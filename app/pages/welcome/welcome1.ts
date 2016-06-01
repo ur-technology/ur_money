@@ -1,7 +1,5 @@
-import {Page, NavController, Component} from 'ionic-angular';
-// import {Component} from '@angular/core';
-// import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl, Control} from '@angular/common';
-import {Auth} from '../../components/auth/auth';
+import {Page} from 'ionic-angular';
+import {Type} from '@angular/core';
 import {Welcome2Page} from './welcome2';
 
 @Page({
@@ -9,26 +7,9 @@ import {Welcome2Page} from './welcome2';
 })
 export class Welcome1Page {
 
-  public welcome2Page: Component;
+  public welcome2Page: Type;
 
-  constructor(
-    public nav: NavController
-  ) {
-    this.nav = nav;
+  constructor() {
     this.welcome2Page = Welcome2Page;
   }
-
-
 }
-
-// import {Page} from 'ionic-angular';
-//
-//
-// @Page({
-//   templateUrl: 'build/pages/welcome/welcome1.html'
-// })
-// export class Welcome1Page {
-//   constructor() {
-//
-//   }
-// }

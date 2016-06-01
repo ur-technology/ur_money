@@ -1,5 +1,4 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {Component} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl, Control} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
 // import {Welcome4Page} from './welcome5';

@@ -65,6 +65,9 @@ export class Auth {
     return new Promise( (resolve) => {
       var user = {phone: phone, uid: "123", verificationCode: '333444'}; // TODO: look up user by phone in users collection
       var userToReturn = user && user.verificationCode == verificationCode ? user : undefined;
+      // thisComponent.uid = user.uid;
+      // thisComponent.user = userToReturn;
+
       resolve(userToReturn);
       // this.angularFire.database.list( "/phone_verifications" ).push({
       //   phone: phone,

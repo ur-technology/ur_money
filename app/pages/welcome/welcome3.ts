@@ -1,10 +1,8 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {Component} from '@angular/core';
-import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl, Control} from '@angular/common';
+import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, AbstractControl, Control} from '@angular/common';
+import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {Auth} from '../../components/auth/auth';
 import {Welcome4Page} from './welcome4';
-import * as _ from 'underscore';
-import {CustomValidators} from '../../components/custom-validators/custom-validators';
 
 @Page({
   templateUrl: 'build/pages/welcome/welcome3.html',
@@ -25,7 +23,7 @@ export class Welcome3Page {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
     this.verificationCodeForm = formBuilder.group({
-      'verificationCode': ["", CustomValidators.phoneValidator]
+      'verificationCode': ["", CustomValidators.verificationCodeValidator]
     });
     this.verificationCodeControl = this.verificationCodeForm.controls['verificationCode'];
   }

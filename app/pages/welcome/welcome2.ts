@@ -1,13 +1,9 @@
-import {Dialogs} from 'ionic-native';
-import {Page, NavController, Alert, Loading} from 'ionic-angular';
+import {Page, NavController, Alert} from 'ionic-angular';
 import {Component} from '@angular/core';
-import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl, Control} from '@angular/common';
+import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
 import {Welcome3Page} from './welcome3';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
-import {AngularFire} from 'angularfire2'
-import * as Firebase from 'firebase';
-import * as _ from 'underscore';
 
 @Page({
   templateUrl: 'build/pages/welcome/welcome2.html',
@@ -16,13 +12,11 @@ import * as _ from 'underscore';
 export class Welcome2Page {
   phoneForm: ControlGroup;
   phoneControl: AbstractControl;
-  loading: any;
 
   constructor(
     public nav: NavController,
     public formBuilder: FormBuilder,
-    public auth: Auth,
-    public angularFire: AngularFire
+    public auth: Auth
   ) {
     this.phoneForm = formBuilder.group({
       'phone': ["", CustomValidators.phoneValidator]

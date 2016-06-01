@@ -14,7 +14,7 @@
   <form [ngFormModel]="verificationCodeForm" (submit)="submit()">
     <p *ngIf="errorMessage">{{errorMessage}}</p>
     <ion-item>
-      <ion-input type="text" [ngFormControl]="verificationCodeControl"></ion-input>
+      <ion-input type="text" [ngFormControl]="verificationCodeControl" autofocus></ion-input>
     </ion-item>
 
     <button primary type="submit">

@@ -17,4 +17,10 @@ export class CustomValidators {
       return { 'invalidPhoneList': true };
     }
   }
+  static verificationCodeValidator(control) {
+    var pattern = /^\d{6}$/;
+    if (!control.value.match(pattern)) {
+      return { 'invalidVerificationCode': true };
+    }
+  }
 }
