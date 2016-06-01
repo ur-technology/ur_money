@@ -1,0 +1,25 @@
+<ion-navbar *navbar class="hidden">
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>{{phoneForm.value.phone}}</ion-title>
+</ion-navbar>
+
+<ion-content padding class="welcome2">
+
+  <p>
+    Pleae confirm your country code and enter your phone number
+  </p>
+
+  <form [ngFormModel]="phoneForm" (submit)="submit()">
+    <ion-item>
+      <ion-input type="tel" [ngFormControl]="phoneControl" autofocus></ion-input>
+    </ion-item>
+
+    <button primary type="submit" [disabled]="!phoneForm.valid">
+      Continue
+    </button>
+
+</form>
+
+</ion-content>

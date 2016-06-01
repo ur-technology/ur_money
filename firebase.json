@@ -1,0 +1,19 @@
+{
+  "firebase": "urcapital-staging",
+  "public": "www",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ],
+  "rewrites": [
+    {"source": "/go/*", "destination": "/index.html"}
+  ],
+  "headers": [ {
+    "source" : "**/*",
+    "headers" : [ {
+      "key" : "Cache-Control",
+      "value" : "max-age=5"
+    } ]
+  } ]
+}

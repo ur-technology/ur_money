@@ -1,0 +1,26 @@
+
+<ion-navbar *navbar class="hidden">
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Hello Ionic</ion-title>
+</ion-navbar>
+
+<ion-content padding class="welcome">
+
+  <div style="text-align: center;">
+    <img src="img/logo_globe_symbol.png">
+  </div>
+
+  <h3>Welcome to UR</h3>
+
+  <p>
+    Tap 'Agree & Continue' to accept UR's Terms of Service and Privacy Policy
+  </p>
+  <p>
+    <button primary [navPush]="welcome2Page">Agree &amp; Continue</button>
+  </p>
+
+
+
+</ion-content>
