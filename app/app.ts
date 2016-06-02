@@ -5,6 +5,9 @@ import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
 import {Auth} from './components/auth/auth';
 import * as _ from 'underscore';
+import {Welcome1Page} from './pages/welcome/welcome1';
+import {Welcome4Page} from './pages/welcome/welcome4';
+import {HomePage} from './pages/home/home';
 
 @App({
   templateUrl: 'build/app.html',
@@ -43,7 +46,11 @@ class UrMoney {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.auth.respondToAuth(this.nav);
+      this.auth.respondToAuth( () => {
+        this.nav.setRoot(this.auth.user.onboardingComplete ? HomePage : Welcome4Page );
+      }, () => {
+        this.nav.setRoot(Welcome1Page);
+      });
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

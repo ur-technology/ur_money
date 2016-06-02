@@ -4,9 +4,9 @@ import {AngularFire} from 'angularfire2'
 import {Component} from '@angular/core';
 import * as _ from 'underscore'
 import * as Firebase from 'firebase'
-import {Welcome1Page} from '../../pages/welcome/welcome1';
-import {Welcome4Page} from '../../pages/welcome/welcome4';
-import {HomePage} from '../../pages/home/home';
+// import {Welcome1Page} from '../../pages/welcome/welcome1';
+// import {Welcome4Page} from '../../pages/welcome/welcome4';
+// import {HomePage} from '../../pages/home/home';
 
 @Injectable()
 
@@ -31,7 +31,10 @@ export class Auth {
     return new Firebase(Auth.firebaseUrl());
   }
 
-  respondToAuth(nav: Nav) {
+  respondToAuth(
+    authenticatedCallback: any,
+    unauthenticatedCallback: any
+  ) {
     var thisComponent = this;
     thisComponent.angularFire.auth.subscribe((authData) => {
       if (authData) {
@@ -39,7 +42,7 @@ export class Auth {
         var object = thisComponent.angularFire.database.object( "/users/" + thisComponent.uid, { preserveSnapshot: true });
         object.subscribe( (snapshot) => {
           thisComponent.user = snapshot.val();
-          nav.setRoot(thisComponent.user.onboardingComplete ? HomePage : Welcome4Page);
+          authenticatedCallback();
         });
 
         // if (authData.provider == 'facebook') {
@@ -51,7 +54,7 @@ export class Auth {
       } else {
         thisComponent.uid = undefined;
         thisComponent.user = undefined;
-        nav.setRoot(Welcome1Page);
+        unauthenticatedCallback();
       }
     });
   }
