@@ -17,7 +17,6 @@ export class Auth {
   // public authDataProfileName: any
   // public authDataProfileDescription: any
   // public authDataProfileEmail: any
-  @ViewChild(Nav) nav2: Nav;
 
   constructor(
     public angularFire: AngularFire

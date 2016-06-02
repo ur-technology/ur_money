@@ -1,10 +1,11 @@
 {
-  "firebase": "urcapital-staging",
+  "firebase": "urcapital-production",
   "public": "www",
   "ignore": [
     "firebase.json",
     "**/.*",
-    "**/node_modules/**"
+    "**/node_modules/**",
+    "**/typings/**"
   ],
   "rewrites": [
     {"source": "/go/*", "destination": "/index.html"}
