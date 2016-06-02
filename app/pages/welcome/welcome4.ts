@@ -27,9 +27,8 @@ export class Welcome4Page {
     this.verificationCodeControl = this.verificationCodeForm.controls['verificationCode'];
   }
 
-  submitVerificationCode() {
-    alert('x');
-    // this.nav.setRoot(Welcome4Page);
+  signOut() {
+    Auth.firebaseRef().unauth();
   }
 
 }

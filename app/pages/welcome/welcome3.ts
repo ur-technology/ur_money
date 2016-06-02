@@ -29,9 +29,7 @@ export class Welcome3Page {
   submit() {
     var verificationCode = this.verificationCodeForm.value.verificationCode;
     this.auth.checkVerificationCode(this.navParams.get('phoneVerificationKey'), verificationCode).then( (success) => {
-      if (success) {
-        this.nav.setRoot(Welcome4Page);
-      } else {
+      if (!success) {
         this.errorMessage = "The verification code you entered is incorrect or expired. Please try again.";
       }
     })

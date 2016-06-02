@@ -4,6 +4,9 @@ import {AngularFire} from 'angularfire2'
 import {Component} from '@angular/core';
 import * as _ from 'underscore'
 import * as Firebase from 'firebase'
+import {Welcome1Page} from '../../pages/welcome/welcome1';
+import {Welcome4Page} from '../../pages/welcome/welcome4';
+import {HomePage} from '../../pages/home/home';
 
 @Injectable()
 
@@ -22,17 +25,14 @@ export class Auth {
   }
 
   static firebaseUrl() {
-    return 'https://blinding-torch-3730.firebaseio.com/';
+    return 'https://urcapital-production.firebaseio.com/';
   }
 
   static firebaseRef() {
     return new Firebase(Auth.firebaseUrl());
   }
 
-  respondToAuth(
-    authenticatedCallback: any,
-    unauthenticatedCallback: any
-  ) {
+  respondToAuth(nav: Nav) {
     var thisComponent = this;
     thisComponent.angularFire.auth.subscribe((authData) => {
       if (authData) {
@@ -40,7 +40,7 @@ export class Auth {
         var object = thisComponent.angularFire.database.object( "/users/" + thisComponent.uid, { preserveSnapshot: true });
         object.subscribe( (snapshot) => {
           thisComponent.user = snapshot.val();
-          authenticatedCallback();
+          nav.setRoot(thisComponent.user.onboardingComplete ? HomePage : Welcome4Page);
         });
 
         // if (authData.provider == 'facebook') {
@@ -52,7 +52,7 @@ export class Auth {
       } else {
         thisComponent.uid = undefined;
         thisComponent.user = undefined;
-        unauthenticatedCallback();
+        nav.setRoot(Welcome1Page);
       }
     });
   }

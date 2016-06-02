@@ -2,8 +2,6 @@ import {ViewChild} from '@angular/core';
 import {App, Platform, MenuController, Nav} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {StatusBar} from 'ionic-native';
-import {Welcome1Page} from './pages/welcome/welcome1';
-import {HomePage} from './pages/home/home';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
 import {Auth} from './components/auth/auth';
 import * as _ from 'underscore';
@@ -45,11 +43,8 @@ class UrMoney {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.auth.respondToAuth(() => {
-        this.nav.setRoot(HomePage);
-      }, () => {
-        this.nav.setRoot(Welcome1Page);
-      });
+      this.auth.respondToAuth(this.nav);
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
