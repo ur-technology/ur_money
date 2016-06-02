@@ -3,6 +3,7 @@ import {Nav} from 'ionic-angular';
 import {AngularFire} from 'angularfire2'
 import {Component} from '@angular/core';
 import * as _ from 'underscore'
+import * as Firebase from 'firebase'
 
 @Injectable()
 
@@ -20,6 +21,14 @@ export class Auth {
   ) {
   }
 
+  static firebaseUrl() {
+    return 'https://blinding-torch-3730.firebaseio.com/';
+  }
+
+  static firebaseRef() {
+    return new Firebase(Auth.firebaseUrl());
+  }
+
   respondToAuth(
     authenticatedCallback: any,
     unauthenticatedCallback: any
@@ -30,7 +39,7 @@ export class Auth {
         thisComponent.uid = authData.uid;
         var object = thisComponent.angularFire.database.object( "/users/" + thisComponent.uid, { preserveSnapshot: true });
         object.subscribe( (snapshot) => {
-          thisComponent.user = snapshot.value();
+          thisComponent.user = snapshot.val();
           authenticatedCallback();
         });
 
@@ -48,33 +57,52 @@ export class Auth {
     });
   }
 
-  sendVerificationSMS(phone: string) {
+  requestPhoneVerification(phone: string) {
     return new Promise( (resolve) => {
       console.log("about to queue verification number");
-      this.angularFire.database.list( "/phone_verifications" ).push({
+      var phoneVerificationRef = Auth.firebaseRef().child("phoneVerifications").push({
         phone: phone,
         createdAt: Firebase.ServerValue.TIMESTAMP
-      }).then( () => {
-        console.log("verification number queued");
-        resolve();
+      });
+      console.log("verification queued");
+      phoneVerificationRef.on("value", (snapshot) => {
+        var phoneVerification = snapshot.val();
+        if (!_.isUndefined(phoneVerification.smsSuccess)) {
+          console.log("resolving promise");
+          phoneVerificationRef.off("value"); // stop watching for changes on this phone verification
+          resolve({phoneVerificationKey: phoneVerificationRef.key(), smsSuccess: phoneVerification.smsSuccess});
+        }
       });
     });
   }
 
-  checkVerificationCode(phone: string, verificationCode: string) {
-    return new Promise( (resolve) => {
-      var user = {phone: phone, uid: "123", verificationCode: '333444'}; // TODO: look up user by phone in users collection
-      var userToReturn = user && user.verificationCode == verificationCode ? user : undefined;
-      // thisComponent.uid = user.uid;
-      // thisComponent.user = userToReturn;
+  checkVerificationCode(phoneVerificationKey: string, attemptedVerificationCode: string) {
 
-      resolve(userToReturn);
-      // this.angularFire.database.list( "/phone_verifications" ).push({
-      //   phone: phone,
-      //   createdAt: Firebase.ServerValue.TIMESTAMP
-      // }).then( () => {
-      //   resolve();
-      // });
+    return new Promise( (resolve) => {
+      var phoneVerificationRef = Auth.firebaseRef().child("phoneVerifications").child(phoneVerificationKey);
+      phoneVerificationRef.child("attemptedVerificationCode").set(attemptedVerificationCode).then( (xxx) => {
+        phoneVerificationRef.on("value", (snapshot) => {
+          var stopWatchingPhoneVerificationAndResolvePromise = function(success) {
+            phoneVerificationRef.off("value"); // stop watching for changes on this phone verification
+            resolve(success);
+          };
+
+          var phoneVerification = snapshot.val();
+          if (_.isUndefined(phoneVerification.verificationSuccess)) {
+            // verificationSuccess still not set
+            return;
+          }
+
+          if (phoneVerification.verificationSuccess) {
+            Auth.firebaseRef().authWithCustomToken(phoneVerification.authToken, function(error, authData) {
+              console.log("Authentication succeded: " + !error);
+              stopWatchingPhoneVerificationAndResolvePromise(!error);
+            });
+          } else {
+            stopWatchingPhoneVerificationAndResolvePromise(false);
+          }
+        });
+      });
     });
   }
 

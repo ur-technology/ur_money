@@ -9,7 +9,6 @@ import {Welcome4Page} from './welcome4';
   directives: [FORM_DIRECTIVES]
 })
 export class Welcome3Page {
-  phone: string;
   verificationCodeForm: ControlGroup;
   verificationCodeControl: AbstractControl;
   errorMessage: string;
@@ -21,7 +20,6 @@ export class Welcome3Page {
     public auth: Auth
   ) {
     this.nav = nav;
-    this.phone = this.navParams.get('phone');
     this.verificationCodeForm = formBuilder.group({
       'verificationCode': ["", CustomValidators.verificationCodeValidator]
     });
@@ -30,8 +28,8 @@ export class Welcome3Page {
 
   submit() {
     var verificationCode = this.verificationCodeForm.value.verificationCode;
-    this.auth.checkVerificationCode(this.phone, verificationCode).then( (user) => {
-      if (user) {
+    this.auth.checkVerificationCode(this.navParams.get('phoneVerificationKey'), verificationCode).then( (success) => {
+      if (success) {
         this.nav.setRoot(Welcome4Page);
       } else {
         this.errorMessage = "The verification code you entered is incorrect or expired. Please try again.";

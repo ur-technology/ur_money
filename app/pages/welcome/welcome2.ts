@@ -53,8 +53,12 @@ export class Welcome2Page {
           text: 'YES',
           handler: () => {
             alert.dismiss();
-            this.auth.sendVerificationSMS(phone).then( () => {
-              this.nav.setRoot(Welcome3Page, {phone:phone});
+            this.auth.requestPhoneVerification(phone).then( (result: any) => {
+              if (!result || !result.smsSuccess) {
+                console.log("error!");
+                return;
+              }
+              this.nav.setRoot(Welcome3Page, {phoneVerificationKey: result.phoneVerificationKey});
             });
           }
         }

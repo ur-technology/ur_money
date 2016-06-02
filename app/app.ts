@@ -13,7 +13,7 @@ import * as _ from 'underscore';
   providers: [
     Auth,
     FIREBASE_PROVIDERS,
-    defaultFirebase('https://blinding-torch-3730.firebaseio.com/'),
+    defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom,
       method: AuthMethods.CustomToken,

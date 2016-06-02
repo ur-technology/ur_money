@@ -1,0 +1,50 @@
+{
+  "rules": {
+    "phoneVerifications": {
+      // fields: phone, smsSuccess, verificationSuccess, verificationCode, attemptedVerificationCode, authToken
+
+      // disallow enumerating entire list, except for admin
+      ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+
+      // disallow overwriting entire list
+      ".write": false,
+
+      "$phoneVerificationId": {
+        // if you know the record id you can read or write the most of the record
+        ".read": true,
+        ".write": true,
+
+        "verificationCode": {
+          // read && write allowed for admin only
+          ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+          ".write": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true"
+        },
+
+        "attemptedVerificationCode": {
+          // read allowed for admin only
+          ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true"
+        }
+
+      }
+    },
+
+    "users": {
+      // disallow enumerating entire list, except for admin
+      ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+
+      // disallow overwriting entire list
+      ".write": false,
+
+      "$userId": {
+        // the record owner and admins can read and write most of the record; everyone else disallowed
+        ".read": "auth != null && (auth.uid === $userId || root.child('users/'+ auth.uid + '/admin').val() == true)",
+        ".write": "auth != null && (auth.uid === $userId || root.child('users/'+ auth.uid + '/admin').val() == true)",
+
+        "admin": {
+          // users can only be granted admin privilges manually
+          ".write": false
+        }
+      }
+    }
+  }
+}
