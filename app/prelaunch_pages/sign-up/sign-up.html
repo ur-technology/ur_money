@@ -1,0 +1,47 @@
+
+<!-- <ion-navbar *navbar>
+  <ion-title>signUp</ion-title>
+</ion-navbar> -->
+
+<ion-content padding class="sign-up">
+
+  <div style="text-align: center;">
+    <img src="img/logo.png">
+  </div>
+
+  <h5 style="text-align: center;">
+    Creating Wealth through Technology
+  </h5>
+
+  <p>
+    You have been invited to become a beta program tester for UR Capital's suite of mobile apps designed to help everyday people navigate the world of crypto currencies. Please enter your info below:
+  </p>
+
+  <form [ngFormModel]="signUpForm" (submit)="signUp($event)">
+    <p *ngIf="error">{{error}}</p>
+    <ion-list>
+
+      <ion-item [class.error]="!firstName.valid && firstName.touched">
+        <ion-label fixed>First Name</ion-label>
+        <ion-input autofocus type="text" [ngFormControl]="firstName"></ion-input>
+      </ion-item>
+
+      <ion-item [class.error]="!lastName.valid && lastName.touched">
+        <ion-label fixed>Last Name</ion-label>
+        <ion-input type="text" [ngFormControl]="lastName"></ion-input>
+      </ion-item>
+
+      <ion-item [class.error]="!phone.valid && phone.touched">
+        <ion-label fixed>Mobile Phone</ion-label>
+        <ion-input type="tel" [ngFormControl]="phone"></ion-input>
+      </ion-item>
+
+      <div>&nbsp;</div>
+      <button secondary full type="submit" [disabled]="!signUpForm.valid || submissionInProgress">
+        Continue
+        <span *ngIf="submissionInProgress" class="spinner-wrapper">&nbsp;<ion-spinner></ion-spinner></span>
+      </button>
+
+    </ion-list>
+  </form>
+</ion-content>
