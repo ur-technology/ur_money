@@ -7,7 +7,7 @@ import {Page, NavController, NavParams} from 'ionic-angular';
   Ionic pages and navigation.
 */
 @Page({
-  templateUrl: 'build/prelaunch_pages/error/error.html',
+  templateUrl: '/build/prelaunch_pages/error/error.html',
 })
 export class ErrorPage {
   message: string;

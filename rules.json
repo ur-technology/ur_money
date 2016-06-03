@@ -29,6 +29,8 @@
     },
 
     "users": {
+      ".indexOn": ["phone"],
+
       // disallow enumerating entire list, except for admin
       ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
 

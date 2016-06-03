@@ -5,7 +5,7 @@ import {Auth} from '../../components/auth/auth';
 import {Welcome4Page} from './welcome4';
 
 @Page({
-  templateUrl: 'build/pages/welcome/welcome3.html',
+  templateUrl: '/build/pages/welcome/welcome3.html',
   directives: [FORM_DIRECTIVES]
 })
 export class Welcome3Page {

@@ -2,7 +2,7 @@ import {Page, NavController, NavParams} from 'ionic-angular';
 
 
 @Page({
-  templateUrl: 'build/pages/item-details/item-details.html'
+  templateUrl: '/build/pages/item-details/item-details.html'
 })
 export class ItemDetailsPage {
   selectedItem: any;

@@ -6,7 +6,7 @@ import * as _ from 'underscore';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 
 @Page({
-  templateUrl: 'build/pages/welcome/welcome4.html',
+  templateUrl: '/build/pages/welcome/welcome4.html',
   directives: [FORM_DIRECTIVES]
 })
 export class Welcome4Page {

@@ -3,7 +3,7 @@ import {ItemDetailsPage} from '../item-details/item-details';
 
 
 @Page({
-  templateUrl: 'build/pages/home/home.html'
+  templateUrl: '/build/pages/home/home.html'
 })
 export class HomePage {
   selectedItem: any;

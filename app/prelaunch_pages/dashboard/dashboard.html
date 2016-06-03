@@ -1,7 +1,7 @@
 <ion-content padding class="dashboard">
 
   <div style="text-align: center;">
-    <img src="img/logo.png">
+    <img src="/img/logo.png">
   </div>
 
   <h5 style="text-align: center;">
@@ -29,7 +29,7 @@
 
   <div *ngIf="user.admin">
     <ion-list>
-     <ion-item ion-item *ngFor="#u of allUsers">
+     <ion-item ion-item *ngFor="let u of allUsers">
        <span class="downline-level-{{u.downlineLevel}}">
          <span *ngIf="u.memberId">#{{u.memberId}} {{fullName(u)}}</span>
          <span *ngIf="!u.memberId">Invitee</span>

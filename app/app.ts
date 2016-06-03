@@ -15,7 +15,7 @@ import {ErrorPage} from './prelaunch_pages/error/error';
 import {FirebaseService} from './prelaunch_components/firebase-service/firebase-service';
 
 @App({
-  templateUrl: 'build/app.html',
+  templateUrl: '/build/app.html',
   providers: [
     Auth,
     FirebaseService,
@@ -88,7 +88,9 @@ class UrMoney {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
 
-      StatusBar.styleDefault();
+      if (this.platform.is('cordova')) {
+        StatusBar.styleDefault();
+      }
 
       if (this.handlePrelaunchRequest()) {
         return;

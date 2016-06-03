@@ -10,7 +10,7 @@
 // import * as _ from 'underscore';
 //
 // @Page({
-//   templateUrl: 'build/pages/welcome/welcome2.html',
+//   templateUrl: '/build/pages/welcome/welcome2.html',
 //   directives: [FORM_DIRECTIVES]
 // })
 // export class Welcome2Page {

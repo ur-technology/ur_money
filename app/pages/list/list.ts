@@ -3,7 +3,7 @@ import {ItemDetailsPage} from '../item-details/item-details';
 
 
 @Page({
-  templateUrl: 'build/pages/list/list.html'
+  templateUrl: '/build/pages/list/list.html'
 })
 export class ListPage {
   selectedItem: any;

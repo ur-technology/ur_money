@@ -7,7 +7,7 @@ import {CustomValidators} from '../../components/custom-validators/custom-valida
 import * as _ from 'underscore'
 
 @Page({
-  templateUrl: 'build/prelaunch_pages/dashboard/dashboard.html',
+  templateUrl: '/build/prelaunch_pages/dashboard/dashboard.html',
   directives: [FORM_DIRECTIVES]
 })
 export class DashboardPage {
