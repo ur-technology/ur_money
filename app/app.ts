@@ -1,6 +1,6 @@
 import {ViewChild} from '@angular/core';
 import {App, Platform, MenuController, Nav} from 'ionic-angular';
-import {Component} from '@angular/core';
+import {Component, Type} from '@angular/core';
 import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
 import {Auth} from './components/auth/auth';
@@ -51,9 +51,9 @@ class UrMoney {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Send', component: SendPage },
-      { title: 'Receive', component: ReceivePage },
-      { title: 'My Network', component: MyNetworkPage }
+      { title: 'My Network', component: MyNetworkPage },
+      { title: 'Send UR/Message', component: SendPage },
+      { title: 'Receive UR', component: ReceivePage }
     ];
   }
 
