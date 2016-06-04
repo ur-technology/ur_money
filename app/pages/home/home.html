@@ -1,21 +1,12 @@
-<ion-navbar *navbar class="hidden">
+<ion-navbar *navbar>
   <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>My First List</ion-title>
+  <!-- <ion-title>Home Page</ion-title> -->
 </ion-navbar>
 
 <ion-content>
-  <p>This is your home page</p>
-  <p>Here is your chart</p>
-  <p>Here are your messages:</p>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon name="{{item.icon}}" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
-      </div>
-    </button>
-  </ion-list>
+  <p>3035.0 UR</p>
+  <p>CHART goes here</p>
+  <p>MESSAGES go here</p>
 </ion-content>

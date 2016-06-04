@@ -2,7 +2,6 @@ import {Page, NavController, NavParams} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, AbstractControl, Control} from '@angular/common';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {Auth} from '../../components/auth/auth';
-import {Welcome4Page} from './welcome4';
 
 @Page({
   templateUrl: '/build/pages/welcome/welcome3.html',

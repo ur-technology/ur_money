@@ -6,9 +6,13 @@ import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, 
 import {Auth} from './components/auth/auth';
 import * as _ from 'underscore';
 import {Welcome1Page} from './pages/welcome/welcome1';
-import {Welcome4Page} from './pages/welcome/welcome4';
 import {HomePage} from './pages/home/home';
+import {SendPage} from './pages/send/send';
+import {ReceivePage} from './pages/receive/receive';
+import {MyNetworkPage} from './pages/my-network/my-network';
+import {InvitePage} from './pages/invite/invite';
 
+// temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
 import {SignUpPage} from './prelaunch_pages/sign-up/sign-up';
 import {ErrorPage} from './prelaunch_pages/error/error';
@@ -35,6 +39,7 @@ class UrMoney {
 
   // rootPage: any = Welcome1Page;
   pages: Array<{title: string, component: any}>;
+  invitePage: Type;
 
   constructor(
     private platform: Platform,
@@ -43,11 +48,13 @@ class UrMoney {
   ) {
     this.initializeApp();
 
-    // // set our app's pages
-    // this.pages = [
-    //   { title: 'Welcome - Step 1', component: Welcome1Page },
-    //   { title: 'Welcome - Step 2', component: Welcome2Page },
-    // ];
+    // set our app's pages
+    this.pages = [
+      { title: 'Home', component: HomePage },
+      { title: 'Send', component: SendPage },
+      { title: 'Receive', component: ReceivePage },
+      { title: 'My Network', component: MyNetworkPage }
+    ];
   }
 
   handlePrelaunchRequest() {
@@ -97,7 +104,7 @@ class UrMoney {
       }
 
       this.auth.respondToAuth( () => {
-        this.nav.setRoot(this.auth.user.onboardingComplete ? HomePage : Welcome4Page );
+        this.nav.setRoot(HomePage);
       }, () => {
         this.nav.setRoot(Welcome1Page);
       });
@@ -111,4 +118,10 @@ class UrMoney {
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
   }
+
+  visitInvitePage() {
+    this.menu.close();
+    this.nav.setRoot(InvitePage);
+  }
+
 }

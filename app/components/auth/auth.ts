@@ -4,9 +4,6 @@ import {AngularFire} from 'angularfire2'
 import {Component} from '@angular/core';
 import * as _ from 'underscore'
 import * as Firebase from 'firebase'
-// import {Welcome1Page} from '../../pages/welcome/welcome1';
-// import {Welcome4Page} from '../../pages/welcome/welcome4';
-// import {HomePage} from '../../pages/home/home';
 
 @Injectable()
 
@@ -42,15 +39,15 @@ export class Auth {
         var object = thisComponent.angularFire.database.object( "/users/" + thisComponent.uid, { preserveSnapshot: true });
         object.subscribe( (snapshot) => {
           thisComponent.user = snapshot.val();
+          // if (authData.provider == 'facebook') {
+          //   this.authDataProfileImage  = authData.facebook.profileImageURL.replace(/\_normal/,"");
+          //   this.authDataProfileName = authData.facebook.displayName;
+          //   this.authDataProfileDescription = authData.facebook.cachedUserProfile.description;
+          //   this.authDataProfileEmail = authData.facebook.email;
+          // }
           authenticatedCallback();
         });
 
-        // if (authData.provider == 'facebook') {
-        //   this.authDataProfileImage  = authData.facebook.profileImageURL.replace(/\_normal/,"");
-        //   this.authDataProfileName = authData.facebook.displayName;
-        //   this.authDataProfileDescription = authData.facebook.cachedUserProfile.description;
-        //   this.authDataProfileEmail = authData.facebook.email;
-        // }
       } else {
         thisComponent.uid = undefined;
         thisComponent.user = undefined;
@@ -82,7 +79,7 @@ export class Auth {
 
     return new Promise( (resolve) => {
       var phoneVerificationRef = Auth.firebaseRef().child("phoneVerifications").child(phoneVerificationKey);
-      phoneVerificationRef.child("attemptedVerificationCode").set(attemptedVerificationCode).then( (xxx) => {
+      phoneVerificationRef.child("attemptedVerificationCode").set(attemptedVerificationCode).then( () => {
         phoneVerificationRef.on("value", (snapshot) => {
           var stopWatchingPhoneVerificationAndResolvePromise = function(success) {
             phoneVerificationRef.off("value"); // stop watching for changes on this phone verification
@@ -96,7 +93,7 @@ export class Auth {
           }
 
           if (phoneVerification.verificationSuccess) {
-            Auth.firebaseRef().authWithCustomToken(phoneVerification.authToken, function(error, authData) {
+            Auth.firebaseRef().authWithCustomToken(phoneVerification.authToken, (error, authData) => {
               console.log("Authentication succeded: " + !error);
               stopWatchingPhoneVerificationAndResolvePromise(!error);
             });

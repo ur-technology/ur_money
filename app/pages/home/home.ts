@@ -1,5 +1,5 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {ItemDetailsPage} from '../item-details/item-details';
+import {Auth} from '../../components/auth/auth';
 
 
 @Page({
@@ -10,7 +10,7 @@ export class HomePage {
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
 
-  constructor(private nav: NavController, navParams: NavParams) {
+  constructor(private nav: NavController, navParams: NavParams, auth: Auth) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
 
@@ -27,9 +27,4 @@ export class HomePage {
     }
   }
 
-  itemTapped(event, item) {
-    this.nav.push(ItemDetailsPage, {
-      item: item
-    });
-  }
 }
