@@ -20,16 +20,9 @@ import {FirebaseService} from './prelaunch_components/firebase-service/firebase-
 
 @App({
   templateUrl: '/build/app.html',
-  providers: [
-    Auth,
-    FirebaseService,
-    FIREBASE_PROVIDERS,
-    defaultFirebase(Auth.firebaseUrl()),
+  providers: [Auth, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
-      provider: AuthProviders.Custom,
-      method: AuthMethods.CustomToken,
-      remember: 'default'
-      // scope: ['email']
+      provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
   ],
   config: {} // http://ionicframework.com/docs/v2/api/config/Config/
@@ -38,14 +31,10 @@ class UrMoney {
   @ViewChild(Nav) nav: Nav;
 
   // rootPage: any = Welcome1Page;
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
   invitePage: Type;
 
-  constructor(
-    private platform: Platform,
-    private menu: MenuController,
-    public auth: Auth
-  ) {
+  constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
 
     // set our app's pages
@@ -74,19 +63,19 @@ class UrMoney {
 
     Auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
       "value", (snapshot) => {
-      var snapshotData = snapshot.val();
-      var users = _.values(snapshotData || {});
-      if (users.length == 0 && phone == '6158566616') {
-        users =  [{phone: '6158566616'}];
-      }
-      if (users.length == 0) {
-       this.nav.setRoot(ErrorPage, {message: "could not find phone number"});
-        return true;
-      }
+        var snapshotData = snapshot.val();
+        var users = _.values(snapshotData || {});
+        if (users.length == 0 && phone == '6158566616') {
+          users = [{ phone: '6158566616' }];
+        }
+        if (users.length == 0) {
+          this.nav.setRoot(ErrorPage, { message: "could not find phone number" });
+          return true;
+        }
 
-      var user = users[0];
-      this.nav.setRoot(user.signedUpAt ? DashboardPage : SignUpPage, {user: user});
-    });
+        var user = users[0];
+        this.nav.setRoot(user.signedUpAt ? DashboardPage : SignUpPage, { user: user });
+      });
     return true;
   }
 
@@ -103,7 +92,7 @@ class UrMoney {
         return;
       }
 
-      this.auth.respondToAuth( () => {
+      this.auth.respondToAuth(() => {
         this.nav.setRoot(HomePage);
       }, () => {
         this.nav.setRoot(Welcome1Page);

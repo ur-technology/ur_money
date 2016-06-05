@@ -70,6 +70,7 @@ export class Auth {
       console.log("verification queued");
       phoneVerificationRef.on("value", (snapshot) => {
         var phoneVerification = snapshot.val();
+        console.log(phoneVerification);
         if (!_.isUndefined(phoneVerification.smsSuccess)) {
           console.log("resolving promise");
           phoneVerificationRef.off("value"); // stop watching for changes on this phone verification

@@ -1,46 +1,58 @@
 import {Page, NavController, Alert} from 'ionic-angular';
-import {Component} from '@angular/core';
+import {Component, OnInit, ElementRef, Inject} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
 import {Welcome3Page} from './welcome3';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 
+declare var jQuery: any, intlTelInputUtils: any;
+
 @Page({
   templateUrl: '/build/pages/welcome/welcome2.html',
   directives: [FORM_DIRECTIVES]
 })
-export class Welcome2Page {
+export class Welcome2Page implements OnInit {
+  elementRef: ElementRef;
   phoneForm: ControlGroup;
   phoneControl: AbstractControl;
 
-  constructor(
-    public nav: NavController,
-    public formBuilder: FormBuilder,
-    public auth: Auth
-  ) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth) {
+    this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
-      'phone': ["", CustomValidators.phoneValidator]
+      'phone': ['', (control) => {
+        if (control.value.length === 0) {
+          jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').blur();
+          return { 'invalidPhone': true };
+        }
+        let isValid = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("isValidNumber");
+        if (!isValid) {
+          return { 'invalidPhone': true };
+        }
+      }]
     });
     this.phoneControl = this.phoneForm.controls['phone'];
   }
 
-  normalizedPhone(phone) {
-    return (phone || "").replace(/\D/g, "");
+  ngOnInit() {
+    jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput({
+      autoHideDialCode: false,
+      initialCountry: 'us',
+      utilsScript: "/js/utils.js"
+    });
   }
 
-  formattedPhone(phone) {
-    var newPhone = this.normalizedPhone(phone);
-    if (newPhone.length == 10) {
-      newPhone = newPhone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
-    }
-    return newPhone;
+  normalizedPhone(phone) {
+    return (phone || '').replace(/\D/g, '');
   }
+
+
 
   submit() {
-    var phone = this.normalizedPhone(this.phoneForm.value.phone);
+    var phone = this.normalizedPhone(this.phoneForm.value.phone);//jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
+    let formattedPhone = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL);
     let alert = Alert.create({
       title: 'NUMBER CONFIRMATION',
-      message: "<p>" + this.formattedPhone(phone) + "</p><p>Is your phone number above correct?</p>",
+      message: "<p>" + formattedPhone + "</p><p>Is your phone number above correct?</p>",
       buttons: [
         {
           text: 'EDIT',
@@ -53,12 +65,12 @@ export class Welcome2Page {
           text: 'YES',
           handler: () => {
             alert.dismiss();
-            this.auth.requestPhoneVerification(phone).then( (result: any) => {
+            this.auth.requestPhoneVerification(phone).then((result: any) => {
               if (!result || !result.smsSuccess) {
                 console.log("error!");
                 return;
               }
-              this.nav.setRoot(Welcome3Page, {phoneVerificationKey: result.phoneVerificationKey});
+              this.nav.setRoot(Welcome3Page, { phoneVerificationKey: result.phoneVerificationKey });
             });
           }
         }
