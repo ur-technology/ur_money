@@ -48,7 +48,7 @@ export class Welcome2Page implements OnInit {
 
 
   submit() {
-    var phone = this.normalizedPhone(this.phoneForm.value.phone);//jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
+    let phone = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
     let formattedPhone = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL);
     let alert = Alert.create({
       title: 'NUMBER CONFIRMATION',

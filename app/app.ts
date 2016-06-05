@@ -60,7 +60,7 @@ class UrMoney {
     if (!phone) {
       return false; // this is not a prelaunch request
     }
-
+  
     Auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
       "value", (snapshot) => {
         var snapshotData = snapshot.val();
