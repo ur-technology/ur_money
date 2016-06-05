@@ -9,7 +9,7 @@ import {DashboardPage} from '../dashboard/dashboard';
 import {ErrorPage} from '../error/error';
 
 @Page({
-  templateUrl: '/build/prelaunch_pages/sign-up/sign-up.html'
+  templateUrl: 'build/prelaunch_pages/sign-up/sign-up.html'
 })
 export class SignUpPage {
   signUpForm: ControlGroup;

@@ -3,7 +3,7 @@ import {Type} from '@angular/core';
 import {Welcome2Page} from './welcome2';
 
 @Page({
-  templateUrl: '/build/pages/welcome/welcome1.html'
+  templateUrl: 'build/pages/welcome/welcome1.html'
 })
 export class Welcome1Page {
 

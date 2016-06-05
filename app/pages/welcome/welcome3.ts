@@ -4,7 +4,7 @@ import {CustomValidators} from '../../components/custom-validators/custom-valida
 import {Auth} from '../../components/auth/auth';
 
 @Page({
-  templateUrl: '/build/pages/welcome/welcome3.html',
+  templateUrl: 'build/pages/welcome/welcome3.html',
   directives: [FORM_DIRECTIVES]
 })
 export class Welcome3Page {

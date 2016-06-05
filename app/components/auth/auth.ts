@@ -21,7 +21,8 @@ export class Auth {
   }
 
   static firebaseUrl() {
-    return 'https://urcapital-production.firebaseio.com/';
+    //return 'https://urcapital-production.firebaseio.com/';
+    return 'https://blinding-torch-3730.firebaseio.com/';
   }
 
   static firebaseRef() {

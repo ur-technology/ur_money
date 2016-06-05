@@ -19,7 +19,7 @@ import {ErrorPage} from './prelaunch_pages/error/error';
 import {FirebaseService} from './prelaunch_components/firebase-service/firebase-service';
 
 @App({
-  templateUrl: '/build/app.html',
+  templateUrl: 'build/app.html',
   providers: [Auth, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']

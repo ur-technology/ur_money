@@ -8,7 +8,7 @@ import {CustomValidators} from '../../components/custom-validators/custom-valida
 declare var jQuery: any, intlTelInputUtils: any;
 
 @Page({
-  templateUrl: '/build/pages/welcome/welcome2.html',
+  templateUrl: 'build/pages/welcome/welcome2.html',
   directives: [FORM_DIRECTIVES]
 })
 export class Welcome2Page implements OnInit {
@@ -37,7 +37,7 @@ export class Welcome2Page implements OnInit {
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput({
       autoHideDialCode: false,
       initialCountry: 'us',
-      utilsScript: "/js/utils.js"
+      utilsScript: "vendor/js/utils.js"
     });
   }
 
