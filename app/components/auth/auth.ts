@@ -28,16 +28,16 @@ export class Auth {
     return new Firebase(Auth.firebaseUrl());
   }
 
-  respondToAuth(
-    authenticatedCallback: any,
-    unauthenticatedCallback: any
-  ) {
+  /*
+  Methods for respondToAuth
+  */
+  respondToAuth(authenticatedCallback: any, unauthenticatedCallback: any) {
     var thisComponent = this;
     thisComponent.angularFire.auth.subscribe((authData) => {
       if (authData) {
         thisComponent.uid = authData.uid;
-        var object = thisComponent.angularFire.database.object( "/users/" + thisComponent.uid, { preserveSnapshot: true });
-        object.subscribe( (snapshot) => {
+        var object = thisComponent.angularFire.database.object("/users/" + thisComponent.uid, { preserveSnapshot: true });
+        object.subscribe((snapshot) => {
           thisComponent.user = snapshot.val();
           // if (authData.provider == 'facebook') {
           //   this.authDataProfileImage  = authData.facebook.profileImageURL.replace(/\_normal/,"");
@@ -56,8 +56,12 @@ export class Auth {
     });
   }
 
+  /*
+  
+  Methods for the Phone verification
+  */
   requestPhoneVerification(phone: string) {
-    return new Promise( (resolve) => {
+    return new Promise((resolve) => {
       console.log("about to queue verification number");
       var phoneVerificationRef = Auth.firebaseRef().child("phoneVerifications").push({
         phone: phone,
@@ -69,19 +73,22 @@ export class Auth {
         if (!_.isUndefined(phoneVerification.smsSuccess)) {
           console.log("resolving promise");
           phoneVerificationRef.off("value"); // stop watching for changes on this phone verification
-          resolve({phoneVerificationKey: phoneVerificationRef.key(), smsSuccess: phoneVerification.smsSuccess});
+          resolve({ phoneVerificationKey: phoneVerificationRef.key(), smsSuccess: phoneVerification.smsSuccess });
         }
       });
     });
   }
 
+  /*
+  Methods used for verfication check
+  */
   checkVerificationCode(phoneVerificationKey: string, attemptedVerificationCode: string) {
 
-    return new Promise( (resolve) => {
+    return new Promise((resolve) => {
       var phoneVerificationRef = Auth.firebaseRef().child("phoneVerifications").child(phoneVerificationKey);
-      phoneVerificationRef.child("attemptedVerificationCode").set(attemptedVerificationCode).then( () => {
+      phoneVerificationRef.child("attemptedVerificationCode").set(attemptedVerificationCode).then(() => {
         phoneVerificationRef.on("value", (snapshot) => {
-          var stopWatchingPhoneVerificationAndResolvePromise = function(success) {
+          var stopWatchingPhoneVerificationAndResolvePromise = function (success) {
             phoneVerificationRef.off("value"); // stop watching for changes on this phone verification
             resolve(success);
           };
@@ -105,6 +112,9 @@ export class Auth {
     });
   }
 
+  /*
+  Used to check wheater signed or not
+  */
   isSignedIn() {
     return !!this.uid;
   }

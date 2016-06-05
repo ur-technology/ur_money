@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import * as _ from 'underscore'
-import * as Firebase from 'firebase'
+import * as _ from 'underscore';
+import * as Firebase from 'firebase';
 import {Auth} from '../../components/auth/auth';
 
 @Injectable()
