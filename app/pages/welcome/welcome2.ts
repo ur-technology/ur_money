@@ -37,6 +37,7 @@ export class Welcome2Page implements OnInit {
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput({
       autoHideDialCode: false,
       initialCountry: 'us',
+      excludeCountries: ['cu', 'ir', 'kp', 'sd', 'sy'],
       utilsScript: "vendor/js/utils.js"
     });
   }
