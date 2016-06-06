@@ -1,6 +1,7 @@
 {
   "name": "URMoney",
   "description": "An app for tracking your UR transactions and messages",
+  "private": true,
   "scripts": {
     "setup": "npm install",
     "server": "ionic serve",
