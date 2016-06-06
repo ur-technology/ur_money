@@ -50,11 +50,11 @@ class UrMoney {
 
   handlePrelaunchRequest() {
     var phone = null;
-    var matchResults = window.location.pathname.match(/\/go\/(\d{10})/);
+    var matchResults = window.location.pathname.match(/\/go\/(\+?\d+)$/);
     if (matchResults && matchResults.length >= 2) {
       phone = matchResults[1];
     } else {
-      matchResults = window.location.search.match(/[?&]p=(\d{10})/);
+      matchResults = window.location.search.match(/[?&]p=(\+?\d+)$/);
       if (matchResults && matchResults.length >= 2) {
         phone = matchResults[1];
       }
@@ -62,13 +62,16 @@ class UrMoney {
     if (!phone) {
       return false; // this is not a prelaunch request
     }
+    phone = phone.replace( /\D/, "" ) // strip out non-digits
+    phone = phone.replace( /^(\d{10})$/, "1$1" ) // add preceding 1 to 10-digit US phone
+    phone = phone.replace( /^(\d{11,})$/, "+$1" ) // prepend + to phone if it now has 11+ digits
 
     Auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
       "value", (snapshot) => {
         var snapshotData = snapshot.val();
         var users = _.values(snapshotData || {});
-        if (users.length == 0 && phone == '6158566616') {
-          users = [{ phone: '6158566616' }];
+        if (users.length == 0 && phone == '+16158566616') {
+          users = [{ phone: phone }];
         }
         if (users.length == 0) {
           this.nav.setRoot(ErrorPage, { message: "could not find phone number" });

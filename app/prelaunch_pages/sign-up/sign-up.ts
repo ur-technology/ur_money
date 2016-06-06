@@ -45,7 +45,7 @@ export class SignUpPage {
     thisPage.submissionInProgress = true;
     this.user.firstName = thisPage.signUpForm.value.firstName;
     this.user.lastName = thisPage.signUpForm.value.lastName;
-    this.user.phone = thisPage.signUpForm.value.phone;
+    this.user.phone = "+1" + thisPage.signUpForm.value.phone
     this.user.signedUpAt = Firebase.ServerValue.TIMESTAMP;
 
     this.firebaseService.saveUser(thisPage.user);

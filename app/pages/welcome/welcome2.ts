@@ -67,8 +67,8 @@ export class Welcome2Page implements OnInit {
           handler: () => {
             alert.dismiss();
             this.auth.requestPhoneVerification(phone).then((result: any) => {
-              if (!result || !result.smsSuccess) {
-                console.log("error!");
+              if (!result.smsSuccess) {
+                console.log("error - sms could not be sent");
                 return;
               }
               this.nav.setRoot(Welcome3Page, { phoneVerificationKey: result.phoneVerificationKey });
