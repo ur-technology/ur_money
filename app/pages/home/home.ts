@@ -90,7 +90,7 @@ export class HomePage implements OnInit {
       },
       yAxis: {
         title: {
-          text: 'Billions'
+          enabled: false
         },
         labels: {
           formatter: function () {
