@@ -1,0 +1,11 @@
+{
+  "development": {
+    "firebaseUrl": ""
+  },
+  "staging": {
+    "firebaseUrl": ""
+  },
+  "production": {
+    "firebaseUrl": ""
+  }
+}

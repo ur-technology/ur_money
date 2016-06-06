@@ -12,6 +12,8 @@ import {ReceivePage} from './pages/receive/receive';
 import {MyNetworkPage} from './pages/my-network/my-network';
 import {InvitePage} from './pages/invite/invite';
 
+import {HomeService} from './providers/home-service/home-service';
+
 // temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
 import {SignUpPage} from './prelaunch_pages/sign-up/sign-up';
@@ -20,7 +22,7 @@ import {FirebaseService} from './prelaunch_components/firebase-service/firebase-
 
 @App({
   templateUrl: 'build/app.html',
-  providers: [Auth, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
+  providers: [Auth, HomeService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
@@ -60,7 +62,7 @@ class UrMoney {
     if (!phone) {
       return false; // this is not a prelaunch request
     }
-  
+
     Auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
       "value", (snapshot) => {
         var snapshotData = snapshot.val();

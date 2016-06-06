@@ -5,17 +5,20 @@
   <ion-title>Home Page</ion-title>
 </ion-navbar>
 
-<ion-content>
+<ion-content class="home-content">
   <ion-list>
-    <ion-item>
-      3035.0 UR
+    <ion-item class="text-center">
+      {{UR.current_ur_holdings.quantity}} UR
     </ion-item>
-    <ion-item>
-      3035.0 UR
-    </ion-item>
-    <ion-item>
-      3035.0 UR
+    <div class="container" id="container"></div>
+    <ion-item *ngFor="let message of messages|orderBy:'timestamp'">
+      <ion-avatar item-left>
+        <img src="http://placehold.it/150x150">
+      </ion-avatar>
+      <strong> {{message.sender}} :</strong>
+      <p> {{message.body}}</p>
+      <ion-note> {{message.timestamp|timestamp}}</ion-note>
     </ion-item>
   </ion-list>
- 
+
 </ion-content>
