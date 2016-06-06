@@ -21,8 +21,8 @@ export class Auth {
   }
 
   static firebaseUrl() {
-    //return 'https://urcapital-production.firebaseio.com/';
-    return 'https://blinding-torch-3730.firebaseio.com/';
+    // TODO: this will work only for webapp, not for mobile app -- need to fix this
+    return (window.location.hostname == "signup.ur.capital") ? "https://urcapital-production.firebaseio.com/" : 'https://blinding-torch-3730.firebaseio.com/';
   }
 
   static firebaseRef() {
@@ -58,7 +58,7 @@ export class Auth {
   }
 
   /*
-  
+
   Methods for the Phone verification
   */
   requestPhoneVerification(phone: string) {
