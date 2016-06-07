@@ -7,6 +7,7 @@ import {Auth} from './components/auth/auth';
 import * as _ from 'underscore';
 import {Welcome1Page} from './pages/welcome/welcome1';
 import {HomePage} from './pages/home/home';
+import {TutorialPage} from './pages/tutorial/tutorial';
 import {SendPage} from './pages/send/send';
 import {ReceivePage} from './pages/receive/receive';
 import {MyNetworkPage} from './pages/my-network/my-network';
@@ -62,9 +63,9 @@ class UrMoney {
     if (!phone) {
       return false; // this is not a prelaunch request
     }
-    phone = phone.replace( /\D/, "" ) // strip out non-digits
-    phone = phone.replace( /^(\d{10})$/, "1$1" ) // add preceding 1 to 10-digit US phone
-    phone = phone.replace( /^(\d{11,})$/, "+$1" ) // prepend + to phone if it now has 11+ digits
+    phone = phone.replace(/\D/, "") // strip out non-digits
+    phone = phone.replace(/^(\d{10})$/, "1$1") // add preceding 1 to 10-digit US phone
+    phone = phone.replace(/^(\d{11,})$/, "+$1") // prepend + to phone if it now has 11+ digits
 
     this.auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
       "value", (snapshot) => {
@@ -98,7 +99,7 @@ class UrMoney {
       }
 
       this.auth.respondToAuth(() => {
-        this.nav.setRoot(HomePage);
+        this.nav.setRoot(TutorialPage);
       }, () => {
         this.nav.setRoot(Welcome1Page);
       });
