@@ -119,7 +119,7 @@ class UrMoney {
   }
 
   signOut() {
-    this.auth.firebaseRef().unauth();
-    this.openPage({component: Welcome1Page});
+    this.menu.close();
+    this.auth.firebaseRef().unauth(); // this will trigger redirect to Welcome1Page
   }
 }
