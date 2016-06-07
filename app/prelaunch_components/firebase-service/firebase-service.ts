@@ -5,14 +5,14 @@ import {Auth} from '../../components/auth/auth';
 
 @Injectable()
 export class FirebaseService {
-  constructor() {
+  constructor(public auth: Auth) {
   }
 
   saveUser(user) {
     if (!user.createdAt) {
       user.createdAt = Firebase.ServerValue.TIMESTAMP;
     }
-    var usersRef = Auth.firebaseRef().child("users");
+    var usersRef = this.auth.firebaseRef().child("users");
     if (!user.uid) {
       user.uid = usersRef.push().key();
     }
@@ -21,7 +21,7 @@ export class FirebaseService {
 
   assignMemberId(user, callback) {
     console.log('assigning member id');
-    var usersRef = Auth.firebaseRef().child("users");
+    var usersRef = this.auth.firebaseRef().child("users");
     usersRef.once("value", function(snapshot) {
       var allUsers = _.values(snapshot.val());
       var usersWithMemberId = _.select(allUsers, function(u) { return u.memberId; } );

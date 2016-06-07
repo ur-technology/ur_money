@@ -18,6 +18,7 @@ export class Auth {
   constructor(
     public angularFire: AngularFire
   ) {
+
   }
 
   static firebaseUrl() {
@@ -25,10 +26,9 @@ export class Auth {
     return (window.location.hostname == "signup.ur.capital") ? "https://urcapital-production.firebaseio.com/" : 'https://blinding-torch-3730.firebaseio.com/';
   }
 
-  static firebaseRef() {
+  firebaseRef() {
     return new Firebase(Auth.firebaseUrl());
   }
-
   /*
   Methods for respondToAuth
   */
@@ -64,7 +64,7 @@ export class Auth {
   requestPhoneVerification(phone: string) {
     return new Promise((resolve) => {
       console.log("about to queue verification number");
-      var phoneVerificationRef = Auth.firebaseRef().child("phoneVerifications").push({
+      var phoneVerificationRef = this.firebaseRef().child("phoneVerifications").push({
         phone: phone,
         createdAt: Firebase.ServerValue.TIMESTAMP
       });
@@ -87,7 +87,7 @@ export class Auth {
   checkVerificationCode(phoneVerificationKey: string, attemptedVerificationCode: string) {
 
     return new Promise((resolve) => {
-      var phoneVerificationRef = Auth.firebaseRef().child("phoneVerifications").child(phoneVerificationKey);
+      var phoneVerificationRef = this.firebaseRef().child("phoneVerifications").child(phoneVerificationKey);
       phoneVerificationRef.child("attemptedVerificationCode").set(attemptedVerificationCode).then(() => {
         phoneVerificationRef.on("value", (snapshot) => {
           var stopWatchingPhoneVerificationAndResolvePromise = function (success) {
@@ -102,7 +102,7 @@ export class Auth {
           }
 
           if (phoneVerification.verificationSuccess) {
-            Auth.firebaseRef().authWithCustomToken(phoneVerification.authToken, (error, authData) => {
+            this.firebaseRef().authWithCustomToken(phoneVerification.authToken, (error, authData) => {
               console.log("Authentication succeded: " + !error);
               stopWatchingPhoneVerificationAndResolvePromise(!error);
             });

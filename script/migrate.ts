@@ -1,6 +1,6 @@
 // migrate data
  if (this.migrate) {
-   var usersRef = Auth.firebaseRef().child("users");
+   var usersRef = this.auth.firebaseRef().child("users");
    usersRef.once("value", function(snapshot) {
      var allUsers = snapshot.val();
      _.each(allUsers, function(user: any, uid: string) {

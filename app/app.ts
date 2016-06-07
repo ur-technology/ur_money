@@ -66,7 +66,7 @@ class UrMoney {
     phone = phone.replace( /^(\d{10})$/, "1$1" ) // add preceding 1 to 10-digit US phone
     phone = phone.replace( /^(\d{11,})$/, "+$1" ) // prepend + to phone if it now has 11+ digits
 
-    Auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
+    this.auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
       "value", (snapshot) => {
         var snapshotData = snapshot.val();
         var users = _.values(snapshotData || {});
@@ -118,4 +118,8 @@ class UrMoney {
     this.nav.setRoot(InvitePage);
   }
 
+  signOut() {
+    this.auth.firebaseRef().unauth();
+    this.openPage({component: Welcome1Page});
+  }
 }

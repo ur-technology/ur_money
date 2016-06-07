@@ -34,7 +34,7 @@ export class DashboardPage {
 
   setAllUsers() {
     var thisPage = this;
-    Auth.firebaseRef().child("users").once("value", function(snapshot) {
+    this.auth.firebaseRef().child("users").once("value", function(snapshot) {
       var idToUserMapping = snapshot.val();
       var topUser = _.detect(idToUserMapping, function(user,uid) { return !user["sponsor"]; });
       var numUsers = _.size(idToUserMapping);
