@@ -32,28 +32,27 @@ export class Auth {
   /*
   Methods for respondToAuth
   */
-  respondToAuth(authenticatedCallback: any, unauthenticatedCallback: any) {
-    var thisComponent = this;
-    thisComponent.angularFire.auth.subscribe((authData) => {
-      if (authData) {
-        thisComponent.uid = authData.uid;
-        var object = thisComponent.angularFire.database.object("/users/" + thisComponent.uid, { preserveSnapshot: true });
-        object.subscribe((snapshot) => {
-          thisComponent.user = snapshot.val();
-          // if (authData.provider == 'facebook') {
-          //   this.authDataProfileImage  = authData.facebook.profileImageURL.replace(/\_normal/,"");
-          //   this.authDataProfileName = authData.facebook.displayName;
-          //   this.authDataProfileDescription = authData.facebook.cachedUserProfile.description;
-          //   this.authDataProfileEmail = authData.facebook.email;
-          // }
-          authenticatedCallback();
-        });
-
-      } else {
-        thisComponent.uid = undefined;
-        thisComponent.user = undefined;
-        unauthenticatedCallback();
-      }
+  respondToAuth() {
+    return new Promise((resolve, reject) => {
+      this.firebaseRef().onAuth( (authData) => {
+        if (authData) {
+          this.firebaseRef().child("users").child(authData.uid).once("value").then((snapshot) => {
+            this.uid = authData.uid;
+            this.user = snapshot.val();
+            // if (authData.provider == 'facebook') {
+            //   this.profileImage  = authData.facebook.profileImageURL.replace(/\_normal/,"");
+            //   this.profileName = authData.facebook.displayName;
+            //   this.profileDescription = authData.facebook.cachedUserProfile.description;
+            //   this.profileEmail = authData.facebook.email;
+            // }
+            resolve();
+          });
+        } else {
+          this.uid = undefined;
+          this.user = undefined;
+          reject();
+        }
+      });
     });
   }
 

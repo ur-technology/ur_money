@@ -97,7 +97,7 @@ class UrMoney {
         return;
       }
 
-      this.auth.respondToAuth(() => {
+      this.auth.respondToAuth().then(() => {
         this.nav.setRoot(HomePage);
       }, () => {
         this.nav.setRoot(Welcome1Page);
