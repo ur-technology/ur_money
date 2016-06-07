@@ -1,7 +1,8 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, AbstractControl, Control} from '@angular/common';
+import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl, Control} from '@angular/common';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {Auth} from '../../components/auth/auth';
+import {TutorialPage} from '../tutorial/tutorial';
 
 @Page({
   templateUrl: 'build/pages/welcome/welcome3.html',
@@ -27,11 +28,15 @@ export class Welcome3Page {
 
   submit() {
     var verificationCode = this.verificationCodeForm.value.verificationCode;
-    this.auth.checkVerificationCode(this.navParams.get('phoneVerificationKey'), verificationCode).then( (success) => {
+    this.auth.checkVerificationCode(this.navParams.get('phoneVerificationKey'), verificationCode).then((success) => {
       if (!success) {
         this.errorMessage = "The verification code you entered is incorrect or expired. Please try again.";
       }
-    })
+    });
+
+    this.auth.authenticatedEmitter.subscribe(() => {
+      this.nav.setRoot(TutorialPage);
+    });
   }
 
 }

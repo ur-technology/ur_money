@@ -7,7 +7,7 @@ import {Auth} from './components/auth/auth';
 import * as _ from 'underscore';
 import {Welcome1Page} from './pages/welcome/welcome1';
 import {HomePage} from './pages/home/home';
-import {TutorialPage} from './pages/tutorial/tutorial';
+
 import {SendPage} from './pages/send/send';
 import {ReceivePage} from './pages/receive/receive';
 import {MyNetworkPage} from './pages/my-network/my-network';
@@ -36,7 +36,7 @@ class UrMoney {
   // rootPage: any = Welcome1Page;
   pages: Array<{ title: string, component: any }>;
   invitePage: Type;
-
+  setPage: boolean = true;
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
 
@@ -97,12 +97,20 @@ class UrMoney {
       if (this.handlePrelaunchRequest()) {
         return;
       }
+      
 
-      this.auth.respondToAuth(() => {
-        this.nav.setRoot(TutorialPage);
+      this.auth.unAuthenticatedEmitter.subscribe(() => {
+        this.nav.setRoot(Welcome1Page);
+      });
+
+      this.auth.respondToAuth().then(() => {
+        this.nav.setRoot(HomePage);
+        this.setPage = false;
       }, () => {
         this.nav.setRoot(Welcome1Page);
       });
+
+
 
     });
   }
