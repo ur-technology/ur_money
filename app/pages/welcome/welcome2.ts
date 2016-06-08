@@ -1,9 +1,12 @@
-import {Page, NavController, Alert} from 'ionic-angular';
-import {Component, OnInit, ElementRef, Inject} from '@angular/core';
+import {IonicApp, Page, NavController, Alert, Platform, Nav} from 'ionic-angular';
+import {OnInit, ElementRef, Inject} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
 import {Welcome3Page} from './welcome3';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
+
+
+import {LoadingService} from '../../providers/loading-service/loading-service';
 
 declare var jQuery: any, intlTelInputUtils: any;
 
@@ -16,7 +19,7 @@ export class Welcome2Page implements OnInit {
   phoneForm: ControlGroup;
   phoneControl: AbstractControl;
 
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public app: IonicApp, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loading: LoadingService) {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
       'phone': ['', (control) => {
@@ -42,6 +45,7 @@ export class Welcome2Page implements OnInit {
     });
   }
 
+
   normalizedPhone(phone) {
     return (phone || '').replace(/\D/g, '');
   }
@@ -65,10 +69,14 @@ export class Welcome2Page implements OnInit {
         {
           text: 'YES',
           handler: () => {
-            alert.dismiss();
+            alert.dismiss().then(() => {
+              this.loading.show();
+            });
             this.auth.requestPhoneVerification(phone).then((result: any) => {
+              this.loading.hide();
               if (!result.smsSuccess) {
                 console.log("error - sms could not be sent");
+                this.showErrorAlert();
                 return;
               }
               this.nav.setRoot(Welcome3Page, { phoneVerificationKey: result.phoneVerificationKey });
@@ -79,6 +87,15 @@ export class Welcome2Page implements OnInit {
     });
     this.nav.present(alert);
 
+  }
+
+  showErrorAlert() {
+    let alert = Alert.create({
+      title: 'Error!',
+      message: 'Error while sending sms. Please try again',
+      buttons: ['Ok']
+    });
+    this.nav.present(alert);
   }
 
 }

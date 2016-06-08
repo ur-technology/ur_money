@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Auth} from '../../components/auth/auth';
+import {BarcodeScanner} from 'ionic-native';
 
+declare var cordova: any;
 /*
   Generated class for the UserService provider.
 
@@ -19,7 +21,15 @@ export class UserService {
     });
   }
 
-
+  createQRCodeAndSave(userId: any) {
+    if (cordova.plugins && cordova.plugins.barcodeScanner) {
+      cordova.plugins.barcodeScanner.encode(cordova.plugins.barcodeScanner.Encode.TEXT_TYPE, userId, (success) => {
+        console.log(success);
+      }, (fail) => {
+        console.log(fail);
+      });
+    }
+  }
 
 }
 

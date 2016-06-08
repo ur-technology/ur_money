@@ -14,6 +14,9 @@ import {MyNetworkPage} from './pages/my-network/my-network';
 import {InvitePage} from './pages/invite/invite';
 
 import {HomeService} from './providers/home-service/home-service';
+import {UserService} from './providers/user-service/user-service';
+import {LoadingService} from './providers/loading-service/loading-service';
+import {LoadingModal} from './components/loading-modal/loading-modal';
 
 // temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
@@ -23,7 +26,8 @@ import {FirebaseService} from './prelaunch_components/firebase-service/firebase-
 
 @App({
   templateUrl: 'build/app.html',
-  providers: [Auth, HomeService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
+  directives: [LoadingModal],
+  providers: [Auth, LoadingService, HomeService, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
@@ -97,7 +101,7 @@ class UrMoney {
       if (this.handlePrelaunchRequest()) {
         return;
       }
-      
+
 
       this.auth.unAuthenticatedEmitter.subscribe(() => {
         this.nav.setRoot(Welcome1Page);

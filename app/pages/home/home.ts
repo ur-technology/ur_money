@@ -2,6 +2,7 @@ import {Page, NavController, NavParams} from 'ionic-angular';
 import {Auth} from '../../components/auth/auth';
 import {Component, OnInit, ElementRef, Inject} from '@angular/core';
 import {HomeService} from '../../providers/home-service/home-service';
+import {UserService} from '../../providers/user-service/user-service';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
 
@@ -24,7 +25,8 @@ export class HomePage implements OnInit {
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
 
-  constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController, navParams: NavParams, auth: Auth, public homeService: HomeService) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
+    navParams: NavParams, auth: Auth, public homeService: HomeService, public userService: UserService) {
     this.elementRef = elementRef;
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
@@ -60,6 +62,8 @@ export class HomePage implements OnInit {
     this.homeService.loadMessages().then((messages: any) => {
       this.messages = messages;
     });
+
+    this.userService.createQRCodeAndSave('123');
   }
 
 
