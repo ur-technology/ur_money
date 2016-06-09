@@ -62,6 +62,7 @@ class UrMoney {
     if (!phone) {
       return false; // this is not a prelaunch request
     }
+    phone = "+1" + phone;
 
     this.auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
       "value", (snapshot) => {

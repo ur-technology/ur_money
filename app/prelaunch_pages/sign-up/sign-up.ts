@@ -28,10 +28,11 @@ export class SignUpPage {
   ) {
 
     this.user = navParams.get("user");
+    var shortPhone = (this.user.phone || "").replace(/^(\+1|1)/,"");
     this.signUpForm = formBuilder.group({
       'firstName': ["", Validators.required],
       'lastName': ["", Validators.required],
-      'phone': [this.user.phone || "", CustomValidators.phoneValidator],
+      'phone': [shortPhone, CustomValidators.phoneValidator],
     });
     this.firstName = this.signUpForm.controls['firstName'];
     this.lastName = this.signUpForm.controls['lastName'];
