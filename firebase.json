@@ -1,5 +1,5 @@
 {
-  "firebase": "urcapital-production",
+  "firebase": "blinding-torch-3730",
   "public": "www",
   "ignore": [
     "firebase.json",
