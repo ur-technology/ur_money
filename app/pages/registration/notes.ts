@@ -3,17 +3,17 @@
 // import {Component} from '@angular/core';
 // import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl, Control} from '@angular/common';
 // import {Auth} from '../../components/auth/auth';
-// import {Welcome3Page} from './welcome3';
+// import {Registration3Page} from './registration3';
 // import {CustomValidators} from '../../components/custom-validators/custom-validators';
 // import {AngularFire} from 'angularfire2'
 // import * as Firebase from 'firebase';
 // import * as _ from 'underscore';
 //
 // @Page({
-//   templateUrl: '/build/pages/welcome/welcome2.html',
+//   templateUrl: '/build/pages/registration/registration2.html',
 //   directives: [FORM_DIRECTIVES]
 // })
-// export class Welcome2Page {
+// export class Registration2Page {
 //   phoneForm: ControlGroup;
 //   phoneControl: AbstractControl;
 //   loading: any;

@@ -5,7 +5,7 @@ import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
 import {Auth} from './components/auth/auth';
 import * as _ from 'underscore';
-import {Welcome1Page} from './pages/welcome/welcome1';
+import {Registration1Page} from './pages/registration/registration1';
 import {HomePage} from './pages/home/home';
 
 import {SendPage} from './pages/send/send';
@@ -45,7 +45,7 @@ import {FirebaseService} from './prelaunch_components/firebase-service/firebase-
 class UrMoney {
   @ViewChild(Nav) nav: Nav;
 
-  // rootPage: any = Welcome1Page;
+  // rootPage: any = Registration1Page;
   pages: Array<{ title: string, component: any }>;
   invitePage: Type;
   setPage: boolean = true;
@@ -105,14 +105,14 @@ class UrMoney {
 
 
       this.auth.unAuthenticatedEmitter.subscribe(() => {
-        this.nav.setRoot(Welcome1Page);
+        this.nav.setRoot(Registration1Page);
       });
 
       this.auth.respondToAuth().then(() => {
         this.nav.setRoot(HomePage);
         this.setPage = false;
       }, () => {
-        this.nav.setRoot(Welcome1Page);
+        this.nav.setRoot(Registration1Page);
       });
 
 
@@ -134,6 +134,6 @@ class UrMoney {
 
   signOut() {
     this.menu.close();
-    this.auth.firebaseRef().unauth(); // this will trigger redirect to Welcome1Page
+    this.auth.firebaseRef().unauth(); // this will trigger redirect to Registration1Page
   }
 }

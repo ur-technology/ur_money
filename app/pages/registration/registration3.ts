@@ -7,10 +7,10 @@ import {TutorialPage} from '../tutorial/tutorial';
 import {LoadingService} from '../../providers/loading-service/loading-service';
 
 @Page({
-  templateUrl: 'build/pages/welcome/welcome3.html',
+  templateUrl: 'build/pages/registration/registration3.html',
   directives: [FORM_DIRECTIVES]
 })
-export class Welcome3Page {
+export class Registration3Page {
   verificationCodeForm: ControlGroup;
   verificationCodeControl: AbstractControl;
   errorMessage: string;

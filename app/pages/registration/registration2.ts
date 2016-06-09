@@ -2,7 +2,7 @@ import {IonicApp, Page, NavController, Alert, Platform, Nav} from 'ionic-angular
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
-import {Welcome3Page} from './welcome3';
+import {Registration3Page} from './registration3';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 
 
@@ -11,10 +11,10 @@ import {LoadingService} from '../../providers/loading-service/loading-service';
 declare var jQuery: any, intlTelInputUtils: any;
 
 @Page({
-  templateUrl: 'build/pages/welcome/welcome2.html',
+  templateUrl: 'build/pages/registration/registration2.html',
   directives: [FORM_DIRECTIVES]
 })
-export class Welcome2Page implements OnInit {
+export class Registration2Page implements OnInit {
   elementRef: ElementRef;
   phoneForm: ControlGroup;
   phoneControl: AbstractControl;
@@ -79,7 +79,7 @@ export class Welcome2Page implements OnInit {
                 this.showErrorAlert();
                 return;
               }
-              this.nav.setRoot(Welcome3Page, { phoneVerificationKey: result.phoneVerificationKey });
+              this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey });
             });
           }
         }
