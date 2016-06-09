@@ -55,21 +55,13 @@ class UrMoney {
 
   handlePrelaunchRequest() {
     var phone = null;
-    var matchResults = window.location.pathname.match(/\/go\/(\+?\d+)$/);
-    if (matchResults && matchResults.length >= 2) {
-      phone = matchResults[1];
-    } else {
-      matchResults = window.location.search.match(/[?&]p=(\+?\d+)$/);
-      if (matchResults && matchResults.length >= 2) {
-        phone = matchResults[1];
-      }
+    var matchResults = window.location.pathname.match(/(\/go\/|[\?\&]p\=)(\d{10})\b/);
+    if (matchResults && matchResults.length == 3) {
+      phone = matchResults[2];
     }
     if (!phone) {
       return false; // this is not a prelaunch request
     }
-    phone = phone.replace(/\D/, "") // strip out non-digits
-    phone = phone.replace(/^(\d{10})$/, "1$1") // add preceding 1 to 10-digit US phone
-    phone = phone.replace(/^(\d{11,})$/, "+$1") // prepend + to phone if it now has 11+ digits
 
     this.auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
       "value", (snapshot) => {
