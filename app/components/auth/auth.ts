@@ -25,7 +25,11 @@ export class Auth {
 
   static firebaseUrl() {
     // TODO: this will work only for webapp, not for mobile app -- need to fix this
-    return (window.location.hostname == "signup.ur.capital") ? "https://urcapital-production.firebaseio.com/" : 'https://blinding-torch-3730.firebaseio.com/';
+    if (window.location.hostname == "signup.ur.capital" || window.location.hostname == "urcapital-production.firebaseapp.com") {
+      return "https://urcapital-production.firebaseio.com/";
+    } else {
+      return "https://blinding-torch-3730.firebaseio.com/";
+    }
   }
 
   firebaseRef() {
