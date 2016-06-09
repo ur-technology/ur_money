@@ -99,6 +99,9 @@ export class Auth {
         phoneVerificationRef.on("value", (snapshot) => {
           var stopWatchingPhoneVerificationAndResolvePromise = function (success) {
             phoneVerificationRef.off("value"); // stop watching for changes on this phone verification
+            if (success) {
+              phoneVerificationRef.remove();
+            }
             resolve(success);
           };
 
