@@ -32,7 +32,13 @@ import {FirebaseService} from './prelaunch_components/firebase-service/firebase-
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
   ],
-  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+  config: {
+    platforms: {
+      ios: {
+        statusbarPadding: true
+      }
+    }
+  } // http://ionicframework.com/docs/v2/api/config/Config/
 })
 class UrMoney {
   @ViewChild(Nav) nav: Nav;
