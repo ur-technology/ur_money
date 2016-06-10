@@ -4,7 +4,7 @@ import {CustomValidators} from '../../components/custom-validators/custom-valida
 import {Auth} from '../../components/auth/auth';
 import {TutorialPage} from '../tutorial/tutorial';
 
-import {LoadingService} from '../../providers/loading-service/loading-service';
+import {LoadingService} from '../../components/loading-modal/loading-service';
 
 @Page({
   templateUrl: 'build/pages/welcome/welcome3.html',

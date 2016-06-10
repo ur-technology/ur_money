@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IONIC_DIRECTIVES} from 'ionic-angular';
-import {LoadingService} from '../../providers/loading-service/loading-service';
+import {LoadingService} from './loading-service';
 
 
 @Component({

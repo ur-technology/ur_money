@@ -13,9 +13,9 @@ import {ReceivePage} from './pages/receive/receive';
 import {MyNetworkPage} from './pages/my-network/my-network';
 import {InvitePage} from './pages/invite/invite';
 
-import {HomeService} from './providers/home-service/home-service';
+import {HomeService} from './pages/home/home-service';
 import {UserService} from './providers/user-service/user-service';
-import {LoadingService} from './providers/loading-service/loading-service';
+import {LoadingService} from './components/loading-modal/loading-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 
 // temporarily support prelaunch sign-up app

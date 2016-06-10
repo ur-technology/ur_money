@@ -1,0 +1,26 @@
+ion-modal.modal {
+    padding: 60px 30px;
+    background: rgba(0,0,0,0.5);
+    
+}
+ion-modal{
+    .modal-wrapper{
+        border-radius: 10px;
+        overflow: hidden;
+        height: 500px;
+    }
+}
+
+.address-book-modal-content{
+    scroll-content{
+        overflow-y: hidden;
+        padding: 10px;
+    }
+    
+    .text-center{
+        text-align: center;
+    }
+    ion-alert{
+        position: relative;
+    }
+}

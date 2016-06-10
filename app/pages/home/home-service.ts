@@ -1,6 +1,7 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {Auth} from '../../components/auth/auth';
 
 /*
   Generated class for the HomeService provider.
@@ -10,22 +11,29 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class HomeService {
-  constructor(public http: Http) {
+  public loadUREmitter = new EventEmitter();
 
+  constructor(public http: Http, public auth: Auth) {
   }
 
   loadUR() {
-    return new Promise(resolve => {
-      let homeData = {
-        current_ur_holdings: { quantity: 2000.0, updatedAt: 1465163554610 },
-        historical_ur_holdings: {
-          '-KJXYAfyakGRJMLs-e1t': { quantity: 2000.0, updatedAt: 1465163554610 },
-          '-KJXYAfyakGRJMLs-e2t': { quantity: 200.0, updatedAt: 1465163554620 },
-          '-KJXYAfyakGRJMLs-e3t': { quantity: 50.0, updatedAt: 1465163554630 },
-          '-KJXYAfyakGRJMLs-e4t': { quantity: 1800.0, updatedAt: 1465163554640 }
+    return new Promise((resolve, reject) => {
+
+      this.auth.firebaseRef().onAuth((authData) => {
+        if (authData) {
+          let getUserDataRef = this.auth.firebaseRef().child("users").child(authData.uid);
+          getUserDataRef.on('value', (snapshot) => {
+            let user = snapshot.val();
+            if (user && user.wallet) {
+              let walletData = user.wallet;
+              this.loadUREmitter.emit(walletData);
+              resolve(walletData);
+            } else {
+              resolve({});
+            }
+          });
         }
-      };
-      resolve(homeData);
+      });
     });
   }
 
@@ -62,5 +70,12 @@ export class HomeService {
       resolve(messages);
     });
   }
+  
+
+  
+  
+  
+  
+  
 }
 

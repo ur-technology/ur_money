@@ -8,7 +8,7 @@
 <ion-content>
   <ion-list>
     <ion-item class="text-center border-none">
-      {{UR.current_ur_holdings.quantity}} UR
+      {{UR.currentBalance.amount}} UR
     </ion-item>
     <div class="container" id="container"></div>
     <ion-item *ngFor="let message of messages|orderBy:'timestamp'">
@@ -19,6 +19,9 @@
       <p> {{message.body}}</p>
       <ion-note> {{message.timestamp|timestamp}}</ion-note>
     </ion-item>
+    <button full primary (click)="createAlertPopup()">
+      Create Model
+    </button>
   </ion-list>
 
 </ion-content>

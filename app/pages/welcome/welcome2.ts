@@ -6,7 +6,7 @@ import {Welcome3Page} from './welcome3';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 
 
-import {LoadingService} from '../../providers/loading-service/loading-service';
+import {LoadingService} from '../../components/loading-modal/loading-service';
 
 declare var jQuery: any, intlTelInputUtils: any;
 

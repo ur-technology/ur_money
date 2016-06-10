@@ -1,11 +1,11 @@
-import {Page, NavController, NavParams} from 'ionic-angular';
+import {Page, NavController, NavParams, Alert, Modal} from 'ionic-angular';
 import {Auth} from '../../components/auth/auth';
 import {Component, OnInit, ElementRef, Inject} from '@angular/core';
-import {HomeService} from '../../providers/home-service/home-service';
+import {HomeService} from './home-service';
 import {UserService} from '../../providers/user-service/user-service';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
-
+import {AddressBookModal} from '../../components/address-book-modal/address-book-modal';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -19,30 +19,19 @@ export class HomePage implements OnInit {
   elementRef: ElementRef;
   selectedItem: any;
   icons: string[];
-  UR: any = { current_ur_holdings: {} };
+  UR: any = { currentBalance: {} };
   URHistoryDate: any[] = [];
-  URHistoryQuantity: any[] = [];
+  URHistoryAmount: any[] = [];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, auth: Auth, public homeService: HomeService, public userService: UserService) {
     this.elementRef = elementRef;
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
 
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-      'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
-
+    this.homeService.loadUREmitter.subscribe((data) => {
+      this.formatTheResponseFromLoadingUR(data);
+    });
   }
 
   ngOnInit() {
@@ -51,21 +40,26 @@ export class HomePage implements OnInit {
 
   onPageDidEnter() {
     this.homeService.loadUR().then((data: any) => {
-      this.UR = data;
-      _.forEach(data.historical_ur_holdings, (value, key) => {
-        this.URHistoryDate.push(moment(value.updatedAt).fromNow(true));
-        this.URHistoryQuantity.push(value.quantity);
-        this.renderChart();
-      });
+      this.formatTheResponseFromLoadingUR(data);
     });
 
     this.homeService.loadMessages().then((messages: any) => {
       this.messages = messages;
     });
 
-    this.userService.createQRCodeAndSave('123');
   }
 
+  formatTheResponseFromLoadingUR(data: any) {
+    this.URHistoryDate = [];
+    this.URHistoryAmount = [];
+    this.UR = data;
+    _.forEach(data.balanceHistory, (value, key) => {
+      this.URHistoryDate.push(moment(value.updatedAt).fromNow(true));
+      this.URHistoryAmount.push(value.amount / 10000);
+    });
+    console.log(this.URHistoryAmount);
+    this.renderChart();
+  }
 
   renderChart() {
     jQuery(this.elementRef.nativeElement).find('.container').highcharts({
@@ -98,7 +92,7 @@ export class HomePage implements OnInit {
         },
         labels: {
           formatter: function () {
-            return this.value;
+            return this.value / 100000;
           }
         }
       },
@@ -117,10 +111,17 @@ export class HomePage implements OnInit {
         }
       },
       series: [{
-        name: 'Quantity',
-        data: this.URHistoryQuantity
+        name: 'Amount',
+        data: this.URHistoryAmount
       }]
     });
+  }
+
+  createAlertPopup() {
+   
+    let addressBookModal = Modal.create(AddressBookModal);
+
+    this.nav.present(addressBookModal);
   }
 
 }
