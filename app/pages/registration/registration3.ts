@@ -3,8 +3,7 @@ import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl, Control} fr
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {Auth} from '../../components/auth/auth';
 import {TutorialPage} from '../tutorial/tutorial';
-
-import {LoadingService} from '../../components/loading-modal/loading-service';
+import {LoadingModal} from '../../components/loading-modal/loading-modal';
 
 @Page({
   templateUrl: 'build/pages/registration/registration3.html',
@@ -16,11 +15,12 @@ export class Registration3Page {
   errorMessage: string;
 
 
-  constructor(public loading: LoadingService,
+  constructor(
     public nav: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public auth: Auth
+    public auth: Auth,
+    public loading: LoadingModal
   ) {
     this.nav = nav;
     this.verificationCodeForm = formBuilder.group({
