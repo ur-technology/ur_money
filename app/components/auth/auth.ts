@@ -1,7 +1,7 @@
 import {Injectable, ViewChild} from '@angular/core'
 import {Nav} from 'ionic-angular';
 import {AngularFire} from 'angularfire2'
-import {Component, EventEmitter} from '@angular/core';
+import {Component} from '@angular/core';
 import * as _ from 'underscore'
 import * as Firebase from 'firebase'
 
@@ -10,8 +10,7 @@ import * as Firebase from 'firebase'
 export class Auth {
   public uid: string
   public user: any
-  public authenticatedEmitter = new EventEmitter();
-  public unAuthenticatedEmitter = new EventEmitter();
+  public userRef: any
   // public authDataProfileImage: any
   // public authDataProfileName: any
   // public authDataProfileDescription: any
@@ -38,29 +37,18 @@ export class Auth {
   /*
   Methods for respondToAuth
   */
-  respondToAuth() {
-    return new Promise((resolve, reject) => {
-      this.firebaseRef().onAuth((authData) => {
-        if (authData) {
-          this.firebaseRef().child("users").child(authData.uid).once("value").then((snapshot) => {
-            this.uid = authData.uid;
-            this.user = snapshot.val();
-            // if (authData.provider == 'facebook') {
-            //   this.profileImage  = authData.facebook.profileImageURL.replace(/\_normal/,"");
-            //   this.profileName = authData.facebook.displayName;
-            //   this.profileDescription = authData.facebook.cachedUserProfile.description;
-            //   this.profileEmail = authData.facebook.email;
-            // }
-            resolve();
-            this.authenticatedEmitter.emit({});
-          });
-        } else {
-          this.uid = undefined;
-          this.user = undefined;
-          reject();
-          this.unAuthenticatedEmitter.emit({});
-        }
-      });
+  respondToAuth(nav: Nav, authPage: any, unauthPage: any) {
+    this.firebaseRef().onAuth((authData) => {
+      if (authData) {
+        this.uid = authData.uid;
+        this.userRef = this.firebaseRef().child("users").child(this.uid);
+        this.user = this.angularFire.database.object(this.userRef);
+        nav.setRoot(authPage);
+      } else {
+        this.uid = undefined;
+        this.user = undefined;
+        nav.setRoot(unauthPage);
+      }
     });
   }
 

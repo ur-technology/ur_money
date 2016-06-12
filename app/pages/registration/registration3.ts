@@ -2,7 +2,6 @@ import {IonicApp, Page, NavController, NavParams} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl, Control} from '@angular/common';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {Auth} from '../../components/auth/auth';
-import {TutorialPage} from '../tutorial/tutorial';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
 
 @Page({
@@ -20,7 +19,7 @@ export class Registration3Page {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public auth: Auth,
-    public loading: LoadingModal
+    public loadingModal: LoadingModal
   ) {
     this.nav = nav;
     this.verificationCodeForm = formBuilder.group({
@@ -30,18 +29,13 @@ export class Registration3Page {
   }
 
   submit() {
-    this.loading.show();
+    this.loadingModal.show();
     var verificationCode = this.verificationCodeForm.value.verificationCode;
     this.auth.checkVerificationCode(this.navParams.get('phoneVerificationKey'), verificationCode).then((success) => {
-      this.loading.hide();
+      this.loadingModal.hide();
       if (!success) {
         this.errorMessage = "The verification code you entered is incorrect or expired. Please try again.";
       }
-    });
-
-    this.auth.authenticatedEmitter.subscribe(() => {
-      this.loading.hide();
-      this.nav.setRoot(TutorialPage);
     });
   }
 

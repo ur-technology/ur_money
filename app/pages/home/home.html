@@ -2,13 +2,13 @@
   <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>Home Page</ion-title>
+  <!-- <ion-title>Home Page</ion-title> -->
 </ion-navbar>
 
 <ion-content>
   <ion-list>
     <ion-item class="text-center border-none">
-      {{UR.currentBalance.amount}} UR
+      {{chartData.currentBalance | number:'1.0-2'}} UR
     </ion-item>
     <div class="container" id="container"></div>
     <ion-item *ngFor="let message of messages|orderBy:'timestamp'">
