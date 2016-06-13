@@ -52,13 +52,12 @@ export class HomePage implements OnInit {
       xAxis: {
         type: 'datetime',
         dateTimeLabelFormats: { // don't display the dummy year
-            month: '%b-%e',
-            year: '%b'
+            day: '%e-%b'
         },
-        tickInterval: 24 * 3600 * 1000,
-        title: {
-            text: 'Date'
-        }
+        tickInterval: 24 * 3600 * 1000, // one day
+        // title: {
+        //     text: 'Date'
+        // }
       },
       yAxis: {
           title: {
