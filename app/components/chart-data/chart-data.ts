@@ -27,17 +27,17 @@ export class ChartData {
    }
 
   loadChartDateWhenBalanceHistoryChanges() {
-    var balanceHistoryRef = this.auth.userRef.child("wallet").child("balanceHistory");
+    var balanceRecordsRef = this.auth.userRef.child("wallet").child("balanceRecords");
     var thisPage = this;
-    thisPage.angularFire.database.object(balanceHistoryRef).subscribe((balanceHistory) => {
+    thisPage.angularFire.database.object(balanceRecordsRef).subscribe((balanceRecords) => {
       thisPage.isLoaded = false;
       thisPage.points = [];
-      var sortedBalanceHistory = _.sortBy(balanceHistory, 'updatedAt');
-      let lastRecord: any = _.last(sortedBalanceHistory);
+      var sortedBalanceRecords = _.sortBy(balanceRecords, 'updatedAt');
+      let lastRecord: any = _.last(sortedBalanceRecords);
       var endTime = moment.max(moment(lastRecord ? lastRecord.updatedAt : undefined, 'x'),moment());
       var startTime = moment(endTime).add(-7, 'days');
 
-      _.each(sortedBalanceHistory, function(value: any, id: any) {
+      _.each(sortedBalanceRecords, function(value: any, id: any) {
         if (startTime.isBefore(moment(value.updatedAt, 'x'))) {
           thisPage.points.push([value.updatedAt, thisPage.convertWeiStringToApproximateUR(value.amount)]);
         }
@@ -45,7 +45,7 @@ export class ChartData {
 
       // add starting point to chart if necessry
       if (thisPage.points.length == 0 || thisPage.points[0][0] != startTime.toDate()) {
-        var priorBalanceRecord = _.detect(sortedBalanceHistory.reverse(), function(value: any, id: any) {
+        var priorBalanceRecord = _.detect(sortedBalanceRecords.reverse(), function(value: any, id: any) {
           return moment(value.updatedAt, 'x').isBefore(startTime);
         });
         var startAmount = priorBalanceRecord ? thisPage.convertWeiStringToApproximateUR(priorBalanceRecord.amount) : 0.0;
