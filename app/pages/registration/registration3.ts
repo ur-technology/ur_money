@@ -2,9 +2,7 @@ import {IonicApp, Page, NavController, NavParams} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl, Control} from '@angular/common';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {Auth} from '../../components/auth/auth';
-import {TutorialPage} from '../tutorial/tutorial';
-
-import {LoadingService} from '../../components/loading-modal/loading-service';
+import {LoadingModal} from '../../components/loading-modal/loading-modal';
 
 @Page({
   templateUrl: 'build/pages/registration/registration3.html',
@@ -16,11 +14,12 @@ export class Registration3Page {
   errorMessage: string;
 
 
-  constructor(public loading: LoadingService,
+  constructor(
     public nav: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public auth: Auth
+    public auth: Auth,
+    public loadingModal: LoadingModal
   ) {
     this.nav = nav;
     this.verificationCodeForm = formBuilder.group({
@@ -30,18 +29,13 @@ export class Registration3Page {
   }
 
   submit() {
-    this.loading.show();
+    this.loadingModal.show();
     var verificationCode = this.verificationCodeForm.value.verificationCode;
     this.auth.checkVerificationCode(this.navParams.get('phoneVerificationKey'), verificationCode).then((success) => {
-      this.loading.hide();
+      this.loadingModal.hide();
       if (!success) {
         this.errorMessage = "The verification code you entered is incorrect or expired. Please try again.";
       }
-    });
-
-    this.auth.authenticatedEmitter.subscribe(() => {
-      this.loading.hide();
-      this.nav.setRoot(TutorialPage);
     });
   }
 

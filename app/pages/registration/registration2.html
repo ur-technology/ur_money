@@ -13,7 +13,7 @@
 
   <form [ngFormModel]="phoneForm" (submit)="submit()">
     <ion-item>
-      <ion-input class="phone-input" type="tel" [ngFormControl]="phoneControl"></ion-input>
+      <ion-input class="phone-input" type="tel" [ngFormControl]="phoneControl" autofocus></ion-input>
     </ion-item>
 
     <button primary type="submit" [disabled]="!phoneForm.valid">

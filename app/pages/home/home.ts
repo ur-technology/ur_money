@@ -1,8 +1,6 @@
 import {Page, NavController, NavParams, Alert, Modal} from 'ionic-angular';
-import {Auth} from '../../components/auth/auth';
+import {ChartData} from '../../components/chart-data/chart-data';
 import {Component, OnInit, ElementRef, Inject} from '@angular/core';
-import {HomeService} from './home-service';
-import {UserService} from '../../providers/user-service/user-service';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
 import {AddressBookModal} from '../../components/address-book-modal/address-book-modal';
@@ -19,106 +17,135 @@ export class HomePage implements OnInit {
   elementRef: ElementRef;
   selectedItem: any;
   icons: string[];
-  UR: any = { currentBalance: {} };
-  URHistoryDate: any[] = [];
-  URHistoryAmount: any[] = [];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
-    navParams: NavParams, auth: Auth, public homeService: HomeService, public userService: UserService) {
+    navParams: NavParams, public chartData: ChartData) {
     this.elementRef = elementRef;
-
-    this.homeService.loadUREmitter.subscribe((data) => {
-      this.formatTheResponseFromLoadingUR(data);
-    });
   }
 
   ngOnInit() {
-
   }
 
   onPageDidEnter() {
-    this.homeService.loadUR().then((data: any) => {
-      this.formatTheResponseFromLoadingUR(data);
-    });
-
-    this.homeService.loadMessages().then((messages: any) => {
-      this.messages = messages;
-    });
-
-  }
-
-  formatTheResponseFromLoadingUR(data: any) {
-    this.URHistoryDate = [];
-    this.URHistoryAmount = [];
-    this.UR = data;
-    // _.forEach(data.balanceHistory, (value, key) => {
-    //   this.URHistoryDate.push(moment(value.updatedAt).fromNow(true));
-    //   this.URHistoryAmount.push(value.amount / 10000);
-    // });
-    // console.log(this.URHistoryAmount);
-    // this.renderChart();
+    console.log("about to render chart");
+    var thisPage = this;
+    if (thisPage.chartData.isLoaded) {
+      thisPage.renderChart();
+    } else {
+      thisPage.chartData.loadedEmitter.subscribe((_) => {
+        console.log("about to render chart");
+        thisPage.renderChart();
+      });
+    }
   }
 
   renderChart() {
     jQuery(this.elementRef.nativeElement).find('.container').highcharts({
-      navigation: {
-        buttonOptions: {
-          enabled: false
-        }
-      },
-
-      credits: {
-        enabled: false
-      },
       chart: {
         type: 'area'
       },
-
       title: {
-        text: ''
+        text: false
       },
       xAxis: {
-        categories: this.URHistoryDate,
-        tickmarkPlacement: 'on',
-        title: {
-          enabled: false
-        }
+        type: 'datetime',
+        dateTimeLabelFormats: { // don't display the dummy year
+            day: '%e-%b'
+        },
+        tickInterval: 24 * 3600 * 1000, // one day
+        // title: {
+        //     text: 'Date'
+        // }
       },
       yAxis: {
-        title: {
-          enabled: false
-        },
-        labels: {
-          formatter: function () {
-            return this.value / 100000;
-          }
-        }
+          title: {
+              text: 'UR Balance'
+          },
+          min: 0
       },
       tooltip: {
-        shared: true
+          headerFormat: '',
+          pointFormat: '{point.x:%e-%b %I:%M %p}: {point.y:.2f} UR'
       },
+
       plotOptions: {
-        area: {
-          stacking: 'normal',
-          lineColor: '#666666',
-          lineWidth: 1,
-          marker: {
-            lineWidth: 1,
-            lineColor: '#666666'
+          spline: {
+              marker: {
+                  enabled: true
+              }
           }
-        }
       },
+
       series: [{
-        name: 'Amount',
-        data: this.URHistoryAmount
+          name: '',
+          showInLegend: false,
+          data: this.chartData.points,
+          // step: 'left'
       }]
+            // navigation: {
+      //   buttonOptions: {
+      //     enabled: false
+      //   }
+      // },
+      //
+      // credits: {
+      //   enabled: false
+      // },
+      // chart: {
+      //   type: 'area'
+      // },
+      //
+      // title: {
+      //   text: ''
+      // },
+      // xAxis: {
+      //   type: 'datetime',
+      //   dateTimeLabelFormats: { // don't display the dummy year
+      //     month: '%e-%b',
+      //     year: '%b'
+      //   },
+      //   //tickmarkPlacement: 'on', // TODO: check this
+      //   title: {
+      //     enabled: false
+      //   }
+      // },
+      // yAxis: {
+      //   title: {
+      //     enabled: false // TODO: check this
+      //   },
+      //   min: 0
+      //   // labels: {
+      //   //   formatter: function () {
+      //   //     return this.value;
+      //   //   }
+      //   // }
+      // },
+      //
+      // tooltip: {
+      //   pointFormat: '{point.x:%e-%b}: {point.y:.2f} UR'
+      // },
+      // plotOptions: {
+      //   area: {
+      //     stacking: 'normal',
+      //     lineColor: '#666666',
+      //     lineWidth: 1,
+      //     marker: {
+      //       lineWidth: 1,
+      //       lineColor: '#666666'
+      //     }
+      //   }
+      // },
+      // series: [{
+      //   name: 'Amount',
+      //   data: this.chartData.points
+      // }]
     });
   }
 
   createAlertPopup() {
-   
+
     let addressBookModal = Modal.create(AddressBookModal);
 
     this.nav.present(addressBookModal);

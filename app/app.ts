@@ -4,6 +4,7 @@ import {Component, Type} from '@angular/core';
 import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
 import {Auth} from './components/auth/auth';
+import {ChartData} from './components/chart-data/chart-data';
 import * as _ from 'underscore';
 import {Registration1Page} from './pages/registration/registration1';
 import {HomePage} from './pages/home/home';
@@ -13,9 +14,7 @@ import {ReceivePage} from './pages/receive/receive';
 import {MyNetworkPage} from './pages/my-network/my-network';
 import {InvitePage} from './pages/invite/invite';
 
-import {HomeService} from './pages/home/home-service';
 import {UserService} from './providers/user-service/user-service';
-import {LoadingService} from './components/loading-modal/loading-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 
 // temporarily support prelaunch sign-up app
@@ -27,7 +26,7 @@ import {FirebaseService} from './prelaunch_components/firebase-service/firebase-
 @App({
   templateUrl: 'build/app.html',
   directives: [LoadingModal],
-  providers: [Auth, LoadingService, HomeService, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
+  providers: [Auth, ChartData, LoadingModal, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
@@ -47,7 +46,6 @@ class UrMoney {
   // rootPage: any = Registration1Page;
   pages: Array<{ title: string, component: any }>;
   invitePage: Type;
-  setPage: boolean = true;
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
 
@@ -102,20 +100,7 @@ class UrMoney {
         return;
       }
 
-
-      this.auth.unAuthenticatedEmitter.subscribe(() => {
-        this.nav.setRoot(Registration1Page);
-      });
-
-      this.auth.respondToAuth().then(() => {
-        this.nav.setRoot(HomePage);
-        this.setPage = false;
-      }, () => {
-        this.nav.setRoot(Registration1Page);
-      });
-
-
-
+      this.auth.respondToAuth(this.nav, HomePage, Registration1Page);
     });
   }
 

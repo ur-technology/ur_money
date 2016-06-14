@@ -4,9 +4,7 @@ import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angu
 import {Auth} from '../../components/auth/auth';
 import {Registration3Page} from './registration3';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
-
-
-import {LoadingService} from '../../components/loading-modal/loading-service';
+import {LoadingModal} from '../../components/loading-modal/loading-modal';
 
 declare var jQuery: any, intlTelInputUtils: any;
 
@@ -19,7 +17,7 @@ export class Registration2Page implements OnInit {
   phoneForm: ControlGroup;
   phoneControl: AbstractControl;
 
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public app: IonicApp, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loading: LoadingService) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public app: IonicApp, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loadingModal: LoadingModal) {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
       'phone': ['', (control) => {
@@ -70,10 +68,10 @@ export class Registration2Page implements OnInit {
           text: 'YES',
           handler: () => {
             alert.dismiss().then(() => {
-              this.loading.show();
+              this.loadingModal.show();
             });
             this.auth.requestPhoneVerification(phone).then((result: any) => {
-              this.loading.hide();
+              this.loadingModal.hide();
               if (!result.smsSuccess) {
                 console.log("error - sms could not be sent");
                 this.showErrorAlert();
