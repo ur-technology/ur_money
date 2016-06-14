@@ -1,7 +1,293 @@
-.side-menu-content{
-    .top-icon-item{
-        .item-inner{
-            border:none;
+/*-----------------
+    defaults
+-------------------*/
+
+body, h1, h2, h3, h4, h5, h6, input, button, select, textarea {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.ur-font-color {
+    color: #17909c;
+}
+
+.ur-bg-color {
+    background-color: #17909c;
+}
+
+
+/*-----------------
+    icons
+-------------------*/
+
+.home-icon, .receive-icon, .wallet-icon, .hand-coin-icon, .dollar-map-icon, .plane-icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 32px;
+    height: 43px;
+}
+
+.home-icon {
+    background: url("../../img/home-icon.png") no-repeat center;
+}
+
+.receive-icon {
+    background: url("../../img/receive-icon.png") no-repeat center;
+}
+
+.wallet-icon {
+    background: url("../../img/wallet.png") no-repeat 0 0;
+}
+
+.hand-coin-icon {
+    background: url("../../img/hand-coin.png") no-repeat center;
+}
+
+.dollar-map-icon {
+    background: url("../../img/dollar-map.png") no-repeat 0 0;
+}
+
+.plane-icon {
+    background: url("../../img/plane.png") no-repeat center;
+}
+
+.invite-icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 32px;
+    height: 43px;
+    background: url("../../img/invite-icon.png") no-repeat center;
+}
+
+.users-icon {
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 23px;
+    height: 22px;
+    background: url("../../img/users-icon.png") no-repeat 0 0;
+}
+
+.add-person-icon {
+    background: url("../../img/add-person-icon.png") no-repeat center;
+    width: 22px;
+    /*height: 23px !important;*/
+}
+
+i.menu-icon-1, i.menu-icon-2, i.menu-icon-3, i.menu-icon-4, i.menu-icon-5, i.menu-icon-6, i.menu-icon-7 {
+    display: inline-block;
+    width: 20px;
+    height: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.menu-icon-1 {
+    background: url(../../img/home-icon-20x19.png);
+}
+
+.menu-icon-2 {
+    background: url("../../img/plane-icon-20x19.png");
+}
+
+.menu-icon-3 {
+    background: url("../../img/earn-icon-20x19.png");
+}
+
+.menu-icon-4 {
+    background: url("../../img/transaction-icon-20x19.png");
+}
+
+.menu-icon-5 {
+    background: url("../../img/group-icon-20x19.png");
+}
+
+.menu-icon-6 {
+    background: url("../../img/building-icon-20x19.png");
+}
+
+.menu-icon-7 {
+    background: url("../../img/info-icon-20x19.png");
+}
+
+.qr-code-icon {
+    background: url("../../img/qr-code-icon.png") no-repeat center;
+    width: 22px;
+}
+
+
+/*--------------------------------------*/
+
+.ur-menu {
+    background: rgba(224, 81, 81, 1);
+    background: -moz-linear-gradient(top, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(224, 81, 81, 1)), color-stop(100%, rgba(232, 118, 112, 1)));
+    background: -webkit-linear-gradient(top, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
+    background: -o-linear-gradient(top, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
+    background: linear-gradient(to bottom, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
+    // filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#e05151', endColorstr='#e87670', GradientType=0);
+    .menu-bar {
+        .left {
+            float: left;
+            ion-icon {
+                font-size: 22px;
+                font-weight: bold;
+            }
+        }
+        .right {
+            float: right;
+            ion-icon {
+                font-size: 22px;
+                font-weight: bold;
+            }
         }
     }
+}
+
+.bar.menu-bar .button:before {
+    font-size: 22px;
+}
+
+.menu-profile {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.menu-profile .menu-avatar {
+    display: inline-block;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 5px solid rgba(104, 117, 118, 0.2);
+}
+
+.menu-profile .profile-name {
+    font-size: 19px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.menu-list .item {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding-left: 28px;
+    height: 5.2rem;
+    .item-inner {
+        padding-left: 24px;
+    }
+}
+
+.menu-list .item.item-icon-left {
+    padding-left: 80px;
+}
+
+.menu-list .item i.icon {
+    background-color: rgba(256, 256, 256, 0.2);
+    border-radius: 50px;
+    width: 28px;
+    height: 28px;
+    top: 12px;
+    left: 28px;
+}
+
+.menu-list .item:hover, .menu-list .item:focus {
+    background-color: #ec514a;
+}
+
+.menu-list .item:hover i.icon, .menu-list .item:focus i.icon {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.menu-footer {
+    display: block;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 9;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    width: 100%;
+    border-width: 0;
+    border-style: solid;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+    background-size: 0;
+    background-color: rgba(57, 57, 57, 0.22);
+    height: 140px;
+    //bottom: 0;
+    border-top-width: 1px;
+    border-bottom-width: 0;
+    background-position: top;
+}
+
+.add-loved-once {
+    padding-bottom: 0;
+}
+
+.add-loved-once .col {
+    padding: 0;
+}
+
+.add-loved-once .add-loved, .add-loved-once .add-once {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.add-loved-once .add-loved {
+    background: rgba(0, 0, 0, 0.2) url("../../img/loved-once.png") no-repeat 6px 17px;
+}
+
+.add-loved-once .add-once {
+    background: rgba(0, 0, 0, 0.2) url("../../img/group-add.png") no-repeat center;
+}
+
+.menu-footer .angle-icon {
+    display: inline-block;
+    width: 32px;
+    height: 59px;
+    background: url("../../img/angle-right.png") no-repeat 0 0;
+}
+
+.menu-footer .invite-text {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 10px;
+}
+
+.menu-footer .invite-text span {
+    color: #1fd1f0;
+}
+
+.menu-footer .button.invite-btn {
+    min-height: 30px;
+    line-height: 30px;
+    border-color: #ffffff;
+    color: #ffffff;
+    max-width: 230px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 2em;
 }

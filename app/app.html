@@ -1,24 +1,65 @@
 <ion-menu [content]="content">
 
-  <ion-content class="side-menu-content">
-    <ion-item class="top-icon-item">
-      <ion-icon name="power" item-left (click)="signOut()"></ion-icon>
-      <ion-icon name="settings" item-right></ion-icon>
-    </ion-item>
-    <ion-item class="text-center">
-      <img style="border-radius:50%" src="http://placehold.it/350x350" />
-      <p>Name Here</p>
-    </ion-item>
-    <ion-searchbar>
-    </ion-searchbar>
-    <ion-list>
-      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+  <ion-content class="ur-menu">
+    <div class="menu-bar">
+      <button clear light class="left">
+         <ion-icon name="power"></ion-icon>
       </button>
+      <button clear light class="right">
+         <ion-icon name="settings"></ion-icon>
+      </button>
+    </div>
+    <!--<ion-header-bar class="bar-clear menu-bar">
+      <button class="button button-icon ion-power"></button>
+      <button class="button button-icon ion-gear-a"></button>
+    </ion-header-bar>-->
+    <div class="menu-profile">
+      <img class="menu-avatar" src="img/menu-avatar.jpg" alt="">
+      <h1 class="profile-name">Daenerys Targaryen</h1>
+    </div>
+    <ion-list class="menu-list" no-lines>
+      <ion-item>
+        <i class="icon menu-icon-1" item-left></i> Home
+      </ion-item>
+
+      <ion-item>
+        <i class="icon menu-icon-2" item-left></i>Send or Request
+      </ion-item>
+
+      <ion-item>
+        <i class="icon menu-icon-3" item-left></i>Earn UR
+      </ion-item>
+
+      <ion-item>
+        <i class="icon menu-icon-4" item-left></i>Transactions
+      </ion-item>
+
+      <ion-item>
+        <i class="icon menu-icon-5" item-left></i> My Network
+      </ion-item>
+
+      <ion-item>
+        <i class="icon menu-icon-6" item-left></i> Company
+      </ion-item>
+      <ion-item>
+        <i class="icon menu-icon-7" item-left></i> Learn About Us
+      </ion-item>
     </ion-list>
-
-    <button primary block (click)="visitInvitePage()">Invite</button>
-
+    <div class="menu-footer">
+      <ion-row class="add-loved-once">
+        <ion-col class="text-center">
+          <a href="#" class="add-loved"></a>
+        </ion-col>
+        <ion-col class="text-center">
+          <div class="angle-icon"></div>
+        </ion-col>
+        <ion-col class="text-center">
+          <a href="#" class="add-once"></a>
+        </ion-col>
+      </ion-row>
+      <p class="invite-text">Invite your Loved Ones And Get <span>1000Ur</span></p>
+      <button class="button button-block button-outline invite-btn">Invite</button>
+    </div>
   </ion-content>
 
 </ion-menu>

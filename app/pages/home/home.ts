@@ -53,12 +53,12 @@ export class HomePage implements OnInit {
     this.URHistoryDate = [];
     this.URHistoryAmount = [];
     this.UR = data;
-    _.forEach(data.balanceHistory, (value, key) => {
-      this.URHistoryDate.push(moment(value.updatedAt).fromNow(true));
-      this.URHistoryAmount.push(value.amount / 10000);
-    });
-    console.log(this.URHistoryAmount);
-    this.renderChart();
+    // _.forEach(data.balanceHistory, (value, key) => {
+    //   this.URHistoryDate.push(moment(value.updatedAt).fromNow(true));
+    //   this.URHistoryAmount.push(value.amount / 10000);
+    // });
+    // console.log(this.URHistoryAmount);
+    // this.renderChart();
   }
 
   renderChart() {

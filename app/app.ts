@@ -35,7 +35,6 @@ import {FirebaseService} from './prelaunch_components/firebase-service/firebase-
   config: {
     mode: 'ios',
     platforms: {
-
       ios: {
         statusbarPadding: true
       }
