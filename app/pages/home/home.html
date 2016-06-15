@@ -17,15 +17,6 @@
     <h2 class="chart-subtitle clearfix"><span class="green"><ion-icon name="md-arrow-up"></ion-icon> 13.5%</span> <span class="right"><ion-icon name="md-arrow-up"></ion-icon> 1,525.00</span></h2>
     <div class="container" id="container"></div>
   </div>
-  <!--<div class="button-bar chart-btns">
-    <button class="button button-clear">1D</button>
-    <button class="button button-clear">1W</button>
-    <button class="button button-clear">1M</button>
-    <button class="button button-clear">6M</button>
-    <button class="button button-clear">1Y</button>
-    <button class="button button-clear active">6Y</button>
-  </div>-->
-
   <div class="list list-msgs">
     <ion-item>
       <ion-avatar item-left>
@@ -92,9 +83,9 @@
 </div>
 <div class="bar bar-footer dash-footer">
   <div class="button-bar footer-btns">
-    <a href="#/dash" class="button button-calm"><i class="home-icon"></i></a>
-    <a href="#/send" class="button button-calm"><i class="plane-icon"></i></a>
-    <a href="#/receive" class="button button-calm"><i class="receive-icon"></i></a>
-    <a class="button button-calm"><i class="invite-icon"></i></a>
+    <a class="button button-calm"><i class="home-icon"></i></a>
+    <a [navPush]="sendPage" class="button button-calm"><i class="plane-icon"></i></a>
+    <a [navPush]="receivePage" class="button button-calm"><i class="receive-icon"></i></a>
+    <a [navPush]="invitePage" class="button button-calm"><i class="invite-icon"></i></a>
   </div>
 </div>

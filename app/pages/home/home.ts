@@ -4,6 +4,9 @@ import {Component, OnInit, ElementRef, Inject} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
 import {AddressBookModal} from '../../components/address-book-modal/address-book-modal';
+import {ReceivePage} from '../receive/receive';
+import {SendPage} from '../send/send';
+import {InvitePage} from '../invite/invite';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -15,7 +18,10 @@ declare var jQuery: any;
 })
 export class HomePage implements OnInit {
   elementRef: ElementRef;
+  sendPage: any;
+  receivePage: any;
   selectedItem: any;
+  invitePage: any;
   icons: string[];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
@@ -23,6 +29,9 @@ export class HomePage implements OnInit {
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartData) {
     this.elementRef = elementRef;
+    this.sendPage = SendPage;
+    this.receivePage = ReceivePage;
+    this.invitePage = InvitePage;
   }
 
   ngOnInit() {

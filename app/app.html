@@ -2,45 +2,24 @@
 
   <ion-content class="ur-menu">
     <div class="menu-bar">
-      <button clear light class="left">
+      <button clear light class="left" (click)="signOut()">
          <ion-icon name="power"></ion-icon>
       </button>
-      <button clear light class="right">
+      <button clear light class="right" (click)="openSetting()">
          <ion-icon name="settings"></ion-icon>
       </button>
     </div>
-    <!--<ion-header-bar class="bar-clear menu-bar">
-      <button class="button button-icon ion-power"></button>
-      <button class="button button-icon ion-gear-a"></button>
-    </ion-header-bar>-->
     <div class="menu-profile">
-      <img class="menu-avatar" src="img/menu-avatar.jpg" alt="">
-      <h1 class="profile-name">Daenerys Targaryen</h1>
+      <img class="menu-avatar" *ngIf="(auth.user | async)?.profileImage" src="{{(auth.user | async)?.profileImage}}" alt="">
+      <img class="menu-avatar" *ngIf="!(auth.user | async)?.profileImage" src="http://placehold.it/350x150" alt="">
+      <h1 class="profile-name">{{(auth.user | async)?.firstName}} {{(auth.user | async)?.lastName}}</h1>
     </div>
     <ion-list class="menu-list" no-lines>
-      <ion-item>
-        <i class="icon menu-icon-1" item-left></i> Home
+      <ion-item *ngFor="let menuItem of menuItems" (click)="openPage(menuItem)">
+        <i [class]="menuItem.icon" item-left></i> {{menuItem.title}}
       </ion-item>
 
-      <ion-item>
-        <i class="icon menu-icon-2" item-left></i>Send UR
-      </ion-item>
 
-      <ion-item>
-        <i class="icon menu-icon-3" item-left></i>Request UR
-      </ion-item>
-
-      <ion-item>
-        <i class="icon menu-icon-4" item-left></i>Transactions
-      </ion-item>
-
-      <ion-item>
-        <i class="icon menu-icon-5" item-left></i> Community
-      </ion-item>
-
-      <ion-item>
-        <i class="icon menu-icon-7" item-left></i> About UR
-      </ion-item>
     </ion-list>
     <div class="menu-footer">
       <ion-row class="add-loved-once">

@@ -11,8 +11,11 @@ import {HomePage} from './pages/home/home';
 
 import {SendPage} from './pages/send/send';
 import {ReceivePage} from './pages/receive/receive';
-import {MyNetworkPage} from './pages/my-network/my-network';
 import {InvitePage} from './pages/invite/invite';
+import {AboutPage} from './pages/about/about';
+import {CommunityPage} from './pages/community/community';
+import {TransactionsPage} from './pages/transactions/transactions';
+import {SettingPage} from './pages/setting/setting';
 
 import {UserService} from './providers/user-service/user-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
@@ -22,6 +25,8 @@ import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
 import {SignUpPage} from './prelaunch_pages/sign-up/sign-up';
 import {ErrorPage} from './prelaunch_pages/error/error';
 import {FirebaseService} from './prelaunch_components/firebase-service/firebase-service';
+
+import * as lodash from 'lodash';
 
 @App({
   templateUrl: 'build/app.html',
@@ -44,19 +49,21 @@ class UrMoney {
   @ViewChild(Nav) nav: Nav;
 
   // rootPage: any = Registration1Page;
-  pages: Array<{ title: string, component: any }>;
+  menuItems: Array<{ title: string, component: any, icon: string }>;
   user: any = {};
   invitePage: Type;
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
-   
-    console.log(this.auth.user);
+
+
     // set our app's pages
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'My Network', component: MyNetworkPage },
-      { title: 'Send UR/Message', component: SendPage },
-      { title: 'Receive UR', component: ReceivePage }
+    this.menuItems = [
+      { title: 'Home', component: HomePage, icon: 'icon menu-icon-1' },
+      { title: 'Send UR', component: SendPage, icon: 'icon menu-icon-2' },
+      { title: 'Request UR', component: ReceivePage, icon: 'icon menu-icon-3' },
+      { title: 'Transactions', component: TransactionsPage, icon: 'icon menu-icon-4' },
+      { title: 'Community', component: CommunityPage, icon: 'icon menu-icon-5' },
+      { title: 'About UR', component: AboutPage, icon: 'icon menu-icon-7' }
     ];
   }
 
@@ -113,6 +120,11 @@ class UrMoney {
     this.nav.setRoot(page.component);
   }
 
+  openSetting() {
+    this.menu.close();
+    this.nav.push(SettingPage);
+  }
+
   visitInvitePage() {
     this.menu.close();
     this.nav.setRoot(InvitePage);
@@ -122,4 +134,33 @@ class UrMoney {
     this.menu.close();
     this.auth.firebaseRef().unauth(); // this will trigger redirect to Registration1Page
   }
+
+
+  generateFaceUrl() {
+    var colorScheme = lodash.sample([{
+      background: "DD4747",
+      foreground: "FFFFFF"
+    }, {
+        background: "ED6D54",
+        foreground: "FFFFFF"
+      }, {
+        background: "FFBE5B",
+        foreground: "FFFFFF"
+      }, {
+        background: "FFE559",
+        foreground: "FFFFFF"
+      }]);
+      
+    var sourceOfInitials = 'sampleImage';
+
+    var firstLetters = sourceOfInitials.match(/\b\w/g);
+    var initials = firstLetters[0];
+    if (firstLetters.length > 1) {
+      initials = initials + firstLetters[firstLetters.length - 1];
+    }
+    initials = initials.toUpperCase();
+    return "https://dummyimage.com/100x100/" + colorScheme.background + "/" + colorScheme.foreground + "&text=" + initials;
+  };
+
+
 }
