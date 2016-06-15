@@ -45,10 +45,12 @@ class UrMoney {
 
   // rootPage: any = Registration1Page;
   pages: Array<{ title: string, component: any }>;
+  user: any = {};
   invitePage: Type;
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
-
+   
+    console.log(this.auth.user);
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage },

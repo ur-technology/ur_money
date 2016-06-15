@@ -44,7 +44,13 @@ export class HomePage implements OnInit {
   renderChart() {
     jQuery(this.elementRef.nativeElement).find('.container').highcharts({
       chart: {
-        type: 'area'
+        type: 'area',
+        backgroundColor: null,
+        // Edit chart spacing
+        spacingBottom: 0,
+        spacingTop: 10,
+        spacingLeft: 0,
+        spacingRight: 0
       },
       title: {
         text: false
@@ -52,7 +58,7 @@ export class HomePage implements OnInit {
       xAxis: {
         type: 'datetime',
         dateTimeLabelFormats: { // don't display the dummy year
-            day: '%e-%b'
+          day: '%e-%b'
         },
         tickInterval: 24 * 3600 * 1000, // one day
         // title: {
@@ -60,87 +66,41 @@ export class HomePage implements OnInit {
         // }
       },
       yAxis: {
-          title: {
-              text: 'UR Balance'
-          },
-          min: 0
+        title: {
+          text: 'UR Balance'
+        },
+        labels: {
+          enabled: false
+        },
+        gridLineWidth: 0,
+        minorGridLineWidth: 0,
+        min: 0
       },
       tooltip: {
-          headerFormat: '',
-          pointFormat: '{point.x:%e-%b %I:%M %p}: {point.y:.2f} UR'
+        headerFormat: '',
+        pointFormat: '{point.x:%e-%b %I:%M %p}: {point.y:.2f} UR'
       },
 
       plotOptions: {
-          spline: {
-              marker: {
-                  enabled: true
-              }
+        spline: {
+          marker: {
+            enabled: true
           }
+        }
       },
-
       series: [{
-          name: '',
-          showInLegend: false,
-          data: this.chartData.points,
-          // step: 'left'
-      }]
-            // navigation: {
-      //   buttonOptions: {
-      //     enabled: false
-      //   }
-      // },
-      //
-      // credits: {
-      //   enabled: false
-      // },
-      // chart: {
-      //   type: 'area'
-      // },
-      //
-      // title: {
-      //   text: ''
-      // },
-      // xAxis: {
-      //   type: 'datetime',
-      //   dateTimeLabelFormats: { // don't display the dummy year
-      //     month: '%e-%b',
-      //     year: '%b'
-      //   },
-      //   //tickmarkPlacement: 'on', // TODO: check this
-      //   title: {
-      //     enabled: false
-      //   }
-      // },
-      // yAxis: {
-      //   title: {
-      //     enabled: false // TODO: check this
-      //   },
-      //   min: 0
-      //   // labels: {
-      //   //   formatter: function () {
-      //   //     return this.value;
-      //   //   }
-      //   // }
-      // },
-      //
-      // tooltip: {
-      //   pointFormat: '{point.x:%e-%b}: {point.y:.2f} UR'
-      // },
-      // plotOptions: {
-      //   area: {
-      //     stacking: 'normal',
-      //     lineColor: '#666666',
-      //     lineWidth: 1,
-      //     marker: {
-      //       lineWidth: 1,
-      //       lineColor: '#666666'
-      //     }
-      //   }
-      // },
-      // series: [{
-      //   name: 'Amount',
-      //   data: this.chartData.points
-      // }]
+        name: '',
+        showInLegend: false,
+        data: this.chartData.points,
+        color: '#a5d3e9'
+        // step: 'left'
+      }],
+      exporting: { enabled: false },
+      legend: { enabled: false },
+      credits: {
+        enabled: false
+      }
+
     });
   }
 

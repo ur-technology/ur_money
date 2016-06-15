@@ -1,15 +1,72 @@
 <ion-navbar *navbar>
+
   <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <!-- <ion-title>Home Page</ion-title> -->
+
+  <button clear class="right">
+    <i class="users-icon"></i>
+   </button>
+
 </ion-navbar>
 
+
 <ion-content>
-  <ion-list>
-    <!--<ion-item class="text-center border-none">
+  <div class="dash-chart-cont">
+    <h1 class="chart-title">{{chartData.currentBalance | number:'1.0-2'}} <span>UR</span></h1>
+    <h2 class="chart-subtitle clearfix"><span class="green"><ion-icon name="md-arrow-up"></ion-icon> 13.5%</span> <span class="right"><ion-icon name="md-arrow-up"></ion-icon> 1,525.00</span></h2>
+    <div class="container" id="container"></div>
+  </div>
+  <!--<div class="button-bar chart-btns">
+    <button class="button button-clear">1D</button>
+    <button class="button button-clear">1W</button>
+    <button class="button button-clear">1M</button>
+    <button class="button button-clear">6M</button>
+    <button class="button button-clear">1Y</button>
+    <button class="button button-clear active">6Y</button>
+  </div>-->
+
+  <div class="list list-msgs">
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="img/avatar.jpg">
+      </ion-avatar>
+      <div class="item-msg">
+        <h2>@Jenny Jones says: </h2> This is exciting. I just got 2000ur
+      </div>
+      <p class="msg-time">
+        <ion-icon name="ios-clock-outline"></ion-icon> Just Now </p>
+      <span class="item-legend green"></span>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="img/avatar.jpg">
+      </ion-avatar>
+      <div class="item-msg">
+        <h2>@Marry Taft says: </h2> Thanks for the invite sis!</div>
+      <p class="msg-time">
+        <ion-icon name="ios-clock-outline"></ion-icon> 30 minutes ago</p>
+      <span class="item-legend blue"></span>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="img/avatar.jpg">
+      </ion-avatar>
+      <div class="item-msg">
+        <h2>@Jane Doe says: </h2> @Jenny I just sent you 2400ur. Enjoy!</div>
+      <p class="msg-time">
+        <ion-icon name="ios-clock-outline"></ion-icon> Yesterday</p>
+      <span class="item-legend green"></span>
+    </ion-item>
+
+  </div>
+
+  <!--<ion-list>
+    <ion-item class="text-center border-none">
       {{chartData.currentBalance | number:'1.0-2'}} UR
-    </ion-item>-->
+    </ion-item>
     <div class="container" id="container"></div>
     <ion-item *ngFor="let message of messages|orderBy:'timestamp'">
       <ion-avatar item-left>
@@ -22,6 +79,22 @@
     <button full primary (click)="createAlertPopup()">
       Create Model
     </button>
-  </ion-list>
+  </ion-list>-->
 
 </ion-content>
+<!-- Button Starts -->
+<div class="float-button">
+  <span class="height-fix">
+     <a class="content">
+        <ion-icon name="md-add"> </ion-icon>
+     </a>
+  </span>
+</div>
+<div class="bar bar-footer dash-footer">
+  <div class="button-bar footer-btns">
+    <a href="#/dash" class="button button-calm"><i class="home-icon"></i></a>
+    <a href="#/send" class="button button-calm"><i class="plane-icon"></i></a>
+    <a href="#/receive" class="button button-calm"><i class="receive-icon"></i></a>
+    <a class="button button-calm"><i class="invite-icon"></i></a>
+  </div>
+</div>
