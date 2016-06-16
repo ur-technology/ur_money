@@ -52,10 +52,9 @@ class UrMoney {
   menuItems: Array<{ title: string, component: any, icon: string }>;
   user: any = {};
   invitePage: Type;
+  faceUrl: string;
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
-
-
     // set our app's pages
     this.menuItems = [
       { title: 'Home', component: HomePage, icon: 'icon menu-icon-1' },
@@ -136,30 +135,22 @@ class UrMoney {
   }
 
 
-  generateFaceUrl() {
-    var colorScheme = lodash.sample([{
-      background: "DD4747",
-      foreground: "FFFFFF"
-    }, {
+  generateFaceUrl(firstName, lastName) {
+    var colorScheme = lodash.sample([
+      {
         background: "ED6D54",
         foreground: "FFFFFF"
-      }, {
-        background: "FFBE5B",
-        foreground: "FFFFFF"
-      }, {
-        background: "FFE559",
-        foreground: "FFFFFF"
       }]);
-      
-    var sourceOfInitials = 'sampleImage';
 
-    var firstLetters = sourceOfInitials.match(/\b\w/g);
-    var initials = firstLetters[0];
-    if (firstLetters.length > 1) {
-      initials = initials + firstLetters[firstLetters.length - 1];
+    var sourceOfInitials = firstName;
+    if (firstName) {
+      var firstLetters = sourceOfInitials.match(/\b\w/g);
+      var initials = firstLetters[0];
+      var lastNameFirstLetter = lastName.match(/\b\w/g);
+      initials = initials + lastNameFirstLetter[0];
+      initials = initials.toUpperCase();
+      return "https://dummyimage.com/100x100/" + colorScheme.background + "/" + colorScheme.foreground + "&text=" + initials;
     }
-    initials = initials.toUpperCase();
-    return "https://dummyimage.com/100x100/" + colorScheme.background + "/" + colorScheme.foreground + "&text=" + initials;
   };
 
 
