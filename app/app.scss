@@ -2,6 +2,7 @@
     defaults
 -------------------*/
 
+
 body, h1, h2, h3, h4, h5, h6, input, button, select, textarea {
     font-family: 'Open Sans', sans-serif;
 }
@@ -72,8 +73,9 @@ body, h1, h2, h3, h4, h5, h6, input, button, select, textarea {
 
 .add-person-icon {
     background: url("../../img/add-person-icon.png") no-repeat center;
-    width: 22px;
-    /*height: 23px !important;*/
+    width: 34px;
+    height: 23px !important;
+    margin: 0;
 }
 
 i.menu-icon-1, i.menu-icon-2, i.menu-icon-3, i.menu-icon-4, i.menu-icon-5, i.menu-icon-6, i.menu-icon-7 {
@@ -115,6 +117,7 @@ i.menu-icon-1, i.menu-icon-2, i.menu-icon-3, i.menu-icon-4, i.menu-icon-5, i.men
 .qr-code-icon {
     background: url("../../img/qr-code-icon.png") no-repeat center;
     width: 22px;
+    height: 23px !important;
 }
 
 

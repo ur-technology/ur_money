@@ -50,6 +50,10 @@ export class HomePage implements OnInit {
     }
   }
 
+  setRoot(page) {
+    this.nav.setRoot(page);
+  }
+
   renderChart() {
     jQuery(this.elementRef.nativeElement).find('.container').highcharts({
       chart: {

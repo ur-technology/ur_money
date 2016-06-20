@@ -56,25 +56,6 @@
     </ion-item>
 
   </div>
-
-  <!--<ion-list>
-    <ion-item class="text-center border-none">
-      {{chartData.currentBalance | number:'1.0-2'}} UR
-    </ion-item>
-    <div class="container" id="container"></div>
-    <ion-item *ngFor="let message of messages|orderBy:'timestamp'">
-      <ion-avatar item-left>
-        <img src="http://placehold.it/150x150">
-      </ion-avatar>
-      <strong> {{message.sender}} :</strong>
-      <p> {{message.body}}</p>
-      <ion-note> {{message.timestamp|timestamp}}</ion-note>
-    </ion-item>
-    <button full primary (click)="createAlertPopup()">
-      Create Model
-    </button>
-  </ion-list>-->
-
 </ion-content>
 <!-- Button Starts -->
 <div class="float-button">
@@ -87,8 +68,8 @@
 <div class="bar bar-footer dash-footer">
   <div class="button-bar footer-btns">
     <a class="button button-calm"><i class="home-icon"></i></a>
-    <a [navPush]="sendPage" class="button button-calm"><i class="plane-icon"></i></a>
-    <a [navPush]="receivePage" class="button button-calm"><i class="receive-icon"></i></a>
-    <a [navPush]="invitePage" class="button button-calm"><i class="invite-icon"></i></a>
+    <button (click)="setRoot(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
+    <button (click)="setRoot(receivePage)" class="button button-calm"><i class="receive-icon"></i></button>
+    <button (click)="setRoot(invitePage)" class="button button-calm"><i class="invite-icon"></i></button>
   </div>
 </div>

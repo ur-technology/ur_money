@@ -1,3 +1,29 @@
-.receive {
+.receive-page {
+    background: rgba(235, 63, 151, 1) url("../../img/img-bg.png") no-repeat 0 0;
+    .toolbar-background {
+        background-color: transparent;
+        border: none;
+        background: none;
+    }
+    .toolbar {
+        .bar-button {
+            color: #17909c;
+            font-size: 25px;
+        }
+        .right {
+            float: right;
+            ion-icon {
+                color: #444;
+                font-weight: bold;
+            }
+        }
+        .toolbar-title {
+            color: #555;
+            font-weight: normal;
+        }
+    }
+}
 
+.dash-receive-view {
+    background: rgba(235, 63, 151, 1) url("../../img/img-bg.png") no-repeat 0 0;
 }
