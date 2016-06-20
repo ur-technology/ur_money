@@ -47,8 +47,8 @@ gulp.task('watch', ['clean'], function (done) {
 });
 
 
-gulp.task('build',function(){
-  runSequence('baseBuild','copyGo');
+gulp.task('build', function (done) {
+  runSequence('baseBuild', 'copyGo', done);
 });
 
 gulp.task('baseBuild', ['clean'], function (done) {
@@ -83,7 +83,7 @@ gulp.task('cleanGo', function () {
   return del('www/go');
 });
 
-gulp.task('copyGo', ['cleanGo'], function (params) {
-  gulp.src(['www/**/*']).pipe(gulp.dest('www/go'));
+gulp.task('copyGo', ['cleanGo'], function (done) {
+  gulp.src(['www/**/*']).pipe(gulp.dest('www/go')).on('end', done);
 
 });
