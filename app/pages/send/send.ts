@@ -11,13 +11,17 @@ import {HomePage} from '../home/home';
   templateUrl: 'build/pages/send/send.html',
 })
 export class SendPage {
-  showContactInput: boolean = true;
+  showContactInput: boolean;
   contactItem: any;
-  showContacts: boolean = false;
-  constructor(public nav: NavController) { }
+  showContacts: boolean;
+  constructor(public nav: NavController) {
+    this.showContactInput = true;
+    this.showContacts = false;
+    this.contactItem = {};
+  }
 
   toHomePage() {
-    this.nav.setRoot(HomePage,{}, {animate: true, direction: 'forward'});
+    this.nav.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
   }
 
   inputBlur() {
@@ -25,6 +29,8 @@ export class SendPage {
       this.showContacts = false;
     }, 300);
   }
+
+
 
   addContact(contact) {
     this.showContactInput = false;
@@ -34,6 +40,6 @@ export class SendPage {
 
   removeContact() {
     this.showContactInput = true;
-    this.contactItem = null;
+    this.contactItem = {};
   }
 }

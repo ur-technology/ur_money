@@ -19,16 +19,16 @@
   <div class="send-receive-cont">
     <!--<form action="#">-->
     <div class="card send-receive-input">
-      <div *ngIf="!showContactInput" class="contacts-cont">
-        <span class="contact-item"><img src="../../img/avatar.jpg" alt="">{{contactItem.email}}  <a (click)="removeContact()" class="contact-close"></a></span>
+      <div [hidden]="showContactInput" class="contacts-cont">
+        <span class="contact-item"><img src="img/avatar.jpg" alt="">{{contactItem.email}}  <a (click)="removeContact()" class="contact-close"></a></span>
       </div>
       <label class="item item-icon-left item-icon-right item-input">
                     <i class="icon add-person-icon" item-left></i>
-                    <input *ngIf="showContactInput" type="text"  style="width: 100%;margin-left: 7px;border: none;"  (blur)="inputBlur()" (click)="showContacts=true" (focus)="showContacts=true"/>
+                    <input [hidden]="!showContactInput" type="text"  style="width: 100%;margin-left: 7px;border: none;"  (blur)="inputBlur()"  (focus)="showContacts=true"/>
                     <i class="icon qr-code-icon" item-right></i>
       </label>
     </div>
-    <div class="send-receive-popover" *ngIf="showContacts">
+    <div class="send-receive-popover" [hidden]="!showContacts">
       <div class="list contacts-list">
         <div class="recent-contacts">
           <ion-item class="item item-divider">
@@ -52,68 +52,68 @@
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
 
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>
           <ion-item class="item item-avatar">
             <ion-avatar item-left>
-              <img src="../../img/avatar.jpg" alt="">
+              <img src="img/avatar.jpg" alt="">
             </ion-avatar>
             abc@gmail.com
           </ion-item>

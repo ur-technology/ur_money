@@ -13,11 +13,13 @@
 
 <ion-content>
   <div class="dash-chart-cont">
-    <h1 class="chart-title">{{chartData.currentBalance | number:'1.0-2'}} <span>UR</span></h1>
-    <h2 class="chart-subtitle clearfix"><span class="green"><ion-icon [name]="chartData.percentageChange>=0?'md-arrow-up':'md-arrow-down'"></ion-icon> {{chartData.percentageChange |number:'1.0-2'}}%</span>
-      <span class="right">
-        <ion-icon [name]="chartData.balanceChange>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>{{chartData.balanceChange| number:'1.0-2'}} </span>
-    </h2>
+    <div>
+      <h1 class="chart-title">{{chartData.currentBalance |round}} <span>UR</span></h1>
+      <h2 class="chart-subtitle clearfix"><span class="green"><ion-icon [name]="chartData.percentageChange>=0?'md-arrow-up':'md-arrow-down'"></ion-icon> {{chartData.percentageChange|round}}%</span>
+        <span class="right">
+        <ion-icon   [name]="chartData.balanceChange>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>{{chartData.balanceChange|round}} </span>
+      </h2>
+    </div>
     <div class="container" id="container"></div>
   </div>
   <div class="list list-msgs">

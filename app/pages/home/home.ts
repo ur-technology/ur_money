@@ -9,12 +9,13 @@ import {SendPage} from '../send/send';
 import {InvitePage} from '../invite/invite';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import {Round} from '../../pipes/round';
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/home/home.html',
-  pipes: [OrderBy, Timestamp]
+  pipes: [OrderBy, Timestamp, Round]
 })
 export class HomePage implements OnInit {
   elementRef: ElementRef;

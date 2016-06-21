@@ -10,13 +10,13 @@ import {HomePage} from '../home/home';
   templateUrl: 'build/pages/receive/receive.html',
 })
 export class ReceivePage {
- showContactInput: boolean = true;
+  showContactInput: boolean = true;
   contactItem: any;
   showContacts: boolean = false;
   constructor(public nav: NavController) { }
 
   toHomePage() {
-    this.nav.setRoot(HomePage,{}, {animate: true, direction: 'forward'});
+    this.nav.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
   }
 
   inputBlur() {
@@ -25,6 +25,7 @@ export class ReceivePage {
     }, 300);
   }
 
+  
   addContact(contact) {
     this.showContactInput = false;
     this.showContacts = false;

@@ -2,6 +2,7 @@ var gulp = require('gulp'),
   gulpWatch = require('gulp-watch'),
   del = require('del'),
   runSequence = require('run-sequence'),
+  sh = require('shelljs'),
   argv = process.argv;
 
 
@@ -14,6 +15,9 @@ gulp.task('serve:before', ['watch']);
 gulp.task('emulate:before', ['build']);
 gulp.task('deploy:before', ['build']);
 gulp.task('build:before', ['build']);
+gulp.task('upload:before', ['baseBuild']);
+gulp.task('upload:after', ['copyGo']);
+
 
 // we want to 'watch' when livereloading
 var shouldWatch = argv.indexOf('-l') > -1 || argv.indexOf('--livereload') > -1;
@@ -87,3 +91,8 @@ gulp.task('copyGo', ['cleanGo'], function (done) {
   gulp.src(['www/**/*']).pipe(gulp.dest('www/go')).on('end', done);
 
 });
+
+gulp.task('upload', ['cleanGo'], function (done) {
+  sh.exec('ionic upload', { async: false }, done);
+});
+
