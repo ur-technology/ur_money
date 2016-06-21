@@ -1,0 +1,42 @@
+<ion-navbar *navbar clear>
+    <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+   <button clear class="right">
+    <i class="users-icon"></i>
+   </button>
+</ion-navbar>
+<ion-content class="transactions transaction-received">
+
+    <div class="transaction-filter-top">
+        <div class="filter-box" padding>
+            <div class="filter-btns">
+                <button class="button button-outline ">Today</button>
+                <button class="button button-outline ">Last 30 Days</button>
+                <button class="button button-outline ">Last 60 Days</button>
+                <button class="button button-outline ">All Time</button>
+                <button class="button button-outline ">Custom</button>
+            </div>
+
+            <div class="total-ur">
+                2116.00
+            </div>
+            <p class="last-update">
+                <ion-icon name="ios-clock-outline"></ion-icon> Last Updated : 5 Days ago
+            </p>
+        </div>
+    </div>
+    <div class="transaction-chat">
+        <div class="card" *ngFor="let transaction of transactionData">
+            <ion-item class="item" text-wrap>
+                <ion-avatar item-left>
+                    <img src="img/avatar.jpg">
+                </ion-avatar>
+                <h2>{{transaction.name}} <span class="item-date-time">{{transaction.date}}, {{transaction.time}}</span></h2>
+                <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">See More</a></span></p>
+                <span class="icon trans-ur" item-right>{{transaction.earnedUR}} UR</span>
+            </ion-item>
+        </div>
+
+    </div>
+</ion-content>

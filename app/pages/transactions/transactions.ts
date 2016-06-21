@@ -1,4 +1,14 @@
 import {Page, NavController} from 'ionic-angular';
+import {TransactionsEarnedPage} from './transaction-earned';
+import {TransactionsReceivedPage} from './transaction-received';
+import {TransactionsSentPage} from './transaction-sent';
+
+import {TransactionNavService} from './transaction-nav-service';
+
+import {HomePage} from '../home/home';
+import {ReceivePage} from '../receive/receive';
+import {SendPage} from '../send/send';
+import {InvitePage} from '../invite/invite';
 
 /*
   Generated class for the TransactionsPage page.
@@ -10,5 +20,34 @@ import {Page, NavController} from 'ionic-angular';
   templateUrl: 'build/pages/transactions/transactions.html',
 })
 export class TransactionsPage {
-  constructor(public nav: NavController) {}
+  transactionData: any;
+  earnedTransactionPage: any;
+  sentTransactionPage: any;
+  receivedTransactionPage: any;
+  homePage: any;
+  sendPage: any;
+  receivePage: any;
+  selectedItem: any;
+  invitePage: any;
+  constructor(public nav: NavController, public transactionnavService: TransactionNavService) {
+
+    this.earnedTransactionPage = TransactionsEarnedPage;
+    this.receivedTransactionPage = TransactionsReceivedPage;
+    this.sentTransactionPage = TransactionsSentPage;
+    this.homePage = HomePage;
+    this.sendPage = SendPage;
+    this.receivePage = ReceivePage;
+    this.invitePage = InvitePage;
+    this.transactionnavService.goToPageEmitter.subscribe((data) => {
+      this.goToPage(data);
+    });
+
+  }
+
+  goToPage(page) {
+
+    this.nav.setRoot(page, {}, { animate: true, direction: 'forward' });
+  }
+
+
 }

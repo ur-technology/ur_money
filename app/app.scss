@@ -120,6 +120,34 @@ i.menu-icon-1, i.menu-icon-2, i.menu-icon-3, i.menu-icon-4, i.menu-icon-5, i.men
     height: 23px !important;
 }
 
+.ion-ios-sent-icon-on,
+.ion-ios-sent-icon-off,
+.ion-ios-received-icon-on,
+.ion-ios-received-icon-off,
+.ion-ios-earned-icon-on,
+.ion-ios-earned-icon-off{
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+}
+.ion-ios-sent-icon-on{
+    background: url("../../img/sent-icon-active.png") no-repeat center;
+}
+.ion-ios-sent-icon-on-outline{
+    background: url("../../img/sent-icon.png") no-repeat center;
+}
+.ion-ios-received-icon-on{
+    background: url("../../img/received-icon-active.png") no-repeat center;
+}
+.ion-ios-received-icon-on-outline{
+    background: url("../../img/received-icon.png") no-repeat center;
+}
+.ion-ios-earned-icon-on{
+    background: url("../../img/earned-icon-active.png") no-repeat center;
+}
+.ion-ios-earned-icon-on-outline{
+    background: url("../../img/earned-icon.png") no-repeat center;
+}
 
 /*--------------------------------------*/
 

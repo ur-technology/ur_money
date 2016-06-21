@@ -16,7 +16,7 @@ import {AboutPage} from './pages/about/about';
 import {CommunityPage} from './pages/community/community';
 import {TransactionsPage} from './pages/transactions/transactions';
 import {SettingPage} from './pages/setting/setting';
-
+import {TransactionNavService} from './pages/transactions/transaction-nav-service';
 import {UserService} from './providers/user-service/user-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 
@@ -31,7 +31,7 @@ import * as lodash from 'lodash';
 @App({
   templateUrl: 'build/app.html',
   directives: [LoadingModal],
-  providers: [Auth, ChartData, LoadingModal, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
+  providers: [Auth, TransactionNavService, ChartData, LoadingModal, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })

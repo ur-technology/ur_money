@@ -52,7 +52,7 @@ export class HomePage implements OnInit {
   }
 
   setRoot(page) {
-    this.nav.setRoot(page);
+    this.nav.setRoot(page, {}, { animate: true, direction: 'forward' });
   }
 
   renderChart() {
