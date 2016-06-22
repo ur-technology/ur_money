@@ -1,7 +1,7 @@
 .transactions-page {
     .toolbar-background {
-        background: transparent;
-        border-color: transparent;
+        background: #fff;
+        border-color: #fff;
     }
      .toolbar {
          padding: 0;
@@ -22,6 +22,9 @@
 .transactions {
     scroll-content {
         overflow-y: visible;
+    }
+    ion-navbar-section{
+        display: none;
     }
 }
 

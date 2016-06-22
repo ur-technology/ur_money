@@ -10,7 +10,14 @@
 
 </ion-navbar>
 
-
+<div class="bar bar-footer dash-footer" *ngIf="android">
+  <div class="button-bar footer-btns">
+    <a class="button button-calm"><i class="home-icon"></i></a>
+    <button (click)="setRoot(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
+    <button (click)="setRoot(receivePage)" class="button button-calm"><i class="receive-icon"></i></button>
+    <button (click)="setRoot(invitePage)" class="button button-calm"><i class="invite-icon"></i></button>
+  </div>
+</div>
 <ion-content>
   <div class="dash-chart-cont">
     <div>
@@ -60,14 +67,14 @@
   </div>
 </ion-content>
 <!-- Button Starts -->
-<div class="float-button">
+<div class="float-button" [style.bottom]="android?'2%':'8%'">
   <span class="height-fix">
      <a class="content">
         <ion-icon name="md-add"> </ion-icon>
      </a>
   </span>
 </div>
-<div class="bar bar-footer dash-footer">
+<div class="bar bar-footer dash-footer" *ngIf="!android">
   <div class="button-bar footer-btns">
     <a class="button button-calm"><i class="home-icon"></i></a>
     <button (click)="setRoot(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>

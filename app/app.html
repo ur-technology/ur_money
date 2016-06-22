@@ -16,7 +16,7 @@
       <p></p>
     </div>
     <ion-list class="menu-list" no-lines>
-      <ion-item *ngFor="let menuItem of menuItems" (click)="openPage(menuItem)">
+      <ion-item *ngFor="let menuItem of menuItems" tappable (click)="openPage(menuItem)">
         <i [class]="menuItem.icon" item-left></i> {{menuItem.title}}
       </ion-item>
 

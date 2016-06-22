@@ -1,4 +1,4 @@
-import {Page, NavController} from 'ionic-angular';
+import {Page, NavController, Platform} from 'ionic-angular';
 import {TransactionsEarnedPage} from './transaction-earned';
 import {TransactionsReceivedPage} from './transaction-received';
 import {TransactionsSentPage} from './transaction-sent';
@@ -20,6 +20,7 @@ import {InvitePage} from '../invite/invite';
   templateUrl: 'build/pages/transactions/transactions.html',
 })
 export class TransactionsPage {
+  android: boolean = false;
   transactionData: any;
   earnedTransactionPage: any;
   sentTransactionPage: any;
@@ -29,7 +30,7 @@ export class TransactionsPage {
   receivePage: any;
   selectedItem: any;
   invitePage: any;
-  constructor(public nav: NavController, public transactionnavService: TransactionNavService) {
+  constructor(public nav: NavController, public transactionnavService: TransactionNavService, public platform: Platform) {
 
     this.earnedTransactionPage = TransactionsEarnedPage;
     this.receivedTransactionPage = TransactionsReceivedPage;
@@ -38,6 +39,9 @@ export class TransactionsPage {
     this.sendPage = SendPage;
     this.receivePage = ReceivePage;
     this.invitePage = InvitePage;
+    if (this.platform.is('android')) {
+      this.android = true;
+    }
     this.transactionnavService.goToPageEmitter.subscribe((data) => {
       this.goToPage(data);
     });

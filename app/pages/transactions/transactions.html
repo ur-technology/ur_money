@@ -1,21 +1,37 @@
+<ion-navbar *navbar clear>
+    <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+   <button clear class="right">
+    <i class="users-icon"></i>
+   </button>
+</ion-navbar>
+<div class="bar bar-footer dash-footer" *ngIf="android">
+  <div class="button-bar footer-btns">
+    <button (click)="goToPage(homePage)" class="button button-calm"><i class="home-icon"></i></button>
+    <button (click)="goToPage(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
+    <button (click)="goToPage(receivePage)" class="button button-calm"><i class="receive-icon"></i></button>
+    <button (click)="goToPage(invitePage)" class="button button-calm"><i class="invite-icon"></i></button>
+  </div>
+</div>
 <ion-content class="transactions">
   <ion-tabs tabbarPlacement="top" class="transactions-tab-nav tabs-nav">
     <ion-tab class="tab-item-active" tabTitle="Sent" tabIcon="sent-icon-on" [root]="sentTransactionPage"></ion-tab>
-    <ion-tab  tabTitle="Received" tabIcon="received-icon-on" [root]="receivedTransactionPage"></ion-tab>
-    <ion-tab  tabTitle="Earned" tabIcon="earned-icon-on" [root]="earnedTransactionPage"></ion-tab>
+    <ion-tab tabTitle="Received" tabIcon="received-icon-on" [root]="receivedTransactionPage"></ion-tab>
+    <ion-tab tabTitle="Earned" tabIcon="earned-icon-on" [root]="earnedTransactionPage"></ion-tab>
   </ion-tabs>
 </ion-content>
 <!-- Button Starts -->
-<div class="float-button">
+<div class="float-button" [style.bottom]="android?'2%':'8%'">
   <span class="height-fix">
      <a class="content">
         <ion-icon name="md-add"> </ion-icon>
      </a>
   </span>
 </div>
-<div class="bar bar-footer dash-footer">
+<div class="bar bar-footer dash-footer" *ngIf="!android">
   <div class="button-bar footer-btns">
-    <button  (click)="goToPage(homePage)"   class="button button-calm"><i class="home-icon"></i></button>
+    <button (click)="goToPage(homePage)" class="button button-calm"><i class="home-icon"></i></button>
     <button (click)="goToPage(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
     <button (click)="goToPage(receivePage)" class="button button-calm"><i class="receive-icon"></i></button>
     <button (click)="goToPage(invitePage)" class="button button-calm"><i class="invite-icon"></i></button>

@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Alert, Modal} from 'ionic-angular';
+import {Page, NavController, NavParams, Alert, Modal, Platform} from 'ionic-angular';
 import {ChartData} from '../../components/chart-data/chart-data';
 import {Component, OnInit, ElementRef, Inject} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
@@ -19,6 +19,7 @@ declare var jQuery: any;
 })
 export class HomePage implements OnInit {
   elementRef: ElementRef;
+  android:boolean=false;
   sendPage: any;
   receivePage: any;
   selectedItem: any;
@@ -28,11 +29,14 @@ export class HomePage implements OnInit {
   items: Array<{ title: string, note: string, icon: string }>;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
-    navParams: NavParams, public chartData: ChartData) {
+    navParams: NavParams, public chartData: ChartData, public platform: Platform) {
     this.elementRef = elementRef;
     this.sendPage = SendPage;
     this.receivePage = ReceivePage;
     this.invitePage = InvitePage;
+    if (this.platform.is('android')) {
+      this.android=true;
+    } 
   }
 
   ngOnInit() {
