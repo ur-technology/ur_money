@@ -51,10 +51,12 @@ class UrMoney {
   // rootPage: any = Registration1Page;
   menuItems: Array<{ title: string, component: any, icon: string }>;
   user: any = {};
-  invitePage: Type;
+  invitePage: {};
   faceUrl: string;
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
+
+    this.invitePage = { component: InvitePage };
     // set our app's pages
     this.menuItems = [
       { title: 'Home', component: HomePage, icon: 'icon menu-icon-1' },
