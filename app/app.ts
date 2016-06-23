@@ -63,7 +63,7 @@ class UrMoney {
       { title: 'Send UR', component: SendPage, icon: 'icon menu-icon-2' },
       { title: 'Request UR', component: ReceivePage, icon: 'icon menu-icon-3' },
       { title: 'Transactions', component: TransactionsPage, icon: 'icon menu-icon-4' },
-      { title: 'Community', component: CommunityPage, icon: 'icon menu-icon-5' },
+      // { title: 'Community', component: CommunityPage, icon: 'icon menu-icon-5' },
       { title: 'About UR', component: AboutPage, icon: 'icon menu-icon-7' }
     ];
   }
