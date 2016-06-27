@@ -1,0 +1,27 @@
+/*----------------------------*/
+
+country-popover {
+    .country-popover {
+        min-width: 300px;
+    }
+    .country-popover .item-input-wrapper {
+        background-color: #ffffff;
+    }
+    .country-popover .search-item {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+  
+}
+
+.popover-content {
+    min-width: 318px;
+    min-height: 200px;
+    max-height: 350px; 
+    // .toolbar{
+    //     position: fixed;
+    // }
+    // ion-item-divider{
+    //     margin-top:50px;
+    // }
+}

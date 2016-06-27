@@ -1,6 +1,5 @@
-import {ViewChild} from '@angular/core';
-import {App, Platform, MenuController, Nav} from 'ionic-angular';
-import {Component, Type} from '@angular/core';
+import {ViewChild, Component, Type} from '@angular/core';
+import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
 import {Auth} from './components/auth/auth';
@@ -17,6 +16,7 @@ import {CommunityPage} from './pages/community/community';
 import {TransactionsPage} from './pages/transactions/transactions';
 import {SettingPage} from './pages/setting/setting';
 import {TransactionNavService} from './pages/transactions/transaction-nav-service';
+import {CountryPopoverService} from './components/country-popover/country-popover.service';
 import {UserService} from './providers/user-service/user-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 
@@ -28,22 +28,14 @@ import {FirebaseService} from './prelaunch_components/firebase-service/firebase-
 
 import * as lodash from 'lodash';
 
-@App({
+@Component({
   templateUrl: 'build/app.html',
   directives: [LoadingModal],
-  providers: [Auth, TransactionNavService, ChartData, LoadingModal, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
+  providers: [Auth, TransactionNavService, CountryPopoverService, ChartData, LoadingModal, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
-  ],
-  config: {
-    mode: 'ios',
-    platforms: {
-      ios: {
-        statusbarPadding: true
-      }
-    }
-  } // http://ionicframework.com/docs/v2/api/config/Config/
+  ]
 })
 class UrMoney {
   @ViewChild(Nav) nav: Nav;
@@ -157,3 +149,22 @@ class UrMoney {
 
 
 }
+// Pass the main App component as the first argument
+// Pass any providers for your app in the second argument
+// Set any config for your app as the third argument, see the docs for
+// more ways to configure your app:
+// http://ionicframework.com/docs/v2/api/config/Config/
+// Place the tabs on the bottom for all platforms
+// See the theming docs for the default values:
+// http://ionicframework.com/docs/v2/theming/platform-specific-styles/
+
+ionicBootstrap(UrMoney, [], {
+  mode: 'ios',
+  platforms: {
+    ios: {
+      statusbarPadding: true
+    }
+  }
+} // http://ionicframework.com/docs/v2/api/config/Config/
+);
+
