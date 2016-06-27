@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams} from 'ionic-angular';
+import {Page, NavController, NavParams, Toast} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
@@ -12,7 +12,6 @@ import * as _ from 'underscore'
 })
 export class DashboardPage {
   inviteForm: ControlGroup;
-  inviteMessage: string;
   phoneControl: AbstractControl;
   user: any;
   allUsers: any;
@@ -30,7 +29,6 @@ export class DashboardPage {
     this.user = navParams.get("user");
     this.setAllUsers();
   }
-
 
   setAllUsers() {
     var thisPage = this;
@@ -77,7 +75,7 @@ export class DashboardPage {
     }
   }
 
-  sendInvitation(event) {
+  sendInvitation(event, phoneInput) {
     this.submissionInProgress = true;
     var invitedUser = {
       sponsor: {
@@ -90,10 +88,20 @@ export class DashboardPage {
       invitedAt: Firebase.ServerValue.TIMESTAMP
     };
     this.firebaseService.saveUser(invitedUser);
-    this.inviteMessage = "You invitation has been sent. Go ahead and send another one!"
     this.buildForm();
+    phoneInput.setFocus();
+    var options = {
+      message: 'You invitation has been sent. Go ahead and send another one!',
+      duration: 2000,
+      position: 'top'
+    };
+    const toast = Toast.create(options);
+    toast.onDismiss(function(toast: Toast) {
+      console.info('Toast onDismiss()');
+    });
+    this.nav.present(toast);
     this.submissionInProgress = false;
-}
+  }
 
   buildForm() {
     this.inviteForm = this.formBuilder.group({

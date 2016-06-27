@@ -70,7 +70,7 @@ class UrMoney {
 
   handlePrelaunchRequest() {
     var phone = null;
-    var matchResults = window.location.pathname.match(/(\/go\/|[\?\&]p\=)(\d{10})\b/);
+    var matchResults = window.location.href.match(/(\/go\/|[\?\&]p\=)(\d{10})\b/);
     if (matchResults && matchResults.length == 3) {
       phone = matchResults[2];
     }
