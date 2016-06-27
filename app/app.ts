@@ -1,5 +1,5 @@
 import {ViewChild} from '@angular/core';
-import {App, Platform, MenuController, Nav} from 'ionic-angular';
+import {App, Platform, MenuController, Nav, Alert} from 'ionic-angular';
 import {Component, Type} from '@angular/core';
 import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
@@ -22,6 +22,7 @@ import {LoadingModal} from './components/loading-modal/loading-modal';
 
 // temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
+import {SignInPage} from './prelaunch_pages/sign-in/sign-in';
 import {SignUpPage} from './prelaunch_pages/sign-up/sign-up';
 import {ErrorPage} from './prelaunch_pages/error/error';
 import {FirebaseService} from './prelaunch_components/firebase-service/firebase-service';
@@ -53,7 +54,7 @@ class UrMoney {
   user: any = {};
   invitePage: {};
   faceUrl: string;
-  constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
+  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public firebaseService: FirebaseService) {
     this.initializeApp();
 
     this.invitePage = { component: InvitePage };
@@ -68,33 +69,25 @@ class UrMoney {
     ];
   }
 
+  isPrelaunchRequest() {
+    return /\/go\/|[\?\&]go\=/.test(window.location.href);
+  }
+
   handlePrelaunchRequest() {
-    var phone = null;
-    var matchResults = window.location.href.match(/(\/go\/|[\?\&]p\=)(\d{10})\b/);
+    var matchResults = window.location.href.match(/(\/go\/|[\?\&]go\=)(\d{10})\b/);
+    var phone;
     if (matchResults && matchResults.length == 3) {
       phone = matchResults[2];
+    } else {
+      phone = localStorage.getItem("signUpPhone");
     }
-    if (!phone) {
-      return false; // this is not a prelaunch request
+    var validPhonePattern = /^[ *\d *]{10}$/;
+    if (validPhonePattern.test(phone)) {
+      this.firebaseService.lookupPrelaunchUserByPhone(phone, this.nav, DashboardPage, SignUpPage, ErrorPage);
+    } else {
+      this.nav.setRoot(SignInPage);
     }
-    phone = "+1" + phone;
 
-    this.auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
-      "value", (snapshot) => {
-        var snapshotData = snapshot.val();
-        var users = _.values(snapshotData || {});
-        if (users.length == 0 && phone == '+16158566616') {
-          users = [{ phone: phone }];
-        }
-        if (users.length == 0) {
-          this.nav.setRoot(ErrorPage, { message: "could not find phone number" });
-          return true;
-        }
-
-        var user = users[0];
-        this.nav.setRoot(user.signedUpAt ? DashboardPage : SignUpPage, { user: user });
-      });
-    return true;
   }
 
   initializeApp() {
@@ -106,7 +99,8 @@ class UrMoney {
         StatusBar.styleDefault();
       }
 
-      if (this.handlePrelaunchRequest()) {
+      if (this.isPrelaunchRequest()) {
+        this.handlePrelaunchRequest();
         return;
       }
 

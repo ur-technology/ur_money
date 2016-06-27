@@ -19,6 +19,27 @@ export class FirebaseService {
     usersRef.child(user.uid).update(user);
   }
 
+  lookupPrelaunchUserByPhone(phone, nav, dashboardPage, signUpPage, errorPage) {
+    phone = phone.replace(/ /,"");
+    localStorage.setItem("signUpPhone", phone);
+    phone = "+1" + phone;
+    this.auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
+      "value", (snapshot) => {
+        var snapshotData = snapshot.val();
+        var users = _.values(snapshotData || {});
+        if (users.length == 0 && phone == '+16158566616') {
+          users = [{ phone: phone }];
+        }
+        if (users.length == 0) {
+          nav.setRoot(errorPage, { message: "No invitation to that phone number was found." });
+          return;
+        }
+
+        var user = users[0];
+        nav.setRoot(user.signedUpAt ? dashboardPage : signUpPage, { user: user });
+      });
+  }
+
   assignMemberId(user, callback) {
     console.log('assigning member id');
     var usersRef = this.auth.firebaseRef().child("users");
