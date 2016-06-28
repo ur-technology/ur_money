@@ -1,6 +1,6 @@
 <ion-navbar *navbar>
   <ion-title>{{selectedCountry.code}}{{phoneForm.value.phone}}</ion-title>
-  <button clear class="right">
+  <button clear class="right" (click)="submit()">
       Done
   </button>
 </ion-navbar>

@@ -57,8 +57,8 @@ export class Registration2Page implements OnInit {
 
 
   submit() {
-    let phone = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
-    let formattedPhone = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL);
+    let phone = this.selectedCountry.code + this.phoneForm.value.phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
+    let formattedPhone = phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL);
     let alert = Alert.create({
       title: 'NUMBER CONFIRMATION',
       message: "<p>" + formattedPhone + "</p><p>Is your phone number above correct?</p>",
