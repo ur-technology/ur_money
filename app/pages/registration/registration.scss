@@ -22,7 +22,7 @@
     Registration Screen / Verification Screen
 ----------------------------------------------------*/
 
-.registration2-page {
+.registration2-page, .registration3-page {
   .toolbar-background {
     background-color: #ededed;
     color: #323232;
@@ -124,6 +124,66 @@
 .registration .unlock-keypad .pin-btn, .phone-number-verification .unlock-keypad .pin-btn {
   color: #323232;
 }
+/*--------------------------------------------------
+    Unlock Screen
+----------------------------------------------------*/
+.unlock{
+    background-color: #ef3f37;
+}
+
+.unlock .heading{
+    text-align: center;
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 0;
+    margin-top: 170px;
+}
+.unlock .sub-heading{
+    font-size: 16px;
+    text-align: center;
+    color: #ffffff;
+}
+.pin-input-cont{
+    text-align: center;
+}
+.pin-input-cont .pin-input{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    margin: 0 2px;
+    color: #ffffff;
+    font-size: 17px;
+    line-height: 40px;
+    vertical-align: middle;
+}
+.unlock .unlock-keypad{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+.unlock-keypad{
+  background: #fff;
+}
+.unlock-keypad ion-row{
+    border-bottom: 1px solid rgba(196,196,196,0.8);
+}
+.unlock-keypad ion-row .col.col-33.mid-col{
+    border-left:1px solid rgba(196,196,196,0.8);
+    border-right: 1px solid rgba(196,196,196,0.8);
+}
+.unlock-keypad .pin-btn{
+    color: #ffffff;
+    display: block;
+    width: 100%;
+    font-size: 28px;
+    min-height: 40px;
+    height: 40px;
+    span{
+      color:#444;
+    }
+}
 
 
 /*------------------------------------------*/
@@ -154,9 +214,8 @@
   font-size: 13px;
   font-weight: 700;
   border: 1px solid #e2e2e2;
+  background-color: #fff;
   border-radius: 10px;
   min-height: 34px;
   line-height: 34px;
 }
-
-

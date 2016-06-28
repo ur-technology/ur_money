@@ -1,6 +1,6 @@
 <ion-navbar *navbar>
   <ion-title>{{selectedCountry.code}}{{phoneForm.value.phone}}</ion-title>
-  <button clear class="right" (click)="submit()">
+  <button clear class="right" [disabled]="!phoneForm.valid" (click)="submit()">
       Done
   </button>
 </ion-navbar>
@@ -11,7 +11,7 @@
     Pleae confirm your country code and enter your phone number
   </p>
 
-  <form [ngFormModel]="phoneForm" (submit)="submit()">
+  <form [ngFormModel]="phoneForm">
 
     <div class="list country-code-cont">
       <ion-item class="item item-input" (click)="openCountryPopover($event)">
@@ -20,21 +20,8 @@
       </ion-item>
       <ion-item class="item item-input input-item-data">
         <ion-input class="phone-country-code" [value]="selectedCountry.code"> </ion-input>
-        <!--<input autocomplete="off" class="phone-country-code" type="tel" style="" [value]="selectedCountry.code">
-        <input autocomplete="off" class="phone-number" type="tel" />-->
         <ion-input class="phone-input" [ngFormControl]="phoneControl" type="tel" autofocus></ion-input>
       </ion-item>
-      <!--<div class="item item-input">
-        <input autocomplete="off" class="phone-country-code" type="tel" ng-model="credentials.phoneCountryCode" style="">
-        <input autocomplete="off" class="phone-number" type="tel" ng-model="credentials.phoneNumber">
-      </div>-->
     </div>
-    <!--<ion-item>
-      <ion-input class="phone-input" type="tel" [ngFormControl]="phoneControl" autofocus></ion-input>
-    </ion-item>
-
-    <button primary type="submit" [disabled]="!phoneForm.valid">
-      Continue
-    </button>-->
   </form>
 </ion-content>

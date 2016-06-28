@@ -23,16 +23,7 @@ export class Registration2Page implements OnInit {
   constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loadingModal: LoadingModal, public countryPopoverService: CountryPopoverService) {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
-      'phone': ['', (control) => {
-        if (control.value.length === 0) {
-          jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').blur();
-          return { 'invalidPhone': true };
-        }
-        let isValid = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("isValidNumber");
-        if (!isValid) {
-          return { 'invalidPhone': true };
-        }
-      }]
+      'phone': ['', CustomValidators.phoneValidator]
     });
     this.phoneControl = this.phoneForm.controls['phone'];
     this.countryPopoverService.countrySelectedEmitter.subscribe((country) => {
@@ -41,12 +32,6 @@ export class Registration2Page implements OnInit {
   }
 
   ngOnInit() {
-    // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput({
-    //   autoHideDialCode: false,
-    //   initialCountry: 'us',
-    //   excludeCountries: ['cu', 'ir', 'kp', 'sd', 'sy'],
-    //   utilsScript: "vendor/js/utils.js"
-    // });
   }
 
 
@@ -83,7 +68,7 @@ export class Registration2Page implements OnInit {
                 this.showErrorAlert();
                 return;
               }
-              this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey });
+              this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey, phone: phone });
             });
           }
         }

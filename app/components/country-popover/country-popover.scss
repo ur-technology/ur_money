@@ -11,17 +11,21 @@ country-popover {
         padding-top: 5px;
         padding-bottom: 5px;
     }
-  
 }
 
 .popover-content {
     min-width: 318px;
     min-height: 200px;
-    max-height: 350px; 
+    max-height: 350px;
+    overflow: hidden;
     // .toolbar{
     //     position: fixed;
     // }
     // ion-item-divider{
     //     margin-top:50px;
     // }
+    ion-content {
+        height: 314px;
+        overflow: scroll;
+    }
 }
