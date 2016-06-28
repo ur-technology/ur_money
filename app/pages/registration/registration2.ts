@@ -1,10 +1,13 @@
-import {IonicApp, Page, NavController, Alert, Platform, Nav} from 'ionic-angular';
+import {Page, NavController, Alert, Platform, Nav, Popover} from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
 import {Registration3Page} from './registration3';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
+
+import {CountryPopover} from '../../components/country-popover/country-popover';
+import {CountryPopoverService} from '../../components/country-popover/country-popover.service';
 
 declare var jQuery: any, intlTelInputUtils: any;
 
@@ -16,31 +19,19 @@ export class Registration2Page implements OnInit {
   elementRef: ElementRef;
   phoneForm: ControlGroup;
   phoneControl: AbstractControl;
-
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public app: IonicApp, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loadingModal: LoadingModal) {
+  selectedCountry = { name: 'United States', code: '+1' };
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loadingModal: LoadingModal, public countryPopoverService: CountryPopoverService) {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
-      'phone': ['', (control) => {
-        if (control.value.length === 0) {
-          jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').blur();
-          return { 'invalidPhone': true };
-        }
-        let isValid = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("isValidNumber");
-        if (!isValid) {
-          return { 'invalidPhone': true };
-        }
-      }]
+      'phone': ['', CustomValidators.phoneValidator]
     });
     this.phoneControl = this.phoneForm.controls['phone'];
+    this.countryPopoverService.countrySelectedEmitter.subscribe((country) => {
+      this.countrySelect(country);
+    });
   }
 
   ngOnInit() {
-    jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput({
-      autoHideDialCode: false,
-      initialCountry: 'us',
-      excludeCountries: ['cu', 'ir', 'kp', 'sd', 'sy'],
-      utilsScript: "vendor/js/utils.js"
-    });
   }
 
 
@@ -51,8 +42,8 @@ export class Registration2Page implements OnInit {
 
 
   submit() {
-    let phone = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
-    let formattedPhone = jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL);
+    let phone = this.selectedCountry.code + this.phoneForm.value.phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
+    let formattedPhone = phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL);
     let alert = Alert.create({
       title: 'NUMBER CONFIRMATION',
       message: "<p>" + formattedPhone + "</p><p>Is your phone number above correct?</p>",
@@ -77,7 +68,7 @@ export class Registration2Page implements OnInit {
                 this.showErrorAlert();
                 return;
               }
-              this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey });
+              this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey, phone: phone });
             });
           }
         }
@@ -94,6 +85,19 @@ export class Registration2Page implements OnInit {
       buttons: ['Ok']
     });
     this.nav.present(alert);
+  }
+
+  openCountryPopover(ev) {
+    let popover = Popover.create(CountryPopover, {
+    });
+    this.nav.present(popover, {
+      ev: ev
+    });
+  }
+
+  countrySelect(country) {
+    this.selectedCountry = country;
+    jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();
   }
 
 }

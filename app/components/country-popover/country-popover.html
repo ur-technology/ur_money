@@ -1,0 +1,14 @@
+<div class="country-popover">
+  <ion-toolbar light>
+    <ion-searchbar [(ngModel)]="searchQuery"></ion-searchbar>
+  </ion-toolbar>
+  <ion-content class="padding">
+    <div class="list">
+      <ion-item-divider text-center> Choose Country</ion-item-divider>
+      <ion-item tappable (click)="countrySelect(country)" class="item" *ngFor="let country of countries|filterBy:searchQuery">
+        {{country.name}}
+        <span item-right>{{country.code}}</span>
+      </ion-item>
+    </div>
+  </ion-content>
+</div>

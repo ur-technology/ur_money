@@ -1,23 +1,27 @@
-<ion-navbar *navbar class="hidden">
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
+<ion-navbar *navbar>
+  <ion-title>{{selectedCountry.code}}{{phoneForm.value.phone}}</ion-title>
+  <button clear class="right" [disabled]="!phoneForm.valid" (click)="submit()">
+      Done
   </button>
-  <ion-title>{{phoneForm.value.phone}}</ion-title>
 </ion-navbar>
 
-<ion-content padding class="registration2">
+<ion-content padding class="registration2 registration">
 
-  <p>
+  <p class="sub-heading">
     Pleae confirm your country code and enter your phone number
   </p>
 
-  <form [ngFormModel]="phoneForm" (submit)="submit()">
-    <ion-item>
-      <ion-input class="phone-input" type="tel" [ngFormControl]="phoneControl" autofocus></ion-input>
-    </ion-item>
+  <form [ngFormModel]="phoneForm">
 
-    <button primary type="submit" [disabled]="!phoneForm.valid">
-      Continue
-    </button>
-</form>
+    <div class="list country-code-cont">
+      <ion-item class="item item-input" (click)="openCountryPopover($event)">
+        <div class="phone-country-name" autocomplete="off">{{selectedCountry.name}}</div>
+        <ion-icon name="arrow-forward" item-right></ion-icon>
+      </ion-item>
+      <ion-item class="item item-input input-item-data">
+        <ion-input class="phone-country-code" [value]="selectedCountry.code"> </ion-input>
+        <ion-input class="phone-input" [ngFormControl]="phoneControl" type="tel" autofocus></ion-input>
+      </ion-item>
+    </div>
+  </form>
 </ion-content>

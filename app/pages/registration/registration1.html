@@ -1,8 +1,6 @@
 
 <ion-navbar *navbar class="hidden">
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
+
   <ion-title>UR Money</ion-title>
 </ion-navbar>
 
@@ -18,7 +16,7 @@
     Tap 'Agree & Continue' to accept UR's Terms of Service and Privacy Policy
   </p>
   <p>
-    <button primary [navPush]="registration2Page">Agree &amp; Continue</button>
+    <button primary (click)="goToPage(registration2Page)" >Agree &amp; Continue</button>
   </p>
 
 
