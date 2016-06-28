@@ -2,6 +2,7 @@ import {Component, EventEmitter} from '@angular/core';
 import {ViewController} from 'ionic-angular';
 import {CountryPopoverService} from './country-popover.service';
 import {FilterPipe} from '../../pipes/filterPipe';
+import {Focuser} from '../focuser/focuser';
 /*
   Generated class for the CountryPopover component.
 
@@ -9,13 +10,14 @@ import {FilterPipe} from '../../pipes/filterPipe';
   for more info on Angular 2 Components.
 */
 @Component({
-  pipes:[FilterPipe],
+  pipes: [FilterPipe],
+  directives: [Focuser],
   selector: 'country-popover',
   templateUrl: 'build/components/country-popover/country-popover.html'
 })
 export class CountryPopover {
   countries: any;
-  constructor(public countryPopoverService: CountryPopoverService,public viewController: ViewController) {
+  constructor(public countryPopoverService: CountryPopoverService, public viewController: ViewController) {
     this.populateCountries();
   }
 
