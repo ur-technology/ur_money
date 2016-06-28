@@ -24,7 +24,7 @@ export class Auth {
 
   static firebaseUrl() {
     // TODO: this will work only for webapp, not for mobile app -- need to fix this
-    if (window.location.hostname == "signup.ur.capital" || window.location.hostname == "urcapital-production.firebaseapp.com") {
+    if (/ur\.capital$|urcapital-production\.firebaseapp\.com$/.test(window.location.hostname)) {
       return "https://urcapital-production.firebaseio.com/";
     } else {
       return "https://blinding-torch-3730.firebaseio.com/";
