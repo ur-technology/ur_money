@@ -20,9 +20,6 @@ export class FirebaseService {
   }
 
   lookupPrelaunchUserByPhone(phone, nav, dashboardPage, signUpPage, errorPage) {
-    phone = phone.replace(/ /,"");
-    localStorage.setItem("signUpPhone", phone);
-    phone = "+1" + phone;
     this.auth.firebaseRef().child("users").orderByChild("phone").equalTo(phone).limitToFirst(1).once(
       "value", (snapshot) => {
         var snapshotData = snapshot.val();

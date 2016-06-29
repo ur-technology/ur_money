@@ -62,24 +62,16 @@ class UrMoney {
   }
 
   isPrelaunchRequest() {
-    return /\/go|go\=/.test(window.location.href);
+    return /[\/?&]go/.test(window.location.href);
   }
 
   handlePrelaunchRequest() {
-    var matchResults = window.location.href.match(/(\/go\/|[\?\&]go\=)(\d{10})\b/);
-    var phone;
-    if (matchResults && matchResults.length == 3) {
-      phone = matchResults[2];
-    } else {
-      phone = localStorage.getItem("signUpPhone");
-    }
-    var validPhonePattern = /^[ *\d *]{10}$/;
-    if (validPhonePattern.test(phone)) {
+    var phone = localStorage.getItem("signUpPhone");
+    if (phone) {
       this.firebaseService.lookupPrelaunchUserByPhone(phone, this.nav, DashboardPage, SignUpPage, ErrorPage);
     } else {
       this.nav.setRoot(SignInPage);
     }
-
   }
 
   initializeApp() {
