@@ -62,7 +62,7 @@ class UrMoney {
   }
 
   isPrelaunchRequest() {
-    return /\/go\/|[\?\&]go\=/.test(window.location.href);
+    return /beta/.test(window.location.href);
   }
 
   handlePrelaunchRequest() {
@@ -161,4 +161,3 @@ ionicBootstrap(UrMoney, [], {
   }
 } // http://ionicframework.com/docs/v2/api/config/Config/
 );
-
