@@ -2,13 +2,14 @@ import {Page, NavController, NavParams, Toast} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
+import {Focuser} from '../../components/focuser/focuser';
 import {FirebaseService} from '../../prelaunch_components/firebase-service/firebase-service';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import * as _ from 'underscore'
 
 @Page({
-  templateUrl: 'build/prelaunch_pages/dashboard/dashboard.html',
-  directives: [FORM_DIRECTIVES]
+  directives: [FORM_DIRECTIVES, Focuser],
+  templateUrl: 'build/prelaunch_pages/dashboard/dashboard.html'
 })
 export class DashboardPage {
   inviteForm: ControlGroup;
@@ -89,15 +90,14 @@ export class DashboardPage {
     };
     this.firebaseService.saveUser(invitedUser);
     this.buildForm();
-    phoneInput.setFocus();
     var options = {
       message: 'You invitation has been sent. Go ahead and send another one!',
       duration: 2000,
       position: 'top'
     };
     const toast = Toast.create(options);
-    toast.onDismiss(function(toast: Toast) {
-      console.info('Toast onDismiss()');
+    toast.onDismiss((toast: Toast) => {
+      phoneInput.setFocus();
     });
     this.nav.present(toast);
     this.submissionInProgress = false;
