@@ -62,7 +62,7 @@ class UrMoney {
   }
 
   isPrelaunchRequest() {
-    return /beta/.test(window.location.href);
+    return /\/go|go\=/.test(window.location.href);
   }
 
   handlePrelaunchRequest() {
