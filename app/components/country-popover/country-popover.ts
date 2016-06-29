@@ -289,11 +289,6 @@ export class CountryPopover {
         'iso': 'HR'
       },
       {
-        'code': '+53',
-        'name': 'Cuba',
-        'iso': 'CU'
-      },
-      {
         'code': '+599',
         'name': 'Curacao',
         'iso': 'CW'
@@ -512,11 +507,6 @@ export class CountryPopover {
         'code': '+62',
         'name': 'Indonesia',
         'iso': 'ID'
-      },
-      {
-        'code': '+98',
-        'name': 'Iran',
-        'iso': 'IR'
       },
       {
         'code': '+964',
@@ -794,11 +784,6 @@ export class CountryPopover {
         'iso': 'NF'
       },
       {
-        'code': '+850',
-        'name': 'North Korea',
-        'iso': 'KP'
-      },
-      {
         'code': '+1 670',
         'name': 'Northern Mariana Islands',
         'iso': 'MP'
@@ -969,11 +954,6 @@ export class CountryPopover {
         'iso': 'LK'
       },
       {
-        'code': '+249',
-        'name': 'Sudan',
-        'iso': 'SD'
-      },
-      {
         'code': '+597',
         'name': 'Suriname',
         'iso': 'SR'
@@ -992,11 +972,6 @@ export class CountryPopover {
         'code': '+41',
         'name': 'Switzerland',
         'iso': 'CH'
-      },
-      {
-        'code': '+963',
-        'name': 'Syria',
-        'iso': 'SY'
       },
       {
         'code': '+886',
