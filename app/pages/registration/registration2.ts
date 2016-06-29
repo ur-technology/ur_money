@@ -89,7 +89,7 @@ export class Registration2Page implements OnInit {
               this.loadingModal.hide();
               if (!result.smsSuccess) {
                 console.log("error - sms could not be sent");
-                this.showErrorAlert();
+                this.showErrorAlert(result.smsError);
                 return;
               }
               this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey, phone: phone });
@@ -102,11 +102,19 @@ export class Registration2Page implements OnInit {
 
   }
 
-  showErrorAlert() {
+  showErrorAlert(title, message) {
     let alert = Alert.create({
-      title: 'Error!',
-      message: 'Error while sending sms. Please try again',
-      buttons: ['Ok']
+      title: title,
+      message: message,
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            // do nothing
+          }
+        }
+      ]
     });
     this.nav.present(alert);
   }
