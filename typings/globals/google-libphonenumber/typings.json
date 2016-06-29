@@ -1,0 +1,11 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/mrshaq/typed-google-libphonenumber/509c353ce18df06da5e073881203a1b444cb57ca/typings.json",
+    "raw": "registry:global/google-libphonenumber#1.0.22+20160622193708",
+    "main": "node.d.ts",
+    "global": false,
+    "name": "google-libphonenumber",
+    "type": "typings"
+  }
+}

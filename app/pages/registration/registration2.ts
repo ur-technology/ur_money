@@ -1,5 +1,6 @@
 import {Page, NavController, Alert, Platform, Nav, Popover} from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
+
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
 import {Registration3Page} from './registration3';
@@ -9,7 +10,11 @@ import {LoadingModal} from '../../components/loading-modal/loading-modal';
 import {CountryPopover} from '../../components/country-popover/country-popover';
 import {CountryPopoverService} from '../../components/country-popover/country-popover.service';
 
-declare var jQuery: any, intlTelInputUtils: any;
+declare var jQuery: any, intlTelInputUtils: any, require: any;
+
+import libphonenumber = require('google-libphonenumber');
+const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
+
 
 @Page({
   templateUrl: 'build/pages/registration/registration2.html',
@@ -19,11 +24,30 @@ export class Registration2Page implements OnInit {
   elementRef: ElementRef;
   phoneForm: ControlGroup;
   phoneControl: AbstractControl;
-  selectedCountry = { name: 'United States', code: '+1' };
+  selectedCountry = { name: 'United States', code: '+1', iso: 'US' };
   constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loadingModal: LoadingModal, public countryPopoverService: CountryPopoverService) {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
-      'phone': ['', CustomValidators.phoneValidator]
+      'phone': ['', (control) => {
+        if (control.value.length === 0) {
+          return { 'invalidPhone': true };
+        }
+        try {
+          if (this.selectedCountry.iso == 'MX') {
+            let controlValue = control.value;
+            if (!controlValue.match(/^[1]/)) {
+              return { 'invalidPhone': true };
+            }
+          }
+          let swissNumberProto = phoneUtil.parse(control.value, this.selectedCountry.iso);
+          let isValid = phoneUtil.isValidNumber(swissNumberProto);
+          if (!isValid) {
+            return { 'invalidPhone': true };
+          }
+        } catch (e) {
+          return { 'invalidPhone': true };
+        }
+      }]
     });
     this.phoneControl = this.phoneForm.controls['phone'];
     this.countryPopoverService.countrySelectedEmitter.subscribe((country) => {
