@@ -65,7 +65,7 @@ export class Registration2Page implements OnInit {
 
 
 
-  submit() {
+  submit(phoneInput) {
     let phone = this.selectedCountry.code + this.phoneForm.value.phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
     let formattedPhone = phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL);
     let alert = Alert.create({
@@ -89,7 +89,7 @@ export class Registration2Page implements OnInit {
               this.loadingModal.hide();
               if (!result.smsSuccess) {
                 console.log("error - sms could not be sent");
-                this.showErrorAlert(result.smsError);
+                this.showErrorAlert(result.smsError, phoneInput);
                 return;
               }
               this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey, phone: phone });
@@ -102,16 +102,18 @@ export class Registration2Page implements OnInit {
 
   }
 
-  showErrorAlert(title, message) {
+  showErrorAlert(smsError, phoneInput) {
     let alert = Alert.create({
-      title: title,
-      message: message,
+      title: /no matching user found/.test(smsError) ? "Unregistered Phone Number!" : "Unable to Send SMS!",
+      message: smsError,
       buttons: [
         {
           text: 'OK',
-          role: 'cancel',
           handler: () => {
-            // do nothing
+            alert.dismiss().then(() => {
+              phoneInput.setFocus();
+              console.log("clicked ok");
+            })
           }
         }
       ]
