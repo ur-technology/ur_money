@@ -127,6 +127,5 @@ export class Registration2Page implements OnInit {
   countrySelect(country) {
     this.selectedCountry = country;
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();
-    this.nav.last().dismiss();
   }
 }

@@ -23,7 +23,6 @@ export class CountryPopover {
 
   countrySelect(country) {
     this.countryPopoverService.countrySelected(country);
-    this.viewController.dismiss();
   }
 
   populateCountries() {
@@ -215,7 +214,7 @@ export class CountryPopover {
       },
       {
         'code': '+599',
-        'name': '"Caribbean Netherlands',
+        'name': 'Caribbean Netherlands',
         'iso': 'BQ'
       },
       {
