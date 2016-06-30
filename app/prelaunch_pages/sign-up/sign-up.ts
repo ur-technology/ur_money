@@ -47,7 +47,7 @@ export class SignUpPage {
     this.user.firstName = thisPage.signUpForm.value.firstName;
     this.user.lastName = thisPage.signUpForm.value.lastName;
     let corePhone = thisPage.signUpForm.value.phone;
-    this.user.phone = "+" + ( /^664/.test(corePhone) ? "52" : "1" ) + corePhone
+    this.user.phone = "+" + ( /^664/.test(corePhone) ? "521" : "1" ) + corePhone
     this.user.signedUpAt = Firebase.ServerValue.TIMESTAMP;
 
     this.firebaseService.saveUser(thisPage.user);
