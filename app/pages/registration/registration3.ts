@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams} from 'ionic-angular';
+import {Page, NavController, NavParams, Alert} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl, Control} from '@angular/common';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {Auth} from '../../components/auth/auth';
@@ -10,6 +10,7 @@ import {LoadingModal} from '../../components/loading-modal/loading-modal';
 })
 export class Registration3Page {
   verificationCode: string;
+  verificationKey: string;
 
   errorMessage: string;
   phone: string;
@@ -19,13 +20,15 @@ export class Registration3Page {
     public loadingModal: LoadingModal) {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
+    this.verificationCode
     this.verificationCode = '';
+    this.verificationKey = this.navParams.get('phoneVerificationKey');
   }
 
   submit() {
     this.loadingModal.show();
     // this.verificationCodeForm.value.verificationCode;
-    this.auth.checkVerificationCode(this.navParams.get('phoneVerificationKey'), this.verificationCode).then((success) => {
+    this.auth.checkVerificationCode(this.verificationKey, this.verificationCode).then((success) => {
       this.loadingModal.hide();
       if (!success) {
         this.errorMessage = "The verification code you entered is incorrect or expired. Please try again.";
@@ -33,6 +36,38 @@ export class Registration3Page {
     });
   }
 
+  smsAgain() {
+    this.loadingModal.show();
+    this.auth.requestPhoneVerification(this.phone).then((result: any) => {
+      this.loadingModal.hide();
+      if (!result.smsSuccess) {
+        console.log("error - sms could not be sent");
+        this.showErrorAlert();
+        return;
+      } else {
+        this.verificationKey = result.phoneVerificationKey;
+        this.showSucessSMSAlert();
+      }
+    });
+  }
+
+  showSucessSMSAlert() {
+    let alert = Alert.create({
+      title: 'Success',
+      message: 'Please use latest verification code.',
+      buttons: ['Ok']
+    });
+    this.nav.present(alert);
+  }
+  
+  showErrorAlert() {
+    let alert = Alert.create({
+      title: 'Error!',
+      message: 'Error while sending sms. Please try again',
+      buttons: ['Ok']
+    });
+    this.nav.present(alert);
+  }
 
   add(number) {
     if (this.verificationCode.length < 6)

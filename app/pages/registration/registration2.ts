@@ -24,7 +24,7 @@ export class Registration2Page implements OnInit {
   elementRef: ElementRef;
   phoneForm: ControlGroup;
   phoneControl: AbstractControl;
-  selectedCountry = { name: 'United States', code: '+1', iso: 'US' };
+  selectedCountry = { name: 'United States', code: '+1', iso: 'US', isoCode: '' };
   constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loadingModal: LoadingModal, public countryPopoverService: CountryPopoverService) {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
@@ -33,12 +33,6 @@ export class Registration2Page implements OnInit {
           return { 'invalidPhone': true };
         }
         try {
-          if (this.selectedCountry.iso == 'MX') {
-            let controlValue = control.value;
-            if (!controlValue.match(/^[1]/)) {
-              return { 'invalidPhone': true };
-            }
-          }
           let swissNumberProto = phoneUtil.parse(control.value, this.selectedCountry.iso);
           let isValid = phoneUtil.isValidNumber(swissNumberProto);
           if (!isValid) {
@@ -66,7 +60,7 @@ export class Registration2Page implements OnInit {
 
 
   submit() {
-    let phone = this.selectedCountry.code + this.phoneForm.value.phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
+    let phone = this.selectedCountry.code + (this.selectedCountry.isoCode ? this.selectedCountry.isoCode : '') + this.phoneForm.value.phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
     let formattedPhone = phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL);
     let alert = Alert.create({
       title: 'NUMBER CONFIRMATION',
@@ -122,6 +116,6 @@ export class Registration2Page implements OnInit {
   countrySelect(country) {
     this.selectedCountry = country;
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();
+    this.nav.last().dismiss();
   }
-
 }

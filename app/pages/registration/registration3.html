@@ -1,5 +1,5 @@
 <ion-navbar *navbar>
-  <ion-title>{{phone}}</ion-title>
+  <ion-title>Enter Verification Code</ion-title>
   <button clear class="right" [disabled]="verificationCode.length<6" (click)="submit()">
       Done
   </button>
@@ -33,8 +33,7 @@
     </div>
 
     <div class="verify-btns">
-      <button class="button button-light">Call Me Again</button>
-      <button class="button button-light">SMS Me Again</button>
+      <button (click)="smsAgain()" class="button button-light">SMS Me Again</button>
     </div>
   </div>
 
