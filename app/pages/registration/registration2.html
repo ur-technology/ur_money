@@ -17,9 +17,9 @@
       <ion-item>
         <ion-label>{{selectedCountry.name}}</ion-label>
         <ion-select [(ngModel)]="selected" (ionChange)="countrySelect()">
-          <ion-option value="{{country.code}}" *ngFor="let country of countries">
+          <ion-option   value="{{country.code}}" *ngFor="let country of countries">
             {{country.name}}
-            <span item-right checked="tttt==country">{{country.code}}</span>
+            <span item-right>{{country.code}}</span>
           </ion-option>
         </ion-select>
         <ion-icon name="arrow-forward" item-right></ion-icon>

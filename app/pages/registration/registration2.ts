@@ -125,7 +125,7 @@ export class Registration2Page implements OnInit {
   }
 
   countrySelect(country) {
-    this.selectedCountry = _.find(this.countries, { code: this.selected });
+    this.selectedCountry = _.find(this.countries, { code: this.selected }) || { name: 'United States', code: '+1', iso: 'US', isoCode: '' };
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();
   }
 }
