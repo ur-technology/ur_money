@@ -1,6 +1,6 @@
 <ion-navbar *navbar>
   <ion-title>{{selectedCountry.code}}{{phoneForm.value.phone}}</ion-title>
-  <button clear class="right" [disabled]="!phoneForm.valid" (click)="submit()">
+  <button clear class="right" [disabled]="!phoneForm.valid" (click)="submit(phoneInput)">
       Done
   </button>
 </ion-navbar>
@@ -20,7 +20,7 @@
       </ion-item>
       <ion-item class="item item-input input-item-data">
         <ion-input class="phone-country-code" [value]="selectedCountry.code"> </ion-input>
-        <ion-input class="phone-input" [ngFormControl]="phoneControl" type="tel" autofocus></ion-input>
+        <ion-input #phoneInput class="phone-input" [ngFormControl]="phoneControl" type="tel" autofocus></ion-input>
       </ion-item>
     </div>
   </form>

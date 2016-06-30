@@ -70,7 +70,7 @@ export class Auth {
         if (!_.isUndefined(phoneVerification.smsSuccess)) {
           console.log("resolving promise");
           phoneVerificationRef.off("value"); // stop watching for changes on this phone verification
-          resolve({ phoneVerificationKey: phoneVerificationRef.key(), smsSuccess: phoneVerification.smsSuccess });
+          resolve({ phoneVerificationKey: phoneVerificationRef.key(), smsSuccess: phoneVerification.smsSuccess, smsError: phoneVerification.smsError });
         }
       });
     });
