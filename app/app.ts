@@ -16,7 +16,7 @@ import {CommunityPage} from './pages/community/community';
 import {TransactionsPage} from './pages/transactions/transactions';
 import {SettingPage} from './pages/setting/setting';
 import {TransactionNavService} from './pages/transactions/transaction-nav-service';
-import {CountryPopoverService} from './components/country-popover/country-popover.service';
+import {CountryListService} from './components/country-list/country-list.service';
 import {UserService} from './providers/user-service/user-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 
@@ -32,7 +32,7 @@ import * as lodash from 'lodash';
 @Component({
   templateUrl: 'build/app.html',
   directives: [LoadingModal],
-  providers: [Auth, TransactionNavService, CountryPopoverService, ChartData, LoadingModal, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
+  providers: [Auth, TransactionNavService, CountryListService, ChartData, LoadingModal, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })

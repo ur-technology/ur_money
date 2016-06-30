@@ -1,14 +1,13 @@
 import {Page, NavController, Alert, Platform, Nav, Popover} from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
-
+import * as _ from 'lodash';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
 import {Registration3Page} from './registration3';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
 
-import {CountryPopover} from '../../components/country-popover/country-popover';
-import {CountryPopoverService} from '../../components/country-popover/country-popover.service';
+import {CountryListService} from '../../components/country-list/country-list.service';
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
 
@@ -24,8 +23,10 @@ export class Registration2Page implements OnInit {
   elementRef: ElementRef;
   phoneForm: ControlGroup;
   phoneControl: AbstractControl;
-  selectedCountry = { name: 'United States', code: '+1', iso: 'US', isoCode: '' };
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loadingModal: LoadingModal, public countryPopoverService: CountryPopoverService) {
+  countries: any;
+  selected: any;
+  selectedCountry: any;
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loadingModal: LoadingModal, public countryListService: CountryListService) {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
       'phone': ['', (control) => {
@@ -43,10 +44,9 @@ export class Registration2Page implements OnInit {
         }
       }]
     });
+    this.selectedCountry = { name: 'United States', code: '+1', iso: 'US', isoCode: '' };
     this.phoneControl = this.phoneForm.controls['phone'];
-    this.countryPopoverService.countrySelectedEmitter.subscribe((country) => {
-      this.countrySelect(country);
-    });
+    this.countries = this.countryListService.getCountryData();
   }
 
   ngOnInit() {
@@ -117,15 +117,15 @@ export class Registration2Page implements OnInit {
   }
 
   openCountryPopover(ev) {
-    let popover = Popover.create(CountryPopover, {
-    });
-    this.nav.present(popover, {
-      ev: ev
-    });
+    // let popover = Popover.create(CountryPopover, {
+    // });
+    // this.nav.present(popover, {
+    //   ev: ev
+    // });
   }
 
   countrySelect(country) {
-    this.selectedCountry = country;
+    this.selectedCountry = _.find(this.countries, { code: this.selected });
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();
   }
 }

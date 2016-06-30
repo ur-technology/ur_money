@@ -14,9 +14,21 @@
   <form [ngFormModel]="phoneForm">
 
     <div class="list country-code-cont">
-      <button ion-item class="item item-input" (click)="openCountryPopover($event)">
+      <ion-item>
+        <ion-label>{{selectedCountry.name}}</ion-label>
+        <ion-select [(ngModel)]="selected" (ionChange)="countrySelect()">
+          <ion-option value="{{country.code}}" *ngFor="let country of countries">
+            {{country.name}}
+            <span item-right checked="tttt==country">{{country.code}}</span>
+          </ion-option>
+        </ion-select>
+        <ion-icon name="arrow-forward" item-right></ion-icon>
+      </ion-item>
+      <!--<button ion-item detail-none class="item item-input" >
         <div class="phone-country-name" autocomplete="off">{{selectedCountry.name}}</div>
-      </button>
+        <ion-icon name="arrow-forward" item-right></ion-icon>
+      </button>-->
+
       <ion-item class="item item-input input-item-data">
         <ion-input class="phone-country-code" [value]="selectedCountry.code"> </ion-input>
         <ion-input #phoneInput class="phone-input" [ngFormControl]="phoneControl" type="tel" autofocus></ion-input>
