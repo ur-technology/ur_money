@@ -52,20 +52,20 @@ export class Registration2Page implements OnInit {
   ngOnInit() {
   }
 
-
   normalizedPhone(phone) {
     return (phone || '').replace(/\D/g, '');
   }
 
-
-
-
   submit(phoneInput) {
-    let phone = this.selectedCountry.code + (this.selectedCountry.isoCode ? this.selectedCountry.isoCode : '') + this.phoneForm.value.phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber");
-    let formattedPhone = phone; // jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL);
+    let corePhone = this.phoneForm.value.phone;
+    let extraIsoCode = '';
+    if (this.selectedCountry.isoCode && !corePhone.startsWith(this.selectedCountry.isoCode)) {
+      extraIsoCode = this.selectedCountry.isoCode;
+    }
+    let phone = this.selectedCountry.code + extraIsoCode + corePhone
     let alert = Alert.create({
       title: 'NUMBER CONFIRMATION',
-      message: "<p>" + formattedPhone + "</p><p>Is your phone number above correct?</p>",
+      message: "<p>" + phone + "</p><p>Is your phone number above correct?</p>",
       buttons: [
         {
           text: 'EDIT',
