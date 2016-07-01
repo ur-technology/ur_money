@@ -85,7 +85,7 @@ export class DashboardPage {
         lastName: this.user.lastName
       },
       downlineLevel: this.user.downlineLevel + 1,
-      phone: "+1" + this.inviteForm.value.phone.replace(/\D/g,''),
+      phone: CustomValidators.normalizedPhone(this.inviteForm.value.phone),
       invitedAt: Firebase.ServerValue.TIMESTAMP
     };
     this.firebaseService.saveUser(invitedUser);
