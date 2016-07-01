@@ -12,13 +12,13 @@
     "ios": "ionic run ios"
   },
   "dependencies": {
-    "@angular/common": "^2.0.0-rc.1",
-    "@angular/compiler": "^2.0.0-rc.1",
-    "@angular/core": "^2.0.0-rc.1",
-    "@angular/http": "^2.0.0-rc.1",
-    "@angular/platform-browser": "^2.0.0-rc.1",
-    "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
-    "@angular/router": "^2.0.0-rc.1",
+    "@angular/common": "2.0.0-rc.1",
+    "@angular/compiler": "2.0.0-rc.1",
+    "@angular/core": "2.0.0-rc.1",
+    "@angular/http": "2.0.0-rc.1",
+    "@angular/platform-browser": "2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.1",
+    "@angular/router": "2.0.0-rc.1",
     "es6-shim": "^0.35.0",
     "firebase": "^2.4.2",
     "google-libphonenumber": "^1.0.23",
@@ -34,7 +34,7 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
-    "angularfire2": "^2.0.0-beta.0",
+    "angularfire2": "2.0.0-beta.0",
     "del": "2.2.0",
     "gulp": "3.9.1",
     "gulp-watch": "4.3.5",
