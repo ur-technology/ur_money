@@ -1,31 +1,22 @@
 # ur_money
-Ionic2, Angular2, Angularfire2, Firebase
-
-`git clone git@github.com:urcapital/ur_money.git`
-`cd ur_money`
-`npm install -g ionic@2.0.0-beta.25, cordova`
-`npm install`
-`ionic serve`
-
 
 ## Install global dependencies
 ```script
-npm install -g cordova gulp
-npm install -g ionic@beta
+`npm install -g ionic@beta, cordova, gulp`
 ```
-
-
 
 ## Install local dependencies
 ```script
-npm run setup
+`git clone git@github.com:urcapital/ur_money.git`
+`cd ur_money`
+`npm install`
+`ionic serve --v2`
 ```
 
 ## Run server
 ```script
-npm run server 
+ionic serve --v2
 ```
-
 
 ## Deploy to Ionic View
 ```script
@@ -47,4 +38,3 @@ If not you try following commands
 npm run setup-android
 npm run android
 ```
-
