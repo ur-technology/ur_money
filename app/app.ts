@@ -66,7 +66,7 @@ class UrMoney {
   }
 
   handlePrelaunchRequest() {
-    var phone = localStorage.getItem("signUpPhone");
+    var phone = localStorage.getItem("prelaunchPhone");
     if (phone) {
       this.firebaseService.lookupPrelaunchUserByPhone(phone, this.nav, DashboardPage, SignUpPage, ErrorPage);
     } else {
