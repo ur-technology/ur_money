@@ -17,6 +17,23 @@
   display: block;
 }
 
+.registration4 {
+  ion-input {
+    padding-left: 5px;
+  }
+
+  ion-input.ng-pristine.ng-invalid {
+    border-left: 5px solid orange; /* orange */
+  }
+
+  ion-input.ng-dirty.ng-invalid {
+    border-left: 5px solid red;
+  }
+
+  ion-input.ng-valid {
+    border-left: 5px solid green;
+  }
+}
 
 /*--------------------------------------------------
     Registration Screen / Verification Screen

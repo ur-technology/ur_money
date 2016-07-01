@@ -1,3 +1,6 @@
+import {ControlGroup} from '@angular/common';
+import * as _ from 'lodash';
+
 export class CustomValidators {
   static normalizedPhone(phone) {
     let p = phone;
@@ -35,4 +38,28 @@ export class CustomValidators {
       return { 'invalidVerificationCode': true };
     }
   }
+
+  static nameValidator(control) {
+    if (!control.value.match(/\w+/)) {
+      return { 'invalidName': true };
+    }
+  }
+
+  static secretPhraseValidator(control) {
+    var pattern = /^ *([^\b]+ ){4}[^\b]+ *$$/;
+    if (!control.value.match(pattern)) {
+      return { 'invalidSecretPhrase': true };
+    }
+  }
+
+  static matchingSecretPhrases(controlName1: string, controlName2: string) {
+    return (group: ControlGroup) => {
+      let control1 = group.controls[controlName1];
+      let control2 = group.controls[controlName2];
+      if (!_.isEmpty(control2.value) && control1.value !== control2.value) {
+        return control2.setErrors({notEquivalent: true})
+      }
+    }
+  }
+
 }
