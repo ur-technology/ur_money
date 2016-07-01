@@ -38,7 +38,8 @@ export class SignInPage {
   signIn() {
     var thisPage = this;
     thisPage.submissionInProgress = true;
-    var phoneValue = "+1" + this.signInForm.value.phone.replace(/\D/g,'');
+    var corePhone = this.signInForm.value.phone.replace(/\D/g,'');
+    var phoneValue = "+" + ( /^664/.test(corePhone) ? "521" : "1" ) + corePhone
     window.localStorage.setItem("signUpPhone", phoneValue)
     this.firebaseService.lookupPrelaunchUserByPhone(phoneValue, this.nav, DashboardPage, SignUpPage, ErrorPage);
   }
