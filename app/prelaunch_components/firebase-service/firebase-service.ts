@@ -33,6 +33,7 @@ export class FirebaseService {
         }
 
         var user = users[0];
+        window.localStorage.setItem("prelaunchPhone", phone)
         nav.setRoot(user.signedUpAt ? dashboardPage : signUpPage, { user: user });
       });
   }

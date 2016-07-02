@@ -38,10 +38,8 @@ export class SignInPage {
   signIn() {
     var thisPage = this;
     thisPage.submissionInProgress = true;
-    var corePhone = this.signInForm.value.phone.replace(/\D/g,'');
-    var phoneValue = "+" + ( /^664/.test(corePhone) ? "521" : "1" ) + corePhone
-    window.localStorage.setItem("prelaunchPhone", phoneValue)
-    this.firebaseService.lookupPrelaunchUserByPhone(phoneValue, this.nav, DashboardPage, SignUpPage, ErrorPage);
+    let normalizedPhone = CustomValidators.normalizedPhone(this.signInForm.value.phone);
+    this.firebaseService.lookupPrelaunchUserByPhone(normalizedPhone, this.nav, DashboardPage, SignUpPage, ErrorPage);
   }
 
 
