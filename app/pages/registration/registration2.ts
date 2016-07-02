@@ -116,14 +116,6 @@ export class Registration2Page implements OnInit {
     this.nav.present(alert);
   }
 
-  openCountryPopover(ev) {
-    // let popover = Popover.create(CountryPopover, {
-    // });
-    // this.nav.present(popover, {
-    //   ev: ev
-    // });
-  }
-
   countrySelect(country) {
     this.selectedCountry = _.find(this.countries, { code: this.selected }) || { name: 'United States', code: '+1', iso: 'US', isoCode: '' };
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();

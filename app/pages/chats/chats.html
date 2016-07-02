@@ -1,0 +1,21 @@
+<ion-navbar *navbar>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <button clear class="right">
+    <i class="users-icon"></i>
+   </button>
+</ion-navbar>
+
+<ion-content class="chats">
+  <ion-list class="chats-list">
+    <button ion-item detail-none (click)="moveToChat(chat)" class="item item-avatar" *ngFor="let chat of chats">
+      <ion-avatar item-left>
+        <img src="img/avatars/avatar-{{chat.imgID}}.jpg" alt="avatar">
+      </ion-avatar>
+      <ion-note item-right class="item-note">{{chat.time}}</ion-note>
+      <h2>{{chat.name}}</h2>
+      <p><ion-icon name="ios-pin-outline"></ion-icon> {{chat.city}}, {{chat.country}}</p>
+    </button>
+  </ion-list>
+</ion-content>

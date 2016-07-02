@@ -7,6 +7,7 @@ import {AddressBookModal} from '../../components/address-book-modal/address-book
 import {ReceivePage} from '../receive/receive';
 import {SendPage} from '../send/send';
 import {InvitePage} from '../invite/invite';
+import {ConversationPage} from '../conversation/conversation';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
@@ -19,11 +20,12 @@ declare var jQuery: any;
 })
 export class HomePage implements OnInit {
   elementRef: ElementRef;
-  android:boolean=false;
+  android: boolean = false;
   sendPage: any;
   receivePage: any;
   selectedItem: any;
   invitePage: any;
+  conversation:any;
   icons: string[];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
@@ -34,9 +36,10 @@ export class HomePage implements OnInit {
     this.sendPage = SendPage;
     this.receivePage = ReceivePage;
     this.invitePage = InvitePage;
+    this.conversation=ConversationPage;
     if (this.platform.is('android')) {
-      this.android=true;
-    } 
+      this.android = true;
+    }
   }
 
   ngOnInit() {

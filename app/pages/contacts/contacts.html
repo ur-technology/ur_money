@@ -1,0 +1,19 @@
+<ion-navbar *navbar>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <button clear class="right">
+    <i class="users-icon"></i>
+   </button>
+</ion-navbar>
+
+<ion-content class="contacts">
+  <ion-list class="contacts-list">
+    <ion-item href="#" class="item item-avatar" *ngFor="let contact of contacts">
+      <ion-avatar item-left> <img src="img/avatars/avatar-{{contact.imgID}}.jpg" alt="avatar"></ion-avatar>
+      <h2>{{contact.name}}</h2>
+      <p>
+        <ion-icon name="ios-pin-outline"></ion-icon> {{contact.city}}, {{contact.country}}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
