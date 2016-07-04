@@ -3,8 +3,8 @@
         background: #fff;
         border-color: #fff;
     }
-     .toolbar {
-         padding: 0;
+    .toolbar {
+        padding: 0;
         .bar-button {
             color: #17909c;
             font-size: 25px;
@@ -23,7 +23,7 @@
     scroll-content {
         overflow-y: visible;
     }
-    ion-navbar-section{
+    ion-navbar-section {
         display: none;
     }
 }
@@ -107,6 +107,7 @@
     text-align: center;
     line-height: 1em;
     padding-bottom: 1px;
+    margin: 0 -5px;
 }
 
 .transaction-filter-top .filter-btns .button.button-outline {
@@ -116,7 +117,7 @@
     border: 1px solid #ffffff;
     border-radius: 10px;
     padding: 1px 5px 2px;
-    margin: 0 4px 4px;
+    margin: 0 1px 4px;
     min-height: 16px;
     min-width: 0;
     height: 16px;
@@ -128,39 +129,39 @@
 }
 
 .transaction-filter-top .total-ur {
-    font-size: 33px;
+    font-size: 24px;
     font-weight: 300;
     color: #ffffff;
     line-height: 1.4em;
-    padding: 0 10px;
 }
 
 .transaction-filter-top .last-update {
-    font-size: 11px;
+    font-size: 10px;
     color: rgba(256, 256, 256, 0.6);
     line-height: 1.4em;
-    padding: 0 10px;
+    margin: 0 0 10px;
 }
 
-.transaction-filter-top .last-update i {
-    margin-right: 5px;
+.transaction-filter-top .last-update ion-icon {
+    margin-right: 3px;
     color: rgba(256, 256, 256, 1);
 }
 
 .transaction-filter-top .invite-and-earn {
-    position: absolute;
+position: absolute;
     background-color: #fa4c44;
     font-size: 10px;
     line-height: 1.1;
     color: #d0d0d0;
-    right: -47px;
-    bottom: -34px;
-    padding: 17px 50px 40px 20px;
+    right: -57px;
+    bottom: -39px;
+    padding: 8px 50px 40px 15px;
     text-align: center;
     width: 180px;
     border-radius: 59% 70% 20% 80%;
     p {
         color: #d0d0d0;
+        margin: 0 0 10px;
     }
 }
 
@@ -229,7 +230,7 @@
 }
 
 .transaction-chat .item {
-    height: 72px;
+    min-height: 72px;
     border-radius: 5px;
     border-radius: 5px;
     .input-wrapper {
@@ -237,6 +238,7 @@
     }
     .item-inner {
         border-bottom: none;
+        padding-right: 0;
     }
 }
 
@@ -270,6 +272,7 @@
     font-size: 13px;
     font-weight: 600;
     color: #38454f;
-    padding-left: 15px;
-    margin: 8px 8px 8px 0px;
+    padding-left: 8px;
+    margin: 8px 11px 8px 0px;
+    text-align: center;
 }
