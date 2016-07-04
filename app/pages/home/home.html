@@ -4,7 +4,7 @@
     <ion-icon name="menu"></ion-icon>
   </button>
 
-  <button (click)="setRoot(conversation)"  clear class="right">
+  <button (click)="setRoot(conversation)" clear class="right">
     <i class="users-icon"></i>
    </button>
 
@@ -29,6 +29,23 @@
     </div>
     <div class="container" id="container"></div>
   </div>
+  <ion-segment class="button-bar chart-btns">
+    <ion-segment-button (click)="selected('1D')" [ngClass]="{'active':selectedOption=='1D'}" class="button">
+      1D
+    </ion-segment-button>
+    <ion-segment-button (click)="selected('1W')" [ngClass]="{'active':selectedOption=='1W'}" class="button">
+      1W
+    </ion-segment-button>
+    <ion-segment-button (click)="selected('1M')" [ngClass]="{'active':selectedOption=='1M'}" class="button">
+      1M
+    </ion-segment-button>
+    <ion-segment-button (click)="selected('6M')" [ngClass]="{'active':selectedOption=='6M'}" class="button">
+      6M
+    </ion-segment-button>
+    <ion-segment-button (click)="selected('1Y')" [ngClass]="{'active':selectedOption=='1Y'}" class="button">
+      1Y
+    </ion-segment-button>
+  </ion-segment>
   <div class="list list-msgs">
     <ion-item>
       <ion-avatar item-left>
