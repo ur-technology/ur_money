@@ -400,8 +400,10 @@ ion-select {
 }
 
 .main-splash .ur-logo {
-  text-align: center;
-  margin-top: 120px;
+  position: absolute;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
 }
 
 .main-splash .ur-logo img {
@@ -422,7 +424,7 @@ ion-select {
 }
 
 .bottom-toolbar .toolbar-background {
-  border:none;
+  border: none;
   background: rgba(241, 241, 241, 1);
   background: -moz-radial-gradient(center, ellipse cover, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
   background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(241, 241, 241, 1)), color-stop(100%, rgba(196, 202, 206, 1)));
