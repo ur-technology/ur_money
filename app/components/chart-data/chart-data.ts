@@ -13,6 +13,7 @@ export class ChartData {
   public currentBalance: any;
   public percentageChange: any;
   public balanceChange: any;
+  public balanceRecordArray: any;
   public loadedEmitter = new EventEmitter();
   public points: any[];
   public isLoaded: boolean = false;
@@ -21,6 +22,11 @@ export class ChartData {
     this.loadChartDateWhenBalanceHistoryChanges();
   }
 
+  // private functions
+
+  /*
+  Use to convert the WeiString to Approximate UR
+  */
   convertWeiStringToApproximateUR(weiString) {
     var x = "0000000000000000000" + weiString;
     x = x.replace(/\D/, '');
@@ -29,71 +35,129 @@ export class ChartData {
     return parseFloat(x);
   }
 
+  /*
+  Method use to create the start Time for Rannge to get the balanceRecords
+  */
+  createStartTime(endTime, filterPeriod) {
+    let startTime = moment(endTime).add(-1, 'days');
+    switch (filterPeriod) {
+      case '1D':
+        startTime = moment(endTime).add(-1, 'days');
+        break;
+      case '1W':
+        startTime = moment(endTime).add(-7, 'days');
+        break;
+      case '1M':
+        startTime = moment(endTime).add(-1, 'months');
+        break;
+      case '6M':
+        startTime = moment(endTime).add(-6, 'months');
+        break;
+      case '1Y':
+      default:
+        startTime = moment(endTime).add(-1, 'years');
+        break;
+    }
+    return startTime;
+  }
+
+
+  // Public Functions
+
+  /*
+  Get The data from firebase
+  */
+
   loadChartDateWhenBalanceHistoryChanges() {
     var balanceRecordsRef = this.auth.userRef.child("wallet").child("balanceRecords");
     var thisPage = this;
     thisPage.angularFire.database.object(balanceRecordsRef).subscribe((balanceRecords) => {
       thisPage.isLoaded = false;
-      thisPage.points = [];
-      var sortedBalanceRecords = _.sortBy(balanceRecords, 'updatedAt');
-      let lastRecord: any = _.last(sortedBalanceRecords);
-      var endTime = moment.max(moment(lastRecord ? lastRecord.updatedAt : undefined, 'x'), moment());
-      var startTime = moment(endTime).add(-7, 'days');
 
+      var sortedBalanceRecords = lodash.sortBy(balanceRecords, 'updatedAt');
+      this.balanceRecordArray = sortedBalanceRecords;
+      thisPage.filterBalanceWithPeriod(thisPage, '1W');
+    });
+  }
 
-      _.each(sortedBalanceRecords, function (value: any, id: any) {
-        if (startTime.isBefore(moment(value.updatedAt, 'x'))) {
-          thisPage.points.push([value.updatedAt, thisPage.convertWeiStringToApproximateUR(value.amount)]);
-        }
-      });
+  /*
+  Filter the Balance with Filter Period
+  */
+  filterBalanceRecords(filterPeriod) {
+    this.filterBalanceWithPeriod(this, filterPeriod);
+  }
 
-      // add starting point to chart if necessry
-      if (thisPage.points.length == 0 || thisPage.points[0][0] != startTime.toDate()) {
-        var priorBalanceRecord = _.detect(sortedBalanceRecords.reverse(), function (value: any, id: any) {
-          return moment(value.updatedAt, 'x').isBefore(startTime);
-        });
-        var startAmount = priorBalanceRecord ? thisPage.convertWeiStringToApproximateUR(priorBalanceRecord.amount) : 0.0;
-        thisPage.points.unshift([startTime.valueOf(), startAmount]);
+  //Helper Function
+  /*
+  Actual method with period with start and end Date    
+  */
+  filterBalanceWithPeriod(thisPage, filterPeriod) {
+    thisPage.points = [];
+    let sortedBalanceRecords = this.balanceRecordArray;
+    let lastRecord: any = _.last(sortedBalanceRecords);
+    var endTime = moment.max(moment(lastRecord ? lastRecord.updatedAt : undefined, 'x'), moment());
+    var startTime = thisPage.createStartTime(endTime, filterPeriod);
+
+    //add to points array only those balance records which is after start time
+    _.each(sortedBalanceRecords, function (value: any, id: any) {
+      if (startTime.isBefore(moment(value.updatedAt, 'x'))) {
+        thisPage.points.push([value.updatedAt, thisPage.convertWeiStringToApproximateUR(value.amount)]);
       }
-
-
-
-      // add ending point to chart if necessry
-      var lastPoint = _.last(thisPage.points);
-      if (lastPoint[0] != endTime.toDate()) {
-        thisPage.points.push([endTime.valueOf(), lastPoint[1]]);
-      }
-      this.currentBalance = lastPoint[1];
-
-
-
-      // balanceChange calculation
-      let endTimeValue = moment(lastPoint[0]);
-      let oneDayBefore = moment(lastPoint[0]).add(-1, 'days');
-      let pointsData = lodash.clone(thisPage.points);
-      let lastDayBalance = _.detect(pointsData.reverse(), function (value: any, id: any) {
-        return moment(value[0]).isBefore(endTimeValue) && moment(value[0]).isAfter(oneDayBefore);
-      });
-      if (lastDayBalance) {
-        if (this.currentBalance > lastDayBalance[1]) {
-          this.percentageChange = ((this.currentBalance - lastDayBalance[1]) / this.currentBalance) * 100;
-          this.balanceChange = this.currentBalance - lastDayBalance[1];
-        } else {
-          this.percentageChange = (((this.currentBalance - lastDayBalance[1]) / lastDayBalance[1]) * 100);
-          this.balanceChange = this.currentBalance - lastDayBalance[1];
-        }
-      } else {
-        this.percentageChange = 0;
-        this.balanceChange = 0;
-      }
-
-
-
-      console.log("data loaded", thisPage.points);
-      thisPage.isLoaded = true;
-      thisPage.loadedEmitter.emit({});
     });
 
+
+    /// Create clone of the sortedBalanceRecords .... so this will not effect Points array
+    let decendingSorted = lodash.clone(sortedBalanceRecords);
+    decendingSorted = decendingSorted.reverse();
+
+    // add starting point to chart if necessry
+    if (thisPage.points.length == 0 || thisPage.points[0][0] != startTime.toDate()) {
+      var priorBalanceRecord = _.detect(decendingSorted, function (value: any, id: any) {
+        return moment(value.updatedAt, 'x').isBefore(startTime);
+      });
+      var startAmount = priorBalanceRecord ? thisPage.convertWeiStringToApproximateUR(priorBalanceRecord.amount) : 0.0;
+      thisPage.points.unshift([startTime.valueOf(), startAmount]);
+    }
+
+    // add ending point to chart if necessry
+    var lastPoint = _.last(thisPage.points);
+    this.currentBalance = lastPoint[1];
+    /* Comment by malkiat .... Seems not required 
+    // if (lastPoint[0] != endTime.toDate()) {
+    //   thisPage.points.push([endTime.valueOf(), lastPoint[1]]);
+    // }
+    */
+
+    // balanceChange calculation for chart 
+    //closne the chart Ponts so that modification in this will not effect the chart data
+    let pointsData = lodash.clone(thisPage.points);
+    // get the offset  day balance by check if the value in points data 
+    // before end time and after start time or equal to start time
+    //// NOTE: If you want immediate value before end time just 
+    //uncomment return in block below
+    let offsetDaybalance = _.detect(pointsData, function (value: any, id: any) {
+      return endTime.isAfter(value[0]) && (startTime.isBefore(value[0]) || startTime.isSame(value[0]));
+      //   return endTime.isAfter(value[0]); 
+    });
+
+    // If offsetDaybalance is defined then check if this greater than current balance 
+    /// and calculate percentageChange and balanceChange with your mathematics skills :)
+    
+    if (offsetDaybalance) {
+      if (this.currentBalance > offsetDaybalance[1]) {
+        this.percentageChange = ((this.currentBalance - offsetDaybalance[1]) / this.currentBalance) * 100;
+        this.balanceChange = this.currentBalance - offsetDaybalance[1];
+      } else {
+        this.percentageChange = (((this.currentBalance - offsetDaybalance[1]) / offsetDaybalance[1]) * 100);
+        this.balanceChange = this.currentBalance - offsetDaybalance[1];
+      }
+    } else {
+      this.percentageChange = 0;
+      this.balanceChange = 0;
+    }
+    console.log("data loaded", thisPage.points);
+    thisPage.isLoaded = true;
+    thisPage.loadedEmitter.emit({});
   }
 
 }

@@ -52,11 +52,11 @@ export class HomePage implements OnInit {
     console.log("about to render chart");
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {
-      this.filterData();
+      this.renderChart();
     } else {
       thisPage.chartData.loadedEmitter.subscribe((_) => {
         console.log("about to render chart");
-        this.filterData();
+        this.renderChart();
       });
     }
   }
@@ -67,39 +67,10 @@ export class HomePage implements OnInit {
 
   selected(selectedOption) {
     this.selectedOption = selectedOption;
-    this.filterData();
+    this.chartData.filterBalanceRecords(this.selectedOption);
   }
 
-  filterData() {
-    let chartPoints = this.chartData.points;
-    let startTime = moment().add(-1, 'days');
-    switch (this.selectedOption) {
-      case '1D':
-        startTime = moment().add(-1, 'days');
-        break;
-      case '1W':
-        startTime = moment().add(-7, 'days');
-        break;
-      case '1M':
-        startTime = moment().add(-1, 'months');
-        break;
-      case '6M':
-        startTime = moment().add(-6, 'months');
-        break;
-      case '1Y':
-      default:
-        startTime = moment().add(-1, 'years');
-        break;
-    }
-    var priorBalanceRecord = _.filter(chartPoints, function (item) {
-      if (moment(item[0]).isAfter(startTime)) {
-        return item;
-      }
-    });
-    this.renderChart(priorBalanceRecord);
-  }
-
-  renderChart(chartPoints) {
+  renderChart() {
     jQuery(this.elementRef.nativeElement).find('.container').highcharts({
       chart: {
         type: 'area',
@@ -117,14 +88,7 @@ export class HomePage implements OnInit {
         title: {
           enabled: false
         },
-        labels: {
-          enabled: false
-        },
-        type: 'datetime',
-        dateTimeLabelFormats: { // don't display the dummy year
-          day: '%e-%b'
-        },
-        tickInterval: 24 * 3600 * 1000, // one day
+        visible: false
       },
       yAxis: {
         title: {
@@ -152,7 +116,7 @@ export class HomePage implements OnInit {
       series: [{
         name: '',
         showInLegend: false,
-        data: chartPoints,
+        data: this.chartData.points,
         color: '#a5d3e9'
         // step: 'left'
       }],
