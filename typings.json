@@ -9,6 +9,7 @@
     "underscore": "registry:dt/underscore#1.7.0+20160505190121"
   },
   "globalDependencies": {
+    "firebase": "file:node_modules/angularfire2/firebase3.d.ts",
     "google-libphonenumber": "registry:global/google-libphonenumber#1.0.22+20160622193708"
   }
 }
