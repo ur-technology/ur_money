@@ -3,9 +3,13 @@ import {Component} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
 import {Focuser} from '../../components/focuser/focuser';
-import {FirebaseService} from '../../prelaunch_components/firebase-service/firebase-service';
+import {PrelaunchService} from '../../prelaunch_components/prelaunch-service/prelaunch-service';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import * as _ from 'underscore'
+import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+declare namespace firebase.database.ServerValue {
+  var TIMESTAMP: any
+}
 
 @Page({
   directives: [FORM_DIRECTIVES, Focuser],
@@ -24,7 +28,8 @@ export class DashboardPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public auth: Auth,
-    public firebaseService: FirebaseService
+    public prelaunchService: PrelaunchService,
+    public angularFire: AngularFire
   ) {
     this.buildForm()
     this.user = navParams.get("user");
@@ -33,8 +38,7 @@ export class DashboardPage {
 
   setAllUsers() {
     var thisPage = this;
-    this.auth.firebaseRef().child("users").once("value", function(snapshot) {
-      var idToUserMapping = snapshot.val();
+    this.angularFire.database.list('/users').subscribe((idToUserMapping) => {
       var topUser = _.detect(idToUserMapping, function(user,uid) { return !user["sponsor"]; });
       var numUsers = _.size(idToUserMapping);
       var i = 0;
@@ -86,9 +90,9 @@ export class DashboardPage {
       },
       downlineLevel: this.user.downlineLevel + 1,
       phone: CustomValidators.normalizedPhone(this.inviteForm.value.phone),
-      invitedAt: Firebase.ServerValue.TIMESTAMP
+      invitedAt: firebase.database.ServerValue.TIMESTAMP
     };
-    this.firebaseService.saveUser(invitedUser);
+    this.prelaunchService.saveUser(invitedUser);
     this.buildForm();
     var options = {
       message: 'You invitation has been sent. Go ahead and send another one!',

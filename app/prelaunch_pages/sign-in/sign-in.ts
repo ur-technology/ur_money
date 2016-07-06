@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl, Control} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
 import {Focuser} from '../../components/focuser/focuser';
-import {FirebaseService} from '../../prelaunch_components/firebase-service/firebase-service';
+import {PrelaunchService} from '../../prelaunch_components/prelaunch-service/prelaunch-service';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import * as _ from 'underscore'
 import {DashboardPage} from '../dashboard/dashboard';
@@ -25,7 +25,7 @@ export class SignInPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public auth: Auth,
-    public firebaseService: FirebaseService
+    public prelaunchService: PrelaunchService
   ) {
 
     this.signInForm = formBuilder.group({
@@ -39,7 +39,7 @@ export class SignInPage {
     var thisPage = this;
     thisPage.submissionInProgress = true;
     let normalizedPhone = CustomValidators.normalizedPhone(this.signInForm.value.phone);
-    this.firebaseService.lookupPrelaunchUserByPhone(normalizedPhone, this.nav, DashboardPage, SignUpPage, ErrorPage);
+    this.prelaunchService.lookupPrelaunchUserByPhone(normalizedPhone, this.nav, DashboardPage, SignUpPage, ErrorPage);
   }
 
 

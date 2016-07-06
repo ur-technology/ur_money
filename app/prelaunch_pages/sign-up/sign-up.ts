@@ -2,11 +2,15 @@ import {Page, NavController, NavParams} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl, Control} from '@angular/common';
 import {Auth} from '../../components/auth/auth';
-import {FirebaseService} from '../../prelaunch_components/firebase-service/firebase-service';
+import {PrelaunchService} from '../../prelaunch_components/prelaunch-service/prelaunch-service';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import * as _ from 'underscore'
 import {DashboardPage} from '../dashboard/dashboard';
 import {ErrorPage} from '../error/error';
+import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+declare namespace firebase.database.ServerValue {
+  var TIMESTAMP: any
+}
 
 @Page({
   templateUrl: 'build/prelaunch_pages/sign-up/sign-up.html'
@@ -24,7 +28,8 @@ export class SignUpPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public auth: Auth,
-    public firebaseService: FirebaseService
+    public prelaunchService: PrelaunchService,
+    public angularFire: AngularFire
   ) {
 
     this.user = navParams.get("user");
@@ -48,13 +53,13 @@ export class SignUpPage {
     this.user.lastName = thisPage.signUpForm.value.lastName;
 
     this.user.phone = CustomValidators.normalizedPhone(thisPage.signUpForm.value.phone);
-    this.user.signedUpAt = Firebase.ServerValue.TIMESTAMP;
+    this.user.signedUpAt = firebase.database.ServerValue.TIMESTAMP;
 
-    this.firebaseService.saveUser(thisPage.user);
+    this.prelaunchService.saveUser(thisPage.user);
 
     // give firebase a second to recognize other recently assigned member ids
     setTimeout(() => {
-      this.firebaseService.assignMemberId(thisPage.user, function(error, dummy) {
+      this.prelaunchService.assignMemberId(thisPage.user, function(error, dummy) {
         if (error) {
           thisPage.nav.setRoot(ErrorPage, {message: "Could not assign member id."});
         } else {

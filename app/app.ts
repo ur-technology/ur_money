@@ -24,14 +24,14 @@ import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
 import {SignInPage} from './prelaunch_pages/sign-in/sign-in';
 import {SignUpPage} from './prelaunch_pages/sign-up/sign-up';
 import {ErrorPage} from './prelaunch_pages/error/error';
-import {FirebaseService} from './prelaunch_components/firebase-service/firebase-service';
+import {PrelaunchService} from './prelaunch_components/prelaunch-service/prelaunch-service';
 
 import * as lodash from 'lodash';
 
 @Component({
   templateUrl: 'build/app.html',
   directives: [LoadingModal],
-  providers: [Auth, TransactionNavService, CountryListService, ChartData, LoadingModal, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
+  providers: [Auth, TransactionNavService, CountryListService, ChartData, LoadingModal, PrelaunchService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom,
       method: AuthMethods.CustomToken,
@@ -47,7 +47,7 @@ class UrMoney {
   user: any = {};
   invitePage: {};
   faceUrl: string;
-  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public firebaseService: FirebaseService) {
+  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService) {
     this.initializeApp();
 
     this.invitePage = { component: InvitePage };
@@ -69,7 +69,7 @@ class UrMoney {
   handlePrelaunchRequest() {
     var phone = localStorage.getItem("prelaunchPhone");
     if (phone) {
-      this.firebaseService.lookupPrelaunchUserByPhone(phone, this.nav, DashboardPage, SignUpPage, ErrorPage);
+      this.prelaunchService.lookupPrelaunchUserByPhone(phone, this.nav, DashboardPage, SignUpPage, ErrorPage);
     } else {
       this.nav.setRoot(SignInPage);
     }
