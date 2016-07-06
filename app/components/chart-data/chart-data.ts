@@ -69,7 +69,7 @@ export class ChartData {
   */
 
   loadChartDateWhenBalanceHistoryChanges() {
-    var balanceRecordsRef = this.auth.userRef.child("wallet").child("balanceRecords");
+    var balanceRecordsRef = `${this.auth.userRef}/wallet/balanceRecords`;
     var thisPage = this;
     thisPage.angularFire.database.object(balanceRecordsRef).subscribe((balanceRecords) => {
       thisPage.isLoaded = false;
@@ -142,7 +142,7 @@ export class ChartData {
 
     // If offsetDaybalance is defined then check if this greater than current balance 
     /// and calculate percentageChange and balanceChange with your mathematics skills :)
-    
+
     if (offsetDaybalance) {
       if (this.currentBalance > offsetDaybalance[1]) {
         this.percentageChange = ((this.currentBalance - offsetDaybalance[1]) / this.currentBalance) * 100;

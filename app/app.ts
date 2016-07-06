@@ -34,7 +34,9 @@ import * as lodash from 'lodash';
   directives: [LoadingModal],
   providers: [Auth, TransactionNavService, CountryListService, ChartData, LoadingModal, UserService, FirebaseService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
     firebaseAuthConfig({
-      provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
+      provider: AuthProviders.Custom,
+      method: AuthMethods.CustomToken,
+      remember: 'default' // scope: ['email']
     })
   ]
 })
