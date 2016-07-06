@@ -1,15 +1,16 @@
-import {Injectable, ViewChild} from '@angular/core'
+import {Injectable, Inject, ViewChild} from '@angular/core'
 import {Nav} from 'ionic-angular';
-import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthProviders, AuthMethods} from 'angularfire2'
+import {AngularFire, FirebaseRef, FirebaseObjectObservable} from 'angularfire2';
 import {Component} from '@angular/core';
 import * as _ from 'underscore'
 import * as lodash from 'lodash';
-import * as Firebase from 'firebase';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 
 export class Auth {
+    
+    @Inject(FirebaseRef) private ref: Firebase
     public uid: string
     public user: FirebaseObjectObservable<any>;
     public userRef: any

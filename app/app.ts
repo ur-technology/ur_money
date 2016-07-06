@@ -113,7 +113,7 @@ class UrMoney {
 
   signOut() {
     this.menu.close();
-    this.auth.firebaseRef().unauth(); // this will trigger redirect to Registration1Page
+    this.auth.angularFire.auth.logout(); // this will trigger redirect to Registration1Page
   }
 
 

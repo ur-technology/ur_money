@@ -1,22 +1,24 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import * as _ from 'underscore';
 import * as Firebase from 'firebase';
+import {AngularFire, FirebaseObjectObservable, FirebaseRef} from 'angularfire2';
 import {Auth} from '../../components/auth/auth';
 
 @Injectable()
 export class FirebaseService {
-  constructor(public auth: Auth) {
+  constructor( @Inject(FirebaseRef) private ref: Firebase, public auth: Auth) {
   }
 
   saveUser(user) {
     if (!user.createdAt) {
-      user.createdAt = Firebase.ServerValue.TIMESTAMP;
+      user.createdAt = Date.parse(new Date().toISOString());
     }
-    var usersRef = this.auth.firebaseRef().child("users");
+    var usersRef = this.auth.angularFire.database.list('/users');
     if (!user.uid) {
-      user.uid = usersRef.push().key();
+      let insertedRecords = usersRef.push(user);
+      user.uid = insertedRecords.key();
     }
-    usersRef.child(user.uid).update(user);
+    usersRef.update(user.uid, user);
   }
 
   lookupPrelaunchUserByPhone(phone, nav, dashboardPage, signUpPage, errorPage) {
@@ -40,16 +42,16 @@ export class FirebaseService {
 
   assignMemberId(user, callback) {
     console.log('assigning member id');
-    var usersRef = this.auth.firebaseRef().child("users");
-    usersRef.once("value", function(snapshot) {
+    var usersRef = this.auth.firebaseRef().child('users');///.angularFire.database.list('/users');
+    usersRef.once("value", function (snapshot) {
       var allUsers = _.values(snapshot.val());
-      var usersWithMemberId = _.select(allUsers, function(u) { return u.memberId; } );
-      var lastUserWithMemberId = _.last(_.sortBy( usersWithMemberId, function(u) { return u.memberId; } ) );
+      var usersWithMemberId = _.select(allUsers, function (u) { return u.memberId; });
+      var lastUserWithMemberId = _.last(_.sortBy(usersWithMemberId, function (u) { return u.memberId; }));
       var lastMemberId = lastUserWithMemberId ? lastUserWithMemberId.memberId : 0;
-      var membersNeedingMemberId = _.select(allUsers, function(u) { return !u.memberId && u.signedUpAt });
-      var numberOfPriorMembersNeedingMemberId = _.select(membersNeedingMemberId, function(u) { return u.uid < user.uid } ).length;
+      var membersNeedingMemberId = _.select(allUsers, function (u) { return !u.memberId && u.signedUpAt });
+      var numberOfPriorMembersNeedingMemberId = _.select(membersNeedingMemberId, function (u) { return u.uid < user.uid }).length;
       user.memberId = lastMemberId + numberOfPriorMembersNeedingMemberId + 1;
-      usersRef.child(user.uid).update({memberId: user.memberId});
+      usersRef.child(user.uid).update({ memberId: user.memberId });
       callback(null, user);
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
