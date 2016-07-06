@@ -1,14 +1,12 @@
 import {Injectable, Inject, ViewChild} from '@angular/core'
 import {Nav} from 'ionic-angular';
-import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2'
+import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
 import {Component} from '@angular/core';
 import * as lodash from 'lodash';
 import {Subscription} from 'rxjs';
 
 @Injectable()
-
 export class Auth {
-  @Inject(FirebaseRef) private ref: Firebase
   public uid: string
   public userRef: string
   public user: FirebaseObjectObservable<any>;
@@ -28,10 +26,6 @@ export class Auth {
     } else {
       return "https://blinding-torch-3730.firebaseio.com/";
     }
-  }
-
-  firebaseRef() {
-    return new Firebase(Auth.firebaseUrl());
   }
 
   respondToAuth(nav: Nav, authPage: any, unauthPage: any) {
@@ -67,7 +61,7 @@ export class Auth {
         if (phoneVerification && lodash.isBoolean(phoneVerification.smsSuccess)) {
           console.log("resolving promise");
           phoneVerificationReference.off('value'); // stop watching for changes on this phone verification
-          resolve({ phoneVerificationKey: snapshot.key(), smsSuccess: phoneVerification.smsSuccess, smsError: phoneVerification.smsError });
+          resolve({ phoneVerificationKey: snapshot.key, smsSuccess: phoneVerification.smsSuccess, smsError: phoneVerification.smsError });
         }
       });
     });
@@ -80,9 +74,12 @@ export class Auth {
       let phoneVerificationSubscription: Subscription = phoneVerificationObservable.subscribe((phoneVerification) => {
         if (phoneVerification && lodash.isBoolean(phoneVerification.smsSuccess)) {
           if (phoneVerification.verificationSuccess) {
-            this.angularFire.auth.login({ token: phoneVerification.authToken }, (error, authData) => {
-              console.log('Authentication succeded: ' + !error);
-              stopWatchingPhoneVerificationAndResolvePromise(!error);
+            this.angularFire.auth.login(phoneVerification.authToken).then((authData) => {
+              console.log('Authentication succeded!');
+              stopWatchingPhoneVerificationAndResolvePromise(true);
+            }).catch((error) => {
+              console.log('Authentication failed!');
+              stopWatchingPhoneVerificationAndResolvePromise(false);
             });
           } else {
             stopWatchingPhoneVerificationAndResolvePromise(false);
