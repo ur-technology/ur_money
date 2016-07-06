@@ -1,14 +1,39 @@
 import {Injectable, Inject, ViewChild} from '@angular/core'
 import {Nav} from 'ionic-angular';
-import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2'
+<<<<<<< acde71a5178eb6a1617ab1df95a96b82ed150d3e
+import {AngularFire, FirebaseRef, FirebaseObjectObservable} from 'angularfire2';
+=======
+import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2'
+>>>>>>> some changes
 import {Component} from '@angular/core';
 import * as lodash from 'lodash';
-import {Subscription} from 'rxjs';
+<<<<<<< acde71a5178eb6a1617ab1df95a96b82ed150d3e
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 
 export class Auth {
-  @Inject(FirebaseRef) private ref: Firebase
+    
+    @Inject(FirebaseRef) private ref: Firebase
+    public uid: string
+    public user: FirebaseObjectObservable<any>;
+    public userRef: any
+    public phoneVerfificationSubject: Subject<any>;
+
+    // public authDataProfileImage: any
+    // public authDataProfileName: any
+    // public authDataProfileDescription: any
+    // public authDataProfileEmail: any
+
+    constructor(public angularFire: AngularFire) {
+=======
+import * as Firebase from 'firebase';
+import {Subject} from 'rxjs/Subject';
+import {Subscription} from 'rxjs';
+2
+@Injectable()
+
+export class Auth {
   public uid: string
   public userRef: string
   public user: FirebaseObjectObservable<any>;
@@ -27,6 +52,7 @@ export class Auth {
       return "https://urcapital-production.firebaseio.com/";
     } else {
       return "https://blinding-torch-3730.firebaseio.com/";
+>>>>>>> some changes
     }
   }
 
@@ -58,7 +84,7 @@ export class Auth {
         phone: phone,
         createdAt: Date.parse(new Date().toISOString()) // would like to change this to database.ServerValue.TIMESTAMP
       });
-
+      
       console.log("verification queued");
       phoneVerificationReference.on('value', (snapshot) => {
         console.log(snapshot);
