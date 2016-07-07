@@ -43,7 +43,8 @@ export class Auth {
   }
 
   respondToAuth(nav: Nav, authPage: any, unauthPage: any) {
-    this.angularFire.auth.subscribe((authData) => {
+    firebase.auth().onAuthStateChanged((authData) => {
+    // this.angularFire.auth.subscribe((authData) => {
       if (authData) {
         this.uid = authData.uid;
         this.userRef = `/users/${this.uid}`;
@@ -89,7 +90,9 @@ export class Auth {
       let phoneVerificationSubscription: Subscription = phoneVerificationObservable.subscribe((phoneVerification) => {
         if (phoneVerification && !_.isUndefined(phoneVerification.verificationSuccess)) {
           if (phoneVerification.verificationSuccess) {
-            angularFire.auth.login(phoneVerification.authToken, {method:AuthMethods.CustomToken}).then((authData) => {
+            // let options = {provider: AuthProviders.Custom,method: AuthMethods.CustomToken};
+            // angularFire.auth.login(phoneVerification.authToken, options).then((authData) => {
+            firebase.auth().signInWithCustomToken(phoneVerification.authToken).then((authData) => {
               console.log('Authentication succeded!');
               stopWatchingPhoneVerificationAndResolvePromise(true);
             }).catch((error) => {
