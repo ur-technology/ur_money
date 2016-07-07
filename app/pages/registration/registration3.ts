@@ -11,7 +11,6 @@ import {LoadingModal} from '../../components/loading-modal/loading-modal';
 export class Registration3Page {
   verificationCode: string;
   verificationKey: string;
-
   errorMessage: string;
   phone: string;
 
@@ -20,7 +19,6 @@ export class Registration3Page {
     public loadingModal: LoadingModal) {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
-    this.verificationCode
     this.verificationCode = '';
     this.verificationKey = this.navParams.get('phoneVerificationKey');
   }
@@ -59,7 +57,7 @@ export class Registration3Page {
     });
     this.nav.present(alert);
   }
-  
+
   showErrorAlert() {
     let alert = Alert.create({
       title: 'Error!',
@@ -73,6 +71,7 @@ export class Registration3Page {
     if (this.verificationCode.length < 6)
       this.verificationCode = `${this.verificationCode}${number}`;
   }
+
   delete() {
     if (this.verificationCode.length > 0) {
       this.verificationCode = this.verificationCode.substring(0, this.verificationCode.length - 1);
