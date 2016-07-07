@@ -75,7 +75,12 @@ export class ChartData {
       thisPage.isLoaded = false;
 
       var sortedBalanceRecords = lodash.sortBy(balanceRecords, 'updatedAt');
-      this.balanceRecordArray = sortedBalanceRecords;
+      thisPage.balanceRecordArray = [];
+      lodash.each(sortedBalanceRecords, function (record) {
+        if (lodash.isObject(record)) {
+          thisPage.balanceRecordArray.push(record);
+        }
+      });
       thisPage.filterBalanceWithPeriod(thisPage, '1W');
     });
   }
@@ -93,7 +98,7 @@ export class ChartData {
   */
   filterBalanceWithPeriod(thisPage, filterPeriod) {
     thisPage.points = [];
-    let sortedBalanceRecords = this.balanceRecordArray;
+    let sortedBalanceRecords = thisPage.balanceRecordArray;
     let lastRecord: any = _.last(sortedBalanceRecords);
     var endTime = moment.max(moment(lastRecord ? lastRecord.updatedAt : undefined, 'x'), moment());
     var startTime = thisPage.createStartTime(endTime, filterPeriod);
