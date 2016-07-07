@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Alert} from 'ionic-angular';
+import {Page, NavController, NavParams, Alert, Loading} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl, Control} from '@angular/common';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {Auth} from '../../components/auth/auth';
@@ -24,10 +24,14 @@ export class Registration3Page {
   }
 
   submit() {
-    this.loadingModal.show();
+    let loading = Loading.create({
+      content: "Please wait...",
+      dismissOnPageChange: true
+    });
+    this.nav.present(loading);
     // this.verificationCodeForm.value.verificationCode;
     this.auth.checkVerificationCode(this.verificationKey, this.verificationCode).then((success) => {
-      this.loadingModal.hide();
+      loading.dismiss();
       if (!success) {
         this.errorMessage = "The verification code you entered is incorrect or expired. Please try again.";
       }
@@ -35,9 +39,13 @@ export class Registration3Page {
   }
 
   smsAgain() {
-    this.loadingModal.show();
+    let loading = Loading.create({
+      content: "Please wait...",
+      dismissOnPageChange: true
+    });
+    this.nav.present(loading);
     this.auth.requestPhoneVerification(this.phone).then((result: any) => {
-      this.loadingModal.hide();
+      loading.dismiss();
       if (!result.smsSuccess) {
         console.log("error - sms could not be sent");
         this.showErrorAlert();

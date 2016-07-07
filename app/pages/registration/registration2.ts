@@ -1,4 +1,4 @@
-import {Page, NavController, Alert, Platform, Nav, Popover} from 'ionic-angular';
+import {Page, NavController, Alert, Platform, Nav, Popover, Loading} from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import * as _ from 'lodash';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
@@ -77,11 +77,15 @@ export class Registration2Page implements OnInit {
         {
           text: 'YES',
           handler: () => {
+            let loading = Loading.create({
+              content: "Please wait...",
+              dismissOnPageChange: true
+            });
             alert.dismiss().then(() => {
-              this.loadingModal.show();
+              this.nav.present(loading);
             });
             this.auth.requestPhoneVerification(phone).then((result: any) => {
-              this.loadingModal.hide();
+              loading.dismiss();
               if (!result.smsSuccess) {
                 console.log("error - sms could not be sent");
                 this.showErrorAlert(result.smsError, phoneInput);
