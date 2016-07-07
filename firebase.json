@@ -1,5 +1,5 @@
 {
-  "firebase": "blinding-torch-3730",
+  "firebase": "ur-money-staging",
   "public": "www",
   "ignore": [
     "firebase.json",
