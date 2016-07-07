@@ -13,7 +13,7 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 
 export class Auth {
-    
+
     @Inject(FirebaseRef) private ref: Firebase
     public uid: string
     public user: FirebaseObjectObservable<any>;
@@ -82,9 +82,9 @@ export class Auth {
 
       var phoneVerificationReference = database.list('/phoneVerifications', { preserveSnapshot: true }).push({
         phone: phone,
-        createdAt: Date.parse(new Date().toISOString()) // would like to change this to database.ServerValue.TIMESTAMP
+        createdAt: firebase.database.ServerValue.TIMESTAMP
       });
-      
+
       console.log("verification queued");
       phoneVerificationReference.on('value', (snapshot) => {
         console.log(snapshot);

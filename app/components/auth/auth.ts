@@ -59,13 +59,13 @@ export class Auth {
   }
 
   requestPhoneVerification(phone: string) {
-    let database = this.angularFire.database;
+    let angularFire = this.angularFire;
     return new Promise((resolve) => {
       console.log('about to queue verification number');
 
-      var phoneVerificationReference = database.list('/phoneVerifications', { preserveSnapshot: true }).push({
+      var phoneVerificationReference = angularFire.database.list('/phoneVerifications', { preserveSnapshot: true }).push({
         phone: phone,
-        createdAt: Date.parse(new Date().toISOString()) // would like to change this to database.ServerValue.TIMESTAMP
+        createdAt: firebase.database.ServerValue.TIMESTAMP
       });
 
       console.log("verification queued");

@@ -73,8 +73,7 @@ export class ChartData {
     var thisPage = this;
     thisPage.angularFire.database.object(balanceRecordsRef).subscribe((balanceRecords) => {
       thisPage.isLoaded = false;
-
-      var sortedBalanceRecords = lodash.sortBy(balanceRecords, 'updatedAt');
+      var sortedBalanceRecords = lodash.sortBy(balanceRecords.value === null ? {} : balanceRecords, 'updatedAt');
       thisPage.balanceRecordArray = [];
       lodash.each(sortedBalanceRecords, function (record) {
         if (lodash.isObject(record)) {
@@ -94,7 +93,7 @@ export class ChartData {
 
   //Helper Function
   /*
-  Actual method with period with start and end Date    
+  Actual method with period with start and end Date
   */
   filterBalanceWithPeriod(thisPage, filterPeriod) {
     thisPage.points = [];
@@ -127,25 +126,25 @@ export class ChartData {
     // add ending point to chart if necessry
     var lastPoint = _.last(thisPage.points);
     this.currentBalance = lastPoint[1];
-    /* Comment by malkiat .... Seems not required 
+    /* Comment by malkiat .... Seems not required
     // if (lastPoint[0] != endTime.toDate()) {
     //   thisPage.points.push([endTime.valueOf(), lastPoint[1]]);
     // }
     */
 
-    // balanceChange calculation for chart 
+    // balanceChange calculation for chart
     //closne the chart Ponts so that modification in this will not effect the chart data
     let pointsData = lodash.clone(thisPage.points);
-    // get the offset  day balance by check if the value in points data 
+    // get the offset  day balance by check if the value in points data
     // before end time and after start time or equal to start time
-    //// NOTE: If you want immediate value before end time just 
+    //// NOTE: If you want immediate value before end time just
     //uncomment return in block below
     let offsetDaybalance = _.detect(pointsData, function (value: any, id: any) {
       return endTime.isAfter(value[0]) && (startTime.isBefore(value[0]) || startTime.isSame(value[0]));
-      //   return endTime.isAfter(value[0]); 
+      //   return endTime.isAfter(value[0]);
     });
 
-    // If offsetDaybalance is defined then check if this greater than current balance 
+    // If offsetDaybalance is defined then check if this greater than current balance
     /// and calculate percentageChange and balanceChange with your mathematics skills :)
 
     if (offsetDaybalance) {

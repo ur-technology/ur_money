@@ -8,9 +8,6 @@ import * as _ from 'underscore'
 import {DashboardPage} from '../dashboard/dashboard';
 import {ErrorPage} from '../error/error';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
-declare namespace firebase.database.ServerValue {
-  var TIMESTAMP: any
-}
 
 @Page({
   templateUrl: 'build/prelaunch_pages/sign-up/sign-up.html'
