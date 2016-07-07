@@ -31,11 +31,17 @@ import * as lodash from 'lodash';
 @Component({
   templateUrl: 'build/app.html',
   directives: [LoadingModal],
-  providers: [Auth, TransactionNavService, CountryListService, ChartData, LoadingModal, PrelaunchService, FIREBASE_PROVIDERS, defaultFirebase(Auth.firebaseUrl()),
+  providers: [
+    Auth,
+    TransactionNavService,
+    CountryListService,
+    ChartData,
+    LoadingModal,
+    PrelaunchService,
+    FIREBASE_PROVIDERS,
+    defaultFirebase(Auth.firebaseConfig()),
     firebaseAuthConfig({
-      provider: AuthProviders.Custom,
-      method: AuthMethods.CustomToken,
-      remember: 'default' // scope: ['email']
+      provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
   ]
 })

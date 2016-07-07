@@ -19,12 +19,26 @@ export class Auth {
   constructor(public angularFire: AngularFire) {
   }
 
-  static firebaseUrl() {
+  static isProduction() {
     // TODO: this will work only for webapp, not for mobile app -- need to fix this
-    if (/ur\.capital$|urcapital-production\.firebaseapp\.com$/.test(window.location.hostname)) {
-      return "https://urcapital-production.firebaseio.com/";
+    return /ur\.capital$|urcapital-production\.firebaseapp\.com$/.test(window.location.hostname);
+  }
+
+  static firebaseConfig() {
+    if (Auth.isProduction()) {
+      return {
+        apiKey: "AIzaSyD6hVJZIofMZFERyvycbjPg4dgNVYFvDXM",
+        authDomain: "urcapital-production.firebaseapp.com",
+        databaseURL: "https://urcapital-production.firebaseio.com",
+        storageBucket: "urcapital-production.appspot.com",
+      };
     } else {
-      return "https://blinding-torch-3730.firebaseio.com/";
+      return  {
+        apiKey: "AIzaSyB8Krsnc9_CKN1IsJl_5R7QteQ5S-39dWs",
+        authDomain: "urcapital-staging.firebaseapp.com",
+        databaseURL: "https://urcapital-staging.firebaseio.com",
+        storageBucket: "urcapital-staging.appspot.com",
+      };
     }
   }
 

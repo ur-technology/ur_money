@@ -15,7 +15,7 @@ export class PrelaunchService {
     var usersRef = this.auth.angularFire.database.list('/users');
     if (!user.uid) {
       let insertedRecords = usersRef.push(user);
-      user.uid = insertedRecords.key();
+      user.uid = insertedRecords.key;
     }
     usersRef.update(user.uid, user);
   }
