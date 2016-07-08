@@ -1,10 +1,9 @@
-.contacts-page {
+.invite-contacts-page {
     scroll-content {
         padding: 0;
     }
     .toolbar-background {
         background: #fff;
-       
     }
     .toolbar {
         padding: 0;
@@ -22,6 +21,12 @@
                 color: #17909c;
                 font-weight: bold;
             }
+        }
+    }
+    .contacts-list .item {
+        button {
+            border-radius: 0;
+            font-weight: 500;
         }
     }
 }

@@ -16,6 +16,7 @@ export class OrderBy {
     Takes a value Contvert to order By.
    */
   transform(array: any[], args: any[]) {
-    return _.orderBy(array, args);
+    console.log(_.orderBy(array, args[0]));
+    return _.orderBy(array, args[0]);
   }
 }

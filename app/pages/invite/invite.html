@@ -11,7 +11,6 @@
 </ion-navbar>
 
 
-<!--<ion-back-button ng-click="goBack()" class="back-btn button-icon ion-close"></ion-back-button>-->
 <ion-content class="invite-friends">
   <h1 class="heading">Invite Friends</h1>
   <p class="sub-heading">Interested in early access ? Improve your spot in line by inviting friends.THe more who join, the sooner you'll get it.</p>
@@ -19,23 +18,25 @@
 </ion-content>
 <div class="invite-btns">
   <div class="clearfix">
-    <button class="button social-btn text-btn">
+    <button (click)="goContact('sms',inviteConstant.sms)" class="button social-btn text-btn">
       <ion-icon name="ios-chatbubbles-outline"></ion-icon>
        Text
     </button>
-    <button class="button social-btn email-btn">
+    <button (click)="goContact('email',inviteConstant.email)" class="button social-btn email-btn">
         <ion-icon name="ios-mail-outline"></ion-icon>
        Email
     </button>
   </div>
   <div class="clearfix">
-    <button class="button social-btn facebook-btn ion-social-facebook">
+    <button (click)="inviteFacebook()" class="button social-btn facebook-btn ion-social-facebook">
        <ion-icon name="logo-facebook"></ion-icon>
        Facebook</button>
-    <button class="button social-btn twitter-btn ion-social-twitter"> Twitter</button>
+    <button (click)="inviteTwitter()" class="button social-btn twitter-btn ion-social-twitter">
+       <ion-icon name="logo-twitter"></ion-icon> 
+      Twitter</button>
   </div>
-  <button class="button whatsapp-btn ion-social-whatsapp button-block">
+  <button (click)="inviteWhatsApp()" class="button whatsapp-btn ion-social-whatsapp button-block">
         <ion-icon name="logo-whatsapp"></ion-icon>
      WhatsApp</button>
-  <button class="button copy-btn button-block">Copy to Clipboard</button>
+  <button (click)="copyToClipboard()" class="button copy-btn button-block">Copy to Clipboard</button>
 </div>
