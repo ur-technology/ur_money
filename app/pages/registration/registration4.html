@@ -1,0 +1,35 @@
+<ion-navbar *navbar>
+  <ion-title>Finish Account Setup</ion-title>
+  <button clear class="right" [disabled]="!walletForm.valid" (click)="submit()">
+      Done
+  </button>
+</ion-navbar>
+
+<ion-content padding class="registration4">
+
+  <p>
+    Please enter a the following information to finish setting up your account.
+  </p>
+
+  <form [ngFormModel]="walletForm">
+    <p *ngIf="errorMessage">{{errorMessage}}</p>
+    <ion-item>
+      <ion-input [focuser] type="text" [ngFormControl]="walletForm.controls.firstName" placeholder="First name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" [ngFormControl]="walletForm.controls.lastName" placeholder="Last name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" [ngFormControl]="walletForm.controls.secretPhrase" [(ngModel)]="secretPhrase" placeholder="Please enter at least 5 secret words"></ion-input>
+    </ion-item>
+    <ion-item>
+      <button secondary (click)="suggestSecretPhrase()">
+        Suggest Secret Phrase
+      </button>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" [ngFormControl]="walletForm.controls.secretPhraseConfirmation" otherControl="secretPhrase" placeholder="Re-type your secret words"></ion-input>
+    </ion-item>
+</form>
+
+</ion-content>

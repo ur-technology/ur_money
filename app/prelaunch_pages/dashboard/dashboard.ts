@@ -7,9 +7,6 @@ import {PrelaunchService} from '../../prelaunch_components/prelaunch-service/pre
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import * as _ from 'underscore'
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
-declare namespace firebase.database.ServerValue {
-  var TIMESTAMP: any
-}
 
 @Page({
   directives: [FORM_DIRECTIVES, Focuser],

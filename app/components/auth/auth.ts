@@ -42,30 +42,35 @@ export class Auth {
     }
   }
 
-  respondToAuth(nav: Nav, authPage: any, unauthPage: any) {
+  respondToAuth(nav: Nav, welcomePage: any, walletSetupPage: any, homePage: any) {
     firebase.auth().onAuthStateChanged((authData) => {
     // this.angularFire.auth.subscribe((authData) => {
       if (authData) {
         this.uid = authData.uid;
-        this.userRef = `/users/${this.uid}`;
-        this.user = this.angularFire.database.object(this.userRef);
-        nav.setRoot(authPage);
+        this.user = this.angularFire.database.object(`/users/${this.uid}`);
+        this.user.subscribe((userObject) => {
+          if (userObject.wallet && userObject.wallet.publicKey) {
+            nav.setRoot(homePage);
+          } else {
+            nav.setRoot(walletSetupPage);
+          }
+        });
       } else {
         this.uid = undefined;
         this.user = undefined;
-        nav.setRoot(unauthPage);
+        nav.setRoot(welcomePage);
       }
     });
   }
 
   requestPhoneVerification(phone: string) {
-    let database = this.angularFire.database;
+    let angularFire = this.angularFire;
     return new Promise((resolve) => {
       console.log('about to queue verification number');
 
-      var phoneVerificationReference = database.list('/phoneVerifications', { preserveSnapshot: true }).push({
+      var phoneVerificationReference = angularFire.database.list('/phoneVerifications', { preserveSnapshot: true }).push({
         phone: phone,
-        createdAt: Date.parse(new Date().toISOString()) // would like to change this to database.ServerValue.TIMESTAMP
+        createdAt: firebase.database.ServerValue.TIMESTAMP
       });
 
       console.log("verification queued");

@@ -6,6 +6,7 @@ import {Auth} from './components/auth/auth';
 import {ChartData} from './components/chart-data/chart-data';
 import * as _ from 'underscore';
 import {Registration1Page} from './pages/registration/registration1';
+import {Registration4Page} from './pages/registration/registration4';
 import {HomePage} from './pages/home/home';
 
 import {SendPage} from './pages/send/send';
@@ -95,7 +96,7 @@ class UrMoney {
         return;
       }
 
-      this.auth.respondToAuth(this.nav, HomePage, Registration1Page);
+      this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
     });
   }
 

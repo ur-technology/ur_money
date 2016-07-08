@@ -123,16 +123,21 @@
     </div>
     <div class="card send-receive-ur" [hidden]="showContacts">
       <label class="item item-input">
-        <input (click)="urInput = ''"  type="text" />
+        <input type="text" />
          <ion-note class="item-note"> UR </ion-note>
      </label>
     </div>
     <div class="card send-receive-textarea" [hidden]="showContacts">
       <label class="item item-input">
-            <textarea (click)="sendReceiveText = ''">Lorem ipsum dolor sit amet, vix tation consul cu, vim ut lorem omnium mandamus. Cum illud adipiscing liberavisse at, possim fastidii ex usu</textarea>
+        <ion-input placeholder="Enter your secret phrase to authorize this transaction"></ion-input>
       </label>
     </div>
-    <button class="button button-light button-outline button-block button-large send-receive-btn">Send</button>
+    <div class="card send-receive-textarea" [hidden]="showContacts">
+      <label class="item item-input">
+        <textarea placeholder="Enter an optional message to the recipient"></textarea>
+      </label>
+    </div>
+    <button class="button button-light button-outline button-block button-large send-receive-btn" (click)="sendUR()">Send</button>
     <!--</form>-->
   </div>
 </ion-content>

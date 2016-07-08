@@ -2,7 +2,7 @@
 
 ## Install global dependencies
 ```script
-`npm install -g ionic@beta, cordova, gulp`
+npm install -g ionic@beta, cordova, gulp
 ```
 
 ## Install local dependencies

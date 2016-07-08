@@ -9,6 +9,8 @@
   },
   "globalDependencies": {
     "firebase": "file:node_modules/angularfire2/firebase3.d.ts",
-    "google-libphonenumber": "registry:global/google-libphonenumber#1.0.22+20160622193708"
+    "firebase-timestamp": "file:app/components/firebase-timestamp/firebase-timestamp.d.ts",
+    "google-libphonenumber": "registry:global/google-libphonenumber#1.0.22+20160622193708",
+    "require": "registry:dt/require#2.1.20+20160316155526"
   }
 }
