@@ -96,3 +96,20 @@ gulp.task('upload', ['cleanGo'], function (done) {
   sh.exec('ionic upload', { async: false }, done);
 });
 
+gulp.task('plugins', function (done) {
+  var plugins = require('./package.json').cordovaPlugins,
+    count = plugins.length;
+
+  plugins.forEach(function (plugin) {
+    if (typeof (plugin) === 'object') {
+      sh.exec('cordova plugin add ' + plugin.locator, { async: false });
+    } else {
+      sh.exec('cordova plugin add ' + plugin, { async: false });
+    }
+    count--;
+  });
+
+  if (count === 0) {
+    done();
+  }
+});
