@@ -100,7 +100,7 @@ class UrMoney {
         this.handlePrelaunchRequest();
         return;
       }
-
+      
       this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
     });
   }

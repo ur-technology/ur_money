@@ -4,4 +4,5 @@
 /// <reference path="globals/google-libphonenumber/index.d.ts" />
 /// <reference path="main/ambient/es6-shim/index.d.ts" />
 /// <reference path="main/ambient/underscore/index.d.ts" />
+/// <reference path="modules/es6-promise/index.d.ts" />
 /// <reference path="modules/lodash/index.d.ts" />
