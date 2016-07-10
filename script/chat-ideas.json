@@ -1,0 +1,55 @@
+{
+  users: {
+    "-KMFyURDIC8dHKBS9idg": {
+      firstName: "Jake",
+      lastName: "Peterson",
+      profilePhotoUrl: "https://urlphoto.com",
+      myChatSummaries: {
+        "-AAAyURDIC8dHKBS9idg": {
+          otherUser: {
+            uid: "-LLLyURDIC8dHKBS9jjj",
+            firstName: "Janet",
+            lastName: "Peterson",
+            profilePhotoUrl: "https://urlphoto.com",
+          },
+          lastMessage: {
+            messageId: "-KMFyURDIC8dHKBS9idg",
+            text: "hi",
+            sentAt: 1468089936151,
+            senderUid: "-KMFyURDIC8dHKBS9idg"
+          }
+        }
+      }
+    }
+  },
+  chats: {
+    "-AAAyURDIC8dHKBS9idg": {
+      users: {
+        "-KMFyURDIC8dHKBS9idg": {
+          firstName: "Jake",
+          lastName: "Peterson",
+          profilePhotoUrl: "https://urlphoto.com",
+          active: true
+        },
+        "-LLLyURDIC8dHKBS9jjj": {
+          firstName: "Janet",
+          lastName: "Peterson",
+          profilePhotoUrl: "https://urlphoto.com",
+          active: true
+        }
+      },
+      messages: {
+        "-KMFyURDIC8dHKBS9idg": {
+          text: "hi",
+          sentAt: 1468089936151,
+          senderUid: "-KMFyURDIC8dHKBS9idg"
+        },
+        "-LMFyURDIC8dHKBS9idh": {
+          text: "hi back",
+          sentAt: 1468089936152,
+          senderUid: "-KMFyURDIC8dHKBS9idg"
+        }
+      }
+    }
+  }
+}
