@@ -26,7 +26,7 @@ ionic upload
 ## Deploy to Firebase Hosting
 ```script
 gulp build
-firebase deploy -f blinding-torch-3730
+firebase deploy -f ur-money-staging
 ```
 
 ## Setup and run iOS
