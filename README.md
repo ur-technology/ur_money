@@ -35,6 +35,11 @@ npm run setup-ios
 npm run ios
 # Then: open project using Xcode from /platforms/ios/*****.xcproj
 ```
+##Quirks
+
+##ios
+*whatsapp*
+[Alt text](iosWhatsappQuirks?raw=true "Whatapp quirks for Invite")
 
 
 ## Setup and run Android
