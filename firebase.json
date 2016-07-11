@@ -1,12 +1,13 @@
 {
-  "firebase": "ur-money-staging",
-  "public": "www",
-  "ignore": [
-    "firebase.json",
-    "**/.*",
-    "**/node_modules/**",
-    "**/typings/**"
-  ],
+  "hosting": {
+    "public": "www",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/typings/**"
+    ]
+  },
   "rewrites": [
     {"source": "/go/*", "destination": "/go/index.html"}
   ],

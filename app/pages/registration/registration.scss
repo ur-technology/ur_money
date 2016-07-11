@@ -22,15 +22,15 @@
     padding-left: 5px;
   }
 
-  ion-input.ng-pristine.ng-invalid {
-    border-left: 5px solid orange; /* orange */
+  ion-input.ng-pristine {
+    border-left: 5px solid white;
   }
 
-  ion-input.ng-dirty.ng-invalid {
+  ion-input.ng-dirty.ng-invalid, ion-input.ng-touched.ng-invalid {
     border-left: 5px solid red;
   }
 
-  ion-input.ng-valid {
+  ion-input.ng-dirty.ng-valid, ion-input.ng-touched.ng-valid {
     border-left: 5px solid green;
   }
 }
