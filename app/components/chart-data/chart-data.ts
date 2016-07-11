@@ -69,7 +69,7 @@ export class ChartData {
   */
 
   loadChartDateWhenBalanceHistoryChanges() {
-    var balanceRecordsRef = `${this.auth.userRef}/wallet/balanceRecords`;
+    var balanceRecordsRef = `/users/${this.auth.uid}/wallet/balanceRecords`;
     var thisPage = this;
     thisPage.angularFire.database.object(balanceRecordsRef).subscribe((balanceRecords) => {
       thisPage.isLoaded = false;
