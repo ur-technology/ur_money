@@ -39,7 +39,7 @@ npm run ios
 
 ##ios
 *whatsapp*
-[Alt text](iosWhatsappQuirks?raw=true "Whatapp quirks for Invite")
+![image](iosWhatsappQuirks.png?raw=true "Whatapp quirks for Invite")
 
 
 ## Setup and run Android
