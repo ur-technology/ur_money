@@ -1,6 +1,6 @@
 import {Page, Alert, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
-// import Web3 = require('web3');
+import {Wallet} from '../../components/wallet/wallet2';
 
 @Page({
   templateUrl: 'build/pages/send/send.html',
@@ -9,20 +9,16 @@ export class SendPage {
   showContactInput: boolean;
   contactItem: any;
   showContacts: boolean;
-
-  Web3: any;
-  amount: any;
-  phrase: any;
-  publicKey: any;
-
+  
+  amount: number;
+  phrase: string;
+  password: string;
+  publicKey: string;
 
   constructor(public nav: NavController) {
     this.showContactInput = true;
     this.showContacts = false;
     this.contactItem = {};
-
-    let web3 = require('web3');
-    this.Web3 = new web3(new web3.providers.HttpProvider("http://localhost:12345"));
   }
 
   toHomePage() {
@@ -46,46 +42,54 @@ export class SendPage {
     this.contactItem = {};
   }
 
-  validateFrom() {
+  validateForm() {
     let ethUtil = require('ethereumjs-util');
 
     return (
-      (this.amount && parseFloat(this.amount) > 0) &&
+      this.amount > 0 &&
       this.phrase != '' &&
-      (this.publicKey && (ethUtil.isValidAddress(this.publicKey) || ethUtil.isValidPublic(this.publicKey)))
+      this.password != '' &&
+      (this.publicKey != '' && (ethUtil.isValidAddress(this.publicKey) || ethUtil.isValidPublic(this.publicKey)))
     )
   }
 
   sendUR() {
+    let wallet: Wallet = new Wallet();
+
+    // this.phrase = 'asd';
+    // this.password = 'qwe';
+    // this.publicKey = '0x350ee71aa87a5d89ceccda8ff8ad4cbe588571d5';
+    // this.amount = 3.2;
+    //
+    // wallet.create(this.phrase, this.password).then(() => {
+    //   wallet.sendTransaction(this.publicKey, this.amount).then((err) => {
+    //     console.log(err);
+    //   });
+    // });
+
     let self = this;
 
-    if(!this.validateFrom()) {
+    if(!this.validateForm()) {
       return;
     }
 
     let confirmation = Alert.create({
       title: 'Confirmation',
-      message: "<p>Sending " + parseFloat(this.amount).toFixed(4) + " ETH</p>",
+      message: "<p>Sending " + this.amount.toFixed(4) + " ETH</p>",
       buttons: [
 
         {
           text: 'OK',
           handler: () => {
             self.error();
-
-            let ethWallet = require('ethereumjs-wallet/thirdparty');
-
-            let brainWallet = ethWallet.fromEtherCamp('asd');
-
-            this.Web3.eth.sendTransaction({
-              from  : brainWallet.getPrivateKeyString(),
-              to    : this.publicKey.toString(),
-              value : this.Web3.toWei(parseFloat(this.amount))
-            }, function(err, address) {
-              if (!err)
-                self.success();
-              else
-                self.error();
+            
+            wallet.create(this.phrase, this.password).then(() => {
+              wallet.sendTransaction(this.publicKey, this.amount).then((err) => {
+                if (!err)
+                  self.success();
+                else
+                  self.error();
+              });
             });
           }
         },

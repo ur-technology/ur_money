@@ -38,6 +38,12 @@
       </label>
     </div>
 
+    <div class="card send-receive-textarea" [hidden]="showContacts">
+      <label class="item item-input">
+        <ion-input [(ngModel)]="password" placeholder="Enter your password"></ion-input>
+      </label>
+    </div>
+
     <button class="button button-light button-outline button-block button-large send-receive-btn" (click)="sendUR()">Send</button>
     <!--</form>-->
   </div>
