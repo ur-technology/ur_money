@@ -66,8 +66,11 @@ export class InvitePage {
   inviteFacebook() {
     this.platform.ready().then(() => {
       if (window.plugins.socialsharing) {
-        window.plugins.socialsharing.shareViaFacebook(this.inviteConstant.facebook.messageText, null /* img */, null /* url */, (data) => {
-          console.log(data);
+        let app=this.platform.is('android') ? 'facebook' : 'com.apple.social.facebook';
+        window.plugins.socialsharing.canShareVia(app, this.inviteConstant.whatsapp.messageText, null, null, null, (result) => {
+          window.plugins.socialsharing.shareViaFacebookWithPasteMessageHint(this.inviteConstant.facebook.messageText, null /* img */,this.downloadUrl  /* url */,this.inviteConstant.facebook.messageText, (data) => {
+            console.log(data);
+          });
         }, (error) => {
           console.log(error);
           this.doErrorAlert('facebook');
@@ -79,7 +82,8 @@ export class InvitePage {
   inviteTwitter() {
     this.platform.ready().then(() => {
       if (window.plugins.socialsharing) {
-        window.plugins.socialsharing.canShareVia('twitter', this.inviteConstant.twitter.messageText, null, null, null, (result) => {
+        let app=this.platform.is('android') ? 'twitter' : 'com.apple.social.twitter';        
+        window.plugins.socialsharing.canShareVia(app, this.inviteConstant.twitter.messageText, null, null, null, (result) => {
           window.plugins.socialsharing.shareViaTwitter(this.inviteConstant.twitter.messageText, null /* img */, null /* url */, (data) => {
             console.log(data);
           });

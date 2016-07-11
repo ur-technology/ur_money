@@ -47,10 +47,7 @@ export class InviteContactsPage {
 
   sendEmailToContact(contact) {
     let toArr = [contact.email];
-    let ccArr = [''];
-    let bccArr = [''];
-    let file = [''];
-    SocialSharing.shareViaEmail(this.inviteData.body, this.inviteData.subject, toArr, ccArr, bccArr, file).then((data) => {
+    SocialSharing.shareViaEmail(this.inviteData.body, this.inviteData.subject, toArr, null, null, null).then((data) => {
       console.log(data);
     });
   }
