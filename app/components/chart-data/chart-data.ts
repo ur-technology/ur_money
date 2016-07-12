@@ -159,7 +159,7 @@ export class ChartData {
       this.percentageChange = 0;
       this.balanceChange = 0;
     }
-    console.log("data loaded", thisPage.points);
+    // console.log("data loaded", thisPage.points);
     thisPage.isLoaded = true;
     thisPage.loadedEmitter.emit({});
   }

@@ -48,7 +48,10 @@ export class Auth {
       if (authData) {
         this.uid = authData.uid;
         this.user = this.angularFire.database.object(`/users/${this.uid}`);
-        this.user.subscribe((userObject) => {
+        let subscriptionUser: Subscription = this.user.subscribe((userObject) => {
+          if((subscriptionUser) && (!subscriptionUser.isUnsubscribed)){
+            subscriptionUser.unsubscribe()
+          }
           if (userObject.wallet && userObject.wallet.publicKey) {
             nav.setRoot(homePage);
           } else {

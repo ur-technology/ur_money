@@ -12,12 +12,14 @@ import * as _ from 'lodash';
 import * as underscore from 'underscore'
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
+import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/home/home.html',
-  pipes: [OrderBy, Timestamp, Round]
+  pipes: [OrderBy, Timestamp, Round],
+  directives: [ChatSummaries]
 })
 export class HomePage implements OnInit {
   elementRef: ElementRef;
@@ -49,17 +51,22 @@ export class HomePage implements OnInit {
   }
 
   onPageDidEnter() {
-    console.log("about to render chart");
+    // console.log("about to render chart");
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {
       this.renderChart();
     } else {
       thisPage.chartData.loadedEmitter.subscribe((_) => {
-        console.log("about to render chart");
+        // console.log("about to render chart");
         this.renderChart();
       });
     }
   }
+
+  openChatsPage(){
+  this.nav.push(ConversationPage, {}, { animate: true, direction: 'forward' });
+}
+
 
   setRoot(page) {
     this.nav.setRoot(page, {}, { animate: true, direction: 'forward' });

@@ -1,0 +1,7 @@
+export class Contact {
+    uid: string;
+    createdAt: number;
+    firstName: string;
+    lastName: string;
+    phone: string;
+}
