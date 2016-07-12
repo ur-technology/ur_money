@@ -6,6 +6,7 @@ import {ChatPage} from '../chat/chat';
 import {Auth} from '../../components/auth/auth';
 import {Subscription} from 'rxjs';
 import * as _ from 'lodash';
+import {ChatUser} from '../../components/models/chat-user';
 
 @Component({
     templateUrl: 'build/pages/contacts/contacts.html',
@@ -15,6 +16,7 @@ export class ContactsPage {
     userId: string;
     contacts: Array<Contact> = [];
     chats: Array<any>;
+    currentUser: Contact;
 
     constructor(private nav: NavController, private contactsService: ContactsService, auth: Auth) {
         this.contacts = [];
@@ -22,9 +24,17 @@ export class ContactsPage {
         this.getContactsList();
 
     }
+    loadCurrentUser() {
+        let subscriptionContacts: Subscription = this.contactsService.getContactById(this.userId).subscribe(data => {
+            this.currentUser = data;
+            if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
+                subscriptionContacts.unsubscribe();
+            }
+        });
+    }
 
     getContactsList() {
-        let subscriptionContacts = this.contactsService.getContacts().subscribe(data => {
+        let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
             this.contacts = data;
             if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
                 subscriptionContacts.unsubscribe();
@@ -32,7 +42,14 @@ export class ContactsPage {
         });
     }
 
-    gotoChat(contact: Contact) {        
-        this.nav.push(ChatPage, { userId: this.userId, contact: contact }, { animate: true, direction: 'forward' });
+    gotoChat(contact: Contact) {
+        let chatUser2: ChatUser;
+        chatUser2.firstName = contact.firstName;
+        chatUser2.lastName = contact.lastName;
+        chatUser2.profilePhotoUrl = contact.profilePhotoUrl;
+
+        let chatUser1: ChatUser = this.currentUser;
+
+        this.nav.push(ChatPage, { user: chatUser1, contact: chatUser2 }, { animate: true, direction: 'forward' });
     }
 }

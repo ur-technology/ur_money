@@ -1,41 +1,59 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {ChatsPage} from '../chats/chats';
+import {Contact} from '../../components/models/contact';
+import {ChatUser} from '../../components/models/chat-user';
+import {Chat} from '../../components/models/chat';
+import {ChatService} from '../../components/services/chat.service';
 
-/*
-  Generated class for the ChatPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
-  templateUrl: 'build/pages/chat/chat.html',
+    templateUrl: 'build/pages/chat/chat.html',
+    providers: [ChatService]
 })
 export class ChatPage {
-  tabBarElement: any;
-  conversation: any;
-  messages: any[];
-  constructor(private nav: NavController, public navParams: NavParams) {
-    this.tabBarElement = document.querySelector('ion-tabbar-section');
-    this.conversation = this.navParams.get('conversation');
-    this.messages = [
-      { "userID": "1", "text": "Hi,I just sent 3000 UR in your account. Let me know if you need more.", "time": "21-june-2016" },
-      { "userID": "2", "text": "Hey, Thanks for the 3000 UR you sent my way. I really appreciate that. Let's catch up on the weekend.", "time": "22-june-2016" }
-    ];
-  }
+    tabBarElement: any;
+    messages: any[];
+    userId: ChatUser;
+    contactFullname: string;
+    contact: ChatUser;
+    messageText: string;
+    chat: Chat;
+    chatId: string;
 
-  moveBack() {
-    this.nav.setRoot(ChatsPage, {}, { animate: true, direction: 'back' });
-  }
-  onPageWillEnter() {
+    constructor(private nav: NavController, public navParams: NavParams, private chatService: ChatService) {
+        this.tabBarElement = document.querySelector('ion-tabbar-section');
+        this.userId = this.navParams.get('user');
+        this.contact = this.navParams.get('contact');
 
-    this.tabBarElement.style.display = 'none';
+    }
 
-  }
+    sendMessage() {
+        if (!this.chat) {
+            this.chatId = this.createChat();
+        }
+        // let message: Message = new Message();
+        // message.userId = this.userId;
+        // message.userName = this.myfullName;
+        // message.sendAt = firebase.database.ServerValue.TIMESTAMP;
+        // message.messageText = this.messageText;
+        // message.chatId = this.chatId;
+        //
+        // console.log("sendaMessage()", message);
+        // this.chatService.saveChatMessage(message);
+        // console.log("saveLastMessage()", this.messageText);
+        // this.chatService.saveLastMessage(message);
+        // this.messageText = "";
+    }
 
-  onPageWillLeave() {
+    createChat(): string {
+        return this.chatService.createChat();
+    }
 
-    this.tabBarElement.style.display = 'block';
+    onPageWillEnter() {
+        this.tabBarElement.style.display = 'none';
+    }
 
-  }
+    onPageWillLeave() {
+        this.tabBarElement.style.display = 'block';
+    }
 }

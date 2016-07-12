@@ -1,30 +1,33 @@
 <ion-navbar *navbar>
-  <button clear (click)="moveBack()">
-   <ion-icon name="md-arrow-round-back"></ion-icon>
-  </button>
-  <ion-title class="chat-title">{{conversation.name}}</ion-title>
-  <button clear class="right">
-    <ion-icon name="ios-more"></ion-icon>
-   </button>
+  <ion-title class="chat-title">{{contactFullname}}</ion-title>
 </ion-navbar>
 <ion-content class="chat-view">
-  <ion-list class="list messages-list">
-    <ion-item text-wrap class="item item-text-wrap" [ngClass]="{'other' : 1 != message.userID}" *ngFor="let message of messages">
-      <img src="img/avatars/avatar-{{message.userID}}.jpg" alt="img">
-      <div class="msg-text">
-        <p>{{ message.text }} </p>
-        <ion-note class="item-note">{{message.time}}</ion-note>
-      </div>
-    </ion-item>
-  </ion-list>
+    <ion-list class="list messages-list">
+        <ion-item text-wrap
+            class="item item-text-wrap"
+            [ngClass]="{'other' : messageNotMe(message)}"
+            *ngFor="let message of messagesDB">
+            <img src="img/avatars/avatar-1.jpg"
+                alt="img">
+            <div class="msg-text">
+                <p>{{ message.messageText }} </p>
+                <ion-note class="item-note">{{message.sendAt}}</ion-note>
+            </div>
+        </ion-item>
+    </ion-list>
 </ion-content>
-<ion-toolbar position="bottom" class="bar item-input-inset ur-message-send">
-  <label class="item-input-wrapper">
-        <input type="text" placeholder="Type your message"  />
+<ion-toolbar position="bottom"
+    class="bar item-input-inset ur-message-send">
+    <label class="item-input-wrapper">
+        <ion-input type="text"
+            [(ngModel)]="messageText"
+            placeholder="Type your message"></ion-input>
     </label>
-  <ion-buttons end>
-    <button clear class="button-icon">
-      <ion-icon name="md-send"></ion-icon>
-    </button>
-  </ion-buttons>
+    <ion-buttons end>
+        <button clear
+            class="button-icon"
+            (click)="sendMessage()">
+            <ion-icon name="md-send"></ion-icon>
+        </button>
+    </ion-buttons>
 </ion-toolbar>
