@@ -1,4 +1,4 @@
-export class Contact {
+export class User {
     uid: string;
     createdAt: number;
     firstName: string;

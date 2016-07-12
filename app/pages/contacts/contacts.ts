@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {ContactsService} from '../../components/services/contacts.service';
-import {Contact} from '../../components/models/contact';
+import {User} from '../../components/models/user';
 import {ChatPage} from '../chat/chat';
 import {Auth} from '../../components/auth/auth';
 import {Subscription} from 'rxjs';
@@ -14,16 +14,19 @@ import {ChatUser} from '../../components/models/chat-user';
 })
 export class ContactsPage {
     userId: string;
-    contacts: Array<Contact> = [];
+    contacts: Array<User> = [];
     chats: Array<any>;
-    currentUser: Contact;
+    currentUser: User;
 
     constructor(private nav: NavController, private contactsService: ContactsService, auth: Auth) {
         this.contacts = [];
         this.userId = auth.uid;
-        this.getContactsList();
-
     }
+    ionViewLoaded() {
+        this.getContactsList();
+        this.loadCurrentUser();
+    }
+
     loadCurrentUser() {
         let subscriptionContacts: Subscription = this.contactsService.getContactById(this.userId).subscribe(data => {
             this.currentUser = data;
@@ -32,6 +35,7 @@ export class ContactsPage {
             }
         });
     }
+
 
     getContactsList() {
         let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
@@ -42,14 +46,19 @@ export class ContactsPage {
         });
     }
 
-    gotoChat(contact: Contact) {
-        let chatUser2: ChatUser;
-        chatUser2.firstName = contact.firstName;
-        chatUser2.lastName = contact.lastName;
-        chatUser2.profilePhotoUrl = contact.profilePhotoUrl;
-
-        let chatUser1: ChatUser = this.currentUser;
+    gotoChat(contact: User) {
+        let chatUser2: ChatUser = this.getChatUser(contact);
+        let chatUser1: ChatUser = this.getChatUser(this.currentUser);
 
         this.nav.push(ChatPage, { user: chatUser1, contact: chatUser2 }, { animate: true, direction: 'forward' });
+    }
+
+    getChatUser(object: any): ChatUser {        
+        let chatUser: ChatUser = new ChatUser();
+        chatUser.firstName = object.firstName;
+        chatUser.lastName = object.lastName;
+        chatUser.userUid = object.$key;
+        chatUser.profilePhotoUrl = object.profilePhotoUrl ? object.profilePhotoUrl : "";
+        return chatUser;
     }
 }
