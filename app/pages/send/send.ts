@@ -1,5 +1,6 @@
-import {Page, NavController} from 'ionic-angular';
+import {Page, Alert, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
+import {Wallet} from '../../components/wallet/wallet2';
 
 @Page({
   templateUrl: 'build/pages/send/send.html',
@@ -8,6 +9,12 @@ export class SendPage {
   showContactInput: boolean;
   contactItem: any;
   showContacts: boolean;
+  
+  amount: number;
+  phrase: string;
+  password: string;
+  publicKey: string;
+
   constructor(public nav: NavController) {
     this.showContactInput = true;
     this.showContacts = false;
@@ -35,21 +42,80 @@ export class SendPage {
     this.contactItem = {};
   }
 
+  validateForm() {
+    let ethUtil = require('ethereumjs-util');
+
+    return (
+      this.amount > 0 &&
+      this.phrase != '' &&
+      this.password != '' &&
+      (this.publicKey != '' && (ethUtil.isValidAddress(this.publicKey) || ethUtil.isValidPublic(this.publicKey)))
+    )
+  }
+
   sendUR() {
-    // TODO: Alex: Insert code to again generate public and private keys based on this.secretPhrase
+    let self = this;
+    
+    let wallet: Wallet = new Wallet();
 
-    // TODO: Alex: Next send the specified amount to the specified recipient
+    if(!this.validateForm()) {
+      return;
+    }
 
-    let myPublicKey = "0x8805317929d0a8cd1e7a19a4a2523b821ed05e42"; // using this dummy address for now
-    let recipientPublicKey = "0x8805317929d0a8cd1e7a19a4a2523b821ed05e43"; // using this dummy address for now
-    let urAmount = 1.5 // using this dummy amount for now
-    let weiAmount = 1000000000000000000 * 1.5; // need to use something like bigdecimal here
+    let confirmation = Alert.create({
+      title: 'Confirmation',
+      message: "<p>Sending " + this.amount.toFixed(4) + " ETH</p>",
+      buttons: [
 
-    // TODO: send weiAmount to recipientPublicKey...
+        {
+          text: 'OK',
+          handler: () => {
+            self.error();
 
-    // TODO: display message to user...
+            wallet.create(self.phrase, self.password).then(() => {
+              wallet.sendTransaction(self.publicKey, self.amount).then((err) => {
+                if (!err)
+                  self.success();
+                else
+                  self.error();
+              });
+            });
+          }
+        },
+        {
+          text: 'CANCEL',
+          role: 'cancel',
+          handler: () => {
+            // do nothing
+          }
+        }
+      ]
+    });
+    this.nav.present(confirmation);
+  }
 
-    // all done
-    this.nav.setRoot(HomePage);
+  success(){
+    let successAlert = Alert.create({
+      title: 'Success',
+      message: "<p>Transaction successfully created</p>",
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.nav.setRoot(HomePage);
+          }
+        }
+      ]
+    });
+    this.nav.present(successAlert);
+  }
+
+  error(){
+    let errorAlert = Alert.create({
+      title: 'Error',
+      message: "<p>An error occurred</p>",
+      buttons: ['OK']
+    });
+    this.nav.present(errorAlert);
   }
 }

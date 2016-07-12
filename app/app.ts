@@ -96,7 +96,8 @@ class UrMoney {
         return;
       }
 
-      this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
+      this.nav.setRoot(SendPage);
+      // this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
     });
   }
 

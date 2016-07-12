@@ -18,125 +18,32 @@
 <ion-content padding class="dash-send-view">
   <div class="send-receive-cont">
     <!--<form action="#">-->
-    <div class="card send-receive-input">
-      <div [hidden]="showContactInput" class="contacts-cont">
-        <span class="contact-item"><img src="img/avatar.jpg" alt="">{{contactItem.email}}  <a (click)="removeContact()" class="contact-close"></a></span>
-      </div>
-      <label class="item item-icon-left item-icon-right item-input">
-                    <i class="icon add-person-icon" item-left></i>
-                    <input [hidden]="!showContactInput" type="text"  style="width: 100%;margin-left: 7px;border: none;"  (blur)="inputBlur()"  (focus)="showContacts=true"/>
-                    <i class="icon qr-code-icon" item-right></i>
+
+    <div class="card send-receive-textarea" [hidden]="showContacts">
+      <label class="item item-input">
+        <ion-input [(ngModel)]="publicKey" placeholder="Enter recipient address"></ion-input>
       </label>
     </div>
-    <div class="send-receive-popover" [hidden]="!showContacts">
-      <div class="list contacts-list">
-        <div class="recent-contacts">
-          <ion-item class="item item-divider">
-            <span>Recent</span>
-          </ion-item>
 
-          <ion-item (click)="addContact('abc@gmail.com')" class="item padding-left">
-            abc@gmail.com
-          </ion-item>
-          <ion-item (click)="addContact('abc@gmail.com')" class="item padding-left">
-            abc@gmail.com
-          </ion-item>
-          <ion-item (click)="addContact('abc@gmail.com')" class="item padding-left">
-            abc@gmail.com
-          </ion-item>
-          <ion-item (click)="addContact('abc@gmail.com')" class="item padding-left">
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-divider">
-            <span>Contacts</span>
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-          <ion-item class="item item-avatar">
-            <ion-avatar item-left>
-              <img src="img/avatar.jpg" alt="">
-            </ion-avatar>
-            abc@gmail.com
-          </ion-item>
-
-        </div>
-      </div>
-    </div>
     <div class="card send-receive-ur" [hidden]="showContacts">
       <label class="item item-input">
-        <input type="text" />
+        <input  [(ngModel)]="amount" type="text" />
          <ion-note class="item-note"> UR </ion-note>
      </label>
     </div>
+
     <div class="card send-receive-textarea" [hidden]="showContacts">
       <label class="item item-input">
-        <ion-input placeholder="Enter your secret phrase to authorize this transaction"></ion-input>
+        <ion-input [(ngModel)]="phrase" placeholder="Enter your secret phrase to authorize this transaction"></ion-input>
       </label>
     </div>
+
     <div class="card send-receive-textarea" [hidden]="showContacts">
       <label class="item item-input">
-        <textarea placeholder="Enter an optional message to the recipient"></textarea>
+        <ion-input [(ngModel)]="password" placeholder="Enter your password"></ion-input>
       </label>
     </div>
+
     <button class="button button-light button-outline button-block button-large send-receive-btn" (click)="sendUR()">Send</button>
     <!--</form>-->
   </div>
