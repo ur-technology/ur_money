@@ -1,6 +1,6 @@
 import {Page, NavController, NavParams, Alert, Modal, Platform} from 'ionic-angular';
 import {ChartData} from '../../components/chart-data/chart-data';
-import {Component, OnInit, ElementRef, Inject} from '@angular/core';
+import {Component, OnInit, ElementRef, Inject, ViewChild} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
 import {AddressBookModal} from '../../components/address-book-modal/address-book-modal';
@@ -33,6 +33,7 @@ export class HomePage implements OnInit {
   icons: string[];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
+  @ViewChild(ChatSummaries) chatSummaries:ChatSummaries;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartData, public platform: Platform) {
@@ -50,8 +51,13 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
+  onPageWillLeave() {
+    console.log("onPageWillLeave");
+    this.chatSummaries.cleanResources();
+  }
   onPageDidEnter() {
-    // console.log("about to render chart");
+    console.log("onPageDidEnter");
+    this.chatSummaries.loadChatSummaries();
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {
       this.renderChart();

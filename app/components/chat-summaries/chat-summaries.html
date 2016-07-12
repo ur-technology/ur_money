@@ -1,1 +1,14 @@
-hola
+<ion-list class="list list-msgs">
+    <ion-item *ngFor="let chat of chats">
+            <ion-avatar item-left>
+                <img src="img/avatar.jpg">
+            </ion-avatar>
+            <div class="item-msg">
+                <h2>{{chat.otherUser.firstName}} {{chat.otherUser.lastName}}: </h2>
+                <br /> {{chat.lastMessage.text}}
+            </div>
+            <p class="msg-time">
+                <ion-icon name="ios-clock-outline"></ion-icon> {{chat.lastMessage.sentAt}}</p>
+            <span class="item-legend green"></span>
+    </ion-item>
+</ion-list>
