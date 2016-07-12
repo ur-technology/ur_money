@@ -36,19 +36,21 @@ export class Wallet {
         let web3connection = new web3(new web3.providers.HttpProvider("http://localhost:12345"));
 
         var rawTx = {
-            nonce: ethUtil.toBuffer(),
-            gasPrice: ethUtil.toBuffer('20000'),
-            gasLimit: ethUtil.toBuffer('70000'),
+            nonce: web3connection.toHex(web3connection.eth.getTransactionCount(this.getAddress())),
+            gasPrice: web3connection.toHex(web3connection.eth.gasPrice),
+            gasLimit: web3connection.toHex(300000),
             to: (ethUtil.isHexPrefixed(to) ? ethUtil.toBuffer(to) : ethUtil.toBuffer('0x' + to)),
-            value: ethUtil.toBuffer(web3connection.toWei(amount)),
+            from : this.getAddress(),
+            value: ethUtil.toBuffer(parseInt(web3connection.toWei(amount))),
         };
+
         let tx = new ethTx(rawTx);
 
         tx.sign(this.getPrivate(false));
 
         let serializedTx = tx.serialize().toString('hex');
 
-        return new Promise((promise) => web3connection.eth.sendRawTransaction(serializedTx,(err, hash) => {
+        return new Promise((promise) => web3connection.eth.sendRawTransaction(serializedTx,(err) => {
             promise(err)
         }));
     }
@@ -74,7 +76,7 @@ export class Wallet {
         return this._wallet;
     };
 
-    private getPrivate(string:boolean){
+    public getPrivate(string:boolean){
         if(string){
             return this._wallet.getPrivateKeyString();
         } else {
