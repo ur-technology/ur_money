@@ -6,6 +6,7 @@ import {ChatUser} from '../../components/models/chat-user';
 import {Chat} from '../../components/models/chat';
 import {ChatService} from '../../components/services/chat.service';
 import {ChatMessage} from '../../components/models/chat-message';
+import {Subscription} from 'rxjs';
 
 @Component({
     templateUrl: 'build/pages/chat/chat.html',
@@ -20,6 +21,7 @@ export class ChatPage {
     messageText: string;
     chat: Chat;
     chatId: string;
+    messagesRef: Subscription;
 
     constructor(private nav: NavController, public navParams: NavParams, private chatService: ChatService) {
         this.tabBarElement = document.querySelector('ion-tabbar-section');
@@ -27,10 +29,31 @@ export class ChatPage {
         this.contact = this.navParams.get('contact');
 
     }
+    ionViewLoaded() {
+        this.findChatAndLoadMessages();
+    }
+
+    findChatAndLoadMessages() {
+        this.chatService.findChatId(this.user, this.contact).then((chatId: string) => {
+            this.chatId = chatId;
+            this.loadMessages();
+        });
+    }
+
+    loadMessages() {
+        this.messagesRef = this.chatService.getChatMessages(this.chatId).subscribe(data => {
+            this.messages = data;
+        });
+    }
+
+    messageNotMe(message: any) {
+        return message.senderUid !== this.user.userUid;
+    }
 
     sendMessage() {
         if (!this.chatId) {
             this.createChat();
+            this.loadMessages();
         }
         let chatMessage: ChatMessage = new ChatMessage();
         chatMessage.text = this.messageText;
@@ -38,13 +61,14 @@ export class ChatPage {
         chatMessage.senderUid = this.user.userUid;
         this.chatService.addMessageToChat(this.chatId, chatMessage);
 
-        this.chatService.addChatSummaryToUser(this.user.userUid, this.user, chatMessage);
-        this.chatService.addChatSummaryToUser(this.contact.userUid, this.user, chatMessage);
+        this.chatService.addChatSummaryToUser(this.user.userUid, this.user, chatMessage, this.chatId);
+        this.chatService.addChatSummaryToUser(this.contact.userUid, this.user, chatMessage, this.chatId);
         this.messageText = "";
     }
 
     createChat() {
         this.chatId = this.chatService.createChat(this.user, this.contact);
+
     }
 
 
@@ -54,6 +78,9 @@ export class ChatPage {
     }
 
     onPageWillLeave() {
+        if (this.messagesRef && !this.messagesRef.isUnsubscribed) {
+            this.messagesRef.unsubscribe();
+        }
         this.tabBarElement.style.display = 'block';
     }
 }

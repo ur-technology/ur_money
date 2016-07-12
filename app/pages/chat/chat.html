@@ -6,12 +6,12 @@
         <ion-item text-wrap
             class="item item-text-wrap"
             [ngClass]="{'other' : messageNotMe(message)}"
-            *ngFor="let message of messagesDB">
+            *ngFor="let message of messages">
             <img src="img/avatars/avatar-1.jpg"
                 alt="img">
             <div class="msg-text">
-                <p>{{ message.messageText }} </p>
-                <ion-note class="item-note">{{message.sendAt}}</ion-note>
+                <p>{{ message.text }} </p>
+                <ion-note class="item-note">{{message.sentAt}}</ion-note>
             </div>
         </ion-item>
     </ion-list>
