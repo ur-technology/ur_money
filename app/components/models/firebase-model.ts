@@ -42,11 +42,23 @@ export class FirebaseModel {
     });
   }
 
+  static fieldsExcludedFromSaving(): Array<string> {
+    // Fields beginning with "_" will be excluded automatically.
+    // To exclude additional fields, override this method in subclass.
+    return [];
+  }
+
   constructor(public _containerPath: string, fieldValues: Object) {
     for (let fieldName of Object.getOwnPropertyNames(fieldValues))
     {
       this[fieldName] = fieldValues[fieldName];
     }
+    for (let fieldName of Object.getOwnPropertyNames(this)) {
+      if (/[\w]At$/.test(fieldName) && this[fieldName] == undefined) {
+        this[fieldName] = firebase.database.ServerValue.TIMESTAMP;
+      }
+    }
+
   }
 
   observable() {
@@ -61,11 +73,11 @@ export class FirebaseModel {
     return new Promise((resolve, reject) => {
       let self = this;
       if (self.key) {
-        self.reference().update(self.valuesToSave()).then((_) => {
+        self.reference().update(self.saveableValues()).then((_) => {
           resolve(self.key);
         });
       } else {
-        let promise = FirebaseModel.reference(self._containerPath).push(self.valuesToSave());
+        let promise = FirebaseModel.reference(self._containerPath).push(self.saveableValues());
         self.key = promise.key;
         promise.then((_) => {
           resolve(self.key);
@@ -78,26 +90,28 @@ export class FirebaseModel {
   // helper methods
   //////////////////
 
-  static fieldsExcludedFromSaving(): Array<string> {
-    // Fields beginning with "_" will be excluded automatically.
-    // To exclude additional fields, override this method in subclass.
-    return [];
-  }
-
   static referenceByKey(containerPath, key) {
     return firebase.database().ref(`${containerPath}/${key}`);
   }
 
-  private valuesToSave(): Object {
-    let excludedFields = (this.constructor as any).fieldsExcludedFromSaving();
-    return _.omitBy(this, function(value, fieldName) {
+  private saveableValues(object?: Object): Object {
+    let excludedFields = object ? [] : (this.constructor as any).fieldsExcludedFromSaving();
+    if (!object) {
+      object = this;
+    }
+    object = _.omitBy(object, (value, fieldName) => {
       return value == undefined ||
         /^_/.test(fieldName) ||
         fieldName == 'key' ||
+        fieldName == '$key' ||
         _.includes(excludedFields, fieldName) ||
         value instanceof Function;
     });
+    _.each(object, (value, fieldName) => {
+      if (value instanceof Object) {
+        object[fieldName] = this.saveableValues(object[fieldName]);
+      }
+    });
+    return object;
   }
-
-
 }

@@ -8,7 +8,6 @@ import {TransactionNavService} from './transaction-nav-service';
 import {HomePage} from '../home/home';
 import {ReceivePage} from '../receive/receive';
 import {SendPage} from '../send/send';
-import {InvitePage} from '../invite/invite';
 
 /*
   Generated class for the TransactionsPage page.
@@ -38,7 +37,6 @@ export class TransactionsPage {
     this.homePage = HomePage;
     this.sendPage = SendPage;
     this.receivePage = ReceivePage;
-    this.invitePage = InvitePage;
     if (this.platform.is('android')) {
       this.android = true;
     }

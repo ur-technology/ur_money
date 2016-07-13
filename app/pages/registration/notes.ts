@@ -40,12 +40,12 @@
 //     });
 //
 //     Dialogs.confirm(
-//       "Would you like to be notified of messages from friends and changes to your balance?",
+//       "Would you like to be notified of messages from contacts and changes to your balance?",
 //       "UR Navigator would like to send you notifications",
 //       [ "OK", "Not Now" ]
 //     ).then( (allowNotificationsButtonIndex) => {
 //       Dialogs.confirm(
-//         "Having access to your contacts makes it easier to earn rewards for signing up friends. Allow access to contacts?",
+//         "Having access to your contacts makes it easier to earn rewards for signing up contacts. Allow access to contacts?",
 //         "UR Navigator would like to access your contacts",
 //         [ "OK", "Not Now" ]
 //       ).then( (allowContactsButtonIndex) => {

@@ -9,14 +9,14 @@
   </h5>
   <p>Your Member Id is {{user.memberId}}</p>
   <p>We will contact you as soon as UR Capital is launched.</p>
-  <p>In the meantime, build status, priority, and more by referring friends to our beta testing program.</p>
+  <p>In the meantime, build status, priority, and more by referring contacts to our beta testing program.</p>
 
   <form [ngFormModel]="inviteForm" (submit)="sendInvitation($event, phoneInput)">
     <p *ngIf="error">{{error}}</p>
 
     <ion-list>
       <ion-item [class.error]="!phone.valid && phone.touched" class="last-child">
-        <ion-input type="tel" [focuser] #phoneInput [ngFormControl]="phone" placeholder="Enter your friend's phone"></ion-input>
+        <ion-input type="tel" [focuser] #phoneInput [ngFormControl]="phone" placeholder="Enter your contact's phone"></ion-input>
       </ion-item>
     </ion-list>
     <button secondary full type="submit" [disabled]="!inviteForm.valid || submissionInProgress">

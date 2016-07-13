@@ -1,29 +1,12 @@
-import { Component, ViewChild} from '@angular/core';
-import { NavController } from 'ionic-angular';
-import {ChatPage} from '../chat/chat';
-import {Subscription} from 'rxjs';
-import {Auth} from '../../components/auth/auth';
-import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
+import {Component, ViewChild} from '@angular/core';
+import {NavController} from 'ionic-angular';
+import {ChatList} from '../../components/chat-list/chat-list';
 
 @Component({
     templateUrl: 'build/pages/chats/chats.html',
-    directives: [ChatSummaries]
+    directives: [ChatList]
 })
 export class ChatsPage {
-
-
     constructor(private nav: NavController) {
-
     }
-
-    ionViewLoaded() {
-
-    }
-
-    onPageWillLeave() {
-
-    }
-
-
-
 }

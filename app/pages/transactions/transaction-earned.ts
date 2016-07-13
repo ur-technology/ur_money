@@ -1,5 +1,4 @@
 import {Page, NavController} from 'ionic-angular';
-import {InvitePage} from '../invite/invite';
 import {TransactionNavService} from './transaction-nav-service';
 
 /*
@@ -15,7 +14,6 @@ export class TransactionsEarnedPage {
     transactionData: any;
     invitePage: any;
     constructor(public nav: NavController, public transactionnavService: TransactionNavService) {
-        this.invitePage = InvitePage;
         this.transactionData = [
             {
                 "name": "Jhon Doe",

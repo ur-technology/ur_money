@@ -5,8 +5,8 @@
         "34234234": {
           "type": "send", // send/receive
           "source": "urmoney", // urmoney/external
-          "senderUid": "4234236345",
-          "receiverUid": "734234234",
+          "senderUserId": "4234236345",
+          "UserId": "734234234",
           "status": "pending",
           "amount": "10000000",
           "message": "Here is some money for you!",

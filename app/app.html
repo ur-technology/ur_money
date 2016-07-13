@@ -9,10 +9,9 @@
          <ion-icon name="settings"></ion-icon>
       </button>
     </div>
-    <div class="menu-profile" *ngIf="auth && auth.user">
-      <img class="menu-avatar" *ngIf="(auth.user|async)?.profileImage" src="{{(auth.user | async)?.profileImage}}" alt="">
-      <img class="menu-avatar" *ngIf="!(auth.user|async)?.profileImage" [src]="generateFaceUrl((auth.user|async)?.firstName,(auth.user|async)?.lastName)" alt="">
-      <h1 class="profile-name">{{(auth.user | async)?.firstName}} {{(auth.user | async)?.lastName}}</h1>
+    <div class="menu-profile" *ngIf="auth.currentUser">
+      <img class="menu-avatar" [src]="generateProfileImage()" alt="">
+      <h1 class="profile-name">{{auth.currentUser.firstName}} {{auth.currentUser.lastName}}</h1>
       <p></p>
     </div>
     <ion-list class="menu-list" no-lines>

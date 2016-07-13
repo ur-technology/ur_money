@@ -1,68 +1,52 @@
 import {Injectable, Inject, ViewChild} from '@angular/core'
 import {Nav} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
-import {Component} from '@angular/core';
 import * as _ from 'lodash';
 import {Subscription} from 'rxjs';
+import {ContactsService} from '../services/contacts-service';
+import {Sim} from 'ionic-native';
 
 @Injectable()
 export class Auth {
-  public uid: string
-  public userRef: string
-  public user: FirebaseObjectObservable<any>;
-  public userObject: any;
+  public currentUserId: string
+  public currentUserRef: FirebaseObjectObservable<any>;
+  public currentUser: any;
+  public countryCode: string;
 
   // public authDataProfileImage: any
   // public authDataProfileName: any
   // public authDataProfileDescription: any
   // public authDataProfileEmail: any
 
-  constructor(public angularFire: AngularFire) {
-  }
-
-  static isProduction() {
-    // TODO: this will work only for webapp, not for mobile app -- need to fix this
-    return /ur\.capital$|urcapital-production\.firebaseapp\.com$/.test(window.location.hostname);
-  }
-
-  static firebaseConfig() {
-    if (Auth.isProduction()) {
-      return  {
-        apiKey: "AIzaSyBUGCRu1n2vFgyFgTVhyoRbKz39MsDMvvw",
-        authDomain: "ur-money-staging.firebaseapp.com",
-        databaseURL: "https://ur-money-staging.firebaseio.com",
-        storageBucket: "ur-money-staging.appspot.com",
-      };
-    } else {
-      return  {
-        apiKey: "AIzaSyBUGCRu1n2vFgyFgTVhyoRbKz39MsDMvvw",
-        authDomain: "ur-money-staging.firebaseapp.com",
-        databaseURL: "https://ur-money-staging.firebaseio.com",
-        storageBucket: "ur-money-staging.appspot.com",
-      };
-    }
+  constructor(public angularFire: AngularFire, public contactsService: ContactsService) {
   }
 
   respondToAuth(nav: Nav, welcomePage: any, walletSetupPage: any, homePage: any) {
+    let self = this;
     firebase.auth().onAuthStateChanged((authData) => {
-    // this.angularFire.auth.subscribe((authData) => {
       if (authData) {
-        this.uid = authData.uid;
-        this.user = this.angularFire.database.object(`/users/${this.uid}`);
-        let subscriptionUser: Subscription = this.user.subscribe((userObject) => {
-          if((subscriptionUser) && (!subscriptionUser.isUnsubscribed)){
-            this.userObject = userObject;
-            subscriptionUser.unsubscribe()
+        self.currentUserId = authData.uid;
+        self.currentUserRef = self.angularFire.database.object(`/users/${self.currentUserId}`);
+        let userSubscription: Subscription = self.currentUserRef.subscribe((currentUser) => {
+          if (userSubscription && !userSubscription.isUnsubscribed) {
+            userSubscription.unsubscribe()
           }
-          if (userObject.wallet && userObject.wallet.address) {
+          self.currentUser = currentUser;
+          self.getSimCountryCode().then((countryCode) => {
+            self.countryCode = countryCode || currentUser.countryCode;
+            self.contactsService.load(self.countryCode, self.currentUserId);
+          });
+          if (currentUser.wallet && currentUser.wallet.address) {
             nav.setRoot(homePage);
           } else {
             nav.setRoot(walletSetupPage);
           }
         });
       } else {
-        this.uid = undefined;
-        this.user = undefined;
+        self.currentUserId = undefined;
+        self.currentUserRef = undefined;
+        self.currentUser = undefined;
+        self.countryCode = undefined;
         nav.setRoot(welcomePage);
       }
     });
@@ -126,7 +110,18 @@ export class Auth {
   }
 
   isSignedIn() {
-    return !!this.uid;
+    return !!this.currentUser;
+  }
+
+  private getSimCountryCode(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      Sim.getSimInfo().then((info) => {
+        resolve(info.countryCode.toUpperCase());
+      }, (error) => {
+        console.log("unable to get country code from sim", error);
+        resolve(undefined);
+      });
+    });
   }
 
 }

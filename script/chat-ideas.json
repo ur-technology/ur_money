@@ -16,7 +16,7 @@
             messageId: "-KMFyURDIC8dHKBS9idg",
             text: "hi",
             sentAt: 1468089936151,
-            senderUid: "-KMFyURDIC8dHKBS9idg"
+            senderUserId: "-KMFyURDIC8dHKBS9idg"
           }
         }
       }
@@ -42,12 +42,12 @@
         "-KMFyURDIC8dHKBS9idg": {
           text: "hi",
           sentAt: 1468089936151,
-          senderUid: "-KMFyURDIC8dHKBS9idg"
+          senderUserId: "-KMFyURDIC8dHKBS9idg"
         },
         "-LMFyURDIC8dHKBS9idh": {
           text: "hi back",
           sentAt: 1468089936152,
-          senderUid: "-KMFyURDIC8dHKBS9idg"
+          senderUserId: "-KMFyURDIC8dHKBS9idg"
         }
       }
     }

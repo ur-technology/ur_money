@@ -15,7 +15,7 @@
     <a class="button button-calm"><i class="home-icon"></i></a>
     <button (click)="setRoot(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
     <button (click)="setRoot(receivePage)" class="button button-calm"><i class="receive-icon"></i></button>
-    <button (click)="setRoot(invitePage)" class="button button-calm"><i class="invite-icon"></i></button>
+    <button (click)="inviteContact()" class="button button-calm"><i class="invite-icon"></i></button>
   </div>
 </div>
 <ion-content>
@@ -46,12 +46,12 @@
       1Y
     </ion-segment-button>
   </ion-segment>
-  <chat-summaries></chat-summaries>
+  <chat-list></chat-list>
 </ion-content>
 <!-- Button Starts -->
 <div class="float-button" [style.bottom]="android?'2%':'8%'">
   <span class="height-fix">
-     <a class="content"  (click)="openChatsPage()">
+     <a class="content"  (click)="startNewChat()">
         <ion-icon name="md-add"> </ion-icon>
      </a>
   </span>
@@ -61,6 +61,6 @@
     <a class="button button-calm"><i class="home-icon"></i></a>
     <button (click)="setRoot(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
     <button (click)="setRoot(receivePage)" class="button button-calm"><i class="receive-icon"></i></button>
-    <button (click)="setRoot(invitePage)" class="button button-calm"><i class="invite-icon"></i></button>
+    <button (click)="inviteContact()" class="button button-calm"><i class="invite-icon"></i></button>
   </div>
 </div>

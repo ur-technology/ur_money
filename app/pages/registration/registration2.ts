@@ -6,8 +6,7 @@ import {Auth} from '../../components/auth/auth';
 import {Registration3Page} from './registration3';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
-
-import {CountryListService} from '../../components/country-list/country-list.service';
+import {CountryListService} from '../../components/services/country-list-service';
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
 

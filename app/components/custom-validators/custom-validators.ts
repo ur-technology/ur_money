@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 export class CustomValidators {
   static normalizedPhone(phone) {
     let p = phone;
-    p = p.replace(/\D/,'');
+    p = p.replace(/\D/g,'');
     p = p.replace(/^011/,"+");
     p = p.replace(/^664(\d{7})$/,"+521664$1");
     p = p.replace(/^\+?521?(\d{10})$/,"+521$1");

@@ -31,7 +31,7 @@
 
       <ion-item class="item item-input input-item-data">
         <ion-input class="phone-country-code" [value]="selectedCountry.code"> </ion-input>
-        <ion-input #phoneInput class="phone-input" [ngFormControl]="phoneControl" type="tel" autofocus></ion-input>
+        <ion-input [focuser] #phoneInput class="phone-input" [ngFormControl]="phoneControl" type="tel"></ion-input>
       </ion-item>
     </div>
   </form>

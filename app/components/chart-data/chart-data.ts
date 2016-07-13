@@ -28,7 +28,7 @@ export class ChartData {
   */
   convertWeiStringToApproximateUR(weiString) {
     var x = "0000000000000000000" + weiString;
-    x = x.replace(/\D/, '');
+    x = x.replace(/\D/g, '');
     x = x.replace(/^(\d+)(\d{18})$/, "$1.$2");
     x = x.replace(/^0+([1-9])/, "$1")
     return parseFloat(x);
@@ -68,7 +68,7 @@ export class ChartData {
   */
 
   loadChartDateWhenBalanceHistoryChanges() {
-    var balanceRecordsRef = `/users/${this.auth.uid}/wallet/balanceRecords`;
+    var balanceRecordsRef = `/users/${this.auth.currentUserId}/wallet/balanceRecords`;
     var thisPage = this;
     thisPage.angularFire.database.object(balanceRecordsRef).subscribe((balanceRecords) => {
       thisPage.isLoaded = false;

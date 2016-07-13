@@ -1,31 +1,24 @@
-// http://ionicframework.com/docs/v2/theming/
-
-
 // App Shared Imports
 // --------------------------------------------------
 // These are the imports which make up the design of this app.
 // By default each design mode includes these shared imports.
 // App Shared Sass variables belong in app.variables.scss.
 @import "../app";
-@import "../pages/tutorial/tutorial";
-
-@import '../components/loading-modal/loading-modal';
-@import '../components/address-book-modal/address-book-modal';
-@import "../pages/home/home";
-@import "../pages/invite/invite";
-@import "../pages/my-network/my-network";
-@import "../pages/receive/receive";
-@import "../pages/send/send";
-@import "../pages/registration/registration";
 
 @import "../prelaunch_pages/dashboard/dashboard";
 @import "../prelaunch_pages/error/error";
 @import "../prelaunch_pages/sign-up/sign-up";
 
-@import "../pages/transactions/transactions";
+@import '../components/country-list/country-popover';
+@import '../components/loading-modal/loading-modal';
+
 @import "../pages/about/about";
-@import "../pages/contacts-and-chats/contacts-and-chats";
+@import "../pages/chat/chat";
 @import "../pages/chats/chats";
 @import "../pages/contacts/contacts";
-@import "../pages/invite-contacts/invite-contacts";
-@import "../pages/chat/chat";
+@import "../pages/contacts-and-chats/contacts-and-chats";
+@import "../pages/home/home";
+@import "../pages/receive/receive";
+@import "../pages/registration/registration";
+@import "../pages/send/send";
+@import "../pages/transactions/transactions";

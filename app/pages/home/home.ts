@@ -3,15 +3,14 @@ import {ChartData} from '../../components/chart-data/chart-data';
 import {Component, OnInit, ElementRef, Inject, ViewChild} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
-import {AddressBookModal} from '../../components/address-book-modal/address-book-modal';
 import {ReceivePage} from '../receive/receive';
 import {SendPage} from '../send/send';
-import {InvitePage} from '../invite/invite';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
+import {ContactsPage} from '../contacts/contacts';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
-import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
+import {ChatList} from '../../components/chat-list/chat-list';
 import {LocalNotifications} from 'ionic-native';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 import {Auth} from '../../components/auth/auth';
@@ -22,7 +21,7 @@ declare var jQuery: any;
 @Page({
   templateUrl: 'build/pages/home/home.html',
   pipes: [OrderBy, Timestamp, Round],
-  directives: [ChatSummaries]
+  directives: [ChatList]
 })
 export class HomePage implements OnInit {
   elementRef: ElementRef;
@@ -30,53 +29,27 @@ export class HomePage implements OnInit {
   sendPage: any;
   receivePage: any;
   selectedItem: any;
-  invitePage: any;
   selectedOption: any;
   icons: string[];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
-    navParams: NavParams, public chartData: ChartData, public platform: Platform, private angularFire: AngularFire, private auth: Auth) {
+    navParams: NavParams, public chartData: ChartData, public platform: Platform,
+    private angularFire: AngularFire, private auth: Auth) {
     this.elementRef = elementRef;
     this.sendPage = SendPage;
     this.receivePage = ReceivePage;
     this.selectedOption = '1W';
-    this.invitePage = InvitePage;
     if (this.platform.is('android')) {
       this.android = true;
     }
-
-    // create new user
-    let user = new User2("/users", { firstName: "Jack", lastName: "Black" });
-    user.save().then((key) => {
-      console.log("step 1: user saved with key", key, ", also stored in user as ", user.key);
-
-      // now look up same user
-      User2.find("/users", user.key).then((user) => {
-        console.log("step 2: looked up user with key ", user.key, ", firstName ", user.firstName);
-
-        // update user
-        user.firstName = "George";
-        user.save();
-        console.log("step 3: saved user, set firstName to", user.firstName);
-
-        // look him up again
-        User2.find("/users", user.key).then((user) => {
-          console.log("step 4: looked up user again, now first name is", user.firstName);
-        });
-
-      });
-    });
-
   }
 
   ngOnInit() {
   }
 
-
   onPageDidEnter() {
-
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {
       this.renderChart();
@@ -87,8 +60,8 @@ export class HomePage implements OnInit {
     this.sendMessageNotifications();
   }
 
-  openChatsPage() {
-    this.nav.push(ContactsAndChatsPage, {}, { animate: true, direction: 'forward' });
+  startNewChat() {
+    this.nav.push(ContactsAndChatsPage, {nonMembersFirst: false}, { animate: true, direction: 'forward' });
   }
 
 
@@ -160,18 +133,16 @@ export class HomePage implements OnInit {
     });
   }
 
-  createAlertPopup() {
-    let addressBookModal = Modal.create(AddressBookModal);
-
-    this.nav.present(addressBookModal);
-  }
-
   sendMessageNotifications() {
-    this.angularFire.database.list(`/users/${this.auth.uid}/notifications/`).subscribe((data: any) => {
+    this.angularFire.database.list(`/users/${this.auth.currentUserId}/notifications/`).subscribe((data: any) => {
       if (data) {
-        this.scheduleNotification(data, this.auth.uid);
+        this.scheduleNotification(data, this.auth.currentUserId);
       }
     });
+  }
+
+  inviteContact() {
+    this.nav.push(ContactsAndChatsPage, {nonMembersFirst: true});
   }
 
   private scheduleNotification(data: any, userId: string) {

@@ -13,11 +13,11 @@ export class PrelaunchService {
       user.createdAt = Date.parse(new Date().toISOString());
     }
     var usersRef = this.auth.angularFire.database.list('/users');
-    if (!user.uid) {
+    if (!user.userId) {
       let insertedRecords = usersRef.push(user);
-      user.uid = insertedRecords.key;
+      user.userId = insertedRecords.key;
     }
-    usersRef.update(user.uid, user);
+    usersRef.update(user.userId, user);
   }
 
   lookupPrelaunchUserByPhone(phone, nav, dashboardPage, signUpPage, errorPage) {
@@ -50,9 +50,9 @@ export class PrelaunchService {
       var lastUserWithMemberId = _.last(_.sortBy(usersWithMemberId, function (u) { return u.memberId; }));
       var lastMemberId = lastUserWithMemberId ? lastUserWithMemberId.memberId : 0;
       var membersNeedingMemberId = _.filter(allUsers, function (u) { return !u.memberId && u.signedUpAt });
-      var numberOfPriorMembersNeedingMemberId = _.filter(membersNeedingMemberId, function (u) { return u.uid < user.uid }).length;
+      var numberOfPriorMembersNeedingMemberId = _.filter(membersNeedingMemberId, function (u) { return u.userId < user.userId }).length;
       user.memberId = lastMemberId + numberOfPriorMembersNeedingMemberId + 1;
-      this.angularFire.database.object(`/users/${user.uid}`).update({ memberId: user.memberId });
+      this.angularFire.database.object(`/users/${user.userId}`).update({ memberId: user.memberId });
       callback(null, user);
     })
   }

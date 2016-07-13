@@ -1,14 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content } from 'ionic-angular';
-import {ChatsPage} from '../chats/chats';
+import {ViewChild } from '@angular/core';
+import {Page, NavController, NavParams, Content } from 'ionic-angular';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
 import {Auth} from '../../components/auth/auth';
 
-
-@Component({
+@Page({
   templateUrl: 'build/pages/chat/chat.html',
   pipes: [Timestamp]
 })
@@ -18,12 +16,15 @@ export class ChatPage {
   contact: any;
   messageText: string;
   chatId: string;
+  chatSummary: any;
   messagesRef: Subscription;
   @ViewChild(Content) content: Content;
 
   constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: Auth) {
+    // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
-    this.chatId = this.navParams.get('chatId');
+    this.chatSummary = this.navParams.get('chatSummary');
+    this.chatId = this.navParams.get('chatId'); // TODO: maybe include this field in chatSummary
   }
 
   scrollToBottom() {
@@ -33,31 +34,41 @@ export class ChatPage {
   }
 
   ionViewLoaded() {
-    this.findChatAndLoadMessages();
+    if (this.chatSummary) {
+      this.loadMessages();
+    } else {
+      this.lookupChatSummaryViaContactAndLoadMessages();
+    }
   }
 
-  findChatAndLoadMessages() {
-    if (this.chatId) {
-      this.loadMessages();
-    }
-    else {
-      this.findChatId(this.contact).then((chatId: string) => {
-        this.chatId = chatId;
-        this.loadMessages();
-
-      });
-    }
+  lookupChatSummaryViaContactAndLoadMessages() {
+    let self = this;
+    firebase.database().ref(`/users/${self.auth.currentUser.$key}/chatSummaries`).once('value', (chatSummariesSnapshot) => {
+      if (chatSummariesSnapshot.exists()) {
+        let chatSummaries = chatSummariesSnapshot.val();
+        self.chatId = _.findKey(chatSummaries, (chatSummary: any, chatId: string) => {
+          return _.includes(_.keys(chatSummary.users), self.contact.userId);
+        });
+        if (self.chatId) {
+          self.chatSummary = chatSummaries[self.chatId];
+          self.loadMessages();
+        }
+      }
+      if (!self.chatSummary) {
+        this.buildNewChatSummary();
+      }
+    });
   }
 
   loadMessages() {
-    this.messagesRef = this.angularFire.database.list(`/users/${this.auth.userObject.$key}/chats/${this.chatId}/messages`).subscribe(data => {
+    this.messagesRef = this.angularFire.database.list(`/users/${this.auth.currentUserId}/chats/${this.chatId}/messages`).subscribe(data => {
       this.messages = data;
       this.scrollToBottom();
     });
   }
 
   messageNotFromMe(message: any) {
-    return message.senderUid !== this.auth.userObject.$key;
+    return message.senderUserId !== this.auth.currentUserId;
   }
 
   validateMessage(): boolean {
@@ -75,30 +86,51 @@ export class ChatPage {
       return;
     }
 
-    this.createChat();
-    let chatMessage = { text: this.messageText, sentAt: firebase.database.ServerValue.TIMESTAMP, senderUid: this.auth.userObject.$key, senderProfilePhotoUrl: this.auth.userObject.profilePhotoUrl };
-    this.angularFire.database.object(`/users/${this.auth.userObject.$key}/chatSummaries/${this.chatId}`).set({ otherUser: this.contact, lastMessage: chatMessage });
-    this.angularFire.database.list(`/users/${this.auth.userObject.$key}/chats/${this.chatId}/messages`).push(chatMessage);
+    if (this.chatSummaryUnsaved()) {
+      this.saveChatSummary();
+    }
+    let chatSummaryRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chatSummaries`).child(this.chatId);
+
+    let messagesRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chats/${this.chatId}/messages`);
+    let message = { text: this.messageText, sentAt: firebase.database.ServerValue.TIMESTAMP, senderUserId: this.auth.currentUserId };
+    let messageRef = messagesRef.push(message);
+    this.loadMessages();
+
+    chatSummaryRef.child("lastMessage").update(_.merge(message, {needsToBeCopied: true, messageId: messageRef.key}));
     this.messageText = "";
   }
 
-  saveNotification(chatId: string, receiverUid: string, sender: any, chatMessage: any) {
-    this.angularFire.database.list(`/users/${receiverUid}/notifications`).push({
+  // TODO: not sure if I broke this - JR
+  saveNotification(chatId: string, userId: string, sender: any, text: any) {
+    this.angularFire.database.list(`/users/${userId}/notifications`).push({
       senderName: `${sender.firstName} ${sender.lastName}`,
       profilePhotoUrl: sender.profilePhotoUrl ? sender.profilePhotoUrl : "",
-      text: chatMessage.text,
+      text: text,
       chatId: chatId
     });
   }
 
-  createChat() {
-    if (!this.chatId) {
-      let chatRef = this.angularFire.database.list(`/users/${this.auth.userObject.$key}/chats`).push({ createdAt: firebase.database.ServerValue.TIMESTAMP });
-      chatRef.child('/users').push({ firstName: this.auth.userObject.firstName, lastName: this.auth.userObject.lastName, userUid: this.auth.userObject.$key, profilePhotoUrl: this.auth.userObject.profilePhotoUrl });
-      chatRef.child('/users').push(this.contact);
-      this.chatId = chatRef.key;
-      this.loadMessages();
-    }
+  buildNewChatSummary() {
+    this.chatSummary = {
+      createdAt: firebase.database.ServerValue.TIMESTAMP,
+      needsToBeCopied: true,
+      creatorUserId: this.auth.currentUserId,
+      displayUserId: this.contact.userId,
+      users: {}
+    };
+    this.chatSummary.users[this.auth.currentUserId] = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'profilePhotoUrl']);
+    this.chatSummary.users[this.contact.userId] = _.pick(this.contact, ['firstName', 'lastName', 'profilePhotoUrl']);
+    // TODO: handle the case where firstName + lastName of the contact do not match that of /users/${contact.userId}
+  }
+
+  private chatSummaryUnsaved() {
+    return !this.chatId;
+  }
+
+  saveChatSummary() {
+    let chatSummariesRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chatSummaries`);
+    let chatSummaryRef = chatSummariesRef.push(this.chatSummary);
+    this.chatId = chatSummaryRef.key;
   }
 
   ionViewWillLeave() {
@@ -107,17 +139,12 @@ export class ChatPage {
     }
   }
 
-  findChatId(user2: any) {
-    return new Promise((resolve) => {
-      firebase.database().ref(`/users/${this.auth.userObject.$key}/chatSummaries`).once('value', snapshot => {
-        snapshot.forEach(childSnapshot => {
-          if (childSnapshot.val().otherUser.userUid === user2.userUid) {
-            resolve(childSnapshot.key);
-            return true;
-          }
-        });
-      })
-    });
+  displayUser() {
+    return this.chatSummary.users[this.chatSummary.displayUserId];
+  }
+
+  sender(message) {
+    return this.chatSummary.users[message.senderUserId];
   }
 
 }

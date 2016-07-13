@@ -1,26 +1,25 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Page, NavController, NavParams} from 'ionic-angular';
 import {ContactsPage} from '../contacts/contacts';
-import {ChatPage} from '../chat/chat';
 import {ChatsPage} from '../chats/chats';
 
-
-@Component({
+@Page({
   templateUrl: 'build/pages/contacts-and-chats/contacts-and-chats.html',
 })
 export class ContactsAndChatsPage {
   contactsPage: any;
+  contactsPageParams: any;
   chatsPage: any;
   navbBarElement: any;
 
-  constructor(private nav: NavController) {
-    this.chatsPage = ChatsPage;
+  constructor(private nav: NavController, private navParams: NavParams) {
     this.contactsPage = ContactsPage;
+    this.contactsPageParams = { nonMembersFirst: navParams.get("nonMembersFirst") };
+    this.chatsPage = ChatsPage;
   }
 
   ionViewLoaded() {
-      this.navbBarElement = document.querySelector('ion-navbar-section');
-      this.navbBarElement.style.display = 'none';
+    this.navbBarElement = document.querySelector('ion-navbar-section');
+    this.navbBarElement.style.display = 'none';
   }
 
 }

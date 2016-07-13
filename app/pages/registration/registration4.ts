@@ -51,7 +51,7 @@ export class Registration4Page {
       'secretPhrase': ["", CustomValidators.secretPhraseValidator],
       'secretPhraseConfirmation': ["", Validators.required]
     }, { validator: CustomValidators.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation') });
-    let authUser = this.auth.userObject;
+    let authUser = this.auth.currentUser;
     this.profile = {
       secretPhrase: '',
       secretPhraseConfirmation: '',
@@ -127,7 +127,7 @@ export class Registration4Page {
   generateAddress() {
     let self = this;
     self.loadingModal.show();
-    Wallet.generate(self.profile.secretPhrase, self.auth.uid).then((walletData) => {
+    Wallet.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
       let wallet: Wallet = new Wallet(walletData);
       self.profile.address = wallet.getAddress();
       self.saveProfile();
@@ -139,7 +139,7 @@ export class Registration4Page {
 
   saveProfile() {
     let self = this;
-    self.auth.user.update({
+    self.auth.currentUserRef.update({
       firstName: self.profile.firstName,
       lastName: self.profile.lastName,
       city: self.profile.city,

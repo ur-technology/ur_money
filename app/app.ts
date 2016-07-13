@@ -5,23 +5,23 @@ import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
 import {Auth} from './components/auth/auth';
 import {ChartData} from './components/chart-data/chart-data';
+import {TransactionNavService} from './pages/transactions/transaction-nav-service';
+import {CountryListService} from './components/services/country-list-service';
+import {LoadingModal} from './components/loading-modal/loading-modal';
+import {ContactsService} from './components/services/contacts-service';
+import {DeviceIdentityService} from './components/services/device-identity.service';
+import {Config} from './components/config/config'; // TODO: make this injectable
+
 import {Registration1Page} from './pages/registration/registration1';
 import {Registration4Page} from './pages/registration/registration4';
 import {HomePage} from './pages/home/home';
-
 import {SendPage} from './pages/send/send';
 import {ReceivePage} from './pages/receive/receive';
-import {InvitePage} from './pages/invite/invite';
+import {ContactsPage} from './pages/contacts/contacts';
 import {AboutPage} from './pages/about/about';
-import {CommunityPage} from './pages/community/community';
+import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';
-import {SettingPage} from './pages/setting/setting';
-import {TransactionNavService} from './pages/transactions/transaction-nav-service';
-import {CountryListService} from './components/country-list/country-list.service';
-import {LoadingModal} from './components/loading-modal/loading-modal';
 
-import {DeviceIdentityService} from './components/services/device-identity.service';
-import {NativeContactsService} from './components/services/native-contact.service';
 // temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
 import {SignInPage} from './prelaunch_pages/sign-in/sign-in';
@@ -31,13 +31,50 @@ import {PrelaunchService} from './prelaunch_components/prelaunch-service/prelaun
 
 import * as _ from 'lodash';
 
+// TODO: consider reorganizing user and chat data in one of the following ways
+
+// /phoneVerifications/
+
+// /userSummaries (contains basic info for searching users)
+// /userSummaries/5/firstName: "John"
+// /userSummaries/5/lastName: "Reitano"
+// /userSummaries/5/phone: "+16196746211"
+
+// all other user data will be retrieved by user id and can be narrowed further
+// /users/5/profile/signedUpAt: "1412342423423"
+// /users/5/smsMessages/-KLT31233123/text: "Birthday Message: ..."
+// ...
+
+// batch lookup of contacts in remote server to speed things up
+// /users/5/contactsLookup/
+// when inserted:
+// /users/5/contactsLookup/pending: true
+// /users/5/contactsLookup/phones/16196746211: "no-userId-assigned"
+// /users/5/contactsLookup/phones/16196746212: "no-userId-assigned"
+// after processing:
+// /users/5/contactsLookup/pending: false
+// /users/5/contactsLookup/phones/16196746211: "d2342342fwefsd"
+// /users/5/contactsLookup/phones/16196746212: "no-userId-assigned"
+
+// /users/5/chatSummaries (contains basic info for listing/searching chats of a particular user)
+// /users/5/chatSummaries/6/createdAt: "14124234234234"
+// /users/5/chatSummaries/6/otherUserId: "14124234234234"
+// /users/5/chatSummaries/6/lastMessage
+// /users/5/chatSummaries/6/lastMessage/text: "Hi"
+
+// /users/5/chats/6/messages (contains all messages for chat 6)
+// /users/5/chats/6/messages/7/text: "Hi"
+// ...
+
+// firebase rules need to be added to further restrict access
+
 @Component({
   templateUrl: 'build/app.html',
   directives: [LoadingModal],
   providers: [
     Auth,
     DeviceIdentityService,
-    NativeContactsService,
+    ContactsService,
     TransactionNavService,
     CountryListService,
     ChartData,
@@ -45,7 +82,7 @@ import * as _ from 'lodash';
     PrelaunchService,
     FIREBASE_PROVIDERS,
     HTTP_PROVIDERS,
-    defaultFirebase(Auth.firebaseConfig()),
+    defaultFirebase(Config.values().firebase),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
@@ -62,7 +99,6 @@ class UrMoney {
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService) {
     this.initializeApp();
 
-    this.invitePage = { component: InvitePage };
     // set our app's pages
     this.menuItems = [
       { title: 'Home', component: HomePage, icon: 'icon menu-icon-1' },
@@ -113,12 +149,12 @@ class UrMoney {
 
   openSetting() {
     this.menu.close();
-    this.nav.push(SettingPage);
+    this.nav.push(SettingsPage);
   }
 
-  visitInvitePage() {
+  inviteContact() {
     this.menu.close();
-    this.nav.setRoot(InvitePage);
+    this.nav.push(ContactsPage, {nonMembersFirst: true});
   }
 
   signOut() {
@@ -127,22 +163,21 @@ class UrMoney {
   }
 
 
-  generateFaceUrl(firstName, lastName) {
+  generateProfileImage() {
     var colorScheme = _.sample([
-      {
-        background: "ED6D54",
-        foreground: "FFFFFF"
-      }]);
-
-    var sourceOfInitials = firstName;
-    if (firstName) {
-      var firstLetters = sourceOfInitials.match(/\b\w/g);
-      var initials = firstLetters[0];
-      var lastNameFirstLetter = lastName.match(/\b\w/g);
+      { background: "ED6D54", foreground: "FFFFFF" }
+    ]);
+    var initials;
+    if (this.auth.currentUser && this.auth.currentUser.firstName) {
+      var firstLetters = this.auth.currentUser.firstName.match(/\b\w/g);
+      initials = firstLetters[0];
+      var lastNameFirstLetter = (this.auth.currentUser.lastName || '').match(/\b\w/g);
       initials = initials + lastNameFirstLetter[0];
       initials = initials.toUpperCase();
-      return "https://dummyimage.com/100x100/" + colorScheme.background + "/" + colorScheme.foreground + "&text=" + initials;
+    } else {
+      initials = "UP";
     }
+    return "https://dummyimage.com/100x100/" + colorScheme.background + "/" + colorScheme.foreground + "&text=" + initials;
   };
 
 

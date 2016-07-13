@@ -1,26 +1,34 @@
 # ur_money
 
 ## Install global dependencies (skip if already installed)
-```script
-npm install -g ionic@beta, cordova, gulp
-```
+`npm install -g ionic@beta, cordova, gulp, typings`
 
-## Install local dependencies (download/get the code from git)
+## Install local dependencies
 ```script
 git clone git@github.com:urcapital/ur_money.git
 cd ur_money
 npm install
-typings install # would like to put this back
+typings install
 ```
 
-## Run server
-```script
-ionic serve --v2
+## Install ionic platforms and cordova plugins
+* First, install required dev tools (Xcode for iOS, Android SDK for Android)
+* Next, run: `ionic state restore`
+
+## Run on device
+* Run `ionic run android -c -l` or `ionic run ios -c -l`
+* If you have a problem running the app, check out these platform-specific instructions:
+* [installation-android.md](doc/installation-android.md)
+* [installation-ios.md](doc/installation-ios.md)
+
+## To reload all plugins
+``` script
+gulp plugins
 ```
 
-## Deploy to Ionic View
+## To run as a web server
 ```script
-ionic upload
+ionic serve -c
 ```
 
 ## Deploy to Firebase Hosting
@@ -28,43 +36,3 @@ ionic upload
 gulp build
 firebase deploy -f ur-money-staging
 ```
-
-# Restore IONIC state 
-* This will add the platforms and plugins by using the entries in package.json
-* Please make sure you have enviroment dependencies(xcode for iOS, Android SDK for Android) already installed otherwise this will not work
-
-```script
-ionic state restore
-```
-## If above works well no issue then you can check the files mentioned below according to your platform
-* installation-Readme-ios.md 
-* installation-Readme-android.md
-
-## If there is issue in (ionic state restore) or you have only ios or android platform dependencies then you can do following:
-
- * iOS Platform setup intial.
-* **Note:** Only if you dont have ios platform in current project.
-
-  * To add ios platfotm 
-``` script
-ionic platform add ios
-```
-  * To load all plugins
-  ``` script
-  gulp plugins
-  ```
-  ## If all goes ok then check "installation-Readme-ios.md" for futher instruction else open issue
-
-
- * Android Platform setup intial 
-* **Note** Only if you dont have Android platform in current project
-
-  * To add android platfotm 
-``` script
-ionic platform add android
-```
-  * To load all plugins
-  ``` script
-  gulp plugins
-  ```
-  ## If all goes ok then check "installation-Readme-android.md" for futher instruction else open issue

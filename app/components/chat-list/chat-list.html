@@ -1,0 +1,19 @@
+<ion-list class="chats-list">
+    <ion-item
+        detail-none
+        (click)="gotoChat(chat)"
+        class="item item-avatar"
+        *ngFor="let chat of chats">
+
+        <ion-avatar item-left>
+          <ion-img [src]="displayUser(chat).profilePhotoUrl"
+              [alt]="avatar"></ion-img>
+        </ion-avatar>
+        <ion-note item-right
+            class="item-note">{{chat.lastMessage.sentAt|timestamp}}</ion-note>
+        <div class="columNameChat">
+            <h2 class="text-cut">  {{displayUser(chat).firstName}} {{displayUser(chat).lastName}}</h2>
+        </div>
+        <p>{{senderLabel(chat)}}{{chat.lastMessage.text}}</p>
+    </ion-item>
+</ion-list>

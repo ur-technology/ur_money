@@ -1,41 +1,81 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import {ChatPage} from '../chat/chat';
+import {NavController, NavParams, ActionSheet} from 'ionic-angular';
+import {SocialSharing} from 'ionic-native';
+import {ContactsService} from '../../components/services/contacts-service';
 import {Auth} from '../../components/auth/auth';
-import {Subscription} from 'rxjs';
+import {ChatPage} from '../chat/chat';
+import {Invite} from '../../components/models/invite';
+import {Config} from '../../components/config/config';
 import * as _ from 'lodash';
-import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
+declare var window: any;
 
 @Component({
   templateUrl: 'build/pages/contacts/contacts.html'
 })
 export class ContactsPage {
-  contacts: Array<any> = [];
-  chats: Array<any>;
-  currentUser: any;
+  pageIndex = 0;
+  numberOfPages = 0;
+  PAGE_SIZE = 15;
+  paginatedContacts: any[] = [];
+  displayableContacts: any[];
+  startTime: number;
+  public nonMembersFirst: boolean;
 
-  constructor(private nav: NavController, auth: Auth, private angularFire: AngularFire) {
-    this.contacts = [];
-    this.currentUser = auth.userObject;
-  }
-  ionViewLoaded() {
-    this.getContactsList();
+  constructor(
+    private nav: NavController,
+    private navParams: NavParams,
+    private contactsService: ContactsService,
+    private auth: Auth) {
+    this.startTime = (new Date()).getTime();
+    this.nonMembersFirst = navParams.get("nonMembersFirst")
   }
 
-  getContactsList() {
-    let subscriptionContacts: Subscription = this.angularFire.database.list(`/users`).subscribe(data => {
-      this.contacts = data;
-      if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
-        subscriptionContacts.unsubscribe();
-      }
+  ionViewDidEnter() {
+    this.contactsService.load(this.auth.countryCode, this.auth.currentUserId).then((contactGroups: any) => {
+      let contacts = this.nonMembersFirst ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
+      this.paginatedContacts = _.chunk(contacts, this.PAGE_SIZE);
+      this.numberOfPages = this.paginatedContacts.length;
+      this.displayableContacts = this.paginatedContacts[0];
+      let timeElapsed = (new Date()).getTime() - this.startTime;
+      console.log("milliseconds elapsed", timeElapsed);
+      console.log("contactGroups.nonMembers.length", contactGroups.nonMembers.length);
+      console.log("contactGroups.members.length", contactGroups.members.length);
     });
   }
 
-  gotoChat(contact: any) {
-    this.nav.rootNav.push(ChatPage, { user: this.getChatUser(this.currentUser), contact: this.getChatUser(contact) }, { animate: true, direction: 'forward' });
+  doInfinite(infiniteScroll) {
+    this.pageIndex++;
+    if (this.pageIndex <= this.numberOfPages - 1) {
+      this.displayableContacts = this.displayableContacts.concat(this.paginatedContacts[this.pageIndex]);
+    }
+    infiniteScroll.complete();
+    if (this.pageIndex >= this.numberOfPages - 1) {
+      infiniteScroll.enable(false);
+    }
   }
 
-  getChatUser(object: any): any {
-    return { firstName: object.firstName, lastName: object.lastName, userUid: object.$key, profilePhotoUrl: object.profilePhotoUrl ? object.profilePhotoUrl : "" };
+  contactSelected(contact: any) {
+    if (contact.userId) {
+      this.nav.rootNav.push(ChatPage, { contact: contact });
+    } else {
+      this.displayInviteActionSheet(contact);
+    }
   }
+
+  displayInviteActionSheet(contact: any) {
+    let invite = new Invite('/invitations', {inviterUserId: this.auth.currentUserId, contact: contact});
+    SocialSharing.shareWithOptions({
+      message: `Check out the new UR Money app: the best way to use cryptocurrency.`, // not supported on some apps (Facebook, Instagram)
+      subject: 'Check out the new UR Money app', // for email only
+      // files: ['', ''], // an array of filenames either locally or remotely
+      url: `${Config.values().appDownloadUrl}/${invite.inviteCode}`,
+      chooserTitle: 'Pick an app' // Android only
+    }).then((result) => {
+      invite.save();
+    },
+    (error) => {
+      console.log("Sharing failed with message: " + error);
+    });
+  }
+
 }

@@ -36,15 +36,15 @@ export class DashboardPage {
   setAllUsers() {
     var thisPage = this;
     this.angularFire.database.list('/users').subscribe((idToUserMapping) => {
-      var topUser = _.find(idToUserMapping, function(user,uid) { return !user["sponsor"]; });
+      var topUser = _.find(idToUserMapping, function(user,userId) { return !user["sponsor"]; });
       var numUsers = _.size(idToUserMapping);
       var i = 0;
-      _.each(idToUserMapping, function(user, uid) {
+      _.each(idToUserMapping, function(user, userId) {
         if (!user["children"])  {
           user["children"] = [];
         }
         if (user["sponsor"]) {
-          var sponsor = idToUserMapping[user["sponsor"]["uid"]];
+          var sponsor = idToUserMapping[user["sponsor"]["userId"]];
           if (!sponsor["children"])  {
             sponsor["children"] = [];
           }
@@ -82,7 +82,7 @@ export class DashboardPage {
     this.submissionInProgress = true;
     var invitedUser = {
       sponsor: {
-        uid: this.user.uid,
+        userId: this.user.userId,
         firstName: this.user.firstName,
         lastName: this.user.lastName
       },

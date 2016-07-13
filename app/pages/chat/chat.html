@@ -1,5 +1,5 @@
 <ion-navbar>
-    <ion-title class="chat-title">{{contact.firstName}} {{contact.lastName}}</ion-title>
+    <ion-title class="chat-title">{{displayUser().firstName}} {{displayUser().lastName}}</ion-title>
 </ion-navbar>
 <ion-content class="chat-view">
     <ion-list class="list messages-list">
@@ -8,7 +8,7 @@
             [ngClass]="{'other' : messageNotFromMe(message)}"
             *ngFor="let message of messages">
 
-                <ion-img [src]="message.senderProfilePhotoUrl"
+                <ion-img [src]="sender(message).profilePhotoUrl"
             [alt]="img"></ion-img>
 
             <div class="msg-text">

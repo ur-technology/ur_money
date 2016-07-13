@@ -1,11 +1,24 @@
 <ion-content class="contacts">
-  <ion-list class="contacts-list">
-    <button ion-item  detail-none *ngFor="let contact of contacts" (click)="gotoChat(contact)">
+
+  <ion-list class="contacts-list" *ngIf="displayableContacts">
+
+    <ion-item  detail-none *ngFor="let contact of displayableContacts" (click)="contactSelected(contact)">
       <ion-avatar item-left> <ion-img [src]="contact.profilePhotoUrl"></ion-img></ion-avatar>
-      <h2>{{contact.firstName}} {{contact.lastName}}</h2>
-      <p>
-         {{contact.phone}}</p>
-    </button>
+      <h2>{{contact.fullName()}}</h2>
+      <p>{{contact.formattedPhone}} <span>{{contact.phoneType}}</span></p>
+      <button type="button" [hidden]="contact.userId" secondary item-right>Invite</button>
+      <button type="button" [hidden]="!contact.userId" primary item-right>Chat</button>
+    </ion-item>
+
+    <ion-item *ngIf="pageIndex == numberOfPages" detail-none (click)="inviteFriend()">
+      <ion-avatar item-left> <ion-img></ion-img></ion-avatar>
+      <h2>Invite Friend</h2>
+    </ion-item>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more contacts..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
   </ion-list>
+
 </ion-content>
