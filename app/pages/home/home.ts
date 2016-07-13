@@ -59,12 +59,11 @@ export class HomePage implements OnInit {
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {
       this.renderChart();
-    } else {
-      thisPage.chartData.loadedEmitter.subscribe((_) => {
-        // console.log("about to render chart");
-        this.renderChart();
-      });
-    }
+    }     
+    thisPage.chartData.loadedEmitter.subscribe((data) => {
+      console.log("about to render chart");
+      this.renderChart();
+    });
   }
 
   openChatsPage(){
