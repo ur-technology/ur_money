@@ -125,7 +125,8 @@ i.menu-icon-1, i.menu-icon-2, i.menu-icon-3, i.menu-icon-4, i.menu-icon-5, i.men
 .ion-ios-received-icon-on,
 .ion-ios-received-icon-off,
 .ion-ios-earned-icon-on,
-.ion-ios-earned-icon-off{
+.ion-ios-earned-icon-off,
+.messenger{
     display: inline-block;
     width: 28px;
     height: 28px;
@@ -147,6 +148,10 @@ i.menu-icon-1, i.menu-icon-2, i.menu-icon-3, i.menu-icon-4, i.menu-icon-5, i.men
 }
 .ion-ios-earned-icon-on-outline{
     background: url("../../img/earned-icon.png") no-repeat center;
+}
+.messenger{
+    background: url("../../img/messenger.png") no-repeat center;    
+        padding-right: 30px;
 }
 
 /*--------------------------------------*/
