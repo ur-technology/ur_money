@@ -12,14 +12,14 @@ import * as _ from 'lodash';
 import * as underscore from 'underscore'
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
-import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
+import {ChatsOverview} from '../../components/chats-overview/chats-overview';
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/home/home.html',
   pipes: [OrderBy, Timestamp, Round],
-  directives: [ChatSummaries]
+  directives: [ChatsOverview]
 })
 export class HomePage implements OnInit {
   elementRef: ElementRef;
@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
   icons: string[];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
-  @ViewChild(ChatSummaries) chatSummaries:ChatSummaries;
+  @ViewChild(ChatsOverview) chatSummaries:ChatsOverview;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartData, public platform: Platform) {
@@ -52,11 +52,9 @@ export class HomePage implements OnInit {
   }
 
   onPageWillLeave() {
-    console.log("onPageWillLeave");
     this.chatSummaries.cleanResources();
   }
   onPageDidEnter() {
-    console.log("onPageDidEnter");
     this.chatSummaries.loadChatSummaries();
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {

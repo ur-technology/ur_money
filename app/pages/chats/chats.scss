@@ -1,12 +1,20 @@
 .chats {
-   scroll-content{
-       padding: 0;
-   }
+    scroll-content {
+        padding: 0;
+    }
     ion-note {
         color: #aeacb4;
         position: absolute;
         top: 10px;
         right: 15px;
         font-size: 10px;
+    }
+    .text-cut {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .columNameChat {
+        width: 70%;
     }
 }

@@ -61,8 +61,7 @@ export class ChatService {
         return this.angularFire.database.list(`/chats/${chatId}/messages`);
     }
 
-    getChatSummaries(userId: string) {
-        console.log(`/users/${userId}/myChatSummaries`);
+    getChatSummaries(userId: string) {        
         return this.angularFire.database.list(`/users/${userId}/myChatSummaries`);
     }
 

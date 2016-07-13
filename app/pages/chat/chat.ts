@@ -27,6 +27,8 @@ export class ChatPage {
         this.tabBarElement = document.querySelector('ion-tabbar-section');
         this.user = this.navParams.get('user');
         this.contact = this.navParams.get('contact');
+        this.chatId = this.navParams.get('chatId');
+
 
     }
     ionViewLoaded() {
@@ -34,10 +36,15 @@ export class ChatPage {
     }
 
     findChatAndLoadMessages() {
-        this.chatService.findChatId(this.user, this.contact).then((chatId: string) => {
-            this.chatId = chatId;
+        if (this.chatId) {
             this.loadMessages();
-        });
+        }
+        else {
+            this.chatService.findChatId(this.user, this.contact).then((chatId: string) => {
+                this.chatId = chatId;
+                this.loadMessages();
+            });
+        }
     }
 
     loadMessages() {
@@ -61,7 +68,7 @@ export class ChatPage {
         chatMessage.senderUid = this.user.userUid;
         this.chatService.addMessageToChat(this.chatId, chatMessage);
 
-        this.chatService.addChatSummaryToUser(this.user.userUid, this.user, chatMessage, this.chatId);
+        this.chatService.addChatSummaryToUser(this.user.userUid, this.contact, chatMessage, this.chatId);
         this.chatService.addChatSummaryToUser(this.contact.userUid, this.user, chatMessage, this.chatId);
         this.messageText = "";
     }

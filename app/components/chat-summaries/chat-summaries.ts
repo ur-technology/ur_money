@@ -19,16 +19,13 @@ export class ChatSummaries {
     }
 
     loadChatSummaries() {
-        console.log("loadChatSummaries()");
         this.chatsRef = this.chatService.getChatSummaries(this.userId).subscribe(data => {
-            console.log("loadChatSummaries()", data);
             this.chats = data;
         });
     }
 
     cleanResources() {
-        if (this.chatsRef && !this.chatsRef.isUnsubscribed) {
-            console.log("cleanResources()");
+        if (this.chatsRef && !this.chatsRef.isUnsubscribed) {            
             this.chatsRef.unsubscribe();
         }
     }
