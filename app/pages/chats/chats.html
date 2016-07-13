@@ -9,25 +9,5 @@
 </ion-navbar>
 
 <ion-content class="chats">
-    <ion-list class="chats-list">
-        <button ion-item
-            detail-none
-            (click)="gotoChat(chat)"
-            class="item item-avatar"
-            *ngFor="let chat of chats">
-
-            <ion-avatar item-left>
-                <img src="img/avatars/avatar-1.jpg"
-                    alt="avatar">
-            </ion-avatar>
-            <ion-note item-right
-                class="item-note"> {{chat.lastMessage.sentAt}}</ion-note>
-            <div class="columNameChat">
-                <h2 class="text-cut">  {{chat.otherUser.firstName}} {{chat.otherUser.lastName}} asasasas</h2>
-            </div>
-            <p>
-                {{whoSentMessage(chat)}}{{chat.lastMessage.text}}</p>
-        </button>
-    </ion-list>
-
+    <chat-summaries></chat-summaries>
 </ion-content>
