@@ -1,6 +1,6 @@
 import {Page, NavController, NavParams, Alert, Modal, Platform} from 'ionic-angular';
 import {ChartData} from '../../components/chart-data/chart-data';
-import {Component, OnInit, ElementRef, Inject} from '@angular/core';
+import {Component, OnInit, ElementRef, Inject, ViewChild} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
 import {AddressBookModal} from '../../components/address-book-modal/address-book-modal';
@@ -12,12 +12,14 @@ import * as _ from 'lodash';
 import * as underscore from 'underscore'
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
+import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/home/home.html',
-  pipes: [OrderBy, Timestamp, Round]
+  pipes: [OrderBy, Timestamp, Round],
+  directives: [ChatSummaries]
 })
 export class HomePage implements OnInit {
   elementRef: ElementRef;
@@ -31,6 +33,7 @@ export class HomePage implements OnInit {
   icons: string[];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
+  @ViewChild(ChatSummaries) chatSummaries:ChatSummaries;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartData, public platform: Platform) {
@@ -48,17 +51,25 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
+  onPageWillLeave() {
+    this.chatSummaries.cleanResources();
+  }
   onPageDidEnter() {
-    console.log("about to render chart");
+    this.chatSummaries.loadChatSummaries();
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {
       this.renderChart();
-    }
+    }     
     thisPage.chartData.loadedEmitter.subscribe((data) => {
       console.log("about to render chart");
       this.renderChart();
     });
   }
+
+  openChatsPage(){
+  this.nav.push(ConversationPage, {}, { animate: true, direction: 'forward' });
+}
+
 
   setRoot(page) {
     this.nav.setRoot(page, {}, { animate: true, direction: 'forward' });

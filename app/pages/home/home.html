@@ -46,47 +46,12 @@
       1Y
     </ion-segment-button>
   </ion-segment>
-  <div class="list list-msgs">
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="img/avatar.jpg">
-      </ion-avatar>
-      <div class="item-msg">
-        <h2>@Jenny Jones says: </h2> This is exciting. I just got 2000ur
-      </div>
-      <p class="msg-time">
-        <ion-icon name="ios-clock-outline"></ion-icon> Just Now </p>
-      <span class="item-legend green"></span>
-    </ion-item>
-
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="img/avatar.jpg">
-      </ion-avatar>
-      <div class="item-msg">
-        <h2>@Marry Taft says: </h2> Thanks for the invite sis!</div>
-      <p class="msg-time">
-        <ion-icon name="ios-clock-outline"></ion-icon> 30 minutes ago</p>
-      <span class="item-legend blue"></span>
-    </ion-item>
-
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="img/avatar.jpg">
-      </ion-avatar>
-      <div class="item-msg">
-        <h2>@Jane Doe says: </h2> @Jenny I just sent you 2400ur. Enjoy!</div>
-      <p class="msg-time">
-        <ion-icon name="ios-clock-outline"></ion-icon> Yesterday</p>
-      <span class="item-legend green"></span>
-    </ion-item>
-
-  </div>
+  <chat-summaries></chat-summaries>
 </ion-content>
 <!-- Button Starts -->
 <div class="float-button" [style.bottom]="android?'2%':'8%'">
   <span class="height-fix">
-     <a class="content">
+     <a class="content"  (click)="openChatsPage()">
         <ion-icon name="md-add"> </ion-icon>
      </a>
   </span>
