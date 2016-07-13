@@ -15,6 +15,7 @@
 
     <div class="list country-code-cont">
       <ion-item>
+        <ion-label>{{selectedCountry.name}}</ion-label>
         <ion-select [(ngModel)]="selected" (ionChange)="countrySelect()">
           <ion-option   value="{{country.code}}" *ngFor="let country of countries">
             {{country.name}}

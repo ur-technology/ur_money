@@ -7,7 +7,6 @@ import {LoadingModal} from '../../components/loading-modal/loading-modal';
 import {HomePage} from '../home/home';
 import {AngularFire} from 'angularfire2'
 import {Focuser} from '../../components/focuser/focuser';
-import {CountryListService} from '../../components/country-list/country-list.service';
 
 @Page({
   templateUrl: 'build/pages/registration/registration4.html',
@@ -17,10 +16,6 @@ export class Registration4Page {
   walletForm: ControlGroup;
   errorMessage: string;
   secretPhrase: string;
-  countries: any[];
-  states: any[];
-  selectedCountry: any;
-  selectedState: any;
 
   constructor(
     public nav: NavController,
@@ -28,33 +23,17 @@ export class Registration4Page {
     public formBuilder: FormBuilder,
     public auth: Auth,
     public loadingModal: LoadingModal,
-    public angularFire: AngularFire,
-    public countryListService: CountryListService
+    public angularFire: AngularFire
   ) {
-    this.countries = this.countryListService.getCountryData();
-    this.states = this.countryListService.getCountryData();
     this.secretPhrase = "";
-    let thisPage:any = this;
-    thisPage.walletForm = formBuilder.group({
-      'firstName': ["", CustomValidators.nameValidator],
-      'lastName': ["", CustomValidators.nameValidator],
-      'city': ["", CustomValidators.nameValidator],
-      'secretPhrase': [ "", CustomValidators.secretPhraseValidator],
-      'secretPhraseConfirmation': ["", Validators.required]
-    }, {validator: CustomValidators.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation')});
     this.auth.user.subscribe((user) => {
-      thisPage.selectedCountry = this.countries.find((country) => { return country.iso == (user.countryId || "US"); });
-      thisPage.selectedState = this.states.find((state) => { return state.iso == user.stateId; }) || this.states[0];
-      thisPage.walletForm.value.firstName = user.firstName || "";
-      thisPage.walletForm.value.lasttName = user.lasttName || "";
-      thisPage.walletForm.value.city = user.city || "";
+      this.walletForm = formBuilder.group({
+        'firstName': [user.firstName || "", CustomValidators.nameValidator],
+        'lastName': [user.lastName || "", CustomValidators.nameValidator],
+        'secretPhrase': [ "", CustomValidators.secretPhraseValidator],
+        'secretPhraseConfirmation': ["", Validators.required]
+      }, {validator: CustomValidators.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation')});
     });
-  }
-
-  selectCountry() {
-  }
-
-  selectState() {
   }
 
   suggestSecretPhrase() {
@@ -106,9 +85,6 @@ export class Registration4Page {
     this.auth.user.update({
       firstName: this.walletForm.value.firstName,
       lastName: this.walletForm.value.lastName,
-      city: this.walletForm.value.city,
-      stateId: this.selectedState.iso,
-      countryId: this.selectedCountry.iso,
       wallet: {
         publicKey: publicKey,
         createdAt: firebase.database.ServerValue.TIMESTAMP
