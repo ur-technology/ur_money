@@ -20,6 +20,8 @@ import {TransactionNavService} from './pages/transactions/transaction-nav-servic
 import {CountryListService} from './components/country-list/country-list.service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 
+import {NativeContactsService} from './components/services/native-contact.service';
+import {ContactsService} from './components/services/contacts.service';
 // temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
 import {SignInPage} from './prelaunch_pages/sign-in/sign-in';
@@ -34,6 +36,8 @@ import * as lodash from 'lodash';
   directives: [LoadingModal],
   providers: [
     Auth,
+    NativeContactsService,
+    ContactsService,
     TransactionNavService,
     CountryListService,
     ChartData,
@@ -64,7 +68,6 @@ class UrMoney {
       { title: 'Send UR', component: SendPage, icon: 'icon menu-icon-2' },
       { title: 'Request UR', component: ReceivePage, icon: 'icon menu-icon-3' },
       { title: 'Transactions', component: TransactionsPage, icon: 'icon menu-icon-4' },
-      // { title: 'Community', component: CommunityPage, icon: 'icon menu-icon-5' },
       { title: 'About UR', component: AboutPage, icon: 'icon menu-icon-7' }
     ];
   }
