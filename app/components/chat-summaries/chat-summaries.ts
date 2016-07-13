@@ -10,7 +10,7 @@ import {Timestamp}  from '../../pipes/timestamp';
 @Component({
     selector: 'chat-summaries',
     templateUrl: 'build/components/chat-summaries/chat-summaries.html',
-    pipes: [Timestamp]  
+    pipes: [Timestamp]
 })
 export class ChatSummaries {
     chats: any[];
@@ -45,8 +45,8 @@ export class ChatSummaries {
 
     gotoChat(chatSelected: any) {
         let userChat: ChatUser = new ChatUser();
-        userChat.firstName = this.auth.userFirstname;
-        userChat.lastName = this.auth.userLastname;
+        userChat.firstName = this.auth.userObject.firstName;
+        userChat.lastName = this.auth.userObject.lastName;
         userChat.userUid = this.userId;
 
         let contactUser: ChatUser = new ChatUser();

@@ -40,7 +40,7 @@ export class CustomValidators {
   }
 
   static nameValidator(control) {
-    if (!control.value.match(/\w+/)) {
+    if (control && _.isString(control.value) && !control.value.match(/\w+/)) {
       return { 'invalidName': true };
     }
   }
@@ -56,7 +56,7 @@ export class CustomValidators {
     return (group: ControlGroup) => {
       let control1 = group.controls[controlName1];
       let control2 = group.controls[controlName2];
-      if (!_.isEmpty(control2.value) && control1.value !== control2.value) {
+      if (!control1 || !control1.value || !control2 || !control2.value || control1.value != control2.value) {
         return control2.setErrors({notEquivalent: true})
       }
     }
