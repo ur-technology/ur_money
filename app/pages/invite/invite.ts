@@ -65,24 +65,39 @@ export class InvitePage {
 
   inviteFacebook() {
     this.platform.ready().then(() => {
-      if (window.plugins.socialsharing) {
-        let app=this.platform.is('android') ? 'facebook' : 'com.apple.social.facebook';
-        window.plugins.socialsharing.canShareVia(app, this.inviteConstant.whatsapp.messageText, null, null, null, (result) => {
-          window.plugins.socialsharing.shareViaFacebookWithPasteMessageHint(this.inviteConstant.facebook.messageText, null /* img */,this.downloadUrl  /* url */,this.inviteConstant.facebook.messageText, (data) => {
-            console.log(data);
-          });
+      if (window.facebookConnectPlugin) {
+        window.facebookConnectPlugin.showDialog({
+          method: "send",
+          caption: "Check this out.",
+          link: "http://google.com",
+          description: "The site I told you about",
+          picture: 'http://google.com/image.png'
+        }, (data) => {
+          console.log(data);
         }, (error) => {
           console.log(error);
           this.doErrorAlert('facebook');
         });
       }
+
+      // if (window.plugins.socialsharing) {
+      //   let app=this.platform.is('android') ? 'facebook' : 'com.apple.social.facebook';
+      //   window.plugins.socialsharing.canShareVia(app, this.inviteConstant.whatsapp.messageText, null, null, null, (result) => {
+      //     window.plugins.socialsharing.shareViaFacebookWithPasteMessageHint(this.inviteConstant.facebook.messageText, null /* img */,this.downloadUrl  /* url */,this.inviteConstant.facebook.messageText, (data) => {
+      //       console.log(data);
+      //     });
+      //   }, (error) => {
+      //     console.log(error);
+      //     this.doErrorAlert('facebook');
+      //   });
+      // }
     });
   }
 
   inviteTwitter() {
     this.platform.ready().then(() => {
       if (window.plugins.socialsharing) {
-        let app=this.platform.is('android') ? 'twitter' : 'com.apple.social.twitter';        
+        let app = this.platform.is('android') ? 'twitter' : 'com.apple.social.twitter';
         window.plugins.socialsharing.canShareVia(app, this.inviteConstant.twitter.messageText, null, null, null, (result) => {
           window.plugins.socialsharing.shareViaTwitter(this.inviteConstant.twitter.messageText, null /* img */, null /* url */, (data) => {
             console.log(data);
