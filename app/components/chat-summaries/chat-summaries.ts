@@ -5,10 +5,12 @@ import {ChatService} from '../../components/services/chat.service';
 import {Auth} from '../../components/auth/auth';
 import {ChatPage} from '../../pages/chat/chat';
 import {ChatUser} from '../../components/models/chat-user';
+import {Timestamp}  from '../../pipes/timestamp';
 
 @Component({
     selector: 'chat-summaries',
     templateUrl: 'build/components/chat-summaries/chat-summaries.html',
+    pipes: [Timestamp],
     providers: [ChatService]
 })
 export class ChatSummaries {

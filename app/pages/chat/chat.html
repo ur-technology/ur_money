@@ -11,7 +11,7 @@
                 alt="img">
             <div class="msg-text">
                 <p>{{ message.text }} </p>
-                <ion-note class="item-note">{{message.sentAt}}</ion-note>
+                <ion-note class="item-note">{{message.sentAt | timestamp}}</ion-note>
             </div>
         </ion-item>
     </ion-list>

@@ -7,9 +7,11 @@ import {Chat} from '../../components/models/chat';
 import {ChatService} from '../../components/services/chat.service';
 import {ChatMessage} from '../../components/models/chat-message';
 import {Subscription} from 'rxjs';
+import {Timestamp}  from '../../pipes/timestamp';
 
 @Component({
     templateUrl: 'build/pages/chat/chat.html',
+    pipes: [Timestamp],
     providers: [ChatService]
 })
 export class ChatPage {
