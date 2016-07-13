@@ -12,14 +12,14 @@ import * as _ from 'lodash';
 import * as underscore from 'underscore'
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
-import {ChatsOverview} from '../../components/chats-overview/chats-overview';
+import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/home/home.html',
   pipes: [OrderBy, Timestamp, Round],
-  directives: [ChatsOverview]
+  directives: [ChatSummaries]
 })
 export class HomePage implements OnInit {
   elementRef: ElementRef;
@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
   icons: string[];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
-  @ViewChild(ChatsOverview) chatSummaries:ChatsOverview;
+  @ViewChild(ChatSummaries) chatSummaries:ChatSummaries;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartData, public platform: Platform) {
