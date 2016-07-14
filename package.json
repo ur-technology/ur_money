@@ -24,12 +24,15 @@
     "buffer": "^4.7.0",
     "crypto": "0.0.3",
     "es6-shim": "^0.35.0",
+    "ethereumjs-tx": "^1.1.1",
+    "ethereumjs-util": "^4.5.0",
     "ethereumjs-wallet": "^0.6.0",
     "firebase": "^3.1.0",
     "google-libphonenumber": "^1.0.23",
     "ionic-angular": "2.0.0-beta.9",
     "ionic-native": "^1.1.0",
     "ionicons": "3.0.0",
+    "jasmine": "^2.4.1",
     "lodash": "^4.13.1",
     "moment": "^2.13.0",
     "ng-intl-tel-input": "^1.3.2",
@@ -38,7 +41,8 @@
     "scrypt-async": "^1.2.0",
     "secure-randword": "^0.1.4",
     "underscore": "^1.8.3",
-    "zone.js": "^0.6.12"
+    "web3": "^0.17.0-alpha",
+    "zone.js": "git://github.com/angular/zone.js.git#a8ea55"
   },
   "devDependencies": {
     "del": "2.2.0",
