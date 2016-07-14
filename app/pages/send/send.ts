@@ -1,5 +1,6 @@
-import {Page, NavController} from 'ionic-angular';
+import {Page, Alert, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
+import {Wallet} from '../../components/wallet/wallet2';
 
 @Page({
   templateUrl: 'build/pages/send/send.html',
@@ -8,6 +9,12 @@ export class SendPage {
   showContactInput: boolean;
   contactItem: any;
   showContacts: boolean;
+  
+  amount: number;
+  phrase: string;
+  password: string;
+  publicKey: string;
+
   constructor(public nav: NavController) {
     this.showContactInput = true;
     this.showContacts = false;
@@ -36,20 +43,86 @@ export class SendPage {
   }
 
   sendUR() {
-    // TODO: Alex: Insert code to again generate public and private keys based on this.secretPhrase
+    
+    let self = this;
 
-    // TODO: Alex: Next send the specified amount to the specified recipient
+    self.confirmation().then(() => {
+      if(Wallet.validateCredentials(self.phrase, self.password)){
+        Wallet.generate(self.phrase, self.password).then((data) => {
+          let wallet: Wallet = new Wallet(data);
 
-    let myPublicKey = "0x8805317929d0a8cd1e7a19a4a2523b821ed05e42"; // using this dummy address for now
-    let recipientPublicKey = "0x8805317929d0a8cd1e7a19a4a2523b821ed05e43"; // using this dummy address for now
-    let urAmount = 1.5 // using this dummy amount for now
-    let weiAmount = 1000000000000000000 * 1.5; // need to use something like bigdecimal here
+          if(!wallet.validateAddress(self.publicKey)){
+            self.error("Recipient address is not valid");
+            return;
+          }
 
-    // TODO: send weiAmount to recipientPublicKey...
+          if(!wallet.validateAmount(self.amount)){
+            self.error("Not enough coins or amount is not correct");
+            return;
+          }
 
-    // TODO: display message to user...
+          wallet.sendRawTransaction(self.publicKey, self.amount).then((err) => {
+            if (!err)
+              self.success();
+            else
+              self.error("An error occured during transaction");
+          });
+        })
+      } else {
+        self.error("Enter secret phrase and password");
+      }
+    });
+    
+  }
 
-    // all done
-    this.nav.setRoot(HomePage);
+  confirmation() {
+    return new Promise((resolve, reject) => {
+      let confirmation = Alert.create({
+        title: 'Confirmation',
+        message: "<p>Sending " + this.amount.toFixed(4) + " ETH</p>",
+        buttons: [
+
+          {
+            text: 'OK',
+            handler: () => {
+              resolve();
+            }
+          },
+          {
+            text: 'CANCEL',
+            role: 'cancel',
+            handler: () => {
+              // do nothing
+            }
+          }
+        ]
+      });
+      this.nav.present(confirmation);
+    });
+  }
+  
+  success(){
+    let successAlert = Alert.create({
+      title: 'Success',
+      message: "<p>Transaction successfully created</p>",
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.nav.setRoot(HomePage);
+          }
+        }
+      ]
+    });
+    this.nav.present(successAlert);
+  }
+
+  error(text){
+    let errorAlert = Alert.create({
+      title: 'Error',
+      message: "<p>" + text + "</p>",
+      buttons: ['OK']
+    });
+    this.nav.present(errorAlert);
   }
 }
