@@ -61,14 +61,9 @@ export class ChatPage {
     }
 
     validateMessage(): boolean {
-        // if (this.messageText.length === 0) {
-        //     res = false;
-        // }
-
         if (!this.messageText) {
             return false;
         }
-        // if (!_.isUndefined(this.messageText) && _.isEmpty(this.messageText.trim())) {
         if (_.isEmpty(this.messageText.trim())) {
             return false;
         }
@@ -77,10 +72,9 @@ export class ChatPage {
 
     sendMessage() {
         if (!this.validateMessage()) {
-            console.log("invalido");
             return;
         }
-        console.log("va a mandar");
+        
         this.createChat();
         let chatMessage = this.createChatMessageObject();
         this.chatService.addMessageToChat(this.chatId, chatMessage);

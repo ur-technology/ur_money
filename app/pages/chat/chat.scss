@@ -1,13 +1,12 @@
 .chat-page {
     .toolbar-background {
-        background: #fff;
+        // background: #fff;
         border: none;
     }
     .toolbar {
         padding: 0;
         .bar-button {
             color: #17909c;
-            font-size: 16px;
         }
         .right {
             float: right;
@@ -18,19 +17,14 @@
         }
     }
 }
-
-
 /*-------------------------*/
-
 .chat-title .toolbar-title {
     color: #546a79;
 }
-
 .messages-list {}
-
 .messages-list .item {
     border: none;
-    padding: 0px 50px 0px 12px;
+    padding: 0 50px 0 12px;
     min-height: 80px;
     margin-bottom: 5px;
     .item-inner {
@@ -45,11 +39,9 @@
         border-bottom: none;
     }
 }
-
 .messages-list .item.other {
     padding: 0 12px 0 50px;
 }
-
 .messages-list .item img:first-child {
     position: absolute;
     top: 24px;
@@ -60,12 +52,10 @@
     height: 100%;
     border-radius: 50%;
 }
-
 .messages-list .item.other img:first-child {
     right: auto;
     left: 12px;
 }
-
 .messages-list .item .msg-text {
     position: relative;
     padding: 7px;
@@ -74,80 +64,78 @@
     border-radius: 5px;
     margin-right: 6px;
 }
-
 .messages-list .item.other .msg-text {
     background-color: #ffffff;
     margin-left: 6px;
 }
-
-.messages-list .item .msg-text:after, .messages-list .item.other .msg-text:after {
+.messages-list .item .msg-text:after,
+.messages-list .item.other .msg-text:after {
     position: absolute;
     top: 2px;
 }
-
 .messages-list .item .msg-text:after {
     content: url("../../img/chat-right-arrow.png");
     right: -4px;
 }
-
 .messages-list .item.other .msg-text:after {
     content: url("../../img/chat-left-arrow.png");
     right: auto;
     left: -4px;
 }
-
 .messages-list .item .msg-text p {
     font-size: 12px;
-    color: #444444
+    color: #444444;
 }
-
 .messages-list .item .item-note {
     position: absolute;
     font-size: 9px;
     top: -20px;
     left: 0;
 }
-
 .messages-list .item.other .item-note {
     left: auto;
     right: 0;
 }
-
-
 /*------------------------*/
-
 .chat-page {
     ion-toolbar {
-        &.ur-message-send {
-            width: 95%;
-            margin: 0 auto;
-            position: absolute;
-            bottom: 10px;
+        &.mio {
+            min-height: 60px;
+        }
+        .button-icon {
+            background-color: #3aade2;
+            color: #ffffff !important;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 14px;
+            line-height: 35px;
+            padding: 0 0 0 3px;
+            text-align: center;
+            margin-right: 5px;
+        }
+        .ur-message-send {
+            // width: 95%;
+            // margin: 0 auto;
+            // position: absolute;
+            // bottom: 10px;
+            // left: 10px;
             border: 1px solid #e3e3e3;
             border-radius: 20px;
-            padding-right: 5px;
+            // padding-right: 5px;
+            // height: 45px;
             .item-input-wrapper {
                 background-color: transparent;
                 input {
-                    padding-left: 8px;
+                    // padding-left: 8px;
                     width: 94%;
-                    height: 35px;
                     background: transparent;
-                    border:none;
+                    border: none;
                     margin-left: 10px;
                 }
             }
-            .button-icon {
-                background-color: #3aade2;
-                color: #ffffff;
-                border-radius: 50%;
-                width: 35px;
-                height: 35px;
-                font-size: 14px;
-                line-height: 35px;
-                padding: 0 0 0 3px;
-                text-align: center;
-            }
+
+
         }
     }
 }

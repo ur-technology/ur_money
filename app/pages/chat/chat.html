@@ -1,5 +1,5 @@
 <ion-navbar>
-  <ion-title class="chat-title">{{contact.firstName}} {{contact.lastName}}</ion-title>
+    <ion-title class="chat-title">{{contact.firstName}} {{contact.lastName}}</ion-title>
 </ion-navbar>
 <ion-content class="chat-view">
     <ion-list class="list messages-list">
@@ -17,12 +17,15 @@
     </ion-list>
 </ion-content>
 <ion-toolbar position="bottom"
-    class="bar item-input-inset ur-message-send">
-    <label class="item-input-wrapper">
-        <ion-input type="text"
-            [(ngModel)]="messageText"
-            placeholder="Type your message"></ion-input>
-    </label>
+    class="bar item-input-inset mio">
+    <div class="ur-message-send">
+        <label class="item-input-wrapper">
+            <ion-input type="text"
+                [(ngModel)]="messageText"
+                placeholder="Type your message"></ion-input>
+        </label>
+
+    </div>
     <ion-buttons end>
         <button clear
             class="button-icon"
