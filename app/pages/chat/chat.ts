@@ -8,6 +8,7 @@ import {ChatService} from '../../components/services/chat.service';
 import {ChatMessage} from '../../components/models/chat-message';
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
+import * as _ from 'underscore';
 
 @Component({
     templateUrl: 'build/pages/chat/chat.html',
@@ -59,30 +60,53 @@ export class ChatPage {
         return message.senderUid !== this.user.userUid;
     }
 
-    sendMessage() {
-        if (!this.chatId) {
-            this.createChat();
-            this.loadMessages();
-        }
-        let chatMessage: ChatMessage = new ChatMessage();
-        chatMessage.text = this.messageText;
-        chatMessage.sentAt = firebase.database.ServerValue.TIMESTAMP;
-        chatMessage.senderUid = this.user.userUid;
-        this.chatService.addMessageToChat(this.chatId, chatMessage);
+    validateMessage(): boolean {
+        // if (this.messageText.length === 0) {
+        //     res = false;
+        // }
 
+        if (!this.messageText) {
+            return false;
+        }
+        // if (!_.isUndefined(this.messageText) && _.isEmpty(this.messageText.trim())) {
+        if (_.isEmpty(this.messageText.trim())) {
+            return false;
+        }
+        return true;
+    }
+
+    sendMessage() {
+        if (!this.validateMessage()) {
+            console.log("invalido");
+            return;
+        }
+        console.log("va a mandar");
+        this.createChat();
+        let chatMessage = this.createChatMessageObject();
+        this.chatService.addMessageToChat(this.chatId, chatMessage);
         this.chatService.addChatSummaryToUser(this.user.userUid, this.contact, chatMessage, this.chatId);
         this.chatService.addChatSummaryToUser(this.contact.userUid, this.user, chatMessage, this.chatId);
         this.messageText = "";
     }
 
-    createChat() {
-        this.chatId = this.chatService.createChat(this.user, this.contact);
+    createChatMessageObject(): ChatMessage {
+        let chatMessage: ChatMessage = new ChatMessage();
+        chatMessage.text = this.messageText;
+        chatMessage.sentAt = firebase.database.ServerValue.TIMESTAMP;
+        chatMessage.senderUid = this.user.userUid;
+        return chatMessage;
+    }
 
+    createChat() {
+        if (!this.chatId) {
+            this.chatId = this.chatService.createChat(this.user, this.contact);
+            this.loadMessages();
+        }
     }
 
 
     ionViewWillLeave() {
-        if (this.messagesRef && !this.messagesRef.isUnsubscribed) {          
+        if (this.messagesRef && !this.messagesRef.isUnsubscribed) {
             this.messagesRef.unsubscribe();
         }
     }

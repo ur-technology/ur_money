@@ -22,6 +22,7 @@ import {LoadingModal} from './components/loading-modal/loading-modal';
 
 import {NativeContactsService} from './components/services/native-contact.service';
 import {ContactsService} from './components/services/contacts.service';
+import {ChatService} from './components/services/chat.service';
 // temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
 import {SignInPage} from './prelaunch_pages/sign-in/sign-in';
@@ -38,6 +39,7 @@ import * as lodash from 'lodash';
     Auth,
     NativeContactsService,
     ContactsService,
+    ChatService,
     TransactionNavService,
     CountryListService,
     ChartData,
