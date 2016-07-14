@@ -37,6 +37,14 @@ export class Wallet {
         
         this._wallet = wallet;
     };
+    
+    public static miningIsActive(){
+        let web3 = require('web3');
+        let connection = new web3(new web3.providers.HttpProvider("http://localhost:12345"));
+
+        let mining = connection.eth.mining;
+        return mining;
+    }
 
     public validateAddress(address: string){
         let self = this;
@@ -59,7 +67,7 @@ export class Wallet {
         
         var balance = self._connection.eth.getBalance(self.getAddress());
         
-        return (self._connection.fromWei(parseFloat(balance)) > amount);
+        return (amount > 0 && self._connection.fromWei(parseFloat(balance)) > amount);
     }
 
     public sendRawTransaction(to: string, amount: number) : Promise<boolean> {
@@ -68,7 +76,7 @@ export class Wallet {
         let ethTx = require('ethereumjs-tx');
 
         var rawTx = {
-            nonce: self._connection.toHex(self._connection.eth.getTransactionCount(self.getAddress())),
+            nonce: self._connection.toHex(Date.now()),
             gasPrice: self._connection.toHex(self._connection.eth.gasPrice),
             gasLimit: self._connection.toHex(300000),
             to: (ethUtil.isHexPrefixed(to) ? ethUtil.toBuffer(to) : ethUtil.toBuffer('0x' + to)),
@@ -84,6 +92,7 @@ export class Wallet {
 
         return new Promise<boolean>((resolve, reject) => {
             self._connection.eth.sendRawTransaction(serializedTx, (error:any) => {
+                console.log(error);
                 resolve(!!error);
             })
         });

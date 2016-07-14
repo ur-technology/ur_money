@@ -4,7 +4,7 @@
 import {beforeEachProviders, it, describe, expect, inject, beforeEach} from '@angular/core/testing';
 import {Wallet} from './wallet2';
 
-describe('Wallet Service', (require, exports, module) => {
+describe('Wallet Service', () => {
 
     var config = {
         seed : '12345',
@@ -18,37 +18,12 @@ describe('Wallet Service', (require, exports, module) => {
     beforeEachProviders(() => [Wallet]);
 
     it('Validating credentials', () => {
-        // if(Wallet.validateCredentials(self.phrase, self.password)){
-        //     Wallet.generate(self.phrase, self.password).then((data) => {
-        //         let wallet: Wallet = new Wallet(data);
-        //
-        //         if(!wallet.validateAddress(self.publicKey)){
-        //             self.error("Recipient address is not valid");
-        //             return;
-        //         }
-        //
-        //         if(!wallet.validateAmount(self.amount)){
-        //             self.error("Not enough coins or amount is not correct");
-        //             return;
-        //         }
-        //
-        //         wallet.sendRawTransaction(self.publicKey, self.amount).then((err) => {
-        //             if (!err)
-        //                 self.success();
-        //             else
-        //                 self.error("An error occured during transaction");
-        //         });
-        //     })
-        // } else {
-        //     self.error("Enter secret phrase and password");
-        // }
 
         expect(Wallet.validateCredentials('', config.salt)).toBeFalsy();
 
         expect(Wallet.validateCredentials(config.seed, '')).toBeFalsy();
 
         expect(Wallet.validateCredentials(config.seed, config.salt)).toBeTruthy();
-
 
     });
 
@@ -82,14 +57,42 @@ describe('Wallet Service', (require, exports, module) => {
         Wallet.generate(config.seed, config.salt).then((data) => {
             let wallet: Wallet = new Wallet(data);
 
-            // expect(wallet.validateAmount(null)).toBeFalsy();
+            expect(wallet.validateAmount(null)).toBeFalsy();
 
-            // expect(wallet.validateAmount(config.amountExisted + 20)).toBeFalsy();
-            //
-            // expect(wallet.validateAmount(0)).toBeFalsy();
-            //
-            // expect(wallet.validateAmount(config.amountSent)).toBeTruthy();
+            expect(wallet.validateAmount(config.amountExisted + 200)).toBeFalsy();
+
+            expect(wallet.validateAmount(0)).toBeFalsy();
+
+            expect(wallet.validateAmount(config.amountSent)).toBeTruthy();
         });
+    });
+
+    it('Transaction', (done) => {
+        Wallet.generate(config.seed, config.salt).then((data) => {
+            let wallet: Wallet = new Wallet(data);
+
+            let first = false;
+            wallet.sendRawTransaction(config.toAddress, config.amountExisted + 200).then(function(error){
+                expect(error).toBeTruthy();
+                first = true;
+                if(second){
+                    done();
+                }
+            });
+
+            let second = false;
+            wallet.sendRawTransaction(config.toAddress, config.amountSent).then(function(error){
+                expect(error).toBeFalsy();
+                second = true;
+                if(first){
+                    done();
+                }
+            });
+        });
+    });
+
+    it('Mining active', () => {
+        expect(Wallet.miningIsActive()).toBeTruthy();
     });
 
 });

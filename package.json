@@ -32,7 +32,6 @@
     "ionic-angular": "2.0.0-beta.9",
     "ionic-native": "^1.1.0",
     "ionicons": "3.0.0",
-    "jasmine": "^2.4.1",
     "lodash": "^4.13.1",
     "moment": "^2.13.0",
     "ng-intl-tel-input": "^1.3.2",
