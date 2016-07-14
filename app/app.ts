@@ -100,9 +100,8 @@ class UrMoney {
         this.handlePrelaunchRequest();
         return;
       }
-
-      this.nav.setRoot(SendPage);
-      // this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
+      
+      this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
     });
   }
 
