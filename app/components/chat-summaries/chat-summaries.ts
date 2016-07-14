@@ -55,7 +55,7 @@ export class ChatSummaries {
         contactUser.lastName = chatSelected.otherUser.lastName;
         contactUser.userUid = chatSelected.otherUser.userUid;
 
-        this.nav.push(ChatPage, { chatId: chatSelected.chatId, user: userChat, contact: contactUser }, { animate: true, direction: 'forward' });
+        this.nav.rootNav.push(ChatPage, { chatId: chatSelected.chatId, user: userChat, contact: contactUser }, { animate: true, direction: 'forward' });
     }
 
 }
