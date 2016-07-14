@@ -23,6 +23,7 @@ import {LoadingModal} from './components/loading-modal/loading-modal';
 import {NativeContactsService} from './components/services/native-contact.service';
 import {ContactsService} from './components/services/contacts.service';
 import {ChatService} from './components/services/chat.service';
+import {NotificationService} from './components/services/notification.service';
 // temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
 import {SignInPage} from './prelaunch_pages/sign-in/sign-in';
@@ -40,6 +41,7 @@ import * as lodash from 'lodash';
     NativeContactsService,
     ContactsService,
     ChatService,
+    NotificationService,
     TransactionNavService,
     CountryListService,
     ChartData,
@@ -60,7 +62,7 @@ class UrMoney {
   user: any = {};
   invitePage: {};
   faceUrl: string;
-  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService) {
+  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService, private notificationService: NotificationService) {
     this.initializeApp();
 
     this.invitePage = { component: InvitePage };
@@ -102,6 +104,8 @@ class UrMoney {
       }
 
       this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
+      console.log("va a leer notificaciones");
+      this.notificationService.sendMessageNotifications();
     });
   }
 

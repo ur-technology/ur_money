@@ -5,10 +5,12 @@ import {User} from '../../components/models/user';
 import {ChatUser} from '../../components/models/chat-user';
 import {Chat} from '../../components/models/chat';
 import {ChatService} from '../../components/services/chat.service';
+import {NotificationService} from '../../components/services/notification.service';
 import {ChatMessage} from '../../components/models/chat-message';
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'underscore';
+
 
 @Component({
     templateUrl: 'build/pages/chat/chat.html',
@@ -27,7 +29,7 @@ export class ChatPage {
     messagesRef: Subscription;
     @ViewChild(Content) content: Content;
 
-    constructor(private nav: NavController, public navParams: NavParams, private chatService: ChatService) {
+    constructor(private nav: NavController, public navParams: NavParams, private chatService: ChatService, private notificationService: NotificationService) {
         this.tabBarElement = document.querySelector('ion-tabbar-section');
         this.user = this.navParams.get('user');
         this.contact = this.navParams.get('contact');
@@ -88,6 +90,7 @@ export class ChatPage {
         this.chatService.addMessageToChat(this.chatId, chatMessage);
         this.chatService.addChatSummaryToUser(this.user.userUid, this.contact, chatMessage, this.chatId);
         this.chatService.addChatSummaryToUser(this.contact.userUid, this.user, chatMessage, this.chatId);
+        this.notificationService.saveNotification(this.chatId, this.contact.userUid, this.user, chatMessage);
         this.messageText = "";
 
     }
