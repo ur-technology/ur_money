@@ -81,15 +81,9 @@ export class ChatPage {
     }
 
 
-
-    onPageWillEnter() {
-        this.tabBarElement.style.display = 'none';
-    }
-
-    onPageWillLeave() {
-        if (this.messagesRef && !this.messagesRef.isUnsubscribed) {
+    ionViewWillLeave() {
+        if (this.messagesRef && !this.messagesRef.isUnsubscribed) {          
             this.messagesRef.unsubscribe();
         }
-        this.tabBarElement.style.display = 'block';
     }
 }

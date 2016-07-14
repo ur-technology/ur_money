@@ -24,7 +24,7 @@ export class ContactsPage {
     }
     ionViewLoaded() {
         this.getContactsList();
-        this.loadCurrentUser();
+        this.loadCurrentUser();        
     }
 
     loadCurrentUser() {
@@ -50,10 +50,11 @@ export class ContactsPage {
         let chatUser2: ChatUser = this.getChatUser(contact);
         let chatUser1: ChatUser = this.getChatUser(this.currentUser);
 
-        this.nav.push(ChatPage, { user: chatUser1, contact: chatUser2 }, { animate: true, direction: 'forward' });
+        this.nav.rootNav.push(ChatPage, { user: chatUser1, contact: chatUser2 }, { animate: true, direction: 'forward' });
+
     }
 
-    getChatUser(object: any): ChatUser {        
+    getChatUser(object: any): ChatUser {
         let chatUser: ChatUser = new ChatUser();
         chatUser.firstName = object.firstName;
         chatUser.lastName = object.lastName;
