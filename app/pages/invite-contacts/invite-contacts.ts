@@ -4,7 +4,10 @@ import {ContactOrderPipe} from '../../pipes/contactOrderPipe';
 import {NativeContactsService} from '../../components/services/native-contact.service';
 import {ContactsService} from '../../components/services/contacts.service';
 import {Subscription} from 'rxjs';
-
+import * as lodash from 'lodash';
+import libphonenumber = require('google-libphonenumber');
+const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
+const PNF = libphonenumber.PhoneNumberFormat;
 
 // Native Plugins
 import {SocialSharing} from 'ionic-native';
@@ -22,9 +25,14 @@ import {Contacts} from 'ionic-native';
   templateUrl: 'build/pages/invite-contacts/invite-contacts.html',
 })
 export class InviteContactsPage {
-  contacts: any;
+  isUserLoaded = false;
+  isContactsLoaded = false;
+  contacts = [];
   inviteType: string;
   inviteData: any = {};
+  intviteContacts = [];
+  deviceContacts = [];
+  userOnApp = [];
   constructor(private nav: NavController, private navParams: NavParams,
     private platform: Platform, private nativeContactService: NativeContactsService,
     private contactsService: ContactsService) {
@@ -32,6 +40,91 @@ export class InviteContactsPage {
     this.inviteType = this.navParams.get('inviteType');
     this.inviteData = this.navParams.get('inviteData');
   }
+
+
+
+  populateContacts() {
+    this.getUserList();
+    this.nativeContactService.getDeviceContacts().then((data: Array<any>) => {
+      //console.log(data);
+      this.deviceContacts = data;
+      this.isContactsLoaded = true;
+      this.createContactList();
+    });
+  }
+
+  getUserList() {
+    let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
+      this.userOnApp = data;
+      this.isUserLoaded = true;
+      this.createContactList();
+      // console.log(data);
+      if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
+        subscriptionContacts.unsubscribe();
+      }
+    });
+  }
+
+
+  createContactList() {
+    if (this.isUserLoaded && this.isContactsLoaded) {
+      let registerUserContactNumbers = [];
+      lodash.each(this.userOnApp, (user) => {
+        registerUserContactNumbers.push(this.phoneNumberWithoutCountryCode(user.phone));
+      });
+
+      lodash.each(this.deviceContacts, (contact) => {
+        if (this.isPhoneNumberExistInContact(contact)) {
+          let inviteContacts = {
+            name: contact.displayName,
+            imgID: contact.photos ? lodash.first(contact.photos) : null,
+            email: contact.emails,
+            phone: lodash.first(contact.phoneNumbers),
+            invite: false,
+            id: contact.id
+          };
+          if (this.isPhoneMatchWithContact(contact, registerUserContactNumbers)) {
+            inviteContacts.invite = true
+            this.contacts.push(inviteContacts);
+          } else {
+            this.contacts.push(inviteContacts);
+          }
+        }
+      });
+      console.log(this.contacts);
+    }
+  }
+
+  isPhoneNumberExistInContact(contact) {
+    return contact.phoneNumbers && contact.phoneNumbers.length > 0;
+  }
+
+  isPhoneMatchWithContact(contact, registeredUserPhoneNumberArray) {
+    let matchedPhoneNumber = [];
+    lodash.each(contact.phoneNumbers, (phoneNumber) => {
+      let phoneNumberWithoutCountryCode = this.phoneNumberWithoutCountryCode(phoneNumber);
+      if (lodash.find(registeredUserPhoneNumberArray, phoneNumberWithoutCountryCode)) {
+        matchedPhoneNumber.push(phoneNumber);
+      }
+    });
+    if (matchedPhoneNumber.length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  phoneNumberWithoutCountryCode(phone) {
+    try {
+      let phoneNumber = phoneUtil.parse(phone, "");
+      return phoneUtil.format(phoneNumber, PNF.NATIONAL);
+    }
+    catch (e) {
+      //  console.log(e);
+      return phone;
+    }
+  }
+
 
   inviteNow(contact) {
     switch (this.inviteType) {
@@ -60,111 +153,5 @@ export class InviteContactsPage {
   }
 
 
-  getContactsList() {
-    let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
-      console.log(data);
-      if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
-        subscriptionContacts.unsubscribe();
-      }
-    });
-  }
-  populateContacts() {
-    this.getContactsList();
-    this.nativeContactService.getDeviceContacts().then((data) => {
-      console.log(data);
-    });
-    this.contacts =
-      [
-        {
-          'name': 'Jhon Doe',
-          'imgID': '1',
-          'city': 'Thimphu',
-          'country': 'Bhutan',
-          'email': 'JhonDoe@gmail.com',
-          'phone': '+919915738619',
-          'invite': true
-        },
-        {
-          'name': 'Jenny Doe',
-          'imgID': '2',
-          'city': 'Ottawa',
-          'country': 'Canada',
-          'email': 'jennyDoe@ur.capital',
-          'phone': '+919915738619',
-          'invite': false
-        },
-        {
-          'name': 'Rashi Doe',
-          'imgID': '3',
-          'city': 'Beijing',
-          'country': 'China',
-          'email': 'rashiDoe@gmail.com',
-          'phone': '+919915738619',
-          'invite': true
-        },
-        {
-          'name': 'Jon Snow',
-          'imgID': '4',
-          'city': 'Bogota',
-          'country': 'Colombia',
-          'email': 'jonSnow@ur.capital',
-          'phone': '+919915738619',
-          'invite': true
-        },
-        {
-          'name': 'Sansa Stark',
-          'imgID': '5',
-          'city': 'Havana',
-          'country': 'Cuba',
-          'email': 'sansaStark@gmail.com',
-          'phone': '+919915738619',
-          'invite': false
-        },
-        {
-          'name': 'Ramsay Bolton',
-          'imgID': '6',
-          'city': 'Helsinki',
-          'country': 'Finland',
-          'email': 'ramsayBolton@ur.capital',
-          'phone': '+919915738619',
-          'invite': false
-        },
-        {
-          'name': 'Daenerys',
-          'imgID': '7',
-          'city': 'Paris',
-          'country': 'France',
-          'email': 'daenerys@gmail.com',
-          'phone': '+919915738619',
-          'invite': true
-        },
-        {
-          'name': 'Gregor Clegane',
-          'imgID': '8',
-          'city': 'Berlin',
-          'country': 'Germany',
-          'email': 'gregorClegane@ur.capital',
-          'phone': '+919915738619',
-          'invite': false
-        },
-        {
-          'name': 'Khal Drogo',
-          'imgID': '9',
-          'city': 'Ankara',
-          'country': 'Turkey',
-          'email': 'khalDrogo@gmail.com',
-          'phone': '+919915738619',
-          'invite': true
-        },
-        {
-          'name': 'Tyrion Lannister',
-          'imgID': '10',
-          'city': 'Washington, D.C.',
-          'country': 'United States',
-          'email': 'tyrionLannister@ur.capital',
-          'phone': '+919915738619',
-          'invite': false
-        }
-      ];
-  }
+
 }
