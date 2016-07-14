@@ -32,16 +32,16 @@ export class ChatPage {
         this.user = this.navParams.get('user');
         this.contact = this.navParams.get('contact');
         this.chatId = this.navParams.get('chatId');
-
-
     }
+
     scrollToBottom() {
-        this.content.scrollToBottom();
+        setTimeout(() => {
+            this.content.scrollToBottom();
+        }, 200);
     }
 
     ionViewLoaded() {
         this.findChatAndLoadMessages();
-        this.scrollToBottom();
     }
 
     findChatAndLoadMessages() {
@@ -52,7 +52,7 @@ export class ChatPage {
             this.chatService.findChatId(this.user, this.contact).then((chatId: string) => {
                 this.chatId = chatId;
                 this.loadMessages();
-                  // this.scrollToBottom();
+
             });
         }
     }
@@ -60,6 +60,7 @@ export class ChatPage {
     loadMessages() {
         this.messagesRef = this.chatService.getChatMessages(this.chatId).subscribe(data => {
             this.messages = data;
+            this.scrollToBottom();
         });
     }
 
@@ -76,7 +77,6 @@ export class ChatPage {
         }
         return true;
     }
-
 
     sendMessage() {
         if (!this.validateMessage()) {
