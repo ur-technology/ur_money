@@ -42,58 +42,65 @@ export class SendPage {
     this.contactItem = {};
   }
 
-  validateForm() {
-    let ethUtil = require('ethereumjs-util');
-
-    return (
-      this.amount > 0 &&
-      this.phrase != '' &&
-      this.password != '' &&
-      (this.publicKey != '' && (ethUtil.isValidAddress(this.publicKey) || ethUtil.isValidPublic(this.publicKey)))
-    )
-  }
-
   sendUR() {
-    let self = this;
     
-    let wallet: Wallet = new Wallet();
+    let self = this;
 
-    if(!this.validateForm()) {
-      return;
-    }
+    self.confirmation().then(() => {
+      if(Wallet.validateCredentials(self.phrase, self.password)){
+        Wallet.generate(self.phrase, self.password).then((data) => {
+          let wallet: Wallet = new Wallet(data);
 
-    let confirmation = Alert.create({
-      title: 'Confirmation',
-      message: "<p>Sending " + this.amount.toFixed(4) + " ETH</p>",
-      buttons: [
-
-        {
-          text: 'OK',
-          handler: () => {
-            self.error();
-
-            wallet.create(self.phrase, self.password).then(() => {
-              wallet.sendTransaction(self.publicKey, self.amount).then((err) => {
-                if (!err)
-                  self.success();
-                else
-                  self.error();
-              });
-            });
+          if(!wallet.validateAddress(self.publicKey)){
+            self.error("Recipient address is not valid");
+            return;
           }
-        },
-        {
-          text: 'CANCEL',
-          role: 'cancel',
-          handler: () => {
-            // do nothing
+
+          if(!wallet.validateAmount(self.amount)){
+            self.error("Not enough coins or amount is not correct");
+            return;
           }
-        }
-      ]
+
+          wallet.sendRawTransaction(self.publicKey, self.amount).then((err) => {
+            if (!err)
+              self.success();
+            else
+              self.error("An error occured during transaction");
+          });
+        })
+      } else {
+        self.error("Enter secret phrase and password");
+      }
     });
-    this.nav.present(confirmation);
+    
   }
 
+  confirmation() {
+    return new Promise((resolve, reject) => {
+      let confirmation = Alert.create({
+        title: 'Confirmation',
+        message: "<p>Sending " + this.amount.toFixed(4) + " ETH</p>",
+        buttons: [
+
+          {
+            text: 'OK',
+            handler: () => {
+              resolve();
+            }
+          },
+          {
+            text: 'CANCEL',
+            role: 'cancel',
+            handler: () => {
+              // do nothing
+            }
+          }
+        ]
+      });
+      this.nav.present(confirmation);
+    });
+  }
+  
   success(){
     let successAlert = Alert.create({
       title: 'Success',
@@ -110,10 +117,10 @@ export class SendPage {
     this.nav.present(successAlert);
   }
 
-  error(){
+  error(text){
     let errorAlert = Alert.create({
       title: 'Error',
-      message: "<p>An error occurred</p>",
+      message: "<p>" + text + "</p>",
       buttons: ['OK']
     });
     this.nav.present(errorAlert);

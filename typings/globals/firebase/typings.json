@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "/Users/John/dev/ur_money/node_modules/angularfire2/firebase3.d.ts",
-    "raw": "file:node_modules/angularfire2/firebase3.d.ts",
-    "typings": "/Users/John/dev/ur_money/node_modules/angularfire2/firebase3.d.ts"
-  }
-}

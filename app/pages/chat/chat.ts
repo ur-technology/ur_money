@@ -1,41 +1,113 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {ChatsPage} from '../chats/chats';
+import {User} from '../../components/models/user';
+import {ChatUser} from '../../components/models/chat-user';
+import {Chat} from '../../components/models/chat';
+import {ChatService} from '../../components/services/chat.service';
+import {ChatMessage} from '../../components/models/chat-message';
+import {Subscription} from 'rxjs';
+import {Timestamp}  from '../../pipes/timestamp';
+import * as _ from 'underscore';
 
-/*
-  Generated class for the ChatPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
-  templateUrl: 'build/pages/chat/chat.html',
+    templateUrl: 'build/pages/chat/chat.html',
+    pipes: [Timestamp],
+    providers: [ChatService]
 })
 export class ChatPage {
-  tabBarElement: any;
-  conversation: any;
-  messages: any[];
-  constructor(private nav: NavController, public navParams: NavParams) {
-    this.tabBarElement = document.querySelector('ion-tabbar-section');
-    this.conversation = this.navParams.get('conversation');
-    this.messages = [
-      { "userID": "1", "text": "Hi,I just sent 3000 UR in your account. Let me know if you need more.", "time": "21-june-2016" },
-      { "userID": "2", "text": "Hey, Thanks for the 3000 UR you sent my way. I really appreciate that. Let's catch up on the weekend.", "time": "22-june-2016" }
-    ];
-  }
+    tabBarElement: any;
+    messages: any[];
+    user: ChatUser;
+    contactFullname: string;
+    contact: ChatUser;
+    messageText: string;
+    chat: Chat;
+    chatId: string;
+    messagesRef: Subscription;
 
-  moveBack() {
-    this.nav.setRoot(ChatsPage, {}, { animate: true, direction: 'back' });
-  }
-  onPageWillEnter() {
+    constructor(private nav: NavController, public navParams: NavParams, private chatService: ChatService) {
+        this.tabBarElement = document.querySelector('ion-tabbar-section');
+        this.user = this.navParams.get('user');
+        this.contact = this.navParams.get('contact');
+        this.chatId = this.navParams.get('chatId');
 
-    this.tabBarElement.style.display = 'none';
 
-  }
+    }
+    ionViewLoaded() {
+        this.findChatAndLoadMessages();
+    }
 
-  onPageWillLeave() {
+    findChatAndLoadMessages() {
+        if (this.chatId) {
+            this.loadMessages();
+        }
+        else {
+            this.chatService.findChatId(this.user, this.contact).then((chatId: string) => {
+                this.chatId = chatId;
+                this.loadMessages();
+            });
+        }
+    }
 
-    this.tabBarElement.style.display = 'block';
+    loadMessages() {
+        this.messagesRef = this.chatService.getChatMessages(this.chatId).subscribe(data => {
+            this.messages = data;
+        });
+    }
 
-  }
+    messageNotMe(message: any) {
+        return message.senderUid !== this.user.userUid;
+    }
+
+    validateMessage(): boolean {
+        // if (this.messageText.length === 0) {
+        //     res = false;
+        // }
+
+        if (!this.messageText) {
+            return false;
+        }
+        // if (!_.isUndefined(this.messageText) && _.isEmpty(this.messageText.trim())) {
+        if (_.isEmpty(this.messageText.trim())) {
+            return false;
+        }
+        return true;
+    }
+
+    sendMessage() {
+        if (!this.validateMessage()) {
+            console.log("invalido");
+            return;
+        }
+        console.log("va a mandar");
+        this.createChat();
+        let chatMessage = this.createChatMessageObject();
+        this.chatService.addMessageToChat(this.chatId, chatMessage);
+        this.chatService.addChatSummaryToUser(this.user.userUid, this.contact, chatMessage, this.chatId);
+        this.chatService.addChatSummaryToUser(this.contact.userUid, this.user, chatMessage, this.chatId);
+        this.messageText = "";
+    }
+
+    createChatMessageObject(): ChatMessage {
+        let chatMessage: ChatMessage = new ChatMessage();
+        chatMessage.text = this.messageText;
+        chatMessage.sentAt = firebase.database.ServerValue.TIMESTAMP;
+        chatMessage.senderUid = this.user.userUid;
+        return chatMessage;
+    }
+
+    createChat() {
+        if (!this.chatId) {
+            this.chatId = this.chatService.createChat(this.user, this.contact);
+            this.loadMessages();
+        }
+    }
+
+
+    ionViewWillLeave() {
+        if (this.messagesRef && !this.messagesRef.isUnsubscribed) {
+            this.messagesRef.unsubscribe();
+        }
+    }
 }

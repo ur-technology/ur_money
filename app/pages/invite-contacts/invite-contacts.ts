@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import {ContactOrderPipe} from '../../pipes/contactOrderPipe';
+import {NativeContactsService} from '../../components/services/native-contact.service';
+import {ContactsService} from '../../components/services/contacts.service';
+import {Subscription} from 'rxjs';
+
 
 // Native Plugins
 import {SocialSharing} from 'ionic-native';
+import {Contacts} from 'ionic-native';
 
 
 /*
@@ -20,7 +25,9 @@ export class InviteContactsPage {
   contacts: any;
   inviteType: string;
   inviteData: any = {};
-  constructor(private nav: NavController, private navParams: NavParams) {
+  constructor(private nav: NavController, private navParams: NavParams,
+    private platform: Platform, private nativeContactService: NativeContactsService,
+    private contactsService: ContactsService) {
     this.populateContacts();
     this.inviteType = this.navParams.get('inviteType');
     this.inviteData = this.navParams.get('inviteData');
@@ -52,7 +59,20 @@ export class InviteContactsPage {
     });
   }
 
+
+  getContactsList() {
+    let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
+      console.log(data);
+      if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
+        subscriptionContacts.unsubscribe();
+      }
+    });
+  }
   populateContacts() {
+    this.getContactsList();
+    this.nativeContactService.getDeviceContacts().then((data) => {
+      console.log(data);
+    });
     this.contacts =
       [
         {

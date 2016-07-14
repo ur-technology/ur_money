@@ -27,7 +27,9 @@ export class InvitePage {
         Get it now form ${this.downloadUrl}`
       },
       facebook: {
-        messageText: `Check out UR Money for your smartphone. Download it today from ${this.downloadUrl}`
+        caption: 'Check out UR Money for your smartphone.',
+        messageText: ` Download it today from ${this.downloadUrl}`,
+        imageUrl: 'https://ur-money-staging.firebaseapp.com/img/logo.png'
       },
       twitter: {
         messageText: `Check out UR Money for your smartphone. Download it today from ${this.downloadUrl}`
@@ -65,15 +67,18 @@ export class InvitePage {
 
   inviteFacebook() {
     this.platform.ready().then(() => {
-      if (window.plugins.socialsharing) {
-        let app=this.platform.is('android') ? 'facebook' : 'com.apple.social.facebook';
-        window.plugins.socialsharing.canShareVia(app, this.inviteConstant.whatsapp.messageText, null, null, null, (result) => {
-          window.plugins.socialsharing.shareViaFacebookWithPasteMessageHint(this.inviteConstant.facebook.messageText, null /* img */,this.downloadUrl  /* url */,this.inviteConstant.facebook.messageText, (data) => {
-            console.log(data);
-          });
+      if (window.facebookConnectPlugin) {
+        window.facebookConnectPlugin.showDialog({
+          method: 'send',
+          caption: 'Check out UR Money for your smartphone.',
+          link: 'https://ur-money-staging.firebaseapp.com/img/logo.png',
+          description: 'Download it today from http://ur-money-staging.com/',
+          picture: 'https://ur-money-staging.firebaseapp.com/img/logo.png'
+        }, (data) => {
+          console.log(data);
         }, (error) => {
           console.log(error);
-          this.doErrorAlert('facebook');
+          this.doErrorAlert('facebook messenger');
         });
       }
     });
@@ -82,7 +87,7 @@ export class InvitePage {
   inviteTwitter() {
     this.platform.ready().then(() => {
       if (window.plugins.socialsharing) {
-        let app=this.platform.is('android') ? 'twitter' : 'com.apple.social.twitter';        
+        let app = this.platform.is('android') ? 'twitter' : 'com.apple.social.twitter';
         window.plugins.socialsharing.canShareVia(app, this.inviteConstant.twitter.messageText, null, null, null, (result) => {
           window.plugins.socialsharing.shareViaTwitter(this.inviteConstant.twitter.messageText, null /* img */, null /* url */, (data) => {
             console.log(data);

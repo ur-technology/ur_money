@@ -9,7 +9,8 @@
     "setup-android": "ionic platform add android",
     "android": "ionic run android",
     "setup-ios": "ionic platform add ios",
-    "ios": "ionic run ios"
+    "ios": "ionic run ios",
+    "test": "karma start karma.conf.js"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.2",
@@ -23,6 +24,8 @@
     "buffer": "^4.7.0",
     "crypto": "0.0.3",
     "es6-shim": "^0.35.0",
+    "ethereumjs-tx": "^1.1.1",
+    "ethereumjs-util": "^4.5.0",
     "ethereumjs-wallet": "^0.6.0",
     "firebase": "^3.1.0",
     "google-libphonenumber": "^1.0.23",
@@ -37,7 +40,8 @@
     "scrypt-async": "^1.2.0",
     "secure-randword": "^0.1.4",
     "underscore": "^1.8.3",
-    "zone.js": "^0.6.12"
+    "web3": "^0.17.0-alpha",
+    "zone.js": "git://github.com/angular/zone.js.git#a8ea55"
   },
   "devDependencies": {
     "del": "2.2.0",
@@ -48,8 +52,19 @@
     "ionic-gulp-html-copy": "^1.0.0",
     "ionic-gulp-sass-build": "^1.0.0",
     "ionic-gulp-scripts-copy": "^2.0.0",
+    "karma": "^1.1.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-opera-launcher": "^1.0.0",
     "run-sequence": "1.1.5",
-    "shelljs": "^0.7.0"
+    "shelljs": "^0.7.0",
+    "jasmine-core": "^2.4.1",
+    "jasmine-as-promised": "0.0.8",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-browserify": "5.0.5",
+    "browserify": "13.0.0",
+    "browserify-istanbul": "2.0.0",
+    "tsify": "0.16.0",
+    "isparta": "4.0.0"
   },
   "cordovaPlugins": [
     "cordova-plugin-device",
@@ -64,7 +79,16 @@
     {
       "locator": "https://github.com/VersoSolutions/CordovaClipboard.git",
       "id": "com.verso.cordova.clipboard"
-    }
+    },
+    {
+      "variables": {
+        "APP_ID": "146177489140384",
+        "APP_NAME": "UR Money"
+      },
+      "locator": "cordova-plugin-facebook4",
+      "id": "cordova-plugin-facebook4"
+    },
+    "cordova-plugin-contacts"
   ],
   "cordovaPlatforms": [
     "ios",

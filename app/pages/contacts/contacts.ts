@@ -1,94 +1,65 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import {ContactsService} from '../../components/services/contacts.service';
+import {User} from '../../components/models/user';
+import {ChatPage} from '../chat/chat';
+import {Auth} from '../../components/auth/auth';
+import {Subscription} from 'rxjs';
+import * as _ from 'lodash';
+import {ChatUser} from '../../components/models/chat-user';
 
-/*
-  Generated class for the ContactsPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
-  templateUrl: 'build/pages/contacts/contacts.html',
+    templateUrl: 'build/pages/contacts/contacts.html',
+    providers: [ContactsService]
 })
 export class ContactsPage {
-  contacts: any;
-  constructor(private nav: NavController) {
-    this.populateContacts();
-  }
+    userId: string;
+    contacts: Array<User> = [];
+    chats: Array<any>;
+    currentUser: User;
 
-  populateContacts() {
-    this.contacts =
-      [
-        {
-          "name": "Jhon Doe",
-          "imgID": "1",
-          "city": "Thimphu",
-          "country": "Bhutan",
-          "email": "JhonDoe@gmail.com"
-        },
-        {
-          "name": "Jenny Doe",
-          "imgID": "2",
-          "city": "Ottawa",
-          "country": "Canada",
-          "email": "jennyDoe@ur.capital"
-        },
-        {
-          "name": "Rashi Doe",
-          "imgID": "3",
-          "city": "Beijing",
-          "country": "China",
-          "email": "rashiDoe@gmail.com"
-        },
-        {
-          "name": "Jon Snow",
-          "imgID": "4",
-          "city": "Bogota",
-          "country": "Colombia",
-          "email": "jonSnow@ur.capital"
-        },
-        {
-          "name": "Sansa Stark",
-          "imgID": "5",
-          "city": "Havana",
-          "country": "Cuba",
-          "email": "sansaStark@gmail.com"
-        },
-        {
-          "name": "Ramsay Bolton",
-          "imgID": "6",
-          "city": "Helsinki",
-          "country": "Finland",
-          "email": "ramsayBolton@ur.capital"
-        },
-        {
-          "name": "Daenerys",
-          "imgID": "7",
-          "city": "Paris",
-          "country": "France",
-          "email": "daenerys@gmail.com"
-        },
-        {
-          "name": "Gregor Clegane",
-          "imgID": "8",
-          "city": "Berlin",
-          "country": "Germany",
-          "email": "gregorClegane@ur.capital"
-        },
-        {
-          "name": "Khal Drogo",
-          "imgID": "9",
-          "city": "Ankara",
-          "country": "Turkey",
-          "email": "khalDrogo@gmail.com"
-        },
-        {
-          "name": "Tyrion Lannister",
-          "imgID": "10",
-          "city": "Washington, D.C.",
-          "country": "United States",
-          "email": "tyrionLannister@ur.capital"
-        }
-      ];
-  }
+    constructor(private nav: NavController, private contactsService: ContactsService, auth: Auth) {
+        this.contacts = [];
+        this.userId = auth.uid;
+    }
+    ionViewLoaded() {
+        this.getContactsList();
+        this.loadCurrentUser();        
+    }
+
+    loadCurrentUser() {
+        let subscriptionContacts: Subscription = this.contactsService.getContactById(this.userId).subscribe(data => {
+            this.currentUser = data;
+            if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
+                subscriptionContacts.unsubscribe();
+            }
+        });
+    }
+
+
+    getContactsList() {
+        let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
+            this.contacts = data;
+            if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
+                subscriptionContacts.unsubscribe();
+            }
+        });
+    }
+
+    gotoChat(contact: User) {
+        let chatUser2: ChatUser = this.getChatUser(contact);
+        let chatUser1: ChatUser = this.getChatUser(this.currentUser);
+
+        this.nav.rootNav.push(ChatPage, { user: chatUser1, contact: chatUser2 }, { animate: true, direction: 'forward' });
+
+    }
+
+    getChatUser(object: any): ChatUser {
+        let chatUser: ChatUser = new ChatUser();
+        chatUser.firstName = object.firstName;
+        chatUser.lastName = object.lastName;
+        chatUser.userUid = object.$key;
+        chatUser.profilePhotoUrl = object.profilePhotoUrl ? object.profilePhotoUrl : "";
+        return chatUser;
+    }
 }
