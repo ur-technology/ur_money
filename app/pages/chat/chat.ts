@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Content } from 'ionic-angular';
 import {ChatsPage} from '../chats/chats';
 import {User} from '../../components/models/user';
 import {ChatUser} from '../../components/models/chat-user';
@@ -25,6 +25,7 @@ export class ChatPage {
     chat: Chat;
     chatId: string;
     messagesRef: Subscription;
+    @ViewChild(Content) content: Content;
 
     constructor(private nav: NavController, public navParams: NavParams, private chatService: ChatService) {
         this.tabBarElement = document.querySelector('ion-tabbar-section');
@@ -34,8 +35,13 @@ export class ChatPage {
 
 
     }
+    scrollToBottom() {
+        this.content.scrollToBottom();
+    }
+
     ionViewLoaded() {
         this.findChatAndLoadMessages();
+        this.scrollToBottom();
     }
 
     findChatAndLoadMessages() {
@@ -46,6 +52,7 @@ export class ChatPage {
             this.chatService.findChatId(this.user, this.contact).then((chatId: string) => {
                 this.chatId = chatId;
                 this.loadMessages();
+                  // this.scrollToBottom();
             });
         }
     }
@@ -70,17 +77,19 @@ export class ChatPage {
         return true;
     }
 
+
     sendMessage() {
         if (!this.validateMessage()) {
             return;
         }
-        
+
         this.createChat();
         let chatMessage = this.createChatMessageObject();
         this.chatService.addMessageToChat(this.chatId, chatMessage);
         this.chatService.addChatSummaryToUser(this.user.userUid, this.contact, chatMessage, this.chatId);
         this.chatService.addChatSummaryToUser(this.contact.userUid, this.user, chatMessage, this.chatId);
         this.messageText = "";
+
     }
 
     createChatMessageObject(): ChatMessage {

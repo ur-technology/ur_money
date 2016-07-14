@@ -1,6 +1,6 @@
 .chat-page {
     .toolbar-background {
-        // background: #fff;
+        background: #fff;
         border: none;
     }
     .toolbar {
@@ -115,19 +115,13 @@
             margin-right: 5px;
         }
         .ur-message-send {
-            // width: 95%;
-            // margin: 0 auto;
-            // position: absolute;
-            // bottom: 10px;
-            // left: 10px;
             border: 1px solid #e3e3e3;
             border-radius: 20px;
-            // padding-right: 5px;
-            // height: 45px;
+            margin-left: 5px;
+            margin-right: 5px;
             .item-input-wrapper {
                 background-color: transparent;
                 input {
-                    // padding-left: 8px;
                     width: 94%;
                     background: transparent;
                     border: none;
