@@ -6,11 +6,6 @@ import {Wallet} from './wallet2';
 
 describe('Wallet Service', (require, exports, module) => {
 
-    var jasmine = require("jasmine");
-    var jasmineAsPromised = require("jasmine-as-promised");
-
-    jasmineAsPromised(jasmine);
-
     var config = {
         seed : '12345',
         salt : '12345',
@@ -86,7 +81,7 @@ describe('Wallet Service', (require, exports, module) => {
     it('Validating amount', () => {
         Wallet.generate(config.seed, config.salt).then((data) => {
             let wallet: Wallet = new Wallet(data);
-            
+
             // expect(wallet.validateAmount(null)).toBeFalsy();
 
             // expect(wallet.validateAmount(config.amountExisted + 20)).toBeFalsy();
