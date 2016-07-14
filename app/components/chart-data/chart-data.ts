@@ -69,7 +69,7 @@ export class ChartData {
   */
 
   loadChartDateWhenBalanceHistoryChanges() {
-    var balanceRecordsRef = `${this.auth.userRef}/wallet/balanceRecords`;
+    var balanceRecordsRef = `/users/${this.auth.uid}/wallet/balanceRecords`;
     var thisPage = this;
     thisPage.angularFire.database.object(balanceRecordsRef).subscribe((balanceRecords) => {
       thisPage.isLoaded = false;
@@ -159,7 +159,7 @@ export class ChartData {
       this.percentageChange = 0;
       this.balanceChange = 0;
     }
-    console.log("data loaded", thisPage.points);
+    // console.log("data loaded", thisPage.points);
     thisPage.isLoaded = true;
     thisPage.loadedEmitter.emit({});
   }

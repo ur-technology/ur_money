@@ -26,7 +26,7 @@ ionic upload
 ## Deploy to Firebase Hosting
 ```script
 gulp build
-firebase deploy -f blinding-torch-3730
+firebase deploy -f ur-money-staging
 ```
 
 ## Setup and run iOS
@@ -35,6 +35,11 @@ npm run setup-ios
 npm run ios
 # Then: open project using Xcode from /platforms/ios/*****.xcproj
 ```
+##Quirks
+
+##ios
+*whatsapp*
+![image](iosWhatsappQuirks.png?raw=true "Whatapp quirks for Invite")
 
 
 ## Setup and run Android

@@ -79,7 +79,16 @@
     {
       "locator": "https://github.com/VersoSolutions/CordovaClipboard.git",
       "id": "com.verso.cordova.clipboard"
-    }
+    },
+    {
+      "variables": {
+        "APP_ID": "146177489140384",
+        "APP_NAME": "UR Money"
+      },
+      "locator": "cordova-plugin-facebook4",
+      "id": "cordova-plugin-facebook4"
+    },
+    "cordova-plugin-contacts"
   ],
   "cordovaPlatforms": [
     "ios",
