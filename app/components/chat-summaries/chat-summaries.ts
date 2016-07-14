@@ -10,8 +10,7 @@ import {Timestamp}  from '../../pipes/timestamp';
 @Component({
     selector: 'chat-summaries',
     templateUrl: 'build/components/chat-summaries/chat-summaries.html',
-    pipes: [Timestamp],
-    providers: [ChatService]
+    pipes: [Timestamp]  
 })
 export class ChatSummaries {
     chats: any[];
