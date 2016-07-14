@@ -5,8 +5,7 @@ import {Auth} from '../../components/auth/auth';
 
 @Component({
   selector: 'chats-overview',
-  templateUrl: 'build/components/chats-overview/chats-overview.html',
-    providers: [ChatService]
+  templateUrl: 'build/components/chats-overview/chats-overview.html'  
 })
 export class ChatsOverview {
   chatsRef: Subscription;
