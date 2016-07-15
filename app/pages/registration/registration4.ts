@@ -1,5 +1,5 @@
 import {ViewChild, ElementRef, Inject} from '@angular/core';
-import {Page, NavController, NavParams, Alert} from 'ionic-angular';
+import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/common';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
 import {Auth} from '../../components/auth/auth';
@@ -23,13 +23,11 @@ export class Registration4Page {
   countries: any[];
   allStates: any[];
   states: any[];
-  user: any;
-  address: string;
+  profile: any;
 
   constructor(
     @Inject(ElementRef) elementRef: ElementRef,
     public nav: NavController,
-    public navParams: NavParams,
     public formBuilder: FormBuilder,
     public auth: Auth,
     public loadingModal: LoadingModal,
@@ -53,7 +51,7 @@ export class Registration4Page {
       'secretPhraseConfirmation': ["", Validators.required]
     }, {validator: CustomValidators.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation')});
     let authUser = this.auth.userObject;
-    this.user = {
+    this.profile = {
       secretPhrase: '',
       secretPhraseConfirmation: '',
       firstName: authUser.firstName || "",
@@ -61,30 +59,30 @@ export class Registration4Page {
       city: authUser.city,
       country: this.countries.find((x) => { return x.alpha2 == ( authUser.countryCode || "US" ); })
     };
-    let defautStateName = (authUser.countryCode == this.user.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
+    let defautStateName = (authUser.countryCode == this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
     this.countrySelected(defautStateName);
 }
 
   countrySelected(defaultStateName) {
-    this.user.countryCode = this.user.country.alpha2;
-    this.states = _.filter(this.allStates, (state) => { return state.country == this.user.country.alpha2; });
+    this.profile.countryCode = this.profile.country.alpha2;
+    this.states = _.filter(this.allStates, (state) => { return state.country == this.profile.country.alpha2; });
     if (this.states.length > 0) {
-      this.user.state = ( defaultStateName && this.states.find((x) => { return x.name == defaultStateName; }) ) || this.states[0];
+      this.profile.state = ( defaultStateName && this.states.find((x) => { return x.name == defaultStateName; }) ) || this.states[0];
       this.stateSelected();
     } else {
-      this.user.state = undefined;
-      this.user.stateName = defaultStateName;
-      this.walletForm.value.stateName = this.user.stateName;
+      this.profile.state = undefined;
+      this.profile.stateName = defaultStateName;
+      this.walletForm.value.stateName = this.profile.stateName;
     }
   }
 
   stateSelected() {
-    this.user.stateName = this.user.state ? this.user.state.name : '';
+    this.profile.stateName = this.profile.state ? this.profile.state.name : '';
   }
 
   suggestSecretPhrase() {
     var secureRandword = require('secure-randword');
-    this.user.secretPhrase = secureRandword(5).join(' ');;
+    this.profile.secretPhrase = secureRandword(5).join(' ');;
     this.walletForm.controls['secretPhrase'].markAsDirty();
   }
 
@@ -125,9 +123,9 @@ export class Registration4Page {
   generateAddress() {
     let self = this;
     self.loadingModal.show();
-    Wallet.generate(self.user.secretPhrase, self.auth.uid).then((walletData) => {
+    Wallet.generate(self.profile.secretPhrase, self.auth.uid).then((walletData) => {
       let wallet: Wallet = new Wallet(walletData);
-      self.address = wallet.getAddress();
+      self.profile.address = wallet.getAddress();
       self.saveProfile();
     }).catch((error) => {
       self.loadingModal.hide();
@@ -138,17 +136,23 @@ export class Registration4Page {
   saveProfile() {
     let self = this;
     self.auth.user.update({
-      firstName: self.user.firstName,
-      lastName: self.user.lastName,
-      city: self.user.city,
-      stateName: self.user.stateName,
-      countryCode: self.user.countryCode,
+      firstName: self.profile.firstName,
+      lastName: self.profile.lastName,
+      city: self.profile.city,
+      stateName: self.profile.stateName,
+      countryCode: self.profile.countryCode,
       wallet: {
-        address: self.address,
+        address: self.profile.address,
         createdAt: firebase.database.ServerValue.TIMESTAMP
       }
     }).then(() => {
       self.loadingModal.hide();
+      let toast = Toast.create({
+        message: 'Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!',
+        duration: 2000,
+        position: 'middle'
+      });
+      self.nav.present(toast);
       self.nav.setRoot(HomePage);
     }).catch((error) => {
       self.loadingModal.hide();
