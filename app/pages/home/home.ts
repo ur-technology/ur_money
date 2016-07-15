@@ -13,6 +13,8 @@ import * as underscore from 'underscore'
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
 import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
+import {NotificationService} from '../../components/services/notification.service';
+import {Auth} from '../../components/auth/auth';
 
 declare var jQuery: any;
 
@@ -32,11 +34,13 @@ export class HomePage implements OnInit {
   conversation: any;
   icons: string[];
   messages: any[] = [];
+  userId: string;
   items: Array<{ title: string, note: string, icon: string }>;
   @ViewChild(ChatSummaries) chatSummaries:ChatSummaries;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
-    navParams: NavParams, public chartData: ChartData, public platform: Platform) {
+    navParams: NavParams, public chartData: ChartData, public platform: Platform,
+    private notificationService: NotificationService, auth: Auth) {
     this.elementRef = elementRef;
     this.sendPage = SendPage;
     this.receivePage = ReceivePage;
@@ -46,6 +50,7 @@ export class HomePage implements OnInit {
     if (this.platform.is('android')) {
       this.android = true;
     }
+    this.userId = auth.uid;
   }
 
   ngOnInit() {
@@ -59,16 +64,16 @@ export class HomePage implements OnInit {
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {
       this.renderChart();
-    }     
+    }
     thisPage.chartData.loadedEmitter.subscribe((data) => {
-      console.log("about to render chart");
       this.renderChart();
     });
+    this.notificationService.sendMessageNotifications(this.userId);
   }
 
-  openChatsPage(){
-  this.nav.push(ConversationPage, {}, { animate: true, direction: 'forward' });
-}
+  openChatsPage() {
+    this.nav.push(ConversationPage, {}, { animate: true, direction: 'forward' });
+  }
 
 
   setRoot(page) {

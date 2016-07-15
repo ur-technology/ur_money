@@ -62,7 +62,7 @@ class UrMoney {
   user: any = {};
   invitePage: {};
   faceUrl: string;
-  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService, private notificationService: NotificationService) {
+  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService) {
     this.initializeApp();
 
     this.invitePage = { component: InvitePage };
@@ -104,8 +104,6 @@ class UrMoney {
       }
 
       this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
-      console.log("va a leer notificaciones");
-      this.notificationService.sendMessageNotifications();
     });
   }
 
