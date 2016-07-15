@@ -7,6 +7,7 @@ import {LoadingModal} from '../../components/loading-modal/loading-modal';
 import {HomePage} from '../home/home';
 import {AngularFire} from 'angularfire2'
 import {Focuser} from '../../components/focuser/focuser';
+import {Wallet} from '../../components/wallet/wallet';
 import * as _ from 'lodash';
 
 declare var jQuery: any;
@@ -23,6 +24,7 @@ export class Registration4Page {
   allStates: any[];
   states: any[];
   user: any;
+  address: string;
 
   constructor(
     @Inject(ElementRef) elementRef: ElementRef,
@@ -112,7 +114,7 @@ export class Registration4Page {
         {text: 'No', handler: () => { alert.dismiss(); }},
         {text: 'Yes', handler: () => {
           alert.dismiss().then(() => {
-            this.saveNamesAndPublicKey();
+            this.generateAddress();
           });
         }}
       ]
@@ -120,26 +122,38 @@ export class Registration4Page {
     this.nav.present(alert);
   }
 
-  saveNamesAndPublicKey() {
-    this.loadingModal.show();
+  generateAddress() {
+    let self = this;
+    self.loadingModal.show();
+    Wallet.generate(self.user.secretPhrase, self.auth.uid).then((walletData) => {
+      let wallet: Wallet = new Wallet(walletData);
+      self.address = wallet.getAddress();
+      self.saveProfile();
+    }).catch((error) => {
+      self.loadingModal.hide();
+      console.log('unable to get address!');
+    });
+  }
 
-    // TODO: Alex: Insert code here to generate public and private keys based on this.secretPhrase
-    let publicKey = "0x8805317929d0a8cd1e7a19a4a2523b821ed05e42"; // using this dummy address for now
-
-    this.auth.user.update({
-      firstName: this.user.firstName,
-      lastName: this.user.lastName,
-      city: this.user.city,
-      stateName: this.user.stateName,
-      countryCode: this.user.countryCode,
+  saveProfile() {
+    let self = this;
+    self.auth.user.update({
+      firstName: self.user.firstName,
+      lastName: self.user.lastName,
+      city: self.user.city,
+      stateName: self.user.stateName,
+      countryCode: self.user.countryCode,
       wallet: {
-        publicKey: publicKey,
+        address: self.address,
         createdAt: firebase.database.ServerValue.TIMESTAMP
       }
     }).then(() => {
-      this.loadingModal.hide();
-      this.nav.setRoot(HomePage);
+      self.loadingModal.hide();
+      self.nav.setRoot(HomePage);
+    }).catch((error) => {
+      self.loadingModal.hide();
+      console.log('unable to save profiel and wallet info!');
     });
-  }
+  };
 
 }
