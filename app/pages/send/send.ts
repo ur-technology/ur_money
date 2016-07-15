@@ -1,5 +1,6 @@
 import {Page, Alert, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
+import {Wallet} from '../../components/wallet/wallet';
 
 @Page({
   templateUrl: 'build/pages/send/send.html',
@@ -8,7 +9,7 @@ export class SendPage {
   showContactInput: boolean;
   contactItem: any;
   showContacts: boolean;
-  
+
   amount: number;
   phrase: string;
   password: string;
@@ -42,11 +43,36 @@ export class SendPage {
   }
 
   sendUR() {
-    
+
     let self = this;
 
+    self.confirmation().then(() => {
+      if(Wallet.validateCredentials(self.phrase, self.password)){
+        Wallet.generate(self.phrase, self.password).then((data) => {
+          let wallet: Wallet = new Wallet(data);
 
-    
+          if(!wallet.validateAddress(self.publicKey)){
+            self.error("Recipient address is not valid");
+            return;
+          }
+
+          if(!wallet.validateAmount(self.amount)){
+            self.error("Not enough coins or amount is not correct");
+            return;
+          }
+
+          wallet.sendRawTransaction(self.publicKey, self.amount).then((err) => {
+            if (!err)
+              self.success();
+            else
+              self.error("An error occured during transaction");
+          });
+        })
+      } else {
+        self.error("Enter secret phrase and password");
+      }
+    });
+
   }
 
   confirmation() {
@@ -74,7 +100,7 @@ export class SendPage {
       this.nav.present(confirmation);
     });
   }
-  
+
   success(){
     let successAlert = Alert.create({
       title: 'Success',

@@ -11,7 +11,6 @@ import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'underscore';
 
-
 @Component({
     templateUrl: 'build/pages/chat/chat.html',
     pipes: [Timestamp],
@@ -74,6 +73,7 @@ export class ChatPage {
         if (!this.messageText) {
             return false;
         }
+
         if (_.isEmpty(this.messageText.trim())) {
             return false;
         }
@@ -103,7 +103,6 @@ export class ChatPage {
         chatMessage.senderProfilePhotoUrl = this.user.profilePhotoUrl;
         return chatMessage;
     }
-
     createChat() {
         if (!this.chatId) {
             this.chatId = this.chatService.createChat(this.user, this.contact);

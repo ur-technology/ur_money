@@ -54,7 +54,7 @@ export class Auth {
             this.userObject = userObject;
             subscriptionUser.unsubscribe()
           }
-          if (userObject.wallet && userObject.wallet.publicKey) {
+          if (userObject.wallet && userObject.wallet.address) {
             nav.setRoot(homePage);
           } else {
             nav.setRoot(walletSetupPage);

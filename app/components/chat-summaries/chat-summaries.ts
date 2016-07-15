@@ -45,6 +45,7 @@ export class ChatSummaries {
         userChat.userUid = this.user.$key;
         userChat.profilePhotoUrl = this.user.profilePhotoUrl;
 
+
         let contactUser: ChatUser = new ChatUser();
         contactUser.firstName = chatSelected.otherUser.firstName;
         contactUser.lastName = chatSelected.otherUser.lastName;

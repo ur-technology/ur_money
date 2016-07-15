@@ -18,6 +18,17 @@
 }
 
 .registration4 {
+  ion-select {
+    width: default;
+    padding-left: 5px;
+    border-left: 5px solid white;
+  }
+
+  ion-label {
+    padding-left: 5px;
+    border-left: 5px solid white;
+  }
+
   ion-input {
     padding-left: 5px;
   }
@@ -30,8 +41,8 @@
     border-left: 5px solid red;
   }
 
-  ion-input.ng-dirty.ng-valid, ion-input.ng-touched.ng-valid {
-    border-left: 5px solid green;
+  ion-input.ng-valid {
+    border-left: 5px solid white;
   }
 }
 
@@ -40,6 +51,12 @@
 ----------------------------------------------------*/
 
 .registration2-page, .registration3-page {
+
+  ion-select {
+    width: 0;
+    padding: 0;
+  }
+
   .toolbar-background {
     background-color: #ededed;
     color: #323232;
@@ -112,11 +129,6 @@
   font-size: 13px;
   line-height: 34px;
   font-weight: 700;
-}
-
-ion-select {
-  width: 0;
-  padding: 0;
 }
 
 .country-code-cont.list .phone-country-code {

@@ -10,7 +10,7 @@
     "android": "ionic run android",
     "setup-ios": "ionic platform add ios",
     "ios": "ionic run ios",
-    "test": "karma start karma.conf.js"
+    "test": "karma start test/karma.conf.js"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.2",
@@ -22,6 +22,7 @@
     "@angular/router": "2.0.0-rc.2",
     "angularfire2": "^2.0.0-beta.3-0930330",
     "buffer": "^4.7.0",
+    "country-data": "0.0.25",
     "crypto": "0.0.3",
     "es6-shim": "^0.35.0",
     "ethereumjs-tx": "^1.1.1",
@@ -33,8 +34,10 @@
     "ionic-native": "^1.1.0",
     "ionicons": "3.0.0",
     "lodash": "^4.13.1",
+    "minimatch": "^3.0.2",
     "moment": "^2.13.0",
     "ng-intl-tel-input": "^1.3.2",
+    "provinces": "^1.8.2",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.0-beta.6",
     "scrypt-async": "^1.2.0",

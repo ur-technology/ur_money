@@ -8,8 +8,8 @@
             [ngClass]="{'other' : messageNotMe(message)}"
             *ngFor="let message of messages">
 
-                <ion-img [src]="message.senderProfilePhotoUrl"
-            [alt]="img"></ion-img>
+            <ion-img [src]="message.senderProfilePhotoUrl"
+                [alt]="img"></ion-img>
 
             <div class="msg-text">
                 <p>{{ message.text }} </p>

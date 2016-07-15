@@ -25,5 +25,5 @@ npm install web3
 let Web3 = require('web3');
 let web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider('http://localhost:9595'));
-let newBalanceAmount = web3.eth.getBalance(user.wallet.publicKey).toString();
+let newBalanceAmount = web3.eth.getBalance(user.wallet.address).toString();
 ```

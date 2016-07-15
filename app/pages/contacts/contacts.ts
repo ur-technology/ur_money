@@ -42,7 +42,7 @@ export class ContactsPage {
 
     }
 
-    getChatUser(object: any): ChatUser {      
+    getChatUser(object: any): ChatUser {
         let chatUser: ChatUser = new ChatUser();
         chatUser.firstName = object.firstName;
         chatUser.lastName = object.lastName;
