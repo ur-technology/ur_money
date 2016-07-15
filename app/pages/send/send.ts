@@ -1,6 +1,6 @@
 import {Page, Alert, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
-import {Wallet} from '../../components/wallet/wallet2';
+import {Wallet} from '../../components/wallet/wallet';
 
 @Page({
   templateUrl: 'build/pages/send/send.html',
@@ -9,7 +9,7 @@ export class SendPage {
   showContactInput: boolean;
   contactItem: any;
   showContacts: boolean;
-  
+
   amount: number;
   phrase: string;
   password: string;
@@ -43,7 +43,7 @@ export class SendPage {
   }
 
   sendUR() {
-    
+
     let self = this;
 
     self.confirmation().then(() => {
@@ -72,7 +72,7 @@ export class SendPage {
         self.error("Enter secret phrase and password");
       }
     });
-    
+
   }
 
   confirmation() {
@@ -100,7 +100,7 @@ export class SendPage {
       this.nav.present(confirmation);
     });
   }
-  
+
   success(){
     let successAlert = Alert.create({
       title: 'Success',

@@ -10,7 +10,7 @@
     "android": "ionic run android",
     "setup-ios": "ionic platform add ios",
     "ios": "ionic run ios",
-    "test": "karma start karma.conf.js"
+    "test": "karma start test/karma.conf.js"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.2",
