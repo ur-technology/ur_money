@@ -6,17 +6,23 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ContactsService {
-
+    contacts: Array<User> = [];
     constructor(private angularFire: AngularFire) {
 
     }
 
     getContacts(): Observable<Array<User>> {
-        let contacts: Array<User> = [];
-        return this.angularFire.database.list(`/users`).map((data: any) => {
-            contacts = data;
-            return contacts;
-        });
+        if (this.contacts && this.contacts.length > 0) {
+            return Observable.create(observer => {
+                observer.next(this.contacts);
+                //  observer.complete();
+            });
+        } else {
+            return this.angularFire.database.list(`/users`).map((data: any) => {
+                this.contacts = data;
+                return this.contacts;
+            });
+        }
     }
 
     getContactById(userId: string): Observable<User> {

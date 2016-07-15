@@ -9,11 +9,14 @@
 
 <ion-content class="contacts">
   <ion-list class="contacts-list">
-    <ion-item text-wrap class="item item-avatar" *ngFor="let contact of contacts">
+    <ion-item text-wrap class="item item-avatar" *ngFor="let contact of contacts|contactOrderPipe:[inviteType]">
       <ion-avatar item-left> <img src="img/avatars/avatar-1.jpg" alt="avatar"></ion-avatar>
       <h2>{{contact.name}}</h2>
-      <p>
-        <button *ngIf="!contact.invite" (click)="inviteNow(contact)" secondary item-right>Invite</button>
+      <button (click)="inviteNow(contact)" secondary item-right>Invite</button>
     </ion-item>
   </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more contacts..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>

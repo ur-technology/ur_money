@@ -19,7 +19,7 @@ import {SettingPage} from './pages/setting/setting';
 import {TransactionNavService} from './pages/transactions/transaction-nav-service';
 import {CountryListService} from './components/country-list/country-list.service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
-
+import {InviteContactsService} from './components/services/invite-contact.service';
 import {NativeContactsService} from './components/services/native-contact.service';
 import {ContactsService} from './components/services/contacts.service';
 // temporarily support prelaunch sign-up app
@@ -36,6 +36,7 @@ import * as lodash from 'lodash';
   directives: [LoadingModal],
   providers: [
     Auth,
+    InviteContactsService,
     NativeContactsService,
     ContactsService,
     TransactionNavService,
@@ -58,7 +59,7 @@ class UrMoney {
   user: any = {};
   invitePage: {};
   faceUrl: string;
-  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService) {
+  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService, private inviteContactsService: InviteContactsService) {
     this.initializeApp();
 
     this.invitePage = { component: InvitePage };

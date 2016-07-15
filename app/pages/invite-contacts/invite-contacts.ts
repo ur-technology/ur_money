@@ -1,17 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform, Loading } from 'ionic-angular';
 import {ContactOrderPipe} from '../../pipes/contactOrderPipe';
-import {NativeContactsService} from '../../components/services/native-contact.service';
-import {ContactsService} from '../../components/services/contacts.service';
-import {Subscription} from 'rxjs';
+import {InviteContactsService} from '../../components/services/invite-contact.service';
 import * as lodash from 'lodash';
-import libphonenumber = require('google-libphonenumber');
-const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
-const PNF = libphonenumber.PhoneNumberFormat;
-
 // Native Plugins
 import {SocialSharing} from 'ionic-native';
-import {Contacts} from 'ionic-native';
 
 
 /*
@@ -25,107 +18,31 @@ import {Contacts} from 'ionic-native';
   templateUrl: 'build/pages/invite-contacts/invite-contacts.html',
 })
 export class InviteContactsPage {
-  isUserLoaded = false;
-  isContactsLoaded = false;
   contacts = [];
   inviteType: string;
+  pageNumber = 1;
+  maxPageCount: Number;
+  size = 20;
   inviteData: any = {};
-  intviteContacts = [];
-  deviceContacts = [];
-  userOnApp = [];
+  loading: Loading;
   constructor(private nav: NavController, private navParams: NavParams,
-    private platform: Platform, private nativeContactService: NativeContactsService,
-    private contactsService: ContactsService) {
-    this.populateContacts();
+    private platform: Platform, private inviteContactsService: InviteContactsService) {
+    this.contacts = inviteContactsService.contacts;
+    this.maxPageCount = inviteContactsService.getContactsLength();
     this.inviteType = this.navParams.get('inviteType');
     this.inviteData = this.navParams.get('inviteData');
   }
 
 
-
-  populateContacts() {
-    this.getUserList();
-    this.nativeContactService.getDeviceContacts().then((data: Array<any>) => {
-      //console.log(data);
-      this.deviceContacts = data;
-      this.isContactsLoaded = true;
-      this.createContactList();
-    });
-  }
-
-  getUserList() {
-    let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
-      this.userOnApp = data;
-      this.isUserLoaded = true;
-      this.createContactList();
-      // console.log(data);
-      if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
-        subscriptionContacts.unsubscribe();
-      }
-    });
-  }
-
-
-  createContactList() {
-    if (this.isUserLoaded && this.isContactsLoaded) {
-      let registerUserContactNumbers = [];
-      lodash.each(this.userOnApp, (user) => {
-        registerUserContactNumbers.push(this.phoneNumberWithoutCountryCode(user.phone));
-      });
-
-      lodash.each(this.deviceContacts, (contact) => {
-        if (this.isPhoneNumberExistInContact(contact)) {
-          let inviteContacts = {
-            name: contact.displayName,
-            imgID: contact.photos ? lodash.first(contact.photos) : null,
-            email: contact.emails,
-            phone: lodash.first(contact.phoneNumbers),
-            invite: false,
-            id: contact.id
-          };
-          if (this.isPhoneMatchWithContact(contact, registerUserContactNumbers)) {
-            inviteContacts.invite = true
-            this.contacts.push(inviteContacts);
-          } else {
-            this.contacts.push(inviteContacts);
-          }
-        }
-      });
-      console.log(this.contacts);
+  doInfinite(infiniteScroll) {
+    this.pageNumber++;
+    let nextContatcs = this.inviteContactsService.getNextContacts(this.pageNumber, this.size);
+    this.contacts = lodash.concat(this.contacts, nextContatcs);
+    infiniteScroll.complete();
+    if (this.contacts.length === this.maxPageCount) {
+      infiniteScroll.enable(false);
     }
   }
-
-  isPhoneNumberExistInContact(contact) {
-    return contact.phoneNumbers && contact.phoneNumbers.length > 0;
-  }
-
-  isPhoneMatchWithContact(contact, registeredUserPhoneNumberArray) {
-    let matchedPhoneNumber = [];
-    lodash.each(contact.phoneNumbers, (phoneNumber) => {
-      let phoneNumberWithoutCountryCode = this.phoneNumberWithoutCountryCode(phoneNumber);
-      if (lodash.find(registeredUserPhoneNumberArray, phoneNumberWithoutCountryCode)) {
-        matchedPhoneNumber.push(phoneNumber);
-      }
-    });
-    if (matchedPhoneNumber.length > 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  phoneNumberWithoutCountryCode(phone) {
-    try {
-      let phoneNumber = phoneUtil.parse(phone, "");
-      return phoneUtil.format(phoneNumber, PNF.NATIONAL);
-    }
-    catch (e) {
-      //  console.log(e);
-      return phone;
-    }
-  }
-
-
   inviteNow(contact) {
     switch (this.inviteType) {
       case 'email':
@@ -140,9 +57,10 @@ export class InviteContactsPage {
 
 
   sendSmsToContact(contact) {
-    SocialSharing.shareViaSMS(this.inviteData.messageText, contact.phone).then((data) => {
-      console.log(data);
-    });
+    if (contact.phone && contact.phone.value)
+      SocialSharing.shareViaSMS(this.inviteData.messageText, contact.phone.value).then((data) => {
+        console.log(data);
+      });
   }
 
   sendEmailToContact(contact) {
