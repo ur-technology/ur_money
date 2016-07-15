@@ -15,19 +15,17 @@ import {Timestamp}  from '../../pipes/timestamp';
 export class ChatSummaries {
     chats: any[];
     chatsRef: Subscription;
-    userId: string;
+    user: any;
 
-
-    constructor(private nav: NavController, private chatService: ChatService, private auth: Auth) {
-        this.userId = auth.uid;
+    constructor(private nav: NavController, private chatService: ChatService, auth: Auth) {
+        this.user = auth.userObject;
     }
 
     loadChatSummaries() {
-        this.chatsRef = this.chatService.getChatSummaries(this.userId).subscribe(data => {
+        this.chatsRef = this.chatService.getChatSummaries(this.user.$key).subscribe(data => {
             this.chats = data;
         });
     }
-
 
     cleanResources() {
         if (this.chatsRef && !this.chatsRef.isUnsubscribed) {
@@ -36,19 +34,22 @@ export class ChatSummaries {
     }
 
     whoSentMessage(chatSelected: any) {
-        return chatSelected.lastMessage.senderUid === this.userId ? "You: " : "";
+        return chatSelected.lastMessage.senderUid === this.user.$key ? "You: " : "";
     }
 
     gotoChat(chatSelected: any) {
+
         let userChat: ChatUser = new ChatUser();
-        userChat.firstName = this.auth.userFirstname;
-        userChat.lastName = this.auth.userLastname;
-        userChat.userUid = this.userId;
+        userChat.firstName = this.user.firstName;
+        userChat.lastName = this.user.lastName;
+        userChat.userUid = this.user.$key;
+        userChat.profilePhotoUrl = this.user.profilePhotoUrl;
 
         let contactUser: ChatUser = new ChatUser();
         contactUser.firstName = chatSelected.otherUser.firstName;
         contactUser.lastName = chatSelected.otherUser.lastName;
         contactUser.userUid = chatSelected.otherUser.userUid;
+        contactUser.profilePhotoUrl = chatSelected.profilePhotoUrl ? chatSelected.profilePhotoUrl : "";
 
         this.nav.rootNav.push(ChatPage, { chatId: chatSelected.chatId, user: userChat, contact: contactUser }, { animate: true, direction: 'forward' });
     }

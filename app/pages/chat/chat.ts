@@ -100,6 +100,7 @@ export class ChatPage {
         chatMessage.text = this.messageText;
         chatMessage.sentAt = firebase.database.ServerValue.TIMESTAMP;
         chatMessage.senderUid = this.user.userUid;
+        chatMessage.senderProfilePhotoUrl = this.user.profilePhotoUrl;
         return chatMessage;
     }
 

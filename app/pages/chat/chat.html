@@ -7,8 +7,10 @@
             class="item item-text-wrap"
             [ngClass]="{'other' : messageNotMe(message)}"
             *ngFor="let message of messages">
-            <img src="img/avatars/avatar-1.jpg"
-                alt="img">
+
+                <ion-img [src]="message.senderProfilePhotoUrl"
+            [alt]="img"></ion-img>
+
             <div class="msg-text">
                 <p>{{ message.text }} </p>
                 <ion-note class="item-note">{{message.sentAt | timestamp}}</ion-note>

@@ -10,8 +10,7 @@ export class Auth {
   public uid: string
   public userRef: string
   public user: FirebaseObjectObservable<any>;
-  public userFirstname: string;
-  public userLastname: string;
+  public userObject: any;
 
   // public authDataProfileImage: any
   // public authDataProfileName: any
@@ -52,8 +51,7 @@ export class Auth {
         this.user = this.angularFire.database.object(`/users/${this.uid}`);
         let subscriptionUser: Subscription = this.user.subscribe((userObject) => {
           if((subscriptionUser) && (!subscriptionUser.isUnsubscribed)){
-            this.userFirstname = userObject.firstName;
-            this.userLastname = userObject.lastName;
+            this.userObject = userObject;
             subscriptionUser.unsubscribe()
           }
           if (userObject.wallet && userObject.wallet.publicKey) {

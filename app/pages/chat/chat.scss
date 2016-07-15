@@ -42,7 +42,7 @@
 .messages-list .item.other {
     padding: 0 12px 0 50px;
 }
-.messages-list .item img:first-child {
+.messages-list .item ion-img:first-child {
     position: absolute;
     top: 24px;
     right: 12px;
@@ -52,7 +52,7 @@
     height: 100%;
     border-radius: 50%;
 }
-.messages-list .item.other img:first-child {
+.messages-list .item.other ion-img:first-child {
     right: auto;
     left: 12px;
 }

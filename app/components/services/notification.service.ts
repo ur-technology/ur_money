@@ -47,14 +47,15 @@ export class NotificationService {
             if (userId === data[i].receiverUid) {
                 LocalNotifications.schedule({
                     id: data[i].$key,
-                    text: data[i].text
+                    text: `${data[i].senderName}: ${data[i].text}`,
+                    icon: data[i].profilePhotoUrl
                 });
                 this.deleteMessageNotification(data[i].$key);
             }
         }
     }
 
-    deleteMessageNotification(messageNotificationId: string) {        
+    deleteMessageNotification(messageNotificationId: string) {
         this.angularFire.database.object(`/message-notifications/${messageNotificationId}`).remove();
     }
 

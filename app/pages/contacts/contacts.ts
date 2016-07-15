@@ -13,29 +13,17 @@ import {ChatUser} from '../../components/models/chat-user';
     providers: [ContactsService]
 })
 export class ContactsPage {
-    userId: string;
     contacts: Array<User> = [];
     chats: Array<any>;
-    currentUser: User;
+    currentUser: any;
 
     constructor(private nav: NavController, private contactsService: ContactsService, auth: Auth) {
         this.contacts = [];
-        this.userId = auth.uid;
+        this.currentUser = auth.userObject;
     }
     ionViewLoaded() {
         this.getContactsList();
-        this.loadCurrentUser();        
     }
-
-    loadCurrentUser() {
-        let subscriptionContacts: Subscription = this.contactsService.getContactById(this.userId).subscribe(data => {
-            this.currentUser = data;
-            if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
-                subscriptionContacts.unsubscribe();
-            }
-        });
-    }
-
 
     getContactsList() {
         let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
@@ -54,7 +42,7 @@ export class ContactsPage {
 
     }
 
-    getChatUser(object: any): ChatUser {
+    getChatUser(object: any): ChatUser {      
         let chatUser: ChatUser = new ChatUser();
         chatUser.firstName = object.firstName;
         chatUser.lastName = object.lastName;
