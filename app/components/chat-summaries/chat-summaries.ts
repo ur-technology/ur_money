@@ -10,7 +10,7 @@ import {Timestamp}  from '../../pipes/timestamp';
 @Component({
     selector: 'chat-summaries',
     templateUrl: 'build/components/chat-summaries/chat-summaries.html',
-    pipes: [Timestamp]  
+    pipes: [Timestamp]
 })
 export class ChatSummaries {
     chats: any[];
@@ -20,10 +20,6 @@ export class ChatSummaries {
 
     constructor(private nav: NavController, private chatService: ChatService, private auth: Auth) {
         this.userId = auth.uid;
-    }
-
-    moveToChat(conversation) {
-        this.nav.setRoot(ChatPage, { conversation: conversation }, { animate: true, direction: 'forword' });
     }
 
     loadChatSummaries() {
