@@ -6,12 +6,13 @@ import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservab
 import {ChatUser} from '../models/chat-user';
 import {ChatMessage} from '../models/chat-message'
 import {LocalNotifications} from 'ionic-native';
+import {Auth} from '../../components/auth/auth';
 
 @Injectable()
 export class NotificationService {
 
 
-    constructor(private angularFire: AngularFire) {
+    constructor(private angularFire: AngularFire, private auth: Auth) {
 
     }
 
@@ -25,7 +26,7 @@ export class NotificationService {
         });
     }
 
-    readMessageNotifications(userId: string): FirebaseListObservable<any> {
+    private readMessageNotifications(userId: string): FirebaseListObservable<any> {
         return this.angularFire.database.list(`/message-notifications`, {
             query: {
                 orderByChild: "receiverUid",
@@ -34,15 +35,15 @@ export class NotificationService {
         });
     }
 
-    sendMessageNotifications(userId: string) {
-        this.readMessageNotifications(userId).subscribe((data: any) => {
+    sendMessageNotifications() {
+        this.readMessageNotifications(this.auth.uid).subscribe((data: any) => {
             if (data) {
-                this.scheduleNotification(data, userId);
+                this.scheduleNotification(data, this.auth.uid);
             }
         });
     }
 
-    scheduleNotification(data: any, userId: string) {
+    private scheduleNotification(data: any, userId: string) {
         for (var i = 0; i < data.length; i++) {
             if (userId === data[i].receiverUid) {
                 LocalNotifications.schedule({
@@ -56,7 +57,7 @@ export class NotificationService {
         }
     }
 
-    deleteMessageNotification(messageNotificationId: string) {
+    private deleteMessageNotification(messageNotificationId: string) {
         this.angularFire.database.object(`/message-notifications/${messageNotificationId}`).remove();
     }
 
