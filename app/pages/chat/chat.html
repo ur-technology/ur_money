@@ -1,5 +1,5 @@
 <ion-navbar>
-  <ion-title class="chat-title">{{contact.firstName}} {{contact.lastName}}</ion-title>
+    <ion-title class="chat-title">{{contact.firstName}} {{contact.lastName}}</ion-title>
 </ion-navbar>
 <ion-content class="chat-view">
     <ion-list class="list messages-list">
@@ -7,8 +7,10 @@
             class="item item-text-wrap"
             [ngClass]="{'other' : messageNotMe(message)}"
             *ngFor="let message of messages">
-            <img src="img/avatars/avatar-1.jpg"
-                alt="img">
+
+                <ion-img [src]="message.senderProfilePhotoUrl"
+            [alt]="img"></ion-img>
+
             <div class="msg-text">
                 <p>{{ message.text }} </p>
                 <ion-note class="item-note">{{message.sentAt | timestamp}}</ion-note>
@@ -17,12 +19,14 @@
     </ion-list>
 </ion-content>
 <ion-toolbar position="bottom"
-    class="bar item-input-inset ur-message-send">
-    <label class="item-input-wrapper">
-        <ion-input type="text"
-            [(ngModel)]="messageText"
-            placeholder="Type your message"></ion-input>
-    </label>
+    class="bar item-input-inset mio">
+    <div class="ur-message-send">
+        <label class="item-input-wrapper">
+            <ion-input type="text"
+                [(ngModel)]="messageText"
+                placeholder="Type your message"></ion-input>
+        </label>
+    </div>
     <ion-buttons end>
         <button clear
             class="button-icon"

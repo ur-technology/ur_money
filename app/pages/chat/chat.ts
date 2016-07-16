@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Content } from 'ionic-angular';
 import {ChatsPage} from '../chats/chats';
 import {User} from '../../components/models/user';
 import {ChatUser} from '../../components/models/chat-user';
 import {Chat} from '../../components/models/chat';
 import {ChatService} from '../../components/services/chat.service';
+import {NotificationService} from '../../components/services/notification.service';
 import {ChatMessage} from '../../components/models/chat-message';
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'underscore';
+
 
 @Component({
     templateUrl: 'build/pages/chat/chat.html',
@@ -25,15 +27,21 @@ export class ChatPage {
     chat: Chat;
     chatId: string;
     messagesRef: Subscription;
+    @ViewChild(Content) content: Content;
 
-    constructor(private nav: NavController, public navParams: NavParams, private chatService: ChatService) {
+    constructor(private nav: NavController, public navParams: NavParams, private chatService: ChatService, private notificationService: NotificationService) {
         this.tabBarElement = document.querySelector('ion-tabbar-section');
         this.user = this.navParams.get('user');
         this.contact = this.navParams.get('contact');
         this.chatId = this.navParams.get('chatId');
-
-
     }
+
+    scrollToBottom() {
+        setTimeout(() => {
+            this.content.scrollToBottom();
+        }, 200);
+    }
+
     ionViewLoaded() {
         this.findChatAndLoadMessages();
     }
@@ -46,6 +54,7 @@ export class ChatPage {
             this.chatService.findChatId(this.user, this.contact).then((chatId: string) => {
                 this.chatId = chatId;
                 this.loadMessages();
+
             });
         }
     }
@@ -53,6 +62,7 @@ export class ChatPage {
     loadMessages() {
         this.messagesRef = this.chatService.getChatMessages(this.chatId).subscribe(data => {
             this.messages = data;
+            this.scrollToBottom();
         });
     }
 
@@ -61,14 +71,9 @@ export class ChatPage {
     }
 
     validateMessage(): boolean {
-        // if (this.messageText.length === 0) {
-        //     res = false;
-        // }
-
         if (!this.messageText) {
             return false;
         }
-        // if (!_.isUndefined(this.messageText) && _.isEmpty(this.messageText.trim())) {
         if (_.isEmpty(this.messageText.trim())) {
             return false;
         }
@@ -77,16 +82,17 @@ export class ChatPage {
 
     sendMessage() {
         if (!this.validateMessage()) {
-            console.log("invalido");
             return;
         }
-        console.log("va a mandar");
+
         this.createChat();
         let chatMessage = this.createChatMessageObject();
         this.chatService.addMessageToChat(this.chatId, chatMessage);
         this.chatService.addChatSummaryToUser(this.user.userUid, this.contact, chatMessage, this.chatId);
         this.chatService.addChatSummaryToUser(this.contact.userUid, this.user, chatMessage, this.chatId);
+        this.notificationService.saveNotification(this.chatId, this.contact.userUid, this.user, chatMessage);
         this.messageText = "";
+
     }
 
     createChatMessageObject(): ChatMessage {
@@ -94,6 +100,7 @@ export class ChatPage {
         chatMessage.text = this.messageText;
         chatMessage.sentAt = firebase.database.ServerValue.TIMESTAMP;
         chatMessage.senderUid = this.user.userUid;
+        chatMessage.senderProfilePhotoUrl = this.user.profilePhotoUrl;
         return chatMessage;
     }
 
