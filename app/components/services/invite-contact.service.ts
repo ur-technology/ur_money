@@ -26,7 +26,12 @@ export class InviteContactsService {
     this.getUserList();
     this.nativeContactService.getDeviceContacts().then((data: Array<any>) => {
       //console.log(data);
-      this.deviceContacts = data;
+      this.deviceContacts = lodash.sortBy(lodash.map(data, function (contact) {
+        if (contact.name && contact.name.formatted) {
+          contact.displayName = contact.name.formatted;
+        }
+        return contact;
+      }), 'displayName');
       this.isDeviceContactsLoaded = true;
       this.createContactList();
     });
@@ -57,13 +62,13 @@ export class InviteContactsService {
           let inviteContacts = {
             name: contact.name && contact.name.formatted ? contact.name.formatted : 'Unknown',
             imgID: contact.photos ? lodash.first(contact.photos) : null,
-            email: contact.emails,
+            email: lodash.first(contact.emails),
             phone: lodash.first(contact.phoneNumbers),
-            invite: false,
+            newUser: true,
             id: contact.id
           };
           if (this.isPhoneMatchWithContact(contact, registerUserContactNumbers)) {
-            inviteContacts.invite = true
+            inviteContacts.newUser = false;
             this.addContactToContactsList(inviteContacts);
           } else {
             this.addContactToContactsList(inviteContacts);
@@ -99,27 +104,39 @@ export class InviteContactsService {
   isPhoneMatchWithContact(contact, registeredUserPhoneNumberArray) {
     let matchedPhoneNumber = [];
     lodash.each(contact.phoneNumbers, (phoneNumber) => {
-      let phoneNumberWithoutCountryCode = this.phoneNumberWithoutCountryCode(phoneNumber);
-      if (lodash.find(registeredUserPhoneNumberArray, phoneNumberWithoutCountryCode)) {
+      let phoneNumberWithoutCountryCode = this.phoneNumberWithoutCountryCode(phoneNumber.value);
+      // console.log(registeredUserPhoneNumberArray);
+      // console.log(phoneNumberWithoutCountryCode);
+      if (registeredUserPhoneNumberArray.indexOf(phoneNumberWithoutCountryCode) > -1) {
         matchedPhoneNumber.push(phoneNumber);
       }
     });
     if (matchedPhoneNumber.length > 0) {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     }
   }
 
   phoneNumberWithoutCountryCode(phone) {
+
     try {
       let phoneNumber = phoneUtil.parse(phone, "");
-      return phoneUtil.format(phoneNumber, PNF.NATIONAL);
+      var contact = phoneUtil.format(phoneNumber, PNF.NATIONAL);
+      return this.phoneFormat(contact);
+      
     }
     catch (e) {
-      //  console.log(e);
-      return phone;
+      //console.log(e);
+      return this.phoneFormat(phone);
     }
+  }
+
+  phoneFormat(phone) {
+    if (phone) {
+      return phone.toString().replace(/^0+/, '').replace(')', '').replace('(', '').replace('-', '').replace('-', '').replace(' ', '').replace(' ', '');
+    }
+    return null;
   }
 
 }

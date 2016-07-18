@@ -12,7 +12,7 @@
     <ion-item text-wrap class="item item-avatar" *ngFor="let contact of contacts|contactOrderPipe:[inviteType]">
       <ion-avatar item-left> <img src="img/avatars/avatar-1.jpg" alt="avatar"></ion-avatar>
       <h2>{{contact.name}}</h2>
-      <button (click)="inviteNow(contact)" secondary item-right>Invite</button>
+      <button [hidden]="!contact.newUser" (click)="inviteNow(contact)" secondary item-right>Invite</button>
     </ion-item>
   </ion-list>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

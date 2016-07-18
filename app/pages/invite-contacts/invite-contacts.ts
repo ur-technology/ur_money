@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, Loading } from 'ionic-angular';
+import { NavController, NavParams, Platform, Loading, Alert } from 'ionic-angular';
 import {ContactOrderPipe} from '../../pipes/contactOrderPipe';
 import {InviteContactsService} from '../../components/services/invite-contact.service';
 import * as lodash from 'lodash';
+
+// Global
+declare var window: any;
 // Native Plugins
 import {SocialSharing} from 'ionic-native';
 
@@ -48,6 +51,9 @@ export class InviteContactsPage {
       case 'email':
         this.sendEmailToContact(contact);
         break;
+      case 'whatsapp':
+        this.inviteWhatsApp(contact);
+        break;
       case 'sms':
       default:
         this.sendSmsToContact(contact);
@@ -63,13 +69,37 @@ export class InviteContactsPage {
       });
   }
 
+
+  inviteWhatsApp(contact) {
+    this.platform.ready().then(() => {
+      if (window.plugins.socialsharing) {
+        let phone = this.platform.is('android') ? contact.phone.value : contact.id;
+        window.plugins.socialsharing.canShareVia('whatsapp', this.inviteData.messageText, null, null, null, (result) => {
+          window.plugins.socialsharing.shareViaWhatsAppToReceiver(phone, this.inviteData.messageText, null, 'http://www.google.com/', (data) => {
+            console.log(data);
+          });
+        }, (error) => {
+          console.log(error);
+          this.doErrorAlert('whatsapp');
+        });
+      }
+    });
+  }
+
   sendEmailToContact(contact) {
-    let toArr = [contact.email];
+    let toArr = [contact.email.value];
     SocialSharing.shareViaEmail(this.inviteData.body, this.inviteData.subject, toArr, null, null, null).then((data) => {
       console.log(data);
     });
   }
 
-
+  doErrorAlert(app) {
+    let alert = Alert.create({
+      title: `Can't share!`,
+      subTitle: `Please check you have ${app} installed or UR Money app has access to that app`,
+      buttons: ['OK']
+    });
+    this.nav.present(alert);
+  }
 
 }
