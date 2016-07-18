@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import {ContactOrderPipe} from '../../pipes/contactOrderPipe';
 import {NativeContactsService} from '../../components/services/native-contact.service';
-import {ContactsService} from '../../components/services/contacts.service';
 import {Subscription} from 'rxjs';
+import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 
 
 // Native Plugins
@@ -27,7 +27,7 @@ export class InviteContactsPage {
   inviteData: any = {};
   constructor(private nav: NavController, private navParams: NavParams,
     private platform: Platform, private nativeContactService: NativeContactsService,
-    private contactsService: ContactsService) {
+    private angularFire: AngularFire) {
     this.populateContacts();
     this.inviteType = this.navParams.get('inviteType');
     this.inviteData = this.navParams.get('inviteData');
@@ -61,7 +61,7 @@ export class InviteContactsPage {
 
 
   getContactsList() {
-    let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
+    let subscriptionContacts: Subscription = this.angularFire.database.list(`/users`).subscribe(data => {
       console.log(data);
       if (subscriptionContacts && !subscriptionContacts.isUnsubscribed) {
         subscriptionContacts.unsubscribe();

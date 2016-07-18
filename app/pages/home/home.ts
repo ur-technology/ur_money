@@ -13,8 +13,9 @@ import * as underscore from 'underscore'
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
 import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
-import {NotificationService} from '../../components/services/notification.service';
-
+import {LocalNotifications} from 'ionic-native';
+import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
+import {Auth} from '../../components/auth/auth';
 
 declare var jQuery: any;
 
@@ -34,11 +35,10 @@ export class HomePage implements OnInit {
   icons: string[];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
-  @ViewChild(ChatSummaries) chatSummaries:ChatSummaries;
+  @ViewChild(ChatSummaries) chatSummaries: ChatSummaries;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
-    navParams: NavParams, public chartData: ChartData, public platform: Platform,
-    private notificationService: NotificationService) {
+    navParams: NavParams, public chartData: ChartData, public platform: Platform, private angularFire: AngularFire, private auth: Auth) {
     this.elementRef = elementRef;
     this.sendPage = SendPage;
     this.receivePage = ReceivePage;
@@ -64,7 +64,7 @@ export class HomePage implements OnInit {
     thisPage.chartData.loadedEmitter.subscribe((data) => {
       this.renderChart();
     });
-    this.notificationService.sendMessageNotifications();
+    this.sendMessageNotifications();
   }
 
   openChatsPage() {
@@ -141,10 +141,35 @@ export class HomePage implements OnInit {
   }
 
   createAlertPopup() {
-
     let addressBookModal = Modal.create(AddressBookModal);
 
     this.nav.present(addressBookModal);
   }
 
+  sendMessageNotifications() {
+    this.angularFire.database.list(`/notifications`, {
+      query: {
+        orderByChild: "receiverUid",
+        equalTo: this.auth.uid
+      }
+    }).subscribe((data: any) => {
+      if (data) {
+        this.scheduleNotification(data, this.auth.uid);
+      }
+    });
+  }
+
+  private scheduleNotification(data: any, userId: string) {
+    for (var i = 0; i < data.length; i++) {
+      if (userId === data[i].receiverUid) {
+        LocalNotifications.schedule({
+          id: data[i].$key,
+          text: `${data[i].senderName}: ${data[i].text}`,
+          icon: 'res://icon',
+          smallIcon: 'stat_notify_chat'
+        });
+        this.angularFire.database.object(`/notifications/${data[i].$key}`).remove();
+      }
+    }
+  }
 }
