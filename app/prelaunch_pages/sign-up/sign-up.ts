@@ -4,7 +4,6 @@ import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl,
 import {Auth} from '../../components/auth/auth';
 import {PrelaunchService} from '../../prelaunch_components/prelaunch-service/prelaunch-service';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
-import * as _ from 'underscore'
 import {DashboardPage} from '../dashboard/dashboard';
 import {ErrorPage} from '../error/error';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';

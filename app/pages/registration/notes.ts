@@ -7,7 +7,6 @@
 // import {CustomValidators} from '../../components/custom-validators/custom-validators';
 // import {AngularFire} from 'angularfire2'
 // import * as Firebase from 'firebase';
-// import * as _ from 'underscore';
 //
 // @Page({
 //   templateUrl: '/build/pages/registration/registration2.html',

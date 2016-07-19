@@ -5,7 +5,6 @@ import {Auth} from '../../components/auth/auth';
 import {Focuser} from '../../components/focuser/focuser';
 import {PrelaunchService} from '../../prelaunch_components/prelaunch-service/prelaunch-service';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
-import * as _ from 'underscore'
 import {DashboardPage} from '../dashboard/dashboard';
 import {SignUpPage} from '../sign-up/sign-up';
 import {ErrorPage} from '../error/error';

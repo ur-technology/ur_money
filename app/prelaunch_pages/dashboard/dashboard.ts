@@ -5,8 +5,8 @@ import {Auth} from '../../components/auth/auth';
 import {Focuser} from '../../components/focuser/focuser';
 import {PrelaunchService} from '../../prelaunch_components/prelaunch-service/prelaunch-service';
 import {CustomValidators} from '../../components/custom-validators/custom-validators';
-import * as _ from 'underscore'
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+import * as _ from 'lodash';
 
 @Page({
   directives: [FORM_DIRECTIVES, Focuser],
@@ -36,7 +36,7 @@ export class DashboardPage {
   setAllUsers() {
     var thisPage = this;
     this.angularFire.database.list('/users').subscribe((idToUserMapping) => {
-      var topUser = _.detect(idToUserMapping, function(user,uid) { return !user["sponsor"]; });
+      var topUser = _.find(idToUserMapping, function(user,uid) { return !user["sponsor"]; });
       var numUsers = _.size(idToUserMapping);
       var i = 0;
       _.each(idToUserMapping, function(user, uid) {
@@ -64,7 +64,8 @@ export class DashboardPage {
     var orderedUsers = [user];
     if (user.children.length > 0) {
       var thisPage = this;
-      _.each(user.children, function(child, i) {
+      _.each(user.children, function(child, index) {
+        let i: number = parseInt(index);
         thisPage.getUserAndDownline(child, function(childAndDownline) {
           orderedUsers = orderedUsers.concat(childAndDownline);
           if (i == user.children.length - 1) {

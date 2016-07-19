@@ -1,5 +1,5 @@
 import {Injectable, Inject} from '@angular/core';
-import * as _ from 'underscore';
+import * as _ from 'lodash';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import {Auth} from '../../components/auth/auth';
 
@@ -37,7 +37,7 @@ export class PrelaunchService {
         return;
       }
 
-      var user = users[0];
+      var user: any = users[0];
       window.localStorage.setItem("prelaunchPhone", phone)
       nav.setRoot(user.signedUpAt ? dashboardPage : signUpPage, { user: user });
     });
@@ -46,11 +46,11 @@ export class PrelaunchService {
   assignMemberId(user, callback) {
     console.log('assigning member id');
     this.angularFire.database.list('/users').subscribe((allUsers) => {
-      var usersWithMemberId = _.select(allUsers, function (u) { return u.memberId; });
+      var usersWithMemberId = _.filter(allUsers, function (u) { return u.memberId; });
       var lastUserWithMemberId = _.last(_.sortBy(usersWithMemberId, function (u) { return u.memberId; }));
       var lastMemberId = lastUserWithMemberId ? lastUserWithMemberId.memberId : 0;
-      var membersNeedingMemberId = _.select(allUsers, function (u) { return !u.memberId && u.signedUpAt });
-      var numberOfPriorMembersNeedingMemberId = _.select(membersNeedingMemberId, function (u) { return u.uid < user.uid }).length;
+      var membersNeedingMemberId = _.filter(allUsers, function (u) { return !u.memberId && u.signedUpAt });
+      var numberOfPriorMembersNeedingMemberId = _.filter(membersNeedingMemberId, function (u) { return u.uid < user.uid }).length;
       user.memberId = lastMemberId + numberOfPriorMembersNeedingMemberId + 1;
       this.angularFire.database.object(`/users/${user.uid}`).update({ memberId: user.memberId });
       callback(null, user);

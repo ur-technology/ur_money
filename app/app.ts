@@ -4,7 +4,6 @@ import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
 import {Auth} from './components/auth/auth';
 import {ChartData} from './components/chart-data/chart-data';
-import * as _ from 'underscore';
 import {Registration1Page} from './pages/registration/registration1';
 import {Registration4Page} from './pages/registration/registration4';
 import {HomePage} from './pages/home/home';
@@ -30,7 +29,7 @@ import {SignUpPage} from './prelaunch_pages/sign-up/sign-up';
 import {ErrorPage} from './prelaunch_pages/error/error';
 import {PrelaunchService} from './prelaunch_components/prelaunch-service/prelaunch-service';
 
-import * as lodash from 'lodash';
+import * as _ from 'lodash';
 
 @Component({
   templateUrl: 'build/app.html',
@@ -129,7 +128,7 @@ class UrMoney {
 
 
   generateFaceUrl(firstName, lastName) {
-    var colorScheme = lodash.sample([
+    var colorScheme = _.sample([
       {
         background: "ED6D54",
         foreground: "FFFFFF"

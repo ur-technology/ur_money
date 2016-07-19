@@ -9,7 +9,6 @@ import {SendPage} from '../send/send';
 import {InvitePage} from '../invite/invite';
 import {ConversationPage} from '../conversation/conversation';
 import * as _ from 'lodash';
-import * as underscore from 'underscore'
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
 import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
@@ -59,7 +58,7 @@ export class HomePage implements OnInit {
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {
       this.renderChart();
-    }     
+    }
     thisPage.chartData.loadedEmitter.subscribe((data) => {
       console.log("about to render chart");
       this.renderChart();

@@ -1,8 +1,7 @@
 import {Injectable, EventEmitter} from '@angular/core'
 import {AngularFire} from 'angularfire2'
 import {Component} from '@angular/core';
-import * as _ from 'underscore'
-import * as lodash from 'lodash';
+import * as _ from 'lodash';
 import * as Firebase from 'firebase'
 import * as moment from 'moment';
 import {Auth} from '../../components/auth/auth';
@@ -73,10 +72,10 @@ export class ChartData {
     var thisPage = this;
     thisPage.angularFire.database.object(balanceRecordsRef).subscribe((balanceRecords) => {
       thisPage.isLoaded = false;
-      var sortedBalanceRecords = lodash.sortBy(balanceRecords.value === null ? {} : balanceRecords, 'updatedAt');
+      var sortedBalanceRecords = _.sortBy(balanceRecords.value === null ? {} : balanceRecords, 'updatedAt');
       thisPage.balanceRecordArray = [];
-      lodash.each(sortedBalanceRecords, function (record) {
-        if (lodash.isObject(record)) {
+      _.each(sortedBalanceRecords, function (record) {
+        if (_.isObject(record)) {
           thisPage.balanceRecordArray.push(record);
         }
       });
@@ -111,12 +110,12 @@ export class ChartData {
 
 
     /// Create clone of the sortedBalanceRecords .... so this will not effect Points array
-    let decendingSorted = lodash.clone(sortedBalanceRecords);
+    let decendingSorted = _.clone(sortedBalanceRecords);
     decendingSorted = decendingSorted.reverse();
 
     // add starting point to chart if necessry
     if (thisPage.points.length == 0 || thisPage.points[0][0] != startTime.toDate()) {
-      var priorBalanceRecord = _.detect(decendingSorted, function (value: any, id: any) {
+      var priorBalanceRecord = _.find(decendingSorted, function (value: any, id: any) {
         return moment(value.updatedAt, 'x').isBefore(startTime);
       });
       var startAmount = priorBalanceRecord ? thisPage.convertWeiStringToApproximateUR(priorBalanceRecord.amount) : 0.0;
@@ -134,12 +133,12 @@ export class ChartData {
 
     // balanceChange calculation for chart
     //closne the chart Ponts so that modification in this will not effect the chart data
-    let pointsData = lodash.clone(thisPage.points);
+    let pointsData = _.clone(thisPage.points);
     // get the offset  day balance by check if the value in points data
     // before end time and after start time or equal to start time
     //// NOTE: If you want immediate value before end time just
     //uncomment return in block below
-    let offsetDaybalance = _.detect(pointsData, function (value: any, id: any) {
+    let offsetDaybalance = _.find(pointsData, function (value: any, id: any) {
       return endTime.isAfter(value[0]) && (startTime.isBefore(value[0]) || startTime.isSame(value[0]));
       //   return endTime.isAfter(value[0]);
     });

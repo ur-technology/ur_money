@@ -8,7 +8,7 @@ import {ChatService} from '../../components/services/chat.service';
 import {ChatMessage} from '../../components/models/chat-message';
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
-import * as _ from 'underscore';
+import * as _ from 'lodash';
 
 @Component({
     templateUrl: 'build/pages/chat/chat.html',
