@@ -12,4 +12,9 @@ export class User2 extends FirebaseModel {
   phone: string;
   profilePhotoUrl: string;
 
+  static fieldsExcludedFromSaving(): Array<string> {
+    return ['profilePhotoUrl'];
+  }
+
+
 }
