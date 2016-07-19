@@ -10,18 +10,18 @@ import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
     directives: [ChatSummaries]
 })
 export class ChatsPage {
-    @ViewChild(ChatSummaries) chatSummaries: ChatSummaries;
+
 
     constructor(private nav: NavController) {
 
     }
 
     ionViewLoaded() {
-        this.chatSummaries.loadChatSummaries();
+
     }
 
     onPageWillLeave() {
-        this.chatSummaries.cleanResources();
+    
     }
 
 

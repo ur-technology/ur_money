@@ -36,7 +36,6 @@ export class HomePage implements OnInit {
   icons: string[];
   messages: any[] = [];
   items: Array<{ title: string, note: string, icon: string }>;
-  @ViewChild(ChatSummaries) chatSummaries: ChatSummaries;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartData, public platform: Platform, private angularFire: AngularFire, private auth: Auth) {
@@ -76,11 +75,9 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-  onPageWillLeave() {
-    this.chatSummaries.cleanResources();
-  }
+
   onPageDidEnter() {
-    this.chatSummaries.loadChatSummaries();
+
     var thisPage = this;
     if (thisPage.chartData.isLoaded) {
       this.renderChart();

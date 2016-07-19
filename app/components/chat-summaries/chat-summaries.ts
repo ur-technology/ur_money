@@ -20,16 +20,14 @@ export class ChatSummaries {
     this.user = auth.userObject;
   }
 
+  ngOnInit() {    
+    this.loadChatSummaries();
+  }
+
   loadChatSummaries() {
     this.chatsRef = this.angularFire.database.list(`/users/${this.user.$key}/chatSummaries`).subscribe(data => {
       this.chats = data;
     });
-  }
-
-  cleanResources() {
-    if (this.chatsRef && !this.chatsRef.isUnsubscribed) {
-      this.chatsRef.unsubscribe();
-    }
   }
 
   whoSentMessage(chatSelected: any) {

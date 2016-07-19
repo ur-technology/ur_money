@@ -86,11 +86,10 @@ export class ChatPage {
     this.addChatSummaryToUser(this.contact.userUid, this.user, chatMessage, this.chatId);
     this.saveNotification(this.chatId, this.contact.userUid, this.user, chatMessage);
     this.messageText = "";
-
   }
 
   saveNotification(chatId: string, receiverUid: string, sender: any, chatMessage: any) {
-    this.angularFire.database.list(`/users/${receiverUid}/notifications`).push({      
+    this.angularFire.database.list(`/users/${receiverUid}/notifications`).push({
       senderName: `${sender.firstName} ${sender.lastName}`,
       profilePhotoUrl: sender.profilePhotoUrl ? sender.profilePhotoUrl : "",
       text: chatMessage.text,
@@ -110,18 +109,12 @@ export class ChatPage {
   }
 
   addChatSummaryToUser(userIdToUpdate: string, otherUser: any, message: any, chatId: string) {
-    let chatRef = this.angularFire.database.list(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).subscribe((data: any) => {
-      if (chatRef && !chatRef.isUnsubscribed) {
-        chatRef.unsubscribe();
-        this.angularFire.database.object(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).set({ otherUser: otherUser, lastMessage: message });
-      }
-    });
+    this.angularFire.database.object(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).set({ otherUser: otherUser, lastMessage: message });
   }
 
   addMessageToChat(chatId: string, chatMessage: any) {
     this.angularFire.database.list(`/chats/${chatId}/messages`).push(chatMessage);
   }
-
 
   createChatMessageObject() {
     let chatMessage: any = new Object();
@@ -162,28 +155,15 @@ export class ChatPage {
 
   findChatId(user1: any, user2: any) {
     return new Promise((resolve) => {
-      let chatRef = this.angularFire.database.list(`/users/${user1.userUid}/chatSummaries`).subscribe(data => {
-        if (chatRef && !chatRef.isUnsubscribed) {
-          chatRef.unsubscribe();
-          for (var i = 0; i < data.length; i++) {
-            let chatId = data[i].chatId;
-            let userRef = this.angularFire.database.list(`/chats/${chatId}/users/`, {
-              query: {
-                orderByChild: "userUid",
-                equalTo: user2.userUid
-              }
-            })
-              .subscribe(userdata => {
-                if (userRef && !userRef.isUnsubscribed) {
-                  userRef.unsubscribe();
-                  if (userdata.length > 0) {
-                    resolve(chatId);
-                  }
-                }
-              });
+      firebase.database().ref(`/users/${user1.userUid}/chatSummaries`).once('value', snapshot => {
+        snapshot.forEach(childSnapshot => {
+          if (childSnapshot.val().otherUser.userUid === user2.userUid) {
+            resolve(childSnapshot.key);
+            return true;
           }
-        }
-      });
+        });
+      })
     });
   }
+
 }
