@@ -16,6 +16,7 @@ import {ChatSummaries} from '../../components/chat-summaries/chat-summaries';
 import {LocalNotifications} from 'ionic-native';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 import {Auth} from '../../components/auth/auth';
+import {User2} from '../../components/models/user2';
 
 declare var jQuery: any;
 
@@ -47,6 +48,28 @@ export class HomePage implements OnInit {
     if (this.platform.is('android')) {
       this.android = true;
     }
+
+    // create new user
+    let user = new User2("/users", {firstName: "Jack", lastName: "Black"});
+    user.save();
+    console.log("step 1: user saved with key", user.key);
+
+    // now look up same user
+    User2.find("/users", user.key).then((user) => {
+      console.log("step 2: looked up user with key", user.key, "firstName", user.firstName);
+
+      // update user
+      user.firstName = "George";
+      user.save();
+      console.log("step 3: saved user, set firstName to", user.firstName);
+
+      // look him up again
+      User2.find("/users", user.key).then((user) => {
+        console.log("step 4: looked up user again, now first name is", user.firstName);
+      });
+
+    });
+
   }
 
   ngOnInit() {
