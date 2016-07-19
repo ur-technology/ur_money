@@ -51,23 +51,24 @@ export class HomePage implements OnInit {
 
     // create new user
     let user = new User2("/users", {firstName: "Jack", lastName: "Black"});
-    user.save();
-    console.log("step 1: user saved with key", user.key);
+    user.save().then((key) => {
+      console.log("step 1: user saved with key", key, ", also stored in user as ", user.key);
 
-    // now look up same user
-    User2.find("/users", user.key).then((user) => {
-      console.log("step 2: looked up user with key", user.key, "firstName", user.firstName);
-
-      // update user
-      user.firstName = "George";
-      user.save();
-      console.log("step 3: saved user, set firstName to", user.firstName);
-
-      // look him up again
+      // now look up same user
       User2.find("/users", user.key).then((user) => {
-        console.log("step 4: looked up user again, now first name is", user.firstName);
-      });
+        console.log("step 2: looked up user with key ", user.key, ", firstName ", user.firstName);
 
+        // update user
+        user.firstName = "George";
+        user.save();
+        console.log("step 3: saved user, set firstName to", user.firstName);
+
+        // look him up again
+        User2.find("/users", user.key).then((user) => {
+          console.log("step 4: looked up user again, now first name is", user.firstName);
+        });
+
+      });
     });
 
   }

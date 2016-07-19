@@ -1,4 +1,5 @@
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
+import * as _ from 'lodash';
 
 export class FirebaseModel {
   private static _angularFire: AngularFire;
@@ -43,12 +44,21 @@ export class FirebaseModel {
     return this.key ? FirebaseModel.referenceByKey(this._containerPath, this.key) : undefined;
   }
 
-  save(): void {
-    if (this.key) {
-      this.observable().update(this.valuesToSave());
-    } else {
-      this.key = FirebaseModel.observable(this._containerPath).push(this.valuesToSave()).key
-    }
+  save(): Promise<FirebaseModel> {
+    return new Promise((resolve, reject) => {
+      let self = this;
+      if (self.key) {
+        self.reference().update(self.valuesToSave()).then((_) => {
+          resolve(self.key);
+        });
+      } else {
+        let promise = FirebaseModel.reference(self._containerPath).push(self.valuesToSave());
+        self.key = promise.key;
+        promise.then((_) => {
+          resolve(self.key);
+        });
+      }
+    });
   }
 
   //////////////////
@@ -65,20 +75,15 @@ export class FirebaseModel {
     return firebase.database().ref(`${containerPath}/${key}`);
   }
 
-  private angularFire() {
-    return FirebaseModel._angularFire;
-  }
-
   private valuesToSave(): Object {
-    let values = {};
-    for (let fieldName of Object.getOwnPropertyNames(this)) {
-      let excludedFields = (this.constructor as any).fieldsExcludedFromSaving();
-      excludedFields.push("key");
-      if (!/^_/.test(fieldName) && excludedFields.indexOf(fieldName) == -1 && this[fieldName] != undefined) {
-        values[fieldName] = this[fieldName];
-      }
-    }
-    return values;
+    let excludedFields = (this.constructor as any).fieldsExcludedFromSaving();
+    return _.omitBy(this, function(value, fieldName) {
+      return value == undefined ||
+        /^_/.test(fieldName) ||
+        fieldName == 'key' ||
+        _.includes(excludedFields, fieldName) ||
+        value instanceof Function;
+    });
   }
 
 
