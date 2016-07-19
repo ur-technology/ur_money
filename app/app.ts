@@ -1,14 +1,14 @@
 import {ViewChild, Component, Type} from '@angular/core';
 import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
-import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
+import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods, AngularFire} from 'angularfire2';
 import {Auth} from './components/auth/auth';
 import {ChartData} from './components/chart-data/chart-data';
+import {FirebaseModel} from './components/models/firebase-model';
 import * as _ from 'underscore';
 import {Registration1Page} from './pages/registration/registration1';
 import {Registration4Page} from './pages/registration/registration4';
 import {HomePage} from './pages/home/home';
-
 import {SendPage} from './pages/send/send';
 import {ReceivePage} from './pages/receive/receive';
 import {InvitePage} from './pages/invite/invite';
@@ -56,7 +56,9 @@ class UrMoney {
   user: any = {};
   invitePage: {};
   faceUrl: string;
-  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService) {
+  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService, private angularFire: AngularFire) {
+    FirebaseModel.init(this.angularFire);
+
     this.initializeApp();
 
     this.invitePage = { component: InvitePage };
@@ -68,6 +70,7 @@ class UrMoney {
       { title: 'Transactions', component: TransactionsPage, icon: 'icon menu-icon-4' },
       { title: 'About UR', component: AboutPage, icon: 'icon menu-icon-7' }
     ];
+
   }
 
   isPrelaunchRequest() {
