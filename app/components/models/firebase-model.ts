@@ -17,6 +17,19 @@ export class FirebaseModel {
     return firebase.database().ref(containerPath);
   }
 
+  static all(containerPath, key: string): Promise<any> {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      FirebaseModel.referenceByKey(containerPath, key).once('value', (snapshot) => {
+        let allValues = snapshot.val();
+        _.each(allValues, function(value, key) {
+          value.key = key;
+        });
+        resolve(allValues);
+      })
+    });
+  }
+
   static find(containerPath, key: string): Promise<any> {
     let self = this;
     return new Promise((resolve, reject) => {
