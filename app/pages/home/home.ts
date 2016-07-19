@@ -171,9 +171,7 @@ export class HomePage implements OnInit {
   }
 
   sendMessageNotifications() {
-    console.log(`/users/${this.auth.uid}/notifications/`);
     this.angularFire.database.list(`/users/${this.auth.uid}/notifications/`).subscribe((data: any) => {
-      console.log("data", data);
       if (data) {
         this.scheduleNotification(data, this.auth.uid);
       }
