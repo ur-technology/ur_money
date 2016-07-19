@@ -90,6 +90,16 @@ export class ChatPage {
   }
 
   saveNotification(chatId: string, receiverUid: string, sender: any, chatMessage: any) {
+    this.angularFire.database.list(`/users/${receiverUid}/notifications`).push({      
+      senderName: `${sender.firstName} ${sender.lastName}`,
+      profilePhotoUrl: sender.profilePhotoUrl ? sender.profilePhotoUrl : "",
+      text: chatMessage.text,
+      chatId: chatId
+    });
+  }
+
+
+  saveNotification2(chatId: string, receiverUid: string, sender: any, chatMessage: any) {
     this.angularFire.database.list(`/notifications`).push({
       receiverUid: receiverUid,
       senderName: `${sender.firstName} ${sender.lastName}`,
@@ -100,35 +110,12 @@ export class ChatPage {
   }
 
   addChatSummaryToUser(userIdToUpdate: string, otherUser: any, message: any, chatId: string) {
-    console.log(`/users/${userIdToUpdate}/chatSummaries/${chatId}`);
     let chatRef = this.angularFire.database.list(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).subscribe((data: any) => {
       if (chatRef && !chatRef.isUnsubscribed) {
         chatRef.unsubscribe();
         this.angularFire.database.object(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).set({ otherUser: otherUser, lastMessage: message });
       }
     });
-  }
-
-  addChatSummaryToUser2(userIdToUpdate: string, otherUser: any, message: any, chatId: string) {
-    console.log(`/users/${userIdToUpdate}/chatSummaries/${chatId}`);
-    let chatRef = this.angularFire.database.list(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).subscribe((data: any) => {
-      if (chatRef && !chatRef.isUnsubscribed) {
-        chatRef.unsubscribe();
-        if (data.length > 0) {
-          console.log("update summary", data);
-          this.updateMyChatSummary(userIdToUpdate, chatId, otherUser, message);
-        } else {
-          console.log("create summary", chatId);
-          this.angularFire.database.object(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).set({ otherUser: otherUser, lastMessage: message });
-        }
-      }
-    });
-
-  }
-
-  updateMyChatSummary(userIdToUpdate: string, chatId: string, otherUser: any, message: any) {
-    this.angularFire.database.object(`/users/${userIdToUpdate}/chatSummaries/${chatId}`)
-      .set({ otherUser: otherUser, lastMessage: message });
   }
 
   addMessageToChat(chatId: string, chatMessage: any) {

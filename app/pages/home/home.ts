@@ -50,7 +50,7 @@ export class HomePage implements OnInit {
     }
 
     // create new user
-    let user = new User2("/users", {firstName: "Jack", lastName: "Black"});
+    let user = new User2("/users", { firstName: "Jack", lastName: "Black" });
     user.save().then((key) => {
       console.log("step 1: user saved with key", key, ", also stored in user as ", user.key);
 
@@ -171,12 +171,9 @@ export class HomePage implements OnInit {
   }
 
   sendMessageNotifications() {
-    this.angularFire.database.list(`/notifications`, {
-      query: {
-        orderByChild: "receiverUid",
-        equalTo: this.auth.uid
-      }
-    }).subscribe((data: any) => {
+    console.log(`/users/${this.auth.uid}/notifications/`);
+    this.angularFire.database.list(`/users/${this.auth.uid}/notifications/`).subscribe((data: any) => {
+      console.log("data", data);
       if (data) {
         this.scheduleNotification(data, this.auth.uid);
       }
@@ -185,15 +182,13 @@ export class HomePage implements OnInit {
 
   private scheduleNotification(data: any, userId: string) {
     for (var i = 0; i < data.length; i++) {
-      if (userId === data[i].receiverUid) {
-        LocalNotifications.schedule({
-          id: data[i].$key,
-          text: `${data[i].senderName}: ${data[i].text}`,
-          icon: 'res://icon',
-          smallIcon: 'stat_notify_chat'
-        });
-        this.angularFire.database.object(`/notifications/${data[i].$key}`).remove();
-      }
+      LocalNotifications.schedule({
+        id: data[i].$key,
+        text: `${data[i].senderName}: ${data[i].text}`,
+        icon: 'res://icon',
+        smallIcon: 'stat_notify_chat'
+      });
+      this.angularFire.database.object(`/users/${userId}/notifications/${data[i].$key}`).remove();
     }
   }
 }
