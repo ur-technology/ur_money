@@ -10,7 +10,7 @@ npm install -g ionic@beta, cordova, gulp
 git clone git@github.com:urcapital/ur_money.git
 cd ur_money
 npm install
-# typings install # would like to put this back
+typings install # would like to put this back
 ```
 
 ## Run server
