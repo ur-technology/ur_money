@@ -100,27 +100,35 @@ export class ChatPage {
   }
 
   addChatSummaryToUser(userIdToUpdate: string, otherUser: any, message: any, chatId: string) {
-    let chatRef = this.angularFire.database.list(`/users/${userIdToUpdate}/chatSummaries`, {
-      query: {
-        orderByChild: "chatId",
-        equalTo: chatId
+    console.log(`/users/${userIdToUpdate}/chatSummaries/${chatId}`);
+    let chatRef = this.angularFire.database.list(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).subscribe((data: any) => {
+      if (chatRef && !chatRef.isUnsubscribed) {
+        chatRef.unsubscribe();
+        this.angularFire.database.object(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).set({ otherUser: otherUser, lastMessage: message });
       }
-    }).subscribe((data: any) => {
+    });
+  }
+
+  addChatSummaryToUser2(userIdToUpdate: string, otherUser: any, message: any, chatId: string) {
+    console.log(`/users/${userIdToUpdate}/chatSummaries/${chatId}`);
+    let chatRef = this.angularFire.database.list(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).subscribe((data: any) => {
       if (chatRef && !chatRef.isUnsubscribed) {
         chatRef.unsubscribe();
         if (data.length > 0) {
-          this.updateMyChatSummary(userIdToUpdate, data[0].$key, otherUser, message, chatId)
+          console.log("update summary", data);
+          this.updateMyChatSummary(userIdToUpdate, chatId, otherUser, message);
         } else {
-          this.angularFire.database.list(`/users/${userIdToUpdate}/chatSummaries`).push({ chatId: chatId, otherUser: otherUser, lastMessage: message });
+          console.log("create summary", chatId);
+          this.angularFire.database.object(`/users/${userIdToUpdate}/chatSummaries/${chatId}`).set({ otherUser: otherUser, lastMessage: message });
         }
       }
     });
 
   }
 
-  updateMyChatSummary(userIdToUpdate: string, chatSummaryId: string, otherUser: any, message: any, chatId: string) {
-    this.angularFire.database.object(`/users/${userIdToUpdate}/chatSummaries/${chatSummaryId}`)
-      .set({ chatId: chatId, otherUser: otherUser, lastMessage: message });
+  updateMyChatSummary(userIdToUpdate: string, chatId: string, otherUser: any, message: any) {
+    this.angularFire.database.object(`/users/${userIdToUpdate}/chatSummaries/${chatId}`)
+      .set({ otherUser: otherUser, lastMessage: message });
   }
 
   addMessageToChat(chatId: string, chatMessage: any) {
@@ -167,10 +175,9 @@ export class ChatPage {
 
   findChatId(user1: any, user2: any) {
     return new Promise((resolve) => {
-      let chatRef = this.angularFire.database.list(`/users/${user1.userUid}/myChatSummaries`).subscribe(data => {
+      let chatRef = this.angularFire.database.list(`/users/${user1.userUid}/chatSummaries`).subscribe(data => {
         if (chatRef && !chatRef.isUnsubscribed) {
           chatRef.unsubscribe();
-          let found: boolean = false;
           for (var i = 0; i < data.length; i++) {
             let chatId = data[i].chatId;
             let userRef = this.angularFire.database.list(`/chats/${chatId}/users/`, {

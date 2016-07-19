@@ -37,20 +37,7 @@ export class ChatSummaries {
   }
 
   gotoChat(chatSelected: any) {
-
-    let userChat: any = new Object();
-    userChat.firstName = this.user.firstName;
-    userChat.lastName = this.user.lastName;
-    userChat.userUid = this.user.$key;
-    userChat.profilePhotoUrl = this.user.profilePhotoUrl;
-
-    let contactUser: any = new Object();
-    contactUser.firstName = chatSelected.otherUser.firstName;
-    contactUser.lastName = chatSelected.otherUser.lastName;
-    contactUser.userUid = chatSelected.otherUser.userUid;
-    contactUser.profilePhotoUrl = chatSelected.profilePhotoUrl ? chatSelected.profilePhotoUrl : "";
-
-    this.nav.rootNav.push(ChatPage, { chatId: chatSelected.chatId, user: userChat, contact: contactUser }, { animate: true, direction: 'forward' });
+    this.nav.rootNav.push(ChatPage, { chatId: chatSelected.$key, user: { firstName: this.user.firstName, lastName: this.user.lastName, userUid: this.user.$key, profilePhotoUrl: this.user.profilePhotoUrl }, contact: { firstName: chatSelected.otherUser.firstName, lastName: chatSelected.otherUser.lastName, userUid: chatSelected.otherUser.userUid, profilePhotoUrl: chatSelected.profilePhotoUrl ? chatSelected.profilePhotoUrl : "" } }, { animate: true, direction: 'forward' });
   }
 
 }
