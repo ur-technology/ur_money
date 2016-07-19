@@ -1,16 +1,14 @@
 {
   "dependencies": {
-    "lodash": "registry:npm/lodash#4.0.0+20160416211519"
+    "lodash": "registry:npm/lodash#4.0.0+20160701205107"
   },
   "devDependencies": {},
-  "ambientDependencies": {
-    "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
-    "underscore": "registry:dt/underscore#1.7.0+20160505190121"
-  },
   "globalDependencies": {
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
     "firebase": "file:node_modules/angularfire2/firebase3.d.ts",
     "firebase-timestamp": "file:app/components/firebase-timestamp/firebase-timestamp.d.ts",
     "google-libphonenumber": "registry:global/google-libphonenumber#1.0.22+20160622193708",
-    "require": "registry:dt/require#2.1.20+20160316155526"
+    "require": "registry:dt/require#2.1.20+20160316155526",
+    "underscore": "registry:dt/underscore#1.7.0+20160622050840"
   }
 }

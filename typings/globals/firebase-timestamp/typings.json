@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "/Users/John/dev/ur_money/app/components/firebase-timestamp/firebase-timestamp.d.ts",
-    "raw": "file:app/components/firebase-timestamp/firebase-timestamp.d.ts",
-    "typings": "/Users/John/dev/ur_money/app/components/firebase-timestamp/firebase-timestamp.d.ts"
-  }
-}
