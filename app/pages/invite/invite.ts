@@ -19,7 +19,7 @@ export class InvitePage {
     let runningPlatform = this.platform.is('android') ? 'android' : 'ios';
     this.inviteConstant = {
       sms: {
-        messageText: `Check out UR Money for your smartphone. Download it today from ${this.downloadUrl}`
+        messageText: `Check out UR Money for your smartphone`
       },
       email: {
         subject: 'UR Money: Android + iPhone + Windows Phone',
@@ -29,17 +29,17 @@ export class InvitePage {
 
       },
       facebook: {
-        messageText: `Check out UR Money for your smartphone.`,
+        messageText: `Check out UR Money for your smartphone`,
         imageUrl: 'https://ur-money-staging.firebaseapp.com/img/logo.png'
       },
       twitter: {
-        messageText: `Check out UR Money for your smartphone. Download it today from ${this.downloadUrl}`
+        messageText: `Check out UR Money for your smartphone`
       },
       whatsapp: {
-        messageText: `Check out UR Money for your smartphone. Download it today from ${this.downloadUrl}`
+        messageText: `Check out UR Money for your smartphone`
       },
       clipboard: {
-        messageText: `Check out UR Money for your smartphone. Download it today from ${this.downloadUrl}`
+        messageText: `Check out UR Money for your smartphone`
       }
     };
   }
@@ -51,7 +51,7 @@ export class InvitePage {
     if (inviteType === 'email') {
       inviteData.body = this.shareText(inviteData.body);
     } else {
-      inviteData.messageText = this.shareText(inviteData.messageText);
+      inviteData.shareText = this.shareText(inviteData.messageText);
     }
     this.nav.push(InviteContactsPage, { inviteType: inviteType, inviteData: inviteData }, { animate: true, direction: 'forward' });
   }

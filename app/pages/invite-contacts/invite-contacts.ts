@@ -64,7 +64,7 @@ export class InviteContactsPage {
 
   sendSmsToContact(contact) {
     if (contact.phone && contact.phone.value)
-      SocialSharing.shareViaSMS(this.inviteData.messageText, contact.phone.value).then((data) => {
+      SocialSharing.shareViaSMS(this.inviteData.shareText, contact.phone.value).then((data) => {
         console.log(data);
       });
   }

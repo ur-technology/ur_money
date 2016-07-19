@@ -22,6 +22,7 @@ import {LoadingModal} from './components/loading-modal/loading-modal';
 import {InviteContactsService} from './components/services/invite-contact.service';
 import {NativeContactsService} from './components/services/native-contact.service';
 import {ContactsService} from './components/services/contacts.service';
+import {InviteService} from './components/services/invite.service';
 // temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
 import {SignInPage} from './prelaunch_pages/sign-in/sign-in';
@@ -36,6 +37,7 @@ import * as lodash from 'lodash';
   directives: [LoadingModal],
   providers: [
     Auth,
+    InviteService,
     InviteContactsService,
     NativeContactsService,
     ContactsService,
