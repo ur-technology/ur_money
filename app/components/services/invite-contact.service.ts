@@ -38,7 +38,7 @@ export class InviteContactsService {
   }
 
   getUserList() {
-    let subscriptionContacts: Subscription = this.contactsService.getContacts().subscribe(data => {
+    let subscriptionContacts: Subscription = this.contactsService.getAppContacts().subscribe(data => {
       this.userOnApp = data;
       this.isUserLoaded = true;
       this.createContactList();
@@ -124,7 +124,7 @@ export class InviteContactsService {
       let phoneNumber = phoneUtil.parse(phone, "");
       var contact = phoneUtil.format(phoneNumber, PNF.NATIONAL);
       return this.phoneFormat(contact);
-      
+
     }
     catch (e) {
       //console.log(e);

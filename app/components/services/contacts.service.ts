@@ -12,6 +12,13 @@ export class ContactsService {
     }
 
     getContacts(): Observable<Array<User>> {
+        return this.angularFire.database.list(`/users`).map((data: any) => {
+            this.contacts = data;
+            return this.contacts;
+        });
+    }
+
+    getAppContacts(): Observable<Array<User>> {
         if (this.contacts && this.contacts.length > 0) {
             return Observable.create(observer => {
                 observer.next(this.contacts);

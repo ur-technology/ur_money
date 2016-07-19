@@ -1,6 +1,8 @@
 import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
 import {HomePage} from '../home/home';
 import {InviteContactsPage} from '../invite-contacts/invite-contacts';
+import {InviteService} from '../../components/services/invite.service';
+import {Auth} from '../../components/auth/auth';
 
 // Native Plugins
 import {SocialSharing} from 'ionic-native';
@@ -13,7 +15,7 @@ declare var window: any;
 export class InvitePage {
   inviteConstant: any = {};
   downloadUrl: string = 'http://ur-money-staging.com/';
-  constructor(public nav: NavController, public platform: Platform) {
+  constructor(public nav: NavController, public platform: Platform, public inviteService: InviteService, public auth: Auth) {
     let runningPlatform = this.platform.is('android') ? 'android' : 'ios';
     this.inviteConstant = {
       sms: {
@@ -23,12 +25,11 @@ export class InvitePage {
         subject: 'UR Money: Android + iPhone + Windows Phone',
         body: `Hey, \n I just downloaded UR Money ${runningPlatform}. 
         \n It is a app used to get hold of your money. \n 
-        UR Money is good app new app use this as wallet \n \n
-        Get it now form ${this.downloadUrl}`
+        UR Money is good app new app use this as wallet \n \n`
+
       },
       facebook: {
-        caption: 'Check out UR Money for your smartphone.',
-        messageText: ` Download it today from ${this.downloadUrl}`,
+        messageText: `Check out UR Money for your smartphone.`,
         imageUrl: 'https://ur-money-staging.firebaseapp.com/img/logo.png'
       },
       twitter: {
@@ -47,14 +48,21 @@ export class InvitePage {
     this.nav.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
   }
   goContact(inviteType, inviteData) {
+    if (inviteType === 'email') {
+      inviteData.body = this.shareText(inviteData.body);
+    } else {
+      inviteData.messageText = this.shareText(inviteData.messageText);
+    }
     this.nav.push(InviteContactsPage, { inviteType: inviteType, inviteData: inviteData }, { animate: true, direction: 'forward' });
   }
 
   inviteWhatsApp() {
+    let shareText = this.shareText(this.inviteConstant.whatsapp.messageText);
+
     this.platform.ready().then(() => {
       if (window.plugins.socialsharing) {
-        window.plugins.socialsharing.canShareVia('whatsapp', this.inviteConstant.whatsapp.messageText, null, null, null, (result) => {
-          window.plugins.socialsharing.shareViaWhatsApp(this.inviteConstant.whatsapp.messageText, null /* img */, null /* url */, (data) => {
+        window.plugins.socialsharing.canShareVia('whatsapp', shareText, null, null, null, (result) => {
+          window.plugins.socialsharing.shareViaWhatsApp(shareText, null /* img */, null /* url */, (data) => {
             console.log(data);
           });
         }, (error) => {
@@ -66,13 +74,13 @@ export class InvitePage {
   }
 
   inviteFacebook() {
+
     this.platform.ready().then(() => {
       if (window.facebookConnectPlugin) {
         window.facebookConnectPlugin.showDialog({
           method: 'send',
-          caption: 'Check out UR Money for your smartphone.',
+          caption: this.shareText(this.inviteConstant.facebook.messageText),
           link: 'https://ur-money-staging.firebaseapp.com/img/logo.png',
-          description: 'Download it today from http://ur-money-staging.com/',
           picture: 'https://ur-money-staging.firebaseapp.com/img/logo.png'
         }, (data) => {
           console.log(data);
@@ -85,11 +93,12 @@ export class InvitePage {
   }
 
   inviteTwitter() {
+    let shareText = this.shareText(this.inviteConstant.whatsapp.messageText);
     this.platform.ready().then(() => {
       if (window.plugins.socialsharing) {
         let app = this.platform.is('android') ? 'twitter' : 'com.apple.social.twitter';
-        window.plugins.socialsharing.canShareVia(app, this.inviteConstant.twitter.messageText, null, null, null, (result) => {
-          window.plugins.socialsharing.shareViaTwitter(this.inviteConstant.twitter.messageText, null /* img */, null /* url */, (data) => {
+        window.plugins.socialsharing.canShareVia(app, shareText, null, null, null, (result) => {
+          window.plugins.socialsharing.shareViaTwitter(shareText, null /* img */, null /* url */, (data) => {
             console.log(data);
           });
         }, (error) => {
@@ -101,7 +110,7 @@ export class InvitePage {
   }
 
   copyToClipboard() {
-    Clipboard.copy(this.inviteConstant.clipboard.messageText).then((data) => {
+    Clipboard.copy(this.shareText(this.inviteConstant.clipboard.messageText)).then((data) => {
       let toast = Toast.create({
         message: 'Text copied to clipboard. Now you can open any app and simple paste',
         duration: 2000,
@@ -109,6 +118,14 @@ export class InvitePage {
       });
       this.nav.present(toast);
     });
+  }
+
+  createInviteCode() {
+    return this.inviteService.createInvite(this.auth.uid);
+  }
+
+  shareText(inviteText: string) {
+    return `${inviteText}. Use invite code ${this.createInviteCode()}. Get it now form ${this.downloadUrl}`;
   }
 
   doErrorAlert(app) {
