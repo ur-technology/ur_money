@@ -8,6 +8,7 @@ import {HomePage} from '../home/home';
 import {AngularFire} from 'angularfire2'
 import {Focuser} from '../../components/focuser/focuser';
 import {Wallet} from '../../components/wallet/wallet';
+import {DeviceIdentityService} from '../../components/services/device-identity.service';
 import * as _ from 'lodash';
 
 declare var jQuery: any;
@@ -24,22 +25,22 @@ export class Registration4Page {
   allStates: any[];
   states: any[];
   profile: any;
-
   constructor(
     @Inject(ElementRef) elementRef: ElementRef,
     public nav: NavController,
     public formBuilder: FormBuilder,
     public auth: Auth,
     public loadingModal: LoadingModal,
-    public angularFire: AngularFire
+    public angularFire: AngularFire,
+    public deviceIdentityService: DeviceIdentityService
   ) {
     this.elementRef = elementRef;
-    this.countries = require('country-data').countries.all.sort((a,b) => {
-      return (a.name < b.name) ? -1 : ( (a.name == b.name) ? 0 : 1 );
+    this.countries = require('country-data').countries.all.sort((a, b) => {
+      return (a.name < b.name) ? -1 : ((a.name == b.name) ? 0 : 1);
     });
     // remove Cuba, Iran, North Korea, Sudan, Syria
     this.countries = _.filter(this.countries, (country) => {
-      return ['CU','IR','KP','SD','SY'].indexOf(country.alpha2) == -1;
+      return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) == -1;
     });
     this.allStates = require('provinces');
     this.walletForm = formBuilder.group({
@@ -47,9 +48,9 @@ export class Registration4Page {
       'lastName': ["", CustomValidators.nameValidator],
       'stateName': ["", CustomValidators.nameValidator],
       'city': ["", CustomValidators.nameValidator],
-      'secretPhrase': [ "", CustomValidators.secretPhraseValidator],
+      'secretPhrase': ["", CustomValidators.secretPhraseValidator],
       'secretPhraseConfirmation': ["", Validators.required]
-    }, {validator: CustomValidators.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation')});
+    }, { validator: CustomValidators.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation') });
     let authUser = this.auth.userObject;
     this.profile = {
       secretPhrase: '',
@@ -57,17 +58,17 @@ export class Registration4Page {
       firstName: authUser.firstName || "",
       lastName: authUser.lastName || "",
       city: authUser.city,
-      country: this.countries.find((x) => { return x.alpha2 == ( authUser.countryCode || "US" ); })
+      country: this.countries.find((x) => { return x.alpha2 == (authUser.countryCode || "US"); })
     };
     let defautStateName = (authUser.countryCode == this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
     this.countrySelected(defautStateName);
-}
+  }
 
   countrySelected(defaultStateName) {
     this.profile.countryCode = this.profile.country.alpha2;
     this.states = _.filter(this.allStates, (state) => { return state.country == this.profile.country.alpha2; });
     if (this.states.length > 0) {
-      this.profile.state = ( defaultStateName && this.states.find((x) => { return x.name == defaultStateName; }) ) || this.states[0];
+      this.profile.state = (defaultStateName && this.states.find((x) => { return x.name == defaultStateName; })) || this.states[0];
       this.stateSelected();
     } else {
       this.profile.state = undefined;
@@ -75,7 +76,6 @@ export class Registration4Page {
       this.walletForm.value.stateName = this.profile.stateName;
     }
   }
-
   stateSelected() {
     this.profile.stateName = this.profile.state ? this.profile.state.name : '';
   }
@@ -92,12 +92,14 @@ export class Registration4Page {
       message: "Write this five word paraphrase down and store it someplace safe. UR Capital does not store your pass phrase and will NOT be able to recover it if it is lost or forgotten.",
       //" If you lose your passphrase, you will not be able to access your money ever again. ?',
       buttons: [
-        {text: 'Cancel', handler: () => { alert.dismiss(); }},
-        {text: 'OK', handler: () => {
-          alert.dismiss().then(() => {
-            this.confirmSecretPhraseWrittenDown();
-          });
-        }}
+        { text: 'Cancel', handler: () => { alert.dismiss(); } },
+        {
+          text: 'OK', handler: () => {
+            alert.dismiss().then(() => {
+              this.confirmSecretPhraseWrittenDown();
+            });
+          }
+        }
       ]
     });
 
@@ -109,12 +111,14 @@ export class Registration4Page {
       title: "Confirm you wrote down your passphrase",
       message: "If you lose your passphrase, you will not be able to access your money ever again. Did you write down your passphrase?",
       buttons: [
-        {text: 'No', handler: () => { alert.dismiss(); }},
-        {text: 'Yes', handler: () => {
-          alert.dismiss().then(() => {
-            this.generateAddress();
-          });
-        }}
+        { text: 'No', handler: () => { alert.dismiss(); } },
+        {
+          text: 'Yes', handler: () => {
+            alert.dismiss().then(() => {
+              this.generateAddress();
+            });
+          }
+        }
       ]
     });
     this.nav.present(alert);
@@ -141,6 +145,7 @@ export class Registration4Page {
       city: self.profile.city,
       stateName: self.profile.stateName,
       countryCode: self.profile.countryCode,
+      deviceIdentity: self.deviceIdentityService.deviceIdentity,
       wallet: {
         address: self.profile.address,
         createdAt: firebase.database.ServerValue.TIMESTAMP
@@ -159,5 +164,4 @@ export class Registration4Page {
       console.log('unable to save profiel and wallet info!');
     });
   };
-
 }

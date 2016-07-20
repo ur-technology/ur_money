@@ -1,4 +1,5 @@
 import {ViewChild, Component, Type} from '@angular/core';
+import {HTTP_PROVIDERS } from '@angular/http';
 import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
@@ -19,6 +20,7 @@ import {TransactionNavService} from './pages/transactions/transaction-nav-servic
 import {CountryListService} from './components/country-list/country-list.service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 
+import {DeviceIdentityService} from './components/services/device-identity.service';
 import {NativeContactsService} from './components/services/native-contact.service';
 // temporarily support prelaunch sign-up app
 import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
@@ -34,13 +36,15 @@ import * as _ from 'lodash';
   directives: [LoadingModal],
   providers: [
     Auth,
-    NativeContactsService,  
+    DeviceIdentityService,
+    NativeContactsService,
     TransactionNavService,
     CountryListService,
     ChartData,
     LoadingModal,
     PrelaunchService,
     FIREBASE_PROVIDERS,
+    HTTP_PROVIDERS,
     defaultFirebase(Auth.firebaseConfig()),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
