@@ -3,13 +3,6 @@
   "description": "An app for tracking your UR transactions and messages",
   "private": true,
   "scripts": {
-    "setup": "npm install",
-    "server": "ionic serve",
-    "deploy": "ionic upload",
-    "setup-android": "ionic platform add android",
-    "android": "ionic run android",
-    "setup-ios": "ionic platform add ios",
-    "ios": "ionic run ios",
     "test": "karma start test/karma.conf.js"
   },
   "dependencies": {
