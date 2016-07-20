@@ -56,7 +56,7 @@ export class ChatPage {
     });
   }
 
-  messageNotFromMe(message: any) {
+  messageFromReceiver(message: any) {
     return message.senderUid !== this.auth.userObject.$key;
   }
 
@@ -74,7 +74,7 @@ export class ChatPage {
     if (!this.validateMessage()) {
       return;
     }
-
+    //TODO: The reciver user has to have chats and chatSummaries created automatically
     this.createChat();
     let chatMessage = { text: this.messageText, sentAt: firebase.database.ServerValue.TIMESTAMP, senderUid: this.auth.userObject.$key, senderProfilePhotoUrl: this.auth.userObject.profilePhotoUrl };
     this.angularFire.database.object(`/users/${this.auth.userObject.$key}/chatSummaries/${this.chatId}`).set({ otherUser: this.contact, lastMessage: chatMessage });
@@ -82,14 +82,15 @@ export class ChatPage {
     this.messageText = "";
   }
 
-  saveNotification(chatId: string, receiverUid: string, sender: any, chatMessage: any) {
-    this.angularFire.database.list(`/users/${receiverUid}/notifications`).push({
-      senderName: `${sender.firstName} ${sender.lastName}`,
-      profilePhotoUrl: sender.profilePhotoUrl ? sender.profilePhotoUrl : "",
-      text: chatMessage.text,
-      chatId: chatId
-    });
-  }
+  //TODO: Notifications have to be saved to the receiver user collection by the NodeJS process
+  // saveNotification(chatId: string, receiverUid: string, sender: any, chatMessage: any) {
+  //   this.angularFire.database.list(`/users/${receiverUid}/notifications`).push({
+  //     senderName: `${sender.firstName} ${sender.lastName}`,
+  //     profilePhotoUrl: sender.profilePhotoUrl ? sender.profilePhotoUrl : "",
+  //     text: chatMessage.text,
+  //     chatId: chatId
+  //   });
+  // }
 
   createChat() {
     if (!this.chatId) {

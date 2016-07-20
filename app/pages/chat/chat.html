@@ -5,7 +5,7 @@
     <ion-list class="list messages-list">
         <ion-item text-wrap
             class="item item-text-wrap"
-            [ngClass]="{'other' : messageNotFromMe(message)}"
+            [ngClass]="{'other' : messageFromReceiver(message)}"
             *ngFor="let message of messages">
 
                 <ion-img [src]="message.senderProfilePhotoUrl"
