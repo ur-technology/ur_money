@@ -9,7 +9,12 @@ ionic build ios
 ##Quirks 
 ##ios
 *whatsapp*  for social share
-![image](iosWhatsappQuirks.png?raw=true "Whatapp quirks for Invite")
+![image](doc/readmeImages/iosWhatsappQuirks.png?raw=true "Whatapp quirks for Invite")
 
 ## Now you able to run the project on device and simulator
 
+
+
+# Test build for the tester and other user 
+
+## Will do this from my mac :) 

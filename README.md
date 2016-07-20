@@ -40,7 +40,7 @@ ionic state restore
 * installation-Readme-ios.md 
 * installation-Readme-android.md
 
-## If there is issue or you have only ios or android platform dependencies then you can do following:
+## If there is issue in (ionic state restore) or you have only ios or android platform dependencies then you can do following:
 
  * iOS Platform setup intial.
 * **Note:** Only if you dont have ios platform in current project.
@@ -68,24 +68,3 @@ ionic platform add android
   gulp plugins
   ```
   ## If all goes ok then check "installation-Readme-android.md" for futher instruction else open issue
-
-## Setup and run iOS 
-
-Please check installation-Readme-ios.md
-```script
-npm run setup-ios 
-npm run ios
-# Then: open project using Xcode from /platforms/ios/*****.xcproj
-```
-##Quirks
-
-##ios
-*whatsapp*
-![image](iosWhatsappQuirks.png?raw=true "Whatapp quirks for Invite")
-
-
-## Setup and run Android
-```script
-npm run setup-android
-npm run android
-```
