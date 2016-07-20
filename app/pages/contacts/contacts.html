@@ -1,7 +1,7 @@
 <ion-content class="contacts">
   <ion-list class="contacts-list">
     <button ion-item  detail-none *ngFor="let contact of contacts" (click)="gotoChat(contact)">
-      <ion-avatar item-left> <img src="img/avatars/avatar-1.jpg" alt="avatar"></ion-avatar>
+      <ion-avatar item-left> <ion-img [src]="contact.profilePhotoUrl"></ion-img></ion-avatar>
       <h2>{{contact.firstName}} {{contact.lastName}}</h2>
       <p>
          {{contact.phone}}</p>

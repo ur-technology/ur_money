@@ -6,8 +6,8 @@
         *ngFor="let chat of chats">
 
         <ion-avatar item-left>
-            <img src="img/avatars/avatar-1.jpg"
-                alt="avatar">
+          <ion-img [src]="chat.otherUser.profilePhotoUrl"
+              [alt]="avatar"></ion-img>
         </ion-avatar>
         <ion-note item-right
             class="item-note"> {{chat.lastMessage.sentAt|timestamp}}</ion-note>

@@ -1,60 +1,38 @@
 import { Component } from '@angular/core';
 import {Subscription} from 'rxjs';
 import { NavController } from 'ionic-angular';
-import {ChatService} from '../../components/services/chat.service';
 import {Auth} from '../../components/auth/auth';
 import {ChatPage} from '../../pages/chat/chat';
-import {ChatUser} from '../../components/models/chat-user';
 import {Timestamp}  from '../../pipes/timestamp';
+import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 
 @Component({
-    selector: 'chat-summaries',
-    templateUrl: 'build/components/chat-summaries/chat-summaries.html',
-    pipes: [Timestamp]
+  selector: 'chat-summaries',
+  templateUrl: 'build/components/chat-summaries/chat-summaries.html',
+  pipes: [Timestamp]
 })
 export class ChatSummaries {
-    chats: any[];
-    chatsRef: Subscription;
-    userId: string;
+  chats: any[];
 
+  constructor(private nav: NavController, private auth: Auth, private angularFire: AngularFire) {
+  }
 
-    constructor(private nav: NavController, private chatService: ChatService, private auth: Auth) {
-        this.userId = auth.uid;
-    }
+  ngOnInit() {
+    this.loadChatSummaries();
+  }
 
-    moveToChat(conversation) {
-        this.nav.setRoot(ChatPage, { conversation: conversation }, { animate: true, direction: 'forword' });
-    }
+  loadChatSummaries() {
+    this.angularFire.database.list(`/users/${this.auth.userObject.$key}/chatSummaries`).subscribe(data => {
+      this.chats = data;
+    });
+  }
 
-    loadChatSummaries() {
-        this.chatsRef = this.chatService.getChatSummaries(this.userId).subscribe(data => {
-            this.chats = data;
-        });
-    }
+  whoSentMessage(chatSelected: any) {
+    return chatSelected.lastMessage.senderUid === this.auth.userObject.$key ? "You: " : "";
+  }
 
-
-    cleanResources() {
-        if (this.chatsRef && !this.chatsRef.isUnsubscribed) {
-            this.chatsRef.unsubscribe();
-        }
-    }
-
-    whoSentMessage(chatSelected: any) {
-        return chatSelected.lastMessage.senderUid === this.userId ? "You: " : "";
-    }
-
-    gotoChat(chatSelected: any) {
-        let userChat: ChatUser = new ChatUser();
-        userChat.firstName = this.auth.userObject.firstName;
-        userChat.lastName = this.auth.userObject.lastName;
-        userChat.userUid = this.userId;
-
-        let contactUser: ChatUser = new ChatUser();
-        contactUser.firstName = chatSelected.otherUser.firstName;
-        contactUser.lastName = chatSelected.otherUser.lastName;
-        contactUser.userUid = chatSelected.otherUser.userUid;
-
-        this.nav.rootNav.push(ChatPage, { chatId: chatSelected.chatId, user: userChat, contact: contactUser }, { animate: true, direction: 'forward' });
-    }
+  gotoChat(chatSelected: any) {
+    this.nav.rootNav.push(ChatPage, { chatId: chatSelected.$key, contact: { firstName: chatSelected.otherUser.firstName, lastName: chatSelected.otherUser.lastName, userUid: chatSelected.otherUser.userUid, profilePhotoUrl: chatSelected.profilePhotoUrl ? chatSelected.profilePhotoUrl : "" } }, { animate: true, direction: 'forward' });
+  }
 
 }

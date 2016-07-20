@@ -6,9 +6,9 @@ import {ChatsPage} from '../chats/chats';
 
 
 @Component({
-  templateUrl: 'build/pages/conversation/conversation.html',
+  templateUrl: 'build/pages/contacts-and-chats/contacts-and-chats.html',
 })
-export class ConversationPage {
+export class ContactsAndChatsPage {
   contactsPage: any;
   chatsPage: any;
   navbBarElement: any;
