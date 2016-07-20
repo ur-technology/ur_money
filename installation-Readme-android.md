@@ -15,7 +15,7 @@ ionic run android
 
 ## Build/Apk file Path
  * ur_money\platforms\android\build\outputs\apk\android-debug.apk
-
+ 
 ## Share build for testing
   You can upload apk to the [diwai.com](http://diawi.com/)  and share link
 
