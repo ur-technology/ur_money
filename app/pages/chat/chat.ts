@@ -7,6 +7,7 @@ import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
 import {Auth} from '../../components/auth/auth';
 
+declare var jQuery: any;
 
 @Component({
   templateUrl: 'build/pages/chat/chat.html',
@@ -19,6 +20,8 @@ export class ChatPage {
   messageText: string;
   chatId: string;
   messagesRef: Subscription;
+  inputDynamicSize: number = 38;
+
   @ViewChild(Content) content: Content;
 
   constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: Auth) {
@@ -34,6 +37,13 @@ export class ChatPage {
 
   ionViewLoaded() {
     this.findChatAndLoadMessages();
+    const TEXTAREA_MAXIMUM_SIZE = 115;
+    const TEXTAREA_MINIMUM_SIZE = 19;
+
+    jQuery("textarea").on("input", event => {
+      this.inputDynamicSize = event.target.scrollHeight > TEXTAREA_MAXIMUM_SIZE ? TEXTAREA_MAXIMUM_SIZE : event.target.scrollHeight
+      event.target.rows = this.inputDynamicSize / TEXTAREA_MINIMUM_SIZE;
+    });
   }
 
   findChatAndLoadMessages() {
@@ -68,6 +78,14 @@ export class ChatPage {
       return false;
     }
     return true;
+  }
+
+  getInputTextDynamicSize() {
+    return `${this.inputDynamicSize}px`
+  }
+
+  getToolbarDynamicSize() {
+    return `${this.inputDynamicSize + 20}px`
   }
 
   sendMessage() {

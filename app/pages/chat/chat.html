@@ -18,13 +18,13 @@
         </ion-item>
     </ion-list>
 </ion-content>
-<ion-toolbar position="bottom"
-    class="bar item-input-inset mio">
+<ion-toolbar position="bottom" [style.min-height]="getToolbarDynamicSize()"
+    class="bar item-input-inset ">
     <div class="ur-message-send">
         <label class="item-input-wrapper">
-            <ion-input type="text"
+            <ion-textarea type="text" [style.min-height]="getInputTextDynamicSize()"
                 [(ngModel)]="messageText"
-                placeholder="Type your message"></ion-input>
+                placeholder="Type your message"></ion-textarea>
         </label>
     </div>
     <ion-buttons end>

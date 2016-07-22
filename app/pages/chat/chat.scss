@@ -121,11 +121,12 @@
             margin-right: 5px;
             .item-input-wrapper {
                 background-color: transparent;
-                input {
+
+                textarea {
                     width: 94%;
                     background: transparent;
-                    border: none;
-                    margin-left: 10px;
+                    border: none;                    
+                    margin: 5px 5px 5px 10px
                 }
             }
 
