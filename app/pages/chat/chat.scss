@@ -85,6 +85,7 @@
 .messages-list .item .msg-text p {
     font-size: 12px;
     color: #444444;
+    white-space: pre-wrap;
 }
 .messages-list .item .item-note {
     position: absolute;
@@ -125,7 +126,7 @@
                 textarea {
                     width: 94%;
                     background: transparent;
-                    border: none;                    
+                    border: none;
                     margin: 5px 5px 5px 10px
                 }
             }

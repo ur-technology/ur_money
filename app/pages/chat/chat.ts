@@ -31,7 +31,7 @@ export class ChatPage {
 
   scrollToBottom() {
     setTimeout(() => {
-      this.content.scrollToBottom();
+      this.content.scrollToBottom(0);
     }, 1);
   }
 
@@ -79,15 +79,6 @@ export class ChatPage {
     }
     return true;
   }
-
-  getInputTextDynamicSize() {
-    return `${this.inputDynamicSize}px`
-  }
-
-  getToolbarDynamicSize() {
-    return `${this.inputDynamicSize + 20}px`
-  }
-
   sendMessage() {
     if (!this.validateMessage()) {
       return;
@@ -97,7 +88,7 @@ export class ChatPage {
     let chatMessage = { text: this.messageText, sentAt: firebase.database.ServerValue.TIMESTAMP, senderUid: this.auth.userObject.$key, senderProfilePhotoUrl: this.auth.userObject.profilePhotoUrl };
     this.angularFire.database.object(`/users/${this.auth.userObject.$key}/chatSummaries/${this.chatId}`).set({ otherUser: this.contact, lastMessage: chatMessage });
     this.angularFire.database.list(`/users/${this.auth.userObject.$key}/chats/${this.chatId}/messages`).push(chatMessage);
-    this.messageText = "";
+    this.resetTextAreaMessageInput()
   }
 
   //TODO: Notifications have to be saved to the receiver user collection by the NodeJS process
@@ -138,5 +129,12 @@ export class ChatPage {
       })
     });
   }
+
+  resetTextAreaMessageInput() {
+    this.messageText = "";
+    this.inputDynamicSize = 38;
+    jQuery("textarea")[0].rows = 2;
+  }
+
 
 }
