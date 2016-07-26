@@ -3,8 +3,7 @@ export class Config {
   }
 
   static getEnvironment() {
-    // return "dev";
-    return "john";
+    return "staging";
   }
 
   static values() {
@@ -28,7 +27,7 @@ export class Config {
         }
       },
       john: {
-        appDownloadUrl: 'https://ur-money-staging.firebaseapp.com/app',
+        appDownloadUrl: 'https://ur-money-john.firebaseapp.com/app',
         firebase: {
           apiKey: "AIzaSyAmnXqJs5-fOzCQdhA38aEY5ZFxVmeNf0g",
           authDomain: "ur-money-john.firebaseapp.com",
@@ -37,12 +36,12 @@ export class Config {
         }
       },
       xavier: {
-        appDownloadUrl: 'https://ur-money-staging.firebaseapp.com/app',
+        appDownloadUrl: 'https://ur-money-xavier.firebaseapp.com/app',
         firebase: {
-          apiKey: "AIzaSyBUGCRu1n2vFgyFgTVhyoRbKz39MsDMvvw",
-          authDomain: "ur-money-staging.firebaseapp.com",
-          databaseURL: "https://ur-money-staging.firebaseio.com",
-          storageBucket: "ur-money-staging.appspot.com"
+          apiKey: "set this up at firebase.com",  // TODO: set up credentials for Xavier
+          authDomain: "ur-money-xavier.firebaseapp.com",
+          databaseURL: "https://ur-money-xavier.firebaseio.com",
+          storageBucket: "ur-money-xavier.appspot.com"
         }
       }
     }[Config.getEnvironment()];
