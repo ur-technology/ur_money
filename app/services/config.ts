@@ -3,7 +3,7 @@ export class Config {
   }
 
   static getEnvironment() {
-    return "john";
+    return "staging";
   }
 
   static values() {
