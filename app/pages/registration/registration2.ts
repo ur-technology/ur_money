@@ -2,11 +2,11 @@ import {Page, NavController, Alert, Platform, Nav, Popover, Loading} from 'ionic
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import * as _ from 'lodash';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
-import {Auth} from '../../components/auth/auth';
+import {Auth} from '../../services/auth';
 import {Registration3Page} from './registration3';
-import {CustomValidators} from '../../components/custom-validators/custom-validators';
+import {CustomValidators} from '../../validators/custom-validators';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
-import {CountryListService} from '../../components/services/country-list-service';
+import {CountryListService} from '../../services/country-list-service';
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
 

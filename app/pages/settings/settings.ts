@@ -3,10 +3,10 @@ import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/c
 import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
 import * as _ from 'lodash';
 
-import {CustomValidators} from '../../components/custom-validators/custom-validators';
-import {Auth} from '../../components/auth/auth';
+import {CustomValidators} from '../../validators/custom-validators';
+import {Auth} from '../../services/auth';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
-import {Focuser} from '../../components/focuser/focuser';
+import {Focuser} from '../../directives/focuser';
 
 import {HomePage} from '../home/home';
 

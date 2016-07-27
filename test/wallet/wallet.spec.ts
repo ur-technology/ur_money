@@ -2,7 +2,7 @@
  * Created by shumer on 7/13/16.
  */
 import {beforeEachProviders, it, describe, expect, inject, beforeEach} from '@angular/core/testing';
-import {Wallet} from '../../app/components/wallet/wallet';
+import {Wallet} from '../../app/models/wallet';
 
 describe('Wallet Service', () => {
 

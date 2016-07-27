@@ -1,14 +1,15 @@
-import {ViewChild} from '@angular/core';
-import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/common';
+import {ViewChild, ElementRef, Inject} from '@angular/core';
 import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
+import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/common';
+import {AngularFire} from 'angularfire2'
 import * as _ from 'lodash';
 
-import {CustomValidators} from '../../components/custom-validators/custom-validators';
-import {Auth} from '../../components/auth/auth';
+import {Focuser} from '../../directives/focuser';
+import {Wallet} from '../../models/wallet';
+import {Auth} from '../../services/auth';
+import {DeviceIdentityService} from '../../services/device-identity-service';
+import {CustomValidators} from '../../validators/custom-validators';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
-import {Focuser} from '../../components/focuser/focuser';
-import {Wallet} from '../../components/wallet/wallet';
-import {DeviceIdentityService} from '../../components/services/device-identity.service';
 
 import {HomePage} from '../home/home';
 

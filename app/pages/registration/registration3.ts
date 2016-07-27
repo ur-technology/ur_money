@@ -1,7 +1,7 @@
 import {Page, NavController, NavParams, Alert, Loading} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl, Control} from '@angular/common';
-import {CustomValidators} from '../../components/custom-validators/custom-validators';
-import {Auth} from '../../components/auth/auth';
+import {CustomValidators} from '../../validators/custom-validators';
+import {Auth} from '../../services/auth';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
 
 @Page({

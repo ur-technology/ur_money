@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, ActionSheet} from 'ionic-angular';
 import {SocialSharing} from 'ionic-native';
-import {ContactsService} from '../../components/services/contacts-service';
-import {Auth} from '../../components/auth/auth';
+import {ContactsService} from '../../services/contacts-service';
+import {Auth} from '../../services/auth';
 import {ChatPage} from '../chat/chat';
-import {Invite} from '../../components/models/invite';
-import {Config} from '../../components/config/config';
+import {Invite} from '../../models/invite';
+import {Config} from '../../services/config';
 import * as _ from 'lodash';
 declare var window: any;
 

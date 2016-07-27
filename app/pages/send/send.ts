@@ -1,6 +1,6 @@
 import {Page, Alert, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
-import {Wallet} from '../../components/wallet/wallet';
+import {Wallet} from '../../models/wallet';
 
 @Page({
   templateUrl: 'build/pages/send/send.html',

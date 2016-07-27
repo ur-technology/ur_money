@@ -3,15 +3,14 @@ import {HTTP_PROVIDERS } from '@angular/http';
 import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
-
-import {Auth} from './components/auth/auth';
-import {ChartData} from './components/chart-data/chart-data';
+import {Auth} from './services/auth';
+import {ChartData} from './services/chart-data';
 import {TransactionNavService} from './pages/transactions/transaction-nav-service';
-import {CountryListService} from './components/services/country-list-service';
+import {CountryListService} from './services/country-list-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
-import {ContactsService} from './components/services/contacts-service';
-import {DeviceIdentityService} from './components/services/device-identity.service';
-import {Config} from './components/config/config'; // TODO: make this injectable
+import {ContactsService} from './services/contacts-service';
+import {DeviceIdentityService} from './services/device-identity-service';
+import {Config} from './services/config'; // TODO: make this injectable
 
 import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
 import {Registration1Page} from './pages/registration/registration1';
@@ -23,13 +22,6 @@ import {ContactsPage} from './pages/contacts/contacts';
 import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';
-
-// temporarily support prelaunch sign-up app
-import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
-import {SignInPage} from './prelaunch_pages/sign-in/sign-in';
-import {SignUpPage} from './prelaunch_pages/sign-up/sign-up';
-import {ErrorPage} from './prelaunch_pages/error/error';
-import {PrelaunchService} from './prelaunch_components/prelaunch-service/prelaunch-service';
 
 import * as _ from 'lodash';
 
@@ -44,7 +36,6 @@ import * as _ from 'lodash';
     CountryListService,
     ChartData,
     LoadingModal,
-    PrelaunchService,
     FIREBASE_PROVIDERS,
     HTTP_PROVIDERS,
     defaultFirebase(Config.values().firebase),
@@ -61,7 +52,7 @@ class UrMoney {
   user: any = {};
   invitePage: any;
   faceUrl: string;
-  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService) {
+  constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
 
     // set our app's pages
@@ -75,19 +66,6 @@ class UrMoney {
     ];
   }
 
-  isPrelaunchRequest() {
-    return /[\/?&]go/.test(window.location.href);
-  }
-
-  handlePrelaunchRequest() {
-    var phone = localStorage.getItem("prelaunchPhone");
-    if (phone) {
-      this.prelaunchService.lookupPrelaunchUserByPhone(phone, this.nav, DashboardPage, SignUpPage, ErrorPage);
-    } else {
-      this.nav.setRoot(SignInPage);
-    }
-  }
-
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -95,11 +73,6 @@ class UrMoney {
 
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
-      }
-
-      if (this.isPrelaunchRequest()) {
-        this.handlePrelaunchRequest();
-        return;
       }
 
       this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
