@@ -6,6 +6,8 @@ import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
 import {Auth} from '../../components/auth/auth';
 
+declare var jQuery: any;
+
 @Page({
   templateUrl: 'build/pages/chat/chat.html',
   pipes: [Timestamp]
@@ -18,6 +20,7 @@ export class ChatPage {
   chatId: string;
   chatSummary: any;
   messagesRef: Subscription;
+  inputDynamicSize: number;
   @ViewChild(Content) content: Content;
 
   constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: Auth) {
@@ -39,6 +42,18 @@ export class ChatPage {
     } else {
       this.lookupChatSummaryViaContactAndLoadMessages();
     }
+    this.listenIfTextAreaShouldGrow();
+  }
+
+  listenIfTextAreaShouldGrow() {
+    this.resetTextAreaMessageInput();
+    const TEXTAREA_MAXIMUM_SIZE = 115;
+    const TEXTAREA_MINIMUM_SIZE = 19;
+
+    jQuery("textarea").on("input", event => {
+      this.inputDynamicSize = event.target.scrollHeight > TEXTAREA_MAXIMUM_SIZE ? TEXTAREA_MAXIMUM_SIZE : event.target.scrollHeight
+      event.target.rows = this.inputDynamicSize / TEXTAREA_MINIMUM_SIZE;
+    });
   }
 
   lookupChatSummaryViaContactAndLoadMessages() {
@@ -47,6 +62,8 @@ export class ChatPage {
       if (chatSummariesSnapshot.exists()) {
         let chatSummaries = chatSummariesSnapshot.val();
         self.chatId = _.findKey(chatSummaries, (chatSummary: any, chatId: string) => {
+          console.log("chatSummary.users", chatSummary.users);
+          console.log("_.keys(chatSummary.users)", _.keys(chatSummary.users));
           return _.includes(_.keys(chatSummary.users), self.contact.userId);
         });
         if (self.chatId) {
@@ -67,8 +84,8 @@ export class ChatPage {
     });
   }
 
-  messageNotFromMe(message: any) {
-    return message.senderUserId !== this.auth.currentUserId;
+  isMessageFromMe(message: any) {
+    return message.senderUid === this.auth.currentUserId;
   }
 
   validateMessage(): boolean {
@@ -96,8 +113,8 @@ export class ChatPage {
     let messageRef = messagesRef.push(message);
     this.loadMessages();
 
-    chatSummaryRef.child("lastMessage").update(_.merge(message, {needsToBeCopied: true, messageId: messageRef.key}));
-    this.messageText = "";
+    chatSummaryRef.child("lastMessage").update(_.merge(message, { needsToBeCopied: true, messageId: messageRef.key }));
+    this.resetTextAreaMessageInput();
   }
 
   // TODO: not sure if I broke this - JR
@@ -146,5 +163,9 @@ export class ChatPage {
   sender(message) {
     return this.chatSummary.users[message.senderUserId];
   }
-
+  resetTextAreaMessageInput() {
+    this.messageText = "";
+    this.inputDynamicSize = 38;
+    jQuery("textarea")[0].rows = 2;
+  }
 }
