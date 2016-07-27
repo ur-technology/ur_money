@@ -84,8 +84,8 @@ export class ChatPage {
     });
   }
 
-  isMessageFromMe(message: any) {
-    return message.senderUid === this.auth.currentUserId;
+  isMessageFromReceiver(message: any) {
+    return message.senderUserId !== this.auth.currentUserId;
   }
 
   validateMessage(): boolean {
