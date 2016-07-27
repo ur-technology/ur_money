@@ -65,8 +65,8 @@ export class ContactsPage {
   displayInviteActionSheet(contact: any) {
     let invite = new Invite('/invitations', {inviterUserId: this.auth.currentUserId, contact: contact});
     SocialSharing.shareWithOptions({
-      message: `Check out the new UR Money app: the best way to use cryptocurrency.`, // not supported on some apps (Facebook, Instagram)
-      subject: 'Check out the new UR Money app', // for email only
+      message: `I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit `, // not supported on some apps (Facebook, Instagram)
+      subject: 'I downloaded the UR money app and got cryptocurrency for free', // for email only
       // files: ['', ''], // an array of filenames either locally or remotely
       url: `${Config.values().appDownloadUrl}/${invite.inviteCode}`,
       chooserTitle: 'Pick an app' // Android only

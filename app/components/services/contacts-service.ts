@@ -19,11 +19,6 @@ export class ContactsService {
     self.countryCode = countryCode;
     self.currentUserId = currentUserId;
     return new Promise((resolve, reject) => {
-      if (!self.platform.is('cordova')) {
-        resolve({});
-        return;
-      }
-
       if (self.loaded) {
         resolve(self.contactGroups);
         return;
@@ -31,7 +26,11 @@ export class ContactsService {
 
       let startTime = new Date().getTime();
       self.platform.ready().then(() => {
-        this.retrieveContactsFromDevice().then((contactsFromDevice) => {
+        if (!self.platform.is('cordova')) {
+          self.retrieveContactsFromDevice = self.fake_retrieveContactsFromDevice;
+        }
+
+        self.retrieveContactsFromDevice().then((contactsFromDevice) => {
           let contacts: Contact[] = contactsFromDevice;
           console.log(`retrieved contacts in ${new Date().getTime() - startTime} milliseconds`)
 
@@ -41,7 +40,13 @@ export class ContactsService {
             contacts = _.sortBy(contacts, (c) => { return c.fullName(); });
             contacts = _.flatten(_.map(contacts, (contact) => { return self.contactAndDuplicates(contact); }));
             _.each(_.map(contacts, (contact) => { delete contact.rawPhones; }));
-            self.contactGroups = _.groupBy(contacts, function (c) { return c.userId ? "members" : "nonMembers"; });
+            self.contactGroups = _.groupBy(contacts, function(c) { return c.userId ? "members" : "nonMembers"; });
+            if (!self.contactGroups.members) {
+              self.contactGroups.members = [];
+            }
+            if (!self.contactGroups.nonMembers) {
+              self.contactGroups.nonMembers = [];
+            }
             self.loaded = true;
             console.log(`processed contacts in ${new Date().getTime() - startTime} milliseconds`)
             resolve(self.contactGroups);
@@ -93,7 +98,7 @@ export class ContactsService {
     return new Promise((resolve, reject) => {
       let contactsRemaining = contacts.length;
       let rejected = false;
-      _.each(contacts, function (contact) {
+      _.each(contacts, function(contact) {
         self.assignUserIdToContact(contact).then(() => {
           if (rejected) {
             return;
@@ -130,7 +135,7 @@ export class ContactsService {
     return new Promise((resolve, reject) => {
       let rawPhonesRemaining = contact.rawPhones.length;
       let rejected = false;
-      _.each(contact.rawPhones, function (rawPhone) {
+      _.each(contact.rawPhones, function(rawPhone) {
         firebase.database().ref('/users').orderByChild('phone').equalTo(rawPhone.value).limitToFirst(1).once('value').then((snapshot) => {
           if (rejected) {
             return;
@@ -154,10 +159,10 @@ export class ContactsService {
 
   private getBestEmail(rawEmails: any[]): string {
     let self = this;
-    let validEmails = _.filter(rawEmails, function (rawEmail: any) {
+    let validEmails = _.filter(rawEmails, function(rawEmail: any) {
       return self.isValidEmail(rawEmail.value);
     });
-    let preferredEmails = _.filter(rawEmails, function (rawEmail: any) {
+    let preferredEmails = _.filter(rawEmails, function(rawEmail: any) {
       return rawEmail.pref;
     });
 
@@ -236,4 +241,191 @@ export class ContactsService {
     return formattedPhone;
   }
 
+  private fake_retrieveContactsFromDevice(): Promise<Contact[]> {
+    return new Promise((resolve, reject) => {
+      resolve(_.map([
+        {
+          "firstName": "Eiland",
+          "lastName": "Glover",
+          "rawPhones": [{
+            "id": "1",
+            "pref": false,
+            "value": "+16158566616",
+            "type": "mobile"
+          }],
+          "deviceContactId": "1"
+        }, {
+          "firstName": "John",
+          "lastName": "Reitano",
+          "rawPhones": [{
+            "id": "2",
+            "pref": false,
+            "value": "+16196746211",
+            "type": "mobile"
+          }],
+          "deviceContactId": "2"
+        }, {
+          "firstName": "Malkiat",
+          "lastName": "Singh",
+          "rawPhones": [{
+            "id": "3",
+            "pref": false,
+            "value": "+919915738619",
+            "type": "mobile"
+          }],
+          "deviceContactId": "3"
+        }, {
+          "firstName": "Xavier",
+          "lastName": "Perez",
+          "rawPhones": [{
+            "id": "4",
+            "pref": false,
+            "value": "+593998016833",
+            "type": "mobile"
+          }],
+          "deviceContactId": "4"
+        }, {
+          "firstName": "Alpha",
+          "lastName": "Andrews",
+          "rawPhones": [{
+            "id": "40",
+            "pref": false,
+            "value": "+16197778001",
+            "type": "mobile"
+          }],
+          "deviceContactId": "7"
+        }, {
+          "firstName": "Beta",
+          "lastName": "Brown",
+          "rawPhones": [{
+            "id": "70",
+            "pref": false,
+            "value": "+16197778002",
+            "type": "home"
+          }, {
+              "id": "72",
+              "pref": false,
+              "value": "+16197778004",
+              "type": "mobile"
+            }, {
+              "id": "73",
+              "pref": false,
+              "value": "+16197778005",
+              "type": "work"
+            }],
+          "deviceContactId": "8"
+        }, {
+          "firstName": "Gamma",
+          "lastName": "Gallant",
+          "rawPhones": [{
+            "id": "95",
+            "pref": false,
+            "value": "+16197778006",
+            "type": "mobile"
+          }],
+          "deviceContactId": "9"
+        }, {
+          "firstName": "Delta",
+          "lastName": "Daniels",
+          "rawPhones": [{
+            "id": "197",
+            "pref": false,
+            "value": "+16197778007",
+            "type": "home"
+          }, {
+              "id": "199",
+              "pref": false,
+              "value": "+16197778008",
+              "type": "mobile"
+            }],
+          "deviceContactId": "10"
+        }, {
+          "firstName": "Epsilon",
+          "lastName": "Ellison",
+          "rawPhones": [{
+            "id": "152",
+            "pref": false,
+            "value": "+16197778009",
+            "type": "mobile"
+          }],
+          "deviceContactId": "13"
+        }, {
+          "firstName": "Zeta",
+          "lastName": "Zenderson",
+          "rawPhones": [{
+            "id": "49",
+            "pref": false,
+            "value": "+16197778010",
+            "type": "mobile"
+          }],
+          "deviceContactId": "16"
+        }, {
+          "firstName": "Eta",
+          "lastName": "Edwards",
+          "rawPhones": [{
+            "id": "232",
+            "pref": false,
+            "value": "+16197778011",
+            "type": "mobile"
+          }],
+          "deviceContactId": "17"
+        }, {
+          "firstName": "Theta",
+          "lastName": "Thierry",
+          "rawPhones": [{
+            "id": "222",
+            "pref": false,
+            "value": "+16197778012",
+            "type": "mobile"
+          }],
+          "deviceContactId": "18"
+        }, {
+          "firstName": "Iota",
+          "lastName": "Immerson",
+          "rawPhones": [{
+            "id": "140",
+            "pref": false,
+            "value": "+16197778013",
+            "type": "home"
+          }, {
+              "id": "142",
+              "pref": false,
+              "value": "+16197778014",
+              "type": "mobile"
+            }],
+          "deviceContactId": "19"
+        }, {
+          "firstName": "Kappa",
+          "lastName": "Krell",
+          "rawPhones": [{
+            "id": "84",
+            "pref": false,
+            "value": "+16197778015",
+            "type": "home"
+          }, {
+              "id": "86",
+              "pref": false,
+              "value": "+16197778016",
+              "type": "mobile"
+            }],
+          "deviceContactId": "20"
+        }, {
+          "firstName": "Lambda",
+          "lastName": "Landau",
+          "rawPhones": [{
+            "id": "184",
+            "pref": false,
+            "value": "+5216643332222",
+            "type": "mobile"
+          }, {
+              "id": "186",
+              "pref": false,
+              "value": "+5216643332223",
+              "type": "mobile"
+            }],
+          "deviceContactId": "20"
+        }
+      ], (attrs) => { return new Contact("", attrs); }));
+    });
+  };
 }
