@@ -20,7 +20,7 @@ export class ChatPage {
   chatId: string;
   chatSummary: any;
   messagesRef: Subscription;
-  inputDynamicSize: number;
+  messageTextAreaHeight: number;
   @ViewChild(Content) content: Content;
 
   constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: Auth) {
@@ -42,17 +42,17 @@ export class ChatPage {
     } else {
       this.lookupChatSummaryViaContactAndLoadMessages();
     }
-    this.listenIfTextAreaShouldGrow();
+    this.resetMessageTextArea();
+    this.adjustMessageTextAreaHeightBasedOnInput();
   }
 
-  listenIfTextAreaShouldGrow() {
-    this.resetTextAreaMessageInput();
-    const TEXTAREA_MAXIMUM_SIZE = 115;
-    const TEXTAREA_MINIMUM_SIZE = 19;
+  adjustMessageTextAreaHeightBasedOnInput() {
+    const MESSAGE_TEXT_AREA_MAXIMUM_HEIGHT = 115;
+    const MESSAGE_TEXT_AREA_ROW_HEIGHT = 19;
 
     jQuery("textarea").on("input", event => {
-      this.inputDynamicSize = event.target.scrollHeight > TEXTAREA_MAXIMUM_SIZE ? TEXTAREA_MAXIMUM_SIZE : event.target.scrollHeight
-      event.target.rows = this.inputDynamicSize / TEXTAREA_MINIMUM_SIZE;
+      this.messageTextAreaHeight = Math.min(event.target.scrollHeight, MESSAGE_TEXT_AREA_MAXIMUM_HEIGHT);
+      event.target.rows = this.messageTextAreaHeight / MESSAGE_TEXT_AREA_ROW_HEIGHT;
     });
   }
 
@@ -114,7 +114,7 @@ export class ChatPage {
     this.loadMessages();
 
     chatSummaryRef.child("lastMessage").update(_.merge(message, { needsToBeCopied: true, messageId: messageRef.key }));
-    this.resetTextAreaMessageInput();
+    this.resetMessageTextArea();
   }
 
   // TODO: not sure if I broke this - JR
@@ -163,9 +163,10 @@ export class ChatPage {
   sender(message) {
     return this.chatSummary.users[message.senderUserId];
   }
-  resetTextAreaMessageInput() {
+
+  resetMessageTextArea() {
     this.messageText = "";
-    this.inputDynamicSize = 38;
+    this.messageTextAreaHeight = 38;
     jQuery("textarea")[0].rows = 2;
   }
 }
