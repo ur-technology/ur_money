@@ -31,43 +31,6 @@ import {PrelaunchService} from './prelaunch_components/prelaunch-service/prelaun
 
 import * as _ from 'lodash';
 
-// TODO: consider reorganizing user and chat data in one of the following ways
-
-// /phoneVerifications/
-
-// /userSummaries (contains basic info for searching users)
-// /userSummaries/5/firstName: "John"
-// /userSummaries/5/lastName: "Reitano"
-// /userSummaries/5/phone: "+16196746211"
-
-// all other user data will be retrieved by user id and can be narrowed further
-// /users/5/profile/signedUpAt: "1412342423423"
-// /users/5/smsMessages/-KLT31233123/text: "Birthday Message: ..."
-// ...
-
-// batch lookup of contacts in remote server to speed things up
-// /users/5/contactsLookup/
-// when inserted:
-// /users/5/contactsLookup/pending: true
-// /users/5/contactsLookup/phones/16196746211: "no-userId-assigned"
-// /users/5/contactsLookup/phones/16196746212: "no-userId-assigned"
-// after processing:
-// /users/5/contactsLookup/pending: false
-// /users/5/contactsLookup/phones/16196746211: "d2342342fwefsd"
-// /users/5/contactsLookup/phones/16196746212: "no-userId-assigned"
-
-// /users/5/chatSummaries (contains basic info for listing/searching chats of a particular user)
-// /users/5/chatSummaries/6/createdAt: "14124234234234"
-// /users/5/chatSummaries/6/otherUserId: "14124234234234"
-// /users/5/chatSummaries/6/lastMessage
-// /users/5/chatSummaries/6/lastMessage/text: "Hi"
-
-// /users/5/chats/6/messages (contains all messages for chat 6)
-// /users/5/chats/6/messages/7/text: "Hi"
-// ...
-
-// firebase rules need to be added to further restrict access
-
 @Component({
   templateUrl: 'build/app.html',
   directives: [LoadingModal],
