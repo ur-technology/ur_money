@@ -5,7 +5,7 @@
     <ion-list class="list messages-list">
         <ion-item text-wrap
             class="item item-text-wrap"
-            [ngClass]="{'other' : messageNotFromMe(message)}"
+            [ngClass]="{'other' : isMessageFromMe(message)}"
             *ngFor="let message of messages">
 
                 <ion-img [src]="sender(message).profilePhotoUrl"
@@ -18,13 +18,13 @@
         </ion-item>
     </ion-list>
 </ion-content>
-<ion-toolbar position="bottom"
+<ion-toolbar position="bottom" [style.min-height]="inputDynamicSize+20+'px'"
     class="bar item-input-inset mio">
     <div class="ur-message-send">
         <label class="item-input-wrapper">
-            <ion-input type="text"
-                [(ngModel)]="messageText"
-                placeholder="Type your message"></ion-input>
+          <ion-textarea type="text" [style.min-height]="inputDynamicSize+'px'"
+              [(ngModel)]="messageText"
+              placeholder="Type your message"></ion-textarea>
         </label>
     </div>
     <ion-buttons end>
