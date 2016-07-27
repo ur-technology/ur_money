@@ -61,9 +61,8 @@ export class HomePage implements OnInit {
   }
 
   startNewChat() {
-    this.nav.push(ContactsAndChatsPage, {nonMembersFirst: false}, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { animate: true, direction: 'forward' });
   }
-
 
   setRoot(page) {
     this.nav.setRoot(page, {}, { animate: true, direction: 'forward' });
@@ -142,7 +141,7 @@ export class HomePage implements OnInit {
   }
 
   inviteContact() {
-    this.nav.push(ContactsAndChatsPage, {nonMembersFirst: true});
+    this.nav.rootNav.push(ContactsAndChatsPage, {nonMembersFirst: true}, { animate: true, direction: 'forward' });
   }
 
   private scheduleNotification(data: any, userId: string) {

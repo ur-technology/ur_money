@@ -10,10 +10,6 @@ import {CountryListService} from '../../components/services/country-list-service
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
 
-import libphonenumber = require('google-libphonenumber');
-const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
-
-
 @Page({
   templateUrl: 'build/pages/registration/registration2.html',
   directives: [FORM_DIRECTIVES]
@@ -29,13 +25,10 @@ export class Registration2Page implements OnInit {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
       'phone': ['', (control) => {
-        if (control.value.length === 0) {
-          return { 'invalidPhone': true };
-        }
         try {
-          let swissNumberProto = phoneUtil.parse(control.value, this.selectedCountry.iso);
-          let isValid = phoneUtil.isValidNumber(swissNumberProto);
-          if (!isValid) {
+          let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();;
+          let phoneNumberObject = phoneNumberUtil.parse(control.value, this.selectedCountry.iso);
+          if (!phoneNumberUtil.isValidNumber(phoneNumberObject)) {
             return { 'invalidPhone': true };
           }
         } catch (e) {

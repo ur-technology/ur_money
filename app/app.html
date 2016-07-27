@@ -2,10 +2,10 @@
 
   <ion-content class="ur-menu">
     <div class="menu-bar">
-      <button clear light class="left" (click)="signOut()">
+      <!-- <button clear light class="left" (click)="signOut()">
          <ion-icon name="power"></ion-icon>
-      </button>
-      <button clear light class="right" (click)="openSetting()">
+      </button> -->
+      <button clear light class="right" (click)="openSettings()">
          <ion-icon name="settings"></ion-icon>
       </button>
     </div>
@@ -34,7 +34,7 @@
         </ion-col>
       </ion-row>
       <p class="invite-text">Invite your Loved Ones And Get <span>1000Ur</span></p>
-      <button (click)="openPage(invitePage)" class="button button-block button-outline invite-btn">Invite</button>
+      <button (click)="inviteContact()" class="button button-block button-outline invite-btn">Invite</button>
     </div>
   </ion-content>
 

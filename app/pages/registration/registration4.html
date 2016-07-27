@@ -1,19 +1,19 @@
 <ion-navbar *navbar>
   <ion-title>Finish Account Setup</ion-title>
-  <button clear class="right" [disabled]="!walletForm.valid" (click)="submit()">
-      Done
+  <button clear class="right" [disabled]="!mainForm.valid" (click)="submit()">
+    Done
   </button>
 </ion-navbar>
 
-<ion-content padding class="registration4">
-  <form [ngFormModel]="walletForm">
+<ion-content padding class="registration registration4">
+  <form [ngFormModel]="mainForm">
     <ion-item-group>
       <ion-item-divider light>Your public profile information</ion-item-divider>
       <ion-item>
-        <ion-input [focuser] type="text" [(ngModel)]="profile.firstName" [ngFormControl]="walletForm.controls.firstName" placeholder="First name"></ion-input>
+        <ion-input [focuser] type="text" [(ngModel)]="profile.firstName" [ngFormControl]="mainForm.controls.firstName" placeholder="First name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="text" [(ngModel)]="profile.lastName" [ngFormControl]="walletForm.controls.lastName" placeholder="Last name"></ion-input>
+        <ion-input type="text" [(ngModel)]="profile.lastName" [ngFormControl]="mainForm.controls.lastName" placeholder="Last name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-select [(ngModel)]="profile.country" (ionChange)="countrySelected()">
@@ -24,10 +24,10 @@
         <ion-select [hidden]="!states || !states.length" [(ngModel)]="profile.state" (ionChange)="stateSelected()">
           <ion-option [value]="s" *ngFor="let s of states">{{s.name}}</ion-option>
         </ion-select>
-        <ion-input  [hidden]="states && states.length" type="text" [(ngModel)]="profile.stateName" [ngFormControl]="walletForm.controls.stateName" placeholder="State or Province"></ion-input>
+        <ion-input  [hidden]="states && states.length" type="text" [(ngModel)]="profile.stateName" [ngFormControl]="mainForm.controls.stateName" placeholder="State or Province"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="text" [(ngModel)]="profile.city" [ngFormControl]="walletForm.controls.city" placeholder="City"></ion-input>
+        <ion-input type="text" [(ngModel)]="profile.city" [ngFormControl]="mainForm.controls.city" placeholder="City"></ion-input>
       </ion-item>
 
     </ion-item-group>
@@ -39,10 +39,10 @@
         </button>
       </ion-item>
       <ion-item>
-        <ion-input type="text" [(ngModel)]="profile.secretPhrase" [ngFormControl]="walletForm.controls.secretPhrase" [(ngModel)]="secretPhrase" placeholder="Please enter at least 5 secret words"></ion-input>
+        <ion-input type="text" [(ngModel)]="profile.secretPhrase" [ngFormControl]="mainForm.controls.secretPhrase" [(ngModel)]="secretPhrase" placeholder="Please enter at least 5 secret words"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="text" [(ngModel)]="profile.secretPhraseConfirmation" [ngFormControl]="walletForm.controls.secretPhraseConfirmation" otherControl="secretPhrase" placeholder="Re-type your secret words"></ion-input>
+        <ion-input type="text" [(ngModel)]="profile.secretPhraseConfirmation" [ngFormControl]="mainForm.controls.secretPhraseConfirmation" otherControl="secretPhrase" placeholder="Re-type your secret words"></ion-input>
       </ion-item>
     </ion-item-group>
   </form>
