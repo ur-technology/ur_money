@@ -58,7 +58,7 @@ class UrMoney {
     // set our app's pages
     this.menuItems = [
       { title: 'Home', component: HomePage, icon: 'icon menu-icon-1' },
-      { title: 'Chat', component: ContactsAndChatsPage, icon: 'icon menu-icon-1' },
+      { title: 'Chat', component: ContactsAndChatsPage, icon: 'icon menu-icon-8' },
       { title: 'Send UR', component: SendPage, icon: 'icon menu-icon-2' },
       { title: 'Request UR', component: ReceivePage, icon: 'icon menu-icon-3' },
       { title: 'Transactions', component: TransactionsPage, icon: 'icon menu-icon-4' },
