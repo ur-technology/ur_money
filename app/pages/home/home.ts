@@ -14,7 +14,7 @@ import {ChatList} from '../../components/chat-list/chat-list';
 import {LocalNotifications} from 'ionic-native';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 import {Auth} from '../../services/auth';
-import {User2} from '../../models/user2';
+import {User} from '../../models/user';
 
 declare var jQuery: any;
 

@@ -2,6 +2,7 @@ import {Injectable, Inject, ViewChild} from '@angular/core'
 import {Nav} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 import {Subscription} from 'rxjs';
 import {ContactsService} from '../services/contacts-service';
 import {Sim} from 'ionic-native';
@@ -55,20 +56,18 @@ export class Auth {
   requestPhoneVerification(phone: string) {
     let angularFire = this.angularFire;
     return new Promise((resolve) => {
-      console.log('about to queue verification number');
+        log.debug('about to queue verification number');
 
       var phoneVerificationReference = angularFire.database.list('/phoneVerifications', { preserveSnapshot: true }).push({
         phone: phone,
         createdAt: firebase.database.ServerValue.TIMESTAMP
       });
 
-      console.log("verification queued");
+      log.debug("verification queued");
       phoneVerificationReference.on('value', (snapshot) => {
-        console.log(snapshot);
         var phoneVerification = snapshot.val();
-        console.log(phoneVerification);
+        log.debug("phoneVerification retrieved: ", phoneVerification);
         if (phoneVerification && !_.isUndefined(phoneVerification.smsSuccess)) {
-          console.log("resolving promise");
           phoneVerificationReference.off('value'); // stop watching for changes on this phone verification
           resolve({ phoneVerificationKey: snapshot.key, smsSuccess: phoneVerification.smsSuccess, smsError: phoneVerification.smsError });
         }
@@ -84,13 +83,11 @@ export class Auth {
       let phoneVerificationSubscription: Subscription = phoneVerificationObservable.subscribe((phoneVerification) => {
         if (phoneVerification && !_.isUndefined(phoneVerification.verificationSuccess)) {
           if (phoneVerification.verificationSuccess) {
-            // let options = {provider: AuthProviders.Custom,method: AuthMethods.CustomToken};
-            // angularFire.auth.login(phoneVerification.authToken, options).then((authData) => {
             firebase.auth().signInWithCustomToken(phoneVerification.authToken).then((authData) => {
-              console.log('Authentication succeded!');
+              log.debug('Authentication succeded!');
               stopWatchingPhoneVerificationAndResolvePromise(true);
             }).catch((error) => {
-              console.log('Authentication failed!');
+              log.warn('Authentication failed!');
               stopWatchingPhoneVerificationAndResolvePromise(false);
             });
           } else {
@@ -118,7 +115,7 @@ export class Auth {
       Sim.getSimInfo().then((info) => {
         resolve(info.countryCode.toUpperCase());
       }, (error) => {
-        console.log("unable to get country code from sim", error);
+        log.debug("unable to get country code from sim", error);
         resolve(undefined);
       });
     });

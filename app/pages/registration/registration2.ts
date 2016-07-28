@@ -1,6 +1,7 @@
 import {Page, NavController, Alert, Platform, Nav, Popover, Loading} from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
 import {Auth} from '../../services/auth';
 import {Registration3Page} from './registration3';
@@ -79,7 +80,7 @@ export class Registration2Page implements OnInit {
             this.auth.requestPhoneVerification(phone).then((result: any) => {
               loading.dismiss();
               if (!result.smsSuccess) {
-                console.log("error - sms could not be sent");
+                log.warn("sms could not be sent");
                 this.showErrorAlert(result.smsError, phoneInput);
                 return;
               }
@@ -103,7 +104,6 @@ export class Registration2Page implements OnInit {
           handler: () => {
             alert.dismiss().then(() => {
               phoneInput.setFocus();
-              console.log("clicked ok");
             })
           }
         }

@@ -1,3 +1,5 @@
+import * as log from 'loglevel';
+
 export class Wallet {
 
     private static ScryptWorkFactor_N: number = 75;
@@ -12,7 +14,7 @@ export class Wallet {
     public static validateCredentials(seed : string, salt : string){
         return (typeof seed != 'undefined' && seed != '' && typeof salt != 'undefined' && salt != '');
     }
-    
+
     public static generate(seed : string, salt : string){
         let scryptAsync = require('scrypt-async');
         let ethWallet = require('ethereumjs-wallet');
@@ -25,7 +27,7 @@ export class Wallet {
                 for (var i = 1; i <= this.BrainWalletRepetitions; i++) {
                     hashedSeed = ethUtil.sha3(hashedSeed);
                 }
-                
+
                 resolve(ethWallet.fromPrivateKey(hashedSeed));
             })
         });
@@ -34,10 +36,10 @@ export class Wallet {
     constructor(wallet){
         let web3 = require('web3');
         this._connection = new web3(new web3.providers.HttpProvider("http://localhost:12345"));
-        
+
         this._wallet = wallet;
     };
-    
+
     public static miningIsActive(){
         let web3 = require('web3');
         let connection = new web3(new web3.providers.HttpProvider("http://localhost:12345"));
@@ -54,19 +56,19 @@ export class Wallet {
         }
 
         let ethUtil = require('ethereumjs-util');
-        
+
         if(!ethUtil.isHexPrefixed(address)){
             address = ('0x' + address);
         }
-        
+
         return ((ethUtil.isValidPublic(address) && address != self.getPublic()) || (ethUtil.isValidAddress(address) && address != self.getAddress()));
     }
-    
+
     public validateAmount(amount: number){
         let self = this;
-        
+
         var balance = self._connection.eth.getBalance(self.getAddress());
-        
+
         return (amount > 0 && self._connection.fromWei(parseFloat(balance)) > amount);
     }
 
@@ -92,7 +94,7 @@ export class Wallet {
 
         return new Promise<boolean>((resolve, reject) => {
             self._connection.eth.sendRawTransaction(serializedTx, (error:any) => {
-                console.log(error);
+                log.error(error);
                 resolve(!!error);
             })
         });

@@ -10,7 +10,7 @@
       </button>
     </div>
     <div class="menu-profile" *ngIf="auth.currentUser">
-      <img class="menu-avatar" [src]="generateProfileImage()" alt="">
+      <img class="menu-avatar" [src]="auth.currentUser.profilePhotoUrl" alt="">
       <h1 class="profile-name">{{auth.currentUser.firstName}} {{auth.currentUser.lastName}}</h1>
       <p></p>
     </div>

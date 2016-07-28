@@ -4,6 +4,7 @@ import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservab
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 import {Auth} from '../../services/auth';
 
 declare var jQuery: any;
@@ -62,8 +63,8 @@ export class ChatPage {
       if (chatSummariesSnapshot.exists()) {
         let chatSummaries = chatSummariesSnapshot.val();
         self.chatId = _.findKey(chatSummaries, (chatSummary: any, chatId: string) => {
-          console.log("chatSummary.users", chatSummary.users);
-          console.log("_.keys(chatSummary.users)", _.keys(chatSummary.users));
+          log.debug("chatSummary.users", chatSummary.users);
+          log.debug("_.keys(chatSummary.users)", _.keys(chatSummary.users));
           return _.includes(_.keys(chatSummary.users), self.contact.userId);
         });
         if (self.chatId) {
@@ -107,13 +108,12 @@ export class ChatPage {
       this.saveChatSummary();
     }
     let chatSummaryRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chatSummaries`).child(this.chatId);
-
     let messagesRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chats/${this.chatId}/messages`);
     let message = { text: this.messageText, sentAt: firebase.database.ServerValue.TIMESTAMP, senderUserId: this.auth.currentUserId };
     let messageRef = messagesRef.push(message);
     this.loadMessages();
 
-    chatSummaryRef.child("lastMessage").update(_.merge(message, { needsToBeCopied: true, messageId: messageRef.key }));
+    chatSummaryRef.child("lastMessage").update(_.merge(message, { pending: true, messageId: messageRef.key }));
     this.resetMessageTextArea();
   }
 
@@ -130,7 +130,7 @@ export class ChatPage {
   buildNewChatSummary() {
     this.chatSummary = {
       createdAt: firebase.database.ServerValue.TIMESTAMP,
-      needsToBeCopied: true,
+      pending: true,
       creatorUserId: this.auth.currentUserId,
       displayUserId: this.contact.userId,
       users: {}

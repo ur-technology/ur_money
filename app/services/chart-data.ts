@@ -2,6 +2,7 @@ import {Injectable, EventEmitter} from '@angular/core'
 import {AngularFire} from 'angularfire2'
 import {Component} from '@angular/core';
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 import * as Firebase from 'firebase'
 import * as moment from 'moment';
 import {Auth} from '../services/auth';
@@ -158,7 +159,7 @@ export class ChartData {
       this.percentageChange = 0;
       this.balanceChange = 0;
     }
-    // console.log("data loaded", thisPage.points);
+    log.trace("data loaded", thisPage.points);
     thisPage.isLoaded = true;
     thisPage.loadedEmitter.emit({});
   }

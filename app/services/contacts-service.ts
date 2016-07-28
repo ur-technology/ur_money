@@ -3,13 +3,16 @@ import {Platform, Alert} from 'ionic-angular';
 import {Contacts} from 'ionic-native';
 import {Contact} from '../models/contact';
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 
 @Injectable()
 export class ContactsService {
   contactGroups: any;
   countryCode: string;
   currentUserId: string;
+  currentUserRef: string;
   loaded: boolean = false;
+  contacts: Contact[];
 
   constructor(private platform: Platform) {
   }
@@ -26,29 +29,28 @@ export class ContactsService {
 
       let startTime = new Date().getTime();
       self.platform.ready().then(() => {
-        if (!self.platform.is('cordova')) {
-          self.retrieveContactsFromDevice = self.fake_retrieveContactsFromDevice;
-        }
-
-        self.retrieveContactsFromDevice().then((contactsFromDevice) => {
-          let contacts: Contact[] = contactsFromDevice;
-          console.log(`retrieved contacts in ${new Date().getTime() - startTime} milliseconds`)
+        self.retrieveContactsFromDevice().then(() => {
+          log.debug(`retrieved contacts in ${new Date().getTime() - startTime} milliseconds`)
 
           startTime = new Date().getTime();
-          self.assignUserIdsToContacts(contacts).then(() => {
-            contacts = _.reject(contacts, (c) => { return c.userId == this.currentUserId; });
-            contacts = _.sortBy(contacts, (c) => { return c.fullName(); });
-            contacts = _.flatten(_.map(contacts, (contact) => { return self.contactAndDuplicates(contact); }));
-            _.each(_.map(contacts, (contact) => { delete contact.rawPhones; }));
-            self.contactGroups = _.groupBy(contacts, function(c) { return c.userId ? "members" : "nonMembers"; });
+          self.assignUserIdsToContacts().then(() => {
+            // clean up contacts list
+            _.remove(self.contacts, (contact) => { return contact.userId == self.currentUserId; });
+            self.contacts = _.concat(self.contacts, self.extraContactsForSecondaryPhones());
+            _.each(self.contacts, (contact) => { self.assignPhoneAndPhoneType(contact); });
+            self.contacts = _.sortBy(self.contacts, (c) => { return c.fullName(); });
+
+            // partition contacts into members and non-members
+            self.contactGroups = _.groupBy(self.contacts, function(c) { return c.userId ? "members" : "nonMembers"; });
             if (!self.contactGroups.members) {
               self.contactGroups.members = [];
             }
             if (!self.contactGroups.nonMembers) {
               self.contactGroups.nonMembers = [];
             }
+
             self.loaded = true;
-            console.log(`processed contacts in ${new Date().getTime() - startTime} milliseconds`)
+            log.debug(`processed contacts in ${new Date().getTime() - startTime} milliseconds`)
             resolve(self.contactGroups);
           }, (error) => {
             reject(error);
@@ -58,11 +60,25 @@ export class ContactsService {
     });
   }
 
-  private retrieveContactsFromDevice(): Promise<Contact[]> {
+  private assignPhoneAndPhoneType(contact) {
+    if (contact.rawPhones && contact.rawPhones[0]) {
+      contact.phone = contact.rawPhones[0].phone;
+      contact.phoneType = contact.rawPhones[0].phoneType;
+    }
+    delete contact.rawPhones;
+  }
+
+  private retrieveContactsFromDevice(): Promise<any> {
     let self = this;
     return new Promise((resolve, reject) => {
+      if (!self.platform.is('cordova')) {
+        self.contacts = self.fakeContacts();
+        resolve(undefined);
+        return;
+      }
+
       Contacts.find(['*']).then((rawContacts) => {
-        let contacts = [];
+        self.contacts = [];
         _.each(rawContacts, (rawContact) => {
           let rawPhones = self.validRawPhones(rawContact.phoneNumbers || []);
           if (rawPhones.length > 0 && rawContact.name && rawContact.name.givenName && rawContact.name.familyName) {
@@ -73,7 +89,8 @@ export class ContactsService {
               deviceContactId: rawContact.id
             });
             if (rawContact.photos && rawContact.photos.length > 0) {
-              // TODO: assign contact.photo
+
+              let x = 7; // TODO: assign contact.photo
             }
             if (rawContact.middleName) {
               contact.middleName = rawContact.middleName;
@@ -82,80 +99,72 @@ export class ContactsService {
             if (email) {
               contact.email = rawContact.email;
             }
-            contacts.push(contact);
+            self.contacts.push(contact);
           }
         });
-        resolve(contacts);
+        resolve(undefined);
       }, (error) => {
         reject(error);
       });
     });
   };
 
-
-  private assignUserIdsToContacts(contacts) {
+  private assignUserIdsToContacts() {
     let self = this;
     return new Promise((resolve, reject) => {
-      let contactsRemaining = contacts.length;
-      let rejected = false;
-      _.each(contacts, function(contact) {
-        self.assignUserIdToContact(contact).then(() => {
-          if (rejected) {
-            return;
+      let currentUserRef = firebase.database().ref(`/users/${this.currentUserId}`)
+      let contactLookup = {
+        pending: true,
+        contacts: _.map(self.contacts, (contact: Contact) => {
+          return {
+            phones: _.map(contact.rawPhones, (rawPhone: any) => {
+              return rawPhone.value;
+            })
+          };
+        })
+      };
+      let contactLookupRef = currentUserRef.child("contactLookups").push(contactLookup);
+      contactLookupRef.on('child_added', (snapshot) => {
+        if (snapshot.key != 'processedContacts') {
+          return;
+        }
+        contactLookupRef.off('child_added');
+        let processedContacts = snapshot.val();
+        _.each(processedContacts, (processedContact, i) => {
+          let index = parseInt(i);
+          if (processedContact.userId) {
+            self.contacts[index].userId = processedContact.userId
+
+            // move raw phone correspeonding to registered phone number to beginning of rawPhone array
+            let registeredRawPhone = self.contacts[index].rawPhones.splice(processedContact.registeredPhoneIndex, 1)[0];
+            self.contacts[index].rawPhones.unshift(registeredRawPhone);
           }
-          contactsRemaining--;
-          if (contactsRemaining == 0) {
+          if (index == processedContacts.length - 1) {
+            contactLookupRef.remove()
             resolve();
           }
-        }, (error) => {
-          rejected = true;
-          reject(error);
         });
       });
     });
   }
 
-  private contactAndDuplicates(contact: any) { // TODO: rename this method to describe what it actually does
-    // if original contact is a non-member with multiple phones, then
-    // add a duplicate contact for each phone and add a phone-type label
-    let rawPhonesToUse = contact.userId ? [contact.rawPhones[0]] : contact.rawPhones;
-    return _.map(rawPhonesToUse, (rawPhone: any, index) => {
-      let contactOrDupe: Contact = index == 0 ? contact : _.clone(contact);
-      contactOrDupe.phone = rawPhone.value;
-      contactOrDupe.formattedPhone = this.e164ToFormattedPhone(contactOrDupe.phone);
-      if (!contact.userId && rawPhonesToUse.length > 1) {
-        contactOrDupe.phoneType = rawPhone.type;
+  private extraContactsForSecondaryPhones() {
+    let self = this;
+    let extraContacts = _.map(self.contacts, (contact) => {
+      if (contact.userId || !contact.rawPhones || contact.rawPhones.length < 2) {
+        return [];
       }
-      return contactOrDupe;
-    });
-  };
 
-
-  private assignUserIdToContact(contact: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      let rawPhonesRemaining = contact.rawPhones.length;
-      let rejected = false;
-      _.each(contact.rawPhones, function(rawPhone) {
-        firebase.database().ref('/users').orderByChild('phone').equalTo(rawPhone.value).limitToFirst(1).once('value').then((snapshot) => {
-          if (rejected) {
-            return;
-          }
-          rawPhonesRemaining--;
-          if (snapshot.exists() && !contact.userId) {
-            contact.userId = _.first(_.keys(snapshot.val()));
-            rawPhonesRemaining = 0;
-          }
-          if (rawPhonesRemaining == 0) {
-            resolve();
-          }
-        }, (error) => {
-          console.log("error looking up userId by phone", error);
-          rejected = true;
-          reject(error);
-        });
+      return _.map(_.slice(contact.rawPhones, 1), (rawPhone: any, index) => {
+        let duplicateContact: Contact = _.clone(contact);
+        duplicateContact.phone = rawPhone.value;
+        duplicateContact.formattedPhone = this.e164ToFormattedPhone(duplicateContact.phone);
+        duplicateContact.phoneType = rawPhone.type;
+        return duplicateContact;
       });
     });
-  }
+    return _.flatten(extraContacts);
+  };
 
   private getBestEmail(rawEmails: any[]): string {
     let self = this;
@@ -222,7 +231,7 @@ export class ContactsService {
       }
     } catch (e) {
       if (!/The string supplied did not seem to be a phone number/.test(e.message)) {
-        console.log(`error parsing or validating phone number '${phone}': ${e.message}`);
+        log.debug(`error parsing or validating phone number '${phone}': ${e.message}`);
       }
     }
     return e164Phone;
@@ -236,221 +245,219 @@ export class ContactsService {
       let phoneNumberObject = phoneNumberUtil.parse(e164Phone, this.countryCode);
       formattedPhone = phoneNumberUtil.format(phoneNumberObject, phoneNumberFormat.INTERNATIONAL);
     } catch (e) {
-      console.log(`error formatting phone number '${formattedPhone}': ${e.message}`);
+      log.debug(`error formatting phone number '${formattedPhone}': ${e.message}`);
     }
     return formattedPhone;
   }
 
-  private fake_retrieveContactsFromDevice(): Promise<Contact[]> {
-    return new Promise((resolve, reject) => {
-      resolve(_.map([
-        {
-          "firstName": "Eiland",
-          "lastName": "Glover",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-40.jpg?alt=media&token=a2226754-081c-43ea-98e4-48870877a253",
-          "rawPhones": [{
-            "id": "1",
-            "pref": false,
-            "value": "+16158566616",
-            "type": "mobile"
-          }],
-          "deviceContactId": "1"
+  private fakeContacts(): Contact[] {
+    return _.map([
+      {
+        "firstName": "Eiland",
+        "lastName": "Glover",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-40.jpg?alt=media&token=a2226754-081c-43ea-98e4-48870877a253",
+        "rawPhones": [{
+          "id": "1",
+          "pref": false,
+          "value": "+16158566616",
+          "type": "mobile"
+        }],
+        "deviceContactId": "1"
+      }, {
+        "firstName": "John",
+        "lastName": "Reitano",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-6.jpg?alt=media&token=9c4b1623-9971-40cb-8aa0-74bf2188e028",
+        "rawPhones": [{
+          "id": "2",
+          "pref": false,
+          "value": "+16196746211",
+          "type": "mobile"
+        }],
+        "deviceContactId": "2"
+      }, {
+        "firstName": "Malkiat",
+        "lastName": "Singh",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "3",
+          "pref": false,
+          "value": "+919915738619",
+          "type": "mobile"
+        }],
+        "deviceContactId": "3"
+      }, {
+        "firstName": "Xavier",
+        "lastName": "Perez",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar.jpg?alt=media&token=083aeded-1e4c-4178-a6e6-dc9a3131d78e",
+        "rawPhones": [{
+          "id": "4",
+          "pref": false,
+          "value": "+593998016833",
+          "type": "mobile"
+        }],
+        "deviceContactId": "4"
+      },  {
+        "firstName": "TestFirstname",
+        "lastName": "TestLastname",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-35.jpg?alt=media&token=c792966a-043c-4a02-9a31-58ea9b8715ed",
+        "rawPhones": [{
+          "id": "44",
+          "pref": false,
+          "value": "+16193611786",
+          "type": "mobile"
+        }],
+        "deviceContactId": "44"
+      }, {
+        "firstName": "Alpha",
+        "lastName": "Andrews",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "40",
+          "pref": false,
+          "value": "+16197778001",
+          "type": "mobile"
+        }],
+        "deviceContactId": "7"
+      }, {
+        "firstName": "Beta",
+        "lastName": "Brown",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "70",
+          "pref": false,
+          "value": "+16197778002",
+          "type": "home"
         }, {
-          "firstName": "John",
-          "lastName": "Reitano",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-6.jpg?alt=media&token=9c4b1623-9971-40cb-8aa0-74bf2188e028",
-          "rawPhones": [{
-            "id": "2",
+            "id": "72",
             "pref": false,
-            "value": "+16196746211",
-            "type": "mobile"
-          }],
-          "deviceContactId": "2"
-        }, {
-          "firstName": "Malkiat",
-          "lastName": "Singh",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "3",
-            "pref": false,
-            "value": "+919915738619",
-            "type": "mobile"
-          }],
-          "deviceContactId": "3"
-        }, {
-          "firstName": "Xavier",
-          "lastName": "Perez",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar.jpg?alt=media&token=083aeded-1e4c-4178-a6e6-dc9a3131d78e",
-          "rawPhones": [{
-            "id": "4",
-            "pref": false,
-            "value": "+593998016833",
-            "type": "mobile"
-          }],
-          "deviceContactId": "4"
-        },  {
-          "firstName": "TestFirstname",
-          "lastName": "TestLastname",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-35.jpg?alt=media&token=c792966a-043c-4a02-9a31-58ea9b8715ed",
-          "rawPhones": [{
-            "id": "44",
-            "pref": false,
-            "value": "+16193611786",
-            "type": "mobile"
-          }],
-          "deviceContactId": "44"
-        }, {
-          "firstName": "Alpha",
-          "lastName": "Andrews",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "40",
-            "pref": false,
-            "value": "+16197778001",
-            "type": "mobile"
-          }],
-          "deviceContactId": "7"
-        }, {
-          "firstName": "Beta",
-          "lastName": "Brown",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "70",
-            "pref": false,
-            "value": "+16197778002",
-            "type": "home"
-          }, {
-              "id": "72",
-              "pref": false,
-              "value": "+16197778004",
-              "type": "mobile"
-            }, {
-              "id": "73",
-              "pref": false,
-              "value": "+16197778005",
-              "type": "work"
-            }],
-          "deviceContactId": "8"
-        }, {
-          "firstName": "Gamma",
-          "lastName": "Gallant",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "95",
-            "pref": false,
-            "value": "+16197778006",
-            "type": "mobile"
-          }],
-          "deviceContactId": "9"
-        }, {
-          "firstName": "Delta",
-          "lastName": "Daniels",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "197",
-            "pref": false,
-            "value": "+16197778007",
-            "type": "home"
-          }, {
-              "id": "199",
-              "pref": false,
-              "value": "+16197778008",
-              "type": "mobile"
-            }],
-          "deviceContactId": "10"
-        }, {
-          "firstName": "Epsilon",
-          "lastName": "Ellison",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "152",
-            "pref": false,
-            "value": "+16197778009",
-            "type": "mobile"
-          }],
-          "deviceContactId": "13"
-        }, {
-          "firstName": "Zeta",
-          "lastName": "Zenderson",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "49",
-            "pref": false,
-            "value": "+16197778010",
-            "type": "mobile"
-          }],
-          "deviceContactId": "16"
-        }, {
-          "firstName": "Eta",
-          "lastName": "Edwards",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "232",
-            "pref": false,
-            "value": "+16197778011",
-            "type": "mobile"
-          }],
-          "deviceContactId": "17"
-        }, {
-          "firstName": "Theta",
-          "lastName": "Thierry",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "222",
-            "pref": false,
-            "value": "+16197778012",
-            "type": "mobile"
-          }],
-          "deviceContactId": "18"
-        }, {
-          "firstName": "Iota",
-          "lastName": "Immerson",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "140",
-            "pref": false,
-            "value": "+16197778013",
-            "type": "home"
-          }, {
-              "id": "142",
-              "pref": false,
-              "value": "+16197778014",
-              "type": "mobile"
-            }],
-          "deviceContactId": "19"
-        }, {
-          "firstName": "Kappa",
-          "lastName": "Krell",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-          "rawPhones": [{
-            "id": "84",
-            "pref": false,
-            "value": "+16197778015",
-            "type": "home"
-          }, {
-              "id": "86",
-              "pref": false,
-              "value": "+16197778016",
-              "type": "mobile"
-            }],
-          "deviceContactId": "20"
-        }, {
-          "firstName": "Lambda",
-          "lastName": "Landau",
-          "rawPhones": [{
-            "id": "184",
-            "pref": false,
-            "value": "+5216643332222",
+            "value": "+16197778004",
             "type": "mobile"
           }, {
-              "id": "186",
-              "pref": false,
-              "value": "+5216643332223",
-              "type": "mobile"
-            }],
-          "deviceContactId": "20"
-        }
-      ], (attrs) => { return new Contact("", attrs); }));
-    });
-  };
+            "id": "73",
+            "pref": false,
+            "value": "+16197778005",
+            "type": "work"
+          }],
+        "deviceContactId": "8"
+      }, {
+        "firstName": "Gamma",
+        "lastName": "Gallant",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "95",
+          "pref": false,
+          "value": "+16197778006",
+          "type": "mobile"
+        }],
+        "deviceContactId": "9"
+      }, {
+        "firstName": "Delta",
+        "lastName": "Daniels",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "197",
+          "pref": false,
+          "value": "+16197778007",
+          "type": "home"
+        }, {
+            "id": "199",
+            "pref": false,
+            "value": "+16197778008",
+            "type": "mobile"
+          }],
+        "deviceContactId": "10"
+      }, {
+        "firstName": "Epsilon",
+        "lastName": "Ellison",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "152",
+          "pref": false,
+          "value": "+16197778009",
+          "type": "mobile"
+        }],
+        "deviceContactId": "13"
+      }, {
+        "firstName": "Zeta",
+        "lastName": "Zenderson",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "49",
+          "pref": false,
+          "value": "+16197778010",
+          "type": "mobile"
+        }],
+        "deviceContactId": "16"
+      }, {
+        "firstName": "Eta",
+        "lastName": "Edwards",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "232",
+          "pref": false,
+          "value": "+16197778011",
+          "type": "mobile"
+        }],
+        "deviceContactId": "17"
+      }, {
+        "firstName": "Theta",
+        "lastName": "Thierry",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "222",
+          "pref": false,
+          "value": "+16197778012",
+          "type": "mobile"
+        }],
+        "deviceContactId": "18"
+      }, {
+        "firstName": "Iota",
+        "lastName": "Immerson",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "140",
+          "pref": false,
+          "value": "+16197778013",
+          "type": "home"
+        }, {
+            "id": "142",
+            "pref": false,
+            "value": "+16197778014",
+            "type": "mobile"
+          }],
+        "deviceContactId": "19"
+      }, {
+        "firstName": "Kappa",
+        "lastName": "Krell",
+        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
+        "rawPhones": [{
+          "id": "84",
+          "pref": false,
+          "value": "+16197778015",
+          "type": "home"
+        }, {
+            "id": "86",
+            "pref": false,
+            "value": "+16197778016",
+            "type": "mobile"
+          }],
+        "deviceContactId": "20"
+      }, {
+        "firstName": "Lambda",
+        "lastName": "Landau",
+        "rawPhones": [{
+          "id": "184",
+          "pref": false,
+          "value": "+5216643332222",
+          "type": "mobile"
+        }, {
+            "id": "186",
+            "pref": false,
+            "value": "+5216643332223",
+            "type": "mobile"
+          }],
+        "deviceContactId": "20"
+      }
+    ], (attrs) => { return new Contact("", attrs); });
+  }
 }

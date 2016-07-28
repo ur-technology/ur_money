@@ -1,12 +1,7 @@
 import {Injectable, Pipe} from '@angular/core';
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 
-/*
-  Generated class for the OrderBy pipe.
-
-  See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
-  Angular 2 Pipes.
-*/
 @Pipe({
   name: 'orderBy'
 })
@@ -16,7 +11,7 @@ export class OrderBy {
     Takes a value Contvert to order By.
    */
   transform(array: any[], args: any[]) {
-    console.log(_.orderBy(array, args[0]));
+    log.trace(_.orderBy(array, args[0]));
     return _.orderBy(array, args[0]);
   }
 }

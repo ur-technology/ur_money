@@ -3,6 +3,7 @@ import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl, Control} fr
 import {CustomValidators} from '../../validators/custom-validators';
 import {Auth} from '../../services/auth';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
+import * as log from 'loglevel';
 
 @Page({
   templateUrl: 'build/pages/registration/registration3.html',
@@ -47,7 +48,7 @@ export class Registration3Page {
     this.auth.requestPhoneVerification(this.phone).then((result: any) => {
       loading.dismiss();
       if (!result.smsSuccess) {
-        console.log("error - sms could not be sent");
+        log.warn("sms could not be sent");
         this.showErrorAlert();
         return;
       } else {

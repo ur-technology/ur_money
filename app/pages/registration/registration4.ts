@@ -3,6 +3,7 @@ import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/common';
 import {AngularFire} from 'angularfire2'
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 
 import {Focuser} from '../../directives/focuser';
 import {Wallet} from '../../models/wallet';
@@ -131,14 +132,15 @@ export class Registration4Page {
       self.saveProfile();
     }).catch((error) => {
       self.loadingModal.hide();
-      console.log('unable to get address!');
+      log.warn('unable to get address!');
     });
   }
 
   saveProfile() {
     let self = this;
-    self.auth.currentUserRef.update({
+    let attrs = {
       firstName: self.profile.firstName,
+      middleName: self.profile.middleName,
       lastName: self.profile.lastName,
       city: self.profile.city,
       stateName: self.profile.stateName,
@@ -147,8 +149,10 @@ export class Registration4Page {
       wallet: {
         address: self.profile.address,
         createdAt: firebase.database.ServerValue.TIMESTAMP
-      }
-    }).then(() => {
+      },
+      signedUpAt: self.auth.currentUser.signedUpAt || firebase.database.ServerValue.TIMESTAMP
+    };
+    self.auth.currentUserRef.update(_.omitBy(attrs, _.isNil)).then(() => {
       self.loadingModal.hide();
       let toast = Toast.create({
         message: 'Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!',
@@ -159,7 +163,7 @@ export class Registration4Page {
       self.nav.setRoot(HomePage);
     }).catch((error) => {
       self.loadingModal.hide();
-      console.log('unable to save profiel and wallet info!');
+      log.warn('unable to save profile and wallet info');
     });
   };
 }

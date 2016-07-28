@@ -3,6 +3,9 @@ import {HTTP_PROVIDERS } from '@angular/http';
 import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
+import * as _ from 'lodash';
+import * as log from 'loglevel';
+
 import {Auth} from './services/auth';
 import {ChartData} from './services/chart-data';
 import {TransactionNavService} from './pages/transactions/transaction-nav-service';
@@ -23,7 +26,6 @@ import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';
 
-import * as _ from 'lodash';
 
 @Component({
   templateUrl: 'build/app.html',
@@ -67,11 +69,15 @@ class UrMoney {
 
   initializeApp() {
     this.platform.ready().then(() => {
+
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
       }
 
+      log.setDefaultLevel(1); // { "TRACE": 0, "DEBUG": 1, "INFO": 2, "WARN": 3, "ERROR": 4, "SILENT": 5 }
+      log.info("starting app")
       this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
+
     });
   }
 
@@ -93,24 +99,6 @@ class UrMoney {
     this.menu.close();
     this.nav.rootNav.push(ContactsAndChatsPage, {nonMembersFirst: true}, { animate: true, direction: 'forward' });
   }
-
-  generateProfileImage() {
-    var colorScheme = _.sample([
-      { background: "ED6D54", foreground: "FFFFFF" }
-    ]);
-    var initials;
-    if (this.auth.currentUser && this.auth.currentUser.firstName) {
-      var firstLetters = this.auth.currentUser.firstName.match(/\b\w/g);
-      initials = firstLetters[0];
-      var lastNameFirstLetter = (this.auth.currentUser.lastName || '').match(/\b\w/g);
-      initials = initials + lastNameFirstLetter[0];
-      initials = initials.toUpperCase();
-    } else {
-      initials = "UP";
-    }
-    return "https://dummyimage.com/100x100/" + colorScheme.background + "/" + colorScheme.foreground + "&text=" + initials;
-  };
-
 
 }
 // Pass the main App component as the first argument

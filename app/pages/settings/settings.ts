@@ -2,6 +2,7 @@ import {ViewChild} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/common';
 import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 
 import {CustomValidators} from '../../validators/custom-validators';
 import {Auth} from '../../services/auth';
@@ -73,7 +74,19 @@ export class SettingsPage {
   }
 
   signOut() {
-    this.auth.angularFire.auth.logout()
+    let alert = Alert.create({
+      title: 'Sign Out Confirmation',
+      message: "Sign out?",
+      buttons: [
+        { text: 'Cancel', handler: () => { alert.dismiss(); } },
+        {
+          text: 'OK', handler: () => {
+            this.auth.angularFire.auth.logout()
+          }
+        }
+      ]
+    });
+
   }
 
   saveProfile() {
@@ -89,7 +102,7 @@ export class SettingsPage {
       self.nav.present(toast);
       this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
     }).catch((error) => {
-      console.log('unable to save profiel and wallet info!');
+      log.warn('unable to save profile');
     });
   };
 
