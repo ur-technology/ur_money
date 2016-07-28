@@ -27,7 +27,10 @@ export class Auth {
       if (authData) {
         self.currentUserId = authData.uid;
         self.currentUserRef = self.angularFire.database.object(`/users/${self.currentUserId}`);
-        self.currentUserRef.subscribe((currentUser) => {
+        let userSubscription: Subscription = self.currentUserRef.subscribe((currentUser) => {
+          if (userSubscription && !userSubscription.isUnsubscribed) {
+            userSubscription.unsubscribe()
+          }
           self.currentUser = currentUser;
           self.getSimCountryCode().then((countryCode) => {
             self.countryCode = countryCode || currentUser.countryCode;
