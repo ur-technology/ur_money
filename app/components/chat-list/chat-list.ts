@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Subscription} from 'rxjs';
 import { NavController } from 'ionic-angular';
-import {Auth} from '../../components/auth/auth';
+import {Auth} from '../../services/auth';
 import {ChatPage} from '../../pages/chat/chat';
 import {Timestamp}  from '../../pipes/timestamp';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';

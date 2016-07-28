@@ -1,3 +1,82 @@
+.hidden {
+  display: none!important;
+}
+
+.centered-spinner {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block !important;
+  text-align: center;
+}
+
+.center-text {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.settings {
+  .sign-out-button {
+    margin-top: 50px;
+  }
+
+  .right {
+    float: right;
+  }
+
+  ion-select {
+    width: default;
+    padding-left: 5px;
+    border-left: 5px solid white;
+  }
+
+  ion-label {
+    padding-left: 5px;
+    border-left: 5px solid white;
+  }
+
+  ion-input {
+    padding-left: 5px;
+  }
+
+  ion-input.ng-pristine {
+    border-left: 5px solid white;
+  }
+
+  ion-input.ng-dirty.ng-invalid, ion-input.ng-touched.ng-invalid {
+    border-left: 5px solid red;
+  }
+
+  ion-input.ng-valid {
+    border-left: 5px solid white;
+  }
+}
+
 .settings {
 
+  ion-select {
+    width: 0;
+    padding: 0;
+  }
+
+  .toolbar-background {
+    background-color: #ededed;
+    color: #323232;
+    border: none;
+  }
+  .right {
+    float: right;
+  }
+  .toolbar-content {
+    ion-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #323232;
+    }
+    button {
+      font-size: 15px;
+      font-weight: 700;
+      color: #59d2ff !important;
+    }
+  }
 }

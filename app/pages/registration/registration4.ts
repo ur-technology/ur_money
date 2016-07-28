@@ -1,15 +1,17 @@
 import {ViewChild, ElementRef, Inject} from '@angular/core';
 import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/common';
-import {CustomValidators} from '../../components/custom-validators/custom-validators';
-import {Auth} from '../../components/auth/auth';
-import {LoadingModal} from '../../components/loading-modal/loading-modal';
-import {HomePage} from '../home/home';
 import {AngularFire} from 'angularfire2'
-import {Focuser} from '../../components/focuser/focuser';
-import {Wallet} from '../../components/wallet/wallet';
-import {DeviceIdentityService} from '../../components/services/device-identity.service';
 import * as _ from 'lodash';
+
+import {Focuser} from '../../directives/focuser';
+import {Wallet} from '../../models/wallet';
+import {Auth} from '../../services/auth';
+import {DeviceIdentityService} from '../../services/device-identity-service';
+import {CustomValidators} from '../../validators/custom-validators';
+import {LoadingModal} from '../../components/loading-modal/loading-modal';
+
+import {HomePage} from '../home/home';
 
 declare var jQuery: any;
 
@@ -18,23 +20,19 @@ declare var jQuery: any;
   directives: [FORM_DIRECTIVES, Focuser]
 })
 export class Registration4Page {
-  elementRef: ElementRef;
-  walletForm: ControlGroup;
+  mainForm: ControlGroup;
   errorMessage: string;
   countries: any[];
   allStates: any[];
   states: any[];
   profile: any;
   constructor(
-    @Inject(ElementRef) elementRef: ElementRef,
     public nav: NavController,
     public formBuilder: FormBuilder,
     public auth: Auth,
     public loadingModal: LoadingModal,
-    public angularFire: AngularFire,
     public deviceIdentityService: DeviceIdentityService
   ) {
-    this.elementRef = elementRef;
     this.countries = require('country-data').countries.all.sort((a, b) => {
       return (a.name < b.name) ? -1 : ((a.name == b.name) ? 0 : 1);
     });
@@ -43,7 +41,7 @@ export class Registration4Page {
       return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) == -1;
     });
     this.allStates = require('provinces');
-    this.walletForm = formBuilder.group({
+    this.mainForm = formBuilder.group({
       'firstName': ["", CustomValidators.nameValidator],
       'lastName': ["", CustomValidators.nameValidator],
       'stateName': ["", CustomValidators.nameValidator],
@@ -73,7 +71,7 @@ export class Registration4Page {
     } else {
       this.profile.state = undefined;
       this.profile.stateName = defaultStateName;
-      this.walletForm.value.stateName = this.profile.stateName;
+      this.mainForm.value.stateName = this.profile.stateName;
     }
   }
   stateSelected() {
@@ -83,7 +81,7 @@ export class Registration4Page {
   suggestSecretPhrase() {
     var secureRandword = require('secure-randword');
     this.profile.secretPhrase = secureRandword(5).join(' ');;
-    this.walletForm.controls['secretPhrase'].markAsDirty();
+    this.mainForm.controls['secretPhrase'].markAsDirty();
   }
 
   submit() {

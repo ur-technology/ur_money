@@ -3,15 +3,16 @@ import {HTTP_PROVIDERS } from '@angular/http';
 import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, AuthMethods} from 'angularfire2';
-import {Auth} from './components/auth/auth';
-import {ChartData} from './components/chart-data/chart-data';
+import {Auth} from './services/auth';
+import {ChartData} from './services/chart-data';
 import {TransactionNavService} from './pages/transactions/transaction-nav-service';
-import {CountryListService} from './components/services/country-list-service';
+import {CountryListService} from './services/country-list-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
-import {ContactsService} from './components/services/contacts-service';
-import {DeviceIdentityService} from './components/services/device-identity.service';
-import {Config} from './components/config/config'; // TODO: make this injectable
+import {ContactsService} from './services/contacts-service';
+import {DeviceIdentityService} from './services/device-identity-service';
+import {Config} from './services/config'; // TODO: make this injectable
 
+import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
 import {Registration1Page} from './pages/registration/registration1';
 import {Registration4Page} from './pages/registration/registration4';
 import {HomePage} from './pages/home/home';
@@ -21,13 +22,6 @@ import {ContactsPage} from './pages/contacts/contacts';
 import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';
-
-// temporarily support prelaunch sign-up app
-import {DashboardPage} from './prelaunch_pages/dashboard/dashboard';
-import {SignInPage} from './prelaunch_pages/sign-in/sign-in';
-import {SignUpPage} from './prelaunch_pages/sign-up/sign-up';
-import {ErrorPage} from './prelaunch_pages/error/error';
-import {PrelaunchService} from './prelaunch_components/prelaunch-service/prelaunch-service';
 
 import * as _ from 'lodash';
 
@@ -42,7 +36,6 @@ import * as _ from 'lodash';
     CountryListService,
     ChartData,
     LoadingModal,
-    PrelaunchService,
     FIREBASE_PROVIDERS,
     HTTP_PROVIDERS,
     defaultFirebase(Config.values().firebase),
@@ -57,32 +50,20 @@ class UrMoney {
   // rootPage: any = Registration1Page;
   menuItems: Array<{ title: string, component: any, icon: string }>;
   user: any = {};
-  invitePage: {};
+  invitePage: any;
   faceUrl: string;
-  constructor(private platform: Platform, private menu: MenuController, public auth: Auth, public prelaunchService: PrelaunchService) {
+  constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
 
     // set our app's pages
     this.menuItems = [
       { title: 'Home', component: HomePage, icon: 'icon menu-icon-1' },
+      { title: 'Chat', component: ContactsAndChatsPage, icon: 'icon menu-icon-1' },
       { title: 'Send UR', component: SendPage, icon: 'icon menu-icon-2' },
       { title: 'Request UR', component: ReceivePage, icon: 'icon menu-icon-3' },
       { title: 'Transactions', component: TransactionsPage, icon: 'icon menu-icon-4' },
       { title: 'About UR', component: AboutPage, icon: 'icon menu-icon-7' }
     ];
-  }
-
-  isPrelaunchRequest() {
-    return /[\/?&]go/.test(window.location.href);
-  }
-
-  handlePrelaunchRequest() {
-    var phone = localStorage.getItem("prelaunchPhone");
-    if (phone) {
-      this.prelaunchService.lookupPrelaunchUserByPhone(phone, this.nav, DashboardPage, SignUpPage, ErrorPage);
-    } else {
-      this.nav.setRoot(SignInPage);
-    }
   }
 
   initializeApp() {
@@ -94,37 +75,28 @@ class UrMoney {
         StatusBar.styleDefault();
       }
 
-      if (this.isPrelaunchRequest()) {
-        this.handlePrelaunchRequest();
-        return;
-      }
-
       this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
     });
   }
 
   openPage(page) {
-    // close the menu when clicking a link from the menu
     this.menu.close();
-    // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
+    if (page.component == HomePage) {
+      this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
+    } else {
+      this.nav.rootNav.push(page.component, {}, { animate: true, direction: 'forward' });
+    }
   }
 
-  openSetting() {
+  openSettings() {
     this.menu.close();
-    this.nav.push(SettingsPage);
+    this.nav.rootNav.push(SettingsPage);
   }
 
   inviteContact() {
     this.menu.close();
-    this.nav.push(ContactsPage, {nonMembersFirst: true});
+    this.nav.rootNav.push(ContactsAndChatsPage, {nonMembersFirst: true}, { animate: true, direction: 'forward' });
   }
-
-  signOut() {
-    this.menu.close();
-    this.auth.angularFire.auth.logout(); // this will trigger redirect to Registration1Page
-  }
-
 
   generateProfileImage() {
     var colorScheme = _.sample([

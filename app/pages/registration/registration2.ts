@@ -2,17 +2,13 @@ import {Page, NavController, Alert, Platform, Nav, Popover, Loading} from 'ionic
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import * as _ from 'lodash';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
-import {Auth} from '../../components/auth/auth';
+import {Auth} from '../../services/auth';
 import {Registration3Page} from './registration3';
-import {CustomValidators} from '../../components/custom-validators/custom-validators';
+import {CustomValidators} from '../../validators/custom-validators';
 import {LoadingModal} from '../../components/loading-modal/loading-modal';
-import {CountryListService} from '../../components/services/country-list-service';
+import {CountryListService} from '../../services/country-list-service';
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
-
-import libphonenumber = require('google-libphonenumber');
-const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
-
 
 @Page({
   templateUrl: 'build/pages/registration/registration2.html',
@@ -29,13 +25,10 @@ export class Registration2Page implements OnInit {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
       'phone': ['', (control) => {
-        if (control.value.length === 0) {
-          return { 'invalidPhone': true };
-        }
         try {
-          let swissNumberProto = phoneUtil.parse(control.value, this.selectedCountry.iso);
-          let isValid = phoneUtil.isValidNumber(swissNumberProto);
-          if (!isValid) {
+          let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();;
+          let phoneNumberObject = phoneNumberUtil.parse(control.value, this.selectedCountry.iso);
+          if (!phoneNumberUtil.isValidNumber(phoneNumberObject)) {
             return { 'invalidPhone': true };
           }
         } catch (e) {

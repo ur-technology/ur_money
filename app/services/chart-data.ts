@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
 import * as _ from 'lodash';
 import * as Firebase from 'firebase'
 import * as moment from 'moment';
-import {Auth} from '../../components/auth/auth';
+import {Auth} from '../services/auth';
 
 @Injectable()
 

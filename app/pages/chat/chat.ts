@@ -4,7 +4,9 @@ import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservab
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
-import {Auth} from '../../components/auth/auth';
+import {Auth} from '../../services/auth';
+
+declare var jQuery: any;
 
 declare var jQuery: any;
 

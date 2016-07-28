@@ -1,5 +1,5 @@
 import {Page, NavController, NavParams, Alert, Modal, Platform} from 'ionic-angular';
-import {ChartData} from '../../components/chart-data/chart-data';
+import {ChartData} from '../../services/chart-data';
 import {Component, OnInit, ElementRef, Inject, ViewChild} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
@@ -13,8 +13,8 @@ import {Round} from '../../pipes/round';
 import {ChatList} from '../../components/chat-list/chat-list';
 import {LocalNotifications} from 'ionic-native';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
-import {Auth} from '../../components/auth/auth';
-import {User2} from '../../components/models/user2';
+import {Auth} from '../../services/auth';
+import {User2} from '../../models/user2';
 
 declare var jQuery: any;
 
@@ -61,9 +61,8 @@ export class HomePage implements OnInit {
   }
 
   startNewChat() {
-    this.nav.push(ContactsAndChatsPage, {nonMembersFirst: false}, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { animate: true, direction: 'forward' });
   }
-
 
   setRoot(page) {
     this.nav.setRoot(page, {}, { animate: true, direction: 'forward' });
@@ -142,7 +141,7 @@ export class HomePage implements OnInit {
   }
 
   inviteContact() {
-    this.nav.push(ContactsAndChatsPage, {nonMembersFirst: true});
+    this.nav.rootNav.push(ContactsAndChatsPage, {nonMembersFirst: true}, { animate: true, direction: 'forward' });
   }
 
   private scheduleNotification(data: any, userId: string) {
