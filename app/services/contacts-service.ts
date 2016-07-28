@@ -27,7 +27,6 @@ export class ContactsService {
       let startTime = new Date().getTime();
       self.platform.ready().then(() => {
         if (!self.platform.is('cordova')) {
-          console.log("if (!self.platform.is('cordova')) {");
           self.retrieveContactsFromDevice = self.fake_retrieveContactsFromDevice;
         }
 
@@ -438,7 +437,6 @@ export class ContactsService {
         }, {
           "firstName": "Lambda",
           "lastName": "Landau",
-          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "184",
             "pref": false,

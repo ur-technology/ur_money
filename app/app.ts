@@ -55,22 +55,18 @@ class UrMoney {
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
 
-    // set our app's pages
     this.menuItems = [
-      { title: 'Home', component: HomePage, icon: 'icon menu-icon-1' },
-      { title: 'Chat', component: ContactsAndChatsPage, icon: 'icon menu-icon-8' },
-      { title: 'Send UR', component: SendPage, icon: 'icon menu-icon-2' },
-      { title: 'Request UR', component: ReceivePage, icon: 'icon menu-icon-3' },
-      { title: 'Transactions', component: TransactionsPage, icon: 'icon menu-icon-4' },
-      { title: 'About UR', component: AboutPage, icon: 'icon menu-icon-7' }
+      { title: 'Home', component: HomePage, icon: 'icon menu-icon menu-icon-home' },
+      { title: 'Chat', component: ContactsAndChatsPage, icon: 'icon menu-icon menu-icon-chat' },
+      { title: 'Send UR', component: SendPage, icon: 'icon menu-icon menu-icon-send-ur' },
+      { title: 'Request UR', component: ReceivePage, icon: 'icon menu-icon menu-icon-request-ur' },
+      { title: 'Transactions', component: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions' },
+      { title: 'About UR', component: AboutPage, icon: 'icon menu-icon menu-icon-about' }
     ];
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
       }
