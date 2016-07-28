@@ -27,6 +27,7 @@ export class ContactsService {
       let startTime = new Date().getTime();
       self.platform.ready().then(() => {
         if (!self.platform.is('cordova')) {
+          console.log("if (!self.platform.is('cordova')) {");
           self.retrieveContactsFromDevice = self.fake_retrieveContactsFromDevice;
         }
 
@@ -247,6 +248,7 @@ export class ContactsService {
         {
           "firstName": "Eiland",
           "lastName": "Glover",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-40.jpg?alt=media&token=a2226754-081c-43ea-98e4-48870877a253",
           "rawPhones": [{
             "id": "1",
             "pref": false,
@@ -257,6 +259,7 @@ export class ContactsService {
         }, {
           "firstName": "John",
           "lastName": "Reitano",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-6.jpg?alt=media&token=9c4b1623-9971-40cb-8aa0-74bf2188e028",
           "rawPhones": [{
             "id": "2",
             "pref": false,
@@ -267,6 +270,7 @@ export class ContactsService {
         }, {
           "firstName": "Malkiat",
           "lastName": "Singh",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "3",
             "pref": false,
@@ -277,6 +281,7 @@ export class ContactsService {
         }, {
           "firstName": "Xavier",
           "lastName": "Perez",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar.jpg?alt=media&token=083aeded-1e4c-4178-a6e6-dc9a3131d78e",
           "rawPhones": [{
             "id": "4",
             "pref": false,
@@ -284,9 +289,21 @@ export class ContactsService {
             "type": "mobile"
           }],
           "deviceContactId": "4"
+        },  {
+          "firstName": "TestFirstname",
+          "lastName": "TestLastname",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-35.jpg?alt=media&token=c792966a-043c-4a02-9a31-58ea9b8715ed",
+          "rawPhones": [{
+            "id": "44",
+            "pref": false,
+            "value": "+16193611786",
+            "type": "mobile"
+          }],
+          "deviceContactId": "44"
         }, {
           "firstName": "Alpha",
           "lastName": "Andrews",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "40",
             "pref": false,
@@ -297,6 +314,7 @@ export class ContactsService {
         }, {
           "firstName": "Beta",
           "lastName": "Brown",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "70",
             "pref": false,
@@ -317,6 +335,7 @@ export class ContactsService {
         }, {
           "firstName": "Gamma",
           "lastName": "Gallant",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "95",
             "pref": false,
@@ -327,6 +346,7 @@ export class ContactsService {
         }, {
           "firstName": "Delta",
           "lastName": "Daniels",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "197",
             "pref": false,
@@ -342,6 +362,7 @@ export class ContactsService {
         }, {
           "firstName": "Epsilon",
           "lastName": "Ellison",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "152",
             "pref": false,
@@ -352,6 +373,7 @@ export class ContactsService {
         }, {
           "firstName": "Zeta",
           "lastName": "Zenderson",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "49",
             "pref": false,
@@ -362,6 +384,7 @@ export class ContactsService {
         }, {
           "firstName": "Eta",
           "lastName": "Edwards",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "232",
             "pref": false,
@@ -372,6 +395,7 @@ export class ContactsService {
         }, {
           "firstName": "Theta",
           "lastName": "Thierry",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "222",
             "pref": false,
@@ -382,6 +406,7 @@ export class ContactsService {
         }, {
           "firstName": "Iota",
           "lastName": "Immerson",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "140",
             "pref": false,
@@ -397,6 +422,7 @@ export class ContactsService {
         }, {
           "firstName": "Kappa",
           "lastName": "Krell",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "84",
             "pref": false,
@@ -412,6 +438,7 @@ export class ContactsService {
         }, {
           "firstName": "Lambda",
           "lastName": "Landau",
+          "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
           "rawPhones": [{
             "id": "184",
             "pref": false,
