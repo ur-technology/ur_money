@@ -77,7 +77,7 @@ export class ContactsPage {
     SocialSharing.shareWithOptions({
       message: `I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit `, // not supported on some apps (Facebook, Instagram)
       file: 'https://ur-money-staging.firebaseapp.com/img/icon.png',
-      url: `${Config.values().appDownloadUrl}/${downlineUser.inviteCode}`,
+      url: `${Config.values().appDownloadUrl}`,
       chooserTitle: 'Pick an app' // Android only
     }).then((result) => {
       log.debug("returned from SocialSharing.shareWithOptions; saving dowlineUser");
