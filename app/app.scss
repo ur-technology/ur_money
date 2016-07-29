@@ -326,3 +326,7 @@ i.menu-icon {
     margin-right: auto;
     height: 2em;
 }
+
+ion-avatar ion-img img {
+  min-height: unset;
+}
