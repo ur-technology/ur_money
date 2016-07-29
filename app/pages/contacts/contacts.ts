@@ -33,12 +33,13 @@ export class ContactsPage {
   }
 
   ionViewDidEnter() {
-    this.contactsService.load(this.auth.countryCode, this.auth.currentUserId).then((contactGroups: any) => {
-      let contacts = this.nonMembersFirst ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
-      this.paginatedContacts = _.chunk(contacts, this.PAGE_SIZE);
-      this.numberOfPages = this.paginatedContacts.length;
-      this.displayableContacts = this.paginatedContacts[0];
-      let timeElapsed = (new Date()).getTime() - this.startTime;
+    let self = this;
+    self.contactsService.load(self.auth.countryCode, self.auth.currentUserId).then((contactGroups: any) => {
+      let contacts = self.nonMembersFirst ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
+      self.paginatedContacts = _.chunk(contacts, self.PAGE_SIZE);
+      self.numberOfPages = self.paginatedContacts.length;
+      self.displayableContacts = self.paginatedContacts[0];
+      let timeElapsed = (new Date()).getTime() - self.startTime;
       log.debug("milliseconds elapsed", timeElapsed);
       log.debug("contactGroups.nonMembers.length", contactGroups.nonMembers.length);
       log.debug("contactGroups.members.length", contactGroups.members.length);

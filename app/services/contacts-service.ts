@@ -7,12 +7,12 @@ import * as log from 'loglevel';
 
 @Injectable()
 export class ContactsService {
+  contacts: Contact[];
   contactGroups: any;
   countryCode: string;
   currentUserId: string;
   currentUserRef: string;
   loaded: boolean = false;
-  contacts: Contact[];
 
   constructor(private platform: Platform) {
   }
@@ -37,7 +37,7 @@ export class ContactsService {
             // clean up contacts list
             _.remove(self.contacts, (contact) => { return contact.userId == self.currentUserId; });
             self.contacts = _.concat(self.contacts, self.extraContactsForSecondaryPhones());
-            _.each(self.contacts, (contact) => { self.assignPhoneAndPhoneType(contact); });
+            _.each(self.contacts, (contact) => { self.assignPhoneInfoToContact(contact); });
             self.contacts = _.sortBy(self.contacts, (c) => { return c.fullName(); });
 
             // partition contacts into members and non-members
@@ -60,10 +60,11 @@ export class ContactsService {
     });
   }
 
-  private assignPhoneAndPhoneType(contact) {
+  private assignPhoneInfoToContact(contact) {
     if (contact.rawPhones && contact.rawPhones[0]) {
-      contact.phone = contact.rawPhones[0].phone;
-      contact.phoneType = contact.rawPhones[0].phoneType;
+      contact.phone = contact.rawPhones[0].value;
+      contact.formattedPhone = this.e164ToFormattedPhone(contact.phone);
+      contact.phoneType = contact.rawPhones[0].type;
     }
     delete contact.rawPhones;
   }
@@ -157,9 +158,7 @@ export class ContactsService {
 
       return _.map(_.slice(contact.rawPhones, 1), (rawPhone: any, index) => {
         let duplicateContact: Contact = _.clone(contact);
-        duplicateContact.phone = rawPhone.value;
-        duplicateContact.formattedPhone = this.e164ToFormattedPhone(duplicateContact.phone);
-        duplicateContact.phoneType = rawPhone.type;
+        duplicateContact.rawPhones = [rawPhone];
         return duplicateContact;
       });
     });
