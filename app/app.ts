@@ -13,7 +13,7 @@ import {CountryListService} from './services/country-list-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 import {ContactsService} from './services/contacts-service';
 import {DeviceIdentityService} from './services/device-identity-service';
-import {Config} from './services/config'; // TODO: make this injectable
+import {Config} from './config/config';
 
 import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
 import {Registration1Page} from './pages/registration/registration1';
@@ -40,7 +40,7 @@ import {DownloadPage} from './pages/download/download';
     LoadingModal,
     FIREBASE_PROVIDERS,
     HTTP_PROVIDERS,
-    defaultFirebase(Config.values().firebase),
+    defaultFirebase(Config.firebase),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
@@ -56,7 +56,6 @@ class UrMoney {
   faceUrl: string;
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
-
     this.menuItems = [
       { title: 'Home', component: HomePage, icon: 'icon menu-icon menu-icon-home' },
       { title: 'Chat', component: ContactsAndChatsPage, icon: 'icon menu-icon menu-icon-chat' },

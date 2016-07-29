@@ -5,7 +5,7 @@ import {ContactsService} from '../../services/contacts-service';
 import {Auth} from '../../services/auth';
 import {ChatPage} from '../chat/chat';
 import {Invite} from '../../models/invite';
-import {Config} from '../../services/config';
+import {Config} from '../../config/config';
 import {User} from '../../models/user';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
@@ -77,7 +77,7 @@ export class ContactsPage {
     SocialSharing.shareWithOptions({
       message: `I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit `, // not supported on some apps (Facebook, Instagram)
       file: 'https://ur-money-staging.firebaseapp.com/img/icon.png',
-      url: `${Config.values().appDownloadUrl}`,
+      url: `${Config.appDownloadUrl}`,
       chooserTitle: 'Pick an app' // Android only
     }).then((result) => {
       log.debug("returned from SocialSharing.shareWithOptions; saving dowlineUser");

@@ -150,8 +150,11 @@ export class Registration4Page {
         address: self.profile.address,
         createdAt: firebase.database.ServerValue.TIMESTAMP
       },
-      signedUpAt: self.auth.currentUser.signedUpAt || firebase.database.ServerValue.TIMESTAMP
+      signedUpAt: undefined
     };
+    if (!self.auth.currentUser.signedUpAt) {
+      attrs.signedUpAt = firebase.database.ServerValue.TIMESTAMP
+    }
     self.auth.currentUserRef.update(_.omitBy(attrs, _.isNil)).then(() => {
       self.loadingModal.hide();
       let toast = Toast.create({
