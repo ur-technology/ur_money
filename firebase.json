@@ -6,17 +6,17 @@
       "**/.*",
       "**/node_modules/**",
       "**/typings/**"
-    ]
-  },
-  "rewrites": [
-    {"source": "/go/*", "destination": "/go/index.html"},
-    {"source": "/app", "destination": "/index.html"}
-  ],
-  "headers": [ {
-    "source" : "**/*",
-    "headers" : [ {
-      "key" : "Cache-Control",
-      "value" : "max-age=5"
+    ],
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ],
+    "headers": [ {
+      "source" : "**/*",
+      "headers" : [ {
+        "key" : "Cache-Control",
+        "value" : "max-age=5"
+      } ]
     } ]
-  } ]
+  }
 }

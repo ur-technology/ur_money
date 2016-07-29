@@ -77,7 +77,7 @@ class UrMoney {
       log.setDefaultLevel(1); // { "TRACE": 0, "DEBUG": 1, "INFO": 2, "WARN": 3, "ERROR": 4, "SILENT": 5 }
       log.info("starting app")
 
-      if (window.location.pathname == '/app') {
+      if (/^\/app/.test(window.location.pathname)) {
         this.nav.setRoot(DownloadPage, {}, { animate: true, direction: 'forward' });
         return;
       }
