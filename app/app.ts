@@ -25,7 +25,7 @@ import {ContactsPage} from './pages/contacts/contacts';
 import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';
-
+import {DownloadPage} from './pages/download/download';
 
 @Component({
   templateUrl: 'build/app.html',
@@ -76,6 +76,12 @@ class UrMoney {
 
       log.setDefaultLevel(1); // { "TRACE": 0, "DEBUG": 1, "INFO": 2, "WARN": 3, "ERROR": 4, "SILENT": 5 }
       log.info("starting app")
+
+      if (window.location.pathname == '/app') {
+        this.nav.setRoot(DownloadPage, {}, { animate: true, direction: 'forward' });
+        return;
+      }
+
       this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
 
     });

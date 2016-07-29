@@ -86,7 +86,7 @@ export class SettingsPage {
         }
       ]
     });
-
+    this.nav.present(alert);
   }
 
   saveProfile() {

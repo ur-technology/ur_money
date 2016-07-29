@@ -1,0 +1,27 @@
+<ion-content padding class="about about-us">
+    <div class="ur-logo">
+        <img src="img/ur-logo.png" alt="logo">
+    </div>
+
+    <div class="about-text">
+        <h1 class="heading">Download the UR Money App</h1>
+        <div *ngIf="deviceType == 'ios'">
+            <p>
+                <a href="xxx">Download UR Money (iOS Test Version)</a>
+            </p>
+        </div>
+        <div *ngIf="deviceType == 'android'">
+            <p>
+                <a href="xxx">Download UR Money (Android Test Version)</a>
+            </p>
+        </div>
+        <div *ngIf="deviceType == 'other'">
+            <p>
+                To download UR Money, please open the following link from within and iPhone, iPad or Android device:
+            </p>
+            <p>
+                <a href="{{currentUrl}}">{{currentUrl}}</a>
+            </p>
+        </div>
+    </div>
+</ion-content>

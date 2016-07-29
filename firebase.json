@@ -9,7 +9,8 @@
     ]
   },
   "rewrites": [
-    {"source": "/go/*", "destination": "/go/index.html"}
+    {"source": "/go/*", "destination": "/go/index.html"},
+    {"source": "/app", "destination": "/index.html"}
   ],
   "headers": [ {
     "source" : "**/*",
