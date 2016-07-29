@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, ActionSheet} from 'ionic-angular';
-import {SocialSharing} from 'ionic-native';
+import {SocialSharing, Clipboard, Toast} from 'ionic-native';
 import {ContactsService} from '../../services/contacts-service';
 import {Auth} from '../../services/auth';
 import {ChatPage} from '../chat/chat';
@@ -61,11 +61,12 @@ export class ContactsPage {
     if (contact.userId) {
       this.nav.rootNav.push(ChatPage, { contact: contact });
     } else {
-      this.displayInviteActionSheet(contact);
+      this.inviteContact(contact);
     }
   }
 
-  displayInviteActionSheet(contact: any) {
+  inviteContact(contact: any) {
+    let self = this;
     let downlineUser = new User(`/users/${this.auth.currentUserId}/downlineUsers`, {
       firstName: contact.firstName,
       middleName: contact.middleName,
@@ -74,18 +75,27 @@ export class ContactsPage {
       pending: true
     });
     downlineUser.generateInviteCode();
-    SocialSharing.shareWithOptions({
-      message: `I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit `, // not supported on some apps (Facebook, Instagram)
-      file: 'https://ur-money-staging.firebaseapp.com/img/icon.png',
-      url: `${Config.appDownloadUrl}`,
-      chooserTitle: 'Pick an app' // Android only
-    }).then((result) => {
-      log.debug("returned from SocialSharing.shareWithOptions; saving dowlineUser");
-      downlineUser.save();
-    },
-    (error) => {
-      log.warn("Sharing failed with message: " + error);
+    downlineUser.save();
+
+    let message = `I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit `;
+    Clipboard.copy(message).then((data) => {
+      Toast.show("Pick an app and type a message. Or you can paste the simple message that we've placed in your clipboard.", 'long', 'top').subscribe((toast) => {
+        SocialSharing.shareWithOptions({
+          message: message, // not supported on some apps (Facebook, Instagram)
+          file: 'https://ur-money-staging.firebaseapp.com/img/icon.png',
+          url: `${Config.appDownloadUrl}`,
+          chooserTitle: 'Pick an app' // Android only
+        }).then((result) => {
+          log.debug("returned from SocialSharing.shareWithOptions; saving dowlineUser");
+          downlineUser.save();
+        }, (error) => {
+          log.warn("Sharing failed with message: " + error);
+        });
+      });
     });
+  }
+
+  displayInviteActionSheet(message: string, downlineUser: User) {
   }
 
 }
