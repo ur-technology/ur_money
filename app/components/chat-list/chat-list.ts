@@ -22,9 +22,13 @@ export class ChatList {
     this.load();
   }
 
+  showNoChatsYetMessage() {
+    return !this.chats || this.chats.length === 0;
+  }
+
   load() {
     this.angularFire.database.list(`/users/${this.auth.currentUserId}/chatSummaries`).subscribe(data => {
-      this.chats = data;
+      this.chats = data;      
     });
   }
 
@@ -37,7 +41,7 @@ export class ChatList {
   }
 
   gotoChat(chatSummary: any) {
-    this.nav.rootNav.push(ChatPage, {chatSummary: chatSummary, chatId: chatSummary.$key}, { animate: true, direction: 'forward' });
+    this.nav.rootNav.push(ChatPage, { chatSummary: chatSummary, chatId: chatSummary.$key }, { animate: true, direction: 'forward' });
   }
 
 }

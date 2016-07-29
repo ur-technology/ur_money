@@ -1,13 +1,16 @@
 <ion-list class="chats-list">
-    <ion-item
-        detail-none
+    <ion-item class="item text-center item-avatar"
+        detail-none *ngIf="showNoChatsYetMessage()">
+        <p>No chats yet</p>
+    </ion-item>
+    <ion-item detail-none
         (click)="gotoChat(chat)"
         class="item item-avatar"
         *ngFor="let chat of chats">
 
         <ion-avatar item-left>
-          <ion-img [src]="displayUser(chat).profilePhotoUrl"
-              [alt]="avatar"></ion-img>
+            <ion-img [src]="displayUser(chat).profilePhotoUrl"
+                [alt]="avatar"></ion-img>
         </ion-avatar>
         <ion-note item-right
             class="item-note">{{chat.lastMessage.sentAt|timestamp}}</ion-note>
