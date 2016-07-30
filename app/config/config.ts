@@ -9,7 +9,7 @@ export class ConfigInitializer {
   }
 
   public static firebaseProjectId(): string {
-    return "ur-money-staging"; // choose one of ur-money-john / ur-money-xavier / ur-money-staging / ur-money-production
+    return "ur-money-john"; // choose one of ur-money-john / ur-money-xavier / ur-money-staging / ur-money-production
   }
 
   public static allValues() {

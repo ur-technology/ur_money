@@ -11,7 +11,7 @@ import * as log from 'loglevel';
 })
 export class Registration3Page {
   verificationCode: string;
-  verificationKey: string;
+  phoneVerificationKey: string;
   errorMessage: string;
   phone: string;
 
@@ -21,56 +21,42 @@ export class Registration3Page {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
     this.verificationCode = '';
-    this.verificationKey = this.navParams.get('phoneVerificationKey');
+    this.phoneVerificationKey = this.navParams.get('phoneVerificationKey');
   }
 
   submit() {
-    let loading = Loading.create({
-      content: "Please wait...",
-      dismissOnPageChange: true
-    });
+    let loading = Loading.create({content: "Please wait...", dismissOnPageChange: true });
     this.nav.present(loading);
     // this.verificationCodeForm.value.verificationCode;
-    this.auth.checkVerificationCode(this.verificationKey, this.verificationCode).then((success) => {
+    this.auth.checkVerificationCode(this.phoneVerificationKey, this.verificationCode).then((success) => {
       loading.dismiss();
       if (!success) {
-        this.errorMessage = "The verification code you entered is incorrect or expired. Please try again.";
+        this.verificationCode = '';
+        this.showErrorAlert("The verification code you entered is incorrect or expired. Please try again.");
       }
     });
   }
 
   smsAgain() {
-    let loading = Loading.create({
-      content: "Please wait...",
-      dismissOnPageChange: true
-    });
+    let loading = Loading.create({content: "Please wait...", dismissOnPageChange: true });
     this.nav.present(loading);
     this.auth.requestPhoneVerification(this.phone).then((result: any) => {
       loading.dismiss();
-      if (!result.smsSuccess) {
-        log.warn("sms could not be sent");
-        this.showErrorAlert();
-        return;
+      if (result.error) {
+        log.warn(result.error);
+        this.verificationCode = '';
+        this.showErrorAlert("Sms could not be sent. Please try again later.");
       } else {
-        this.verificationKey = result.phoneVerificationKey;
-        this.showSucessSMSAlert();
+        this.phoneVerificationKey = result.phoneVerificationKey;
       }
     });
   }
 
-  showSucessSMSAlert() {
+  showErrorAlert(message) {
+    // TODO: change this to toast message
     let alert = Alert.create({
-      title: 'Success',
-      message: 'Please use latest verification code.',
-      buttons: ['Ok']
-    });
-    this.nav.present(alert);
-  }
-
-  showErrorAlert() {
-    let alert = Alert.create({
-      title: 'Error!',
-      message: 'Error while sending sms. Please try again',
+      title: 'There was a problem...',
+      message: message,
       buttons: ['Ok']
     });
     this.nav.present(alert);

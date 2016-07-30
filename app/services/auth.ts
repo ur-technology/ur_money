@@ -54,55 +54,63 @@ export class Auth {
   }
 
   requestPhoneVerification(phone: string) {
-    let angularFire = this.angularFire;
     return new Promise((resolve) => {
-        log.debug('about to queue verification number');
-
-      var phoneVerificationReference = angularFire.database.list('/phoneVerifications', { preserveSnapshot: true }).push({
+      var phoneVerificationRef = firebase.database().ref('/phoneVerifications').push({
         phone: phone,
+        status: "verification-code-requested",
         createdAt: firebase.database.ServerValue.TIMESTAMP
-      });
+      })
+      phoneVerificationRef.then((xxx) => {
+        log.debug("verification request queued");
+        phoneVerificationRef.on('value', (snapshot) => {
+          let phoneVerification = snapshot.val();
+          if (!phoneVerification || phoneVerification.status == "verification-code-requested") {
+            return; // not yet processed
+          }
+          phoneVerificationRef.off('value');
 
-      log.debug("verification queued");
-      phoneVerificationReference.on('value', (snapshot) => {
-        var phoneVerification = snapshot.val();
-        log.debug("phoneVerification retrieved: ", phoneVerification);
-        if (phoneVerification && !_.isUndefined(phoneVerification.smsSuccess)) {
-          phoneVerificationReference.off('value'); // stop watching for changes on this phone verification
-          resolve({ phoneVerificationKey: snapshot.key, smsSuccess: phoneVerification.smsSuccess, smsError: phoneVerification.smsError });
-        }
+          if (phoneVerification.status != "verification-code-sent-via-sms"
+            && phoneVerification.status != "verification-code-not-sent-via-sms") {
+            log.debug(`phoneVerification ${phoneVerificationRef.key} has status ${phoneVerification.status}`);
+            return;
+          }
+          resolve({
+            phoneVerificationKey: phoneVerificationRef.key,
+            error: phoneVerification.error
+          });
+        });
       });
     });
   }
 
-  checkVerificationCode(phoneVerificationKey: string, attemptedVerificationCode: string) {
-    let angularFire = this.angularFire;
+  checkVerificationCode(phoneVerificationKey: string, submittedVerificationCode: string) {
     return new Promise((resolve) => {
-      let phoneVerificationObservable: FirebaseObjectObservable<any> = angularFire.database.object(`/phoneVerifications/${phoneVerificationKey}`);
-      phoneVerificationObservable.update({ attemptedVerificationCode: attemptedVerificationCode });
-      let phoneVerificationSubscription: Subscription = phoneVerificationObservable.subscribe((phoneVerification) => {
-        if (phoneVerification && !_.isUndefined(phoneVerification.verificationSuccess)) {
-          if (phoneVerification.verificationSuccess) {
+      let phoneVerificationRef = firebase.database().ref(`/phoneVerifications/${phoneVerificationKey}`);
+      phoneVerificationRef.update({ submittedVerificationCode: submittedVerificationCode, status: "verification-code-submitted-via-app" }).then((xxx) => {
+        phoneVerificationRef.on('value', (snapshot) => {
+          let phoneVerification = snapshot.val();
+          if (!phoneVerification || phoneVerification.status == "verification-code-submitted-via-app") {
+            return; // not yet processed
+          }
+          phoneVerificationRef.off('value');
+          if (phoneVerification.status == "verification-succeeded") {
             firebase.auth().signInWithCustomToken(phoneVerification.authToken).then((authData) => {
               log.debug('Authentication succeded!');
-              stopWatchingPhoneVerificationAndResolvePromise(true);
+              phoneVerificationRef.remove();
+              resolve(true);
             }).catch((error) => {
               log.warn('Authentication failed!');
-              stopWatchingPhoneVerificationAndResolvePromise(false);
+              resolve(false);
             });
+          } else if (phoneVerification.status == "verification-failed") {
+            phoneVerificationRef.remove();
+            resolve(false);
           } else {
-            stopWatchingPhoneVerificationAndResolvePromise(false);
+            log.warn(`phoneVerification ${phoneVerificationRef.key} has unexpected status ${phoneVerification.status}`);
+            resolve(false);
           }
-        }
-      });
-
-      function stopWatchingPhoneVerificationAndResolvePromise(success) {
-        phoneVerificationSubscription.unsubscribe();
-        if (success) {
-          phoneVerificationObservable.remove();
-        }
-        resolve(success);
-      }
+        });
+      })
     });
   }
 

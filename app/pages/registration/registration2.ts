@@ -79,12 +79,12 @@ export class Registration2Page implements OnInit {
             });
             this.auth.requestPhoneVerification(phone).then((result: any) => {
               loading.dismiss();
-              if (!result.smsSuccess) {
-                log.warn("sms could not be sent");
-                this.showErrorAlert(result.smsError, phoneInput);
-                return;
+              if (result.error) {
+                log.warn(result.error);
+                this.showErrorAlert("Sms could not be sent. Please try again later.", phoneInput);
+              } else {
+                this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey, phone: phone });
               }
-              this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey, phone: phone });
             });
           }
         }
@@ -94,10 +94,11 @@ export class Registration2Page implements OnInit {
 
   }
 
-  showErrorAlert(smsError, phoneInput) {
+  showErrorAlert(message, phoneInput) {
+    // TODO: change this to toast message
     let alert = Alert.create({
-      title: /no matching user found/.test(smsError) ? "Unregistered Phone Number!" : "Unable to Send SMS!",
-      message: smsError,
+      title: "There was a problem...",
+      message: message,
       buttons: [
         {
           text: 'OK',
