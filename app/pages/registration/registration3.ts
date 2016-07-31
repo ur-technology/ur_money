@@ -38,6 +38,7 @@ export class Registration3Page {
   }
 
   smsAgain() {
+    this.verificationCode = '';
     let loading = Loading.create({content: "Please wait...", dismissOnPageChange: true });
     this.nav.present(loading);
     this.auth.requestPhoneVerification(this.phone).then((result: any) => {

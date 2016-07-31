@@ -50,7 +50,7 @@ export class ContactsService {
             }
 
             self.loaded = true;
-            log.debug(`processed contacts in ${new Date().getTime() - startTime} milliseconds`)
+            log.debug(`processed ${self.contacts.length} contacts (${self.contactGroups.members.length} members/${self.contactGroups.nonMembers.length} non-members) in ${new Date().getTime() - startTime} milliseconds`)
             resolve(self.contactGroups);
           }, (error) => {
             reject(error);

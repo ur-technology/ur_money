@@ -23,16 +23,11 @@ declare var jQuery: any;
   pipes: [OrderBy, Timestamp, Round],
   directives: [ChatList]
 })
-export class HomePage implements OnInit {
+export class HomePage {
   elementRef: ElementRef;
-  android: boolean = false;
+  android: boolean;
   sendPage: any;
   receivePage: any;
-  selectedItem: any;
-  selectedOption: any;
-  icons: string[];
-  messages: any[] = [];
-  items: Array<{ title: string, note: string, icon: string }>;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartData, public platform: Platform,
@@ -40,24 +35,18 @@ export class HomePage implements OnInit {
     this.elementRef = elementRef;
     this.sendPage = SendPage;
     this.receivePage = ReceivePage;
-    this.selectedOption = '1W';
-    if (this.platform.is('android')) {
-      this.android = true;
-    }
-  }
-
-  ngOnInit() {
+    this.android = this.platform.is('android');
   }
 
   onPageDidEnter() {
-    var thisPage = this;
-    if (thisPage.chartData.isLoaded) {
-      this.renderChart();
+    var self = this;
+    if (self.chartData.pointsLoaded) {
+      self.renderChart();
     }
-    thisPage.chartData.loadedEmitter.subscribe((data) => {
-      this.renderChart();
+    self.chartData.pointsLoadedEmitter.subscribe((data) => {
+      self.renderChart();
     });
-    this.sendMessageNotifications();
+    self.sendMessageNotifications();
   }
 
   startNewChat() {
@@ -68,9 +57,8 @@ export class HomePage implements OnInit {
     this.nav.setRoot(page, {}, { animate: true, direction: 'forward' });
   }
 
-  selected(selectedOption) {
-    this.selectedOption = selectedOption;
-    this.chartData.filterBalanceRecords(this.selectedOption);
+  loadChartPoints(duration: number, unitOfTime: moment.UnitOfTime) {
+    this.chartData.loadPointsAndCalculateMetaData(duration, unitOfTime);
   }
 
   renderChart() {
