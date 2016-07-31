@@ -74,6 +74,7 @@ export class Auth {
             log.debug(`phoneVerification ${phoneVerificationRef.key} has status ${phoneVerification.status}`);
             return;
           }
+          log.debug(`phoneVerification.verificationCode=${phoneVerification.verificationCode}`);
           resolve({
             phoneVerificationKey: phoneVerificationRef.key,
             error: phoneVerification.error
