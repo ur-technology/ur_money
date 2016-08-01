@@ -103,7 +103,7 @@ export class ContactsService {
             self.contacts.push(contact);
           }
         });
-        resolve(undefined);
+        resolve();
       }, (error) => {
         reject(error);
       });
@@ -113,9 +113,8 @@ export class ContactsService {
   private assignUserIdsToContacts() {
     let self = this;
     return new Promise((resolve, reject) => {
-      let currentUserRef = firebase.database().ref(`/users/${this.currentUserId}`)
-      let contactLookup = {
-        pending: true,
+      let contactLookupRef = firebase.database().ref('/contactLookupQueue/tasks').push({
+        userId: self.currentUserId,
         contacts: _.map(self.contacts, (contact: Contact) => {
           return {
             phones: _.map(contact.rawPhones, (rawPhone: any) => {
@@ -123,14 +122,15 @@ export class ContactsService {
             })
           };
         })
-      };
-      let contactLookupRef = currentUserRef.child("contactLookups").push(contactLookup);
-      contactLookupRef.on('child_added', (snapshot) => {
-        if (snapshot.key != 'processedContacts') {
+      });
+
+      let ref = contactLookupRef.child('processedContacts');
+      ref.on('value', (snapshot) => {
+        let processedContacts = snapshot.val();
+        if (!processedContacts) {
           return;
         }
-        contactLookupRef.off('child_added');
-        let processedContacts = snapshot.val();
+        ref.off('value');
         _.each(processedContacts, (processedContact, i) => {
           let index = parseInt(i);
           if (processedContact.userId) {
@@ -142,9 +142,11 @@ export class ContactsService {
           }
           if (index == processedContacts.length - 1) {
             contactLookupRef.remove()
-            resolve();
+            resolve(undefined);
           }
         });
+      }, (error) => {
+        reject(error);
       });
     });
   }

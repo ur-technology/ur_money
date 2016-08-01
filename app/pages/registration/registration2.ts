@@ -77,13 +77,14 @@ export class Registration2Page implements OnInit {
             alert.dismiss().then(() => {
               this.nav.present(loading);
             });
-            this.auth.requestPhoneVerification(phone).then((result: any) => {
+            this.auth.requestPhoneVerification(phone).then((state: string) => {
               loading.dismiss();
-              if (result.error) {
-                log.warn(result.error);
-                this.showErrorAlert("Sms could not be sent. Please try again later.", phoneInput);
+              if (state == "code_generation_completed_and_sms_sent") {
+                this.nav.setRoot(Registration3Page, { phone: phone });
+              } else if (state == "code_generation_canceled_because_user_not_invited") {
+                this.showErrorAlert("Use of UR Money is currently available by invitation only, and you phone number was not on the invitee list.", phoneInput);
               } else {
-                this.nav.setRoot(Registration3Page, { phoneVerificationKey: result.phoneVerificationKey, phone: phone });
+                this.showErrorAlert("There was an unexpected problem sending the SMS. Please try again later", phoneInput);
               }
             });
           }

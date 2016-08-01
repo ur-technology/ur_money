@@ -11,7 +11,6 @@ import * as log from 'loglevel';
 })
 export class Registration3Page {
   verificationCode: string;
-  phoneVerificationKey: string;
   errorMessage: string;
   phone: string;
 
@@ -21,17 +20,20 @@ export class Registration3Page {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
     this.verificationCode = '';
-    this.phoneVerificationKey = this.navParams.get('phoneVerificationKey');
   }
 
   submit() {
     let loading = Loading.create({content: "Please wait...", dismissOnPageChange: true });
     this.nav.present(loading);
-    // this.verificationCodeForm.value.verificationCode;
-    this.auth.checkVerificationCode(this.phoneVerificationKey, this.verificationCode).then((success) => {
+    this.auth.checkVerificationCode(this.verificationCode).then((result: any) => {
       loading.dismiss();
-      if (!success) {
-        this.verificationCode = '';
+      this.verificationCode = '';
+      if (result.error) {
+        log.debug(result.error);
+        this.showErrorAlert("We were unable to process your verification code. Please try again later");
+      } else if (result.codeMatch) {
+        // NOTE: nothing to do; navigation will be handled by respondToAuth in auth.ts
+      } else {
         this.showErrorAlert("The verification code you entered is incorrect or expired. Please try again.");
       }
     });
@@ -41,14 +43,10 @@ export class Registration3Page {
     this.verificationCode = '';
     let loading = Loading.create({content: "Please wait...", dismissOnPageChange: true });
     this.nav.present(loading);
-    this.auth.requestPhoneVerification(this.phone).then((result: any) => {
+    this.auth.requestPhoneVerification(this.phone).then((state: string) => {
       loading.dismiss();
-      if (result.error) {
-        log.warn(result.error);
-        this.verificationCode = '';
-        this.showErrorAlert("Sms could not be sent. Please try again later.");
-      } else {
-        this.phoneVerificationKey = result.phoneVerificationKey;
+      if (state != "code_generation_completed_and_sms_sent") {
+        this.showErrorAlert("There was an unexpected problem sending the SMS. Please try again later");
       }
     });
   }

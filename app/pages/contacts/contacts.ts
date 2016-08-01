@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, ActionSheet} from 'ionic-angular';
+import {NavController, NavParams, ActionSheet, Platform, Alert} from 'ionic-angular';
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
 import {ContactsService} from '../../services/contacts-service';
 import {Auth} from '../../services/auth';
@@ -27,7 +27,9 @@ export class ContactsPage {
     private nav: NavController,
     private navParams: NavParams,
     private contactsService: ContactsService,
-    private auth: Auth) {
+    private auth: Auth,
+    private platform: Platform
+  ) {
     this.startTime = (new Date()).getTime();
     this.nonMembersFirst = navParams.get("nonMembersFirst")
   }
@@ -67,16 +69,14 @@ export class ContactsPage {
 
   inviteContact(contact: any) {
     let self = this;
-    let downlineUser = new User(`/users/${this.auth.currentUserId}/downlineUsers`, {
-      firstName: contact.firstName,
-      middleName: contact.middleName,
-      lastName: contact.lastName,
-      phone: contact.phone,
-      pending: true
-    });
-    downlineUser.generateInviteCode();
-    downlineUser.save();
-
+    let invitationCode = self.generateInvitationCode();
+    if (!this.platform.is('cordova')) {
+      // HACK: this code is here to test invitations in ionic serve
+      let alert = Alert.create({title: 'Simulating social sharing action sheet', message: 'Invitation added to queue!', buttons: ['Ok']});
+      this.nav.present(alert);
+      self.addNewInvitationToQueue(contact, invitationCode);
+      return;
+    }
     let message = `I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit `;
     Clipboard.copy(message).then((data) => {
       Toast.show("Pick an app and type a message. Or you can paste the simple message that we've placed in your clipboard.", 'long', 'top').subscribe((toast) => {
@@ -87,7 +87,7 @@ export class ContactsPage {
           chooserTitle: 'Pick an app' // Android only
         }).then((result) => {
           log.debug("returned from SocialSharing.shareWithOptions; saving dowlineUser");
-          downlineUser.save();
+          self.addNewInvitationToQueue(contact, invitationCode);
         }, (error) => {
           log.warn("Sharing failed with message: " + error);
         });
@@ -95,7 +95,27 @@ export class ContactsPage {
     });
   }
 
-  displayInviteActionSheet(message: string, downlineUser: User) {
+  private addNewInvitationToQueue(contact, invitationCode) {
+    let taskRef = firebase.database().ref('/invitationQueue/tasks').push({
+      sponsorUserId: this.auth.currentUserId,
+      invitee: {
+        firstName: contact.firstName,
+        middleName: contact.middleName || null,
+        lastName: contact.lastName,
+        phone: contact.phone,
+        invitationCode: invitationCode
+      }
+    });
+  }
+
+  private generateInvitationCode(): string {
+    let code: string = '';
+    let letters = "ABCDEFGHKMNPRSTWXYZ2345689";
+    for (var i = 0; i < 6; i++) {
+      let position = Math.floor(Math.random() * letters.length);
+      code = code + letters.charAt(position);
+    }
+    return code;
   }
 
 }

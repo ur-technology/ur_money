@@ -27,15 +27,6 @@ export class User extends FirebaseModel {
   wallet: any;
   pending: boolean;
 
-  generateInviteCode() {
-    this.inviteCode = ''
-    let letters = "ABCDEFGHKMNPRSTWXYZ2345689";
-    for (var i = 0; i < 6; i++) {
-      let position = Math.floor(Math.random() * letters.length);
-      this.inviteCode = this.inviteCode + letters.charAt(position);
-    }
-  }
-
   generateProfilePhotoUrl() {
     var colorScheme = _.sample([
       { background: "DD4747", foreground: "FFFFFF" },

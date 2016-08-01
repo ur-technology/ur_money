@@ -119,16 +119,35 @@ export class ChatPage {
       return;
     }
 
+    let isFirstMessageInChat = this.chatSummaryUnsaved();
     if (this.chatSummaryUnsaved()) {
       this.saveChatSummary();
     }
-    let chatSummaryRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chatSummaries`).child(this.chatId);
+
+    // add message to list of messages for this chat
     let messagesRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chats/${this.chatId}/messages`);
     let message = { text: this.messageText, sentAt: firebase.database.ServerValue.TIMESTAMP, senderUserId: this.auth.currentUserId };
     let messageRef = messagesRef.push(message);
     this.loadMessages();
 
-    chatSummaryRef.child("lastMessage").update(_.merge(message, { pending: true, messageId: messageRef.key }));
+    // copy the message to the 'lastMessage' field of the chat summary associated with this chat
+    let chatSummaryRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chatSummaries`).child(this.chatId);
+    chatSummaryRef.child("lastMessage").update(_.merge(message, { messageId: messageRef.key }));
+
+    // add item to queue so that message is copied to chats, chatSummaries and notifications of other users
+    if (isFirstMessageInChat) {
+      firebase.database().ref('/chatSummaryCopyingQueue/tasks').push({
+        userId: this.auth.currentUserId,
+        chatId: this.chatId
+      });
+    }
+    firebase.database().ref('/chatMessageCopyingQueue/tasks').push({
+      userId: this.auth.currentUserId,
+      chatId: this.chatId,
+      messageId: messageRef.key,
+      isFirstMessageInChat: isFirstMessageInChat
+    });
+
     this.resetMessageTextArea();
   }
 

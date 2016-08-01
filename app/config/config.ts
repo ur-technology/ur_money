@@ -5,7 +5,7 @@ export class ConfigInitializer {
   }
 
   public static env() {
-    return "dev"; // choose one of dev / staging / production
+    return "staging"; // choose one of staging / production
   }
 
   public static firebaseProjectId(): string {

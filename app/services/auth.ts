@@ -15,6 +15,7 @@ export class Auth {
   public currentUser: any;
   public countryCode: string;
   public androidPlatform: boolean;
+  public taskId: string;
 
   // public authDataProfileImage: any
   // public authDataProfileName: any
@@ -49,6 +50,7 @@ export class Auth {
           }
         });
       } else {
+        // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
         self.currentUserId = undefined;
         self.currentUserRef = undefined;
         self.currentUser = undefined;
@@ -66,64 +68,61 @@ export class Auth {
   }
 
   requestPhoneVerification(phone: string) {
+    let self = this;
     return new Promise((resolve) => {
-      var phoneVerificationRef = firebase.database().ref('/phoneVerifications').push({
-        phone: phone,
-        status: "verification-code-requested",
-        createdAt: firebase.database.ServerValue.TIMESTAMP
-      })
-      phoneVerificationRef.then((xxx) => {
-        log.debug("verification request queued");
-        phoneVerificationRef.on('value', (snapshot) => {
-          let phoneVerification = snapshot.val();
-          if (!phoneVerification || phoneVerification.status == "verification-code-requested") {
-            return; // not yet processed
+      let taskRef = firebase.database().ref('/phoneAuthenticationQueue/tasks').push({phone: phone});
+      self.taskId = taskRef.key
+      taskRef.then((xxx) => {
+        log.debug(`task queued to /phoneAuthenticationQueue/tasks/${self.taskId}`);
+        let stateRef = taskRef.child("_state");
+        stateRef.on('value', (snapshot) => {
+          let state = snapshot.val();
+          if (state != undefined && state != null && state != "code_generation_in_progress") {
+            stateRef.off('value');
+            resolve(state);
           }
-          phoneVerificationRef.off('value');
-
-          if (phoneVerification.status != "verification-code-sent-via-sms"
-            && phoneVerification.status != "verification-code-not-sent-via-sms") {
-            log.debug(`phoneVerification ${phoneVerificationRef.key} has status ${phoneVerification.status}`);
-            return;
-          }
-          log.debug(`phoneVerification.verificationCode=${phoneVerification.verificationCode}`);
-          resolve({
-            phoneVerificationKey: phoneVerificationRef.key,
-            error: phoneVerification.error
-          });
         });
       });
     });
   }
 
-  checkVerificationCode(phoneVerificationKey: string, submittedVerificationCode: string) {
+  checkVerificationCode(submittedVerificationCode: string) {
+    let self = this;
     return new Promise((resolve) => {
-      let phoneVerificationRef = firebase.database().ref(`/phoneVerifications/${phoneVerificationKey}`);
-      phoneVerificationRef.update({ submittedVerificationCode: submittedVerificationCode, status: "verification-code-submitted-via-app" }).then((xxx) => {
-        phoneVerificationRef.on('value', (snapshot) => {
-          let phoneVerification = snapshot.val();
-          if (!phoneVerification || phoneVerification.status == "verification-code-submitted-via-app") {
-            return; // not yet processed
+      let taskRef = firebase.database().ref(`/phoneAuthenticationQueue/tasks/${self.taskId}`);
+      taskRef.update({
+        submittedVerificationCode: submittedVerificationCode,
+        _state: "code_matching_requested" // TODO: add rule that allows only this client-initiated state change
+      }).then((xxx) => {
+        log.debug(`set submittedVerificationCode to ${submittedVerificationCode} at ${taskRef.toString()}`);
+        let verificationResultRef = taskRef.child("verificationResult");
+        verificationResultRef.on('value', (snapshot) => {
+          let verificationResult = snapshot.val();
+          if (verificationResult == undefined) {
+            return;
           }
-          phoneVerificationRef.off('value');
-          if (phoneVerification.status == "verification-succeeded") {
-            firebase.auth().signInWithCustomToken(phoneVerification.authToken).then((authData) => {
+          verificationResultRef.off('value');
+          if (verificationResult.error) {
+            resolve({ error: verificationResult.error });
+          } else if (verificationResult.codeMatch) {
+            log.debug('Submitted verification code was correct.');
+            firebase.auth().signInWithCustomToken(verificationResult.authToken).then((authData) => {
               log.debug('Authentication succeded!');
-              phoneVerificationRef.remove();
-              resolve(true);
+              resolve({codeMatch: true});
+              taskRef.remove();
             }).catch((error) => {
               log.warn('Authentication failed!');
+              taskRef.update({authenticationError: error});
+              resolve({error: "Authentication failed"});
               resolve(false);
             });
-          } else if (phoneVerification.status == "verification-failed") {
-            phoneVerificationRef.remove();
-            resolve(false);
           } else {
-            log.warn(`phoneVerification ${phoneVerificationRef.key} has unexpected status ${phoneVerification.status}`);
-            resolve(false);
+            log.debug('Submitted verification code was not correct.');
+            resolve({codeMatch: false});
+            taskRef.remove();
           }
         });
-      })
+      });
     });
   }
 
@@ -133,21 +132,34 @@ export class Auth {
 
   processChatNotificationQueue() {
     let self = this;
-    self.angularFire.database.list(`/users/${self.currentUserId}/notifications/`).subscribe((data: any) => {
-      if (data) {
-        for (var i = 0; i < data.length; i++) {
-          LocalNotifications.schedule({
-            id: 1,
-            text: `${data[i].senderName}: ${data[i].text}`,
-            icon: 'res://icon',
-            smallIcon: 'stat_notify_chat',
-            sound: `file://sounds/${self.androidPlatform ? 'messageSound.mp3' : 'messageSound.m4r'}`,
-            data: { chatId: data[i].chatId }
-          });
-          self.angularFire.database.object(`/users/${self.currentUserId}/notifications/${data[i].$key}`).remove();
-        }
-      }
+    // TODO: fix this to use firebase-queue later
+    // let Queue = require('firebase-queue');
+    // let queueRef = firebase.database().ref(`/users/${this.currentUserId}/notificationQueue`);
+    // let options = { 'numWorkers': 1 };
+    // let queue = new Queue(queueRef, options, (notificationTask: any, progress: any, resolve: any, reject: any) => {
+    let notificationTasksRef = firebase.database().ref(`/users/${this.currentUserId}/notificationQueue/tasks`);
+    notificationTasksRef.on('child_added', (notificationTaskSnapshot: firebase.database.DataSnapshot) => {
+      let notificationTask = notificationTaskSnapshot.val();
+      LocalNotifications.schedule({
+        id: 1,
+        text: `${notificationTask.senderName}: ${notificationTask.text}`,
+        icon: 'res://icon',
+        smallIcon: 'stat_notify_chat',
+        sound: `file://sounds/${self.androidPlatform ? 'messageSound.mp3' : 'messageSound.m4r'}`,
+        data: { chatId: notificationTask.chatId }
+      });
+      notificationTaskSnapshot.ref.remove();
     });
+    //   LocalNotifications.schedule({
+    //     id: 1,
+    //     text: `${notificationTask.senderName}: ${notificationTask.text}`,
+    //     icon: 'res://icon',
+    //     smallIcon: 'stat_notify_chat',
+    //     sound: `file://sounds/${self.androidPlatform ? 'messageSound.mp3' : 'messageSound.m4r'}`,
+    //     data: { chatId: notificationTask.chatId }
+    //   });
+    //   resolve(notificationTask);
+    // });
   }
 
   private getSimCountryCode(): Promise<string> {
