@@ -40,11 +40,26 @@ export class ChatPage {
   ionViewLoaded() {
     if (this.chatSummary) {
       this.loadMessages();
-    } else {
+    } else if (this.chatId) {
+      this.lookupChatSummaryViaChatIdAndLoadMessages();
+    }
+    else {
       this.lookupChatSummaryViaContactAndLoadMessages();
     }
     this.resetMessageTextArea();
     this.adjustMessageTextAreaHeightBasedOnInput();
+  }
+
+  lookupChatSummaryViaChatIdAndLoadMessages() {
+    let chatSummaryRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chatSummaries/${this.chatId}`);
+    chatSummaryRef.once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        this.chatSummary = snapshot.val();
+        this.loadMessages();
+      } else {
+        log.warn(`could not find chatSummary at ${chatSummaryRef.toString()}`)
+      }
+    });
   }
 
   adjustMessageTextAreaHeightBasedOnInput() {

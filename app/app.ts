@@ -19,6 +19,7 @@ import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chat
 import {Registration1Page} from './pages/registration/registration1';
 import {Registration4Page} from './pages/registration/registration4';
 import {HomePage} from './pages/home/home';
+import {ChatPage} from './pages/chat/chat';
 import {SendPage} from './pages/send/send';
 import {ReceivePage} from './pages/receive/receive';
 import {ContactsPage} from './pages/contacts/contacts';
@@ -81,7 +82,7 @@ class UrMoney {
         return;
       }
 
-      this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage);
+      this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage, ChatPage);
 
     });
   }

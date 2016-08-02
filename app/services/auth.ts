@@ -1,11 +1,12 @@
 import {Injectable, Inject, ViewChild} from '@angular/core'
-import {Nav} from 'ionic-angular';
+import {Nav, Platform} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import {Subscription} from 'rxjs';
 import {ContactsService} from '../services/contacts-service';
 import {Sim} from 'ionic-native';
+import {LocalNotifications} from 'ionic-native';
 
 @Injectable()
 export class Auth {
@@ -13,16 +14,18 @@ export class Auth {
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
   public countryCode: string;
+  public androidPlatform: boolean;
 
   // public authDataProfileImage: any
   // public authDataProfileName: any
   // public authDataProfileDescription: any
   // public authDataProfileEmail: any
 
-  constructor(public angularFire: AngularFire, public contactsService: ContactsService) {
+  constructor(public angularFire: AngularFire, public contactsService: ContactsService, public platform: Platform) {
+    this.androidPlatform = this.platform.is('android');
   }
 
-  respondToAuth(nav: Nav, welcomePage: any, walletSetupPage: any, homePage: any) {
+  respondToAuth(nav: Nav, welcomePage: any, walletSetupPage: any, homePage: any, chatPage) {
     let self = this;
     firebase.auth().onAuthStateChanged((authData) => {
       if (authData) {
@@ -39,6 +42,8 @@ export class Auth {
           });
           if (currentUser.wallet && currentUser.wallet.address) {
             nav.setRoot(homePage);
+            self.processChatNotificationQueue();
+            self.listenForNotificationSelection(nav, chatPage);
           } else {
             nav.setRoot(walletSetupPage);
           }
@@ -50,6 +55,13 @@ export class Auth {
         self.countryCode = undefined;
         nav.setRoot(welcomePage);
       }
+    });
+  }
+
+  listenForNotificationSelection(nav, chatPage) {
+    LocalNotifications.on("click", (notification, state) => {
+      let data = JSON.parse(notification.data);
+      nav.rootNav.push(chatPage, { chatId: data.chatId }, { animate: true, direction: 'forward' });
     });
   }
 
@@ -117,6 +129,25 @@ export class Auth {
 
   isSignedIn() {
     return !!this.currentUser;
+  }
+
+  processChatNotificationQueue() {
+    let self = this;
+    self.angularFire.database.list(`/users/${self.currentUserId}/notifications/`).subscribe((data: any) => {
+      if (data) {
+        for (var i = 0; i < data.length; i++) {
+          LocalNotifications.schedule({
+            id: 1,
+            text: `${data[i].senderName}: ${data[i].text}`,
+            icon: 'res://icon',
+            smallIcon: 'stat_notify_chat',
+            sound: `file://sounds/${self.androidPlatform ? 'messageSound.mp3' : 'messageSound.m4r'}`,
+            data: { chatId: data[i].chatId }
+          });
+          self.angularFire.database.object(`/users/${self.currentUserId}/notifications/${data[i].$key}`).remove();
+        }
+      }
+    });
   }
 
   private getSimCountryCode(): Promise<string> {

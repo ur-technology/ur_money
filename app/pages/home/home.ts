@@ -7,6 +7,7 @@ import {ReceivePage} from '../receive/receive';
 import {SendPage} from '../send/send';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
 import {ContactsPage} from '../contacts/contacts';
+import {ChatPage} from '../chat/chat';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
@@ -46,7 +47,6 @@ export class HomePage {
     self.chartData.pointsLoadedEmitter.subscribe((data) => {
       self.renderChart();
     });
-    self.sendMessageNotifications();
   }
 
   startNewChat() {
@@ -120,27 +120,7 @@ export class HomePage {
     });
   }
 
-  sendMessageNotifications() {
-    this.angularFire.database.list(`/users/${this.auth.currentUserId}/notifications/`).subscribe((data: any) => {
-      if (data) {
-        this.scheduleNotification(data, this.auth.currentUserId);
-      }
-    });
-  }
-
   inviteContact() {
-    this.nav.rootNav.push(ContactsAndChatsPage, {nonMembersFirst: true}, { animate: true, direction: 'forward' });
-  }
-
-  private scheduleNotification(data: any, userId: string) {
-    for (var i = 0; i < data.length; i++) {
-      LocalNotifications.schedule({
-        id: data[i].$key,
-        text: `${data[i].senderName}: ${data[i].text}`,
-        icon: 'res://icon',
-        smallIcon: 'stat_notify_chat'
-      });
-      this.angularFire.database.object(`/users/${userId}/notifications/${data[i].$key}`).remove();
-    }
+    this.nav.rootNav.push(ContactsAndChatsPage, { nonMembersFirst: true }, { animate: true, direction: 'forward' });
   }
 }
