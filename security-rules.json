@@ -1,38 +1,41 @@
 {
   "rules": {
 
+    ".read": true,
+    ".write": true,
+
     "contactLookupQueue": {
       // disallow enumerating entire collection, except for admin
-      ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+      // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
       // disallow overwriting entire list
-      ".write": false,
+      // ".write": false,
 
       "specs": {
         // disallow enumerating entire collection, except for admin
-        ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+        // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
         // disallow overwriting entire list
-        ".write": false,
+        // ".write": false,
       },
 
       "tasks": {
         ".indexOn": ["_state"],
 
         // disallow enumerating entire collection, except for admin
-        ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+        // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
         // disallow overwriting entire list
-        ".write": false,
+        // ".write": false,
 
         "$taskId": {
           // disallow reading, except for admin
-          ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+          // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
           // allow only record inserts, except for admin
-          ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
+          // ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
 
           "verificationResult": {
             // allow reading verificationResult of a particular record
-            ".read": true,
+            // ".read": true,
             // disallow writing, except for admin
-            ".write": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+            // ".write": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
           }
 
         },
@@ -41,118 +44,118 @@
 
     "invitationQueue": {
       // disallow enumerating entire collection, except for admin
-      ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+      // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
       // disallow overwriting entire list
-      ".write": false,
+      // ".write": false,
 
       "tasks": {
         ".indexOn": ["_state"],
 
         // disallow enumerating entire collection, except for admin
-        ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+        // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
         // disallow overwriting entire list
-        ".write": false,
+        // ".write": false,
 
         "$taskId": {
           // disallow reading, except for admin
-          ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+          // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
           // allow record inserts only, except for admin
-          ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
+          // ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
         },
       },
     },
 
     "chatSummaryCopyingQueue": {
       // disallow enumerating entire collection, except for admin
-      ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+      // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
       // disallow overwriting entire list
-      ".write": false,
+      // ".write": false,
 
       "tasks": {
         ".indexOn": ["_state"],
 
         // disallow enumerating entire collection, except for admin
-        ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+        // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
         // disallow overwriting entire list
-        ".write": false,
+        // ".write": false,
 
         "$taskId": {
           // disallow reading, except for admin
-          ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+          // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
           // allow record inserts only, except for admin
-          ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
+          // ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
         },
       },
     },
 
     "chatMessageCopyingQueue": {
       // disallow enumerating entire collection, except for admin
-      ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+      // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
       // disallow overwriting entire list
-      ".write": false,
+      // ".write": false,
 
       "tasks": {
         ".indexOn": ["_state"],
 
         // disallow enumerating entire collection, except for admin
-        ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+        // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
         // disallow overwriting entire list
-        ".write": false,
+        // ".write": false,
 
         "$taskId": {
           // disallow reading, except for admin
-          ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+          // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
           // allow record inserts only, except for admin
-          ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
+          // ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
         },
       },
     },
 
     "phoneAuthenticationQueue": {
       // disallow enumerating entire collection, except for admin
-      ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+      // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
       // disallow overwriting entire list
-      ".write": false,
+      // ".write": false,
 
       "specs": {
         // disallow enumerating entire collection, except for admin
-        ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+        // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
         // disallow overwriting entire list
-        ".write": false,
+        // ".write": false,
       },
 
       "tasks": {
         ".indexOn": ["_state"],
 
         // disallow enumerating entire collection, except for admin
-        ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+        // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
         // disallow overwriting entire list
-        ".write": false,
+        // ".write": false,
 
         "$taskId": {
           // disallow reading, except for admin
-          ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+          // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
           // allow record inserts only, except for admin
-          ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
+          // ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
 
           "_state": {
             // allow reading verification result of a particular record
-            ".read": true,
+            // ".read": true,
             // disallow writing, exceptions: 1) inserting, 2) updating _state to 'code_matching_requested', 3) admin
-            ".write": "data.exists() && data.val() != 'code_matching_requested' && newData.exists() && newData.val() == 'code_matching_requested'"
+            // ".write": "data.exists() && data.val() != 'code_matching_requested' && newData.exists() && newData.val() == 'code_matching_requested'"
           },
           "submittedVerificationCode": {
             // disallow reading, except for admin
-            ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+            // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
             // allow only updating submittedVerificationCode of existing record if _state also being set to 'code_matching_requested'
-            ".write": true
+            // ".write": true
             // TODO: add something like: "!data.exists() && newData.exists() && data.parent().exists() && data.parent().child('_state').exists() && data.parent().child('_state').val() != 'code_matching_requested' && newData.parent().child('_state').val() == 'code_matching_requested'"
           },
           "verificationResult": {
             // allow reading verificationResult of a particular record
-            ".read": true,
+            // ".read": true,
             // disallow writing, except for admin
-            ".write": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+            // ".write": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
           }
 
         },
@@ -163,19 +166,19 @@
       ".indexOn": ["phone"],
 
       // disallow enumerating entire list, except for admin
-      ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+      // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
 
       // disallow overwriting entire list
-      ".write": false,
+      // ".write": false,
 
       "$userId": {
         // the record owner and admins can read and write most of the record; everyone else disallowed
-        ".read": "auth != null && (auth.uid === $userId || root.child('users/'+ auth.uid + '/admin').val() == true)",
-        ".write": "auth != null && (auth.uid === $userId || root.child('users/'+ auth.uid + '/admin').val() == true)",
+        // ".read": "auth != null && (auth.uid === $userId || root.child('users/'+ auth.uid + '/admin').val() == true)",
+        // ".write": "auth != null && (auth.uid === $userId || root.child('users/'+ auth.uid + '/admin').val() == true)",
 
         "admin": {
           // users can only be granted admin privilges manually
-          ".write": false
+          // ".write": false
         }
       }
     }
