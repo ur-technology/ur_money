@@ -5,8 +5,20 @@
         "34234234": {
           "type": "send", // send/receive
           "source": "urmoney", // urmoney/external
-          "senderUserId": "4234236345",
-          "UserId": "734234234",
+          "sender": {
+            "firstName": "John",
+            "middleName": "William",
+            "lastName": "Reitano",
+            "profilePhotoUrl": "xxx",
+            "userId": "213123"
+          },
+          "receiver": {
+            "firstName": "John",
+            "middleName": "William",
+            "lastName": "Reitano",
+            "profilePhotoUrl": "xxx",
+            userId: "213123"
+          },
           "status": "pending",
           "amount": "10000000",
           "message": "Here is some money for you!",
