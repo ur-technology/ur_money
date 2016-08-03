@@ -18,7 +18,7 @@
       },
 
       "tasks": {
-        ".indexOn": ["_state"],
+        ".indexOn": "_state",
 
         // disallow enumerating entire collection, except for admin
         // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
@@ -49,7 +49,7 @@
       // ".write": false,
 
       "tasks": {
-        ".indexOn": ["_state"],
+        ".indexOn": "_state",
 
         // disallow enumerating entire collection, except for admin
         // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
@@ -72,7 +72,7 @@
       // ".write": false,
 
       "tasks": {
-        ".indexOn": ["_state"],
+        ".indexOn": "_state",
 
         // disallow enumerating entire collection, except for admin
         // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
@@ -95,7 +95,7 @@
       // ".write": false,
 
       "tasks": {
-        ".indexOn": ["_state"],
+        ".indexOn": "_state",
 
         // disallow enumerating entire collection, except for admin
         // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
@@ -125,7 +125,7 @@
       },
 
       "tasks": {
-        ".indexOn": ["_state"],
+        ".indexOn": "_state",
 
         // disallow enumerating entire collection, except for admin
         // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
