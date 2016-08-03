@@ -6,6 +6,7 @@ import {FIREBASE_PROVIDERS, defaultFirebase, firebaseAuthConfig, AuthProviders, 
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
+import {Config} from './config/config';
 import {Auth} from './services/auth';
 import {ChartData} from './services/chart-data';
 import {TransactionNavService} from './pages/transactions/transaction-nav-service';
@@ -13,7 +14,6 @@ import {CountryListService} from './services/country-list-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 import {ContactsService} from './services/contacts-service';
 import {DeviceIdentityService} from './services/device-identity-service';
-import {Config} from './config/config';
 
 import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
 import {Registration1Page} from './pages/registration/registration1';
@@ -57,6 +57,9 @@ class UrMoney {
   faceUrl: string;
   constructor(private platform: Platform, private menu: MenuController, public auth: Auth) {
     this.initializeApp();
+  }
+
+  initializeApp() {
     this.menuItems = [
       { title: 'Home', component: HomePage, icon: 'icon menu-icon menu-icon-home' },
       { title: 'Chat', component: ContactsAndChatsPage, icon: 'icon menu-icon menu-icon-chat' },
@@ -65,9 +68,7 @@ class UrMoney {
       { title: 'Transactions', component: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions' },
       { title: 'About UR', component: AboutPage, icon: 'icon menu-icon menu-icon-about' }
     ];
-  }
 
-  initializeApp() {
     this.platform.ready().then(() => {
 
       if (this.platform.is('cordova')) {
@@ -75,7 +76,6 @@ class UrMoney {
       }
 
       log.setDefaultLevel(1); // { "TRACE": 0, "DEBUG": 1, "INFO": 2, "WARN": 3, "ERROR": 4, "SILENT": 5 }
-      log.info("starting app")
 
       if (/^\/app/.test(window.location.pathname)) {
         this.nav.setRoot(DownloadPage, {}, { animate: true, direction: 'forward' });
@@ -84,6 +84,7 @@ class UrMoney {
 
       this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, HomePage, ChatPage);
 
+      log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
     });
   }
 

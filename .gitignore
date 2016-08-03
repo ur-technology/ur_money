@@ -12,3 +12,4 @@ plugins/
 Thumbs.db
 firebase-debug.log
 www/go/
+app/config/env.json

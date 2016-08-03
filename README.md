@@ -15,6 +15,10 @@ typings install
 * First, install required dev tools (Xcode for iOS, Android SDK for Android)
 * Next, run: `ionic state restore`
 
+## Create environment configuaration file
+* Run `echo "{ firebaseProjectId: 'ur-money-staging' }" > app/config/env.json`
+* Edit app/config/env.json to change or add configuration files
+
 ## Run on device
 * Run `ionic run android -c -l` or `ionic run ios -c -l`
 * If you have a problem running the app, check out these platform-specific instructions:
