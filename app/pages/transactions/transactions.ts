@@ -3,18 +3,15 @@ import {TransactionsEarnedPage} from './transaction-earned';
 import {TransactionsReceivedPage} from './transaction-received';
 import {TransactionsSentPage} from './transaction-sent';
 
-import {TransactionNavService} from './transaction-nav-service';
+// import {TransactionNavService} from './transaction-nav-service';
 
 import {HomePage} from '../home/home';
 import {ReceivePage} from '../receive/receive';
 import {SendPage} from '../send/send';
+import {TransactionComponent} from '../../components/transaction/transaction.component';
 
-/*
-  Generated class for the TransactionsPage page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+
 @Page({
   templateUrl: 'build/pages/transactions/transactions.html',
 })
@@ -29,7 +26,7 @@ export class TransactionsPage {
   receivePage: any;
   selectedItem: any;
   invitePage: any;
-  constructor(public nav: NavController, public transactionnavService: TransactionNavService, public platform: Platform) {
+  constructor(public nav: NavController, public platform: Platform) {
 
     this.earnedTransactionPage = TransactionsEarnedPage;
     this.receivedTransactionPage = TransactionsReceivedPage;
@@ -40,9 +37,9 @@ export class TransactionsPage {
     if (this.platform.is('android')) {
       this.android = true;
     }
-    this.transactionnavService.goToPageEmitter.subscribe((data) => {
-      this.goToPage(data);
-    });
+    // this.transactionnavService.goToPageEmitter.subscribe((data) => {
+    //   this.goToPage(data);
+    // });
 
   }
 

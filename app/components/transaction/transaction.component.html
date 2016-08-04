@@ -1,0 +1,53 @@
+<div class="transaction-filter-top">
+    <div class="filter-box"
+        padding>
+        <div class="filter-btns">
+          <button class="button button-outline" (click)="filterTransactions('today')" [ngClass]="{'active':filterOption==='today'}">Today</button>
+          <button class="button button-outline" (click)="filterTransactions('30')" [ngClass]="{'active':filterOption==='30'}">Last 30 Days</button>
+          <button class="button button-outline" (click)="filterTransactions('60')" [ngClass]="{'active':filterOption==='60'}">Last 60 Days</button>
+          <button class="button button-outline" (click)="filterTransactions('all')" [ngClass]="{'active':filterOption==='all'}">All Time</button>
+        </div>
+
+        <div class="total-ur">
+            {{amount | number:1.2}}
+        </div>
+        <p class="last-update">
+            <ion-icon name="ios-clock-outline"></ion-icon> Last Updated : {{lastUpdated|timestamp}}
+        </p>
+        <div class="invite-and-earn" *ngIf="transactionType==='earned'">
+                <p>Invite your Friends & Earn 1500 UR</p>
+                <button (click)="openInvitePage()" class="button button-outline">Invite</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="showSpinner">
+    <ion-row>
+        <ion-col text-center>
+            <ion-spinner></ion-spinner>
+        </ion-col>
+    </ion-row>
+</div>
+<div class="transaction-chat"
+    *ngIf="!showSpinner">
+    <div class="card"
+        *ngIf="transactionDataFiltered.length ===0">
+        <ion-item class="item">
+            <p style="text-align: center;">No transactions yet</p>
+        </ion-item>
+    </div>
+    <div class="card"
+        *ngFor="let transaction of transactionDataFiltered">
+
+        <ion-item class="item"
+            text-wrap>
+            <ion-avatar item-left>
+                <img src="img/avatar.jpg">
+            </ion-avatar>
+            <h2>{{transaction.name}} <span class="item-date-time">{{transaction.createdAt | date:'medium'}}</span></h2>
+            <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">See More</a></span></p>
+            <span class="icon trans-ur"
+                item-right>{{transaction.amount}}<br/>  UR</span>
+        </ion-item>
+    </div>
+
+</div>

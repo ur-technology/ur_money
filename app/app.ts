@@ -9,7 +9,6 @@ import * as log from 'loglevel';
 import {Config} from './config/config';
 import {Auth} from './services/auth';
 import {ChartData} from './services/chart-data';
-import {TransactionNavService} from './pages/transactions/transaction-nav-service';
 import {CountryListService} from './services/country-list-service';
 import {LoadingModal} from './components/loading-modal/loading-modal';
 import {ContactsService} from './services/contacts-service';
@@ -34,8 +33,7 @@ import {DownloadPage} from './pages/download/download';
   providers: [
     Auth,
     DeviceIdentityService,
-    ContactsService,
-    TransactionNavService,
+    ContactsService,    
     CountryListService,
     ChartData,
     LoadingModal,
