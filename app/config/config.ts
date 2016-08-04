@@ -11,7 +11,7 @@ import * as log from 'loglevel';
 
 export let Config: any = require("./env"); // TODO: figure out how to respond gracefully when there is no env.json file
 _.defaults(Config, {
-  version: "0.6",
+  version: "0.6 (04-Aug-2016 3:38 PM CT)",
   generalAppDownloadUrl: "http://ur-money-staging.firebaseapp.com/app",
   iosAppDownloadUrl: "https://i.diawi.com/Ed2B7w",
   androidAppDownloadUrl: "https://i.diawi.com/jLAiSs",
