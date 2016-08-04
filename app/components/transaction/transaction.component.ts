@@ -6,11 +6,13 @@ import * as _ from 'lodash';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as moment from 'moment';
 import {ContactsAndChatsPage} from '../../pages/contacts-and-chats/contacts-and-chats';
+import {Round} from '../../pipes/round';
+import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 
 @Component({
   selector: 'transaction-component',
   templateUrl: 'build/components/transaction/transaction.component.html',
-  pipes: [Timestamp]
+  pipes: [Timestamp, Round, DateAndTime]
 })
 export class TransactionComponent {
   showSpinner: boolean = false;
