@@ -83,7 +83,7 @@ export class ContactsPage {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
           file: 'https://ur-money-staging.firebaseapp.com/img/icon.png',
-          url: `${Config.appDownloadUrl}`,
+          url: `${Config.generalAppDownloadUrl}`,
           chooserTitle: 'Pick an app' // Android only
         }).then((result) => {
           log.debug("returned from SocialSharing.shareWithOptions; saving dowlineUser");

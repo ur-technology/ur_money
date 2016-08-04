@@ -33,7 +33,7 @@ import {DownloadPage} from './pages/download/download';
   providers: [
     Auth,
     DeviceIdentityService,
-    ContactsService,    
+    ContactsService,
     CountryListService,
     ChartData,
     LoadingModal,
@@ -75,7 +75,7 @@ class UrMoney {
 
       log.setDefaultLevel(1); // { "TRACE": 0, "DEBUG": 1, "INFO": 2, "WARN": 3, "ERROR": 4, "SILENT": 5 }
 
-      if (/^\/app/.test(window.location.pathname)) {
+      if (/^\/app/.test(window.location.pathname) || /^\?app/.test(window.location.search)) {
         this.nav.setRoot(DownloadPage, {}, { animate: true, direction: 'forward' });
         return;
       }

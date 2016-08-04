@@ -1,17 +1,16 @@
 import {Page, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
+import {Config} from '../../config/config';
 
-/*
-  Generated class for the AboutPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
   templateUrl: 'build/pages/about/about.html',
 })
 export class AboutPage {
-  constructor(public nav: NavController) { }
+  public config: any;
+
+  constructor(public nav: NavController) {
+    this.config = Config;
+  }
 
   moveBack() {
     this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });

@@ -1,7 +1,7 @@
 // NOTE: to define new config values or override the defaults, create a file 'env.json'
 // in this difrectory with the following contents:
 // {
-//   appDownloadUrl: "http://myfavoritydownwonloadurl/app",
+//   generalAppDownloadUrl: "http://myfavoritydownwonloadurl/app",
 //   firebaseProjectId: "ur-money-newguy",
 //   // ...
 // }
@@ -11,7 +11,10 @@ import * as log from 'loglevel';
 
 export let Config: any = require("./env"); // TODO: figure out how to respond gracefully when there is no env.json file
 _.defaults(Config, {
-  appDownloadUrl: "http://ur-money-staging.firebaseapp.com/app",
+  version: "0.6",
+  generalAppDownloadUrl: "http://ur-money-staging.firebaseapp.com/app",
+  iosAppDownloadUrl: "https://i.diawi.com/Ed2B7w",
+  androidAppDownloadUrl: "https://i.diawi.com/jLAiSs",
   firebaseProjectId: "ur-money-staging"
 });
 
