@@ -4,6 +4,38 @@
     ".read": true,
     ".write": true,
 
+    "urBlockQueue": {
+      // disallow enumerating entire collection, except for admin
+      ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+      // disallow overwriting entire list
+      ".write": false,
+
+      "specs": {
+        // disallow enumerating entire collection, except for admin
+        ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+        // disallow overwriting entire list
+        ".write": false,
+      },
+
+      "tasks": {
+        ".indexOn": "_state",
+
+        // disallow enumerating entire collection, except for admin
+        ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+        // disallow overwriting entire list
+        ".write": false,
+
+        "$taskId": {
+          // disallow reading, except for admin
+          ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+          // disallow writing, except for admin
+          ".write": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
+
+        },
+      },
+    },
+
+
     "contactLookupQueue": {
       // disallow enumerating entire collection, except for admin
       // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
