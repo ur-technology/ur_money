@@ -15,7 +15,8 @@ _.defaults(Config, {
   generalAppDownloadUrl: "http://ur-money-staging.firebaseapp.com/app",
   iosAppDownloadUrl: "https://i.diawi.com/Ed2B7w",
   androidAppDownloadUrl: "https://i.diawi.com/jLAiSs",
-  firebaseProjectId: "ur-money-staging"
+  firebaseProjectId: "ur-money-staging",
+  logLevel: "debug"
 });
 
 let firebaseValues = {

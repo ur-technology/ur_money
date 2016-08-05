@@ -2,10 +2,10 @@ import {Injectable, EventEmitter} from '@angular/core'
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import * as moment from 'moment';
-import {Auth} from '../services/auth';
+import {AuthService} from '../services/auth';
 
 @Injectable()
-export class ChartData {
+export class ChartDataService {
   public duration: number = 1;
   public unitOfTime: moment.UnitOfTime = 'weeks';
   public startingTime: moment.Moment;
@@ -19,7 +19,7 @@ export class ChartData {
   public balanceChange: number;
   public percentageChange: number;
 
-  constructor(public auth: Auth) {
+  constructor(public auth: AuthService) {
     this.pointsLoaded = false;
     this.loadPointsWhenBalanceRecordsChange();
   }

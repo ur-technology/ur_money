@@ -1,10 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
 import {NavController} from 'ionic-angular';
-import {ChatList} from '../../components/chat-list/chat-list';
+import {ChatListComponent} from '../../components/chat-list/chat-list';
 
 @Component({
     templateUrl: 'build/pages/chats/chats.html',
-    directives: [ChatList]
+    directives: [ChatListComponent]
 })
 export class ChatsPage {
     constructor(private nav: NavController) {

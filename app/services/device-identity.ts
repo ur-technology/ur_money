@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import {Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {DeviceIdentity} from '../models/device-identity';
+import {DeviceIdentityModel} from '../models/device-identity';
 
 // Native plugin
 import {Device} from 'ionic-native';
@@ -11,9 +11,9 @@ import {Geolocation} from 'ionic-native';
 
 @Injectable()
 export class DeviceIdentityService {
-  deviceIdentity: DeviceIdentity;
+  deviceIdentity: DeviceIdentityModel;
   constructor(public http: Http, public platform: Platform) {
-    this.deviceIdentity = new DeviceIdentity();
+    this.deviceIdentity = new DeviceIdentityModel();
     this.getIpAddress();
     this.getDeviceInformation();
     this.getDeviceLocation();

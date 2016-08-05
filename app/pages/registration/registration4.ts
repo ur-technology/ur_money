@@ -5,12 +5,12 @@ import {AngularFire} from 'angularfire2'
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
-import {Focuser} from '../../directives/focuser';
-import {Wallet} from '../../models/wallet';
-import {Auth} from '../../services/auth';
-import {DeviceIdentityService} from '../../services/device-identity-service';
-import {CustomValidators} from '../../validators/custom-validators';
-import {LoadingModal} from '../../components/loading-modal/loading-modal';
+import {FocuserDirective} from '../../directives/focuser';
+import {WalletModel} from '../../models/wallet';
+import {AuthService} from '../../services/auth';
+import {DeviceIdentityService} from '../../services/device-identity';
+import {CustomValidator} from '../../validators/custom';
+import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 
 import {HomePage} from '../home/home';
 
@@ -18,7 +18,7 @@ declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/registration/registration4.html',
-  directives: [FORM_DIRECTIVES, Focuser]
+  directives: [FORM_DIRECTIVES, FocuserDirective]
 })
 export class Registration4Page {
   mainForm: ControlGroup;
@@ -30,8 +30,8 @@ export class Registration4Page {
   constructor(
     public nav: NavController,
     public formBuilder: FormBuilder,
-    public auth: Auth,
-    public loadingModal: LoadingModal,
+    public auth: AuthService,
+    public loadingModal: LoadingModalComponent,
     public deviceIdentityService: DeviceIdentityService
   ) {
     this.countries = require('country-data').countries.all.sort((a, b) => {
@@ -43,13 +43,13 @@ export class Registration4Page {
     });
     this.allStates = require('provinces');
     this.mainForm = formBuilder.group({
-      'firstName': ["", CustomValidators.nameValidator],
-      'lastName': ["", CustomValidators.nameValidator],
-      'stateName': ["", CustomValidators.nameValidator],
-      'city': ["", CustomValidators.nameValidator],
-      'secretPhrase': ["", CustomValidators.secretPhraseValidator],
+      'firstName': ["", CustomValidator.nameValidator],
+      'lastName': ["", CustomValidator.nameValidator],
+      'stateName': ["", CustomValidator.nameValidator],
+      'city': ["", CustomValidator.nameValidator],
+      'secretPhrase': ["", CustomValidator.secretPhraseValidator],
       'secretPhraseConfirmation': ["", Validators.required]
-    }, { validator: CustomValidators.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation') });
+    }, { validator: CustomValidator.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation') });
     let authUser = this.auth.currentUser;
     this.profile = {
       secretPhrase: '',
@@ -126,8 +126,8 @@ export class Registration4Page {
   generateAddress() {
     let self = this;
     self.loadingModal.show();
-    Wallet.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
-      let wallet: Wallet = new Wallet(walletData);
+    WalletModel.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
+      let wallet: WalletModel = new WalletModel(walletData);
       self.profile.address = wallet.getAddress();
       self.saveProfile();
     }).catch((error) => {

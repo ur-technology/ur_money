@@ -6,7 +6,7 @@ import {IONIC_DIRECTIVES} from 'ionic-angular';
     templateUrl: 'build/components/loading-modal/loading-modal.html',
     directives: [IONIC_DIRECTIVES] // makes all Ionic directives available to your component
 })
-export class LoadingModal {
+export class LoadingModalComponent {
   public isBusy: boolean = false;
   constructor() {
   }

@@ -1,13 +1,10 @@
 import {Page, NavController, NavParams, Alert, Loading} from 'ionic-angular';
-import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl, Control} from '@angular/common';
-import {CustomValidators} from '../../validators/custom-validators';
-import {Auth} from '../../services/auth';
-import {LoadingModal} from '../../components/loading-modal/loading-modal';
+import {AuthService} from '../../services/auth';
+import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import * as log from 'loglevel';
 
 @Page({
-  templateUrl: 'build/pages/registration/registration3.html',
-  directives: [FORM_DIRECTIVES]
+  templateUrl: 'build/pages/registration/registration3.html'
 })
 export class Registration3Page {
   verificationCode: string;
@@ -15,8 +12,8 @@ export class Registration3Page {
   phone: string;
 
   constructor(public nav: NavController, public navParams: NavParams,
-    public formBuilder: FormBuilder, public auth: Auth,
-    public loadingModal: LoadingModal) {
+    public auth: AuthService,
+    public loadingModal: LoadingModalComponent) {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
     this.verificationCode = '';

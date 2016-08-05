@@ -4,10 +4,10 @@ import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
-import {CustomValidators} from '../../validators/custom-validators';
-import {Auth} from '../../services/auth';
-import {LoadingModal} from '../../components/loading-modal/loading-modal';
-import {Focuser} from '../../directives/focuser';
+import {CustomValidator} from '../../validators/custom';
+import {AuthService} from '../../services/auth';
+import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
+import {FocuserDirective} from '../../directives/focuser';
 
 import {HomePage} from '../home/home';
 
@@ -24,8 +24,8 @@ export class SettingsPage {
   constructor(
     public nav: NavController,
     public formBuilder: FormBuilder,
-    public auth: Auth,
-    public loadingModal: LoadingModal
+    public auth: AuthService,
+    public loadingModal: LoadingModalComponent
   ) {
     this.countries = require('country-data').countries.all.sort((a, b) => {
       return (a.name < b.name) ? -1 : ((a.name == b.name) ? 0 : 1);
@@ -36,10 +36,10 @@ export class SettingsPage {
     });
     this.allStates = require('provinces');
     this.mainForm = formBuilder.group({
-      'firstName': ["", CustomValidators.nameValidator],
-      'lastName': ["", CustomValidators.nameValidator],
-      'stateName': ["", CustomValidators.nameValidator],
-      'city': ["", CustomValidators.nameValidator]
+      'firstName': ["", CustomValidator.nameValidator],
+      'lastName': ["", CustomValidator.nameValidator],
+      'stateName': ["", CustomValidator.nameValidator],
+      'city': ["", CustomValidator.nameValidator]
     });
     let authUser = this.auth.currentUser;
     this.profile = {

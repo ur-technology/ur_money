@@ -2,9 +2,9 @@
  * Created by shumer on 7/13/16.
  */
 import {beforeEachProviders, it, describe, expect, inject, beforeEach} from '@angular/core/testing';
-import {Wallet} from '../../app/models/wallet';
+import {WalletModel} from '../../app/models/wallet';
 
-describe('Wallet Service', () => {
+describe('WalletModel Service', () => {
 
     var config = {
         seed : '12345',
@@ -15,21 +15,21 @@ describe('Wallet Service', () => {
         toAddress : 'b3244b260355d9ef74fb6520c00b7359f5e967e3'
     };
 
-    beforeEachProviders(() => [Wallet]);
+    beforeEachProviders(() => [WalletModel]);
 
     it('Validating credentials', () => {
 
-        expect(Wallet.validateCredentials('', config.salt)).toBeFalsy();
+        expect(WalletModel.validateCredentials('', config.salt)).toBeFalsy();
 
-        expect(Wallet.validateCredentials(config.seed, '')).toBeFalsy();
+        expect(WalletModel.validateCredentials(config.seed, '')).toBeFalsy();
 
-        expect(Wallet.validateCredentials(config.seed, config.salt)).toBeTruthy();
+        expect(WalletModel.validateCredentials(config.seed, config.salt)).toBeTruthy();
 
     });
 
     it('Creating wallet', () => {
-        Wallet.generate(config.seed, config.salt).then((data) => {
-            let wallet: Wallet = new Wallet(data);
+        WalletModel.generate(config.seed, config.salt).then((data) => {
+            let wallet: WalletModel = new WalletModel(data);
 
             expect(typeof wallet).toBe('object');
 
@@ -38,8 +38,8 @@ describe('Wallet Service', () => {
     });
 
     it('Validating address', () => {
-        Wallet.generate(config.seed, config.salt).then((data) => {
-            let wallet: Wallet = new Wallet(data);
+        WalletModel.generate(config.seed, config.salt).then((data) => {
+            let wallet: WalletModel = new WalletModel(data);
 
             expect(wallet.validateAddress('')).toBeFalsy();
 
@@ -54,8 +54,8 @@ describe('Wallet Service', () => {
     });
 
     it('Validating amount', () => {
-        Wallet.generate(config.seed, config.salt).then((data) => {
-            let wallet: Wallet = new Wallet(data);
+        WalletModel.generate(config.seed, config.salt).then((data) => {
+            let wallet: WalletModel = new WalletModel(data);
 
             expect(wallet.validateAmount(null)).toBeFalsy();
 
@@ -68,8 +68,8 @@ describe('Wallet Service', () => {
     });
 
     it('Transaction', (done) => {
-        Wallet.generate(config.seed, config.salt).then((data) => {
-            let wallet: Wallet = new Wallet(data);
+        WalletModel.generate(config.seed, config.salt).then((data) => {
+            let wallet: WalletModel = new WalletModel(data);
 
             let first = false;
             wallet.sendRawTransaction(config.toAddress, config.amountExisted + 200).then(function(error){
@@ -92,7 +92,7 @@ describe('Wallet Service', () => {
     });
 
     it('Mining active', () => {
-        expect(Wallet.miningIsActive()).toBeTruthy();
+        expect(WalletModel.miningIsActive()).toBeTruthy();
     });
 
 });

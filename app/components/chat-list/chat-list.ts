@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Subscription} from 'rxjs';
-import { NavController } from 'ionic-angular';
-import {Auth} from '../../services/auth';
+import {NavController } from 'ionic-angular';
+import {AuthService} from '../../services/auth';
 import {ChatPage} from '../../pages/chat/chat';
 import {Timestamp}  from '../../pipes/timestamp';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
@@ -11,11 +11,11 @@ import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservab
   templateUrl: 'build/components/chat-list/chat-list.html',
   pipes: [Timestamp]
 })
-export class ChatList {
+export class ChatListComponent {
   chats: any[];
   x: any[];
 
-  constructor(private nav: NavController, private auth: Auth, private angularFire: AngularFire) {
+  constructor(private nav: NavController, private auth: AuthService, private angularFire: AngularFire) {
   }
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class ChatList {
 
   load() {
     this.angularFire.database.list(`/users/${this.auth.currentUserId}/chatSummaries`).subscribe(data => {
-      this.chats = data;      
+      this.chats = data;
     });
   }
 

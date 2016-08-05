@@ -4,12 +4,12 @@ import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMetho
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import {Subscription} from 'rxjs';
-import {ContactsService} from '../services/contacts-service';
+import {ContactsService} from '../services/contacts';
 import {Sim} from 'ionic-native';
 import {LocalNotifications} from 'ionic-native';
 
 @Injectable()
-export class Auth {
+export class AuthService {
   public currentUserId: string
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;

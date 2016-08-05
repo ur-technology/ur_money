@@ -3,11 +3,10 @@ import {OnInit, ElementRef, Inject} from '@angular/core';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
-import {Auth} from '../../services/auth';
+import {AuthService} from '../../services/auth';
 import {Registration3Page} from './registration3';
-import {CustomValidators} from '../../validators/custom-validators';
-import {LoadingModal} from '../../components/loading-modal/loading-modal';
-import {CountryListService} from '../../services/country-list-service';
+import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
+import {CountryListService} from '../../services/country-list';
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
 
@@ -22,7 +21,7 @@ export class Registration2Page implements OnInit {
   countries: any;
   selected: any;
   selectedCountry: any;
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: Auth, public loadingModal: LoadingModal, public countryListService: CountryListService) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: AuthService, public loadingModal: LoadingModalComponent, public countryListService: CountryListService) {
     this.elementRef = elementRef;
     this.phoneForm = formBuilder.group({
       'phone': ['', (control) => {

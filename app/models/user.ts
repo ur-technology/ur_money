@@ -1,7 +1,7 @@
 import {FirebaseModel} from './firebase-model';
 import * as _ from 'lodash';
 
-export class User extends FirebaseModel {
+export class UserModel extends FirebaseModel {
   admin: boolean;
   chats: any;
   chatSummaries: any;

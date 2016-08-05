@@ -13,7 +13,7 @@ export class ContactsAndChatsPage {
 
   constructor(private nav: NavController, private navParams: NavParams) {
     this.contactsPage = ContactsPage;
-    this.contactsPageParams = { nonMembersFirst: navParams.get("nonMembersFirst") };
+    this.contactsPageParams = { goal: navParams.get("goal") };
     this.chatsPage = ChatsPage;
   }
 

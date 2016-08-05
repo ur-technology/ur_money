@@ -1,7 +1,7 @@
 import {FirebaseModel} from './firebase-model';
 import * as _ from 'lodash';
 
-export class Contact extends FirebaseModel {
+export class ContactModel extends FirebaseModel {
   userId: string
   firstName: string;
   middleName: string;

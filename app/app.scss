@@ -23,7 +23,7 @@ body, h1, h2, h3, h4, h5, h6, input, button, select, textarea {
     icons
 -------------------*/
 
-.home-icon, .receive-icon, .wallet-icon, .hand-coin-icon, .dollar-map-icon, .plane-icon {
+.home-icon, .request-icon, .wallet-icon, .hand-coin-icon, .dollar-map-icon, .plane-icon {
     display: inline-block;
     vertical-align: middle;
     width: 32px;
@@ -34,7 +34,7 @@ body, h1, h2, h3, h4, h5, h6, input, button, select, textarea {
     background: url("../../img/home-icon.png") no-repeat center;
 }
 
-.receive-icon {
+.request-icon {
     background: url("../../img/earn-icon-20x19.png") no-repeat center;
 }
 
@@ -121,36 +121,6 @@ i.menu-icon {
     background: url("../../img/qr-code-icon.png") no-repeat center;
     width: 22px;
     height: 23px !important;
-}
-
-.ion-ios-sent-icon-on, .ion-ios-sent-icon-off, .ion-ios-received-icon-on, .ion-ios-received-icon-off, .ion-ios-earned-icon-on, .ion-ios-earned-icon-off {
-    display: inline-block;
-    width: 28px;
-    height: 28px;
-}
-
-.ion-ios-sent-icon-on {
-    background: url("../../img/sent-icon-active.png") no-repeat center;
-}
-
-.ion-ios-sent-icon-on-outline {
-    background: url("../../img/sent-icon.png") no-repeat center;
-}
-
-.ion-ios-received-icon-on {
-    background: url("../../img/received-icon-active.png") no-repeat center;
-}
-
-.ion-ios-received-icon-on-outline {
-    background: url("../../img/received-icon.png") no-repeat center;
-}
-
-.ion-ios-earned-icon-on {
-    background: url("../../img/earned-icon-active.png") no-repeat center;
-}
-
-.ion-ios-earned-icon-on-outline {
-    background: url("../../img/earned-icon.png") no-repeat center;
 }
 
 /*--------------------------------------*/

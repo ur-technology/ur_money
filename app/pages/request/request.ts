@@ -1,15 +1,15 @@
 import {Page, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
 /*
-  Generated class for the ReceivePage page.
+  Generated class for the RequestPage page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
 @Page({
-  templateUrl: 'build/pages/receive/receive.html',
+  templateUrl: 'build/pages/request/request.html',
 })
-export class ReceivePage {
+export class RequestPage {
   showContactInput: boolean = true;
   contactItem: any;
   showContacts: boolean = false;

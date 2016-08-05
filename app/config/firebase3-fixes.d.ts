@@ -4,7 +4,7 @@ declare namespace firebase.database.ServerValue {
   var TIMESTAMP: any
 }
 declare namespace firebase.auth {
-  interface Auth {
+  interface AuthService {
     createCustomToken(uid: string, options?: any): string;
   }
 }

@@ -15,10 +15,10 @@
   <ion-title>Balance: 3,035.00</ion-title>
 </ion-navbar>
 
-<ion-content padding class="dash-receive-view">
-  <div class="send-receive-cont">
+<ion-content padding class="dash-request-view">
+  <div class="send-requestcont">
     <!--<form action="#">-->
-    <div class="card send-receive-input">
+    <div class="card send-requestinput">
       <div *ngIf="!showContactInput" class="contacts-cont">
         <span class="contact-item"><img src="../../img/avatar.jpg" alt="">{{contactItem.email}}  <a (click)="removeContact()" class="contact-close"></a></span>
       </div>
@@ -28,7 +28,7 @@
                     <i class="icon qr-code-icon" item-right></i>
       </label>
     </div>
-    <div class="send-receive-popover" *ngIf="showContacts">
+    <div class="send-requestpopover" *ngIf="showContacts">
       <div class="list contacts-list">
         <div class="recent-contacts">
           <ion-item class="item item-divider">
@@ -121,18 +121,18 @@
         </div>
       </div>
     </div>
-    <div class="card send-receive-ur" [hidden]="showContacts">
+    <div class="card send-requestur" [hidden]="showContacts">
       <label class="item item-input">
         <input (click)="urInput = ''"  type="text" />
          <ion-note class="item-note"> UR </ion-note>
      </label>
     </div>
-    <div class="card send-receive-textarea" [hidden]="showContacts">
+    <div class="card send-requesttextarea" [hidden]="showContacts">
       <label class="item item-input">
             <textarea (click)="sendReceiveText = ''">Lorem ipsum dolor sit amet, vix tation consul cu, vim ut lorem omnium mandamus. Cum illud adipiscing liberavisse at, possim fastidii ex usu</textarea>
       </label>
     </div>
-    <button class="button button-light button-outline button-block button-large send-receive-btn">Request</button>
+    <button class="button button-light button-outline button-block button-large send-requestbtn">Request</button>
     <!--</form>-->
   </div>
 </ion-content>

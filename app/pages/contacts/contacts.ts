@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, ActionSheet, Platform, Alert} from 'ionic-angular';
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
-import {ContactsService} from '../../services/contacts-service';
-import {Auth} from '../../services/auth';
+import {ContactsService} from '../../services/contacts';
+import {AuthService} from '../../services/auth';
+import {SendPage} from '../send/send';
+import {RequestPage} from '../request/request';
 import {ChatPage} from '../chat/chat';
-import {Invite} from '../../models/invite';
+import {InviteModel} from '../../models/invite';
 import {Config} from '../../config/config';
-import {User} from '../../models/user';
+import {UserModel} from '../../models/user';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 declare var window: any;
@@ -21,23 +23,23 @@ export class ContactsPage {
   paginatedContacts: any[] = [];
   displayableContacts: any[];
   startTime: number;
-  public nonMembersFirst: boolean;
+  public goal: string;
 
   constructor(
     private nav: NavController,
     private navParams: NavParams,
     private contactsService: ContactsService,
-    private auth: Auth,
+    private auth: AuthService,
     private platform: Platform
   ) {
     this.startTime = (new Date()).getTime();
-    this.nonMembersFirst = navParams.get("nonMembersFirst")
+    this.goal = navParams.get("goal")
   }
 
   ionViewDidEnter() {
     let self = this;
     self.contactsService.load(self.auth.countryCode, self.auth.currentUserId).then((contactGroups: any) => {
-      let contacts = self.nonMembersFirst ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
+      let contacts = self.goal == "invite" ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
       self.paginatedContacts = _.chunk(contacts, self.PAGE_SIZE);
       self.numberOfPages = self.paginatedContacts.length;
       self.displayableContacts = self.paginatedContacts[0];
@@ -60,20 +62,24 @@ export class ContactsPage {
   }
 
   contactSelected(contact: any) {
-    if (contact.userId) {
-      this.nav.rootNav.push(ChatPage, { contact: contact });
-    } else {
+    if (!contact.userId) {
       this.inviteContact(contact);
+    } else if (this.goal == "send") {
+      this.nav.rootNav.push(SendPage, { contact: contact });
+    } else if (this.goal == "request") {
+      this.nav.rootNav.push(RequestPage, { contact: contact });
+    } else {
+      this.nav.rootNav.push(ChatPage, { contact: contact });
     }
   }
 
   inviteContact(contact: any) {
     let self = this;
     let invitationCode = self.generateInvitationCode();
-    if (!this.platform.is('cordova')) {
+    if (!self.platform.is('cordova')) {
       // HACK: this code is here to test invitations in ionic serve
       let alert = Alert.create({title: 'Simulating social sharing action sheet', message: 'Invitation added to queue!', buttons: ['Ok']});
-      this.nav.present(alert);
+      self.nav.present(alert);
       self.addNewInvitationToQueue(contact, invitationCode);
       return;
     }

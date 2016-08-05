@@ -5,7 +5,7 @@ import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {Auth} from '../../services/auth';
+import {AuthService} from '../../services/auth';
 
 declare var jQuery: any;
 
@@ -24,7 +24,7 @@ export class ChatPage {
   messageTextAreaHeight: number;
   @ViewChild(Content) content: Content;
 
-  constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: Auth) {
+  constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: AuthService) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');

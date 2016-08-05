@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
-import {Auth} from '../../services/auth';
+import {AuthService} from '../../services/auth';
 import * as _ from 'lodash';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as moment from 'moment';
@@ -11,7 +11,7 @@ import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 
 @Component({
   selector: 'transaction-component',
-  templateUrl: 'build/components/transaction/transaction.component.html',
+  templateUrl: 'build/components/transaction/transaction.html',
   pipes: [Timestamp, Round, DateAndTime]
 })
 export class TransactionComponent {
@@ -23,7 +23,7 @@ export class TransactionComponent {
   filterOption: string = 'all';
   transactionType: string;
 
-  constructor(private auth: Auth, private nav: NavController) {
+  constructor(private auth: AuthService, private nav: NavController) {
   }
 
   filterTransactions(filterOption) {
@@ -69,8 +69,8 @@ export class TransactionComponent {
     return todayWithDayStartTime;
   }
 
-  openInvitePage() {
-    this.nav.rootNav.push(ContactsAndChatsPage, { nonMembersFirst: true }, { animate: true, direction: 'forward' });
+  chooseContactAndInvite() {
+    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
   }
 
 

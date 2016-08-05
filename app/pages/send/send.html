@@ -16,35 +16,29 @@
 </ion-navbar>
 
 <ion-content padding class="dash-send-view">
-  <div class="send-receive-cont">
+  <div class="send-requestcont">
     <!--<form action="#">-->
 
-    <div class="card send-receive-textarea" [hidden]="showContacts">
+    <div class="card send-requesttextarea" [hidden]="showContacts">
       <label class="item item-input">
         <ion-input [(ngModel)]="publicKey" placeholder="Enter recipient address"></ion-input>
       </label>
     </div>
 
-    <div class="card send-receive-ur" [hidden]="showContacts">
+    <div class="card send-requestur" [hidden]="showContacts">
       <label class="item item-input">
         <input  [(ngModel)]="amount" type="text" />
          <ion-note class="item-note"> UR </ion-note>
      </label>
     </div>
 
-    <div class="card send-receive-textarea" [hidden]="showContacts">
+    <div class="card send-requesttextarea" [hidden]="showContacts">
       <label class="item item-input">
         <ion-input [(ngModel)]="phrase" placeholder="Enter your secret phrase to authorize this transaction"></ion-input>
       </label>
     </div>
 
-    <div class="card send-receive-textarea" [hidden]="showContacts">
-      <label class="item item-input">
-        <ion-input [(ngModel)]="password" placeholder="Enter your password"></ion-input>
-      </label>
-    </div>
-
-    <button class="button button-light button-outline button-block button-large send-receive-btn" (click)="sendUR()">Send</button>
+    <button class="button button-light button-outline button-block button-large send-requestbtn" (click)="sendUR()">Send</button>
     <!--</form>-->
   </div>
 </ion-content>

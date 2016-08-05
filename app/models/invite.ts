@@ -1,6 +1,6 @@
 import {FirebaseModel} from './firebase-model';
 
-export class Invite extends FirebaseModel {
+export class InviteModel extends FirebaseModel {
   createdAt: number;
   inviteCode: string;
   // app: string;

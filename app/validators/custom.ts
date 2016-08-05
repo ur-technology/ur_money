@@ -1,7 +1,7 @@
 import {ControlGroup} from '@angular/common';
 import * as _ from 'lodash';
 
-export class CustomValidators {
+export class CustomValidator {
   static normalizedPhone(phone) {
     let p = phone;
     p = p.replace(/\D/g,'');
@@ -21,7 +21,7 @@ export class CustomValidators {
   }
 
   static phoneValidator(control) {
-    let normalizedPhone = CustomValidators.normalizedPhone(control.value);
+    let normalizedPhone = CustomValidator.normalizedPhone(control.value);
     if (!/^\+(\d{1,3})(\d{10,})$/.test(normalizedPhone)) {
       return { 'invalidPhone': true };
     }

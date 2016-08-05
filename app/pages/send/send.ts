@@ -1,6 +1,6 @@
 import {Page, Alert, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
-import {Wallet} from '../../models/wallet';
+import {WalletModel} from '../../models/wallet';
 
 @Page({
   templateUrl: 'build/pages/send/send.html',
@@ -47,9 +47,9 @@ export class SendPage {
     let self = this;
 
     self.confirmation().then(() => {
-      if(Wallet.validateCredentials(self.phrase, self.password)){
-        Wallet.generate(self.phrase, self.password).then((data) => {
-          let wallet: Wallet = new Wallet(data);
+      if(WalletModel.validateCredentials(self.phrase, self.password)){
+        WalletModel.generate(self.phrase, self.password).then((data) => {
+          let wallet: WalletModel = new WalletModel(data);
 
           if(!wallet.validateAddress(self.publicKey)){
             self.error("Recipient address is not valid");

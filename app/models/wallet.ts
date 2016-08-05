@@ -1,6 +1,6 @@
 import * as log from 'loglevel';
 
-export class Wallet {
+export class WalletModel {
 
     private static ScryptWorkFactor_N: number = 75;
     private static ScryptBlocksize_r: number = 16;

@@ -1,9 +1,9 @@
 import {Page, NavController, NavParams, Alert, Modal, Platform} from 'ionic-angular';
-import {ChartData} from '../../services/chart-data';
+import {ChartDataService} from '../../services/chart-data';
 import {Component, OnInit, ElementRef, Inject, ViewChild} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
-import {ReceivePage} from '../receive/receive';
+import {RequestPage} from '../request/request';
 import {SendPage} from '../send/send';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
 import {ContactsPage} from '../contacts/contacts';
@@ -11,31 +11,31 @@ import {ChatPage} from '../chat/chat';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
-import {ChatList} from '../../components/chat-list/chat-list';
+import {ChatListComponent} from '../../components/chat-list/chat-list';
 import {LocalNotifications} from 'ionic-native';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
-import {Auth} from '../../services/auth';
-import {User} from '../../models/user';
+import {AuthService} from '../../services/auth';
+import {UserModel} from '../../models/user';
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/home/home.html',
   pipes: [OrderBy, Timestamp, Round],
-  directives: [ChatList]
+  directives: [ChatListComponent]
 })
 export class HomePage {
   elementRef: ElementRef;
   android: boolean;
   sendPage: any;
-  receivePage: any;
+  requestPage: any;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
-    navParams: NavParams, public chartData: ChartData, public platform: Platform,
-    private angularFire: AngularFire, private auth: Auth) {
+    navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
+    private angularFire: AngularFire, private auth: AuthService) {
     this.elementRef = elementRef;
     this.sendPage = SendPage;
-    this.receivePage = ReceivePage;
+    this.requestPage = RequestPage;
     this.android = this.platform.is('android');
   }
 
@@ -50,7 +50,7 @@ export class HomePage {
   }
 
   startNewChat() {
-    this.nav.push(ContactsAndChatsPage, { animate: true, direction: 'forward' });
+    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "chat" }, { animate: true, direction: 'forward' });
   }
 
   setRoot(page) {
@@ -120,7 +120,7 @@ export class HomePage {
     });
   }
 
-  inviteContact() {
-    this.nav.rootNav.push(ContactsAndChatsPage, { nonMembersFirst: true }, { animate: true, direction: 'forward' });
+  chooseContactAndInvite() {
+    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
   }
 }

@@ -1,6 +1,6 @@
 import {Page, NavController} from 'ionic-angular';
 import {ViewChild} from '@angular/core';
-import {TransactionComponent} from '../../components/transaction/transaction.component';
+import {TransactionComponent} from '../../components/transaction/transaction';
 
 @Page({
   templateUrl: 'build/pages/transactions/transaction-earned.html',

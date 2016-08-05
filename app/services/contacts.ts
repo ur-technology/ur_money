@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Platform, Alert} from 'ionic-angular';
 import {Contacts} from 'ionic-native';
-import {Contact} from '../models/contact';
+import {ContactModel} from '../models/contact';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
 @Injectable()
 export class ContactsService {
-  contacts: Contact[];
+  contacts: ContactModel[];
   contactGroups: any;
   countryCode: string;
   currentUserId: string;
@@ -83,7 +83,7 @@ export class ContactsService {
         _.each(rawContacts, (rawContact) => {
           let rawPhones = self.validRawPhones(rawContact.phoneNumbers || []);
           if (rawPhones.length > 0 && rawContact.name && rawContact.name.givenName && rawContact.name.familyName) {
-            let contact: Contact = new Contact("", {
+            let contact: ContactModel = new ContactModel("", {
               firstName: rawContact.name.givenName,
               lastName: rawContact.name.familyName,
               rawPhones: rawPhones,
@@ -115,7 +115,7 @@ export class ContactsService {
     return new Promise((resolve, reject) => {
       let contactLookupRef = firebase.database().ref('/contactLookupQueue/tasks').push({
         userId: self.currentUserId,
-        contacts: _.map(self.contacts, (contact: Contact) => {
+        contacts: _.map(self.contacts, (contact: ContactModel) => {
           return {
             phones: _.map(contact.rawPhones, (rawPhone: any) => {
               return rawPhone.value;
@@ -159,7 +159,7 @@ export class ContactsService {
       }
 
       return _.map(_.slice(contact.rawPhones, 1), (rawPhone: any, index) => {
-        let duplicateContact: Contact = _.clone(contact);
+        let duplicateContact: ContactModel = _.clone(contact);
         duplicateContact.rawPhones = [rawPhone];
         return duplicateContact;
       });
@@ -251,7 +251,7 @@ export class ContactsService {
     return formattedPhone;
   }
 
-  private fakeContacts(): Contact[] {
+  private fakeContacts(): ContactModel[] {
     return _.map([
       {
         "firstName": "Eiland",
@@ -459,6 +459,6 @@ export class ContactsService {
           }],
         "deviceContactId": "20"
       }
-    ], (attrs) => { return new Contact("", attrs); });
+    ], (attrs) => { return new ContactModel("", attrs); });
   }
 }
