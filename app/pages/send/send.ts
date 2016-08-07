@@ -17,7 +17,7 @@ export class SendPage {
   sendUR() {
     let self = this;
     self.confirmation().then(() => {
-      if (WalletModel.validateCredentials(self.phrase, self.contact.userId)){
+      if (WalletModel.validateCredentials(self.phrase, self.contact.userId)) {
         WalletModel.generate(self.phrase, self.contact.userId).then((data) => {
           let wallet: WalletModel = new WalletModel(data);
 
@@ -26,7 +26,7 @@ export class SendPage {
             return;
           }
 
-          if (!wallet.validateAmount(self.amount)){
+          if (!wallet.validateAmount(self.amount)) {
             self.error("Not enough coins or amount is not correct");
             return;
           }
@@ -47,28 +47,52 @@ export class SendPage {
 
   confirmation() {
     return new Promise((resolve, reject) => {
-      let confirmation = Alert.create({
-        title: 'Confirmation',
-        message: "<p>Sending " + this.amount.toFixed(4) + " ETH</p>",
+      let prompt = Alert.create({
+        title: 'Secret phrase',
+        message: "Please enter your account's secret phrase",
+        inputs: [{ name: 'secretPhrase', placeholder: 'Secret Phrase' }],
         buttons: [
-
           {
-            text: 'OK',
-            handler: () => {
-              resolve();
+            text: 'Cancel',
+            handler: data => {
+              reject();
+              console.log('Cancel clicked');
             }
           },
           {
-            text: 'CANCEL',
-            role: 'cancel',
-            handler: () => {
-              // do nothing
+            text: 'Continue',
+            handler: data => {
+              this.confirmationStep2(resolve, reject);
+              console.log('Saved clicked');
             }
           }
         ]
       });
-      this.nav.present(confirmation);
+      this.nav.present(prompt);
     });
+  }
+
+  confirmationStep2(resolve: any, reject: any) {
+    let prompt = Alert.create({
+      title: 'Confirmation',
+      message: "<p>Sending " + this.amount.toFixed(4) + " UR</p>",
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            resolve();
+          }
+        },
+        {
+          text: 'CANCEL',
+          role: 'cancel',
+          handler: () => {
+            reject();
+          }
+        }
+      ]
+    });
+    this.nav.present(prompt);
   }
 
   success() {

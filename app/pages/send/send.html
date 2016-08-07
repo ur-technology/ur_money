@@ -23,13 +23,7 @@
 
     <div class="card send-requesttextarea">
       <label class="item item-input">
-        <ion-input [(ngModel)]="messageText" placeholder="Enter a message (optional )"></ion-input>
-      </label>
-    </div>
-
-    <div class="card send-requesttextarea" [hidden]="showContactsPopup">
-      <label class="item item-input">
-        <ion-input [(ngModel)]="phrase" placeholder="Enter your secret phrase to authorize this transaction"></ion-input>
+        <ion-textarea [(ngModel)]="messageText" placeholder="Enter a message (optional)"></ion-textarea>
       </label>
     </div>
 
