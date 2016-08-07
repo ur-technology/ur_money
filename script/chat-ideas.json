@@ -1,15 +1,13 @@
 {
   users: {
     "-KMFyURDIC8dHKBS9idg": {
-      firstName: "Jake",
-      lastName: "Peterson",
+      name: "Jake Peterson",
       profilePhotoUrl: "https://urlphoto.com",
       myChatSummaries: {
         "-AAAyURDIC8dHKBS9idg": {
           otherUser: {
             uid: "-LLLyURDIC8dHKBS9jjj",
-            firstName: "Janet",
-            lastName: "Peterson",
+            name: "Janet Peterson",
             profilePhotoUrl: "https://urlphoto.com",
           },
           lastMessage: {
@@ -26,14 +24,12 @@
     "-AAAyURDIC8dHKBS9idg": {
       users: {
         "-KMFyURDIC8dHKBS9idg": {
-          firstName: "Jake",
-          lastName: "Peterson",
+          name: "Jake Peterson",
           profilePhotoUrl: "https://urlphoto.com",
           active: true
         },
         "-LLLyURDIC8dHKBS9jjj": {
-          firstName: "Janet",
-          lastName: "Peterson",
+          name: "Janet Peterson",
           profilePhotoUrl: "https://urlphoto.com",
           active: true
         }

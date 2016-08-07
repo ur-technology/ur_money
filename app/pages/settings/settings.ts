@@ -4,6 +4,7 @@ import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
+import {UserModel} from '../../models/user';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
@@ -37,6 +38,7 @@ export class SettingsPage {
     this.allStates = require('provinces');
     this.mainForm = formBuilder.group({
       'firstName': ["", CustomValidator.nameValidator],
+      'middleName': ["", CustomValidator.optionalNameValidator],
       'lastName': ["", CustomValidator.nameValidator],
       'stateName': ["", CustomValidator.nameValidator],
       'city': ["", CustomValidator.nameValidator]
@@ -44,6 +46,7 @@ export class SettingsPage {
     let authUser = this.auth.currentUser;
     this.profile = {
       firstName: authUser.firstName || "",
+      middleName: authUser.middleName || "",
       lastName: authUser.lastName || "",
       city: authUser.city,
       country: this.countries.find((x) => { return x.alpha2 == (authUser.countryCode || "US"); })
@@ -93,7 +96,9 @@ export class SettingsPage {
     let self = this;
     self.auth.currentUserRef.update({
       firstName: self.profile.firstName,
+      middleName: self.profile.middleName,
       lastName: self.profile.lastName,
+      name: UserModel.fullName(self.profile),
       city: self.profile.city,
       stateName: self.profile.stateName,
       countryCode: self.profile.countryCode

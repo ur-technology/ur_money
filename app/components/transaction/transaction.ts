@@ -69,7 +69,7 @@ export class TransactionComponent {
     return todayWithDayStartTime;
   }
 
-  chooseContactAndInvite() {
+  invite() {
     this.nav.rootNav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
   }
 

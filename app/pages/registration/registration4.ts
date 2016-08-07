@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import * as log from 'loglevel';
 
 import {FocuserDirective} from '../../directives/focuser';
+import {UserModel} from '../../models/user';
 import {WalletModel} from '../../models/wallet';
 import {AuthService} from '../../services/auth';
 import {DeviceIdentityService} from '../../services/device-identity';
@@ -44,22 +45,24 @@ export class Registration4Page {
     this.allStates = require('provinces');
     this.mainForm = formBuilder.group({
       'firstName': ["", CustomValidator.nameValidator],
+      'middleName': ["", CustomValidator.optionalNameValidator],
       'lastName': ["", CustomValidator.nameValidator],
       'stateName': ["", CustomValidator.nameValidator],
       'city': ["", CustomValidator.nameValidator],
       'secretPhrase': ["", CustomValidator.secretPhraseValidator],
       'secretPhraseConfirmation': ["", Validators.required]
     }, { validator: CustomValidator.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation') });
-    let authUser = this.auth.currentUser;
+    let currentUser = this.auth.currentUser;
     this.profile = {
       secretPhrase: '',
       secretPhraseConfirmation: '',
-      firstName: authUser.firstName || "",
-      lastName: authUser.lastName || "",
-      city: authUser.city,
-      country: this.countries.find((x) => { return x.alpha2 == (authUser.countryCode || "US"); })
+      firstName: currentUser.firstName || "",
+      middleName: currentUser.middleName || "",
+      lastName: currentUser.lastName || "",
+      city: currentUser.city,
+      country: this.countries.find((x) => { return x.alpha2 == (currentUser.countryCode || "US"); })
     };
-    let defautStateName = (authUser.countryCode == this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
+    let defautStateName = (currentUser.countryCode == this.profile.country.alpha2 && currentUser.stateName) ? currentUser.stateName : undefined;
     this.countrySelected(defautStateName);
   }
 
@@ -142,6 +145,7 @@ export class Registration4Page {
       firstName: self.profile.firstName,
       middleName: self.profile.middleName,
       lastName: self.profile.lastName,
+      name: UserModel.fullName(self.profile),
       city: self.profile.city,
       stateName: self.profile.stateName,
       countryCode: self.profile.countryCode,
@@ -155,7 +159,8 @@ export class Registration4Page {
     if (!self.auth.currentUser.signedUpAt) {
       attrs.signedUpAt = firebase.database.ServerValue.TIMESTAMP
     }
-    self.auth.currentUserRef.update(_.omitBy(attrs, _.isNil)).then(() => {
+    let strippedAttrs = _.omitBy(attrs, _.isNil);
+    self.auth.currentUserRef.update(strippedAttrs).then(() => {
       self.loadingModal.hide();
       let toast = Toast.create({
         message: 'Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!',

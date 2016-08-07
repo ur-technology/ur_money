@@ -97,7 +97,7 @@ class UrMoney {
     this.nav.rootNav.push(SettingsPage);
   }
 
-  chooseContactAndInvite() {
+  invite() {
     this.menu.close();
     this.nav.rootNav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
   }

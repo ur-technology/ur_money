@@ -27,15 +27,11 @@ declare var jQuery: any;
 export class HomePage {
   elementRef: ElementRef;
   android: boolean;
-  sendPage: any;
-  requestPage: any;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
     private angularFire: AngularFire, private auth: AuthService) {
     this.elementRef = elementRef;
-    this.sendPage = SendPage;
-    this.requestPage = RequestPage;
     this.android = this.platform.is('android');
   }
 
@@ -120,7 +116,15 @@ export class HomePage {
     });
   }
 
-  chooseContactAndInvite() {
+  send() {
+    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "send" }, { animate: true, direction: 'forward' });
+  }
+
+  request() {
+    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "request" }, { animate: true, direction: 'forward' });
+  }
+
+  invite() {
     this.nav.rootNav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
   }
 }

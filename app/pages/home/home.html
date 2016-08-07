@@ -13,9 +13,9 @@
 <div class="bar bar-footer dash-footer" *ngIf="android">
   <div class="button-bar footer-btns">
     <a class="button button-calm"><i class="home-icon"></i></a>
-    <button (click)="setRoot(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
-    <button (click)="setRoot(requestPage)" class="button button-calm"><i class="request-icon"></i></button>
-    <button (click)="chooseContactAndInvite()" class="button button-calm"><i class="invite-icon"></i></button>
+    <button (click)="send()" class="button button-calm"><i class="plane-icon"></i></button>
+    <button (click)="request()" class="button button-calm"><i class="request-icon"></i></button>
+    <button (click)="invite()" class="button button-calm"><i class="invite-icon"></i></button>
   </div>
 </div>
 <ion-content>
@@ -59,8 +59,8 @@
 <div class="bar bar-footer dash-footer" *ngIf="!android">
   <div class="button-bar footer-btns">
     <a class="button button-calm"><i class="home-icon"></i></a>
-    <button (click)="setRoot(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
-    <button (click)="setRoot(requestPage)" class="button button-calm"><i class="request-icon"></i></button>
-    <button (click)="chooseContactAndInvite()" class="button button-calm"><i class="invite-icon"></i></button>
+    <button (click)="send()" class="button button-calm"><i class="plane-icon"></i></button>
+    <button (click)="request()" class="button button-calm"><i class="request-icon"></i></button>
+    <button (click)="invite()" class="button button-calm"><i class="invite-icon"></i></button>
   </div>
 </div>

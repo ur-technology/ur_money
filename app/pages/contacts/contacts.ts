@@ -6,7 +6,6 @@ import {AuthService} from '../../services/auth';
 import {SendPage} from '../send/send';
 import {RequestPage} from '../request/request';
 import {ChatPage} from '../chat/chat';
-import {InviteModel} from '../../models/invite';
 import {Config} from '../../config/config';
 import {UserModel} from '../../models/user';
 import * as _ from 'lodash';
@@ -24,6 +23,7 @@ export class ContactsPage {
   displayableContacts: any[];
   startTime: number;
   public goal: string;
+  public memberActionLabel: string;
 
   constructor(
     private nav: NavController,
@@ -33,12 +33,22 @@ export class ContactsPage {
     private platform: Platform
   ) {
     this.startTime = (new Date()).getTime();
-    this.goal = navParams.get("goal")
+    this.goal = navParams.get("goal");
+    this.memberActionLabel = this.determineMemberActionLabel();
   }
 
+  private determineMemberActionLabel() {
+    if (this.goal == "send") {
+      return "Send UR";
+    } else if (this.goal == "request") {
+      return "Request UR";
+    } else {
+      return "Chat";
+    }
+  }
   ionViewDidEnter() {
     let self = this;
-    self.contactsService.load(self.auth.countryCode, self.auth.currentUserId).then((contactGroups: any) => {
+    self.contactsService.load(self.auth.countryCode, self.auth.currentUserId, self.auth.currentUser.phone).then((contactGroups: any) => {
       let contacts = self.goal == "invite" ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
       self.paginatedContacts = _.chunk(contacts, self.PAGE_SIZE);
       self.numberOfPages = self.paginatedContacts.length;
@@ -105,9 +115,9 @@ export class ContactsPage {
     let taskRef = firebase.database().ref('/invitationQueue/tasks').push({
       sponsorUserId: this.auth.currentUserId,
       invitee: {
-        firstName: contact.firstName,
-        middleName: contact.middleName || null,
-        lastName: contact.lastName,
+        firstName: contact.original.firstName,
+        middleName: contact.original.middleName || "",
+        lastName: contact.original.lastName,
         phone: contact.phone,
         invitationCode: invitationCode
       }

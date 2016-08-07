@@ -11,8 +11,7 @@ import {HomePage} from '../home/home';
 })
 export class RequestPage {
   showContactInput: boolean = true;
-  contactItem: any;
-  showContacts: boolean = false;
+  showContactsPopup: boolean = false;
   constructor(public nav: NavController) { }
 
   toHomePage() {
@@ -21,19 +20,17 @@ export class RequestPage {
 
   inputBlur() {
     setTimeout(() => {
-      this.showContacts = false;
+      this.showContactsPopup = false;
     }, 300);
   }
 
-  
+
   addContact(contact) {
     this.showContactInput = false;
-    this.showContacts = false;
-    this.contactItem = { email: contact };
+    this.showContactsPopup = false;
   }
 
   removeContact() {
     this.showContactInput = true;
-    this.contactItem = null;
   }
 }

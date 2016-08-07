@@ -2,24 +2,19 @@ import {FirebaseModel} from './firebase-model';
 import * as _ from 'lodash';
 
 export class ContactModel extends FirebaseModel {
-  userId: string
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  profilePhotoUrl: string
+  userId: string;
+  name: string;
+  profilePhotoUrl: string;
   phone: string;
-  formattedPhone: string;
   phoneType: string;
+  formattedPhone: string;
+  wallet: any;
   email: string;
-  deviceContactId: string;
-  rawPhones: Object[];
+  original: any;
 
   constructor(public _containerPath: string, fieldValues: Object) {
     super(_containerPath, fieldValues);
     // do stuff here
   }
 
-  fullName() {
-    return _.trim(`${this.firstName || ''} ${this.middleName || ''} ${this.lastName || ''}`).replace(/  /, ' ');
-  }
 }

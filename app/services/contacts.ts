@@ -1,170 +1,169 @@
 import {Injectable} from '@angular/core';
 import {Platform, Alert} from 'ionic-angular';
 import {Contacts} from 'ionic-native';
+import {FakeContactsSource} from '../models/fake-contacts-source';
 import {ContactModel} from '../models/contact';
+import {UserModel} from '../models/user';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
+export interface ContactGroups {
+  members: ContactModel[];
+  nonMembers: ContactModel[];
+}
+
 @Injectable()
 export class ContactsService {
-  contacts: ContactModel[];
-  contactGroups: any;
   countryCode: string;
   currentUserId: string;
-  currentUserRef: string;
+  currentUserPhone: string;
   loaded: boolean = false;
+  contactGroups: any;
 
   constructor(private platform: Platform) {
   }
 
-  load(countryCode: string, currentUserId: string): Promise<any[]> {
+  generateContactGroups(contacts: ContactModel[]): Promise<ContactGroups> {
     let self = this;
+    return new Promise((resolve, reject) => {
+      contacts = _.concat(contacts, self.extraContactsForSecondaryPhones(contacts));
+      _.each(contacts, (contact) => {
+        contact.formattedPhone = self.e164ToFormattedPhone(contact.phone);
+      });
+      contacts = _.sortBy(contacts, 'name');
+      let groups = _.groupBy(contacts, function(c) { return c.userId ? "members" : "nonMembers"; });
+      resolve({ members: groups["members"] || [], nonMembers: groups["nonMembers"] || [] });
+    });
+  }
+
+  load(countryCode: string, currentUserId: string, currentUserPhone: string): Promise<ContactGroups> {
+    let self = this;
+    if (self.loaded) {
+      return new Promise((resolve, reject) => {
+        resolve(self.contactGroups);
+      });
+    };
+
     self.countryCode = countryCode;
     self.currentUserId = currentUserId;
+    self.currentUserPhone = currentUserPhone;
     return new Promise((resolve, reject) => {
-      if (self.loaded) {
+      self.retrieveContactsFromDevice().then((contacts: ContactModel[]) => {
+        return self.retrieveUserInfo(contacts);
+      }).then((contactsWithUserInfo: ContactModel[]) => {
+        return self.generateContactGroups(contactsWithUserInfo);
+      }).then((contactGroups: ContactGroups) => {
+        self.contactGroups = contactGroups;
+        self.loaded = true;
         resolve(self.contactGroups);
-        return;
-      }
-
-      let startTime = new Date().getTime();
-      self.platform.ready().then(() => {
-        self.retrieveContactsFromDevice().then(() => {
-          log.debug(`retrieved contacts in ${new Date().getTime() - startTime} milliseconds`)
-
-          startTime = new Date().getTime();
-          self.assignUserIdsToContacts().then(() => {
-            // clean up contacts list
-            _.remove(self.contacts, (contact) => { return contact.userId == self.currentUserId; });
-            self.contacts = _.concat(self.contacts, self.extraContactsForSecondaryPhones());
-            _.each(self.contacts, (contact) => { self.assignPhoneInfoToContact(contact); });
-            self.contacts = _.sortBy(self.contacts, (c) => { return c.fullName(); });
-
-            // partition contacts into members and non-members
-            self.contactGroups = _.groupBy(self.contacts, function(c) { return c.userId ? "members" : "nonMembers"; });
-            if (!self.contactGroups.members) {
-              self.contactGroups.members = [];
-            }
-            if (!self.contactGroups.nonMembers) {
-              self.contactGroups.nonMembers = [];
-            }
-
-            self.loaded = true;
-            log.debug(`processed ${self.contacts.length} contacts (${self.contactGroups.members.length} members/${self.contactGroups.nonMembers.length} non-members) in ${new Date().getTime() - startTime} milliseconds`)
-            resolve(self.contactGroups);
-          }, (error) => {
-            reject(error);
-          });
-        });
+      }, (error) => {
+        reject(error);
       });
     });
   }
 
-  private assignPhoneInfoToContact(contact) {
-    if (contact.rawPhones && contact.rawPhones[0]) {
-      contact.phone = contact.rawPhones[0].value;
-      contact.formattedPhone = this.e164ToFormattedPhone(contact.phone);
-      contact.phoneType = contact.rawPhones[0].type;
-    }
-    delete contact.rawPhones;
-  }
-
-  private retrieveContactsFromDevice(): Promise<any> {
+  private retrieveContactsFromDevice(): Promise<ContactModel[]> {
     let self = this;
+    let startTime = new Date().getTime();
     return new Promise((resolve, reject) => {
-      if (!self.platform.is('cordova')) {
-        self.contacts = self.fakeContacts();
-        resolve(undefined);
-        return;
-      }
-
-      Contacts.find(['*']).then((rawContacts) => {
-        self.contacts = [];
+      let contactsSource = self.platform.is('cordova') ? Contacts : FakeContactsSource;
+      contactsSource.find(['*']).then((rawContacts) => {
+        let contacts: ContactModel[] = [];
         _.each(rawContacts, (rawContact) => {
           let rawPhones = self.validRawPhones(rawContact.phoneNumbers || []);
-          if (rawPhones.length > 0 && rawContact.name && rawContact.name.givenName && rawContact.name.familyName) {
-            let contact: ContactModel = new ContactModel("", {
-              firstName: rawContact.name.givenName,
-              lastName: rawContact.name.familyName,
-              rawPhones: rawPhones,
-              deviceContactId: rawContact.id
-            });
-            if (rawContact.photos && rawContact.photos.length > 0) {
-
-              let x = 7; // TODO: assign contact.photo
-            }
-            if (rawContact.middleName) {
-              contact.middleName = rawContact.middleName;
-            }
-            let email: string = self.getBestEmail(rawContact.emails);
-            if (email) {
-              contact.email = rawContact.email;
-            }
-            self.contacts.push(contact);
+          if (rawPhones.length == 0 || !rawContact.name || !rawContact.name.givenName || !rawContact.name.familyName) {
+            return;
           }
+          let originalContact = {
+            id: rawContact.id,
+            firstName: rawContact.name.givenName,
+            middleName: rawContact.name.middleName || "",
+            lastName: rawContact.name.familyName,
+            phones: rawPhones,
+            email: self.getBestEmail(rawContact.emails),
+            profilePhotoUrl: null // TODO: assign this
+          };
+          let contact: ContactModel = new ContactModel("", {
+            name: UserModel.fullName(originalContact),
+            original: _.omitBy(originalContact, _.isNil) // remove null or undefined fields
+          });
+          contacts.push(contact);
         });
-        resolve();
+        log.debug(`retrieved ${contacts.length} contacts in ${new Date().getTime() - startTime} milliseconds`)
+        resolve(contacts);
       }, (error) => {
         reject(error);
       });
     });
   };
 
-  private assignUserIdsToContacts() {
+  private retrieveUserInfo(contacts: ContactModel[]): Promise<ContactModel[]> {
     let self = this;
+    let startTime = new Date().getTime();
     return new Promise((resolve, reject) => {
-      let contactLookupRef = firebase.database().ref('/contactLookupQueue/tasks').push({
+      let phonesToLookup: string[] = _.flatten(_.map(contacts, (contact: ContactModel) => { return _.map(contact.original.phones, 'value'); })) as string[];
+      phonesToLookup = _.uniq(phonesToLookup);
+      let phoneLookupRef = firebase.database().ref('/phoneLookupQueue/tasks').push({
         userId: self.currentUserId,
-        contacts: _.map(self.contacts, (contact: ContactModel) => {
-          return {
-            phones: _.map(contact.rawPhones, (rawPhone: any) => {
-              return rawPhone.value;
-            })
-          };
-        })
+        phones: phonesToLookup
       });
-
-      let ref = contactLookupRef.child('processedContacts');
+      let ref = phoneLookupRef.child('result');
+      log.debug(`waiting for value at ${ref.toString()}`)
       ref.on('value', (snapshot) => {
-        let processedContacts = snapshot.val();
-        if (!processedContacts) {
+
+        // wait until result element appears on phoneLookupRef
+        let result: any = snapshot.val();
+        if (!result) {
           return;
         }
-        ref.off('value');
-        _.each(processedContacts, (processedContact, i) => {
-          let index = parseInt(i);
-          if (processedContact.userId) {
-            self.contacts[index].userId = processedContact.userId
 
-            // move raw phone correspeonding to registered phone number to beginning of rawPhone array
-            let registeredRawPhone = self.contacts[index].rawPhones.splice(processedContact.registeredPhoneIndex, 1)[0];
-            self.contacts[index].rawPhones.unshift(registeredRawPhone);
-          }
-          if (index == processedContacts.length - 1) {
-            contactLookupRef.remove()
-            resolve(undefined);
+        log.debug(`got value at ${ref.toString()}`, result)
+        let phoneToUserMapping: any = result.numMatches > 0 ? result.phoneToUserMapping : {};
+        ref.off('value');
+        phoneLookupRef.remove();
+        _.each(contacts, (contact) => {
+          _.find(contact.original.phones, (originalPhone: any) => {
+            let user = phoneToUserMapping[originalPhone.value];
+            if (user) {
+              contact.userId = user.userId;
+              contact.name = user.name;
+              contact.profilePhotoUrl = user.profilePhotoUrl;
+              contact.wallet = user.wallet;
+              contact.phone = originalPhone.value;
+              contact.phoneType = 'mobile';
+            }
+            return !!user;
+          });
+          if (!contact.userId) {
+            contact.name = UserModel.fullName(contact.original);
+            contact.profilePhotoUrl = contact.original.profilePhotoUrl;
+            contact.phone = contact.original.phones[0].value;
+            contact.phoneType = contact.original.phones[0].type;
           }
         });
+        log.debug(`retrieved ${contacts.length} contacts in ${new Date().getTime() - startTime} milliseconds`);
+        resolve(contacts);
       }, (error) => {
         reject(error);
       });
     });
   }
 
-  private extraContactsForSecondaryPhones() {
-    let self = this;
-    let extraContacts = _.map(self.contacts, (contact) => {
-      if (contact.userId || !contact.rawPhones || contact.rawPhones.length < 2) {
-        return [];
+  private extraContactsForSecondaryPhones(contacts: ContactModel[]) {
+    let extraContacts = [];
+    _.each(contacts, (contact) => {
+      if (contact.userId || contact.original.phones.length < 2) {
+        return;
       }
-
-      return _.map(_.slice(contact.rawPhones, 1), (rawPhone: any, index) => {
-        let duplicateContact: ContactModel = _.clone(contact);
-        duplicateContact.rawPhones = [rawPhone];
-        return duplicateContact;
+      let secondaryOriginalPhones = _.slice(contact.original.phones, 1);
+      _.each(secondaryOriginalPhones, (originalPhone: any, index) => {
+        let extraContact: ContactModel = _.clone(contact);
+        extraContact.phone = originalPhone.value;
+        extraContact.phoneType = originalPhone.type;
+        extraContacts.push(extraContact);
       });
     });
-    return _.flatten(extraContacts);
+    return extraContacts;
   };
 
   private getBestEmail(rawEmails: any[]): string {
@@ -194,7 +193,7 @@ export class ContactsService {
     let self = this;
     _.each(rawPhones, (rawPhone: any) => {
       let e164Phone = self.toE164(rawPhone.value);
-      if (e164Phone && rawPhone.type == 'mobile' || rawPhone.type == 'home') {
+      if (e164Phone && (rawPhone.type == 'mobile' || rawPhone.type == 'home') && rawPhone.value != self.currentUserPhone) {
         rawPhone.value = e164Phone;
       } else {
         rawPhone.value = undefined;
@@ -251,214 +250,4 @@ export class ContactsService {
     return formattedPhone;
   }
 
-  private fakeContacts(): ContactModel[] {
-    return _.map([
-      {
-        "firstName": "Eiland",
-        "lastName": "Glover",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-40.jpg?alt=media&token=a2226754-081c-43ea-98e4-48870877a253",
-        "rawPhones": [{
-          "id": "1",
-          "pref": false,
-          "value": "+16158566616",
-          "type": "mobile"
-        }],
-        "deviceContactId": "1"
-      }, {
-        "firstName": "John",
-        "lastName": "Reitano",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-6.jpg?alt=media&token=9c4b1623-9971-40cb-8aa0-74bf2188e028",
-        "rawPhones": [{
-          "id": "2",
-          "pref": false,
-          "value": "+16196746211",
-          "type": "mobile"
-        }],
-        "deviceContactId": "2"
-      }, {
-        "firstName": "Malkiat",
-        "lastName": "Singh",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "3",
-          "pref": false,
-          "value": "+919915738619",
-          "type": "mobile"
-        }],
-        "deviceContactId": "3"
-      }, {
-        "firstName": "Xavier",
-        "lastName": "Perez",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar.jpg?alt=media&token=083aeded-1e4c-4178-a6e6-dc9a3131d78e",
-        "rawPhones": [{
-          "id": "4",
-          "pref": false,
-          "value": "+593998016833",
-          "type": "mobile"
-        }],
-        "deviceContactId": "4"
-      },  {
-        "firstName": "TestFirstname",
-        "lastName": "TestLastname",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2Favatar-35.jpg?alt=media&token=c792966a-043c-4a02-9a31-58ea9b8715ed",
-        "rawPhones": [{
-          "id": "44",
-          "pref": false,
-          "value": "+16193611786",
-          "type": "mobile"
-        }],
-        "deviceContactId": "44"
-      }, {
-        "firstName": "Alpha",
-        "lastName": "Andrews",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "40",
-          "pref": false,
-          "value": "+16197778001",
-          "type": "mobile"
-        }],
-        "deviceContactId": "7"
-      }, {
-        "firstName": "Beta",
-        "lastName": "Brown",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "70",
-          "pref": false,
-          "value": "+16197778002",
-          "type": "home"
-        }, {
-            "id": "72",
-            "pref": false,
-            "value": "+16197778004",
-            "type": "mobile"
-          }, {
-            "id": "73",
-            "pref": false,
-            "value": "+16197778005",
-            "type": "work"
-          }],
-        "deviceContactId": "8"
-      }, {
-        "firstName": "Gamma",
-        "lastName": "Gallant",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "95",
-          "pref": false,
-          "value": "+16197778006",
-          "type": "mobile"
-        }],
-        "deviceContactId": "9"
-      }, {
-        "firstName": "Delta",
-        "lastName": "Daniels",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "197",
-          "pref": false,
-          "value": "+16197778007",
-          "type": "home"
-        }, {
-            "id": "199",
-            "pref": false,
-            "value": "+16197778008",
-            "type": "mobile"
-          }],
-        "deviceContactId": "10"
-      }, {
-        "firstName": "Epsilon",
-        "lastName": "Ellison",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "152",
-          "pref": false,
-          "value": "+16197778009",
-          "type": "mobile"
-        }],
-        "deviceContactId": "13"
-      }, {
-        "firstName": "Zeta",
-        "lastName": "Zenderson",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "49",
-          "pref": false,
-          "value": "+16197778010",
-          "type": "mobile"
-        }],
-        "deviceContactId": "16"
-      }, {
-        "firstName": "Eta",
-        "lastName": "Edwards",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "232",
-          "pref": false,
-          "value": "+16197778011",
-          "type": "mobile"
-        }],
-        "deviceContactId": "17"
-      }, {
-        "firstName": "Theta",
-        "lastName": "Thierry",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "222",
-          "pref": false,
-          "value": "+16197778012",
-          "type": "mobile"
-        }],
-        "deviceContactId": "18"
-      }, {
-        "firstName": "Iota",
-        "lastName": "Immerson",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "140",
-          "pref": false,
-          "value": "+16197778013",
-          "type": "home"
-        }, {
-            "id": "142",
-            "pref": false,
-            "value": "+16197778014",
-            "type": "mobile"
-          }],
-        "deviceContactId": "19"
-      }, {
-        "firstName": "Kappa",
-        "lastName": "Krell",
-        "profilePhotoUrl": "https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117",
-        "rawPhones": [{
-          "id": "84",
-          "pref": false,
-          "value": "+16197778015",
-          "type": "home"
-        }, {
-            "id": "86",
-            "pref": false,
-            "value": "+16197778016",
-            "type": "mobile"
-          }],
-        "deviceContactId": "20"
-      }, {
-        "firstName": "Lambda",
-        "lastName": "Landau",
-        "rawPhones": [{
-          "id": "184",
-          "pref": false,
-          "value": "+5216643332222",
-          "type": "mobile"
-        }, {
-            "id": "186",
-            "pref": false,
-            "value": "+5216643332223",
-            "type": "mobile"
-          }],
-        "deviceContactId": "20"
-      }
-    ], (attrs) => { return new ContactModel("", attrs); });
-  }
 }

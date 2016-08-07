@@ -45,6 +45,15 @@ export class CustomValidator {
     }
   }
 
+  static optionalNameValidator(control) {
+    console.log("control",control);
+    console.log("control.value",control.value);
+    console.log("control.value.match(/^\s*$|\w+/)", control.value.match(/^\s*$|\w+/));
+    if (control && !control.value.match(/^\s*$|\w+/)) {
+      return { 'invalidName': true };
+    }
+  }
+
   static secretPhraseValidator(control) {
     var pattern = /^ *([^\b]+ ){4}[^\b]+ *$$/;
     if (!control.value.match(pattern)) {

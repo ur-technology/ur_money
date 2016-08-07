@@ -11,13 +11,14 @@ export class UserModel extends FirebaseModel {
   deviceCountryCode: string;
   deviceIdentity: any;
   downlineLevel: number;
-  firstName: string;
   inviteCode: string;
   inviter: any;
+  firstName: string;
+  middleName: string;
   lastName: string;
+  name: string;
   lastSignedInAt: number;
   memberId: number;
-  middleName: string;
   phone: string;
   profilePhotoUrl: string;
   signedUpAt: number;
@@ -27,7 +28,7 @@ export class UserModel extends FirebaseModel {
   wallet: any;
   pending: boolean;
 
-  generateProfilePhotoUrl() {
+  setProfilePhotoUrl() {
     var colorScheme = _.sample([
       { background: "DD4747", foreground: "FFFFFF" },
       { background: "ED6D54", foreground: "FFFFFF" },
@@ -43,6 +44,10 @@ export class UserModel extends FirebaseModel {
       initials = initials.toUpperCase();
     }
     this.profilePhotoUrl = "https://dummyimage.com/100x100/" + colorScheme.background + "/" + colorScheme.foreground + "&text=" + initials;
+  }
+
+  static fullName(user: any) {
+    return _.trim(`${user.firstName || ''} ${user.middleName || ''} ${user.lastName || ''}`).replace(/  /, ' ');
   }
 
 }

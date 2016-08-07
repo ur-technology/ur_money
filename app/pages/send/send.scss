@@ -1,25 +1,24 @@
 .send-page {
-    background: rgba(58, 173, 226, 1) url("../../img/img-bg.png") no-repeat 0 0;
     .toolbar-background {
-        background-color: transparent;
-        border: none;
-        background: none;
+        background: #fff;
+        border-color: #fff;
     }
     .toolbar {
+        padding: 0;
         .bar-button {
             color: #17909c;
-            font-size: 25px;
+            font-size: 16px;
+        }
+        .button-icon-only {
+            color: #17909c;
+            font-size: 16px;
         }
         .right {
             float: right;
             ion-icon {
-                color: #444;
+                color: #17909c;
                 font-weight: bold;
             }
-        }
-        .toolbar-title {
-            color: #555;
-            font-weight: normal;
         }
     }
 }
@@ -76,6 +75,15 @@
     right: 10px;
 }
 
+.send-requestcont .send-requestur .receiver-profile {
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+}
+
 .send-requestcont .send-requesttextarea .item.item-input {
     padding: 10px;
 }
@@ -100,7 +108,7 @@
     background-color: transparent;
 }
 
-.send-requestcont .send-requestinput .contacts-cont {
+.send-requestcont .send-requestinput .selected-contact-container {
     height: 100%;
     padding-left: 40px;
     padding-right: 40px;
@@ -112,7 +120,7 @@
     z-index: 3;
 }
 
-.send-requestcont .contacts-cont .contact-item {
+.send-requestcont .selected-contact-container .contact-item {
     font-size: 11px;
     font-weight: 600;
     background-color: #f3f2f2;
@@ -122,7 +130,7 @@
     position: relative;
 }
 
-.send-requestcont .contacts-cont .contact-item img {
+.send-requestcont .selected-contact-container .contact-item img {
     width: 17px;
     height: 17px;
     border-radius: 50%;
@@ -130,7 +138,7 @@
     margin-right: 3px;
 }
 
-.send-requestcont .contacts-cont .contact-item .contact-close {
+.send-requestcont .selected-contact-container .contact-item .contact-close {
     display: block;
     width: 10px;
     height: 10px;
@@ -143,7 +151,7 @@
 
 /*----------------------------------*/
 
-.send-requestpopover {
+.contacts-popup {
     margin-top: -10px;
     height: 205px;
     background-color: #ffffff;
@@ -151,12 +159,12 @@
     overflow: auto;
 }
 
-.send-requestpopover .list {
+.contacts-popup .list {
     margin-left: 10px;
     margin-right: 10px;
 }
 
-.send-requestpopover .list .item {
+.contacts-popup .list .item {
     border-left-color: transparent;
     border-right-color: transparent;
     padding: 0;
@@ -166,11 +174,11 @@
         margin: 0;
     }
 }
-.send-requestpopover .list .item.padding-left{
+.contacts-popup .list .item.padding-left{
     padding-left: 8px;
 }
 
-.send-requestpopover .list .item-divider {
+.contacts-popup .list .item-divider {
     text-align: center;
     background-color: transparent;
     padding-left: 0;
@@ -185,7 +193,7 @@
     }
 }
 
-.send-requestpopover .item-divider span {
+.contacts-popup .item-divider span {
     background-color: #efefef;
     border-radius: 5px;
     font-size: 10px;
@@ -196,7 +204,7 @@
     padding: 3px 0;
 }
 
-.send-requestpopover .contacts-list .item.item-avatar {
+.contacts-popup .contacts-list .item.item-avatar {
     min-height: 30px;
     height: 30px;
     border-bottom: 1px solid #c4c4c4;
@@ -205,7 +213,7 @@
     }
 }
 
-.send-requestpopover .item.item-avatar img {
+.contacts-popup .item.item-avatar img {
     width: 25px;
     height: 25px;
     top: 4px;

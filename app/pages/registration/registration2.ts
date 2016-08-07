@@ -49,7 +49,7 @@ export class Registration2Page implements OnInit {
   }
 
   submit(phoneInput) {
-    let corePhone = this.phoneForm.value.phone;
+    let corePhone = this.normalizedPhone(this.phoneForm.value.phone);
     let extraIsoCode = '';
     if (this.selectedCountry.isoCode && !corePhone.startsWith(this.selectedCountry.isoCode)) {
       extraIsoCode = this.selectedCountry.isoCode;

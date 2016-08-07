@@ -11,7 +11,7 @@
     </div>
     <div class="menu-profile" *ngIf="auth.currentUser">
       <img class="menu-avatar" [src]="auth.currentUser.profilePhotoUrl" alt="">
-      <h1 class="profile-name">{{auth.currentUser.firstName}} {{auth.currentUser.lastName}}</h1>
+      <h1 class="profile-name">{{auth.currentUser.name}}</h1>
       <p></p>
     </div>
     <ion-list class="menu-list" no-lines>
@@ -34,7 +34,7 @@
         </ion-col>
       </ion-row>
       <p class="invite-text">Invite your Loved Ones And Get <span>1000Ur</span></p>
-      <button (click)="chooseContactAndInvite()" class="button button-block button-outline invite-btn">Invite</button>
+      <button (click)="invite()" class="button button-block button-outline invite-btn">Invite</button>
     </div>
   </ion-content>
 

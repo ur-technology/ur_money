@@ -1,4 +1,4 @@
-import {Page, Alert, NavController} from 'ionic-angular';
+import {Page, Alert, NavController, NavParams} from 'ionic-angular';
 import {HomePage} from '../home/home';
 import {WalletModel} from '../../models/wallet';
 
@@ -6,62 +6,32 @@ import {WalletModel} from '../../models/wallet';
   templateUrl: 'build/pages/send/send.html',
 })
 export class SendPage {
-  showContactInput: boolean;
-  contactItem: any;
-  showContacts: boolean;
-
   amount: number;
   phrase: string;
-  password: string;
-  publicKey: string;
+  contact: any;
 
-  constructor(public nav: NavController) {
-    this.showContactInput = true;
-    this.showContacts = false;
-    this.contactItem = {};
-  }
-
-  toHomePage() {
-    this.nav.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
-  }
-
-  inputBlur() {
-    setTimeout(() => {
-      this.showContacts = false;
-    }, 300);
-  }
-
-  addContact(contact) {
-    this.showContactInput = false;
-    this.showContacts = false;
-    this.contactItem = { email: contact };
-  }
-
-  removeContact() {
-    this.showContactInput = true;
-    this.contactItem = {};
+  constructor(public nav: NavController, public navParams: NavParams) {
+    this.contact = this.navParams.get('contact');
   }
 
   sendUR() {
-
     let self = this;
-
     self.confirmation().then(() => {
-      if(WalletModel.validateCredentials(self.phrase, self.password)){
-        WalletModel.generate(self.phrase, self.password).then((data) => {
+      if (WalletModel.validateCredentials(self.phrase, self.contact.userId)){
+        WalletModel.generate(self.phrase, self.contact.userId).then((data) => {
           let wallet: WalletModel = new WalletModel(data);
 
-          if(!wallet.validateAddress(self.publicKey)){
+          if (!wallet.validateAddress(self.contact.wallet.address)) {
             self.error("Recipient address is not valid");
             return;
           }
 
-          if(!wallet.validateAmount(self.amount)){
+          if (!wallet.validateAmount(self.amount)){
             self.error("Not enough coins or amount is not correct");
             return;
           }
 
-          wallet.sendRawTransaction(self.publicKey, self.amount).then((err) => {
+          wallet.sendRawTransaction(self.contact.wallet.address, self.amount).then((err) => {
             if (!err)
               self.success();
             else
@@ -69,7 +39,7 @@ export class SendPage {
           });
         })
       } else {
-        self.error("Enter secret phrase and password");
+        self.error("The secret phrase you entered was not correct.");
       }
     });
 
@@ -101,7 +71,7 @@ export class SendPage {
     });
   }
 
-  success(){
+  success() {
     let successAlert = Alert.create({
       title: 'Success',
       message: "<p>Transaction successfully created</p>",
@@ -117,7 +87,7 @@ export class SendPage {
     this.nav.present(successAlert);
   }
 
-  error(text){
+  error(text) {
     let errorAlert = Alert.create({
       title: 'Error',
       message: "<p>" + text + "</p>",

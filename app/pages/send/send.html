@@ -1,17 +1,4 @@
-<!--
-  Generated template for the SendPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-navbar *navbar>
-  <!-- <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button> -->
-
-  <button (click)="toHomePage()" clear class="right">
-   <ion-icon name="md-close"></ion-icon>
-   </button>
+<ion-navbar>
   <ion-title>Balance: 3,035.00</ion-title>
 </ion-navbar>
 
@@ -19,20 +6,28 @@
   <div class="send-requestcont">
     <!--<form action="#">-->
 
-    <div class="card send-requesttextarea" [hidden]="showContacts">
-      <label class="item item-input">
-        <ion-input [(ngModel)]="publicKey" placeholder="Enter recipient address"></ion-input>
-      </label>
+    <div class="card send-requestinput">
+        <div class="selected-contact-container">
+            <span class="contact-item"><img src="../../img/avatar.jpg" alt="">{{contact.name}}  <a (click)="removeContact()" class="contact-close"></a></span>
+        </div>
+        <label class="item item-icon-left item-icon-right item-input">
+        </label>
     </div>
 
-    <div class="card send-requestur" [hidden]="showContacts">
+    <div class="card send-requestur" [hidden]="showContactsPopup">
       <label class="item item-input">
-        <input  [(ngModel)]="amount" type="text" />
+        <input [(ngModel)]="amount" type="text" />
          <ion-note class="item-note"> UR </ion-note>
      </label>
     </div>
 
-    <div class="card send-requesttextarea" [hidden]="showContacts">
+    <div class="card send-requesttextarea">
+      <label class="item item-input">
+        <ion-input [(ngModel)]="messageText" placeholder="Enter a message (optional )"></ion-input>
+      </label>
+    </div>
+
+    <div class="card send-requesttextarea" [hidden]="showContactsPopup">
       <label class="item item-input">
         <ion-input [(ngModel)]="phrase" placeholder="Enter your secret phrase to authorize this transaction"></ion-input>
       </label>

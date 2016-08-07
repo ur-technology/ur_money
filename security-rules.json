@@ -35,8 +35,7 @@
       },
     },
 
-
-    "contactLookupQueue": {
+    "phoneLookupQueue": {
       // disallow enumerating entire collection, except for admin
       // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
       // disallow overwriting entire list
@@ -63,7 +62,7 @@
           // allow only record inserts, except for admin
           // ".write": "!data.exists() || (auth != null && root.child('users/'+ auth.uid + '/admin').val() == true)",
 
-          "verificationResult": {
+          "result": {
             // allow reading verificationResult of a particular record
             // ".read": true,
             // disallow writing, except for admin

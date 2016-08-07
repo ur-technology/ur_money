@@ -15,7 +15,7 @@
         <ion-note item-right
             class="item-note">{{chat.lastMessage.sentAt|timestamp}}</ion-note>
         <div class="columNameChat">
-            <h2 class="text-cut">  {{displayUser(chat).firstName}} {{displayUser(chat).lastName}}</h2>
+            <h2 class="text-cut">  {{displayUser(chat).name}}</h2>
         </div>
         <p>{{senderLabel(chat)}}{{chat.lastMessage.text}}</p>
     </ion-item>

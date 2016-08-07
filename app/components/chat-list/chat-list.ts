@@ -37,6 +37,9 @@ export class ChatListComponent {
   }
 
   displayUser(chatSummary: any) {
+    if (!chatSummary.users[chatSummary.displayUserId]) {
+      let x = 7;
+    }
     return chatSummary.users[chatSummary.displayUserId];
   }
 

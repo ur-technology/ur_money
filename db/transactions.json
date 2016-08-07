@@ -6,16 +6,12 @@
           "type": "send", // send/receive
           "source": "urmoney", // urmoney/external
           "sender": {
-            "firstName": "John",
-            "middleName": "William",
-            "lastName": "Reitano",
+            "name": "John Reitano",
             "profilePhotoUrl": "xxx",
             "userId": "213123"
           },
           "receiver": {
-            "firstName": "John",
-            "middleName": "William",
-            "lastName": "Reitano",
+            "name": "John Reitano",
             "profilePhotoUrl": "xxx",
             userId: "213123"
           },
