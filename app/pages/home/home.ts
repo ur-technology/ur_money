@@ -11,7 +11,7 @@ import {ChatPage} from '../chat/chat';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
-import {ChatListComponent} from '../../components/chat-list/chat-list';
+import {EventListComponent} from '../../components/event-list/event-list';
 import {LocalNotifications} from 'ionic-native';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 import {AuthService} from '../../services/auth';
@@ -22,7 +22,7 @@ declare var jQuery: any;
 @Page({
   templateUrl: 'build/pages/home/home.html',
   pipes: [OrderBy, Timestamp, Round],
-  directives: [ChatListComponent]
+  directives: [EventListComponent]
 })
 export class HomePage {
   elementRef: ElementRef;

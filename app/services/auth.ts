@@ -6,7 +6,7 @@ import * as log from 'loglevel';
 import {Subscription} from 'rxjs';
 import {ContactsService} from '../services/contacts';
 import {Sim} from 'ionic-native';
-import {LocalNotifications} from 'ionic-native';
+
 
 @Injectable()
 export class AuthService {
@@ -43,8 +43,6 @@ export class AuthService {
           });
           if (currentUser.wallet && currentUser.wallet.address) {
             nav.setRoot(homePage);
-            self.processChatNotificationQueue();
-            self.listenForNotificationSelection(nav, chatPage);
           } else {
             nav.setRoot(walletSetupPage);
           }
@@ -60,12 +58,6 @@ export class AuthService {
     });
   }
 
-  listenForNotificationSelection(nav, chatPage) {
-    LocalNotifications.on("click", (notification, state) => {
-      let data = JSON.parse(notification.data);
-      nav.rootNav.push(chatPage, { chatId: data.chatId }, { animate: true, direction: 'forward' });
-    });
-  }
 
   requestPhoneVerification(phone: string) {
     let self = this;
@@ -130,37 +122,6 @@ export class AuthService {
     return !!this.currentUser;
   }
 
-  processChatNotificationQueue() {
-    let self = this;
-    // TODO: fix this to use firebase-queue later
-    // let Queue = require('firebase-queue');
-    // let queueRef = firebase.database().ref(`/users/${this.currentUserId}/notificationQueue`);
-    // let options = { 'numWorkers': 1 };
-    // let queue = new Queue(queueRef, options, (notificationTask: any, progress: any, resolve: any, reject: any) => {
-    let notificationTasksRef = firebase.database().ref(`/users/${this.currentUserId}/notificationQueue/tasks`);
-    notificationTasksRef.on('child_added', (notificationTaskSnapshot: firebase.database.DataSnapshot) => {
-      let notificationTask = notificationTaskSnapshot.val();
-      LocalNotifications.schedule({
-        id: 1,
-        text: `${notificationTask.senderName}: ${notificationTask.text}`,
-        icon: 'res://icon',
-        smallIcon: 'stat_notify_chat',
-        sound: `file://sounds/${self.androidPlatform ? 'messageSound.mp3' : 'messageSound.m4r'}`,
-        data: { chatId: notificationTask.chatId }
-      });
-      notificationTaskSnapshot.ref.remove();
-    });
-    //   LocalNotifications.schedule({
-    //     id: 1,
-    //     text: `${notificationTask.senderName}: ${notificationTask.text}`,
-    //     icon: 'res://icon',
-    //     smallIcon: 'stat_notify_chat',
-    //     sound: `file://sounds/${self.androidPlatform ? 'messageSound.mp3' : 'messageSound.m4r'}`,
-    //     data: { chatId: notificationTask.chatId }
-    //   });
-    //   resolve(notificationTask);
-    // });
-  }
 
   private getSimCountryCode(): Promise<string> {
     return new Promise((resolve, reject) => {

@@ -13,6 +13,7 @@ import {CountryListService} from './services/country-list';
 import {LoadingModalComponent} from './components/loading-modal/loading-modal';
 import {ContactsService} from './services/contacts';
 import {DeviceIdentityService} from './services/device-identity';
+import {EventsService} from './services/events';
 
 import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
 import {Registration1Page} from './pages/registration/registration1';
@@ -34,6 +35,7 @@ import {DownloadPage} from './pages/download/download';
     AuthService,
     DeviceIdentityService,
     ContactsService,
+    EventsService,
     CountryListService,
     ChartDataService,
     LoadingModalComponent,

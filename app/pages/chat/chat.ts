@@ -191,6 +191,9 @@ export class ChatPage {
   }
 
   displayUser() {
+    if (!this.chatSummary) {
+      return "";
+    }
     return this.chatSummary.users[this.chatSummary.displayUserId];
   }
 
