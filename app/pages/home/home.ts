@@ -117,14 +117,14 @@ export class HomePage {
   }
 
   send() {
-    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "send" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: "send" }, { animate: true, direction: 'forward' });
   }
 
   request() {
-    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "request" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: "request" }, { animate: true, direction: 'forward' });
   }
 
   invite() {
-    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
   }
 }

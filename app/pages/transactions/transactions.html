@@ -1,17 +1,14 @@
 <ion-navbar *navbar clear>
     <button menuToggle>
     <ion-icon name="menu"></ion-icon>
-  </button>
-   <!-- <button clear class="right">
-    <i class="users-icon"></i>
-   </button> -->
+  </button>   
 </ion-navbar>
 <div class="bar bar-footer dash-footer" *ngIf="android">
   <div class="button-bar footer-btns">
-    <button (click)="goToPage(homePage)" class="button button-calm"><i class="home-icon"></i></button>
-    <button (click)="goToPage(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
-    <button (click)="goToPage(requestPage)" class="button button-calm"><i class="request-icon"></i></button>
-    <button (click)="goToPage(invitePage)" class="button button-calm"><i class="invite-icon"></i></button>
+    <button (click)="goToPage('home')" class="button button-calm"><i class="home-icon"></i></button>
+    <button (click)="goToPage('send')" class="button button-calm"><i class="plane-icon"></i></button>
+    <button (click)="goToPage('request')" class="button button-calm"><i class="request-icon"></i></button>
+    <button (click)="goToPage('invite')" class="button button-calm"><i class="invite-icon"></i></button>
   </div>
 </div>
 <ion-content class="transactions">
@@ -21,19 +18,11 @@
     <ion-tab tabTitle="Earned" tabIcon="earned-icon-on" [root]="earnedTransactionPage"></ion-tab>
   </ion-tabs>
 </ion-content>
-<!-- Button Starts -->
-<div class="float-button" [style.bottom]="android?'2%':'8%'">
-  <span class="height-fix">
-     <a class="content">
-        <ion-icon name="md-add"> </ion-icon>
-     </a>
-  </span>
-</div>
 <div class="bar bar-footer dash-footer" *ngIf="!android">
   <div class="button-bar footer-btns">
-    <button (click)="goToPage(homePage)" class="button button-calm"><i class="home-icon"></i></button>
-    <button (click)="goToPage(sendPage)" class="button button-calm"><i class="plane-icon"></i></button>
-    <button (click)="goToPage(requestPage)" class="button button-calm"><i class="request-icon"></i></button>
-    <button (click)="goToPage(invitePage)" class="button button-calm"><i class="invite-icon"></i></button>
+    <button (click)="goToPage('home')" class="button button-calm"><i class="home-icon"></i></button>
+    <button (click)="goToPage('send')" class="button button-calm"><i class="plane-icon"></i></button>
+    <button (click)="goToPage('request')" class="button button-calm"><i class="request-icon"></i></button>
+    <button (click)="goToPage('invite')" class="button button-calm"><i class="invite-icon"></i></button>
   </div>
 </div>
