@@ -151,16 +151,6 @@ export class ChatPage {
     this.resetMessageTextArea();
   }
 
-  // TODO: not sure if I broke this - JR
-  saveNotification(chatId: string, userId: string, sender: any, text: any) {
-    this.angularFire.database.list(`/users/${userId}/notifications`).push({
-      senderName: `${sender.firstName} ${sender.lastName}`,
-      profilePhotoUrl: sender.profilePhotoUrl ? sender.profilePhotoUrl : "",
-      text: text,
-      chatId: chatId
-    });
-  }
-
   buildNewChatSummary() {
     this.chatSummary = {
       createdAt: firebase.database.ServerValue.TIMESTAMP,
@@ -169,9 +159,8 @@ export class ChatPage {
       displayUserId: this.contact.userId,
       users: {}
     };
-    this.chatSummary.users[this.auth.currentUserId] = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'profilePhotoUrl']);
-    this.chatSummary.users[this.contact.userId] = _.pick(this.contact, ['firstName', 'lastName', 'profilePhotoUrl']);
-    // TODO: handle the case where firstName + lastName of the contact do not match that of /users/${contact.userId}
+    this.chatSummary.users[this.auth.currentUserId] = _.pick(this.auth.currentUser, ['name', 'profilePhotoUrl']);
+    this.chatSummary.users[this.contact.userId] = _.pick(this.contact, ['name', 'profilePhotoUrl']);
   }
 
   private chatSummaryUnsaved() {
@@ -191,10 +180,12 @@ export class ChatPage {
   }
 
   displayUser() {
-    if (!this.chatSummary) {
-      return "";
+    if (this.contact) {
+      return this.contact;
     }
-    return this.chatSummary.users[this.chatSummary.displayUserId];
+    else {
+      return this.chatSummary?this.chatSummary.users[this.chatSummary.displayUserId]:"";
+    }
   }
 
   sender(message) {

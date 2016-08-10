@@ -24,7 +24,6 @@ export class EventListComponent {
   }
 
   ngOnInit() {
-    console.log("ngOnInit()");
     this.eventsService.loadEvents();
   }
 
@@ -36,13 +35,13 @@ export class EventListComponent {
   }
 
   processChatNotification() {
-    console.log("processChatNotificationQueue()")
     firebase.database().ref(`/users/${this.auth.currentUserId}/events`)
       .orderByChild("notificationProcessed")
       .equalTo("false")
       .on('child_added', notificationTaskSnapshot => {
         let event = notificationTaskSnapshot.val();
         LocalNotifications.schedule({
+          id: Math.floor(Math.random() * 3000) + 1,
           text: `${event.title}`,
           icon: 'res://icon',
           smallIcon: 'stat_notify_chat',
@@ -67,7 +66,7 @@ export class EventListComponent {
   }
 
 
-  openPageByEventType(sourceType:string, sourceId:string) {
+  openPageByEventType(sourceType: string, sourceId: string) {
     if (sourceType === "message") {
       this.nav.rootNav.push(ChatPage, { chatId: sourceId }, { animate: true, direction: 'forward' });
     }
