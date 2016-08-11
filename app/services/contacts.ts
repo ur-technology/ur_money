@@ -103,6 +103,11 @@ export class ContactsService {
     return new Promise((resolve, reject) => {
       let phonesToLookup: string[] = _.flatten(_.map(contacts, (contact: ContactModel) => { return _.map(contact.original.phones, 'value'); })) as string[];
       phonesToLookup = _.uniq(phonesToLookup);
+      if (_.isEmpty(phonesToLookup)) {
+        resolve([]);
+        return;
+      }
+
       let phoneLookupRef = firebase.database().ref('/phoneLookupQueue/tasks').push({
         userId: self.currentUserId,
         phones: phonesToLookup

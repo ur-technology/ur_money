@@ -39,6 +39,9 @@ export class AuthService {
           self.currentUser = currentUser;
           self.getSimCountryCode().then((countryCode) => {
             self.countryCode = countryCode || currentUser.countryCode;
+            if (_.trim((self.countryCode || "")) == "") {
+              log.warn("country code not defined for this user");
+            }
             self.contactsService.load(self.countryCode, self.currentUserId, self.currentUser.phone);
           });
           if (currentUser.wallet && currentUser.wallet.address) {

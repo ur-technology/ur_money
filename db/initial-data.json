@@ -180,6 +180,7 @@
     },
     "-KJnRTuL8A1ZdfVvwAbv" : {
       "admin" : true,
+      "countryCode" : "US",
       "createdAt" : 1465446952757,
       "downlineLevel" : 2,
       "downlineUsers" : {
@@ -332,6 +333,7 @@
       }
     },
     "-KLqYxC3-j6MhstbXiED" : {
+      "countryCode" : "US",
       "createdAt" : 1467646727200,
       "downlineLevel" : 3,
       "firstName" : "TestFirstname",
@@ -470,6 +472,7 @@
       }
     },
     "-KLwWedxw2DHDhTdTK9-" : {
+      "countryCode" : "EC",
       "createdAt" : 1467746790141,
       "downlineLevel" : 3,
       "firstName" : "Xavier",
@@ -608,6 +611,7 @@
       }
     },
     "-KNEKfk_nwPeckdg79HU" : {
+      "countryCode" : "EC",
       "createdAt" : 1467746790141,
       "downlineLevel" : 4,
       "firstName" : "Horacio",
