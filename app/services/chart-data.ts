@@ -10,7 +10,7 @@ export class ChartDataService {
   public unitOfTime: moment.UnitOfTime = 'weeks';
   public startingTime: moment.Moment;
   public endingTime: moment.Moment;
-  public balanceRecords: any[];
+  public transactions: any[];
   public points: any[]; // array of points, with points represented as 2-element arrays
   public pointsLoaded: boolean = false;
   public pointsLoadedEmitter = new EventEmitter();
@@ -21,7 +21,7 @@ export class ChartDataService {
 
   constructor(public auth: AuthService) {
     this.pointsLoaded = false;
-    this.loadPointsWhenBalanceRecordsChange();
+    this.loadPointsWhenTransactionsChange();
   }
 
   private ensureStartingTimeIncludedInPoints() {
@@ -30,10 +30,10 @@ export class ChartDataService {
       firstPointTime = moment(_.first(this.points)[0], 'x');
     }
     if (this.points.length == 0 || this.startingTime.isBefore(firstPointTime)) {
-      let priorBalanceRecord = _.findLast(this.balanceRecords, (balanceRecord: any) => {
-        return moment(balanceRecord.updatedAt, 'x').isBefore(this.startingTime);
+      let priorTransaction = _.findLast(this.transactions, (transaction: any) => {
+        return moment(transaction.updatedAt, 'x').isBefore(this.startingTime);
       });
-      var priorBalance = priorBalanceRecord ? this.convertWeiStringToApproximateUR(priorBalanceRecord.amount) : 0.0;
+      var priorBalance = priorTransaction ? this.convertWeiStringToApproximateUR(priorTransaction.balance) : 0.0;
       this.points.unshift([this.startingTime.valueOf(), priorBalance]);
     }
   }
@@ -53,7 +53,7 @@ export class ChartDataService {
     this.unitOfTime = newUnitOfTime;
 
     this.calculateStartingAndEndingTimes();
-    this.loadPointsCorrespondingToBalanceRecordsWithinTimeRage();
+    this.loadPointsCorrespondingToTransactionsWithinTimeRage();
     this.ensureStartingTimeIncludedInPoints();
     this.ensureEndingTimeIncludedInPoints();
 
@@ -66,17 +66,17 @@ export class ChartDataService {
     this.pointsLoadedEmitter.emit({});
   }
 
-  private loadPointsCorrespondingToBalanceRecordsWithinTimeRage() {
-    let balanceRecordsWithinTimeRange = _.filter(this.balanceRecords, (balanceRecord: any) => {
-      return moment(balanceRecord.updatedAt, 'x').isSameOrAfter(this.startingTime);
+  private loadPointsCorrespondingToTransactionsWithinTimeRage() {
+    let transactionsWithinTimeRange = _.filter(this.transactions, (transaction: any) => {
+      return moment(transaction.updatedAt, 'x').isSameOrAfter(this.startingTime);
     });
-    this.points = _.map(balanceRecordsWithinTimeRange, (balanceRecord) => {
-      return [balanceRecord.updatedAt, this.convertWeiStringToApproximateUR(balanceRecord.amount)];
+    this.points = _.map(transactionsWithinTimeRange, (transaction) => {
+      return [transaction.updatedAt, this.convertWeiStringToApproximateUR(transaction.balance)];
     });
   }
 
   private calculateStartingAndEndingTimes() {
-    let lastRecord: any = _.last(this.balanceRecords);
+    let lastRecord: any = _.last(this.transactions);
     this.endingTime = lastRecord ? moment.max(moment(lastRecord.updatedAt, 'x'), moment()) : moment();
     this.startingTime = this.endingTime.add(-1 * this.duration, this.unitOfTime);
   }
@@ -89,10 +89,10 @@ export class ChartDataService {
     return parseFloat(x);
   }
 
-  private loadPointsWhenBalanceRecordsChange() {
+  private loadPointsWhenTransactionsChange() {
     let self = this;
-    firebase.database().ref(`/users/${self.auth.currentUserId}/wallet/balanceRecords`).on('value', (balanceRecordData) => {
-      self.balanceRecords = _.sortBy(_.values(balanceRecordData),'updatedAt');
+    firebase.database().ref(`/users/${self.auth.currentUserId}/transactions`).orderByChild('sortKey').on('value', (snapshot) => {
+      self.transactions = _.sortBy(_.values(snapshot.val()), 'updatedAt');
       self.loadPointsAndCalculateMetaData(self.duration, self.unitOfTime);
     });
   }

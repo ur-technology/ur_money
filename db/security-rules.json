@@ -194,7 +194,7 @@
     },
 
     "users": {
-      ".indexOn": ["phone"],
+      ".indexOn": ["phone", "wallet/address"],
 
       // disallow enumerating entire list, except for admin
       // ".read": "auth != null && root.child('users/'+ auth.uid + '/admin').val() == true",
@@ -210,7 +210,12 @@
         "admin": {
           // users can only be granted admin privilges manually
           // ".write": false
+        },
+
+        "transactions": {
+          ".indexOn": ["sortKey"]
         }
+
       }
     }
   }
