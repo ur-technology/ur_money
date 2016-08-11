@@ -147,8 +147,24 @@ export class ChatPage {
       messageId: messageRef.key,
       isFirstMessageInChat: isFirstMessageInChat
     });
-
+    this.saveEvent();
     this.resetMessageTextArea();
+  }
+
+  saveEvent() {
+    console.log("contact",this.contact);
+    let eventRef = firebase.database().ref(`/users/${this.auth.currentUserId}/events/${this.chatId}`);
+    eventRef.set({
+      createdAt: firebase.database.ServerValue.TIMESTAMP,
+      messageText: `You: ${this.messageText}`,
+      notificationProcessed: 'true',
+      profilePhotoUrl: this.chatSummary.users[this.chatSummary.displayUserId].profilePhotoUrl,
+      sourceId: this.chatId,
+      sourceType: 'message',
+      title: this.chatSummary.users[this.chatSummary.displayUserId].name,
+      updatedAt: firebase.database.ServerValue.TIMESTAMP,
+      userdId: this.chatSummary.displayUserId
+    });
   }
 
   buildNewChatSummary() {
@@ -184,7 +200,7 @@ export class ChatPage {
       return this.contact;
     }
     else {
-      return this.chatSummary?this.chatSummary.users[this.chatSummary.displayUserId]:"";
+      return this.chatSummary ? this.chatSummary.users[this.chatSummary.displayUserId] : "";
     }
   }
 

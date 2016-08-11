@@ -19,12 +19,11 @@ import {AuthService} from '../../services/auth';
 export class EventListComponent {
   constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService) {
     console.log("EventListComponent constructor");
-    this.processChatNotification();
+    this.listenForNewEvents();
     this.listenForNotificationSelection();
   }
 
   ngOnInit() {
-    this.eventsService.loadEvents();
   }
 
   listenForNotificationSelection() {
@@ -34,37 +33,28 @@ export class EventListComponent {
     });
   }
 
-  processChatNotification() {
+  listenForNewEvents() {
     firebase.database().ref(`/users/${this.auth.currentUserId}/events`)
       .orderByChild("notificationProcessed")
       .equalTo("false")
-      .on('child_added', notificationTaskSnapshot => {
-        let event = notificationTaskSnapshot.val();
+      .on('child_added', eventSnapshot  => {
+        let event = eventSnapshot.val();
         LocalNotifications.schedule({
           id: Math.floor(Math.random() * 3000) + 1,
-          text: `${event.title}`,
+          text: `${event.title}: ${event.messageText}`,
           icon: 'res://icon',
           smallIcon: 'stat_notify_chat',
-          sound: this._returnSoundNotificationByEventType(event.sourceType),
+          sound: this._soundFile(event.sourceType),
           data: { sourceId: event.sourceId, sourceType: event.sourceType }
         });
-        notificationTaskSnapshot.ref.update({ notificationProcessed: "true" });
+        eventSnapshot.ref.update({ notificationProcessed: "true" });
       });
   }
 
-  private _returnSoundNotificationByEventType(type: string) {
-    let sound: string = "";
-    switch (type) {
-      case 'message':
-        sound = `file://sounds/${this.platform.is('android') ? 'messageSound.mp3' : 'messageSound.m4r'}`
-        break;
-      case 'transaction':
-        sound = `file://sounds/${this.platform.is('android') ? 'transactionSound.mp3' : 'transactionSound.m4r'}`
-        break;
-    }
-    return sound;
+  private _soundFile(type: string) {
+    let baseName = type === 'transaction' ? 'transactionSound' : 'messageSound';
+    return `file://sounds/${baseName}.${this.platform.is('android') ? 'mp3' : 'm4r'}`;
   }
-
 
   openPageByEventType(sourceType: string, sourceId: string) {
     if (sourceType === "message") {
