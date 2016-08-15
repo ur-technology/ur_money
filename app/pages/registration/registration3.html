@@ -1,88 +1,106 @@
-<ion-navbar *navbar>
-  <ion-title>Enter Verification Code</ion-title>
-  <button clear class="right" [disabled]="verificationCode.length<6" (click)="submit()">
-      Done
-  </button>
-</ion-navbar>
-
+<ion-header>
+    <ion-navbar>
+        <ion-title>Enter Verification Code</ion-title>
+        <button clear
+            class="right"
+            [disabled]="verificationCode.length<6"
+            (click)="submit()">
+            Done
+        </button>
+    </ion-navbar>
+</ion-header>
 <ion-content class="registration2 phone-number-verification">
+    <p class="sub-heading">We have sent you an SMS with a code to a number above.
+        <br/> To complete your phone number verification, please enter the 6-digit activation code.
+    </p>
+    <div class="verification-cont">
+        <div class="pin-input-cont">
+            <div class="pin-input">
+                {{verificationCode.length>=1?verificationCode.substring(0, 1):''}}
+            </div>
+            <div class="pin-input">
+                {{verificationCode.length>=2?verificationCode.substring(1, 2):''}}
+            </div>
+            <div class="pin-input">
+                {{verificationCode.length>=3?verificationCode.substring(2, 3):''}}
+            </div>
+            <div class="pin-input">
+                {{verificationCode.length>=4?verificationCode.substring(3, 4):''}}
+            </div>
+            <div class="pin-input">
+                {{verificationCode.length>=5?verificationCode.substring(4, 5):''}}
+            </div>
+            <div class="pin-input">
+                {{verificationCode.length>=6?verificationCode.substring(5,6):''}}
+            </div>
+        </div>
 
-  <p class="sub-heading">We have sent you an SMS with a code to a number above.
-    <br/> To complete your phone number verification, please enter the 6-digit activation code.
-  </p>
-  <div class="verification-cont">
-    <div class="pin-input-cont">
-      <div class="pin-input">
-        {{verificationCode.length>=1?verificationCode.substring(0, 1):''}}
-      </div>
-      <div class="pin-input">
-        {{verificationCode.length>=2?verificationCode.substring(1, 2):''}}
-      </div>
-      <div class="pin-input">
-        {{verificationCode.length>=3?verificationCode.substring(2, 3):''}}
-      </div>
-      <div class="pin-input">
-        {{verificationCode.length>=4?verificationCode.substring(3, 4):''}}
-      </div>
-      <div class="pin-input">
-        {{verificationCode.length>=5?verificationCode.substring(4, 5):''}}
-      </div>
-      <div class="pin-input">
-        {{verificationCode.length>=6?verificationCode.substring(5,6):''}}
-      </div>
+        <div class="verify-btns">
+            <button clear
+                (click)="smsAgain()"
+                class="button button-light">Didn't receive SMS? Send again</button>
+        </div>
     </div>
-
-    <div class="verify-btns">
-      <button clear (click)="smsAgain()" class="button button-light">Didn't receive SMS? Send again</button>
-    </div>
-  </div>
 
 </ion-content>
-<div class="unlock-keypad">
-  <ion-row class="row">
-    <ion-col class="col col-33">
-      <button class="button button-clear pin-btn" (click)="add(1)">1</button>
-    </ion-col>
-    <ion-col class="col col-33 mid-col">
-      <button class="button button-clear pin-btn" (click)="add(2)">2</button>
-    </ion-col>
-    <ion-col class="col col-33">
-      <button class="button button-clear pin-btn" (click)="add(3)">3</button>
-    </ion-col>
-  </ion-row>
-  <ion-row class="row">
-    <ion-col class="col col-33">
-      <button class="button button-clear pin-btn" (click)="add(4)">4</button>
-    </ion-col>
-    <ion-col class="col col-33 mid-col">
-      <button class="button button-clear pin-btn" (click)="add(5)">5</button>
-    </ion-col>
-    <ion-col class="col col-33">
-      <button class="button button-clear pin-btn" (click)="add(6)">6</button>
-    </ion-col>
-  </ion-row>
-  <ion-row class="row">
-    <ion-col class="col col-33">
-      <button class="button button-clear pin-btn" (click)="add(7)">7</button>
-    </ion-col>
-    <ion-col class="col col-33 mid-col">
-      <button class="button button-clear pin-btn" (click)="add(8)">8</button>
-    </ion-col>
-    <ion-col class="col col-33">
-      <button class="button button-clear pin-btn" (click)="add(9)">9</button>
-    </ion-col>
-  </ion-row>
-  <ion-row class="row">
-    <ion-col class="col col-33">
-      <button class="button button-clear pin-btn"></button>
-    </ion-col>
-    <ion-col class="col col-33 mid-col">
-      <button class="button button-clear pin-btn" (click)="add(0)">0</button>
-    </ion-col>
-    <ion-col class="col col-33">
-      <button class="button button-clear pin-btn" (click)="delete()">
-         <ion-icon name="ios-backspace-outline"></ion-icon>
-      </button>
-    </ion-col>
-  </ion-row>
-</div>
+<ion-footer>
+    <div class="unlock-keypad">
+        <ion-row class="row">
+            <ion-col class="col col-33">
+                <button class="button button-clear pin-btn"
+                    (click)="add(1)">1</button>
+            </ion-col>
+            <ion-col class="col col-33 mid-col">
+                <button class="button button-clear pin-btn"
+                    (click)="add(2)">2</button>
+            </ion-col>
+            <ion-col class="col col-33">
+                <button class="button button-clear pin-btn"
+                    (click)="add(3)">3</button>
+            </ion-col>
+        </ion-row>
+        <ion-row class="row">
+            <ion-col class="col col-33">
+                <button class="button button-clear pin-btn"
+                    (click)="add(4)">4</button>
+            </ion-col>
+            <ion-col class="col col-33 mid-col">
+                <button class="button button-clear pin-btn"
+                    (click)="add(5)">5</button>
+            </ion-col>
+            <ion-col class="col col-33">
+                <button class="button button-clear pin-btn"
+                    (click)="add(6)">6</button>
+            </ion-col>
+        </ion-row>
+        <ion-row class="row">
+            <ion-col class="col col-33">
+                <button class="button button-clear pin-btn"
+                    (click)="add(7)">7</button>
+            </ion-col>
+            <ion-col class="col col-33 mid-col">
+                <button class="button button-clear pin-btn"
+                    (click)="add(8)">8</button>
+            </ion-col>
+            <ion-col class="col col-33">
+                <button class="button button-clear pin-btn"
+                    (click)="add(9)">9</button>
+            </ion-col>
+        </ion-row>
+        <ion-row class="row">
+            <ion-col class="col col-33">
+                <button class="button button-clear pin-btn"></button>
+            </ion-col>
+            <ion-col class="col col-33 mid-col">
+                <button class="button button-clear pin-btn"
+                    (click)="add(0)">0</button>
+            </ion-col>
+            <ion-col class="col col-33">
+                <button class="button button-clear pin-btn"
+                    (click)="delete()">
+                    <ion-icon name="ios-backspace-outline"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-footer>

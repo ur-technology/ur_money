@@ -1,38 +1,43 @@
-<ion-navbar *navbar>
-  <ion-title>{{selectedCountry.code}}{{phoneForm.value.phone}}</ion-title>
-  <button clear class="right" [disabled]="!phoneForm.valid" (click)="submit(phoneInput)">
-      Done
-  </button>
-</ion-navbar>
-
-<ion-content padding class="registration2 registration">
-
-  <p class="sub-heading">
-    Please confirm your country code and enter your phone number
-  </p>
-
-  <form [ngFormModel]="phoneForm">
-
-    <div class="list country-code-cont">
-      <ion-item>
-        <ion-label>{{selectedCountry.name}}</ion-label>
-        <ion-select [(ngModel)]="selected" (ionChange)="countrySelect()">
-          <ion-option   value="{{country.code}}" *ngFor="let country of countries">
-            {{country.name}}
-            <span item-right>{{country.code}}</span>
-          </ion-option>
-        </ion-select>
-        <ion-icon name="arrow-forward" item-right></ion-icon>
-      </ion-item>
-      <!--<button ion-item detail-none class="item item-input" >
-        <div class="phone-country-name" autocomplete="off">{{selectedCountry.name}}</div>
-        <ion-icon name="arrow-forward" item-right></ion-icon>
-      </button>-->
-
-      <ion-item class="item item-input input-item-data">
-        <ion-input class="phone-country-code" [value]="selectedCountry.code"> </ion-input>
-        <ion-input [focuser] #phoneInput class="phone-input" [ngFormControl]="phoneControl" type="tel"></ion-input>
-      </ion-item>
-    </div>
-  </form>
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{selectedCountry.code}}{{phoneForm.value.phone}}</ion-title>
+        <button clear
+            class="right"
+            [disabled]="!phoneForm.valid"
+            (click)="submit(phoneInput)">
+            Done
+        </button>
+    </ion-navbar>
+</ion-header>
+<ion-content padding
+    class="registration2 registration">
+    <p class="sub-heading">
+        Please confirm your country code and enter your phone number
+    </p>
+    <form [ngFormModel]="phoneForm">
+        <div class="list country-code-cont">
+            <ion-item>
+                <ion-label>{{selectedCountry.name}}</ion-label>
+                <ion-select [(ngModel)]="selected"
+                    (ionChange)="countrySelect()">
+                    <ion-option value="{{country.code}}"
+                        *ngFor="let country of countries">
+                        {{country.name}}
+                        <span item-right>{{country.code}}</span>
+                    </ion-option>
+                </ion-select>
+                <ion-icon name="arrow-forward"
+                    item-right></ion-icon>
+            </ion-item>            
+            <ion-item class="item item-input input-item-data">
+                <ion-input class="phone-country-code"
+                    [value]="selectedCountry.code"> </ion-input>
+                <ion-input [focuser]
+                    #phoneInput
+                    class="phone-input"
+                    [ngFormControl]="phoneControl"
+                    type="tel"></ion-input>
+            </ion-item>
+        </div>
+    </form>
 </ion-content>

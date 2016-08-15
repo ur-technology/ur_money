@@ -18,7 +18,7 @@ export class ContactsAndChatsPage {
   }
 
   ionViewLoaded() {
-    jQuery("ion-navbar-section").css("display", "none");
+    // jQuery("ion-navbar-section").css("display", "none");
   }
 
 }

@@ -11,8 +11,4 @@ export class AboutPage {
   constructor(public nav: NavController) {
     this.config = Config;
   }
-
-  moveBack() {
-    this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
-  }
 }

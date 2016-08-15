@@ -1,6 +1,8 @@
-<ion-navbar>
-    <ion-title class="chat-title">{{displayUser().name}}</ion-title>
-</ion-navbar>
+<ion-header>
+    <ion-navbar>
+        <ion-title class="chat-title">{{displayUser().name}}</ion-title>
+    </ion-navbar>
+</ion-header>
 <ion-content class="chat-view">
     <ion-list class="list messages-list">
         <ion-item text-wrap
@@ -8,8 +10,8 @@
             [ngClass]="{'other' : isMessageFromReceiver(message)}"
             *ngFor="let message of messages">
 
-                <ion-img [src]="sender(message).profilePhotoUrl"
-            [alt]="img"></ion-img>
+            <ion-img [src]="sender(message).profilePhotoUrl"
+                [alt]="img"></ion-img>
 
             <div class="msg-text">
                 <p>{{ message.text }} </p>
@@ -18,20 +20,24 @@
         </ion-item>
     </ion-list>
 </ion-content>
-<ion-toolbar position="bottom" [style.min-height]="messageTextAreaHeight+20+'px'"
-    class="bar item-input-inset">
-    <div class="ur-message-send">
-        <label class="item-input-wrapper">
-          <ion-textarea type="text" [style.min-height]="messageTextAreaHeight+'px'"
-              [(ngModel)]="messageText"
-              placeholder="Type your message"></ion-textarea>
-        </label>
-    </div>
-    <ion-buttons end>
-        <button clear
-            class="button-icon"
-            (click)="sendMessage()">
-            <ion-icon name="md-send"></ion-icon>
-        </button>
-    </ion-buttons>
-</ion-toolbar>
+<ion-footer>
+    <ion-toolbar
+        [style.min-height]="messageTextAreaHeight+20+'px'"
+        class="bar item-input-inset">
+        <div class="ur-message-send">
+            <label class="item-input-wrapper">
+                <ion-textarea type="text"
+                    [style.min-height]="messageTextAreaHeight+'px'"
+                    [(ngModel)]="messageText"
+                    placeholder="Type your message"></ion-textarea>
+            </label>
+        </div>
+        <ion-buttons end>
+            <button clear
+                class="button-icon"
+                (click)="sendMessage()">
+                <ion-icon name="md-send"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>
