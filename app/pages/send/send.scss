@@ -57,13 +57,20 @@
 
 .send-requestcont .send-requestur input {
     height: 75px;
-    font-size: 53px;
+    font-size: 2rem;
     line-height: 1.1em;
     font-weight: 300;
     letter-spacing: 0.01em;
-    text-align: center;
+
     width: 92%;
     border: none;
+}
+.disabled{
+  background-color: #eee;
+}
+
+.amount::-webkit-input-placeholder {
+    font-size: 1.7rem;
 }
 
 .send-requestcont .send-requestur .item-note {
