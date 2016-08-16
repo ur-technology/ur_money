@@ -32,13 +32,13 @@ export class TransactionsPage {
         this.nav.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
         break;
       case 'request':
-        this.nav.rootNav.push(ContactsAndChatsPage, { goal: "request" }, { animate: true, direction: 'forward' });
+        this.nav.push(ContactsAndChatsPage, { goal: "request" }, { animate: true, direction: 'forward' });
         break;
       case 'send':
         this.nav.push(ContactsAndChatsPage, { goal: "send" }, { animate: true, direction: 'forward' });
         break;
       case 'invite':
-        this.nav.rootNav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
+        this.nav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
         break;
     }
 

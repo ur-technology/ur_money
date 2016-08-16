@@ -1,4 +1,4 @@
-import {Page, Alert, NavController, NavParams} from 'ionic-angular';
+import {Page, AlertController, NavController, NavParams} from 'ionic-angular';
 import {HomePage} from '../home/home';
 import {WalletModel} from '../../models/wallet';
 
@@ -10,7 +10,7 @@ export class SendPage {
   phrase: string;
   contact: any;
 
-  constructor(public nav: NavController, public navParams: NavParams) {
+  constructor(public nav: NavController, public navParams: NavParams,  private alertCtrl: AlertController) {
     this.contact = this.navParams.get('contact');
   }
 
@@ -47,7 +47,7 @@ export class SendPage {
 
   confirmation() {
     return new Promise((resolve, reject) => {
-      let prompt = Alert.create({
+      let prompt = this.alertCtrl.create({
         title: 'Secret phrase',
         message: "Please enter your account's secret phrase",
         inputs: [{ name: 'secretPhrase', placeholder: 'Secret Phrase' }],
@@ -68,12 +68,12 @@ export class SendPage {
           }
         ]
       });
-      this.nav.present(prompt);
+      prompt.present();
     });
   }
 
   confirmationStep2(resolve: any, reject: any) {
-    let prompt = Alert.create({
+    let prompt = this.alertCtrl.create({
       title: 'Confirmation',
       message: "<p>Sending " + this.amount.toFixed(4) + " UR</p>",
       buttons: [
@@ -92,11 +92,11 @@ export class SendPage {
         }
       ]
     });
-    this.nav.present(prompt);
+    prompt.present();
   }
 
   success() {
-    let successAlert = Alert.create({
+    let successAlert = this.alertCtrl.create({
       title: 'Success',
       message: "<p>Transaction successfully created</p>",
       buttons: [
@@ -108,15 +108,15 @@ export class SendPage {
         }
       ]
     });
-    this.nav.present(successAlert);
+    successAlert.present();
   }
 
   error(text) {
-    let errorAlert = Alert.create({
+    let errorAlert = this.alertCtrl.create({
       title: 'Error',
       message: "<p>" + text + "</p>",
       buttons: ['OK']
     });
-    this.nav.present(errorAlert);
+    errorAlert.present();
   }
 }

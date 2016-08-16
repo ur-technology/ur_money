@@ -1,6 +1,7 @@
 import {ViewChild} from '@angular/core';
-import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/common';
-import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
+import {ControlGroup, Validators} from '@angular/common';
+import {FormGroup, FormControl} from '@angular/forms';
+import {Page, NavController, Platform, AlertController, ToastController} from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -16,7 +17,7 @@ import {HomePage} from '../home/home';
   templateUrl: 'build/pages/settings/settings.html',
 })
 export class SettingsPage {
-  mainForm: ControlGroup;
+  mainForm: FormGroup;
   errorMessage: string;
   countries: any[];
   allStates: any[];
@@ -24,10 +25,15 @@ export class SettingsPage {
   profile: any;
   constructor(
     public nav: NavController,
-    public formBuilder: FormBuilder,
     public auth: AuthService,
-    public loadingModal: LoadingModalComponent
+    public loadingModal: LoadingModalComponent,
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
   ) {
+
+  }
+
+  ionViewLoaded() {
     this.countries = require('country-data').countries.all.sort((a, b) => {
       return (a.name < b.name) ? -1 : ((a.name == b.name) ? 0 : 1);
     });
@@ -36,12 +42,12 @@ export class SettingsPage {
       return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) == -1;
     });
     this.allStates = require('provinces');
-    this.mainForm = formBuilder.group({
-      'firstName': ["", CustomValidator.nameValidator],
-      'middleName': ["", CustomValidator.optionalNameValidator],
-      'lastName': ["", CustomValidator.nameValidator],
-      'stateName': ["", CustomValidator.nameValidator],
-      'city': ["", CustomValidator.nameValidator]
+    this.mainForm = new FormGroup({
+      firstName: new FormControl("", CustomValidator.nameValidator),
+      middleName: new FormControl("", CustomValidator.optionalNameValidator),
+      lastName: new FormControl("", CustomValidator.nameValidator),
+      stateName: new FormControl("", CustomValidator.nameValidator),
+      city: new FormControl("", CustomValidator.nameValidator)
     });
     let authUser = this.auth.currentUser;
     this.profile = {
@@ -77,19 +83,18 @@ export class SettingsPage {
   }
 
   signOut() {
-    let alert = Alert.create({
-      title: 'Sign Out Confirmation',
-      message: "Sign out?",
+    let alert = this.alertCtrl.create({
+      title: "Sign out?",
       buttons: [
-        { text: 'Cancel', handler: () => { alert.dismiss(); } },
-        {
-          text: 'OK', handler: () => {
-            this.auth.angularFire.auth.logout()
-          }
-        }
-      ]
+        'Cancel']
     });
-    this.nav.present(alert);
+    alert.addButton({
+      text: 'OK',
+      handler: () => {
+        this.auth.angularFire.auth.logout()
+      }
+    });
+    alert.present();
   }
 
   saveProfile() {
@@ -103,8 +108,9 @@ export class SettingsPage {
       stateName: self.profile.stateName,
       countryCode: self.profile.countryCode
     }).then(() => {
-      let toast = Toast.create({ message: 'Your profile has been updated', duration: 2000, position: 'middle' });
-      self.nav.present(toast);
+      self.auth.loadCurrentUser();
+      let toast = this.toastCtrl.create({ message: 'Your profile has been updated', duration: 3000, position: 'bottom' });
+      toast.present();
       this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
     }).catch((error) => {
       log.warn('unable to save profile');

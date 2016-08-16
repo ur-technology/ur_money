@@ -70,7 +70,7 @@ export class TransactionComponent {
   }
 
   invite() {
-    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
   }
 
 

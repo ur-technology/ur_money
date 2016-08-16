@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform} from 'ionic-angular';
-import { Toast} from 'ionic-native';
+import { NavController, Platform, ToastController} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
 import * as _ from 'lodash';
 import {Timestamp}  from '../../pipes/timestamp';
@@ -17,8 +16,7 @@ import {AuthService} from '../../services/auth';
   pipes: [DateAndTime]
 })
 export class EventListComponent {
-  constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService) {
-    console.log("EventListComponent constructor");
+  constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService, private toastCtrl: ToastController) {
     this.listenForNewEvents();
     this.listenForNotificationSelection();
   }
@@ -37,7 +35,7 @@ export class EventListComponent {
     firebase.database().ref(`/users/${this.auth.currentUserId}/events`)
       .orderByChild("notificationProcessed")
       .equalTo("false")
-      .on('child_added', eventSnapshot  => {
+      .on('child_added', eventSnapshot => {
         let event = eventSnapshot.val();
         LocalNotifications.schedule({
           id: Math.floor(Math.random() * 3000) + 1,
@@ -58,13 +56,11 @@ export class EventListComponent {
 
   openPageByEventType(sourceType: string, sourceId: string) {
     if (sourceType === "message") {
-      this.nav.rootNav.push(ChatPage, { chatId: sourceId }, { animate: true, direction: 'forward' });
+      this.nav.push(ChatPage, { chatId: sourceId }, { animate: true, direction: 'forward' });
     }
     else if (sourceType === "transaction") {
-      Toast.show("Not implemented yet. It should open the transaction page", '5000', 'bottom').subscribe(
-        toast => {
-        }
-      );
+      let toast = this.toastCtrl.create({ message: 'Not implemented yet. It should open the transaction page', duration: 3000, position: 'bottom' });
+      toast.present();
     }
   }
 

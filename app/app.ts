@@ -1,4 +1,5 @@
 import {ViewChild, Component, Type} from '@angular/core';
+import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import {HTTP_PROVIDERS } from '@angular/http';
 import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
@@ -58,9 +59,9 @@ class UrMoney {
   initializeApp() {
     this.menuItems = [
       { title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home' },
-      { title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: "chat"}, icon: 'icon menu-icon menu-icon-chat' },
-      { title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: "send"}, icon: 'icon menu-icon menu-icon-send-ur' },
-      { title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: "request"}, icon: 'icon menu-icon menu-icon-request-ur' },
+      { title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: "chat" }, icon: 'icon menu-icon menu-icon-chat' },
+      { title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: "send" }, icon: 'icon menu-icon menu-icon-send-ur' },
+      { title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: "request" }, icon: 'icon menu-icon menu-icon-request-ur' },
       { title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions' },
       { title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about' }
     ];
@@ -90,28 +91,32 @@ class UrMoney {
     if (menuItem.page == HomePage) {
       this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
     } else {
-      this.nav.rootNav.push(menuItem.page, menuItem.pageParams || {}, { animate: true, direction: 'forward' });
+      this.nav.push(menuItem.page, menuItem.pageParams || {}, { animate: true, direction: 'forward' });
     }
   }
 
   openSettings() {
     this.menu.close();
-    this.nav.rootNav.push(SettingsPage);
+    this.nav.push(SettingsPage);
   }
 
   invite() {
     this.menu.close();
-    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
   }
 
 }
 
-ionicBootstrap(UrMoney, [], {
-  mode: 'ios',
-  platforms: {
-    ios: {
-      statusbarPadding: true
+ionicBootstrap(UrMoney, [disableDeprecatedForms(),
+  provideForms()], {
+    mode: 'ios',
+    tabsPlacement: 'top',
+    tabsHideOnSubPages: false,
+    tabsHighlight: true,
+    platforms: {
+      ios: {
+        statusbarPadding: true
+      },
     }
-  }
-} // http://ionicframework.com/docs/v2/api/config/Config/
+  } // http://ionicframework.com/docs/v2/api/config/Config/
 );

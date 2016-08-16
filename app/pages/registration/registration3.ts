@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Alert, Loading} from 'ionic-angular';
+import {Page, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import * as log from 'loglevel';
@@ -13,15 +13,15 @@ export class Registration3Page {
 
   constructor(public nav: NavController, public navParams: NavParams,
     public auth: AuthService,
-    public loadingModal: LoadingModalComponent) {
+    private alertCtrl: AlertController, private loadingController: LoadingController) {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
     this.verificationCode = '';
   }
 
   submit() {
-    let loading = Loading.create({content: "Please wait...", dismissOnPageChange: true });
-    this.nav.present(loading);
+    let loading = this.loadingController.create({content: "Please wait...", dismissOnPageChange: true });
+    loading.present();
     this.auth.checkVerificationCode(this.verificationCode).then((result: any) => {
       loading.dismiss();
       this.verificationCode = '';
@@ -38,8 +38,8 @@ export class Registration3Page {
 
   smsAgain() {
     this.verificationCode = '';
-    let loading = Loading.create({content: "Please wait...", dismissOnPageChange: true });
-    this.nav.present(loading);
+    let loading = this.loadingController.create({content: "Please wait...", dismissOnPageChange: true });
+    loading.present();
     this.auth.requestPhoneVerification(this.phone).then((state: string) => {
       loading.dismiss();
       if (state != "code_generation_completed_and_sms_sent") {
@@ -50,12 +50,12 @@ export class Registration3Page {
 
   showErrorAlert(message) {
     // TODO: change this to toast message
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'There was a problem...',
       message: message,
       buttons: ['Ok']
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   add(number) {

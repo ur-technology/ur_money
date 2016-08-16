@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, ActionSheet, Platform, Alert} from 'ionic-angular';
+import {NavController, NavParams, Platform, AlertController} from 'ionic-angular';
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
 import {ContactsService} from '../../services/contacts';
 import {AuthService} from '../../services/auth';
@@ -30,7 +30,8 @@ export class ContactsPage {
     private navParams: NavParams,
     private contactsService: ContactsService,
     private auth: AuthService,
-    private platform: Platform
+    private platform: Platform,
+    private alertCtrl: AlertController
   ) {
     this.startTime = (new Date()).getTime();
     this.goal = navParams.get("goal");
@@ -75,11 +76,11 @@ export class ContactsPage {
     if (!contact.userId) {
       this.inviteContact(contact);
     } else if (this.goal == "send") {
-      this.nav.rootNav.push(SendPage, { contact: contact });
+      this.nav.push(SendPage, { contact: contact });
     } else if (this.goal == "request") {
-      this.nav.rootNav.push(RequestPage, { contact: contact });
+      this.nav.push(RequestPage, { contact: contact });
     } else {
-      this.nav.rootNav.push(ChatPage, { contact: contact });
+      this.nav.push(ChatPage, { contact: contact });
     }
   }
 
@@ -88,8 +89,8 @@ export class ContactsPage {
     let invitationCode = self.generateInvitationCode();
     if (!self.platform.is('cordova')) {
       // HACK: this code is here to test invitations in ionic serve
-      let alert = Alert.create({title: 'Simulating social sharing action sheet', message: 'Invitation added to queue!', buttons: ['Ok']});
-      self.nav.present(alert);
+      let alert = self.alertCtrl.create({title: 'Simulating social sharing action sheet', message: 'Invitation added to queue!', buttons: ['Ok']});
+      alert.present();
       self.addNewInvitationToQueue(contact, invitationCode);
       return;
     }

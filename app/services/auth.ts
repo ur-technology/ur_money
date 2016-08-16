@@ -17,11 +17,6 @@ export class AuthService {
   public androidPlatform: boolean;
   public taskId: string;
 
-  // public authDataProfileImage: any
-  // public authDataProfileName: any
-  // public authDataProfileDescription: any
-  // public authDataProfileEmail: any
-
   constructor(public angularFire: AngularFire, public contactsService: ContactsService, public platform: Platform) {
     this.androidPlatform = this.platform.is('android');
   }
@@ -50,7 +45,7 @@ export class AuthService {
             nav.setRoot(walletSetupPage);
           }
         });
-      } else {
+      } else {        
         // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
         self.currentUserId = undefined;
         self.currentUserRef = undefined;
@@ -61,11 +56,16 @@ export class AuthService {
     });
   }
 
+  loadCurrentUser() {
+    firebase.database().ref(`/users/${this.currentUserId}`).once('value', data => {
+      this.currentUser = data.val();
+    });
+  }
 
   requestPhoneVerification(phone: string) {
     let self = this;
     return new Promise((resolve) => {
-      let taskRef = firebase.database().ref('/phoneAuthenticationQueue/tasks').push({phone: phone});
+      let taskRef = firebase.database().ref('/phoneAuthenticationQueue/tasks').push({ phone: phone });
       self.taskId = taskRef.key
       taskRef.then((xxx) => {
         log.debug(`task queued to /phoneAuthenticationQueue/tasks/${self.taskId}`);
@@ -103,17 +103,17 @@ export class AuthService {
             log.debug('Submitted verification code was correct.');
             firebase.auth().signInWithCustomToken(verificationResult.authToken).then((authData) => {
               log.debug('Authentication succeded!');
-              resolve({codeMatch: true});
+              resolve({ codeMatch: true });
               taskRef.remove();
             }).catch((error) => {
               log.warn('Authentication failed!');
-              taskRef.update({authenticationError: error});
-              resolve({error: "Authentication failed"});
+              taskRef.update({ authenticationError: error });
+              resolve({ error: "Authentication failed" });
               resolve(false);
             });
           } else {
             log.debug('Submitted verification code was not correct.');
-            resolve({codeMatch: false});
+            resolve({ codeMatch: false });
             taskRef.remove();
           }
         });

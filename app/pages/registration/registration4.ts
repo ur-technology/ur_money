@@ -1,5 +1,5 @@
 import {ViewChild, ElementRef, Inject} from '@angular/core';
-import {Page, NavController, Platform, Alert, Toast} from 'ionic-angular';
+import {Page, NavController, Platform, AlertController, ToastController} from 'ionic-angular';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/common';
 import {AngularFire} from 'angularfire2'
 import * as _ from 'lodash';
@@ -33,7 +33,9 @@ export class Registration4Page {
     public formBuilder: FormBuilder,
     public auth: AuthService,
     public loadingModal: LoadingModalComponent,
-    public deviceIdentityService: DeviceIdentityService
+    public deviceIdentityService: DeviceIdentityService,
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
   ) {
     this.countries = require('country-data').countries.all.sort((a, b) => {
       return (a.name < b.name) ? -1 : ((a.name == b.name) ? 0 : 1);
@@ -89,7 +91,7 @@ export class Registration4Page {
   }
 
   submit() {
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'IMPORTANT! Write down your passphrase',
       message: "Write this five word paraphrase down and store it someplace safe. UR Capital does not store your pass phrase and will NOT be able to recover it if it is lost or forgotten.",
       //" If you lose your passphrase, you will not be able to access your money ever again. ?',
@@ -105,11 +107,11 @@ export class Registration4Page {
       ]
     });
 
-    this.nav.present(alert);
+    alert.present();
   }
 
   confirmSecretPhraseWrittenDown() {
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: "Confirm you wrote down your passphrase",
       message: "If you lose your passphrase, you will not be able to access your money ever again. Did you write down your passphrase?",
       buttons: [
@@ -123,7 +125,7 @@ export class Registration4Page {
         }
       ]
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   generateAddress() {
@@ -162,12 +164,12 @@ export class Registration4Page {
     let strippedAttrs = _.omitBy(attrs, _.isNil);
     self.auth.currentUserRef.update(strippedAttrs).then(() => {
       self.loadingModal.hide();
-      let toast = Toast.create({
+      let toast = this.toastCtrl.create({
         message: 'Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!',
         duration: 2000,
         position: 'middle'
       });
-      self.nav.present(toast);
+      toast.present();
       self.nav.setRoot(HomePage);
     }).catch((error) => {
       self.loadingModal.hide();

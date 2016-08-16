@@ -1,8 +1,9 @@
-import {Page, NavController, Alert, Platform, Nav, Popover, Loading} from 'ionic-angular';
+import {Page, NavController, AlertController, Platform, Nav, Popover, LoadingController } from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
+import {FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {FORM_DIRECTIVES, FormBuilder, ControlGroup, AbstractControl} from '@angular/common';
+import {ControlGroup, AbstractControl} from '@angular/common';
 import {AuthService} from '../../services/auth';
 import {Registration3Page} from './registration3';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
@@ -12,19 +13,18 @@ declare var jQuery: any, intlTelInputUtils: any, require: any;
 
 @Page({
   templateUrl: 'build/pages/registration/registration2.html',
-  directives: [FORM_DIRECTIVES]
+
 })
 export class Registration2Page implements OnInit {
   elementRef: ElementRef;
-  phoneForm: ControlGroup;
-  phoneControl: AbstractControl;
+  phoneForm: FormGroup;
   countries: any;
   selected: any;
   selectedCountry: any;
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public formBuilder: FormBuilder, public auth: AuthService, public loadingModal: LoadingModalComponent, public countryListService: CountryListService) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public loadingModal: LoadingModalComponent, public countryListService: CountryListService, private alertCtrl: AlertController, private loadingController: LoadingController) {
     this.elementRef = elementRef;
-    this.phoneForm = formBuilder.group({
-      'phone': ['', (control) => {
+    this.phoneForm = new FormGroup({
+      phone: new FormControl('', (control) => {
         try {
           let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();;
           let phoneNumberObject = phoneNumberUtil.parse(control.value, this.selectedCountry.iso);
@@ -34,10 +34,9 @@ export class Registration2Page implements OnInit {
         } catch (e) {
           return { 'invalidPhone': true };
         }
-      }]
+      })
     });
     this.selectedCountry = { name: 'United States', code: '+1', iso: 'US', isoCode: '' };
-    this.phoneControl = this.phoneForm.controls['phone'];
     this.countries = this.countryListService.getCountryData();
   }
 
@@ -55,29 +54,31 @@ export class Registration2Page implements OnInit {
       extraIsoCode = this.selectedCountry.isoCode;
     }
     let phone = this.selectedCountry.code + extraIsoCode + corePhone
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'NUMBER CONFIRMATION',
       message: "<p>" + phone + "</p><p>Is your phone number above correct?</p>",
       buttons: [
         {
-          text: 'EDIT',
+          text: 'Edit',
           role: 'cancel',
           handler: () => {
             // do nothing
           }
         },
         {
-          text: 'YES',
+          text: 'Yes',
           handler: () => {
-            let loading = Loading.create({
+            let loading = this.loadingController.create({
               content: "Please wait...",
               dismissOnPageChange: true
             });
             alert.dismiss().then(() => {
-              this.nav.present(loading);
+              loading.present();
             });
             this.auth.requestPhoneVerification(phone).then((state: string) => {
-              loading.dismiss();
+              setTimeout(() => {
+                loading.dismiss();
+              }, 1000);
               if (state == "code_generation_completed_and_sms_sent") {
                 this.nav.setRoot(Registration3Page, { phone: phone });
               } else if (state == "code_generation_canceled_because_user_not_invited") {
@@ -90,13 +91,13 @@ export class Registration2Page implements OnInit {
         }
       ]
     });
-    this.nav.present(alert);
+    alert.present();
 
   }
 
   showErrorAlert(message, phoneInput) {
     // TODO: change this to toast message
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: "There was a problem...",
       message: message,
       buttons: [
@@ -110,7 +111,7 @@ export class Registration2Page implements OnInit {
         }
       ]
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   countrySelect(country) {

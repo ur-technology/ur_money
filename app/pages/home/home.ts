@@ -46,7 +46,7 @@ export class HomePage {
   }
 
   startNewChat() {
-    this.nav.rootNav.push(ContactsAndChatsPage, { goal: "chat" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: "chat" }, { animate: true, direction: 'forward' });
   }
 
   setRoot(page) {

@@ -45,10 +45,7 @@ export class CustomValidator {
     }
   }
 
-  static optionalNameValidator(control) {
-    console.log("control",control);
-    console.log("control.value",control.value);
-    console.log("control.value.match(/^\s*$|\w+/)", control.value.match(/^\s*$|\w+/));
+  static optionalNameValidator(control) {    
     if (control && !control.value.match(/^\s*$|\w+/)) {
       return { 'invalidName': true };
     }

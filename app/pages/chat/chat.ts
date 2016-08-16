@@ -151,8 +151,7 @@ export class ChatPage {
     this.resetMessageTextArea();
   }
 
-  saveEvent() {
-    console.log("contact",this.contact);
+  saveEvent() {    
     let eventRef = firebase.database().ref(`/users/${this.auth.currentUserId}/events/${this.chatId}`);
     eventRef.set({
       createdAt: firebase.database.ServerValue.TIMESTAMP,
