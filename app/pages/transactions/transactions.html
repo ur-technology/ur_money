@@ -1,26 +1,13 @@
 <ion-header>
     <ion-navbar clear>
+        <ion-title>Transactions</ion-title>
         <button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
     </ion-navbar>
-    <div class="bar bar-footer dash-footer"
-        *ngIf="android">
-        <div class="button-bar footer-btns">
-            <button (click)="goToPage('home')"
-                class="button button-calm"><i class="home-icon"></i></button>
-            <button (click)="goToPage('send')"
-                class="button button-calm"><i class="plane-icon"></i></button>
-            <button (click)="goToPage('request')"
-                class="button button-calm"><i class="request-icon"></i></button>
-            <button (click)="goToPage('invite')"
-                class="button button-calm"><i class="invite-icon"></i></button>
-        </div>
-    </div>
 </ion-header>
 <ion-content class="transactions" [fullscreen]="false">
-    <ion-tabs
-        class="transactions-tab-nav tabs-nav">
+    <ion-tabs>
         <ion-tab class="tab-item-active"
             tabTitle="Sent"
             tabIcon="sent-icon-on"
@@ -32,19 +19,19 @@
             tabIcon="earned-icon-on"
             [root]="earnedTransactionPage"></ion-tab>
     </ion-tabs>
+
 </ion-content>
 <ion-footer>
-    <div class="bar bar-footer dash-footer"
-        *ngIf="!android">
-        <div class="button-bar footer-btns">
-            <button (click)="goToPage('home')"
-                class="button button-calm"><i class="home-icon"></i></button>
-            <button (click)="goToPage('send')"
-                class="button button-calm"><i class="plane-icon"></i></button>
-            <button (click)="goToPage('request')"
-                class="button button-calm"><i class="request-icon"></i></button>
-            <button (click)="goToPage('invite')"
-                class="button button-calm"><i class="invite-icon"></i></button>
-        </div>
-    </div>
+  <div class="bar bar-footer dash-footer">
+      <div class="button-bar footer-btns">
+          <button (click)="goToPage('home')"
+              class="button button-calm"><i class="home-icon"></i></button>
+          <button (click)="goToPage('send')"
+              class="button button-calm"><i class="plane-icon"></i></button>
+          <button (click)="goToPage('request')"
+              class="button button-calm"><i class="request-icon"></i></button>
+          <button (click)="goToPage('invite')"
+              class="button button-calm"><i class="invite-icon"></i></button>
+      </div>
+  </div>
 </ion-footer>

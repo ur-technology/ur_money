@@ -8,6 +8,7 @@ import {RequestPage} from '../request/request';
 import {ChatPage} from '../chat/chat';
 import {Config} from '../../config/config';
 import {UserModel} from '../../models/user';
+import { App } from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 declare var window: any;
@@ -31,7 +32,8 @@ export class ContactsPage {
     private contactsService: ContactsService,
     private auth: AuthService,
     private platform: Platform,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private app: App 
   ) {
     this.startTime = (new Date()).getTime();
     this.goal = navParams.get("goal");
@@ -76,11 +78,11 @@ export class ContactsPage {
     if (!contact.userId) {
       this.inviteContact(contact);
     } else if (this.goal == "send") {
-      this.nav.push(SendPage, { contact: contact });
+      this.app.getRootNav().push(SendPage, { contact: contact });
     } else if (this.goal == "request") {
-      this.nav.push(RequestPage, { contact: contact });
+      this.app.getRootNav().push(RequestPage, { contact: contact });
     } else {
-      this.nav.push(ChatPage, { contact: contact });
+      this.app.getRootNav().push(ChatPage, { contact: contact });
     }
   }
 

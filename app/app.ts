@@ -110,13 +110,11 @@ class UrMoney {
 ionicBootstrap(UrMoney, [disableDeprecatedForms(),
   provideForms()], {
     mode: 'ios',
-    tabsPlacement: 'top',
     tabsHideOnSubPages: false,
-    tabsHighlight: true,
     platforms: {
       ios: {
-        statusbarPadding: true
+        statusbarPadding: false
       },
     }
-  } // http://ionicframework.com/docs/v2/api/config/Config/
+  }
 );

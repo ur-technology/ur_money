@@ -4,6 +4,7 @@ import {NavController } from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import {ChatPage} from '../../pages/chat/chat';
 import {Timestamp}  from '../../pipes/timestamp';
+import { App } from 'ionic-angular';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 
 @Component({
@@ -15,7 +16,7 @@ export class ChatListComponent {
   chats: any[];
   x: any[];
 
-  constructor(private nav: NavController, private auth: AuthService, private angularFire: AngularFire) {
+  constructor(private nav: NavController, private auth: AuthService, private angularFire: AngularFire, private app: App ) {
   }
 
   ngOnInit() {
@@ -44,7 +45,7 @@ export class ChatListComponent {
   }
 
   gotoChat(chatSummary: any) {
-    this.nav.push(ChatPage, { chatSummary: chatSummary, chatId: chatSummary.$key }, { animate: true, direction: 'forward' });
+    this.app.getRootNav().push(ChatPage, { chatSummary: chatSummary, chatId: chatSummary.$key }, { animate: true, direction: 'forward' });
   }
 
 }

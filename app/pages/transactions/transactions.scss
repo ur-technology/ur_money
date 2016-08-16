@@ -25,6 +25,14 @@
     ion-navbar-section {
         display: none;
     }
+
+    ion-tabbar {
+      bottom: 45px !important;
+    }
+
+    ion-tab{
+      top:45px !important;
+    }
 }
 
 .transactions-tab-nav tabbar {

@@ -3,6 +3,7 @@ import { NavController, Platform, ToastController} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
 import * as _ from 'lodash';
 import {Timestamp}  from '../../pipes/timestamp';
+import { App } from 'ionic-angular';
 import * as moment from 'moment';
 import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 import {EventsService} from '../../services/events';
@@ -16,7 +17,7 @@ import {AuthService} from '../../services/auth';
   pipes: [DateAndTime]
 })
 export class EventListComponent {
-  constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService, private toastCtrl: ToastController) {
+  constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService, private toastCtrl: ToastController,  private app: App) {
     this.listenForNewEvents();
     this.listenForNotificationSelection();
   }
@@ -56,7 +57,7 @@ export class EventListComponent {
 
   openPageByEventType(sourceType: string, sourceId: string) {
     if (sourceType === "message") {
-      this.nav.push(ChatPage, { chatId: sourceId }, { animate: true, direction: 'forward' });
+      this.app.getRootNav().push(ChatPage, { chatId: sourceId }, { animate: true, direction: 'forward' });
     }
     else if (sourceType === "transaction") {
       let toast = this.toastCtrl.create({ message: 'Not implemented yet. It should open the transaction page', duration: 3000, position: 'bottom' });

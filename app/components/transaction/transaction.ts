@@ -5,6 +5,7 @@ import {AuthService} from '../../services/auth';
 import * as _ from 'lodash';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as moment from 'moment';
+import { App } from 'ionic-angular';
 import {ContactsAndChatsPage} from '../../pages/contacts-and-chats/contacts-and-chats';
 import {Round} from '../../pipes/round';
 import {DateAndTime} from '../../pipes/dateAndTime.pipe';
@@ -23,7 +24,7 @@ export class TransactionComponent {
   filterOption: string = 'all';
   transactionType: string;
 
-  constructor(private auth: AuthService, private nav: NavController) {
+  constructor(private auth: AuthService, private nav: NavController, private app: App) {
   }
 
   filterTransactions(filterOption) {
@@ -70,7 +71,7 @@ export class TransactionComponent {
   }
 
   invite() {
-    this.nav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
+    this.app.getRootNav().push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
   }
 
 
