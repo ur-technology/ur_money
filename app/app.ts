@@ -23,7 +23,6 @@ import {HomePage} from './pages/home/home';
 import {ChatPage} from './pages/chat/chat';
 import {SendPage} from './pages/send/send';
 import {RequestPage} from './pages/request/request';
-import {ContactsPage} from './pages/contacts/contacts';
 import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';

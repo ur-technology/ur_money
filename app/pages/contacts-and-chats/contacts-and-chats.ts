@@ -1,24 +1,20 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {ContactsPage} from '../contacts/contacts';
-import {ChatsPage} from '../chats/chats';
+import {ContactsComponent} from '../../components/contacts/contacts';
+import {ChatListComponent} from '../../components/chat-list/chat-list';
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/contacts-and-chats/contacts-and-chats.html',
+  directives: [ContactsComponent, ChatListComponent]
 })
 export class ContactsAndChatsPage {
   contactsPage: any;
-  contactsPageParams: any;
+  goal: any;
   chatsPage: any;
+  segmentSelected:string = "contacts";
 
   constructor(private nav: NavController, private navParams: NavParams) {
-    this.contactsPage = ContactsPage;
-    this.contactsPageParams = { goal: navParams.get("goal") };
-    this.chatsPage = ChatsPage;
-  }
-
-  ionViewLoaded() {
-    // jQuery("ion-navbar-section").css("display", "none");
+    this.goal = navParams.get("goal");
   }
 
 }

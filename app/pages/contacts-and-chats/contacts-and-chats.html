@@ -3,14 +3,27 @@
     </ion-navbar>
 </ion-header>
 <ion-content class="contacts-and-chats-page">
-    <ion-tabs>
-        <ion-tab tabTitle="Contacts"
-            tabIcon="contacts-icon-on"
-            [root]="contactsPage"
-            [rootParams]="contactsPageParams"
-            class="tab-item-active"></ion-tab>
-        <ion-tab tabTitle="Chats"
-            tabIcon="chats-icon-on"
-            [root]="chatsPage"></ion-tab>
-    </ion-tabs>
+  <ion-segment [(ngModel)]="segmentSelected"
+      class="transactions-tab-nav">
+      <ion-segment-button value="contacts" >
+          <a class="tab-button has-title has-icon disable-hover"
+              role="tab">
+              <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
+                  role="img"
+                  name="contacts-icon-on"></ion-icon>
+              <span class="tab-button-text">Contacts</span>
+          </a>
+      </ion-segment-button>
+      <ion-segment-button value="chats" >
+          <a class="tab-button has-title has-icon disable-hover"
+              role="tab">
+              <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
+                  role="img"
+                  name="chats-icon-on"></ion-icon>
+              <span class="tab-button-text">Chats</span>
+          </a>
+      </ion-segment-button>
+  </ion-segment>
+  <contacts goal={{goal}} *ngIf="segmentSelected==='contacts'"></contacts>
+  <chat-list *ngIf="segmentSelected==='chats'"></chat-list>
 </ion-content>

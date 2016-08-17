@@ -2,36 +2,55 @@
     <ion-navbar clear>
         <ion-title>Transactions</ion-title>
         <button menuToggle>
-            <ion-icon name="menu"></ion-icon>
+            <ion-icon name="sent-icon-on"></ion-icon>
         </button>
     </ion-navbar>
 </ion-header>
-<ion-content class="transactions" [fullscreen]="false">
-    <ion-tabs>
-        <ion-tab class="tab-item-active"
-            tabTitle="Sent"
-            tabIcon="sent-icon-on"
-            [root]="sentTransactionPage"></ion-tab>
-        <ion-tab tabTitle="Received"
-            tabIcon="received-icon-on"
-            [root]="receivedTransactionPage"></ion-tab>
-        <ion-tab tabTitle="Earned"
-            tabIcon="earned-icon-on"
-            [root]="earnedTransactionPage"></ion-tab>
-    </ion-tabs>
-
+<ion-content class="transactions"
+    [fullscreen]="false">
+    <ion-segment [(ngModel)]="segmentSelected"
+        class="transactions-tab-nav">
+        <ion-segment-button value="sent" >
+            <a class="tab-button has-title has-icon disable-hover"
+                role="tab">
+                <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
+                    role="img"
+                    name="sent-icon-on"></ion-icon>
+                <span class="tab-button-text">Sent</span>
+            </a>
+        </ion-segment-button>
+        <ion-segment-button value="received" >
+            <a class="tab-button has-title has-icon disable-hover"
+                role="tab">
+                <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
+                    role="img"
+                    name="received-icon-on"></ion-icon>
+                <span class="tab-button-text">Received</span>
+            </a>
+        </ion-segment-button>
+        <ion-segment-button value="earned">
+            <a class="tab-button has-title has-icon disable-hover"
+                role="tab">
+                <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
+                    role="img"
+                    name="earned-icon-on"></ion-icon>
+                <span class="tab-button-text">Earned</span>
+            </a>
+        </ion-segment-button>
+    </ion-segment>
+    <transaction-component class="transactions transaction-{{segmentSelected}}" transactionType={{segmentSelected}} ></transaction-component>
 </ion-content>
 <ion-footer>
-  <div class="bar bar-footer dash-footer">
-      <div class="button-bar footer-btns">
-          <button (click)="goToPage('home')"
-              class="button button-calm"><i class="home-icon"></i></button>
-          <button (click)="goToPage('send')"
-              class="button button-calm"><i class="plane-icon"></i></button>
-          <button (click)="goToPage('request')"
-              class="button button-calm"><i class="request-icon"></i></button>
-          <button (click)="goToPage('invite')"
-              class="button button-calm"><i class="invite-icon"></i></button>
-      </div>
-  </div>
+    <div class="bar bar-footer dash-footer">
+        <div class="button-bar footer-btns">
+            <button (click)="goToPage('home')"
+                class="button button-calm"><i class="home-icon"></i></button>
+            <button (click)="goToPage('send')"
+                class="button button-calm"><i class="plane-icon"></i></button>
+            <button (click)="goToPage('request')"
+                class="button button-calm"><i class="request-icon"></i></button>
+            <button (click)="goToPage('invite')"
+                class="button button-calm"><i class="invite-icon"></i></button>
+        </div>
+    </div>
 </ion-footer>

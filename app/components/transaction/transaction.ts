@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, Input, AfterViewInit , OnInit, OnChanges} from '@angular/core';
+import { NavController} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
 import {AuthService} from '../../services/auth';
 import * as _ from 'lodash';
@@ -22,7 +22,7 @@ export class TransactionComponent {
   amount: number = 0;
   lastUpdated: any;
   filterOption: string = 'all';
-  transactionType: string;
+  @Input() transactionType: string;
 
   constructor(private auth: AuthService, private nav: NavController, private app: App) {
   }
@@ -39,17 +39,20 @@ export class TransactionComponent {
     this.lastUpdated = this.transactionDataFiltered.length > 0 ? _.last(_.sortBy(this.transactionDataFiltered, 'createdAt')).createdAt : "";
   }
 
-  loadTransactionsByType(type: string) {
-    this.transactionType = type;
+  private loadTransactionsByType() {
     this.showSpinner = true;
     firebase.database().ref(`/users/${this.auth.currentUserId}/transactions/`)
       .orderByChild("type")
-      .equalTo(type)
+      .equalTo(this.transactionType)
       .once("value", snapshot => {
         this.showSpinner = false;
         this.transactionDataAll = _.values(snapshot.val());
         this.filterTransactions(this.filterOption);
       });
+  }
+
+  ngOnChanges(){
+    this.loadTransactionsByType();
   }
 
   private _getDateFromNowAppliedFilter() {

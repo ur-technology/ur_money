@@ -6,7 +6,6 @@ import {Timestamp}  from '../../pipes/timestamp';
 import {RequestPage} from '../request/request';
 import {SendPage} from '../send/send';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
-import {ContactsPage} from '../contacts/contacts';
 import {ChatPage} from '../chat/chat';
 import * as _ from 'lodash';
 import * as moment from 'moment';

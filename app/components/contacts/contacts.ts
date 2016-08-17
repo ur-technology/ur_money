@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input,  AfterViewInit , OnInit, } from '@angular/core';
 import {NavController, NavParams, Platform, AlertController} from 'ionic-angular';
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
 import {ContactsService} from '../../services/contacts';
 import {AuthService} from '../../services/auth';
-import {SendPage} from '../send/send';
-import {RequestPage} from '../request/request';
-import {ChatPage} from '../chat/chat';
+import {SendPage} from '../../pages/send/send';
+import {RequestPage} from '../../pages/request/request';
+import {ChatPage} from '../../pages/chat/chat';
 import {Config} from '../../config/config';
 import {UserModel} from '../../models/user';
 import { App } from 'ionic-angular';
@@ -14,16 +14,17 @@ import * as log from 'loglevel';
 declare var window: any;
 
 @Component({
-  templateUrl: 'build/pages/contacts/contacts.html'
+  templateUrl: 'build/components/contacts/contacts.html',
+  selector: 'contacts'
 })
-export class ContactsPage {
+export class ContactsComponent {
   pageIndex = 0;
   numberOfPages = 0;
   PAGE_SIZE = 15;
   paginatedContacts: any[] = [];
   displayableContacts: any[];
   startTime: number;
-  public goal: string;
+  @Input() goal: string;
   public memberActionLabel: string;
 
   constructor(
@@ -33,10 +34,9 @@ export class ContactsPage {
     private auth: AuthService,
     private platform: Platform,
     private alertCtrl: AlertController,
-    private app: App 
+    private app: App
   ) {
     this.startTime = (new Date()).getTime();
-    this.goal = navParams.get("goal");
     this.memberActionLabel = this.determineMemberActionLabel();
   }
 
@@ -49,7 +49,7 @@ export class ContactsPage {
       return "Chat";
     }
   }
-  ionViewDidEnter() {
+  ngOnInit() {    
     let self = this;
     self.contactsService.load(self.auth.countryCode, self.auth.currentUserId, self.auth.currentUser.phone).then((contactGroups: any) => {
       let contacts = self.goal == "invite" ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
