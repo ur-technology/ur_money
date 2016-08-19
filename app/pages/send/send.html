@@ -14,10 +14,19 @@
             </ion-avatar>
             <h2>{{contact.name}}</h2>
         </ion-item>
+        <div class="card send-requestinput">
+            <label class="item item-input disabled">
+                <span>Available balance:</span>
+                <input formControlName="balance"
+                    class="inputDisabled"
+                    [disabled]="true"
+                    type="text" />
+            </label>
+        </div>
         <div class="card send-requestur">
             <label class="item item-input">
                 <input formControlName="amount"
-                    placeholder="Enter amount"
+                    placeholder="Enter amount to send"
                     class="amount"
                     type="text" />
                 <ion-note class="item-note"> UR </ion-note>
@@ -25,7 +34,7 @@
             <div class="validatorError"
                 *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('required')">Amount is required</div>
             <div class="validatorError"
-                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidPositiveNumber')">Amount has to be greater than 0</div>
+                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidPositiveNumber') && !mainForm.find('amount').hasError('required')">Amount has to be greater than 0</div>
             <div class="validatorError"
                 *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidBalance')">Amount cannot be greater than balance</div>
         </div>
@@ -35,17 +44,8 @@
                     placeholder="Enter a message (optional)"></ion-textarea>
             </label>
         </div>
-        <div class="card send-requestinput">
-            <label class="item item-input disabled">
-                <span>Balance:</span>
-                <input formControlName="balance"
-                    class="inputDisabled"
-                    [disabled]="true"
-                    type="text" />
-            </label>
-        </div>
-        <div class="validatorError"
-            *ngIf="errorMessage && errorMessage.length>0">{{errorMessage}}</div>
+
+    
         <button class="button button-light button-outline button-block button-large send-requestbtn"
             type="submit"
             [disabled]="!mainForm.valid">Send</button>

@@ -13,7 +13,6 @@ export class SendPage {
   contact: any;
   mainForm: FormGroup;
   balance: number;
-  errorMessage: string;
 
   constructor(public nav: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
     this.contact = this.navParams.get('contact');
@@ -39,9 +38,7 @@ export class SendPage {
     if (balance < 0) {
       (this.mainForm.find("amount") as FormControl).setErrors({ invalidBalance: true });
     }
-    (this.mainForm.find("balance") as FormControl).updateValue(balance);
   }
-
 
   sendUR() {
     let amount: number = Number(this.mainForm.value.amount);
@@ -50,7 +47,6 @@ export class SendPage {
       if (WalletModel.validateCredentials(self.phrase, self.contact.userId)) {
         WalletModel.generate(self.phrase, self.contact.userId).then((data) => {
           let wallet: WalletModel = new WalletModel(data);
-
           if (!wallet.validateAddress(self.contact.wallet.address)) {
             self.error("Recipient address is not valid");
             return;
@@ -94,8 +90,6 @@ export class SendPage {
             handler: data => {
               prompt.dismiss().then(() => {
                 this.confirmationStep2(resolve, reject);
-                resolve();
-                console.log('Saved clicked', data);
               });
             }
           }
@@ -122,7 +116,6 @@ export class SendPage {
           text: 'Ok',
           handler: data => {
             prompt.dismiss().then(() => {
-              console.log("confimacion2 ok", data);
               resolve();
             });
           }
@@ -149,6 +142,11 @@ export class SendPage {
   }
 
   error(text) {
-    this.errorMessage = text;
+    let errorAlert = this.alertCtrl.create({
+      title: 'Error',
+      message: "<p>" + text + "</p>",
+      buttons: ['OK']
+    });
+    errorAlert.present();
   }
 }
