@@ -37,7 +37,7 @@ export class ContactsComponent {
     private app: App
   ) {
     this.startTime = (new Date()).getTime();
-    this.memberActionLabel = this.determineMemberActionLabel();
+
   }
 
   private determineMemberActionLabel() {
@@ -49,8 +49,9 @@ export class ContactsComponent {
       return "Chat";
     }
   }
-  ngOnInit() {    
+  ngOnInit() {
     let self = this;
+    this.memberActionLabel = this.determineMemberActionLabel();
     self.contactsService.load(self.auth.countryCode, self.auth.currentUserId, self.auth.currentUser.phone).then((contactGroups: any) => {
       let contacts = self.goal == "invite" ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
       self.paginatedContacts = _.chunk(contacts, self.PAGE_SIZE);

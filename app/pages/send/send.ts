@@ -18,7 +18,7 @@ export class SendPage {
   constructor(public nav: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
     this.contact = this.navParams.get('contact');
     this.mainForm = new FormGroup({
-      amount: new FormControl("", [Validators.required, CustomValidator.positiveNumberValidator]),
+      amount: new FormControl("", [CustomValidator.positiveNumberValidator, Validators.required]),
       message: new FormControl(""),
       balance: new FormControl("")
     });
@@ -34,14 +34,12 @@ export class SendPage {
   }
 
   calculateBalance() {
-    if (this.mainForm.find("amount").valid) {
-      let amount = Number(this.mainForm.find("amount").value);
-      let balance: number = this.balance - amount;
-      if (balance < 0) {
-        (this.mainForm.find("amount") as FormControl).setErrors({ invalidBalance: true });
-      }
-      (this.mainForm.find("balance") as FormControl).updateValue(balance);
+    let amount = this.mainForm.find("amount").valid ? Number(this.mainForm.find("amount").value) : 0;
+    let balance: number = this.balance - amount;
+    if (balance < 0) {
+      (this.mainForm.find("amount") as FormControl).setErrors({ invalidBalance: true });
     }
+    (this.mainForm.find("balance") as FormControl).updateValue(balance);
   }
 
 
