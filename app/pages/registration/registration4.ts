@@ -19,7 +19,7 @@ declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/registration/registration4.html',
-  directives: [REACTIVE_FORM_DIRECTIVES ,FocuserDirective]
+  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective]
 })
 export class Registration4Page {
   mainForm: FormGroup;
@@ -54,8 +54,9 @@ export class Registration4Page {
       secretPhrase: new FormControl("", CustomValidator.secretPhraseValidator),
       secretPhraseConfirmation: new FormControl("", Validators.required)
     });
-    // },null, CustomValidator.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation') );
-    // },{validator: CustomValidator.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation')} );
+
+    this.mainForm.setValidators(CustomValidator.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation'));
+
     let currentUser = this.auth.currentUser;
     this.profile = {
       secretPhrase: '',
@@ -168,8 +169,8 @@ export class Registration4Page {
       self.loadingModal.hide();
       let toast = this.toastCtrl.create({
         message: 'Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!',
-        duration: 2000,
-        position: 'middle'
+        duration: 5000,
+        position: 'bottom'
       });
       toast.present();
       self.nav.setRoot(HomePage);
