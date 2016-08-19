@@ -1,6 +1,6 @@
 import {ViewChild, ElementRef, Inject} from '@angular/core';
 import {Page, NavController, Platform, AlertController, ToastController} from 'ionic-angular';
-import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from '@angular/common';
+import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
 import {AngularFire} from 'angularfire2'
 import * as _ from 'lodash';
 import * as log from 'loglevel';
@@ -19,10 +19,10 @@ declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/registration/registration4.html',
-  directives: [FORM_DIRECTIVES, FocuserDirective]
+  directives: [REACTIVE_FORM_DIRECTIVES ,FocuserDirective]
 })
 export class Registration4Page {
-  mainForm: ControlGroup;
+  mainForm: FormGroup;
   errorMessage: string;
   countries: any[];
   allStates: any[];
@@ -30,7 +30,7 @@ export class Registration4Page {
   profile: any;
   constructor(
     public nav: NavController,
-    public formBuilder: FormBuilder,
+    // public formBuilder: FormGroup,
     public auth: AuthService,
     public loadingModal: LoadingModalComponent,
     public deviceIdentityService: DeviceIdentityService,
@@ -45,15 +45,17 @@ export class Registration4Page {
       return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) == -1;
     });
     this.allStates = require('provinces');
-    this.mainForm = formBuilder.group({
-      'firstName': ["", CustomValidator.nameValidator],
-      'middleName': ["", CustomValidator.optionalNameValidator],
-      'lastName': ["", CustomValidator.nameValidator],
-      'stateName': ["", CustomValidator.nameValidator],
-      'city': ["", CustomValidator.nameValidator],
-      'secretPhrase': ["", CustomValidator.secretPhraseValidator],
-      'secretPhraseConfirmation': ["", Validators.required]
-    }, { validator: CustomValidator.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation') });
+    this.mainForm = new FormGroup({
+      firstName: new FormControl("", CustomValidator.nameValidator),
+      middleName: new FormControl("", CustomValidator.optionalNameValidator),
+      lastName: new FormControl("", CustomValidator.nameValidator),
+      stateName: new FormControl("", CustomValidator.nameValidator),
+      city: new FormControl("", CustomValidator.nameValidator),
+      secretPhrase: new FormControl("", CustomValidator.secretPhraseValidator),
+      secretPhraseConfirmation: new FormControl("", Validators.required)
+    });
+    // },null, CustomValidator.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation') );
+    // },{validator: CustomValidator.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation')} );
     let currentUser = this.auth.currentUser;
     this.profile = {
       secretPhrase: '',

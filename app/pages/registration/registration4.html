@@ -11,31 +11,32 @@
 </ion-header>
 <ion-content padding
     class="registration registration4">
-    <form [ngFormModel]="mainForm">
+    <form [formGroup]="mainForm">
         <ion-item-group>
             <ion-item-divider light>Your public profile information</ion-item-divider>
             <ion-item>
                 <ion-input [focuser]
                     type="text"
                     [(ngModel)]="profile.firstName"
-                    [ngFormControl]="mainForm.controls.firstName"
+                    formControlName="firstName"
                     placeholder="First name"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-input [focuser]
                     type="text"
                     [(ngModel)]="profile.middleName"
-                    [ngFormControl]="mainForm.controls.middleName"
+                    formControlName="middleName"
                     placeholder="Middle name (optional)"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-input type="text"
                     [(ngModel)]="profile.lastName"
-                    [ngFormControl]="mainForm.controls.lastName"
+                    formControlName="lastName"
                     placeholder="Last name"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-select [(ngModel)]="profile.country"
+                    [ngModelOptions]="{standalone: true}"
                     (ionChange)="countrySelected()">
                     <ion-option [value]="c"
                         *ngFor="let c of countries">{{c.name}}</ion-option>
@@ -44,6 +45,7 @@
             <ion-item>
                 <ion-select [hidden]="!states || !states.length"
                     [(ngModel)]="profile.state"
+                    [ngModelOptions]="{standalone: true}"
                     (ionChange)="stateSelected()">
                     <ion-option [value]="s"
                         *ngFor="let s of states">{{s.name}}</ion-option>
@@ -51,13 +53,13 @@
                 <ion-input [hidden]="states && states.length"
                     type="text"
                     [(ngModel)]="profile.stateName"
-                    [ngFormControl]="mainForm.controls.stateName"
+                    formControlName="stateName"
                     placeholder="State or Province"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-input type="text"
                     [(ngModel)]="profile.city"
-                    [ngFormControl]="mainForm.controls.city"
+                    formControlName="city"
                     placeholder="City"></ion-input>
             </ion-item>
 
@@ -74,14 +76,14 @@
             <ion-item>
                 <ion-input type="text"
                     [(ngModel)]="profile.secretPhrase"
-                    [ngFormControl]="mainForm.controls.secretPhrase"
+                    formControlName="secretPhrase"
                     [(ngModel)]="secretPhrase"
                     placeholder="Please enter at least 5 secret words"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-input type="text"
                     [(ngModel)]="profile.secretPhraseConfirmation"
-                    [ngFormControl]="mainForm.controls.secretPhraseConfirmation"
+                    formControlName="secretPhraseConfirmation"
                     otherControl="secretPhrase"
                     placeholder="Re-type your secret words"></ion-input>
             </ion-item>

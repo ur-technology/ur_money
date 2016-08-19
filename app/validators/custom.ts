@@ -1,4 +1,4 @@
-import {ControlGroup} from '@angular/common';
+import {FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
 
 export class CustomValidator {
@@ -45,7 +45,7 @@ export class CustomValidator {
     }
   }
 
-  static optionalNameValidator(control) {    
+  static optionalNameValidator(control) {
     if (control && !control.value.match(/^\s*$|\w+/)) {
       return { 'invalidName': true };
     }
@@ -58,13 +58,20 @@ export class CustomValidator {
     }
   }
 
-  static matchingSecretPhrases(controlName1: string, controlName2: string) {
-    return (group: ControlGroup) => {
+  static matchingSecretPhrases(controlName1: string, controlName2: string) {    
+    return (group: FormGroup) => {
       let control1 = group.controls[controlName1];
       let control2 = group.controls[controlName2];
       if (!control1 || !control1.value || !control2 || !control2.value || control1.value != control2.value) {
         return control2.setErrors({notEquivalent: true})
       }
+    }
+  }
+
+  static positiveNumberValidator(control){
+    var pattern = /^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$/;
+    if (!control.value.match(pattern)) {
+      return { 'invalidPositiveNumber': true };
     }
   }
 
