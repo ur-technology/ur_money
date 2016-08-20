@@ -16,7 +16,7 @@
         </ion-item>
         <div class="card send-requestinput">
             <label class="item item-input disabled">
-                <span>Available balance: {{balance|number:'1.2-2'}}  </span>
+                <span>Available balance: {{balance|number:'1.2-18'}}</span>
                 <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
             </label>
         </div>
@@ -33,7 +33,7 @@
             <div class="validatorError"
                 *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidPositiveNumber') && !mainForm.find('amount').hasError('required')">Amount has to be greater than 0</div>
             <div class="validatorError"
-                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidBalance')">Amount cannot be greater than balance</div>
+                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidBalance')">Amount cannot be greater than available balance</div>
         </div>
         <div class="card send-requesttextarea">
             <label class="item item-input">
