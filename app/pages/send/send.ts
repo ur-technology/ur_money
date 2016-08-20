@@ -28,7 +28,7 @@ export class SendPage {
       this.calculateBalance();
     });
 
-    this.balance = 1700.56;
+    this.balance = 1542540.645645;
     (this.mainForm.find("balance") as FormControl).updateValue(this.balance);
   }
 

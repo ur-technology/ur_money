@@ -7,13 +7,12 @@ import {Timestamp}  from '../../pipes/timestamp';
 import * as moment from 'moment';
 import { App } from 'ionic-angular';
 import {ContactsAndChatsPage} from '../../pages/contacts-and-chats/contacts-and-chats';
-import {Round} from '../../pipes/round';
 import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 
 @Component({
   selector: 'transaction-component',
   templateUrl: 'build/components/transaction/transaction.html',
-  pipes: [Timestamp, Round, DateAndTime]
+  pipes: [Timestamp, DateAndTime]
 })
 export class TransactionComponent {
   showSpinner: boolean = false;
