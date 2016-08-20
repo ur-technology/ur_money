@@ -28,7 +28,7 @@ export class SendPage {
       this.calculateBalance();
     });
 
-    this.balance = 1000;
+    this.balance = 1700.56;
     (this.mainForm.find("balance") as FormControl).updateValue(this.balance);
   }
 
@@ -44,31 +44,26 @@ export class SendPage {
     let amount: number = Number(this.mainForm.value.amount);
     let self = this;
     self.confirmation().then(() => {
-      if (WalletModel.validateCredentials(self.phrase, self.contact.userId)) {
-        WalletModel.generate(self.phrase, self.contact.userId).then((data) => {
-          let wallet: WalletModel = new WalletModel(data);
-          if (!wallet.validateAddress(self.contact.wallet.address)) {
-            self.error("Recipient address is not valid");
-            return;
-          }
+      WalletModel.generate(self.phrase, self.contact.userId).then((data) => {
+        let wallet: WalletModel = new WalletModel(data);
+        if (!wallet.validateAddress(self.contact.wallet.address)) {
+          self.error("Recipient address is not valid");
+          return;
+        }
 
-          if (!wallet.validateAmount(amount)) {
-            self.error("Not enough coins or amount is not correct");
-            return;
-          }
+        if (!wallet.validateAmount(amount)) {
+          self.error("Not enough coins or amount is not correct");
+          return;
+        }
 
-          wallet.sendRawTransaction(self.contact.wallet.address, amount).then((err) => {
-            if (!err)
-              self.success();
-            else
-              self.error("An error occured during transaction");
-          });
-        })
-      } else {
-        self.error("The secret phrase you entered was not correct.");
-      }
+        wallet.sendRawTransaction(self.contact.wallet.address, amount).then((err) => {
+          if (!err)
+            self.success();
+          else
+            self.error("An error occured during transaction");
+        });
+      })
     });
-
   }
 
   confirmation() {
@@ -89,8 +84,15 @@ export class SendPage {
             text: 'Continue',
             handler: data => {
               prompt.dismiss().then(() => {
-                this.confirmationStep2(resolve, reject);
+                if (WalletModel.validateCredentials(this.phrase, this.contact.userId)) {
+                  this.confirmationStep2(resolve, reject);
+                }
+                else {
+                  this.error("The secret phrase you entered was not correct.");
+                }
               });
+
+
             }
           }
         ]
@@ -103,7 +105,7 @@ export class SendPage {
     let amount: number = Number(this.mainForm.value.amount);
     let prompt = this.alertCtrl.create({
       title: 'Confirmation',
-      message: "<p>Send " + amount.toFixed(4) + " UR?</p>",
+      message: "<p>Send " + amount.toFixed(2) + " UR?</p>",
       buttons: [
         {
           text: 'Cancel',
