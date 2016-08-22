@@ -39,31 +39,29 @@ export class SendPage {
 
   sendUR() {
     let self = this;
-
     self.obtainAndValidateSecretPhrase().then(() => {
       return self.confirm();
     }).then(() => {
       return self.wallet.sendRawTransaction(self.contact.wallet.address, Number(self.mainForm.value.amount));
+    }).then((urTransaction) => {
+      let transactionRef = firebase.database().ref(`/users/${self.authService.currentUserId}/transactions/${urTransaction.hash}`);
+      return transactionRef.set({
+        createdAt: firebase.database.ServerValue.TIMESTAMP,
+        updatedAt: firebase.database.ServerValue.TIMESTAMP,
+        urTransaction: urTransaction
+      });
     }).then(() => {
-      let toast  = self.toastCtrl.create({message: 'Your UR has been sent!', duration: 3000, position: 'middle'});
+      let toast  = self.toastCtrl.create({message: 'Your UR has been sent!', duration: 3000, position: 'bottom'});
       toast.present();
       this.nav.setRoot(HomePage);
-    }, (error) => {
-      if (_.isObject(error) && (error.displayMessage || error.logMessage)) {
-        if (error.displayMessage) {
-          let toast  = self.toastCtrl.create({message: error.displayMessage, duration: 3000, position: 'middle'});
-          toast.present();
-          log.debug(error.displayMessage);
-        }
-        if (error.logMessage) {
-          log.debug(error.logMessage);
-        }
-      } else {
-        let toast = self.toastCtrl.create({message: "An unexpected error has occurred. Please try again later.", duration: 3000, position: 'bottom'});
-        toast.present();
-        log.debug(error)
-      }
-      // stop trying to send
+    }, (error: any) => {
+      self.toastCtrl.create({
+        message: error.displayMessage ? error.displayMessage : "An unexpected error has occurred. Please try again later.",
+        duration: 3000,
+        position: 'bottom'
+      }).present();
+      log.debug(error.logMessage || error);
+      // give up trying to send
     });
   }
 

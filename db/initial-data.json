@@ -1,31 +1,4 @@
 {
-  "phoneAuthenticationQueue" : {
-    "specs" : {
-      "code_generation" : {
-        "error_state" : "code_generation_error",
-        "finished_state" : "code_generation_completed_and_sms_sent",
-        "in_progress_state" : "code_generation_in_progress",
-        "timeout" : 15000
-      },
-      "code_matching" : {
-        "error_state" : "code_matching_error",
-        "finished_state" : "code_matching_completed",
-        "in_progress_state" : "code_matching_in_progress",
-        "start_state" : "code_matching_requested",
-        "timeout" : 15000
-      }
-    }
-  },
-  "phoneLookupQueue" : {
-    "specs" : {
-      "phone_lookup" : {
-        "error_state" : "error",
-        "finished_state" : "finished",
-        "in_progress_state" : "in_progress",
-        "timeout" : 30000
-      }
-    }
-  },
   "users" : {
     "-KJn47TvHAlfQocDX_ES" : {
       "admin" : true,
@@ -56,7 +29,7 @@
       "signedUpAt" : 1465440831526,
       "stateName" : "Tennessee",
       "wallet" : {
-        "address" : "0x62af064ae47a33fa2edea3009f008ddb6df2f996",
+        "address" : "0x073bf41b6d55c8a83e6e6612cffcc014e64aa830",
         "createdAt" : 1470525317195
       }
     },
@@ -92,7 +65,7 @@
         "userId" : "-KJn47TvHAlfQocDX_ES"
       },
       "wallet" : {
-        "address" : "0xa6bff828f64d04ad58a029b75bce0556133941e6",
+        "address" : "0x62af064ae47a33fa2edea3009f008ddb6df2f996",
         "createdAt" : 1470525317195
       }
     },
@@ -113,7 +86,7 @@
         "userId" : "-KJnRTuL8A1ZdfVvwAbv"
       },
       "wallet" : {
-        "address" : "0xb361ff1d4acc8583177735dae9d00e555c57607e",
+        "address" : "0xc1b1d16194932f38c16c340e1cb56acedc9666da",
         "createdAt" : 1470525317195
       }
     },
@@ -134,7 +107,7 @@
         "userId" : "-KJnRTuL8A1ZdfVvwAbv"
       },
       "wallet" : {
-        "address" : "0x073bf41b6d55c8a83e6e6612cffcc014e64aa830",
+        "address" : "0xa6bff828f64d04ad58a029b75bce0556133941e6",
         "createdAt" : 1470525317195
       }
     },
@@ -155,7 +128,7 @@
         "userId" : "-KLwWedxw2DHDhTdTK9-"
       },
       "wallet" : {
-        "address" : "0xc1b1d16194932f38c16c340e1cb56acedc9666da",
+        "address" : "0xb361ff1d4acc8583177735dae9d00e555c57607e",
         "createdAt" : 1470525317195
       }
     }

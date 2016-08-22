@@ -24,11 +24,9 @@ export class WalletModel {
     return new Promise((resolve, reject) => {
       scryptAsync(seed, salt, this.ScryptParallelization_p, this.ScryptBlocksize_r, this.ScryptOutputSize, (seed) => {
         let hashedSeed = ethUtil.sha3(seed);
-
         for (var i = 1; i <= this.BrainWalletRepetitions; i++) {
           hashedSeed = ethUtil.sha3(hashedSeed);
         }
-
         resolve(ethWallet.fromPrivateKey(hashedSeed));
       })
     });
@@ -87,7 +85,7 @@ export class WalletModel {
     let ethUtil = require('ethereumjs-util');
     let ethTx = require('ethereumjs-tx');
 
-    var rawTx = {
+    let rawTx: any = {
       nonce: self.connection().toHex(Date.now()),
       gasPrice: self.connection().toHex(self.connection().eth.gasPrice),
       gasLimit: self.connection().toHex(50000),
@@ -103,12 +101,13 @@ export class WalletModel {
     let serializedTx = tx.serialize().toString('hex');
 
     return new Promise<boolean>((resolve, reject) => {
-      self.connection().eth.sendRawTransaction(serializedTx, (error: any) => {
+      self.connection().eth.sendRawTransaction(serializedTx, (error: any, hash: string) => {
         if (error) {
           log.error(error);
           reject(error);
         } else {
-          resolve();
+          rawTx.hash = hash;
+          resolve(rawTx);
         }
       })
     });
