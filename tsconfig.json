@@ -10,7 +10,8 @@
     "!node_modules/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "app/config"
   ],
   "compileOnSave": false,
   "atom": {
