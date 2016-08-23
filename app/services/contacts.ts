@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core'
 import {Platform, Alert} from 'ionic-angular';
 import {Contacts} from 'ionic-native';
 import {FakeContactsSource} from '../models/fake-contacts-source';
@@ -17,10 +17,23 @@ export class ContactsService {
   countryCode: string;
   currentUserId: string;
   currentUserPhone: string;
-  loaded: boolean = false;
   contactGroups: any;
+  contactsLoadedEmitter = new EventEmitter();
 
   constructor(private platform: Platform) {
+  }
+
+  getContacts(): Promise<ContactGroups> {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      if (self.contactGroups) {
+        resolve(self.contactGroups);
+      } else {
+        self.contactsLoadedEmitter.subscribe((data) => {
+          resolve(self.contactGroups);
+        })
+      }
+    });
   }
 
   generateContactGroups(contacts: ContactModel[]): Promise<ContactGroups> {
@@ -36,29 +49,22 @@ export class ContactsService {
     });
   }
 
-  load(countryCode: string, currentUserId: string, currentUserPhone: string): Promise<ContactGroups> {
+  loadContacts(countryCode: string, currentUserId: string, currentUserPhone: string) {
     let self = this;
-    if (self.loaded) {
-      return new Promise((resolve, reject) => {
-        resolve(self.contactGroups);
-      });
-    };
-
     self.countryCode = countryCode;
     self.currentUserId = currentUserId;
     self.currentUserPhone = currentUserPhone;
-    return new Promise((resolve, reject) => {
-      self.retrieveContactsFromDevice().then((contacts: ContactModel[]) => {
-        return self.retrieveUserInfo(contacts);
-      }).then((contactsWithUserInfo: ContactModel[]) => {
-        return self.generateContactGroups(contactsWithUserInfo);
-      }).then((contactGroups: ContactGroups) => {
-        self.contactGroups = contactGroups;
-        self.loaded = true;
-        resolve(self.contactGroups);
-      }, (error) => {
-        reject(error);
-      });
+    self.retrieveContactsFromDevice().then((contacts: ContactModel[]) => {
+      return self.retrieveUserInfo(contacts);
+    }).then((contactsWithUserInfo: ContactModel[]) => {
+      return self.generateContactGroups(contactsWithUserInfo);
+    }).then((contactGroups: ContactGroups) => {
+      self.contactGroups = contactGroups;
+      self.contactsLoadedEmitter.emit({});
+    }, (error) => {
+      log.warn(`unable to load contacts: ${error}`);
+      self.contactGroups = {};
+      self.contactsLoadedEmitter.emit({});
     });
   }
 

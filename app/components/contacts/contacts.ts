@@ -49,10 +49,11 @@ export class ContactsComponent {
       return "Chat";
     }
   }
+
   ngOnInit() {
     let self = this;
     this.memberActionLabel = this.determineMemberActionLabel();
-    self.contactsService.load(self.auth.countryCode, self.auth.currentUserId, self.auth.currentUser.phone).then((contactGroups: any) => {
+    self.contactsService.getContacts().then((contactGroups:any) => {
       let contacts = self.goal == "invite" ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
       self.paginatedContacts = _.chunk(contacts, self.PAGE_SIZE);
       self.numberOfPages = self.paginatedContacts.length;

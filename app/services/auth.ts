@@ -37,7 +37,7 @@ export class AuthService {
             if (_.trim((self.countryCode || "")) == "") {
               log.warn("country code not defined for this user");
             }
-            self.contactsService.load(self.countryCode, self.currentUserId, self.currentUser.phone);
+            self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
           });
           if (currentUser.wallet && currentUser.wallet.address) {
             nav.setRoot(homePage);
@@ -45,7 +45,7 @@ export class AuthService {
             nav.setRoot(walletSetupPage);
           }
         });
-      } else {        
+      } else {
         // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
         self.currentUserId = undefined;
         self.currentUserRef = undefined;
