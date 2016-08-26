@@ -85,6 +85,5 @@
   <plugin name="cordova-plugin-facebook4" spec="~1.7.1">
     <variable name="APP_ID" value="146177489140384"/>
     <variable name="APP_NAME" value="UR Money"/>
-  </plugin>
-  <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
+  </plugin>  
 </widget>
