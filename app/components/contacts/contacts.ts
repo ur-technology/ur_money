@@ -50,7 +50,7 @@ export class ContactsComponent {
     }
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     let self = this;
     this.memberActionLabel = this.determineMemberActionLabel();
     self.contactsService.getContacts().then((contactGroups:any) => {

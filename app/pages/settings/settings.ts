@@ -99,7 +99,7 @@ export class SettingsPage {
 
   saveProfile() {
     let self = this;
-    self.auth.currentUserRef.update({
+    let profile ={
       firstName: self.profile.firstName,
       middleName: self.profile.middleName,
       lastName: self.profile.lastName,
@@ -107,7 +107,8 @@ export class SettingsPage {
       city: self.profile.city,
       stateName: self.profile.stateName,
       countryCode: self.profile.countryCode
-    }).then(() => {
+    };
+    self.auth.currentUserRef.update(_.omitBy(profile, _.isNil)).then(() => {
       self.auth.loadCurrentUser();
       let toast = this.toastCtrl.create({ message: 'Your profile has been updated', duration: 3000, position: 'bottom' });
       toast.present();
