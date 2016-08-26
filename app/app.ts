@@ -60,7 +60,7 @@ class UrMoney {
       { title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home' },
       { title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: "chat" }, icon: 'icon menu-icon menu-icon-chat' },
       { title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: "send" }, icon: 'icon menu-icon menu-icon-send-ur' },
-      { title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: "request" }, icon: 'icon menu-icon menu-icon-request-ur' },
+      // { title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: "request" }, icon: 'icon menu-icon menu-icon-request-ur' },
       { title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions' },
       { title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about' }
     ];
@@ -108,7 +108,7 @@ class UrMoney {
 
 ionicBootstrap(UrMoney, [disableDeprecatedForms(),
   provideForms()], {
-    mode: 'ios',    
+    mode: 'ios',
     platforms: {
       ios: {
         statusbarPadding: true
