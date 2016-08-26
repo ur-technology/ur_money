@@ -9,7 +9,7 @@
         </div>
 
         <div class="total-ur">
-            {{amount|number:'1.2-2'}}
+            {{urAmount(transactionTotal)}}
         </div>
         <p class="last-update">
             <ion-icon name="ios-clock-outline"></ion-icon> Last Updated : {{lastUpdated|timestamp}}
@@ -46,7 +46,7 @@
             <h2>{{transaction.name}} <span class="item-date-time">{{transaction.createdAt|dateAndTime}}</span></h2>
             <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">See More</a></span></p>
             <span class="icon trans-ur"
-                item-right>{{transaction.amount}}<br/>  UR</span>
+                item-right>{{urAmount(transaction.urTransaction.value)}}<br/>  UR</span>
         </ion-item>
     </div>
 

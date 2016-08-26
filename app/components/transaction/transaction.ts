@@ -1,6 +1,8 @@
 import { Component, Input, AfterViewInit , OnInit, OnChanges} from '@angular/core';
 import { NavController} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
+import {BigNumber} from 'bignumber.js'
+
 import {AuthService} from '../../services/auth';
 import * as _ from 'lodash';
 import {Timestamp}  from '../../pipes/timestamp';
@@ -18,7 +20,7 @@ export class TransactionComponent {
   showSpinner: boolean = false;
   transactionDataAll = [];
   transactionDataFiltered = [];
-  amount: number = 0;
+  transactionTotal: BigNumber = new BigNumber(0);
   lastUpdated: any;
   filterOption: string = 'all';
   @Input() transactionType: string;
@@ -32,21 +34,28 @@ export class TransactionComponent {
       let dateFromNowAppliedFilter = this._getDateFromNowAppliedFilter();
       return moment(transaction.createdAt).isAfter(dateFromNowAppliedFilter);
     });
-    this.amount = _.sumBy(this.transactionDataFiltered, transaction => {
-      return Number(transaction.amount);
+    this.transactionTotal = new BigNumber(0);
+    _.each(this.transactionDataFiltered, transaction => {
+      this.transactionTotal = this.transactionTotal.plus(transaction.urTransaction.value);
     });
     this.lastUpdated = this.transactionDataFiltered.length > 0 ? _.last(_.sortBy(this.transactionDataFiltered, 'createdAt')).createdAt : "";
   }
 
+  private urAmount(weiAmount: any) {
+    let amount = new BigNumber(weiAmount).dividedBy(1000000000000000000);
+    return amount.modulo(0.01) == new BigNumber(0) ? amount.toPrecision(2) : amount.toPrecision();
+  }
+
   private loadTransactionsByType() {
-    this.showSpinner = true;
-    firebase.database().ref(`/users/${this.auth.currentUserId}/transactions/`)
+    let self = this;
+    self.showSpinner = true;
+    firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/`)
       .orderByChild("type")
-      .equalTo(this.transactionType)
+      .equalTo(self.transactionType)
       .once("value", snapshot => {
-        this.showSpinner = false;
-        this.transactionDataAll = _.values(snapshot.val());
-        this.filterTransactions(this.filterOption);
+        self.showSpinner = false;
+        self.transactionDataAll = _.values(snapshot.val());
+        self.filterTransactions(self.filterOption);
       });
   }
 

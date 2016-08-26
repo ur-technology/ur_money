@@ -88,16 +88,13 @@ export class WalletModel {
     let rawTx: any = {
       nonce: self.connection().toHex(Date.now()),
       gasPrice: self.connection().toHex(self.connection().eth.gasPrice),
-      gasLimit: self.connection().toHex(50000),
+      gasLimit: self.connection().toHex(29000),
       to: (ethUtil.isHexPrefixed(to) ? ethUtil.toBuffer(to) : ethUtil.toBuffer('0x' + to)),
       from: this.getAddress(),
       value: ethUtil.toBuffer(parseInt(self.connection().toWei(amount))),
     };
-
     let tx = new ethTx(rawTx);
-
     tx.sign(this.getPrivate(false));
-
     let serializedTx = tx.serialize().toString('hex');
 
     return new Promise<boolean>((resolve, reject) => {
