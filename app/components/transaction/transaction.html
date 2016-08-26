@@ -9,7 +9,7 @@
         </div>
 
         <div class="total-ur">
-            {{urAmount(transactionTotal)}}
+            {{weiToURString(filteredTransactionsTotal)}}
         </div>
         <p class="last-update">
             <ion-icon name="ios-clock-outline"></ion-icon> Last Updated : {{lastUpdated|timestamp}}
@@ -30,13 +30,13 @@
 <div class="transaction-chat"
     *ngIf="!showSpinner">
     <div class="card"
-        *ngIf="transactionDataFiltered.length ===0">
+        *ngIf="filteredTransactions.length ===0">
         <ion-item class="item">
             <p style="text-align: center;">No transactions yet</p>
         </ion-item>
     </div>
     <div class="card"
-        *ngFor="let transaction of transactionDataFiltered">
+        *ngFor="let transaction of filteredTransactions">
 
         <ion-item class="item"
             text-wrap>
@@ -46,7 +46,7 @@
             <h2>{{transaction.name}} <span class="item-date-time">{{transaction.createdAt|dateAndTime}}</span></h2>
             <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">See More</a></span></p>
             <span class="icon trans-ur"
-                item-right>{{urAmount(transaction.urTransaction.value)}}<br/>  UR</span>
+                item-right>{{weiToURString(transaction.amount)}}<br/>  UR</span>
         </ion-item>
     </div>
 

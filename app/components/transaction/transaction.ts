@@ -5,6 +5,7 @@ import {BigNumber} from 'bignumber.js'
 
 import {AuthService} from '../../services/auth';
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as moment from 'moment';
 import { App } from 'ionic-angular';
@@ -18,9 +19,9 @@ import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 })
 export class TransactionComponent {
   showSpinner: boolean = false;
-  transactionDataAll = [];
-  transactionDataFiltered = [];
-  transactionTotal: BigNumber = new BigNumber(0);
+  transactions = [];
+  filteredTransactions = [];
+  filteredTransactionsTotal: BigNumber = new BigNumber(0);
   lastUpdated: any;
   filterOption: string = 'all';
   @Input() transactionType: string;
@@ -28,22 +29,36 @@ export class TransactionComponent {
   constructor(private auth: AuthService, private nav: NavController, private app: App) {
   }
 
-  filterTransactions(filterOption) {
-    this.filterOption = filterOption;
-    this.transactionDataFiltered = filterOption === "all" ? this.transactionDataAll : _.filter(this.transactionDataAll, (transaction: any) => {
-      let dateFromNowAppliedFilter = this._getDateFromNowAppliedFilter();
-      return moment(transaction.createdAt).isAfter(dateFromNowAppliedFilter);
+  filterTransactions(newFilterOption?) {
+    if (newFilterOption) {
+      this.filterOption = newFilterOption;
+    }
+    this.filteredTransactions = this.filterOption === "all" ? this.transactions : _.filter(this.transactions, (transaction: any) => {
+      return moment(transaction.updatedAt).isAfter(this.startTime());
     });
-    this.transactionTotal = new BigNumber(0);
-    _.each(this.transactionDataFiltered, transaction => {
-      this.transactionTotal = this.transactionTotal.plus(transaction.urTransaction.value);
+    this.filteredTransactionsTotal = new BigNumber(0);
+    _.each(this.filteredTransactions, transaction => {
+      this.filteredTransactionsTotal = this.filteredTransactionsTotal.plus(transaction.amount);
     });
-    this.lastUpdated = this.transactionDataFiltered.length > 0 ? _.last(_.sortBy(this.transactionDataFiltered, 'createdAt')).createdAt : "";
+    this.lastUpdated = this.filteredTransactions.length > 0 ? _.last(_.sortBy(this.filteredTransactions, 'updatedAt')).updatedAt : "";
   }
 
-  private urAmount(weiAmount: any) {
-    let amount = new BigNumber(weiAmount).dividedBy(1000000000000000000);
-    return amount.modulo(0.01) == new BigNumber(0) ? amount.toPrecision(2) : amount.toPrecision();
+  private weiToURString(amount: any): string {
+    let convertedAmount = (new BigNumber(amount)).dividedBy(1000000000000000000);
+    return convertedAmount.toFormat(2);
+  }
+
+  private isPrivilegedTransaction(transaction: any): boolean {
+    let privilegedAddresses = [
+      "0x5d32e21bf3594aa66c205fde8dbee3dc726bd61d",
+      "0x9194d1fa799d9feb9755aadc2aa28ba7904b0efd",
+      "0xab4b7eeb95b56bae3b2630525b4d9165f0cab172",
+      "0xea82e994a02fb137ffaca8051b24f8629b478423",
+      "0xb1626c3fc1662410d85d83553d395cabba148be1",
+      "0x65afd2c418a1005f678f9681f50595071e936d7c",
+      "0x49158a28df943acd20be7c8e758d8f4a9dc07d05"
+    ];
+    return _.includes(privilegedAddresses, transaction.urTransaction.from);
   }
 
   private loadTransactionsByType() {
@@ -54,8 +69,8 @@ export class TransactionComponent {
       .equalTo(self.transactionType)
       .once("value", snapshot => {
         self.showSpinner = false;
-        self.transactionDataAll = _.values(snapshot.val());
-        self.filterTransactions(self.filterOption);
+        self.transactions = _.values(snapshot.val());
+        self.filterTransactions();
       });
   }
 
@@ -63,22 +78,22 @@ export class TransactionComponent {
     this.loadTransactionsByType();
   }
 
-  private _getDateFromNowAppliedFilter() {
-    let todayWithDayStartTime: any = moment('0', 'HH');
+  private startTime() {
+    let startTimeValue: any = moment('0', 'HH');
     switch (this.filterOption) {
       case 'today':
         break;
       case '30':
-        todayWithDayStartTime.add(-30, 'days');
+        startTimeValue.add(-30, 'days');
         break;
       case '60':
-        todayWithDayStartTime.add(-60, 'days')
+        startTimeValue.add(-60, 'days')
         break;
       case 'all':
       default:
         return;
     }
-    return todayWithDayStartTime;
+    return startTimeValue;
   }
 
   invite() {
