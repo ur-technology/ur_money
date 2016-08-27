@@ -15,6 +15,7 @@ import {LocalNotifications} from 'ionic-native';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {UserModel} from '../../models/user';
+import {BigNumber} from 'bignumber.js'
 
 declare var jQuery: any;
 
@@ -125,5 +126,9 @@ export class HomePage {
 
   invite() {
     this.nav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
+  }
+
+  formatUR(amount: number): string {
+    return (new BigNumber(amount || 0)).toFormat(2);
   }
 }

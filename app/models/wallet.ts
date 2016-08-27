@@ -84,21 +84,25 @@ export class WalletModel {
     let self = this;
     let ethUtil = require('ethereumjs-util');
     let ethTx = require('ethereumjs-tx');
+    let eth = self.connection().eth;
+    let toHex = self.connection().toHex;
 
     let rawTx: any = {
-      nonce: self.connection().toHex(Date.now()),
-      gasPrice: self.connection().toHex(self.connection().eth.gasPrice),
-      gasLimit: self.connection().toHex(29000),
-      to: (ethUtil.isHexPrefixed(to) ? ethUtil.toBuffer(to) : ethUtil.toBuffer('0x' + to)),
-      from: this.getAddress(),
-      value: ethUtil.toBuffer(parseInt(self.connection().toWei(amount))),
+      nonce: toHex(new Date().now()),
+      gasPrice: toHex(eth.gasPrice),
+      gasLimit: toHex(29000),
+      to: to,
+      from: self.getAddress(),
+      value: self.connection().toWei(amount)
     };
+    rawTx.gas = eth.estimateGas(rawTx);
+
     let tx = new ethTx(rawTx);
-    tx.sign(this.getPrivate(false));
+    tx.sign(self.getPrivate(false));
     let serializedTx = tx.serialize().toString('hex');
 
     return new Promise<boolean>((resolve, reject) => {
-      self.connection().eth.sendRawTransaction(serializedTx, (error: any, hash: string) => {
+      eth.sendRawTransaction(serializedTx, (error: any, hash: string) => {
         if (error) {
           log.error(error);
           reject(error);
