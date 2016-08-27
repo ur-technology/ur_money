@@ -88,7 +88,7 @@ export class WalletModel {
     let toHex = self.connection().toHex;
 
     let rawTx: any = {
-      nonce: toHex(new Date().now()),
+      nonce: toHex(Date.now()),
       gasPrice: toHex(eth.gasPrice),
       gasLimit: toHex(29000),
       to: to,
