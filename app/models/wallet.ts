@@ -39,6 +39,25 @@ export class WalletModel {
     return Math.max(balance - gasPrice * this.GasLimit, 0);
   }
 
+  public static availableBalanceAsync(address): Promise<any> {
+  return new Promise((resolve, reject) => {
+    this.connection().eth.getBalance(address, (error, balanceInWei) => {
+      if (error) {
+        log.error(error);
+        reject(error);
+      } else {
+        let balance = this.connection().fromWei(parseFloat(balanceInWei));
+        this.connection().fromWei(this.connection().eth.getGasPrice((error, result) => {
+          let gasPrice = this.connection().fromWei(result);
+          let availableBalance = Math.max(balance - gasPrice * this.GasLimit, 0);
+          resolve(availableBalance);
+        }));
+      }
+    });
+  });
+}
+
+
   public static validateAmount(address: string, amount: number) {
     return amount > 0 && amount <= this.availableBalance(address);
   }

@@ -36,7 +36,10 @@ export class SendPage {
   }
 
   ngOnInit() {
-    this.balance = WalletModel.availableBalance(this.authService.currentUser.wallet.address);
+    WalletModel.availableBalanceAsync(this.authService.currentUser.wallet.address)
+      .then(availableBalance => {
+        this.balance = availableBalance;
+      });
   }
 
   sendUR() {
@@ -53,7 +56,7 @@ export class SendPage {
         urTransaction: urTransaction
       });
     }).then(() => {
-      let toast  = self.toastCtrl.create({message: 'Your UR has been sent!', duration: 3000, position: 'bottom'});
+      let toast = self.toastCtrl.create({ message: 'Your UR has been sent!', duration: 3000, position: 'bottom' });
       toast.present();
       this.nav.setRoot(HomePage);
     }, (error: any) => {
@@ -79,7 +82,7 @@ export class SendPage {
             text: 'Cancel',
             role: 'cancel',
             handler: data => {
-              reject({logMessage: "cancel clicked"});
+              reject({ logMessage: "cancel clicked" });
             }
           },
           {
@@ -92,7 +95,7 @@ export class SendPage {
                   if (self.wallet.getAddress() == self.authService.currentUser.wallet.address) {
                     resolve();
                   } else {
-                    reject({displayMessage: "The secret phrase you entered was not correct."});
+                    reject({ displayMessage: "The secret phrase you entered was not correct." });
                   }
                 }, (error) => {
                   reject({
@@ -124,7 +127,7 @@ export class SendPage {
             text: 'Cancel',
             role: 'cancel',
             handler: data => {
-              reject({logMessage: "cancel clicked"});
+              reject({ logMessage: "cancel clicked" });
             }
           },
           {
