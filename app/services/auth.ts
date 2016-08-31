@@ -21,7 +21,7 @@ export class AuthService {
     this.androidPlatform = this.platform.is('android');
   }
 
-  respondToAuth(nav: Nav, welcomePage: any, walletSetupPage: any, homePage: any, chatPage) {
+  respondToAuth(nav: Nav, welcomePage: any, verificationStartPage: any, verificationPendingPage: any, walletSetupPage: any, homePage: any, chatPage) {
     let self = this;
     firebase.auth().onAuthStateChanged((authData) => {
       if (authData) {
@@ -39,10 +39,16 @@ export class AuthService {
             }
             self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
           });
-          if (currentUser.wallet && currentUser.wallet.address) {
-            nav.setRoot(homePage);
+          if (currentUser.identityVerifiedAt) {
+            if (currentUser.wallet && currentUser.wallet.address) {
+              nav.setRoot(homePage);
+            } else {
+              nav.setRoot(walletSetupPage);
+            }
+          } else if (currentUser.identityVerificationRequestedAt) {
+            nav.setRoot(verificationPendingPage);
           } else {
-            nav.setRoot(walletSetupPage);
+            nav.setRoot(verificationStartPage);
           }
         });
       } else {

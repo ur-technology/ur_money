@@ -57,8 +57,8 @@ export class SettingsPage {
       city: authUser.city,
       country: this.countries.find((x) => { return x.alpha2 == (authUser.countryCode || "US"); })
     };
-    let defautStateName = (authUser.countryCode == this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
-    this.countrySelected(defautStateName);
+    let defaultStateName = (authUser.countryCode == this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
+    this.countrySelected(defaultStateName);
   }
 
   countrySelected(defaultStateName) {

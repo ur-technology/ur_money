@@ -21,10 +21,9 @@ export class UserModel extends FirebaseModel {
   memberId: number;
   phone: string;
   profilePhotoUrl: string;
-  signedUpAt: number;
   smsMessages: any;
   stateName: string;
-  verifiedAt: number;
+  identityVerifiedAt: number;
   wallet: any;
   pending: boolean;
 

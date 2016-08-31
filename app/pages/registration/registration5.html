@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Identification Document</ion-title>
+        <button clear class="right" [disabled]="!mainForm.valid" (click)="submit()">
+            Done
+        </button>
+    </ion-navbar>
+</ion-header>
+<ion-content padding class="registration registration4">
+  {{ mainForm._errors}}
+    <form [formGroup]="mainForm">
+      <ion-item-group>
+        <ion-item>
+            <ion-select [(ngModel)]="verification.PersonInfo.Gender" formControlName="gender">
+                <ion-option [value]="s.value" *ngFor="let s of genders">{{s.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" [(ngModel)]="verification.PersonInfo.DayOfBirth" formControlName="dayOfBirth" placeholder="Birth Day"></ion-input>
+            <ion-input type="text" [(ngModel)]="verification.PersonInfo.MonthOfBirth" formControlName="monthOfBirth" placeholder="Birth Month"></ion-input>
+            <ion-input type="text" [(ngModel)]="verification.PersonInfo.YearOfBirth" formControlName="yearOfBirth" placeholder="Birth Year"></ion-input>
+        </ion-item>
+      </ion-item-group>
+      <ion-item-group>
+        <ion-item>
+          <ion-select [(ngModel)]="identificationType" formControlName="identificationType" (ionChange)="identificationTypeSelected()">
+              <ion-option [value]="t.value" *ngFor="let t of identificationTypes">{{t.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-item-group>
+
+        <ion-item-group *ngIf="identificationType == 'Driver License'">
+          <ion-item>
+              <ion-select [(ngModel)]="verification.DriverLicense.State" formControlName="driverLicenseState" (ionChange)="driverLicenseStateSelected()">
+                  <ion-option [value]="s" *ngFor="let s of driverLicenseStates">{{s}}</ion-option>
+              </ion-select>
+          </ion-item>
+          <ion-item>
+              <ion-input type="text" [(ngModel)]="verification.DriverLicense.Number" formControlName="driverLicenseNumber" placeholder="Drive License Number"></ion-input>
+          </ion-item>
+        </ion-item-group>
+
+        <ion-item-group *ngIf="identificationType == 'National Id'">
+          <ion-item>
+              <ion-input type="text" [(ngModel)]="verification.NationalId.Number" formControlName="nationalIdNumber" placeholder="Please enter {{nationalIdPlaceholder()}}"></ion-input>
+          </ion-item>
+        </ion-item-group>
+
+        <ion-item-group *ngIf="identificationType == 'Passport'">
+          <ion-item>
+              <ion-input type="text" [(ngModel)]="verification.Passport.Mrz1" formControlName="passportMrz1" placeholder="Machine Readable Info - Line 1"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-input type="text" [(ngModel)]="verification.Passport.Mrz2" formControlName="passportMrz2" placeholder="Machine Readable Info - Line 2"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-input type="text" [(ngModel)]="verification.Passport.Number" formControlName="passportNumber" placeholder="Passport Number"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-input type="text" [(ngModel)]="verification.Passport.DayOfExpiry" formControlName="passportDayOfExpiry" placeholder="Expiration Day"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.Passport.MonthOfExpiry" formControlName="passportMonthOfExpiry" placeholder="Expiration Month"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.Passport.YearOfExpiry" formControlName="passportYearOfExpiry" placeholder="Expiration Year"></ion-input>
+          </ion-item>
+        </ion-item-group>
+    </form>
+</ion-content>

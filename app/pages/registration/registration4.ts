@@ -13,6 +13,7 @@ import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 
+import {Registration5Page} from './registration5';
 import {HomePage} from '../home/home';
 
 declare var jQuery: any;
@@ -25,12 +26,13 @@ export class Registration4Page {
   mainForm: FormGroup;
   errorMessage: string;
   countries: any[];
+  country: any;
   allStates: any[];
   states: any[];
+  state: any;
   profile: any;
   constructor(
     public nav: NavController,
-    // public formBuilder: FormGroup,
     public auth: AuthService,
     public loadingModal: LoadingModalComponent,
     public deviceIdentityService: DeviceIdentityService,
@@ -45,138 +47,52 @@ export class Registration4Page {
       return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) == -1;
     });
     this.allStates = require('provinces');
-    this.mainForm = new FormGroup({
+    let formElements: any = {
       firstName: new FormControl("", CustomValidator.nameValidator),
       middleName: new FormControl("", CustomValidator.optionalNameValidator),
       lastName: new FormControl("", CustomValidator.nameValidator),
-      stateName: new FormControl("", CustomValidator.nameValidator),
+      address: new FormControl("", CustomValidator.nameValidator),
       city: new FormControl("", CustomValidator.nameValidator),
-      secretPhrase: new FormControl("", CustomValidator.secretPhraseValidator),
-      secretPhraseConfirmation: new FormControl("", Validators.required)
-    });
-
-    this.mainForm.setValidators(CustomValidator.matchingSecretPhrases('secretPhrase', 'secretPhraseConfirmation'));
-
-    let currentUser = this.auth.currentUser;
-    this.profile = {
-      secretPhrase: '',
-      secretPhraseConfirmation: '',
-      firstName: currentUser.firstName || "",
-      middleName: currentUser.middleName || "",
-      lastName: currentUser.lastName || "",
-      city: currentUser.city,
-      country: this.countries.find((x) => { return x.alpha2 == (currentUser.countryCode || "US"); })
+      stateName: new FormControl("", CustomValidator.nameValidator),
+      postalCode: new FormControl("", CustomValidator.nameValidator)
     };
-    let defautStateName = (currentUser.countryCode == this.profile.country.alpha2 && currentUser.stateName) ? currentUser.stateName : undefined;
-    this.countrySelected(defautStateName);
+    this.mainForm = new FormGroup(formElements);
+    this.profile = _.pick(this.auth.currentUser, ['firstName', 'middleName', 'lastName', 'address', 'city', 'postalCode']);
+    this.country = this.countries.find((x) => { return x.alpha2 == (this.auth.currentUser.countryCode || "US"); });
+    this.countrySelected(this.auth.currentUser.stateCode, this.auth.currentUser.stateName);
   }
 
-  countrySelected(defaultStateName) {
-    this.profile.countryCode = this.profile.country.alpha2;
-    this.states = _.filter(this.allStates, (state) => { return state.country == this.profile.country.alpha2; });
+  countrySelected(initialStateCode?: string, initialStateName?: string) {
+    this.profile.countryCode = this.country.alpha2;
+    this.states = _.filter(this.allStates, (state) => { return state.country == this.profile.countryCode; });
     if (this.states.length > 0) {
-      this.profile.state = (defaultStateName && this.states.find((x) => { return x.name == defaultStateName; })) || this.states[0];
+      this.state = (initialStateCode && this.states.find((x) => { return x.short == initialStateCode; })) || this.states[0];
+      delete this.profile.stateName;
       this.stateSelected();
     } else {
-      this.profile.state = undefined;
-      this.profile.stateName = defaultStateName;
-      this.mainForm.value.stateName = this.profile.stateName;
+      this.state = undefined;
+      delete this.profile.stateCode;
+      this.profile.stateName = initialStateName || '';
     }
-  }
-  stateSelected() {
-    this.profile.stateName = this.profile.state ? this.profile.state.name : '';
+    this.mainForm.value.stateName = this.profile.stateName || '';
   }
 
-  suggestSecretPhrase() {
-    var secureRandword = require('secure-randword');
-    this.profile.secretPhrase = secureRandword(5).join(' ');;
-    this.mainForm.controls['secretPhrase'].markAsDirty();
+  stateSelected() {
+    this.profile.stateCode = this.state.short;
   }
 
   submit() {
-    let alert = this.alertCtrl.create({
-      title: 'IMPORTANT! Write down your passphrase',
-      message: "Write this five word paraphrase down and store it someplace safe. UR Capital does not store your pass phrase and will NOT be able to recover it if it is lost or forgotten.",
-      //" If you lose your passphrase, you will not be able to access your money ever again. ?',
-      buttons: [
-        { text: 'Cancel', handler: () => { alert.dismiss(); } },
-        {
-          text: 'OK', handler: () => {
-            alert.dismiss().then(() => {
-              this.confirmSecretPhraseWrittenDown();
-            });
-          }
-        }
-      ]
+    let newValues = _.merge(this.profile, {
+      name: UserModel.fullName(this.profile),
+      deviceIdentity: this.deviceIdentityService.deviceIdentity,
     });
-
-    alert.present();
-  }
-
-  confirmSecretPhraseWrittenDown() {
-    let alert = this.alertCtrl.create({
-      title: "Confirm you wrote down your passphrase",
-      message: "If you lose your passphrase, you will not be able to access your money ever again. Did you write down your passphrase?",
-      buttons: [
-        { text: 'No', handler: () => { alert.dismiss(); } },
-        {
-          text: 'Yes', handler: () => {
-            alert.dismiss().then(() => {
-              this.generateAddress();
-            });
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-
-  generateAddress() {
-    let self = this;
-    self.loadingModal.show();
-    WalletModel.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
-      let wallet: WalletModel = new WalletModel(walletData);
-      self.profile.address = wallet.getAddress();
-      self.saveProfile();
+    this.auth.currentUserRef.update(newValues).then(() => {
+      _.merge(this.auth.currentUser, newValues);
+      this.loadingModal.hide();
+      this.nav.setRoot(Registration5Page);
     }).catch((error) => {
-      self.loadingModal.hide();
-      log.warn('unable to get address!');
-    });
-  }
-
-  saveProfile() {
-    let self = this;
-    let attrs = {
-      firstName: self.profile.firstName,
-      middleName: self.profile.middleName,
-      lastName: self.profile.lastName,
-      name: UserModel.fullName(self.profile),
-      city: self.profile.city,
-      stateName: self.profile.stateName,
-      countryCode: self.profile.countryCode,
-      deviceIdentity: self.deviceIdentityService.deviceIdentity,
-      wallet: {
-        address: self.profile.address,
-        createdAt: firebase.database.ServerValue.TIMESTAMP
-      },
-      signedUpAt: undefined
-    };
-    if (!self.auth.currentUser.signedUpAt) {
-      attrs.signedUpAt = firebase.database.ServerValue.TIMESTAMP
-    }
-    let strippedAttrs = _.omitBy(attrs, _.isNil);
-    self.auth.currentUserRef.update(strippedAttrs).then(() => {
-      self.loadingModal.hide();
-      let toast = this.toastCtrl.create({
-        message: 'Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!',
-        duration: 5000,
-        position: 'bottom'
-      });
-      toast.present();
-      self.nav.setRoot(HomePage);
-    }).catch((error) => {
-      self.loadingModal.hide();
-      log.warn('unable to save profile and wallet info');
+      this.loadingModal.hide();
+      log.warn('unable to save address info');
     });
   };
 }

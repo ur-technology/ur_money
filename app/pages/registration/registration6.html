@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Wallet Setup Page</ion-title>
+        <button clear
+            class="right"
+            [disabled]="!mainForm.valid"
+            (click)="submit()">
+            Done
+        </button>
+    </ion-navbar>
+</ion-header>
+<ion-content padding
+    class="registration registration4">
+    <form [formGroup]="mainForm">
+      <ion-item>
+          <button type="text"
+              secondary
+              (click)="suggestSecretPhrase()">
+              Suggest Secret Phrase
+          </button>
+      </ion-item>
+      <ion-item>
+          <ion-input type="text"
+              [(ngModel)]="profile.secretPhrase"
+              formControlName="secretPhrase"
+              [(ngModel)]="secretPhrase"
+              placeholder="Please enter at least 5 secret words"></ion-input>
+      </ion-item>
+    </form>
+</ion-content>

@@ -45,8 +45,14 @@ export class CustomValidator {
     }
   }
 
+  static conditionalNameValidator(control) {
+    if (control.controlEnabled && control.controlEnabled() && _.isString(control.value) && !control.value.match(/\w+/)) {
+      return { 'invalidName': true };
+    }
+  }
+
   static optionalNameValidator(control) {
-    if (control && !control.value.match(/^\s*$|\w+/)) {
+    if (control && control.value && !control.value.match(/^\s*$|\w+/)) {
       return { 'invalidName': true };
     }
   }
