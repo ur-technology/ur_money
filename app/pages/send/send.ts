@@ -76,7 +76,7 @@ export class SendPage {
       let prompt = self.alertCtrl.create({
         title: 'Secret phrase',
         message: "Please enter your account's secret phrase",
-        inputs: [{ name: 'secretPhrase', placeholder: 'Secret Phrase' }],
+        inputs: [{ name: 'secretPhrase', placeholder: 'Secret Phrase'}], // value: "apple apple apple apple apple"
         buttons: [
           {
             text: 'Cancel',
