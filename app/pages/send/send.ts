@@ -9,6 +9,8 @@ import {WalletModel} from '../../models/wallet';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 
+declare var jQuery: any;
+
 @Page({
   templateUrl: 'build/pages/send/send.html',
 })
@@ -103,7 +105,11 @@ export class SendPage {
           }
         ]
       });
-      prompt.present();
+      prompt.present().then(() => {
+        let alertInput = jQuery("input.alert-input");
+        alertInput.attr("autocapitalize", "off");
+        alertInput.attr("autocorrect", "off");
+      });
     });
   }
 

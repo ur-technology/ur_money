@@ -73,7 +73,11 @@ export class Registration6Page {
         }
       ]
     });
-    prompt.present();
+    prompt.present().then(() => {
+      let alertInput = jQuery("input.alert-input");
+      alertInput.attr("autocapitalize", "off");
+      alertInput.attr("autocorrect", "off");
+    });
   }
 
   confirmSecretPhraseWrittenDown() {
