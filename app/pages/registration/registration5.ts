@@ -46,10 +46,12 @@ export class Registration5Page {
       { name: 'Female', value: 'F' }
     ];
     this.identificationTypes = [
-      { name: 'Driver License', value: 'Driver License' },
       { name: this.nationalIdPlaceholder(), value: 'National Id' },
       { name: 'Passport', value: 'Passport' }
     ];
+    if (_.includes(["US", "AU", "NZ"], this.auth.currentUser.countryCode)) {
+      this.identificationTypes.unshift({ name: 'Driver License', value: 'Driver License' });
+    }
 
     let allStates: any[] = require('provinces');
     let states = _.filter(allStates, (state) => { return state.country == this.auth.currentUser.countryCode; });
@@ -57,12 +59,7 @@ export class Registration5Page {
     this.driverLicenseStates = _.map(states, (state) => { return state.name; });
 
     let user = this.auth.currentUser;
-    this.identificationType = 'Driver License';
-    if(this.auth.currentUser.countryCode=="MX")
-    {
-      this.identificationTypes.shift();
-      this.identificationType = 'National Id';
-    }
+    this.identificationType = this.identificationTypes[0].value;
 
     this.verification = {
       "PersonInfo": {
