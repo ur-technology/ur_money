@@ -49,7 +49,7 @@ export class Registration6Page {
 
   submit() {
     let prompt = this.alertCtrl.create({
-      title: 'Cnfirm secret phrase',
+      title: 'Confirm secret phrase',
       message: "Please re-enter your secret phrase",
       inputs: [{ name: 'secretPhrase', placeholder: 'Secret Phrase' }],
       buttons: [
@@ -63,12 +63,14 @@ export class Registration6Page {
         {
           text: 'Continue',
           handler: data => {
-            let secretPhrase = data.secretPhrase;
-            if (data.secretPhrase == this.profile.secretPhrase) {
-              this.confirmSecretPhraseWrittenDown();
-            } else {
-              // do nothing
-            }
+            prompt.dismiss().then(() => {
+              let secretPhrase = data.secretPhrase;
+              if (data.secretPhrase == this.profile.secretPhrase) {
+                this.confirmSecretPhraseWrittenDown();
+              } else {
+                // do nothing
+              }
+            });
           }
         }
       ]
@@ -89,7 +91,7 @@ export class Registration6Page {
         { text: 'Cancel', handler: () => { alert.dismiss(); } },
         {
           text: 'OK', handler: () => {
-            alert.dismiss().then(() => {
+            alert.dismiss().then(() => {              
               this.generateAddress();
             });
           }

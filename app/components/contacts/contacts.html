@@ -8,7 +8,7 @@
   </div>
   <ion-list class="contacts-list" *ngIf="displayableContacts">
 
-    <ion-item  detail-none *ngFor="let contact of displayableContacts" (click)="contactSelected(contact)">
+    <ion-item  detail-none *ngFor="let contact of displayableContacts" (click)="contactSelected(contact)" class="item item-avatar">
       <ion-avatar item-left> <ion-img [src]="contact.profilePhotoUrl"></ion-img></ion-avatar>
       <h2>{{contact.name}}</h2>
       <p>{{contact.formattedPhone}} <span>{{contact.phoneType}}</span></p>

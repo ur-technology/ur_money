@@ -1,4 +1,4 @@
-<ion-menu [content]="content" *ngIf="auth.currentUser">
+<ion-menu [content]="content" *ngIf="auth.currentUser && auth.currentUser.identityVerificationResult && auth.currentUser.identityVerificationResult.RecordStatus === 'match'">
 
   <ion-content class="ur-menu">
     <div class="menu-bar">

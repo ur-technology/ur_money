@@ -252,16 +252,47 @@
 }
 
 .events-list .item.item-avatar{
-    min-height: 55px;
+    min-height: 65px;
+    max-height: 65px;
     border-bottom: 1px solid #ddd;
     .item-inner {
         border-bottom: none;
     }
 }
 
-.events-list .item.item-avatar img {
-    max-width: 45px;
-    max-height: 45px;
+.chats-list .item.item-avatar{
+    min-height: 65px;
+    max-height: 65px;
+    border-bottom: 1px solid #ddd;
+    .item-inner {
+        border-bottom: none;
+    }
+}
+
+.contacts-list .item.item-avatar{
+    min-height: 65px;
+    max-height: 65px;
+    border-bottom: 1px solid #ddd;
+    .item-inner {
+        border-bottom: none;
+    }
+}
+
+.contacts-list .item.item-avatar ion-img {
+    max-width: 55px;
+    max-height: 55px;
+    border-radius: 50%;
+}
+
+.chats-list .item.item-avatar ion-img {
+    max-width: 55px;
+    max-height: 55px;
+    border-radius: 50%;
+}
+
+.events-list .item.item-avatar ion-img {
+    max-width: 55px;
+    max-height: 55px;
     border-radius: 50%;
 }
 

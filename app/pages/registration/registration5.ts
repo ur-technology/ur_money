@@ -50,6 +50,7 @@ export class Registration5Page {
       { name: this.nationalIdPlaceholder(), value: 'National Id' },
       { name: 'Passport', value: 'Passport' }
     ];
+
     let allStates: any[] = require('provinces');
     let states = _.filter(allStates, (state) => { return state.country == this.auth.currentUser.countryCode; });
     let userStateName = states.find((x) => { return x.short == this.auth.currentUser.stateCode; }).name;
@@ -57,6 +58,11 @@ export class Registration5Page {
 
     let user = this.auth.currentUser;
     this.identificationType = 'Driver License';
+    if(this.auth.currentUser.countryCode=="MX")
+    {
+      this.identificationTypes.shift();
+      this.identificationType = 'National Id';
+    }
 
     this.verification = {
       "PersonInfo": {
@@ -155,7 +161,6 @@ export class Registration5Page {
       task.Passport = this.verification.Passport;
     };
     task.userId = this.auth.currentUserId;
-
     let taskRef = firebase.database().ref(`/identityVerificationQueue/tasks/${this.auth.currentUserId}`);
     taskRef.set(task);
     let resultRef = taskRef.child('result');
@@ -174,6 +179,7 @@ export class Registration5Page {
       this.loadingModal.hide();
 
       if (result.RecordStatus == "match") {
+        this.auth.loadCurrentUser();
         this.nav.setRoot(Registration6Page);
       } else {
         this.nav.setRoot(Registration7Page);
@@ -200,7 +206,7 @@ export class Registration5Page {
     } else if (this.auth.currentUser.countryCode == 'CA') {
       return 'Social Insurance Number';
     } else if (this.auth.currentUser.countryCode == 'MX') {
-      return 'Número de Credecial de Elector';
+      return 'Número de Credencial de Elector';
     } else {
       return 'National Id Number';
     }

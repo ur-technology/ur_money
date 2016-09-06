@@ -36,6 +36,16 @@
 .dash-send-view {
   background: rgba(58, 173, 226, 1) url("../../img/img-bg.png") no-repeat 0 0;
 }
+.dash-send-view .item-avatar {
+  min-height: 52px;
+  max-height: 52px;
+}
+
+.dash-send-view .item-avatar ion-img {
+    max-width: 42px;
+    max-height: 42px;
+    border-radius: 50%;
+}
 .send-requestcont {
   margin-top: 5px;
   padding: 0 20px;
