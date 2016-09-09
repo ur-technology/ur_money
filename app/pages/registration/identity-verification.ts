@@ -159,6 +159,7 @@ export class IdentityVerificationPage {
       task.Passport = this.verification.Passport;
     };
     task.userId = this.auth.currentUserId;
+    task.wallet = this.auth.currentUser.wallet;
     let taskRef = firebase.database().ref(`/identityVerificationQueue/tasks/${this.auth.currentUserId}`);
     taskRef.set(task);
     let resultRef = taskRef.child('result');

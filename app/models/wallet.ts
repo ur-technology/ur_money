@@ -34,7 +34,7 @@ export class WalletModel {
   public static web3() {
     if (!this._web3) {
       let Web3 = require('web3');
-      this._web3 = new Web3(new Web3.providers.HttpProvider("http://45.55.7.79:9595"));
+      this._web3 = new Web3(new Web3.providers.HttpProvider("http://138.68.52.104:9595"));
     }
     return this._web3;
   }
