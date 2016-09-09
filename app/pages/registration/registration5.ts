@@ -55,8 +55,7 @@ export class Registration5Page {
 
     let allStates: any[] = require('provinces');
     let states = _.filter(allStates, (state) => { return state.country == this.auth.currentUser.countryCode; });
-    let userStateName = states.find((x) => { return x.short == this.auth.currentUser.stateCode; }).name;
-    this.driverLicenseStates = _.map(states, (state) => { return state.name; });
+    this.driverLicenseStates = _.map(states, (state) => { return state.name; });    
 
     let user = this.auth.currentUser;
     this.identificationType = this.identificationTypes[0].value;
@@ -85,7 +84,7 @@ export class Registration5Page {
       },
       "DriverLicense": {
         "Number": '',
-        "State": userStateName,
+        "State": this.auth.currentUser.stateName,
       },
       "NationalId": {
         "Number": '',
@@ -176,7 +175,7 @@ export class Registration5Page {
       this.loadingModal.hide();
 
       if (result.RecordStatus == "match") {
-        this.auth.loadCurrentUser();
+        this.auth.reloadCurrentUser();
         this.nav.setRoot(Registration6Page);
       } else {
         this.nav.setRoot(Registration7Page);

@@ -62,7 +62,7 @@ export class AuthService {
     });
   }
 
-  loadCurrentUser() {
+  reloadCurrentUser() {
     firebase.database().ref(`/users/${this.currentUserId}`).once('value', data => {
       this.currentUser = data.val();
     });

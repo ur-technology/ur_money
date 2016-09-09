@@ -109,7 +109,7 @@ export class SettingsPage {
       countryCode: self.profile.countryCode
     };
     self.auth.currentUserRef.update(_.omitBy(profile, _.isNil)).then(() => {
-      self.auth.loadCurrentUser();
+      self.auth.reloadCurrentUser();
       let toast = this.toastCtrl.create({ message: 'Your profile has been updated', duration: 3000, position: 'bottom' });
       toast.present();
       this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
