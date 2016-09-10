@@ -13,16 +13,16 @@ import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 
-import {Registration5Page} from './registration5';
+import {IdentityVerificationPage} from './identity-verification';
 import {HomePage} from '../home/home';
 
 declare var jQuery: any;
 
 @Page({
-  templateUrl: 'build/pages/registration/registration4.html',
+  templateUrl: 'build/pages/registration/profile-setup.html',
   directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective]
 })
-export class Registration4Page {
+export class ProfileSetupPage {
   mainForm: FormGroup;
   errorMessage: string;
   countries: any[];
@@ -101,7 +101,7 @@ export class Registration4Page {
     this.auth.currentUserRef.update(newValues).then(() => {
       _.merge(this.auth.currentUser, newValues);
       this.loadingModal.hide();
-      this.nav.setRoot(Registration5Page);
+      this.nav.setRoot(IdentityVerificationPage);
     }).catch((error) => {
       this.loadingModal.hide();
       log.warn('unable to save address info');

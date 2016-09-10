@@ -1,16 +1,16 @@
 import {Page, NavController, Platform} from 'ionic-angular';
 import {Type} from '@angular/core';
-import {Registration2Page} from './registration2';
+import {PhoneNumberPage} from './phone-number';
 import {DownloadPage} from '../download/download';
 
 @Page({
-  templateUrl: 'build/pages/registration/registration1.html'
+  templateUrl: 'build/pages/registration/welcome.html'
 })
-export class Registration1Page {
-  public registration2Page: Type;
+export class WelcomePage {
+  public phoneNumberPage: Type;
 
   constructor(public nav: NavController, private platform: Platform) {
-    this.registration2Page = Registration2Page;
+    this.phoneNumberPage = PhoneNumberPage;
   }
 
   goToPage(page) {

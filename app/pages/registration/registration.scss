@@ -17,7 +17,7 @@
   display: block;
 }
 
-.registration4 {
+.profile-setup {
   ion-select {
     width: default;
     padding-left: 5px;
@@ -48,22 +48,22 @@
 /*--------------------------------------------------
     Registration Screen / Verification Screen
 ----------------------------------------------------*/
-.registration4-page {
+.profile-setup-page {
   .right {
     float: right;
   }
 }
-.registration5-page {
+.identity-verification-page {
   .right {
     float: right;
   }
 }
-.registration6-page {
+.wallet-setup-page {
   .right {
     float: right;
   }
 }
-.registration2-page, .registration3-page {
+.phone-number-page, .verification-sms-code-page {
 
   ion-select {
     width: 0;

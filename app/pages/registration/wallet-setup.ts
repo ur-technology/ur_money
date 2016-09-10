@@ -1,5 +1,5 @@
 import {ViewChild, ElementRef, Inject} from '@angular/core';
-import {Page, NavController, Platform, AlertController, ToastController} from 'ionic-angular';
+import {Page, NavController, Platform, AlertController, ToastController, LoadingController} from 'ionic-angular';
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
 import {AngularFire} from 'angularfire2'
 import * as _ from 'lodash';
@@ -10,28 +10,26 @@ import {WalletModel} from '../../models/wallet';
 import {AuthService} from '../../services/auth';
 import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
-import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
-
 import {HomePage} from '../home/home';
 
 declare var jQuery: any;
 
 @Page({
-  templateUrl: 'build/pages/registration/registration6.html',
+  templateUrl: 'build/pages/registration/wallet-setup.html',
   directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective]
 })
-export class Registration6Page {
+export class WalletSetupPage {
   mainForm: FormGroup;
   errorMessage: string;
   profile: any;
+  loadingModal: any;
+
   constructor(
     public nav: NavController,
-    // public formBuilder: FormGroup,
     public auth: AuthService,
-    public loadingModal: LoadingModalComponent,
     public deviceIdentityService: DeviceIdentityService,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController, private loadingController: LoadingController
   ) {
     this.mainForm = new FormGroup({
       secretPhrase: new FormControl("", CustomValidator.secretPhraseValidator)
@@ -39,6 +37,10 @@ export class Registration6Page {
     this.profile = {
       secretPhrase: '',
     };
+    this.loadingModal = this.loadingController.create({
+      content: "Please wait...",
+      dismissOnPageChange: true
+    });
   }
 
   suggestSecretPhrase() {
@@ -91,7 +93,7 @@ export class Registration6Page {
         { text: 'Cancel', handler: () => { alert.dismiss(); } },
         {
           text: 'OK', handler: () => {
-            alert.dismiss().then(() => {              
+            alert.dismiss().then(() => {
               this.generateAddress();
             });
           }
@@ -103,13 +105,13 @@ export class Registration6Page {
 
   generateAddress() {
     let self = this;
-    self.loadingModal.show();
+    self.loadingModal.present();
     WalletModel.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
       let wallet: WalletModel = new WalletModel(walletData);
       self.profile.address = wallet.getAddress();
       self.saveWallet();
     }).catch((error) => {
-      self.loadingModal.hide();
+      self.loadingModal.dismiss();
       log.warn('unable to get address!');
     });
   }
@@ -122,15 +124,16 @@ export class Registration6Page {
         createdAt: firebase.database.ServerValue.TIMESTAMP
       }
     }).then(() => {
-      self.loadingModal.hide();
-      self.toastCtrl.create({
-        message: 'Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!',
-        duration: 5000,
-        position: 'bottom'
-      }).present();
-      self.nav.setRoot(HomePage);
+      self.loadingModal.dismiss().then(()=>{
+        self.toastCtrl.create({
+          message: 'Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!',
+          duration: 5000,
+          position: 'bottom'
+        }).present();
+        self.nav.setRoot(HomePage);
+      });
     }).catch((error) => {
-      self.loadingModal.hide();
+      self.loadingModal.dismiss();
       log.warn('unable to save profile and wallet info');
     });
   };

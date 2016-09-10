@@ -4,9 +4,9 @@ import {LoadingModalComponent} from '../../components/loading-modal/loading-moda
 import * as log from 'loglevel';
 
 @Page({
-  templateUrl: 'build/pages/registration/registration3.html'
+  templateUrl: 'build/pages/registration/verification-sms-code.html'
 })
-export class Registration3Page {
+export class VerificationSmsCodePage {
   verificationCode: string;
   errorMessage: string;
   phone: string;

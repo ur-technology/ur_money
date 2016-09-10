@@ -17,10 +17,10 @@ import {DeviceIdentityService} from './services/device-identity';
 import {EventsService} from './services/events';
 
 import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
-import {Registration1Page} from './pages/registration/registration1';
-import {Registration4Page} from './pages/registration/registration4';
-import {Registration6Page} from './pages/registration/registration6';
-import {Registration7Page} from './pages/registration/registration7';
+import {WelcomePage} from './pages/registration/welcome';
+import {ProfileSetupPage} from './pages/registration/profile-setup';
+import {WalletSetupPage} from './pages/registration/wallet-setup';
+import {VerificationPendingPage} from './pages/registration/verification-pending';
 import {HomePage} from './pages/home/home';
 import {ChatPage} from './pages/chat/chat';
 import {SendPage} from './pages/send/send';
@@ -81,7 +81,7 @@ class UrMoney {
         return;
       }
 
-      this.auth.respondToAuth(this.nav, Registration1Page, Registration4Page, Registration7Page, Registration6Page, HomePage, ChatPage);
+      this.auth.respondToAuth(this.nav, WelcomePage, ProfileSetupPage, VerificationPendingPage, WalletSetupPage, HomePage, ChatPage);
 
       log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
     });

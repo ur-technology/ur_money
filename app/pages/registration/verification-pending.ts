@@ -13,10 +13,10 @@ import {CustomValidator} from '../../validators/custom';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 
 @Page({
-  templateUrl: 'build/pages/registration/registration7.html',
+  templateUrl: 'build/pages/registration/verification-pending.html',
   directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective]
 })
-export class Registration7Page {
+export class VerificationPendingPage {
   constructor(
     public nav: NavController,
     public auth: AuthService

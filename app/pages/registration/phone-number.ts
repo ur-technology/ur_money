@@ -5,18 +5,18 @@ import * as _ from 'lodash';
 import * as log from 'loglevel';
 import {ControlGroup, AbstractControl} from '@angular/common';
 import {AuthService} from '../../services/auth';
-import {Registration3Page} from './registration3';
-import {CountryNotSupportedPage} from './countryNotSupportedPage';
+import {VerificationSmsCodePage} from './verification-sms-code';
+import {CountryNotSupportedPage} from './country-not-supported';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import {CountryListService} from '../../services/country-list';
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
 
 @Page({
-  templateUrl: 'build/pages/registration/registration2.html',
+  templateUrl: 'build/pages/registration/phone-number.html',
 
 })
-export class Registration2Page implements OnInit {
+export class PhoneNumberPage implements OnInit {
   elementRef: ElementRef;
   phoneForm: FormGroup;
   countries: any;
@@ -70,26 +70,26 @@ export class Registration2Page implements OnInit {
         {
           text: 'Yes',
           handler: () => {
-            let loading = this.loadingController.create({
-              content: "Please wait...",
-              dismissOnPageChange: true
-            });
             alert.dismiss().then(() => {
+              let loading = this.loadingController.create({
+                content: "Please wait...",
+                dismissOnPageChange: true
+              });
               loading.present();
-            });
-            this.auth.requestPhoneVerification(phone, this.selectedCountry.code).then((state: string) => {
-              setTimeout(() => {
-                loading.dismiss();
-              }, 100);
-              if (state === "code_generation_canceled_because_user_from_not_supported_country") {
-                this.nav.setRoot(CountryNotSupportedPage);
-              } else if (state === "code_generation_completed_and_sms_sent") {
-                this.nav.setRoot(Registration3Page, { phone: phone, countryCode: this.selectedCountry.code });
-              } else if (state === "code_generation_canceled_because_user_not_invited") {
-                this.showErrorAlert("Use of UR Money is currently available by invitation only, and your phone number was not on the invitee list.", phoneInput);
-              } else {
-                this.showErrorAlert("There was an unexpected problem sending the SMS. Please try again later", phoneInput);
-              }
+
+              this.auth.requestPhoneVerification(phone, this.selectedCountry.code).then((state: string) => {
+                loading.dismiss().then(() => {
+                  if (state === "code_generation_canceled_because_user_from_not_supported_country") {
+                    this.nav.setRoot(CountryNotSupportedPage);
+                  } else if (state === "code_generation_completed_and_sms_sent") {
+                    this.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: this.selectedCountry.code });
+                  } else if (state === "code_generation_canceled_because_user_not_invited") {
+                    this.showErrorAlert("Use of UR Money is currently available by invitation only, and your phone number was not on the invitee list.", phoneInput);
+                  } else {
+                    this.showErrorAlert("There was an unexpected problem sending the SMS. Please try again later", phoneInput);
+                  }
+                });
+              });
             });
           }
         }

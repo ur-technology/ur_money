@@ -21,9 +21,9 @@ export class AuthService {
     this.androidPlatform = this.platform.is('android');
   }
 
-  respondToAuth(nav: Nav, welcomePage: any, verificationStartPage: any, verificationPendingPage: any, walletSetupPage: any, homePage: any, chatPage) {
+  respondToAuth(nav: Nav, welcomePage: any, profileSetupPage: any, verificationPendingPage: any, walletSetupPage: any, homePage: any, chatPage) {
     let self = this;
-    firebase.auth().onAuthStateChanged((authData) => {      
+    firebase.auth().onAuthStateChanged((authData) => {
       if (authData) {
         self.currentUserId = authData.uid;
         self.currentUserRef = self.angularFire.database.object(`/users/${self.currentUserId}`);
@@ -48,7 +48,7 @@ export class AuthService {
           } else if (currentUser.identityVerificationRequestedAt) {
             nav.setRoot(verificationPendingPage);
           } else {
-            nav.setRoot(verificationStartPage);
+            nav.setRoot(profileSetupPage);
           }
         });
       } else {

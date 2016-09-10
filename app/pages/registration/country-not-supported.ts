@@ -13,7 +13,7 @@ import {CustomValidator} from '../../validators/custom';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 
 @Page({
-  templateUrl: 'build/pages/registration/countryNotSupportedPage.html',
+  templateUrl: 'build/pages/registration/country-not-supported.html',
 })
 export class CountryNotSupportedPage {
   constructor(

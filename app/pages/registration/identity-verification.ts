@@ -13,17 +13,17 @@ import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 
-import {Registration6Page} from './registration6';
-import {Registration7Page} from './registration7';
+import {WalletSetupPage} from './wallet-setup';
+import {VerificationPendingPage} from './verification-pending';
 import {HomePage} from '../home/home';
 
 declare var jQuery: any;
 
 @Page({
-  templateUrl: 'build/pages/registration/registration5.html',
+  templateUrl: 'build/pages/registration/identity-verification.html',
   directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective]
 })
-export class Registration5Page {
+export class IdentityVerificationPage {
   mainForm: FormGroup;
   errorMessage: string;
   verification: any;
@@ -55,7 +55,7 @@ export class Registration5Page {
 
     let allStates: any[] = require('provinces');
     let states = _.filter(allStates, (state) => { return state.country == this.auth.currentUser.countryCode; });
-    this.driverLicenseStates = _.map(states, (state) => { return state.name; });    
+    this.driverLicenseStates = _.map(states, (state) => { return state.name; });
 
     let user = this.auth.currentUser;
     this.identificationType = this.identificationTypes[0].value;
@@ -176,9 +176,9 @@ export class Registration5Page {
 
       if (result.RecordStatus == "match") {
         this.auth.reloadCurrentUser();
-        this.nav.setRoot(Registration6Page);
+        this.nav.setRoot(WalletSetupPage);
       } else {
-        this.nav.setRoot(Registration7Page);
+        this.nav.setRoot(VerificationPendingPage);
       }
     }, (error) => {
       this.loadingModal.hide();
