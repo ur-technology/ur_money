@@ -1,4 +1,4 @@
-import {Page, NavController, AlertController, Platform, Nav, Popover, LoadingController } from 'ionic-angular';
+import {Page, NavController, AlertController, Platform, Nav, Popover, LoadingController, ToastController } from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
@@ -6,6 +6,7 @@ import * as log from 'loglevel';
 import {ControlGroup, AbstractControl} from '@angular/common';
 import {AuthService} from '../../services/auth';
 import {Registration3Page} from './registration3';
+import {CountryNotSupportedPage} from './countryNotSupportedPage';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import {CountryListService} from '../../services/country-list';
 
@@ -21,7 +22,7 @@ export class Registration2Page implements OnInit {
   countries: any;
   selected: any;
   selectedCountry: any;
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public loadingModal: LoadingModalComponent, public countryListService: CountryListService, private alertCtrl: AlertController, private loadingController: LoadingController) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public loadingModal: LoadingModalComponent, public countryListService: CountryListService, private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController) {
     this.elementRef = elementRef;
     this.phoneForm = new FormGroup({
       phone: new FormControl('', (control) => {
@@ -53,6 +54,7 @@ export class Registration2Page implements OnInit {
     if (this.selectedCountry.isoCode && !corePhone.startsWith(this.selectedCountry.isoCode)) {
       extraIsoCode = this.selectedCountry.isoCode;
     }
+
     let phone = this.selectedCountry.code + extraIsoCode + corePhone
     let alert = this.alertCtrl.create({
       title: 'NUMBER CONFIRMATION',
@@ -75,14 +77,16 @@ export class Registration2Page implements OnInit {
             alert.dismiss().then(() => {
               loading.present();
             });
-            this.auth.requestPhoneVerification(phone).then((state: string) => {
+            this.auth.requestPhoneVerification(phone, this.selectedCountry.code).then((state: string) => {
               setTimeout(() => {
                 loading.dismiss();
-              }, 1000);
-              if (state == "code_generation_completed_and_sms_sent") {
-                this.nav.setRoot(Registration3Page, { phone: phone });
-              } else if (state == "code_generation_canceled_because_user_not_invited") {
-                this.showErrorAlert("Use of UR Money is currently available by invitation only, and you phone number was not on the invitee list.", phoneInput);
+              }, 100);
+              if (state === "code_generation_canceled_because_user_from_not_supported_country") {
+                this.nav.setRoot(CountryNotSupportedPage);
+              } else if (state === "code_generation_completed_and_sms_sent") {
+                this.nav.setRoot(Registration3Page, { phone: phone, countryCode: this.selectedCountry.code });
+              } else if (state === "code_generation_canceled_because_user_not_invited") {
+                this.showErrorAlert("Use of UR Money is currently available by invitation only, and your phone number was not on the invitee list.", phoneInput);
               } else {
                 this.showErrorAlert("There was an unexpected problem sending the SMS. Please try again later", phoneInput);
               }
@@ -96,22 +100,11 @@ export class Registration2Page implements OnInit {
   }
 
   showErrorAlert(message, phoneInput) {
-    // TODO: change this to toast message
-    let alert = this.alertCtrl.create({
-      title: "There was a problem...",
-      message: message,
-      buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            alert.dismiss().then(() => {
-              phoneInput.setFocus();
-            })
-          }
-        }
-      ]
+    let toast = this.toastCtrl.create({
+      message: message, duration: 9000, position: 'bottom'
     });
-    alert.present();
+    toast.present();
+    phoneInput.setFocus();
   }
 
   countrySelect(country) {

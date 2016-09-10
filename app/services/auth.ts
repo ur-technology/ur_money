@@ -23,7 +23,7 @@ export class AuthService {
 
   respondToAuth(nav: Nav, welcomePage: any, verificationStartPage: any, verificationPendingPage: any, walletSetupPage: any, homePage: any, chatPage) {
     let self = this;
-    firebase.auth().onAuthStateChanged((authData) => {
+    firebase.auth().onAuthStateChanged((authData) => {      
       if (authData) {
         self.currentUserId = authData.uid;
         self.currentUserRef = self.angularFire.database.object(`/users/${self.currentUserId}`);
@@ -68,10 +68,10 @@ export class AuthService {
     });
   }
 
-  requestPhoneVerification(phone: string) {
+  requestPhoneVerification(phone: string, countryCode: string) {
     let self = this;
     return new Promise((resolve) => {
-      let taskRef = firebase.database().ref('/phoneAuthenticationQueue/tasks').push({ phone: phone });
+      let taskRef = firebase.database().ref('/phoneAuthenticationQueue/tasks').push({ phone: phone, countryCode: countryCode });
       self.taskId = taskRef.key
       taskRef.then((xxx) => {
         log.debug(`task queued to /phoneAuthenticationQueue/tasks/${self.taskId}`);
@@ -107,6 +107,8 @@ export class AuthService {
             resolve({ error: verificationResult.error });
           } else if (verificationResult.codeMatch) {
             log.debug('Submitted verification code was correct.');
+
+
             firebase.auth().signInWithCustomToken(verificationResult.authToken).then((authData) => {
               log.debug('Authentication succeded!');
               resolve({ codeMatch: true });

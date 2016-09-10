@@ -17,13 +17,13 @@
         <ion-item>
             <ion-input type="text" [(ngModel)]="profile.lastName" formControlName="lastName" placeholder="Last name"></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
             <ion-select [(ngModel)]="profile.countryCode"  (ionChange)="fillStatesArray()" formControlName="country">
                 <ion-option [value]="c.alpha2" *ngFor="let c of countries">{{c.name}}</ion-option>
             </ion-select>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
-            <ion-select *ngIf="states.length>0" (ionChange)="onStateSelected($event)" formControlName="stateName" >                
+            <ion-select *ngIf="states.length>0" (ionChange)="onStateSelected($event)" formControlName="stateName" >
                 <ion-option [value]="s" *ngFor="let s of states">{{s.name}}</ion-option>
             </ion-select>
             <ion-input *ngIf="states.length==0" type="text" [(ngModel)]="profile.stateName" formControlName="stateName" placeholder="State or Province"></ion-input>

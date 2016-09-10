@@ -38,7 +38,7 @@ export class Registration4Page {
   ) {
 
     this.profile = _.pick(this.auth.currentUser, ['firstName', 'middleName', 'lastName', 'address', 'city', 'postalCode', 'countryCode', 'stateName']);
-    this.profile.countryCode = this.profile.countryCode || "US";
+    this.profile.countryCode = "US";
 
     let formElements: any = {
       firstName: new FormControl("", [CustomValidator.nameValidator, Validators.required]),
@@ -52,7 +52,7 @@ export class Registration4Page {
       stateCode: new FormControl("")
     };
     this.mainForm = new FormGroup(formElements);
-    this.fillCountriesArray();
+    // this.fillCountriesArray();
     this.fillStatesArray();
 
   }

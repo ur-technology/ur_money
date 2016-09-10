@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
+import {Page, NavController, NavParams, AlertController, LoadingController, ToastController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import * as log from 'loglevel';
@@ -10,12 +10,14 @@ export class Registration3Page {
   verificationCode: string;
   errorMessage: string;
   phone: string;
+  countryCode: string;
 
   constructor(public nav: NavController, public navParams: NavParams,
     public auth: AuthService,
-    private alertCtrl: AlertController, private loadingController: LoadingController) {
+    private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController) {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
+    this.countryCode = this.navParams.get('countryCode');
     this.verificationCode = '';
   }
 
@@ -40,7 +42,7 @@ export class Registration3Page {
     this.verificationCode = '';
     let loading = this.loadingController.create({content: "Please wait...", dismissOnPageChange: true });
     loading.present();
-    this.auth.requestPhoneVerification(this.phone).then((state: string) => {
+    this.auth.requestPhoneVerification(this.phone, this.countryCode).then((state: string) => {
       loading.dismiss();
       if (state != "code_generation_completed_and_sms_sent") {
         this.showErrorAlert("There was an unexpected problem sending the SMS. Please try again later");
@@ -49,13 +51,10 @@ export class Registration3Page {
   }
 
   showErrorAlert(message) {
-    // TODO: change this to toast message
-    let alert = this.alertCtrl.create({
-      title: 'There was a problem...',
-      message: message,
-      buttons: ['Ok']
+    let toast = this.toastCtrl.create({
+      message: message, duration: 5000, position: 'bottom'
     });
-    alert.present();
+    toast.present();
   }
 
   add(number) {
