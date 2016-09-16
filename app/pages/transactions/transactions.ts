@@ -5,15 +5,17 @@ import {RequestPage} from '../request/request';
 import {SendPage} from '../send/send';
 import {ContactsAndChatsPage} from '../../pages/contacts-and-chats/contacts-and-chats';
 import {ViewChild} from '@angular/core';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Page({
   templateUrl: 'build/pages/transactions/transactions.html',
-  directives: [TransactionComponent]
+  directives: [TransactionComponent],
+  pipes: [TranslatePipe]
 })
 export class TransactionsPage {
   segmentSelected: any = "sent";
 
-  constructor(public nav: NavController, public platform: Platform) {    
+  constructor(public nav: NavController, public platform: Platform) {
   }
 
   goToPage(page: string) {

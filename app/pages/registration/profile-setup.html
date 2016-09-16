@@ -1,21 +1,21 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Set Up Basic Profile</ion-title>
+        <ion-title>{{"profile-setup.title" | translate}}</ion-title>
         <button clear class="right" [disabled]="!mainForm.valid" (click)="submit()">
-            Done
+            {{"done" | translate}}
         </button>
     </ion-navbar>
 </ion-header>
 <ion-content padding class="registration profile-setup">
     <form [formGroup]="mainForm">
         <ion-item>
-            <ion-input [focuser] type="text" [(ngModel)]="profile.firstName" formControlName="firstName" placeholder="First name"></ion-input>
+            <ion-input [focuser] type="text" [(ngModel)]="profile.firstName" formControlName="firstName" placeholder="{{'profile-setup.firstName' | translate}}"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-input type="text" [(ngModel)]="profile.middleName" formControlName="middleName" placeholder="Middle name (optional)"></ion-input>
+            <ion-input type="text" [(ngModel)]="profile.middleName" formControlName="middleName" placeholder="{{'profile-setup.middleName' | translate}}"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-input type="text" [(ngModel)]="profile.lastName" formControlName="lastName" placeholder="Last name"></ion-input>
+            <ion-input type="text" [(ngModel)]="profile.lastName" formControlName="lastName" placeholder="{{'profile-setup.lastName' | translate}}"></ion-input>
         </ion-item>
         <!-- <ion-item>
             <ion-select [(ngModel)]="profile.countryCode"  (ionChange)="fillStatesArray()" formControlName="country">
@@ -26,16 +26,16 @@
             <ion-select *ngIf="states.length>0" (ionChange)="onStateSelected($event)" formControlName="stateName" >
                 <ion-option [value]="s" *ngFor="let s of states">{{s.name}}</ion-option>
             </ion-select>
-            <ion-input *ngIf="states.length==0" type="text" [(ngModel)]="profile.stateName" formControlName="stateName" placeholder="State or Province"></ion-input>
+            <ion-input *ngIf="states.length==0" type="text" [(ngModel)]="profile.stateName" formControlName="stateName" placeholder="{{'profile-setup.state' | translate}}"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-input type="text" [(ngModel)]="profile.address" formControlName="address" placeholder="Street Address"></ion-input>
+            <ion-input type="text" [(ngModel)]="profile.address" formControlName="address" placeholder="{{'profile-setup.address' | translate}}"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-input type="text" [(ngModel)]="profile.city" formControlName="city" placeholder="City"></ion-input>
+            <ion-input type="text" [(ngModel)]="profile.city" formControlName="city" placeholder="{{'profile-setup.city' | translate}}"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-input type="text" [(ngModel)]="profile.postalCode" formControlName="postalCode" placeholder="Zip/Postal Code"></ion-input>
+            <ion-input type="text" [(ngModel)]="profile.postalCode" formControlName="postalCode" placeholder="{{'profile-setup.zipCode' | translate}}"></ion-input>
         </ion-item>
     </form>
 </ion-content>

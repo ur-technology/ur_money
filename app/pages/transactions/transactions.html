@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar clear>
-        <ion-title>Transactions</ion-title>
+        <ion-title>{{"transactions.title" | translate}}</ion-title>
         <button menuToggle>
             <ion-icon name="sent-icon-on"></ion-icon>
         </button>
@@ -16,7 +16,7 @@
                 <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
                     role="img"
                     name="sent-icon-on"></ion-icon>
-                <span class="tab-button-text">Sent</span>
+                <span class="tab-button-text">{{"transactions.sent" | translate}}</span>
             </a>
         </ion-segment-button>
         <ion-segment-button value="received" >
@@ -25,7 +25,7 @@
                 <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
                     role="img"
                     name="received-icon-on"></ion-icon>
-                <span class="tab-button-text">Received</span>
+                <span class="tab-button-text">{{"transactions.received" | translate}}</span>
             </a>
         </ion-segment-button>
         <ion-segment-button value="earned">
@@ -34,7 +34,7 @@
                 <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
                     role="img"
                     name="earned-icon-on"></ion-icon>
-                <span class="tab-button-text">Earned</span>
+                <span class="tab-button-text">{{"transactions.earned" | translate}}</span>
             </a>
         </ion-segment-button>
     </ion-segment>
@@ -46,7 +46,7 @@
             <button (click)="goToPage('home')"
                 class="button button-calm"><i class="home-icon"></i></button>
             <button (click)="goToPage('send')"
-                class="button button-calm"><i class="plane-icon"></i></button>            
+                class="button button-calm"><i class="plane-icon"></i></button>
             <button (click)="goToPage('invite')"
                 class="button button-calm"><i class="invite-icon"></i></button>
         </div>

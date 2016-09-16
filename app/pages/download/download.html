@@ -4,20 +4,20 @@
     </div>
 
     <div class="about-text">
-        <h1 class="heading">UR Money App - Version {{config.version}}</h1>
+        <h1 class="heading">{{"download.urMoneyversion" | translate}} {{config.version}}</h1>
         <div *ngIf="deviceType == 'ios'">
             <p>
-                <a href="{{config.iosAppDownloadUrl}}">Download and Install UR Money (iOS Version)</a>
+                <a href="{{config.iosAppDownloadUrl}}">{{"download.download" | translate}} (iOS Version)</a>
             </p>
         </div>
         <div *ngIf="deviceType == 'android'">
             <p>
-                <a href="{{config.androidAppDownloadUrl}}">Download and Install UR Money (Android Version)</a>
+                <a href="{{config.androidAppDownloadUrl}}">{{"download.download" | translate}}  (Android Version)</a>
             </p>
         </div>
         <div *ngIf="deviceType == 'other'">
             <p>
-                To install UR Money, please open the following link from within an iPhone, iPad or Android device:
+                {{"download.toInstallMessage" | translate}}
                 <a href="{{currentUrl}}">{{currentUrl}}</a>
             </p>
         </div>

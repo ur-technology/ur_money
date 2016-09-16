@@ -6,17 +6,18 @@ import {ChatPage} from '../../pages/chat/chat';
 import {Timestamp}  from '../../pipes/timestamp';
 import { App } from 'ionic-angular';
 import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Component({
   selector: 'chat-list',
   templateUrl: 'build/components/chat-list/chat-list.html',
-  pipes: [Timestamp]
+  pipes: [Timestamp, TranslatePipe]
 })
 export class ChatListComponent {
   chats: any[];
   x: any[];
 
-  constructor(private nav: NavController, private auth: AuthService, private angularFire: AngularFire, private app: App ) {
+  constructor(private nav: NavController, private auth: AuthService, private angularFire: AngularFire, private app: App, private translate: TranslateService ) {
   }
 
   ngOnInit() {
@@ -34,7 +35,7 @@ export class ChatListComponent {
   }
 
   senderLabel(chatSummary: any) {
-    return chatSummary.lastMessage.senderUserId === this.auth.currentUserId ? "You: " : "";
+    return chatSummary.lastMessage.senderUserId === this.auth.currentUserId ? `${this.translate.instant("you")}: ` : "";
   }
 
   displayUser(chatSummary: any) {

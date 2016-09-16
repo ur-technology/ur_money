@@ -1,0 +1,173 @@
+{
+    "welcome": {
+        "welcomeText": "Bienvenido a UR",
+        "description": "Una criptomoneda segura hecha para tu mundo",
+        "terms": "Presiona \"Aceptar y continuar\" para aceptar los",
+        "terms2": " ",
+        "terms3": "Términos y Acuerdos de Servicio",
+        "terms4": " y reclamar tu UR.",
+        "agreeAndContinue": "Aceptar y continuar",
+        "learnMore": "Conocer más"
+    },
+    "phone-number": {
+        "heading": "Por favor, confirma tu código de país e ingresa tu número de teléfono",
+        "phoneNumber": "Número de teléfono",
+        "numberConfirmation": "Confirmación de número",
+        "phoneCorrect": "Es el número de teléfono indicado anteriormente correcto?",
+        "errorInvitation": "El uso de UR Money está disponible sólo por invitación y tu número de teléfono no está en la lista de invitados.",
+        "errorSms": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"
+    },
+    "verification-sms-code": {
+        "title": "Ingresa el código de verificación",
+        "heading1": "Te hemos enviado un SMS con un código.",
+        "heading2": " Para completar la verificación del número de teléfono, ingresa el código de activación de 6 dígitos.",
+        "smsAgain": "No llegó el SMS? Enviar de nuevo",
+        "errorVerificationSms": "No hemos podido procesar el código de verificación. Por favor, inténtalo más tarde",
+        "errorCode": "El código de verificación que has introducido es incorrecto o ha caducado. Por favor, inténtalo de nuevo.",
+        "errorSendingSmsAgain": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"
+    },
+    "profile-setup": {
+        "title": "Configurar perfil",
+        "firstName": "Nombre",
+        "middleName": "Segundo nombre (optional)",
+        "lastName": "Apellido",
+        "address": "Dirección",
+        "state": "Estado o provincia",
+        "city": "Ciudad",
+        "zipCode": "Código postal"
+    },
+    "identity-verification": {
+        "title": "Documento de identificación",
+        "birthDay": "Día de nacimiento",
+        "birthMonth": "Mes de nacimiento",
+        "birthYear": "Año de nacimiento",
+        "driverLicence": "Número de licencia de conducir",
+        "MRI1": "Lectura mecánica - Línea 1",
+        "MRI2": "Lectura mecánica - Línea 2",
+        "passportNumber": "Número de pasaporte",
+        "passportDay": "Día de caducidad",
+        "passportMonth": "Mes de caducidad",
+        "passportYear": "Año de caducidad"
+    },
+    "wallet-setup": {
+        "title": "Configuración de la billetera",
+        "suggestSecretPhrase": "Sugerir frase secreta",
+        "secretWords": "Introduzca al menos 5 palabras",
+        "alertTitle": "Confirmar frase secreta",
+        "messageAlert": "Vuelva a introducir la frase secreta",
+        "secretPhrase": "Frase secreta",
+        "titleConfirm": "Confirmar frase secreta",
+        "messagePhrase": "Anota las cinco palabras y guárdalo en un lugar seguro. UR capital no almacena la contraseña y no será capaz de recuperarla si se pierde o se olvida.",
+        "messageSave": "Tu cuenta ha sido enviada para su revisión. Una vez aprobada, recibirás 2.000 UR!"
+    },
+    "verification-pending": {
+        "title": "Verificación pendiente",
+        "message": "Gracias por enviar su solicitud de verificación. La mayoría de las solicitudes se procesan dentro de 24 horas. Le notificaremos mediante un mensaje de texto cuando hayamos terminado de procesar su solicitud."
+    },
+    "country-not-supported": {
+        "title": "UR Money",
+        "message": "Gracias por tu interés en UR Money. Cuando lancemos nuestro servicio en tu país, te lo notificaremos."
+    },
+    "app": {
+        "inviteMessage": "Invita a tus seres queridos y obtén",
+        "invite": "Invita",
+        "home": "Inicio",
+        "chat": "Chat",
+        "sendUr": "Enviar UR",
+        "requestUr": "Solicitar UR",
+        "transactions": "Transacciones",
+        "about": "Acerca UR"
+    },
+    "contacts": {
+        "invite": "Invitar",
+        "sendUr": "Enviar UR",
+        "requestUr": "Solicitar UR",
+        "chat": "Chat",
+        "inviteMessage": "He descargado la aplicación UR Money y tengo 2.000 unidades de criptomoneda de forma gratuita. Para obtener más información y obtener el tuyo, visita ",
+        "toastMessage": "Elije una aplicación y escribe un mensaje. O bien, puedes pegar el mensaje que hemos colocado en el portapapeles.",
+        "toastTitle": "Compartir mediante"
+    },
+    "contacts-and-chats": {
+        "contacts": "Contactos",
+        "chats": "Chats"
+    },
+    "chat": {
+        "typeMessage": "Escribe tu mensaje"
+    },
+    "chat-list": {
+        "noChatsYet": "Aún no hay chats"
+    },
+    "transaction": {
+        "today": "Hoy",
+        "last30Days": "Últimos 30 días",
+        "last60Days": "Últimos 60 días",
+        "allTime": "Todos",
+        "lastUpdated": "Última actualización: ",
+        "inviteFriends": "Invita a tus amigos y gana 1.500 UR",
+        "invite": "Invitar",
+        "noTransactionsyet": "Aún no hay transacciones",
+        "seeMore": "Ver más",
+        "sent": "enviado",
+        "received": "recibido",
+        "earned": "ganado"
+    },
+    "transactions": {
+        "title": "Transacciones",
+        "sent": "Enviado",
+        "received": "Recibido",
+        "earned": "Ganado"
+    },
+    "send": {
+        "title": "Enviar UR",
+        "availableBalance": "Saldo disponible",
+        "enterAmount": "Cantidad a enviar",
+        "enterMessage": "Mensaje (opcional)",
+        "send": "Enviar",
+        "urSent": "Tu UR ha sido enviado!",
+        "errorMessage": "Ha ocurrido un error inesperado. Por favor, inténtalo más tarde.",
+        "secretPhrase": "Frase secreta",
+        "enterSecret": "Ingresa la frase secreta de tu cuenta",
+        "phraseIncorrect": "La frase secreta no es correcta.",
+        "confirmation": "Confirmación",
+        "amountRequired": "Se requiere la cantidad",
+        "amountGreater0": "La cantidad tiene que ser mayor que 0",
+        "amountGreaterBalance": "La cantidad sobrepasa el saldo disponible"
+    },
+    "about": {
+        "about": "Acerca UR",
+        "message1": "UR es una criptomoneda avanzada hecha para la gente común y para los gastos de todos los días. 2.000 UR se distribuye a cada ser humano que decide unirse a la comunidad UR y comprueba su identidad. No hay ningún costo para inscribirse o para recibir esta distribución. Lo miembros de la comunidad UR pueden ganar UR adicional refiriendo o ayudando a la integridad, seguridad y utilidad de la moneda y la comunidad UR.",
+        "message2": "UR Capital es una empresa cuya misión es crear una moneda mundial segura, estable y útil, disponible para cada ser humano.",
+        "learnMore": "Conocer más de UR Capital"
+    },
+    "settings": {
+        "title": "Configuración",
+        "profileInfo": "Información de tu perfil público",
+        "firstName": "Nombre",
+        "middleName": "Segundo nombre (optional)",
+        "lastName": "Apellido",
+        "state": "Estado o provincia",
+        "city": "Ciudad",
+        "profileUpdated": "Tu perfil ha sido actualizado"
+    },
+    "download": {
+        "urMoneyversion": "UR Money App - Versión",
+        "download": "Descarga e instala UR Money",
+        "toInstallMessage": "Para instalar UR Money, abre el siguiente enlace desde tu dispositivo iPhone, iPad o Android:"
+    },
+    "request": {
+        "balance": "Saldo disponible:",
+        "enterMessage": "Mensaje (opcional)",
+        "send": "Enviar"
+    },
+    "done": "Aceptar",
+    "edit": "Editar",
+    "yes": "Si",
+    "cancel": "Cancelar",
+    "continue": "Continuar",
+    "ok": "Aceptar",
+    "you": "Tu",
+    "pleaseWait": "Por favor espere...",
+    "version": "Versión",
+    "save": "Guardar",
+    "signOut": "Salir"
+}

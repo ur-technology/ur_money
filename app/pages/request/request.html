@@ -5,7 +5,7 @@
             class="right">
             <ion-icon name="md-close"></ion-icon>
         </button>
-        <ion-title>Balance: 3,035.00</ion-title>
+        <ion-title>{{"request.balance" | translate}} 3,035.00</ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content padding
@@ -27,10 +27,10 @@
         </div>
         <div class="card send-requesttextarea">
             <label class="item item-input">
-                <textarea placehold="Enter option message"
+                <textarea placehold="{{'request.enterMessage' | translate}}"
                     (click)="sendReceiveText = ''"></textarea>
             </label>
         </div>
-        <button class="button button-light button-outline button-block button-large send-requestbtn">Send</button>
+        <button class="button button-light button-outline button-block button-large send-requestbtn">{{"request.send" | translate}} </button>
     </div>
 </ion-content>

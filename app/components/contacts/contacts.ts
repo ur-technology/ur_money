@@ -11,11 +11,13 @@ import {UserModel} from '../../models/user';
 import { App } from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 declare var window: any;
 
 @Component({
   templateUrl: 'build/components/contacts/contacts.html',
-  selector: 'contacts'
+  selector: 'contacts',
+  pipes: [TranslatePipe]
 })
 export class ContactsComponent {
   pageIndex = 0;
@@ -34,7 +36,7 @@ export class ContactsComponent {
     private auth: AuthService,
     private platform: Platform,
     private alertCtrl: AlertController,
-    private app: App
+    private app: App,  private translate: TranslateService
   ) {
     this.startTime = (new Date()).getTime();
 
@@ -42,11 +44,11 @@ export class ContactsComponent {
 
   private determineMemberActionLabel() {
     if (this.goal == "send") {
-      return "Send UR";
+      return this.translate.instant("contacts.sendUr");
     } else if (this.goal == "request") {
-      return "Request UR";
+      return this.translate.instant("contacts.requestUr");
     } else {
-      return "Chat";
+      return this.translate.instant("contacts.chat");
     }
   }
 
@@ -98,14 +100,14 @@ export class ContactsComponent {
       self.addNewInvitationToQueue(contact, invitationCode);
       return;
     }
-    let message = `I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit `;
+    let message = this.translate.instant("contacts.inviteMessage");
     Clipboard.copy(message).then((data) => {
-      Toast.show("Pick an app and type a message. Or you can paste the simple message that we've placed in your clipboard.", 'long', 'top').subscribe((toast) => {
+      Toast.show(this.translate.instant("contacts.toastMessage"), 'long', 'top').subscribe((toast) => {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
           file: 'https://ur-money-staging.firebaseapp.com/img/icon.png',
           url: `${Config.generalAppDownloadUrl}`,
-          chooserTitle: 'Pick an app' // Android only
+          chooserTitle: this.translate.instant("contacts.toastTitle") // Android only
         }).then((result) => {
           log.debug("returned from SocialSharing.shareWithOptions; saving dowlineUser");
           self.addNewInvitationToQueue(contact, invitationCode);

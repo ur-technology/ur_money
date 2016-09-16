@@ -3,6 +3,7 @@ import {Page, AlertController, NavController, NavParams, ToastController} from '
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 import {HomePage} from '../home/home';
 import {WalletModel} from '../../models/wallet';
@@ -13,6 +14,7 @@ declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/send/send.html',
+  pipes: [TranslatePipe]
 })
 export class SendPage {
   contact: any;
@@ -25,7 +27,7 @@ export class SendPage {
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private authService: AuthService
+    private authService: AuthService,  private translate: TranslateService
   ) {
     this.contact = this.navParams.get('contact');
     this.mainForm = new FormGroup({
@@ -56,12 +58,12 @@ export class SendPage {
         urTransaction: urTransaction
       });
     }).then(() => {
-      let toast = self.toastCtrl.create({ message: 'Your UR has been sent!', duration: 3000, position: 'bottom' });
+      let toast = self.toastCtrl.create({ message: this.translate.instant("send.urSent"), duration: 3000, position: 'bottom' });
       toast.present();
       this.nav.setRoot(HomePage);
     }, (error: any) => {
       self.toastCtrl.create({
-        message: error.displayMessage ? error.displayMessage : "An unexpected error has occurred. Please try again later.",
+        message: error.displayMessage ? error.displayMessage : this.translate.instant("send.errorMessage"),
         duration: 3000,
         position: 'bottom'
       }).present();
@@ -74,19 +76,19 @@ export class SendPage {
     let self = this;
     return new Promise((resolve, reject) => {
       let prompt = self.alertCtrl.create({
-        title: 'Secret phrase',
-        message: "Please enter your account's secret phrase",
-        inputs: [{ name: 'secretPhrase', placeholder: 'Secret Phrase'}], // value: "apple apple apple apple apple"
+        title: this.translate.instant("send.secretPhrase"),
+        message: this.translate.instant("send.enterSecret"),
+        inputs: [{ name: 'secretPhrase', placeholder: this.translate.instant("send.secretPhrase")}], // value: "apple apple apple apple apple"
         buttons: [
           {
-            text: 'Cancel',
+            text: this.translate.instant("cancel"),
             role: 'cancel',
             handler: data => {
               reject({ logMessage: "cancel clicked" });
             }
           },
           {
-            text: 'Continue',
+            text: this.translate.instant("continue"),
             handler: data => {
               let secretPhrase = data.secretPhrase;
               prompt.dismiss().then(() => {
@@ -95,11 +97,11 @@ export class SendPage {
                   if (self.wallet.getAddress() == self.authService.currentUser.wallet.address) {
                     resolve();
                   } else {
-                    reject({ displayMessage: "The secret phrase you entered was not correct." });
+                    reject({ displayMessage: this.translate.instant("send.phraseIncorrect") });
                   }
                 }, (error) => {
                   reject({
-                    displayMessage: "An unexpected error occurred. Please try again later.",
+                    displayMessage: this.translate.instant("send.errorMessage"),
                     logMessage: `cannot send UR: ${error}`
                   });
                 });
@@ -120,18 +122,18 @@ export class SendPage {
     return new Promise((resolve, reject) => {
       let amount: number = Number(this.mainForm.value.amount); // add number:'1.2-2'
       let prompt = this.alertCtrl.create({
-        title: 'Confirmation',
-        message: `<p>Send ${amount} UR?</p>`,
+        title: this.translate.instant("send.confirmation"),
+        message: `<p>${this.translate.instant("send.send")} ${amount} UR?</p>`,
         buttons: [
           {
-            text: 'Cancel',
+            text: this.translate.instant("cancel"),
             role: 'cancel',
             handler: data => {
               reject({ logMessage: "cancel clicked" });
             }
           },
           {
-            text: 'Ok',
+            text: this.translate.instant("ok"),
             handler: data => {
               prompt.dismiss().then(() => { resolve(); });
             }

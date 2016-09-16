@@ -122,7 +122,7 @@ export class AuthService {
           } else {
             log.debug('Submitted verification code was not correct.');
             resolve({ codeMatch: false });
-            taskRef.remove();
+            verificationResultRef.remove();
           }
         });
       });

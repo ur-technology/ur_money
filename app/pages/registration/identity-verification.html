@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Identification Document</ion-title>
+        <ion-title>{{"identity-verification.title" | translate}}</ion-title>
         <button clear class="right" [disabled]="!mainForm.valid" (click)="submit()">
-            Done
+            {{"done" | translate}}
         </button>
     </ion-navbar>
 </ion-header>
@@ -16,13 +16,13 @@
             </ion-select>
         </ion-item>
         <ion-item>
-            <ion-input type="text" [(ngModel)]="verification.PersonInfo.DayOfBirth" formControlName="dayOfBirth" placeholder="Birth Day"></ion-input>
+            <ion-input type="text" [(ngModel)]="verification.PersonInfo.DayOfBirth" formControlName="dayOfBirth" placeholder="{{'identity-verification.birthDay' | translate}}"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-input type="text" [(ngModel)]="verification.PersonInfo.MonthOfBirth" formControlName="monthOfBirth" placeholder="Birth Month"></ion-input>
+            <ion-input type="text" [(ngModel)]="verification.PersonInfo.MonthOfBirth" formControlName="monthOfBirth" placeholder="{{'identity-verification.birthMonth' | translate}}"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-input type="text" [(ngModel)]="verification.PersonInfo.YearOfBirth" formControlName="yearOfBirth" placeholder="Birth Year"></ion-input>
+            <ion-input type="text" [(ngModel)]="verification.PersonInfo.YearOfBirth" formControlName="yearOfBirth" placeholder="{{'identity-verification.birthYear' | translate}}"></ion-input>
         </ion-item>
       </ion-item-group>
       <ion-item-group>
@@ -40,34 +40,34 @@
               </ion-select>
           </ion-item>
           <ion-item>
-              <ion-input type="text" [(ngModel)]="verification.DriverLicense.Number" formControlName="driverLicenseNumber" placeholder="Drive License Number"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.DriverLicense.Number" formControlName="driverLicenseNumber" placeholder="{{'identity-verification.driverLicence' | translate}}"></ion-input>
           </ion-item>
         </ion-item-group>
 
         <ion-item-group *ngIf="identificationType == 'National Id'">
           <ion-item>
-              <ion-input type="text" [(ngModel)]="verification.NationalId.Number" formControlName="nationalIdNumber" placeholder="Please enter {{nationalIdPlaceholder()}}"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.NationalId.Number" formControlName="nationalIdNumber" placeholder="{{nationalIdPlaceholder()}}"></ion-input>
           </ion-item>
         </ion-item-group>
 
         <ion-item-group *ngIf="identificationType == 'Passport'">
           <ion-item>
-              <ion-input type="text" [(ngModel)]="verification.Passport.Mrz1" formControlName="passportMrz1" placeholder="Machine Readable Info - Line 1"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.Passport.Mrz1" formControlName="passportMrz1" placeholder="{{'identity-verification.MRI1' | translate}}"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-input type="text" [(ngModel)]="verification.Passport.Mrz2" formControlName="passportMrz2" placeholder="Machine Readable Info - Line 2"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.Passport.Mrz2" formControlName="passportMrz2" placeholder="{{'identity-verification.MRI2' | translate}}"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-input type="text" [(ngModel)]="verification.Passport.Number" formControlName="passportNumber" placeholder="Passport Number"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.Passport.Number" formControlName="passportNumber" placeholder="{{'identity-verification.passportNumber' | translate}}"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-input type="text" [(ngModel)]="verification.Passport.DayOfExpiry" formControlName="passportDayOfExpiry" placeholder="Expiration Day"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.Passport.DayOfExpiry" formControlName="passportDayOfExpiry" placeholder="{{'identity-verification.passportDay' | translate}}"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-input type="text" [(ngModel)]="verification.Passport.MonthOfExpiry" formControlName="passportMonthOfExpiry" placeholder="Expiration Month"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.Passport.MonthOfExpiry" formControlName="passportMonthOfExpiry" placeholder="{{'identity-verification.passportMonth' | translate}}"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-input type="text" [(ngModel)]="verification.Passport.YearOfExpiry" formControlName="passportYearOfExpiry" placeholder="Expiration Year"></ion-input>
+              <ion-input type="text" [(ngModel)]="verification.Passport.YearOfExpiry" formControlName="passportYearOfExpiry" placeholder="{{'identity-verification.passportYear' | translate}}"></ion-input>
           </ion-item>
         </ion-item-group>
     </form>

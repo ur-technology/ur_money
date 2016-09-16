@@ -1,17 +1,17 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Enter Verification Code</ion-title>
+        <ion-title>{{"verification-sms-code.title" | translate}}</ion-title>
         <button clear
             class="right"
             [disabled]="verificationCode.length<6"
             (click)="submit()">
-            Done
+            {{"done" | translate}}
         </button>
     </ion-navbar>
 </ion-header>
 <ion-content class="phone-number phone-number-verification">
-    <p class="sub-heading">We have sent you an SMS with a code.
-        <br/> To complete your phone number verification, please enter the 6-digit activation code.
+    <p class="sub-heading">{{"verification-sms-code.heading1" | translate}}
+        <br/>{{"verification-sms-code.heading2" | translate}}
     </p>
     <div class="verification-cont">
         <div class="pin-input-cont">
@@ -38,7 +38,7 @@
         <div class="verify-btns">
             <button clear
                 (click)="smsAgain()"
-                class="button button-light">Didn't receive SMS? Send again</button>
+                class="button button-light">{{"verification-sms-code.smsAgain" | translate}}</button>
         </div>
     </div>
 

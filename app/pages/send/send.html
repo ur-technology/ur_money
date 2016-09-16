@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Send UR</ion-title>
+        <ion-title>{{"send.title" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content padding
@@ -16,35 +16,35 @@
         </ion-item>
         <div class="card send-requestinput">
             <label class="item item-input disabled">
-                <span>Available balance: {{balance|number:'1.2-18'}}</span>
+                <span>{{"send.availableBalance" | translate}}: {{balance|number:'1.2-18'}}</span>
                 <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
             </label>
         </div>
         <div class="card send-requestur">
             <label class="item item-input">
                 <input formControlName="amount"
-                    placeholder="Enter amount to send"
+                    placeholder="{{'send.enterAmount' | translate}}"
                     class="amount"
                     type="text" />
                 <ion-note class="item-note"> UR </ion-note>
             </label>
             <div class="validatorError"
-                *ngIf="mainForm.find('amount').touched && mainForm.find('amount').hasError('required')">Amount is required</div>
+                *ngIf="mainForm.find('amount').touched && mainForm.find('amount').hasError('required')">{{"send.amountRequired" | translate}}</div>
             <div class="validatorError"
-                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidPositiveNumber') && !mainForm.find('amount').hasError('required')">Amount has to be greater than 0</div>
+                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidPositiveNumber') && !mainForm.find('amount').hasError('required')">{{"send.amountGreater0" | translate}}</div>
             <div class="validatorError"
-                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidBalance')">Amount cannot be greater than available balance</div>
+                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidBalance')">{{"send.amountGreaterBalance" | translate}}</div>
         </div>
         <div class="card send-requesttextarea">
             <label class="item item-input">
                 <ion-textarea formControlName="message"
-                    placeholder="Enter a message (optional)"></ion-textarea>
+                    placeholder="{{'send.enterMessage' | translate}}"></ion-textarea>
             </label>
         </div>
 
 
         <button class="button button-light button-outline button-block button-large send-requestbtn"
             type="submit"
-            [disabled]="!mainForm.valid">Send</button>
+            [disabled]="!mainForm.valid">{{"send.send" | translate}}</button>
     </form>
 </ion-content>

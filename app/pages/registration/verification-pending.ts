@@ -11,10 +11,12 @@ import {AuthService} from '../../services/auth';
 import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Page({
   templateUrl: 'build/pages/registration/verification-pending.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective]
+  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective],
+  pipes: [TranslatePipe]
 })
 export class VerificationPendingPage {
   constructor(

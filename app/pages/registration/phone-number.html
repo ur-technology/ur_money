@@ -5,14 +5,14 @@
             class="right"
             [disabled]="!phoneForm.valid"
             (click)="submit(phoneInput)">
-            Done
+            {{"done" | translate}}
         </button>
     </ion-navbar>
 </ion-header>
 <ion-content padding
     class="phone-number registration">
     <p class="sub-heading">
-        Please confirm your country code and enter your phone number
+        {{"phone-number.heading" | translate}}
     </p>
     <form [formGroup]="phoneForm">
         <div class="list country-code-cont">
@@ -38,7 +38,7 @@
                     #phoneInput
                     class="phone-input"
                     formControlName="phone"
-                    placeholder="Phone number"
+                    placeholder="{{'phone-number.phoneNumber' | translate}}"
                     type="tel"></ion-input>
             </ion-item>
         </div>

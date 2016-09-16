@@ -11,12 +11,14 @@ import {AuthService} from '../../services/auth';
 import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
 import {HomePage} from '../home/home';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/registration/wallet-setup.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective]
+  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective],
+  pipes: [TranslatePipe]
 })
 export class WalletSetupPage {
   mainForm: FormGroup;
@@ -29,7 +31,7 @@ export class WalletSetupPage {
     public auth: AuthService,
     public deviceIdentityService: DeviceIdentityService,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController, private loadingController: LoadingController
+    private toastCtrl: ToastController, private loadingController: LoadingController,  private translate: TranslateService
   ) {
     this.mainForm = new FormGroup({
       secretPhrase: new FormControl("", CustomValidator.secretPhraseValidator)
@@ -38,7 +40,7 @@ export class WalletSetupPage {
       secretPhrase: '',
     };
     this.loadingModal = this.loadingController.create({
-      content: "Please wait...",
+      content: this.translate.instant("pleaseWait"),
       dismissOnPageChange: true
     });
   }
@@ -51,19 +53,19 @@ export class WalletSetupPage {
 
   submit() {
     let prompt = this.alertCtrl.create({
-      title: 'Confirm secret phrase',
-      message: "Please re-enter your secret phrase",
-      inputs: [{ name: 'secretPhrase', placeholder: 'Secret Phrase' }],
+      title: this.translate.instant("wallet-setup.alertTitle"),
+      message: this.translate.instant("wallet-setup.messageAlert"),
+      inputs: [{ name: 'secretPhrase', placeholder: this.translate.instant("wallet-setup.secretPhrase") }],
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant("cancel"),
           role: 'cancel',
           handler: data => {
             log.debug("cancel clicked");
           }
         },
         {
-          text: 'Continue',
+          text: this.translate.instant("continue"),
           handler: data => {
             prompt.dismiss().then(() => {
               let secretPhrase = data.secretPhrase;
@@ -86,13 +88,13 @@ export class WalletSetupPage {
 
   confirmSecretPhraseWrittenDown() {
     let alert = this.alertCtrl.create({
-      title: 'Confirm secret phrase written',
-      message: "Write your five word paraphrase down and store it someplace safe. UR Capital does not store your pass phrase and will NOT be able to recover it if it is lost or forgotten.",
+      title: this.translate.instant("wallet-setup.titleConfirm"),
+      message: this.translate.instant("wallet-setup.messagePhrase"),
       //" If you lose your passphrase, you will not be able to access your money ever again. ?',
       buttons: [
-        { text: 'Cancel', handler: () => { alert.dismiss(); } },
+        { text: this.translate.instant("cancel"), handler: () => { alert.dismiss(); } },
         {
-          text: 'OK', handler: () => {
+          text: this.translate.instant("ok"), handler: () => {
             alert.dismiss().then(() => {
               this.generateAddress();
             });
@@ -126,7 +128,7 @@ export class WalletSetupPage {
     }).then(() => {
       self.loadingModal.dismiss().then(()=>{
         self.toastCtrl.create({
-          message: 'Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!',
+          message: this.translate.instant("wallet-setup.messageSave"),
           duration: 5000,
           position: 'bottom'
         }).present();

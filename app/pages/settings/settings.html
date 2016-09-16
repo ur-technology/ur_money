@@ -1,11 +1,11 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Settings</ion-title>
+        <ion-title>{{"settings.title" | translate}}</ion-title>
         <button clear
             class="right"
             [disabled]="!mainForm.valid"
             (click)="submit()">
-            Save
+            {{"save" | translate}}
         </button>
     </ion-navbar>
 </ion-header>
@@ -13,26 +13,26 @@
     class="settings">
     <form [formGroup]="mainForm">
         <ion-item-group>
-            <ion-item-divider light>Your public profile information</ion-item-divider>
+            <ion-item-divider light>{{"settings.profileInfo" | translate}}</ion-item-divider>
             <ion-item>
                 <ion-input [focuser]
                     type="text"
                     [(ngModel)]="profile.firstName"
                     formControlName="firstName"
-                    placeholder="First name"></ion-input>
+                    placeholder="{{'settings.firstName' | translate}}"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-input [focuser]
                     type="text"
                     [(ngModel)]="profile.middleName"
                     formControlName="middleName"
-                    placeholder="Middle name (optional)"></ion-input>
+                    placeholder="{{'settings.middleName' | translate}}"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-input type="text"
                     [(ngModel)]="profile.lastName"
                     formControlName="lastName"
-                    placeholder="Last name"></ion-input>
+                    placeholder="{{'settings.lastName' | translate}}"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-select [(ngModel)]="profile.country"
@@ -55,29 +55,23 @@
                     [(ngModel)]="profile.stateName"
                     [ngModelOptions]="{standalone: true}"
                     formControlName="stateName"
-                    placeholder="State or Province"></ion-input>
+                    placeholder="{{'settings.state' | translate}}"></ion-input>
             </ion-item>
-
-
             <ion-item>
                 <ion-input type="text"
                     [(ngModel)]="profile.city"
                     formControlName="city"
-                    placeholder="City"></ion-input>
+                    placeholder="{{'settings.city' | translate}}"></ion-input>
             </ion-item>
-
-
-
         </ion-item-group>
     </form>
 </ion-content>
 <ion-footer>
     <button class="sign-out-button" full
-    
         type="text"
         danger
         small
         (click)="signOut()">
-        <ion-icon name="power"></ion-icon>Sign Out
+        <ion-icon name="power"></ion-icon>{{"signOut" | translate}}
     </button>
 </ion-footer>

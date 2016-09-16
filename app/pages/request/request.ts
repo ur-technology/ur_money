@@ -1,13 +1,10 @@
 import {Page, NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
-/*
-  Generated class for the RequestPage page.
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
   templateUrl: 'build/pages/request/request.html',
+  pipes: [TranslatePipe]
 })
 export class RequestPage {
   showContactInput: boolean = true;

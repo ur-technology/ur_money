@@ -12,9 +12,11 @@ import {LoadingModalComponent} from '../../components/loading-modal/loading-moda
 import {FocuserDirective} from '../../directives/focuser';
 
 import {HomePage} from '../home/home';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Page({
   templateUrl: 'build/pages/settings/settings.html',
+  pipes: [TranslatePipe]
 })
 export class SettingsPage {
   mainForm: FormGroup;
@@ -28,7 +30,7 @@ export class SettingsPage {
     public auth: AuthService,
     public loadingModal: LoadingModalComponent,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,  private translate: TranslateService
   ) {
 
   }
@@ -84,12 +86,12 @@ export class SettingsPage {
 
   signOut() {
     let alert = this.alertCtrl.create({
-      title: "Sign out?",
+      title:  this.translate.instant("signOut")+"?",
       buttons: [
-        'Cancel']
+        this.translate.instant("cancel")]
     });
     alert.addButton({
-      text: 'OK',
+      text:  this.translate.instant("ok"),
       handler: () => {
         this.auth.angularFire.auth.logout()
       }
@@ -110,7 +112,7 @@ export class SettingsPage {
     };
     self.auth.currentUserRef.update(_.omitBy(profile, _.isNil)).then(() => {
       self.auth.reloadCurrentUser();
-      let toast = this.toastCtrl.create({ message: 'Your profile has been updated', duration: 3000, position: 'bottom' });
+      let toast = this.toastCtrl.create({ message: this.translate.instant("settings.profileUpdated"), duration: 3000, position: 'bottom' });
       toast.present();
       this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
     }).catch((error) => {

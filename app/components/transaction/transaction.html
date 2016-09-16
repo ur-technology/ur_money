@@ -2,21 +2,21 @@
     <div class="filter-box"
         padding>
         <div class="filter-btns">
-          <button class="button button-outline" (click)="filterTransactions('today')" [ngClass]="{'active':filterOption==='today'}">Today</button>
-          <button class="button button-outline" (click)="filterTransactions('30')" [ngClass]="{'active':filterOption==='30'}">Last 30 Days</button>
-          <button class="button button-outline" (click)="filterTransactions('60')" [ngClass]="{'active':filterOption==='60'}">Last 60 Days</button>
-          <button class="button button-outline" (click)="filterTransactions('all')" [ngClass]="{'active':filterOption==='all'}">All Time</button>
+          <button class="button button-outline" (click)="filterTransactions('today')" [ngClass]="{'active':filterOption==='today'}">{{"transaction.today" | translate}}</button>
+          <button class="button button-outline" (click)="filterTransactions('30')" [ngClass]="{'active':filterOption==='30'}">{{"transaction.last30Days" | translate}}</button>
+          <button class="button button-outline" (click)="filterTransactions('60')" [ngClass]="{'active':filterOption==='60'}">{{"transaction.last60Days" | translate}}</button>
+          <button class="button button-outline" (click)="filterTransactions('all')" [ngClass]="{'active':filterOption==='all'}">{{"transaction.allTime" | translate}}</button>
         </div>
 
         <div class="total-ur">
-            {{weiToURString(filteredTransactionsTotal)}}
+            {{weiToURString(filteredTransactionsTotal)}} {{getTransactionType()}}
         </div>
         <p class="last-update">
-            <ion-icon name="ios-clock-outline"></ion-icon> Last Updated : {{lastUpdated|timestamp}}
+            <ion-icon name="ios-clock-outline"></ion-icon> {{"transaction.lastUpdated" | translate}} {{lastUpdated|timestamp}}
         </p>
         <div class="invite-and-earn" *ngIf="transactionType==='earned'">
-                <p>Invite your Friends & Earn 1500 UR</p>
-                <button (click)="invite()" class="button button-outline">Invite</button>
+                <p>{{"transaction.inviteFriends" | translate}}</p>
+                <button (click)="invite()" class="button button-outline">{{"transaction.invite" | translate}}</button>
         </div>
     </div>
 </div>
@@ -32,7 +32,7 @@
     <div class="card"
         *ngIf="filteredTransactions.length ===0">
         <ion-item class="item">
-            <p style="text-align: center;">No transactions yet</p>
+            <p style="text-align: center;">{{"transaction.noTransactionsyet" | translate}}</p>
         </ion-item>
     </div>
     <div class="card"
@@ -44,7 +44,7 @@
                 <img src="img/avatar.jpg">
             </ion-avatar>
             <h2>{{transaction.name}} <span class="item-date-time">{{transaction.createdAt|dateAndTime}}</span></h2>
-            <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">See More</a></span></p>
+            <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">{{"transaction.seeMore" | translate}}</a></span></p>
             <span class="icon trans-ur"
                 item-right>{{weiToURString(transaction.amount)}}<br/>  UR</span>
         </ion-item>

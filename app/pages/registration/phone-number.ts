@@ -9,12 +9,13 @@ import {VerificationSmsCodePage} from './verification-sms-code';
 import {CountryNotSupportedPage} from './country-not-supported';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import {CountryListService} from '../../services/country-list';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
 
 @Page({
   templateUrl: 'build/pages/registration/phone-number.html',
-
+  pipes: [TranslatePipe]
 })
 export class PhoneNumberPage implements OnInit {
   elementRef: ElementRef;
@@ -22,7 +23,7 @@ export class PhoneNumberPage implements OnInit {
   countries: any;
   selected: any;
   selectedCountry: any;
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public loadingModal: LoadingModalComponent, public countryListService: CountryListService, private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public loadingModal: LoadingModalComponent, public countryListService: CountryListService, private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
     this.elementRef = elementRef;
     this.phoneForm = new FormGroup({
       phone: new FormControl('', (control) => {
@@ -57,22 +58,22 @@ export class PhoneNumberPage implements OnInit {
 
     let phone = this.selectedCountry.code + extraIsoCode + corePhone
     let alert = this.alertCtrl.create({
-      title: 'NUMBER CONFIRMATION',
-      message: "<p>" + phone + "</p><p>Is your phone number above correct?</p>",
+      title: this.translate.instant("phone-number.numberConfirmation"),
+      message: "<p>" + phone + "</p><p>"+this.translate.instant("phone-number.phoneCorrect")+"</p>",
       buttons: [
         {
-          text: 'Edit',
+          text: this.translate.instant("edit"),
           role: 'cancel',
           handler: () => {
             // do nothing
           }
         },
         {
-          text: 'Yes',
+          text: this.translate.instant("yes"),
           handler: () => {
             alert.dismiss().then(() => {
               let loading = this.loadingController.create({
-                content: "Please wait...",
+                content: this.translate.instant("pleaseWait"),
                 dismissOnPageChange: true
               });
               loading.present();
@@ -84,9 +85,9 @@ export class PhoneNumberPage implements OnInit {
                   } else if (state === "code_generation_completed_and_sms_sent") {
                     this.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: this.selectedCountry.code });
                   } else if (state === "code_generation_canceled_because_user_not_invited") {
-                    this.showErrorAlert("Use of UR Money is currently available by invitation only, and your phone number was not on the invitee list.", phoneInput);
+                    this.showErrorAlert(this.translate.instant("phone-number.errorInvitation"), phoneInput);
                   } else {
-                    this.showErrorAlert("There was an unexpected problem sending the SMS. Please try again later", phoneInput);
+                    this.showErrorAlert(this.translate.instant("phone-number.errorSms"), phoneInput);
                   }
                 });
               });

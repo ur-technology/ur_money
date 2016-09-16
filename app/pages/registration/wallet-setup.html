@@ -1,11 +1,11 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Wallet Setup Page</ion-title>
+        <ion-title>{{"wallet-setup.title" | translate}}</ion-title>
         <button clear
             class="right"
             [disabled]="!mainForm.valid"
             (click)="submit()">
-            Done
+            {{"done" | translate}}
         </button>
     </ion-navbar>
 </ion-header>
@@ -16,7 +16,7 @@
           <button type="text"
               secondary
               (click)="suggestSecretPhrase()">
-              Suggest Secret Phrase
+              {{"wallet-setup.suggestSecretPhrase" | translate}}
           </button>
       </ion-item>
       <ion-item>
@@ -24,7 +24,7 @@
               [(ngModel)]="profile.secretPhrase"
               formControlName="secretPhrase"
               [(ngModel)]="secretPhrase"
-              placeholder="Please enter at least 5 secret words"></ion-input>
+              placeholder="{{'wallet-setup.secretWords' | translate}}"></ion-input>
       </ion-item>
     </form>
 </ion-content>

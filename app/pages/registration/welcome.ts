@@ -2,9 +2,11 @@ import {Page, NavController, Platform} from 'ionic-angular';
 import {Type} from '@angular/core';
 import {PhoneNumberPage} from './phone-number';
 import {DownloadPage} from '../download/download';
+import {TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Page({
-  templateUrl: 'build/pages/registration/welcome.html'
+  templateUrl: 'build/pages/registration/welcome.html',
+  pipes: [TranslatePipe]
 })
 export class WelcomePage {
   public phoneNumberPage: Type;

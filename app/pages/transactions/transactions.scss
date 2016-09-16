@@ -158,17 +158,14 @@
   background-color: #dedede;
 }
 .transaction-sent .transaction-filter-top .total-ur:after {
-  content: 'Sent';
   font-size: 11px;
   font-weight: 600;
 }
 .transaction-received .transaction-filter-top .total-ur:after {
-  content: 'Received';
   font-size: 11px;
   font-weight: 600;
 }
-.transaction-earned .transaction-filter-top .total-ur:after {
-  content: 'Earned';
+.transaction-earned .transaction-filter-top .total-ur:after {  
   font-size: 11px;
   font-weight: 600;
 }

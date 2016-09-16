@@ -1,7 +1,7 @@
 <ion-list class="chats-list">
     <ion-item class="item text-center item-avatar"
         detail-none *ngIf="showNoChatsYetMessage()">
-        <p>No chats yet</p>
+        <p>{{"chat-list.noChatsYet" | translate}}</p>
     </ion-item>
     <ion-item detail-none
         (click)="gotoChat(chat)"

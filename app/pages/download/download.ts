@@ -1,8 +1,10 @@
 import {Page, NavController, Platform} from 'ionic-angular';
 import {Config} from '../../config/config';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Page({
   templateUrl: 'build/pages/download/download.html',
+  pipes: [TranslatePipe]
 })
 export class DownloadPage {
   public currentUrl: string;

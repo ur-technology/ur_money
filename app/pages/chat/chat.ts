@@ -6,12 +6,14 @@ import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import {AuthService} from '../../services/auth';
+import {DateAndTime} from '../../pipes/dateAndTime.pipe';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/chat/chat.html',
-  pipes: [Timestamp]
+  pipes: [Timestamp, DateAndTime, TranslatePipe]
 })
 export class ChatPage {
   messages: any[];
@@ -24,7 +26,7 @@ export class ChatPage {
   messageTextAreaHeight: number;
   @ViewChild(Content) content: Content;
 
-  constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: AuthService) {
+  constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: AuthService, private translate: TranslateService) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
@@ -151,11 +153,11 @@ export class ChatPage {
     this.resetMessageTextArea();
   }
 
-  saveEvent() {    
+  saveEvent() {
     let eventRef = firebase.database().ref(`/users/${this.auth.currentUserId}/events/${this.chatId}`);
     eventRef.set({
       createdAt: firebase.database.ServerValue.TIMESTAMP,
-      messageText: `You: ${this.messageText}`,
+      messageText: `${this.translate.instant("you")}: ${this.messageText}`,
       notificationProcessed: 'true',
       profilePhotoUrl: this.chatSummary.users[this.chatSummary.displayUserId].profilePhotoUrl,
       sourceId: this.chatId,

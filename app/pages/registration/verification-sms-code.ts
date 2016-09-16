@@ -2,9 +2,11 @@ import {Page, NavController, NavParams, AlertController, LoadingController, Toas
 import {AuthService} from '../../services/auth';
 import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import * as log from 'loglevel';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Page({
-  templateUrl: 'build/pages/registration/verification-sms-code.html'
+  templateUrl: 'build/pages/registration/verification-sms-code.html',
+  pipes: [TranslatePipe]
 })
 export class VerificationSmsCodePage {
   verificationCode: string;
@@ -14,7 +16,7 @@ export class VerificationSmsCodePage {
 
   constructor(public nav: NavController, public navParams: NavParams,
     public auth: AuthService,
-    private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController) {
+    private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
     this.countryCode = this.navParams.get('countryCode');
@@ -22,37 +24,38 @@ export class VerificationSmsCodePage {
   }
 
   submit() {
-    let loading = this.loadingController.create({content: "Please wait...", dismissOnPageChange: true });
+    let loading = this.loadingController.create({content: this.translate.instant("pleaseWait"), dismissOnPageChange: true });
     loading.present();
     this.auth.checkVerificationCode(this.verificationCode).then((result: any) => {
-      loading.dismiss();
-      this.verificationCode = '';
-      if (result.error) {
-        log.debug(result.error);
-        this.showErrorAlert("We were unable to process your verification code. Please try again later");
-      } else if (result.codeMatch) {
-        // NOTE: nothing to do; navigation will be handled by respondToAuth in auth.ts
-      } else {
-        this.showErrorAlert("The verification code you entered is incorrect or expired. Please try again.");
-      }
+      loading.dismiss().then(()=>{
+        this.verificationCode = '';
+        if (result.error) {
+          log.debug(result.error);
+          this.showErrorAlert(this.translate.instant("verification-sms-code.errorVerificationSms"));
+        } else if (result.codeMatch) {
+          loading.dismiss();          
+        } else {
+          this.showErrorAlert(this.translate.instant("verification-sms-code.errorCode"));
+        }
+      });
     });
   }
 
   smsAgain() {
     this.verificationCode = '';
-    let loading = this.loadingController.create({content: "Please wait...", dismissOnPageChange: true });
+    let loading = this.loadingController.create({content: this.translate.instant("pleaseWait"), dismissOnPageChange: true });
     loading.present();
     this.auth.requestPhoneVerification(this.phone, this.countryCode).then((state: string) => {
       loading.dismiss();
       if (state != "code_generation_completed_and_sms_sent") {
-        this.showErrorAlert("There was an unexpected problem sending the SMS. Please try again later");
+        this.showErrorAlert(this.translate.instant("verification-sms-code.errorSendingSmsAgain"));
       }
     });
   }
 
   showErrorAlert(message) {
     let toast = this.toastCtrl.create({
-      message: message, duration: 5000, position: 'bottom'
+      message: message, duration: 3500, position: 'bottom'
     });
     toast.present();
   }

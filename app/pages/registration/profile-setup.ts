@@ -4,6 +4,7 @@ import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@ang
 import {AngularFire} from 'angularfire2'
 import * as _ from 'lodash';
 import * as log from 'loglevel';
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 import {FocuserDirective} from '../../directives/focuser';
 import {UserModel} from '../../models/user';
@@ -20,7 +21,8 @@ declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/registration/profile-setup.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective]
+  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective],
+  pipes: [TranslatePipe]
 })
 export class ProfileSetupPage {
   mainForm: FormGroup;

@@ -12,17 +12,17 @@
     <ion-toolbar
         class="bottom-toolbar">
         <div class="welcome-ur">
-            <h3>Welcome to UR</h3>
-            <p class="ur-slogan">A secure cryptocurrency made for your world</p>
+            <h3>{{ "welcome.welcomeText" | translate }}</h3>
+            <p class="ur-slogan">{{ "welcome.description" | translate }}</p>
             <p>
-                Tap "Agree & Continue" to accept the
-                <br> UR Capital <a class="terms-btn">Terms and Service Agreement</a>
-                <br> and claim your UR.<a (click)="goToDownloadPage()">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                {{ "welcome.terms" | translate }}
+                <br> {{ "welcome.terms2" | translate }} <a class="terms-btn">{{ "welcome.terms3" | translate }} </a>
+                <br> {{ "welcome.terms4" | translate }}<a (click)="goToDownloadPage()">&nbsp;&nbsp;&nbsp;&nbsp;</a>
             </p>
             <button clear
                 (click)="goToPage(phoneNumberPage)"
-                class="button button-clear button-block agree-btn"><span>Agree & Continue</span></button>
-            <a class="button button-clear learn-btn"><span>Learn More</span></a>
+                class="button button-clear button-block agree-btn"><span>{{ "welcome.agreeAndContinue" | translate }}</span></button>
+            <a class="button button-clear learn-btn"><span>{{ "welcome.learnMore" | translate }}</span></a>
         </div>
     </ion-toolbar>
 </ion-footer>

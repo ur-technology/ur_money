@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-      
+
     </ion-navbar>
 </ion-header>
 <ion-content padding
@@ -11,18 +11,13 @@
     </div>
 
     <div class="about-text">
-        <h1 class="heading">About UR</h1>
+        <h1 class="heading">{{"about.about" | translate}}</h1>
         <p>
-            UR is an advanced cryptocurrency made for everyday people and everyday expenditures. 2,000 UR is distributed
-            to every human being who chooses to join the UR community and proves his/her identity. There
-            is no cost to join or to receive this distribution. UR community members may earn additional
-            UR by referring and for helping to support the integrity, security, and usefulness of UR
-            currency and the UR community. (learn more about UR)
+            {{"about.message1" | translate}}
             <br>
-            <br> UR Capital is a corporation whose mission is to create a secure, stable, and useful world
-            currency available to every human being.
+            <br>{{"about.message2" | translate}}
         </p>
-        <a href="#">(learn more about UR Capital)</a>
-        <p>Version {{config.version}}</p>
+        <a href="#">{{"about.learnMore" | translate}}</a>
+        <p>{{"version" | translate}} {{config.version}}</p>
     </div>
 </ion-content>
