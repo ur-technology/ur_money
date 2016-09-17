@@ -1,8 +1,9 @@
-import {Page, NavController, Platform} from 'ionic-angular';
+import {Page, NavController, Platform, ModalController } from 'ionic-angular';
 import {Type} from '@angular/core';
 import {PhoneNumberPage} from './phone-number';
 import {DownloadPage} from '../download/download';
-import {TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TermsAndConditionsPage} from '../terms-and-conditions/terms-and-conditions';
 
 @Page({
   templateUrl: 'build/pages/registration/welcome.html',
@@ -11,7 +12,7 @@ import {TranslatePipe} from "ng2-translate/ng2-translate";
 export class WelcomePage {
   public phoneNumberPage: Type;
 
-  constructor(public nav: NavController, private platform: Platform) {
+  constructor(public nav: NavController, private platform: Platform, private modalCtrl: ModalController) {
     this.phoneNumberPage = PhoneNumberPage;
   }
 
@@ -23,6 +24,11 @@ export class WelcomePage {
     if (!this.platform.is('cordova')) {
       this.nav.setRoot(DownloadPage, {}, { animate: true, direction: 'forword' });
     }
+  }
+
+  openTermsAndConditions() {
+    let modal = this.modalCtrl.create(TermsAndConditionsPage);
+    modal.present();
   }
 
 }

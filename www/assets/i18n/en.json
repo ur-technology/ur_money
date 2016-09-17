@@ -159,6 +159,10 @@
         "enterMessage": "Enter option message",
         "send": "Send"
     },
+    "terms-and-conditions": {
+        "title": "Terms and Conditions",
+        "text": "Text of terms and conditions"
+    },
     "done": "Done",
     "edit": "Edit",
     "yes": "Yes",

@@ -16,7 +16,7 @@
             <p class="ur-slogan">{{ "welcome.description" | translate }}</p>
             <p>
                 {{ "welcome.terms" | translate }}
-                <br> {{ "welcome.terms2" | translate }} <a class="terms-btn">{{ "welcome.terms3" | translate }} </a>
+                <br> {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
                 <br> {{ "welcome.terms4" | translate }}<a (click)="goToDownloadPage()">&nbsp;&nbsp;&nbsp;&nbsp;</a>
             </p>
             <button clear
