@@ -1,4 +1,4 @@
-import { Component, Input,  AfterViewInit , OnInit, } from '@angular/core';
+import { Component, Input, AfterViewInit, OnInit, } from '@angular/core';
 import {NavController, NavParams, Platform, AlertController} from 'ionic-angular';
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
 import {ContactsService} from '../../services/contacts';
@@ -36,7 +36,7 @@ export class ContactsComponent {
     private auth: AuthService,
     private platform: Platform,
     private alertCtrl: AlertController,
-    private app: App,  private translate: TranslateService
+    private app: App, private translate: TranslateService
   ) {
     this.startTime = (new Date()).getTime();
 
@@ -55,7 +55,7 @@ export class ContactsComponent {
   ngAfterViewInit() {
     let self = this;
     this.memberActionLabel = this.determineMemberActionLabel();
-    self.contactsService.getContacts().then((contactGroups:any) => {
+    self.contactsService.getContacts().then((contactGroups: any) => {
       let contacts = self.goal == "invite" ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
       self.paginatedContacts = _.chunk(contacts, self.PAGE_SIZE);
       self.numberOfPages = self.paginatedContacts.length;
@@ -82,11 +82,17 @@ export class ContactsComponent {
     if (!contact.userId) {
       this.inviteContact(contact);
     } else if (this.goal == "send") {
-      this.app.getRootNav().push(SendPage, { contact: contact });
+      this.nav.pop({ animate: false, duration: 0, transitionDelay: 0,  progressAnimation: false  }).then(data => {
+        this.app.getRootNav().push(SendPage, { contact: contact });
+      });
     } else if (this.goal == "request") {
-      this.app.getRootNav().push(RequestPage, { contact: contact });
+      this.nav.pop({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(data => {
+        this.app.getRootNav().push(RequestPage, { contact: contact });
+      });
     } else {
-      this.app.getRootNav().push(ChatPage, { contact: contact });
+      this.nav.pop({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(data => {
+        this.app.getRootNav().push(ChatPage, { contact: contact });
+      });
     }
   }
 
@@ -95,7 +101,7 @@ export class ContactsComponent {
     let invitationCode = self.generateInvitationCode();
     if (!self.platform.is('cordova')) {
       // HACK: this code is here to test invitations in ionic serve
-      let alert = self.alertCtrl.create({title: 'Simulating social sharing action sheet', message: 'Invitation added to queue!', buttons: ['Ok']});
+      let alert = self.alertCtrl.create({ title: 'Simulating social sharing action sheet', message: 'Invitation added to queue!', buttons: ['Ok'] });
       alert.present();
       self.addNewInvitationToQueue(contact, invitationCode);
       return;
