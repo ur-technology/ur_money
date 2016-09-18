@@ -35,7 +35,7 @@
 
         <ion-item-group *ngIf="identificationType == 'Driver License'">
           <ion-item>
-              <ion-select [(ngModel)]="verification.DriverLicense.State" formControlName="driverLicenseState" (ionChange)="driverLicenseStateSelected()">
+              <ion-select [(ngModel)]="verification.DriverLicense.State" formControlName="driverLicenseState">
                   <ion-option [value]="s" *ngFor="let s of driverLicenseStates">{{s}}</ion-option>
               </ion-select>
           </ion-item>

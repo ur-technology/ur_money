@@ -190,10 +190,6 @@ export class IdentityVerificationPage {
     });
   }
 
-  driverLicenseStateSelected() {
-    this.verification.DriverLicense.State = this.driverLicenseState;
-  }
-
   identificationTypeSelected() {
     for (let name in this.mainForm.controls) {
       this.mainForm.controls[name].setErrors(null);
