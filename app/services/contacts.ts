@@ -5,6 +5,7 @@ import {FakeContactsSource} from '../models/fake-contacts-source';
 import {ContactModel} from '../models/contact';
 import {UserModel} from '../models/user';
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 
 export interface ContactGroups {

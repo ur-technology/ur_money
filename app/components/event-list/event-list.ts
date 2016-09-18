@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, Platform, ToastController} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 import {Timestamp}  from '../../pipes/timestamp';
 import { App } from 'ionic-angular';
 import * as moment from 'moment';

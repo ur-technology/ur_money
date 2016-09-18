@@ -5,6 +5,7 @@ import {BigNumber} from 'bignumber.js'
 
 import {AuthService} from '../../services/auth';
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as moment from 'moment';

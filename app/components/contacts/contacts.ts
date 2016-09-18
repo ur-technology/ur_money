@@ -10,6 +10,7 @@ import {Config} from '../../config/config';
 import {UserModel} from '../../models/user';
 import { App } from 'ionic-angular';
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 declare var window: any;

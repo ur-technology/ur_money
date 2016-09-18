@@ -4,6 +4,7 @@ import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservab
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {AuthService} from '../../services/auth';
 import {DateAndTime} from '../../pipes/dateAndTime.pipe';

@@ -1,5 +1,6 @@
 import {Injectable, EventEmitter} from '@angular/core'
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import * as moment from 'moment';
 import {AuthService} from '../services/auth';

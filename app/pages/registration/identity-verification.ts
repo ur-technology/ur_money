@@ -3,6 +3,7 @@ import {Page, NavController, Platform, AlertController, ToastController} from 'i
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
 import {AngularFire} from 'angularfire2'
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 

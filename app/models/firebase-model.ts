@@ -1,5 +1,6 @@
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 
 export class FirebaseModel {
   private static _angularFire: AngularFire;

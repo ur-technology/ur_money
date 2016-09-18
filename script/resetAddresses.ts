@@ -1,5 +1,6 @@
 import {WalletModel} from '../app/models/wallet';
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 
 _.each([

@@ -2,11 +2,11 @@ import {Injectable, Inject, ViewChild} from '@angular/core'
 import {Nav, Platform} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {Subscription} from 'rxjs';
 import {ContactsService} from '../services/contacts';
 import {Sim} from 'ionic-native';
-
 
 @Injectable()
 export class AuthService {
