@@ -1,84 +1,121 @@
 .contacts-and-chats-page {
-    .toolbar-background {
-        background: #fff;
-        border-color: #fff;
-    }
-    .toolbar {
-        padding: 0;
-        .bar-button {
-            color: #17909c;
-            font-size: 16px;
-        }
-        .button-icon-only {
-            color: #17909c;
-            font-size: 16px;
-        }
-        .right {
-            float: right;
-            ion-icon {
-                color: #17909c;
-                font-weight: bold;
-            }
-        }
-    }
+  .toolbar-background {
+    background: #fff;
+    border-color: #fff;
+  }
 
+  .toolbar {
+    padding: 0;
+
+
+
+    .right {
+      float: right;
+
+      ion-icon {
+        color: #17909c;
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 .contacts-and-chats-page {
-    scroll-content {
-        overflow-y: visible;
-        padding: 0;
-    }
-    // ion-navbar-section {
-    //     display: none;
-    // }
-    .ion-ios-contacts-icon-on {
-        background: url("../../img/contacts-icon-active.png") no-repeat center;
-    }
-    .ion-ios-contacts-icon-on-outline {
-        background: url("../../img/contacts-icon.png") no-repeat center;
-    }
-    .ion-ios-chats-icon-on {
-        background: url("../../img/chats-icon-active.png") no-repeat center;
-    }
-    .ion-ios-chats-icon-on-outline {
-        background: url("../../img/chats-icon.png") no-repeat center;
-    }
+  scroll-content {
+    overflow-y: visible;
+    padding: 0;
+  }
+
+  .ion-ios-contacts-icon {
+    content: url("../../img/contacts-icon-active.png");
+  }
+
+  .ion-md-contacts-icon {
+    content: url("../../img/contacts-icon-active.png");
+    width: 24px;
+    height: 24px;
+  }
+
+  .ion-ios-contacts-icon-on-outline {
+    background: url("../../img/contacts-icon.png") no-repeat center;
+  }
+
+  .ion-ios-chats-icon {
+    content: url("../../img/chats-icon-active.png");
+  }
+
+  .ion-md-chats-icon {
+    content: url("../../img/chats-icon-active.png");
+    width: 24px;
+    height: 24px;
+  }
+
+  .ion-ios-chats-icon-on-outline {
+    background: url("../../img/chats-icon.png") no-repeat center;
+  }
+
+  .segment-tab-nav ion-segment-button span {
+    margin-top: -7px;
+  }
+
+  .segment-tab-nav ion-segment-button {
+    background-color: #e4e7e8;
+    border: none;
+    border-bottom: 1px solid #ddd !important;
+    height: 66px;
+    padding-top: 17px;
+  }
+
+  .segment-tab-nav ion-segment-button .tab-buttons {
+    display: flex;
+    overflow: hidden;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+  }
 }
 
-.chats-list, .contacts-list {
-    margin: -1px 0 8px 0;
+.chats-list,
+.contacts-list {
+  margin: -1px 0 8px;
 }
 
-.chats-list .item.item-avatar, .contacts-list .item.item-avatar {
-    min-height: 85px;
-    border-bottom: 1px solid #ddd;
-    .item-inner {
-        border-bottom: none;
-    }
+.chats-list .item.item-avatar,
+.contacts-list .item.item-avatar {
+  min-height: 85px;
+  border-bottom: 1px solid #ddd;
+
+  .item-inner {
+    border-bottom: none;
+  }
 }
 
-.chats-list .item.item-avatar img, .contacts-list .item.item-avatar img {
-    max-width: 55px;
-    max-height: 55px;
-    border-radius: 50%;
+.chats-list .item.item-avatar img,
+.contacts-list .item.item-avatar img {
+  max-width: 55px;
+  max-height: 55px;
+  border-radius: 50%;
 }
 
-.chats-list .item h2, .contacts-list .item h2 {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-size: 20px;
-    color: #546a79;
+.chats-list .item h2,
+.contacts-list .item h2 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 1.8rem;
+  color: #546a79;
 }
 
-.chats-list .item p, .contacts-list .item p {
-    font-size: 12px;
-    color: #98a6af;
+.chats-list .item p,
+.contacts-list .item p {
+  font-size: 1.4rem;
+  color: #98a6af;
 }
 
-.chats-list .item-note, .contacts-list .item-note {
-    position: absolute;
-    top: 25px;
-    right: 20px;
-    font-size: 10px;
+.chats-list .item-note,
+.contacts-list .item-note {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  font-size: 1.2rem;
 }

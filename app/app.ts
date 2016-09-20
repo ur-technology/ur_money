@@ -12,7 +12,6 @@ import {Config} from './config/config';
 import {AuthService} from './services/auth';
 import {ChartDataService} from './services/chart-data';
 import {CountryListService} from './services/country-list';
-import {LoadingModalComponent} from './components/loading-modal/loading-modal';
 import {ContactsService} from './services/contacts';
 import {DeviceIdentityService} from './services/device-identity';
 import {EventsService} from './services/events';
@@ -33,15 +32,13 @@ import {DownloadPage} from './pages/download/download';
 
 @Component({
   templateUrl: 'build/app.html',
-  directives: [LoadingModalComponent],
   providers: [
     AuthService,
     DeviceIdentityService,
     ContactsService,
     EventsService,
     CountryListService,
-    ChartDataService,
-    LoadingModalComponent,
+    ChartDataService,    
     FIREBASE_PROVIDERS,
     HTTP_PROVIDERS,
     defaultFirebase(Config.firebase),
@@ -144,7 +141,6 @@ ionicBootstrap(UrMoney, [disableDeprecatedForms(),
     deps: [Http]
   }),
     TranslateService]], {
-    mode: 'ios',
     platforms: {
       ios: {
         statusbarPadding: true

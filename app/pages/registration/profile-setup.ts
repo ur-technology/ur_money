@@ -12,7 +12,6 @@ import {WalletModel} from '../../models/wallet';
 import {AuthService} from '../../services/auth';
 import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
-import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 
 import {IdentityVerificationPage} from './identity-verification';
 import {HomePage} from '../home/home';
@@ -33,7 +32,6 @@ export class ProfileSetupPage {
   constructor(
     public nav: NavController,
     public auth: AuthService,
-    public loadingModal: LoadingModalComponent,
     public deviceIdentityService: DeviceIdentityService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController
@@ -101,11 +99,9 @@ export class ProfileSetupPage {
       deviceIdentity: this.deviceIdentityService.deviceIdentity,
     });
     this.auth.currentUserRef.update(newValues).then(() => {
-      _.merge(this.auth.currentUser, newValues);
-      this.loadingModal.hide();
+      _.merge(this.auth.currentUser, newValues);    
       this.nav.setRoot(IdentityVerificationPage);
     }).catch((error) => {
-      this.loadingModal.hide();
       log.warn('unable to save address info');
     });
   };

@@ -3,7 +3,7 @@
 -------------------*/
 
 body, h1, h2, h3, h4, h5, h6, input, button, select, textarea {
-    font-family: 'Open Sans', sans-serif;
+
 }
 
 .text-center {
@@ -131,6 +131,14 @@ i.menu-icon {
     height: 28px;
 }
 
+.ion-ios-sent-icon {
+    content: url("../../img/sent-icon-active.png");
+}
+
+.ion-md-sent-icon {
+    content: url("../../img/sent-icon-active.png");
+}
+
 .ion-ios-sent-icon-on {
     background: url("../../img/sent-icon-active.png") no-repeat center;
 }
@@ -139,12 +147,28 @@ i.menu-icon {
     background: url("../../img/sent-icon.png") no-repeat center;
 }
 
+.ion-ios-received-icon {
+    content: url("../../img/received-icon-active.png");
+}
+
+.ion-md-received-icon {
+    content: url("../../img/received-icon-active.png");
+}
+
 .ion-ios-received-icon-on {
     background: url("../../img/received-icon-active.png") no-repeat center;
 }
 
 .ion-ios-received-icon-on-outline {
     background: url("../../img/received-icon.png") no-repeat center;
+}
+
+.ion-ios-earned-icon {
+    content: url("../../img/earned-icon-active.png");
+}
+
+.ion-md-earned-icon {
+    content: url("../../img/earned-icon-active.png");
 }
 
 .ion-ios-earned-icon-on {
@@ -211,6 +235,7 @@ i.menu-icon {
     border: none;
     color: #ffffff;
     font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;

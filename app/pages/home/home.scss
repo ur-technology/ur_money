@@ -13,7 +13,7 @@
     }
     .toolbar {
         .bar-button {
-            color: #17909c;
+                  color: #17909c;
         }
         .right {
             float: right;
@@ -92,6 +92,10 @@
     min-height: 30px;
     font-size: 16px;
     border-color: transparent;
+}
+
+.md .button-bar.chart-btns .button {
+  box-shadow: none;
 }
 
 .button-bar.chart-btns .button.active {
@@ -231,6 +235,10 @@
     width: 32%;
     margin: 0;
     border-radius: 0;
+}
+
+.md .footer-btns .button.button-calm {
+  box-shadow: none;
 }
 
 .footer-btns .button.button-calm:last-child {

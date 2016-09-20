@@ -8,7 +8,6 @@ import * as log from 'loglevel';
 import {UserModel} from '../../models/user';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
-import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import {FocuserDirective} from '../../directives/focuser';
 
 import {HomePage} from '../home/home';
@@ -27,8 +26,7 @@ export class SettingsPage {
   profile: any;
   constructor(
     public nav: NavController,
-    public auth: AuthService,
-    public loadingModal: LoadingModalComponent,
+    public auth: AuthService,    
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,  private translate: TranslateService
   ) {

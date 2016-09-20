@@ -20,4 +20,7 @@
 // The "primary" color is the only required color in the map.
 // Both iOS and MD colors can be further customized if colors
 // are different per mode.
-$colors: ( primary: #387ef5, secondary: #32db64, danger: #f53d3d, light: #f4f4f4, dark: #222, favorite: #69BB7B);
+$colors: ( primary: #3aade2, secondary: #32db64, danger: #f53d3d, light: #f4f4f4, dark: #222, favorite: #69BB7B);
+$text-input-md-show-focus-highlight: false;
+$select-ios-padding-left: 0px;
+$select-md-padding-left: 8px;

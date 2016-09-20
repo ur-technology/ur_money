@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar>
         <ion-title>{{"wallet-setup.title" | translate}}</ion-title>
-        <button clear
-            class="right"
-            [disabled]="!mainForm.valid"
-            (click)="submit()">
-            {{"done" | translate}}
-        </button>
+        <ion-buttons end>
+          <button [disabled]="!mainForm.valid"
+              (click)="submit()">
+              {{"done" | translate}}
+          </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content padding

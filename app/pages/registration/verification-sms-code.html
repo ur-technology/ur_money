@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar>
         <ion-title>{{"verification-sms-code.title" | translate}}</ion-title>
-        <button clear
-            class="right"
-            [disabled]="verificationCode.length<6"
-            (click)="submit()">
-            {{"done" | translate}}
-        </button>
+        <ion-buttons end>
+          <button [disabled]="verificationCode.length<6"
+              (click)="submit()">
+              {{"done" | translate}}
+          </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content class="phone-number phone-number-verification">

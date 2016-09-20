@@ -4,23 +4,17 @@
 </ion-header>
 <ion-content class="contacts-and-chats-page contentPage">
   <ion-segment [(ngModel)]="segmentSelected"
-      class="transactions-tab-nav">
+      class="segment-tab-nav">
       <ion-segment-button value="contacts" >
-          <a class="tab-button has-title has-icon disable-hover"
-              role="tab">
-              <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
-                  role="img"
-                  name="contacts-icon-on"></ion-icon>
-              <span class="tab-button-text">{{"contacts-and-chats.contacts" | translate}}</span>
+          <a class="tab-buttons has-title has-icon">
+              <ion-icon name="contacts-icon"></ion-icon>
+              <span>{{"contacts-and-chats.contacts" | translate}}</span>
           </a>
       </ion-segment-button>
       <ion-segment-button value="chats" >
-          <a class="tab-button has-title has-icon disable-hover"
-              role="tab">
-              <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
-                  role="img"
-                  name="chats-icon-on"></ion-icon>
-              <span class="tab-button-text">{{"contacts-and-chats.chats" | translate}}</span>
+          <a class="tab-buttons has-title has-icon">
+              <ion-icon name="chats-icon"></ion-icon>
+              <span>{{"contacts-and-chats.chats" | translate}}</span>
           </a>
       </ion-segment-button>
   </ion-segment>

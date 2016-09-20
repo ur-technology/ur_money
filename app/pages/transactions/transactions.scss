@@ -3,70 +3,65 @@
     background: #fff;
     border-color: #fff;
   }
+
   .toolbar {
     padding: 0;
-    .bar-button {
-      color: #17909c;
-    }
+
+  
     .right {
       float: right;
+
       ion-icon {
         color: #444;
         font-weight: bold;
       }
     }
   }
+
+
+  .transactions-tab-nav ion-segment-button span {
+    margin-top: -5px;
+  }
+  .transactions-tab-nav ion-segment-button {
+    background-color: #e4e7e8;
+    border: none;
+    height: 61px;
+    padding-top: 8px;
+    border-bottom: 1px solid #ddd !important;
+  }
+
+  .transactions-tab-nav ion-segment-button .tab-buttons {
+    display: flex;
+    overflow: hidden;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+  }
 }
+
 .transactions {
   scroll-content {
     overflow-y: visible;
   }
+
   ion-navbar-section {
     display: none;
   }
 }
-.transactions-tab-nav ion-segment-button {
-  background-color: #e4e7e8;
-  border: none;
-  height: 65px;
-  padding-top: 8px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #ddd !important;
-}
-.transactions-tab-nav ion-segment-button span {
-  padding-top: 3px;
-}
-.transactions-tab-nav ion-segment-button .tab-button {
-  line-height: 1.6em;
-  color: #a8a8a8;
-  text-transform: uppercase;
-  font-size: 9px;
-  font-weight: 600;
-}
-.segment-activated {
+
+
+.ios .segment-activated {
   color: #3aade2 !important;
   position: relative;
-  background-color: #e4e7e8 !important;
+  background-color: #d6dadc !important;
 }
-.segment-activated span {
-  padding-top: 3px;
-  color: #3aade2 !important;
-}
-.segment-activated:after {
-  content: '';
-  display: block;
-  width: 50px;
-  height: 1px;
-  background-color: #3aade2;
-  position: absolute;
-  bottom: 5;
-  left: 50%;
-  margin-left: -25px;
-}
+
 .transaction-filter-top {
   background-color: #e4e7e8;
   padding: 10px 24px 25px;
 }
+
 .transaction-filter-top .filter-box {
   position: relative;
   overflow: hidden;
@@ -88,6 +83,7 @@
   padding-bottom: 1px;
   margin: 0 -5px;
 }
+
 .transaction-filter-top .filter-btns .button.button-outline {
   font-size: 8px;
   line-height: 1.4;
@@ -100,28 +96,33 @@
   min-width: 0;
   height: 16px;
 }
+
 .transaction-filter-top .filter-btns .button.button-outline.activated,
 .transaction-filter-top .filter-btns .button.button-outline.active,
 .transaction-filter-top .filter-btns .button.button-outline:focus {
   background-color: rgba(0, 0, 0, 0.15);
   border-color: rgba(0, 0, 0, 0.15);
 }
+
 .transaction-filter-top .total-ur {
   font-size: 24px;
   font-weight: 300;
   color: #ffffff;
   line-height: 1.4em;
 }
+
 .transaction-filter-top .last-update {
   font-size: 10px;
   color: rgba(256, 256, 256, 0.6);
   line-height: 1.4em;
   margin: 0 0 10px;
 }
+
 .transaction-filter-top .last-update ion-icon {
   margin-right: 3px;
   color: rgba(256, 256, 256, 1);
 }
+
 .transaction-filter-top .invite-and-earn {
   position: absolute;
   background-color: #fa4c44;
@@ -134,11 +135,13 @@
   text-align: center;
   width: 180px;
   border-radius: 59% 70% 20% 80%;
+
   p {
     color: #d0d0d0;
     margin: 0 0 10px;
   }
 }
+
 .transaction-filter-top .invite-and-earn .button {
   font-size: 10px;
   padding: 5px 10px;
@@ -151,30 +154,37 @@
   background: transparent;
   color: #ddd;
 }
+
 .transaction-earned .has-tabs-top,
 .transaction-received .has-tabs-top,
 .transaction-sent .has-tabs-top {
   top: 120px;
   background-color: #dedede;
 }
+
 .transaction-sent .transaction-filter-top .total-ur:after {
   font-size: 11px;
   font-weight: 600;
 }
+
 .transaction-received .transaction-filter-top .total-ur:after {
   font-size: 11px;
   font-weight: 600;
 }
-.transaction-earned .transaction-filter-top .total-ur:after {  
+
+.transaction-earned .transaction-filter-top .total-ur:after {
   font-size: 11px;
   font-weight: 600;
 }
+
 .transaction-sent .filter-box {
   background-color: #eb3f97;
 }
+
 .transaction-received .filter-box {
   background-color: #3aade2;
 }
+
 .transaction-earned .filter-box {
   background-color: #ef3f37;
 }
@@ -183,6 +193,7 @@
   background-color: #dedede;
   padding: 13px;
 }
+
 .transaction-chat .card {
   border-radius: 5px;
   margin: 0 10px 7px;
@@ -190,27 +201,33 @@
   padding-bottom: 1px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
+
 .transaction-chat .item {
   min-height: 72px;
   border-radius: 5px;
   border-radius: 5px;
+
   .input-wrapper {
     border-right: 1px solid #dedede;
   }
+
   .item-inner {
     border-bottom: none;
     padding-right: 0;
   }
 }
+
 .transaction-chat .item img {
   left: 7px;
 }
+
 .transaction-chat .item h2 {
   font-size: 13px;
   font-weight: 600;
   text-transform: capitalize;
   color: #38454f;
 }
+
 .transaction-chat .item h2 .item-date-time {
   font-size: 7px;
   font-weight: 500;
@@ -219,11 +236,13 @@
   line-height: 15px;
   margin-left: 8px;
 }
+
 .transaction-chat .item p {
   font-size: 9px;
   line-height: 1.3em;
   color: #546a79;
 }
+
 .transaction-chat .trans-ur {
   font-size: 13px;
   font-weight: 600;

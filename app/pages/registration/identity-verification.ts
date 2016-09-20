@@ -1,5 +1,5 @@
 import {ViewChild, ElementRef, Inject} from '@angular/core';
-import {Page, NavController, Platform, AlertController, ToastController} from 'ionic-angular';
+import {Page, NavController, Platform, AlertController, ToastController, LoadingController} from 'ionic-angular';
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
 import {AngularFire} from 'angularfire2'
 import * as _ from 'lodash';
@@ -13,7 +13,6 @@ import {WalletModel} from '../../models/wallet';
 import {AuthService} from '../../services/auth';
 import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
-import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 
 import {WalletSetupPage} from './wallet-setup';
 import {VerificationPendingPage} from './verification-pending';
@@ -40,9 +39,9 @@ export class IdentityVerificationPage {
   constructor(
     public nav: NavController,
     public auth: AuthService,
-    public loadingModal: LoadingModalComponent,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,  private translate: TranslateService
   ) {
     this.genders = [
       { name: 'Male', value: 'M' },
@@ -149,7 +148,11 @@ export class IdentityVerificationPage {
   }
 
   submit() {
-    this.loadingModal.show();
+    let loader = this.loadingCtrl.create({
+      content: this.translate.instant("pleaseWait"),
+      dismissOnPageChange: true
+    });
+    loader.present();
 
     let task: any = _.pick(this.verification, ['PersonInfo', 'Location', 'Communication']);
     if (this.identificationType == 'Driver License') {
@@ -166,7 +169,6 @@ export class IdentityVerificationPage {
     let resultRef = taskRef.child('result');
     log.debug(`waiting for value at ${resultRef.toString()}`)
     resultRef.on('value', (snapshot) => {
-
       // wait until result element appears on phoneLookupRef
       let result: any = snapshot.val();
       if (!result) {
@@ -176,7 +178,7 @@ export class IdentityVerificationPage {
       taskRef.remove();
       log.debug(`got value at ${resultRef.toString()}`, result)
 
-      this.loadingModal.hide();
+      loader.dismiss();
 
       if (result.RecordStatus == "match") {
         this.auth.reloadCurrentUser();
@@ -185,7 +187,7 @@ export class IdentityVerificationPage {
         this.nav.setRoot(VerificationPendingPage);
       }
     }, (error) => {
-      this.loadingModal.hide();
+      loader.dismiss();
       log.warn(`unable to get match results: ${error}`);
     });
   }

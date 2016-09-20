@@ -10,35 +10,27 @@
     [fullscreen]="false">
     <ion-segment [(ngModel)]="segmentSelected"
         class="transactions-tab-nav">
-        <ion-segment-button value="sent" >
-            <a class="tab-button has-title has-icon disable-hover"
-                role="tab">
-                <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
-                    role="img"
-                    name="sent-icon-on"></ion-icon>
-                <span class="tab-button-text">{{"transactions.sent" | translate}}</span>
+        <ion-segment-button value="sent">
+            <a class="tab-buttons has-title has-icon">
+                <ion-icon name="sent-icon"></ion-icon>
+                <span>{{"transactions.sent" | translate}}</span>
             </a>
         </ion-segment-button>
-        <ion-segment-button value="received" >
-            <a class="tab-button has-title has-icon disable-hover"
-                role="tab">
-                <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
-                    role="img"
-                    name="received-icon-on"></ion-icon>
-                <span class="tab-button-text">{{"transactions.received" | translate}}</span>
+        <ion-segment-button value="received">
+            <a class="tab-buttons has-title has-icon ">
+                <ion-icon name="received-icon"></ion-icon>
+                <span>{{"transactions.received" | translate}}</span>
             </a>
         </ion-segment-button>
         <ion-segment-button value="earned">
-            <a class="tab-button has-title has-icon disable-hover"
-                role="tab">
-                <ion-icon class="tab-button-icon ion-ios-sent-icon-on"
-                    role="img"
-                    name="earned-icon-on"></ion-icon>
-                <span class="tab-button-text">{{"transactions.earned" | translate}}</span>
+            <a class="tab-buttons has-title has-icon">
+                <ion-icon name="earned-icon"></ion-icon>
+                <span>{{"transactions.earned" | translate}}</span>
             </a>
         </ion-segment-button>
     </ion-segment>
-    <transaction-component class="transactions transaction-{{segmentSelected}}" transactionType={{segmentSelected}} ></transaction-component>
+    <transaction-component class="transactions transaction-{{segmentSelected}}"
+        transactionType={{segmentSelected}}></transaction-component>
 </ion-content>
 <ion-footer>
     <div class="bar bar-footer dash-footer">

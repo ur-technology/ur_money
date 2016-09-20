@@ -67,7 +67,7 @@ export class ChatPage {
 
   adjustMessageTextAreaHeightBasedOnInput() {
     const MESSAGE_TEXT_AREA_MAXIMUM_HEIGHT = 115;
-    const MESSAGE_TEXT_AREA_ROW_HEIGHT = 19;
+    const MESSAGE_TEXT_AREA_ROW_HEIGHT = 38;
 
     jQuery("textarea").on("input", event => {
       this.messageTextAreaHeight = Math.min(event.target.scrollHeight, MESSAGE_TEXT_AREA_MAXIMUM_HEIGHT);
@@ -212,7 +212,7 @@ export class ChatPage {
 
   resetMessageTextArea() {
     this.messageText = "";
-    this.messageTextAreaHeight = 38;
+    this.messageTextAreaHeight = 32;
     jQuery("textarea")[0].rows = 2;
   }
 }

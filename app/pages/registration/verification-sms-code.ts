@@ -1,6 +1,5 @@
 import {Page, NavController, NavParams, AlertController, LoadingController, ToastController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
-import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
@@ -33,7 +32,7 @@ export class VerificationSmsCodePage {
           log.debug(result.error);
           this.showErrorAlert(this.translate.instant("verification-sms-code.errorVerificationSms"));
         } else if (result.codeMatch) {
-          loading.dismiss();          
+          loading.dismiss();
         } else {
           this.showErrorAlert(this.translate.instant("verification-sms-code.errorCode"));
         }

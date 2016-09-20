@@ -18,7 +18,7 @@
         "errorSms": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"
     },
     "verification-sms-code": {
-        "title": "Ingresa el código de verificación",
+        "title": "Código de verificación",
         "heading1": "Te hemos enviado un SMS con un código.",
         "heading2": " Para completar la verificación del número de teléfono, ingresa el código de activación de 6 dígitos.",
         "smsAgain": "No llegó el SMS? Enviar de nuevo",

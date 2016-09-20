@@ -7,7 +7,6 @@ import {ControlGroup, AbstractControl} from '@angular/common';
 import {AuthService} from '../../services/auth';
 import {VerificationSmsCodePage} from './verification-sms-code';
 import {CountryNotSupportedPage} from './country-not-supported';
-import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import {CountryListService} from '../../services/country-list';
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
@@ -23,7 +22,7 @@ export class PhoneNumberPage implements OnInit {
   countries: any;
   selected: any;
   selectedCountry: any;
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public loadingModal: LoadingModalComponent, public countryListService: CountryListService, private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public countryListService: CountryListService, private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
     this.elementRef = elementRef;
     this.phoneForm = new FormGroup({
       phone: new FormControl('', (control) => {

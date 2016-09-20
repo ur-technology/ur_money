@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar>
         <ion-title>{{"settings.title" | translate}}</ion-title>
-        <button clear
-            class="right"
-            [disabled]="!mainForm.valid"
-            (click)="submit()">
+        <ion-buttons end>
+            <button [disabled]="!mainForm.valid"
+                (click)="submit()">
             {{"save" | translate}}
         </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content padding
@@ -67,7 +67,8 @@
     </form>
 </ion-content>
 <ion-footer>
-    <button class="sign-out-button" full
+    <button class="sign-out-button"
+        full
         type="text"
         danger
         small

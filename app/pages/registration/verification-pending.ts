@@ -10,7 +10,6 @@ import {WalletModel} from '../../models/wallet';
 import {AuthService} from '../../services/auth';
 import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
-import {LoadingModalComponent} from '../../components/loading-modal/loading-modal';
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Page({

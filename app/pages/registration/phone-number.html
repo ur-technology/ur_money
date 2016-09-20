@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar>
         <ion-title>{{selectedCountry.code}}{{phoneForm.value.phone}}</ion-title>
-        <button clear
-            class="right"
-            [disabled]="!phoneForm.valid"
-            (click)="submit(phoneInput)">
-            {{"done" | translate}}
-        </button>
+        <ion-buttons end>
+          <button [disabled]="!phoneForm.valid"
+              (click)="submit(phoneInput)">
+              {{"done" | translate}}
+          </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content padding
