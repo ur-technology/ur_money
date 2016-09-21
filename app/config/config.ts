@@ -13,7 +13,7 @@ export let Config: any = require("./env"); // TODO: figure out how to respond gr
 _.defaults(Config, {
   version: "1.0.0 (21-Sep-2016 08:35 PM CT)",
   generalAppDownloadUrl: "http://ur-money-staging.firebaseapp.com/app",
-  iosAppDownloadUrl: "https://i.diawi.com/AVLixG",
+  iosAppDownloadUrl: "https://i.diawi.com/AZ5fgm",
   androidAppDownloadUrl: "https://i.diawi.com/TaovaP",
   firebaseProjectId: "ur-money-staging",
   logLevel: "debug"
