@@ -178,14 +178,14 @@ export class IdentityVerificationPage {
       taskRef.remove();
       log.debug(`got value at ${resultRef.toString()}`, result)
 
-      loader.dismiss();
-
-      if (result.RecordStatus == "match") {
-        this.auth.reloadCurrentUser();
-        this.nav.setRoot(WalletSetupPage);
-      } else {
-        this.nav.setRoot(VerificationPendingPage);
-      }
+      loader.dismiss().then(()=>{
+        if (result.RecordStatus == "match") {
+          this.auth.reloadCurrentUser();
+          this.nav.setRoot(WalletSetupPage);
+        } else {
+          this.nav.setRoot(VerificationPendingPage);
+        }
+      });
     }, (error) => {
       loader.dismiss();
       log.warn(`unable to get match results: ${error}`);
