@@ -5,6 +5,10 @@
         // disallow reading anything in the db
         ".read": false,
 
+        "version": {
+            ".write": false,
+            ".read": true,
+        },
         "phoneAuthenticationQueue": {
             "tasks": {
                 ".indexOn": "_state",

@@ -1,18 +1,17 @@
 <ion-content padding class="about about-us">
     <div class="ur-logo">
         <img src="img/ur-logo.png" alt="logo">
-    </div>
-
+    </div>  
     <div class="about-text">
-        <h1 class="heading">{{"download.urMoneyversion" | translate}} {{config.version}}</h1>
+        <h1 class="heading">{{"download.urMoneyversion" | translate}} {{version.description}}</h1>
         <div *ngIf="deviceType == 'ios'">
             <p>
-                <a href="{{config.iosAppDownloadUrl}}">{{"download.download" | translate}} (iOS Version)</a>
+                <a href="{{version.iosAppDownloadUrl}}">{{"download.download" | translate}} (iOS Version)</a>
             </p>
         </div>
         <div *ngIf="deviceType == 'android'">
             <p>
-                <a href="{{config.androidAppDownloadUrl}}">{{"download.download" | translate}}  (Android Version)</a>
+                <a href="{{version.androidAppDownloadUrl}}">{{"download.download" | translate}}  (Android Version)</a>
             </p>
         </div>
         <div *ngIf="deviceType == 'other'">
