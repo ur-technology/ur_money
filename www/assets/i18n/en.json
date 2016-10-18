@@ -36,7 +36,7 @@
         "city": "City",
         "zipCode": "Zip/Postal code"
     },
-    "identity-verification": {
+    "identity-info-setup": {
         "title": "Identification document",
         "birthDay": "Birth day",
         "birthMonth": "Birth month",
@@ -58,11 +58,15 @@
         "secretPhrase": "Secret phrase",
         "titleConfirm": "Confirm secret phrase written",
         "messagePhrase": "Write your five word paraphrase down and store it someplace safe. UR Capital does not store your pass phrase and will NOT be able to recover it if it is lost or forgotten.",
-        "messageSave": "Your account has been submitted for review. Once it is approved, you will receive 2,000 UR!"
+        "messageSave": "You will receive your 2,000 UR bonus soon!"
     },
     "verification-pending": {
         "title": "Verification pending",
         "message": "Thank you for submitting your verification request. Most requests are processed within 24 hours. We will notify you via text message when we are finished processing your request."
+    },
+    "verification-failed": {
+        "title": "Verification Failed",
+        "message": "We're sorry. We were unable to verify your identity. We will send you an email with details on how you can re-apply."
     },
     "country-not-supported": {
         "title": "UR Money",

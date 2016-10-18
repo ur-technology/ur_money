@@ -67,7 +67,28 @@
                 ".indexOn": "_state",
                 "$task": {
                     // allow write only if the authenticated user is writing his own data
-                    ".write": "(newData.exists() || data.exists() ) && $task===auth.uid",
+                    /*".write": "(newData.exists() || data.exists() ) && $task===auth.uid",*/
+                    ".write": true,
+                    // allow read only if the authenticated user is reading his own data
+                    ".read": "data.child('userId').val()===auth.uid",
+
+                    "result": {
+                        // allow reading verification result of a particular record
+                        ".read": true
+                        /*".read": "$task===auth.uid"*/
+                    }
+
+                }
+            }
+        },
+
+        "identityAnnouncementQueue": {
+            "tasks": {
+                ".indexOn": "_state",
+                "$task": {
+                    // allow write only if the authenticated user is writing his own data
+                    /*".write": "(newData.exists() || data.exists() ) && $task===auth.uid",*/
+                    ".write": true,
                     // allow read only if the authenticated user is reading his own data
                     ".read": "data.child('userId').val()===auth.uid",
 

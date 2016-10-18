@@ -133,6 +133,9 @@ export class WalletSetupPage {
           duration: 5000,
           position: 'bottom'
         }).present();
+        firebase.database().ref("/identityAnnouncementQueue/tasks").push({
+          userId: this.auth.currentUserId
+        });
         self.nav.setRoot(HomePage);
       });
     }).catch((error) => {

@@ -20,8 +20,10 @@
         }
       },
       "firstName" : "Eiland",
-      "identityVerificationRequestedAt": 1472751891913,
-      "identityVerifiedAt": 1465446952757,
+      "identityVerification": {
+        "requestedAt": 1472751891913,
+        "verifiedAt": 1465446952757
+      },
       "lastName" : "Glover",
       "memberId" : 1,
       "middleName" : "",
@@ -54,8 +56,10 @@
         }
       },
       "firstName" : "John",
-      "identityVerificationRequestedAt": 1472751891913,
-      "identityVerifiedAt": 1465446952757,
+      "identityVerification": {
+        "requestedAt": 1472751891913,
+        "verifiedAt": 1465446952757
+      },
       "lastName" : "Reitano",
       "memberId" : 2,
       "name" : "John Reitano",
@@ -76,8 +80,10 @@
       "createdAt" : 1467646727200,
       "downlineLevel" : 3,
       "firstName" : "TestFirstname",
-      "identityVerificationRequestedAt": 1472751891913,
-      "identityVerifiedAt": 1465446952757,
+      "identityVerification": {
+        "requestedAt": 1472751891913,
+        "verifiedAt": 1465446952757
+      },
       "lastName" : "TestLastname",
       "memberId" : 301,
       "name" : "TestFirstname TestLastname",
@@ -98,8 +104,10 @@
       "createdAt" : 1467746790141,
       "downlineLevel" : 3,
       "firstName" : "Xavier",
-      "identityVerificationRequestedAt": 1472751891913,
-      "identityVerifiedAt": 1465446952757,
+      "identityVerification": {
+        "requestedAt": 1472751891913,
+        "verifiedAt": 1465446952757
+      },
       "lastName" : "Pérez",
       "memberId" : 303,
       "name" : "Xavier Pérez",
@@ -120,8 +128,10 @@
       "createdAt" : 1467746790141,
       "downlineLevel" : 4,
       "firstName" : "Horacio",
-      "identityVerificationRequestedAt": 1472751891913,
-      "identityVerifiedAt": 1465446952757,
+      "identityVerification": {
+        "requestedAt": 1472751891913,
+        "verifiedAt": 1465446952757
+      },
       "lastName" : "Pérez",
       "memberId" : 304,
       "name" : "Horacio Pérez",

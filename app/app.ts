@@ -21,6 +21,7 @@ import {WelcomePage} from './pages/registration/welcome';
 import {ProfileSetupPage} from './pages/registration/profile-setup';
 import {WalletSetupPage} from './pages/registration/wallet-setup';
 import {VerificationPendingPage} from './pages/registration/verification-pending';
+import {VerificationFailedPage} from './pages/registration/verification-failed';
 import {HomePage} from './pages/home/home';
 import {ChatPage} from './pages/chat/chat';
 import {SendPage} from './pages/send/send';
@@ -38,7 +39,7 @@ import {DownloadPage} from './pages/download/download';
     ContactsService,
     EventsService,
     CountryListService,
-    ChartDataService,    
+    ChartDataService,
     FIREBASE_PROVIDERS,
     HTTP_PROVIDERS,
     defaultFirebase(Config.firebase),
@@ -81,7 +82,14 @@ class UrMoney {
         this.nav.setRoot(DownloadPage, {}, { animate: true, direction: 'forward' });
         return;
       }
-      this.auth.respondToAuth(this.nav, WelcomePage, ProfileSetupPage, VerificationPendingPage, WalletSetupPage, HomePage, ChatPage);
+      this.auth.respondToAuth(this.nav, {
+        welcomePage: WelcomePage,
+        profileSetupPage: ProfileSetupPage,
+        verificationPendingPage: VerificationPendingPage,
+        verificationFailedPage: VerificationFailedPage,
+        walletSetupPage: WalletSetupPage,
+        homePage: HomePage
+      });
 
       log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
     });

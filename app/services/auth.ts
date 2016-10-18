@@ -21,7 +21,7 @@ export class AuthService {
     this.androidPlatform = this.platform.is('android');
   }
 
-  respondToAuth(nav: Nav, welcomePage: any, profileSetupPage: any, verificationPendingPage: any, walletSetupPage: any, homePage: any, chatPage) {
+  respondToAuth(nav: Nav, pages: any) {
     let self = this;
     firebase.auth().onAuthStateChanged((authData) => {
       if (authData) {
@@ -39,17 +39,17 @@ export class AuthService {
             }
             self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
           });
-          if (currentUser.identityVerifiedAt) {
-            if (currentUser.wallet && currentUser.wallet.address) {
-              nav.setRoot(homePage);
-            } else {
-              nav.setRoot(walletSetupPage);
-            }
-          } else if (currentUser.identityVerificationRequestedAt) {
-            nav.setRoot(verificationPendingPage);
-          } else {
-            nav.setRoot(profileSetupPage);
-          }
+          let status = _.trim((currentUser.registration && currentUser.registration.status) || "") || "initial";
+          nav.setRoot({
+            "initial": pages.profileSetupPage,
+            "verification-requested": pages.verificationPendingPage,
+            "verification-pending": pages.verificationPendingPage,
+            "verification-failed": pages.verificationFailedPage,
+            "verification-succeeded": pages.walletSetupPage,
+            "announcement-requested": pages.homePage,
+            "announcement-failed": pages.homePage,
+            "announcement-succeeded": pages.homePage
+          }[status]);
         });
       } else {
         // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
@@ -57,14 +57,18 @@ export class AuthService {
         self.currentUserRef = undefined;
         self.currentUser = undefined;
         self.countryCode = undefined;
-        nav.setRoot(welcomePage);
+        nav.setRoot(pages.welcomePage);
       }
     });
   }
 
-  reloadCurrentUser() {
-    firebase.database().ref(`/users/${this.currentUserId}`).once('value', data => {
-      this.currentUser = data.val();
+  reloadCurrentUser(): Promise<any> {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      firebase.database().ref(`/users/${self.currentUserId}`).once('value', data => {
+        self.currentUser = data.val();
+        resolve();
+      });
     });
   }
 

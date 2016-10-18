@@ -23,7 +23,7 @@ export class UserModel extends FirebaseModel {
   profilePhotoUrl: string;
   smsMessages: any;
   stateName: string;
-  identityVerifiedAt: number;
+  identityVerification: any;
   wallet: any;
   pending: boolean;
 

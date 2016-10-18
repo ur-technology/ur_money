@@ -36,7 +36,7 @@
         "city": "Ciudad",
         "zipCode": "Código postal"
     },
-    "identity-verification": {
+    "identity-info-setup": {
         "title": "Documento de identificación",
         "birthDay": "Día de nacimiento",
         "birthMonth": "Mes de nacimiento",
@@ -58,7 +58,7 @@
         "secretPhrase": "Frase secreta",
         "titleConfirm": "Confirmar frase secreta",
         "messagePhrase": "Anota las cinco palabras y guárdalo en un lugar seguro. UR capital no almacena la contraseña y no será capaz de recuperarla si se pierde o se olvida.",
-        "messageSave": "Tu cuenta ha sido enviada para su revisión. Una vez aprobada, recibirás 2.000 UR!"
+        "messageSave": "Recibirás tu bono de 2.000 UR pronto!"
     },
     "verification-pending": {
         "title": "Verificación pendiente",

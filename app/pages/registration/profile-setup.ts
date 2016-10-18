@@ -13,7 +13,7 @@ import {AuthService} from '../../services/auth';
 import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
 
-import {IdentityVerificationPage} from './identity-verification';
+import {IdentityInfoSetupPage} from './identity-info-setup';
 import {HomePage} from '../home/home';
 
 declare var jQuery: any;
@@ -96,11 +96,11 @@ export class ProfileSetupPage {
   submit() {
     let newValues = _.merge(this.profile, {
       name: UserModel.fullName(this.profile),
-      deviceIdentity: this.deviceIdentityService.deviceIdentity,
+      deviceIdentity: this.deviceIdentityService.deviceIdentity
     });
     this.auth.currentUserRef.update(newValues).then(() => {
-      _.merge(this.auth.currentUser, newValues);    
-      this.nav.setRoot(IdentityVerificationPage);
+      _.merge(this.auth.currentUser, newValues);
+      this.nav.setRoot(IdentityInfoSetupPage);
     }).catch((error) => {
       log.warn('unable to save address info');
     });

@@ -21,11 +21,11 @@ import {HomePage} from '../home/home';
 declare var jQuery: any;
 
 @Page({
-  templateUrl: 'build/pages/registration/identity-verification.html',
+  templateUrl: 'build/pages/registration/identity-info-setup.html',
   directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective],
   pipes: [TranslatePipe]
 })
-export class IdentityVerificationPage {
+export class IdentityInfoSetupPage {
   mainForm: FormGroup;
   errorMessage: string;
   verification: any;
@@ -148,24 +148,23 @@ export class IdentityVerificationPage {
   }
 
   submit() {
-    let loader = this.loadingCtrl.create({
-      content: this.translate.instant("pleaseWait"),
+    let self = this;
+    let loader = self.loadingCtrl.create({
+      content: self.translate.instant("pleaseWait"),
       dismissOnPageChange: true
     });
     loader.present();
 
-    let task: any = _.pick(this.verification, ['PersonInfo', 'Location', 'Communication']);
-    if (this.identificationType == 'Driver License') {
-      task.DriverLicence = this.verification.DriverLicense; // note Canadian spelling of 'Driver Licence'
-    } else if (this.identificationType == 'National Id') {
-      task.NationalIds = [ this.verification.NationalId ];
-    } else if (this.identificationType == 'Passport') {
-      task.Passport = this.verification.Passport;
+    let task: any = _.pick(self.verification, ['PersonInfo', 'Location', 'Communication']);
+    if (self.identificationType == 'Driver License') {
+      task.DriverLicence = self.verification.DriverLicense; // note Canadian spelling of 'Driver Licence'
+    } else if (self.identificationType == 'National Id') {
+      task.NationalIds = [ self.verification.NationalId ];
+    } else if (self.identificationType == 'Passport') {
+      task.Passport = self.verification.Passport;
     };
-    task.userId = this.auth.currentUserId;
-    task.wallet = this.auth.currentUser.wallet;
-    let taskRef = firebase.database().ref(`/identityVerificationQueue/tasks/${this.auth.currentUserId}`);
-    taskRef.set(task);
+    task.userId = self.auth.currentUserId;
+    let taskRef = firebase.database().ref(`/identityVerificationQueue/tasks`).push(task);
     let resultRef = taskRef.child('result');
     log.debug(`waiting for value at ${resultRef.toString()}`)
     resultRef.on('value', (snapshot) => {
@@ -179,14 +178,18 @@ export class IdentityVerificationPage {
       log.debug(`got value at ${resultRef.toString()}`, result)
 
       loader.dismiss().then(()=>{
-        if (result.RecordStatus == "match") {
-          this.auth.reloadCurrentUser();
-          this.nav.setRoot(WalletSetupPage);
-        } else {
-          this.nav.setRoot(VerificationPendingPage);
-        }
+        self.auth.reloadCurrentUser().then(() => {
+          if (self.auth.currentUser.registration.status == "verification-succeeded") {
+            self.nav.setRoot(WalletSetupPage);
+          } else {
+            if (self.auth.currentUser.registration.status != "verification-pending") {
+              console.log(`unexpected registration status ${self.auth.currentUser.registration.status}`);
+            }
+            self.nav.setRoot(VerificationPendingPage);
+          }
+        });
       });
-    }, (error) => {
+    }, (error: any) => {
       loader.dismiss();
       log.warn(`unable to get match results: ${error}`);
     });
