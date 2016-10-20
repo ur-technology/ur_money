@@ -1,4 +1,10 @@
 {
+  "version": {
+      "description": "0.12.0 (20-Oct-2016 04:35 PM CT)",
+      "generalAppDownloadUrl": "http://ur-money-staging.firebaseapp.com/app",
+      "iosAppDownloadUrl": "https://i.diawi.com/AVLixG",
+      "androidAppDownloadUrl": "https://i.diawi.com/htsZv4"
+  },
   "users" : {
     "-KJn47TvHAlfQocDX_ES" : {
       "admin" : true,
