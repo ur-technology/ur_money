@@ -70,12 +70,13 @@
                     /*".write": "(newData.exists() || data.exists() ) && $task===auth.uid",*/
                     ".write": true,
                     // allow read only if the authenticated user is reading his own data
-                    ".read": "data.child('userId').val()===auth.uid",
+                    /*".read": "data.child('userId').val()===auth.uid",*/
+                    ".write": true,
 
                     "result": {
                         // allow reading verification result of a particular record
-                        ".read": true
                         /*".read": "$task===auth.uid"*/
+                        ".read": true
                     }
 
                 }
@@ -90,11 +91,13 @@
                     /*".write": "(newData.exists() || data.exists() ) && $task===auth.uid",*/
                     ".write": true,
                     // allow read only if the authenticated user is reading his own data
-                    ".read": "data.child('userId').val()===auth.uid",
+                    /*".read": "data.child('userId').val()===auth.uid",*/
+                    ".read": true
 
                     "result": {
                         // allow reading verification result of a particular record
-                        ".read": "$task===auth.uid"
+                        /*".read": "$task===auth.uid"*/
+                        ".read": true
                     }
 
                 }
