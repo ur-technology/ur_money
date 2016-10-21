@@ -94,7 +94,7 @@ export class ChartDataService {
     let self = this;
     firebase.database().ref(`/users/${self.auth.currentUserId}/transactions`).orderByChild('sortKey').on('value', (snapshot) => {
       let transactions: any[] = _.values(snapshot.val())
-      self.transactions = _.sortBy(_.filter(transactions, 'minedAt'), 'minedAt');
+      self.transactions = _.sortBy(_.filter(transactions, 'sortKey'), 'sortKey');
       self.loadPointsAndCalculateMetaData(self.duration, self.unitOfTime);
     });
   }
