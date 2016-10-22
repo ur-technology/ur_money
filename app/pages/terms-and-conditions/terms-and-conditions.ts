@@ -9,7 +9,6 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 export class TermsAndConditionsPage {
 
   constructor(private navCtrl: NavController, public viewCtrl: ViewController) {
-
   }
 
   closePage() {

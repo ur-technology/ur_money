@@ -4,7 +4,6 @@ import {PhoneNumberPage} from './phone-number';
 import {DownloadPage} from '../download/download';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {TermsAndConditionsPage} from '../terms-and-conditions/terms-and-conditions';
-import {InAppBrowser} from 'ionic-native';
 
 @Page({
   templateUrl: 'build/pages/registration/welcome.html',
@@ -28,11 +27,8 @@ export class WelcomePage {
   }
 
   openTermsAndConditions() {
-    this.platform.ready().then( () => {
-      InAppBrowser.open("https://www.ur.internation/terms", "_system", "location=true");
-    });
-    // let modal = this.modalCtrl.create(TermsAndConditionsPage);
-    // modal.present();
+    let modal = this.modalCtrl.create(TermsAndConditionsPage);
+    modal.present();
   }
 
 }
