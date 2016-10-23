@@ -52,13 +52,17 @@
     "wallet-setup": {
         "title": "Wallet setup",
         "suggestSecretPhrase": "Suggest secret phrase",
-        "secretWords": "Enter at least 5 words",
-        "alertTitle": "Confirm secret phrase",
-        "messageAlert": "Re-enter your secret phrase",
-        "secretPhrase": "Secret phrase",
-        "titleConfirm": "Confirm secret phrase written",
-        "messagePhrase": "Write your five word paraphrase down and store it someplace safe. UR Capital does not store your pass phrase and will NOT be able to recover it if it is lost or forgotten.",
-        "messageSave": "You will receive your 2,000 UR bonus soon!"
+        "secretPhrasePlaceholder": "Enter at least 5 words",
+        "confirmWrittenDownTitle": "Write It Down!",
+        "confirmWrittenDownMessage1": "This is your secret phrase:",
+        "confirmWrittenDownMessage2": "Write this phrase on a piece of paper and store it in a safe place.",
+        "confirmWrittenDownMessage3": "WARNING: UR Technology does not store your secret phrase and will NOT be able to recover it if it is lost or forgotten.",
+        "confirmWrittenDownButton": "I wrote it down!",
+        "reenterSecretPhraseTitle": "Confirm Your Secret Phrase",
+        "reenterSecretPhraseMessage": "Please confirm your secret phrase by re-entering it.",
+        "renterSecretPhraseRetryMessage": "INCORRECT - PLEASE TRY AGAIN",
+        "renterSecretPhrasePlaceholder": "Re-enter your secret phrase",
+        "youWillReceiveBonus": "You will receive your 2,000 UR bonus soon!"
     },
     "verification-pending": {
         "title": "Verification pending",

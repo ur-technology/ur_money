@@ -3,7 +3,7 @@
         <ion-title>{{"wallet-setup.title" | translate}}</ion-title>
         <ion-buttons end>
           <button [disabled]="!mainForm.valid"
-              (click)="submit()">
+              (click)="confirmSecretPhraseWrittenDown()">
               {{"done" | translate}}
           </button>
         </ion-buttons>
@@ -11,8 +11,13 @@
 </ion-header>
 <ion-content padding
     class="registration profile-setup">
-    <form [formGroup]="mainForm">
+    <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && confirmSecretPhraseWrittenDown()">
       <ion-item>
+          <button
+            type="submit"
+            style="position: absolute; left: -9999px; width: 1px; height: 1px;">
+              x
+          </button>
           <button type="text"
               secondary
               (click)="suggestSecretPhrase()">
@@ -21,11 +26,13 @@
       </ion-item>
       <ion-item>
           <ion-input type="text"
-              autocapitalize="off"
+              autocorrect="off"
+              autocapitalize="none"
               [(ngModel)]="profile.secretPhrase"
               formControlName="secretPhrase"
               [(ngModel)]="secretPhrase"
-              placeholder="{{'wallet-setup.secretWords' | translate}}"></ion-input>
+              placeholder="{{'wallet-setup.secretPhrasePlaceholder' | translate}}"></ion-input>
       </ion-item>
+      <div class="filler">&nbsp;</div>
     </form>
 </ion-content>

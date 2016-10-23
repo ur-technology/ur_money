@@ -14,7 +14,8 @@
     <p class="sub-heading">
         {{"phone-number.heading" | translate}}
     </p>
-    <form [formGroup]="phoneForm">
+    <form [formGroup]="phoneForm" (ngSubmit)="submit(phoneInput)">
+
         <div class="list country-code-cont">
             <ion-item>
                 <ion-label>{{selectedCountry.name}}</ion-label>
@@ -40,6 +41,9 @@
                     formControlName="phone"
                     placeholder="{{'phone-number.phoneNumber' | translate}}"
                     type="tel"></ion-input>
+            </ion-item>
+            <ion-item class="item item-input input-item-data" style="position: absolute; left: -9999px; width: 1px; height: 1px;">
+              <ion-input type="submit">.</ion-input>
             </ion-item>
         </div>
     </form>

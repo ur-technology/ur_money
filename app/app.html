@@ -1,4 +1,4 @@
-<ion-menu [content]="content" *ngIf="auth.currentUser && auth.currentUser.identityVerification && auth.currentUser.identityVerification.completedAt">
+<ion-menu [content]="content" *ngIf="auth.currentUser && auth.currentUser.wallet && auth.currentUser.wallet.address">
 
   <ion-content class="ur-menu">
     <div class="menu-bar">

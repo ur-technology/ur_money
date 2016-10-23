@@ -39,10 +39,31 @@
 }
 
 .wallet-setup-page {
+
   .right {
     float: right;
   }
+
+  scroll-content {
+    display: table !important;
+    width: 100% !important;
+    height: 100% !important;
+
+    form {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+
+      .filler {
+        height: 200px;
+      }
+
+    }
+  }
+
 }
+
+
 
 .phone-number-page,
 .verification-sms-code-page {
@@ -447,4 +468,8 @@
     overflow-x: hidden;
     overflow-y: hidden;
   }
+}
+
+.incorrect-secret-phrase {
+  color: red;
 }

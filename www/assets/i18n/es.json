@@ -52,13 +52,17 @@
     "wallet-setup": {
         "title": "Configuración de la billetera",
         "suggestSecretPhrase": "Sugerir frase secreta",
-        "secretWords": "Introduzca al menos 5 palabras",
-        "alertTitle": "Confirmar frase secreta",
-        "messageAlert": "Vuelva a introducir la frase secreta",
-        "secretPhrase": "Frase secreta",
-        "titleConfirm": "Confirmar frase secreta",
-        "messagePhrase": "Anota las cinco palabras y guárdalo en un lugar seguro. UR capital no almacena la contraseña y no será capaz de recuperarla si se pierde o se olvida.",
-        "messageSave": "Recibirás tu bono de 2.000 UR pronto!"
+        "secretPhrasePlaceholder": "Introduzca al menos 5 palabras",
+        "confirmWrittenDownTitle": "Escribelo!",
+        "confirmWrittenDownMessage1": "Eso es tu frase secreta:",
+        "confirmWrittenDownMessage2": "Escribe este frase en un papel y guardalo en un lugar seguro.",
+        "confirmWrittenDownMessage3": "ADVERTENCIA: UR Technology no guarda tu frase secreta y NO PUEDE recuperarlo si se pierde or se olvide.",
+        "confirmWrittenDownButton": "Lo escribí!",
+        "reenterSecretPhraseTitle": "Confirme Tu Frase Secreta",
+        "reenterSecretPhraseMessage": "Por favor re-entre tu frase secreta para confirmarlo.",
+        "renterSecretPhraseRetryMessage": "INCORECTO - INTENTE DE NUEVO",
+        "renterSecretPhrasePlaceholder": "Re-entre tu frase secreta",
+        "youWillReceiveBonus": "Recibirás tu bono de 2.000 UR pronto!"
     },
     "verification-pending": {
         "title": "Verificación pendiente",

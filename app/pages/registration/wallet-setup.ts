@@ -13,6 +13,7 @@ import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
 import {HomePage} from '../home/home';
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import { Keyboard } from 'ionic-native';
 
 declare var jQuery: any;
 
@@ -50,54 +51,22 @@ export class WalletSetupPage {
     var secureRandword = require('secure-randword');
     this.profile.secretPhrase = secureRandword(5).join(' ');;
     this.mainForm.controls['secretPhrase'].markAsDirty();
-  }
-
-  submit() {
-    let prompt = this.alertCtrl.create({
-      title: this.translate.instant("wallet-setup.alertTitle"),
-      message: this.translate.instant("wallet-setup.messageAlert"),
-      inputs: [{ name: 'secretPhrase', placeholder: this.translate.instant("wallet-setup.secretPhrase") }],
-      buttons: [
-        {
-          text: this.translate.instant("cancel"),
-          role: 'cancel',
-          handler: data => {
-            log.debug("cancel clicked");
-          }
-        },
-        {
-          text: this.translate.instant("continue"),
-          handler: data => {
-            prompt.dismiss().then(() => {
-              let secretPhrase = data.secretPhrase;
-              if (data.secretPhrase == this.profile.secretPhrase) {
-                this.confirmSecretPhraseWrittenDown();
-              } else {
-                // do nothing
-              }
-            });
-          }
-        }
-      ]
-    });
-    prompt.present().then(() => {
-      let alertInput = jQuery("input.alert-input");
-      alertInput.attr("autocapitalize", "off");
-      alertInput.attr("autocorrect", "off");
-    });
+    return false;
   }
 
   confirmSecretPhraseWrittenDown() {
+    let message1 = this.translate.instant("wallet-setup.confirmWrittenDownMessage1");
+    let message2 = this.translate.instant("wallet-setup.confirmWrittenDownMessage2");
+    let message3 = this.translate.instant("wallet-setup.confirmWrittenDownMessage3");
     let alert = this.alertCtrl.create({
-      title: this.translate.instant("wallet-setup.titleConfirm"),
-      message: this.translate.instant("wallet-setup.messagePhrase"),
-      //" If you lose your passphrase, you will not be able to access your money ever again. ?',
+      title: this.translate.instant("wallet-setup.confirmWrittenDownTitle"),
+      message: `<p>${message1}</p><p><b>${this.profile.secretPhrase}</b></p><p>${message2}</p><p>${message3}</p>`,
       buttons: [
         { text: this.translate.instant("cancel"), handler: () => { alert.dismiss(); } },
         {
-          text: this.translate.instant("ok"), handler: () => {
+          text: this.translate.instant("wallet-setup.confirmWrittenDownButton"), handler: () => {
             alert.dismiss().then(() => {
-              this.generateAddress();
+              this.reenterSecretPhrase();
             });
           }
         }
@@ -106,9 +75,53 @@ export class WalletSetupPage {
     alert.present();
   }
 
+  reenterSecretPhrase(retrying?) {
+    let message = this.translate.instant("wallet-setup.reenterSecretPhraseMessage");
+    if (retrying) {
+      message = `<p class='incorrect-secret-phrase'>${ this.translate.instant("wallet-setup.renterSecretPhraseRetryMessage") }</p><p>${message}</p>`;
+    }
+    let prompt = this.alertCtrl.create({
+      title: this.translate.instant("wallet-setup.reenterSecretPhraseTitle"),
+      message: message,
+      inputs: [{ type: 'password', name: 'secretPhrase', placeholder: this.translate.instant("wallet-setup.renterSecretPhrasePlaceholder") }],
+      buttons: [
+        {
+          text: this.translate.instant("cancel"),
+          role: 'cancel',
+          handler: data => {
+            // do nothing
+          }
+        },
+        {
+          text: this.translate.instant("continue"),
+          handler: data => {
+            prompt.dismiss().then(() => {
+              if (data.secretPhrase == this.profile.secretPhrase) {
+                Keyboard.close();
+                this.loadingModal.present().then(() => {
+                  this.generateAddress();
+                })
+              } else {
+                setTimeout(() => {
+                  this.reenterSecretPhrase(true);
+                }, 1);
+                return false;
+              }
+            });
+          }
+        }
+      ]
+    });
+    prompt.present();
+    // .then(() => {
+    //   let alertInput = jQuery("input.alert-input");
+    //   alertInput.attr("autocorrect", "off");
+    //   alertInput.attr("autocapitalize", "none");
+    // });
+  }
+
   generateAddress() {
     let self = this;
-    self.loadingModal.present();
     WalletModel.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
       let wallet: WalletModel = new WalletModel(walletData);
       self.profile.address = wallet.getAddress();
@@ -121,21 +134,24 @@ export class WalletSetupPage {
 
   saveWallet() {
     let self = this;
+    self.auth.currentUser.wallet = {
+      address: self.profile.address
+    };
     self.auth.currentUserRef.update({
       wallet: {
         address: self.profile.address,
         createdAt: firebase.database.ServerValue.TIMESTAMP
       }
     }).then(() => {
+      firebase.database().ref("/identityAnnouncementQueue/tasks").push({
+        userId: this.auth.currentUserId
+      });
       self.loadingModal.dismiss().then(()=>{
         self.toastCtrl.create({
-          message: this.translate.instant("wallet-setup.messageSave"),
+          message: this.translate.instant("wallet-setup.youWillReceiveBonus"),
           duration: 5000,
           position: 'bottom'
         }).present();
-        firebase.database().ref("/identityAnnouncementQueue/tasks").push({
-          userId: this.auth.currentUserId
-        });
         self.nav.setRoot(HomePage);
       });
     }).catch((error) => {
