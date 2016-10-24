@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Platform, ToastController} from 'ionic-angular';
-import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
-import * as _ from 'lodash';
 import * as firebase from 'firebase';
-import {Timestamp}  from '../../pipes/timestamp';
 import { App } from 'ionic-angular';
-import * as moment from 'moment';
 import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 import {EventsService} from '../../services/events';
 import {ChatPage} from '../../pages/chat/chat';
@@ -27,7 +23,7 @@ export class EventListComponent {
   }
 
   listenForNotificationSelection() {
-    LocalNotifications.on("click", (notification, state) => {
+    LocalNotifications.on('click', (notification, state) => {
       let data = JSON.parse(notification.data);
       this.openPageByEventType(data.sourceType, data.sourceId);
     });
@@ -35,7 +31,7 @@ export class EventListComponent {
 
   listenForNewEvents() {
     firebase.database().ref(`/users/${this.auth.currentUserId}/events`)
-      .orderByChild("notificationProcessed")
+      .orderByChild('notificationProcessed')
       .equalTo(false)
       .on('child_added', eventSnapshot => {
         let event = eventSnapshot.val();
@@ -57,10 +53,9 @@ export class EventListComponent {
   }
 
   openPageByEventType(sourceType: string, sourceId: string) {
-    if (sourceType === "message") {
+    if (sourceType === 'message') {
       this.app.getRootNav().push(ChatPage, { chatId: sourceId }, { animate: true, direction: 'forward' });
-    }
-    else if (sourceType === "transaction") {
+    } else if (sourceType === 'transaction') {
       let toast = this.toastCtrl.create({ message: 'Not implemented yet. It should open the transaction page', duration: 3000, position: 'bottom' });
       toast.present();
     }

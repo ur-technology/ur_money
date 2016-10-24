@@ -1,7 +1,6 @@
-import {Injectable, EventEmitter} from '@angular/core'
+import {Injectable, EventEmitter} from '@angular/core';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
-import * as log from 'loglevel';
 import * as moment from 'moment';
 import {AuthService} from '../services/auth';
 
@@ -30,7 +29,7 @@ export class ChartDataService {
     if (this.points.length > 0) {
       firstPointTime = moment(_.first(this.points)[0], 'x');
     }
-    if (this.points.length == 0 || this.startingTime.isBefore(firstPointTime)) {
+    if (this.points.length === 0 || this.startingTime.isBefore(firstPointTime)) {
       let priorTransaction = _.findLast(this.transactions, (transaction: any) => {
         return moment(transaction.minedAt, 'x').isBefore(this.startingTime);
       });
@@ -61,7 +60,7 @@ export class ChartDataService {
     this.startingBalance = _.first(this.points)[1];
     this.endingBalance = _.last(this.points)[1];
     this.balanceChange = this.endingBalance - this.startingBalance;
-    this.percentageChange = this.startingBalance != 0 ? Math.round(this.balanceChange * 100 / this.startingBalance) : 0;
+    this.percentageChange = this.startingBalance !== 0 ? Math.round(this.balanceChange * 100 / this.startingBalance) : 0;
 
     this.pointsLoaded = true;
     this.pointsLoadedEmitter.emit({});
@@ -83,17 +82,17 @@ export class ChartDataService {
   }
 
   private convertWeiStringToApproximateUR(weiString) {
-    var x = "0000000000000000000" + weiString;
+    var x = '0000000000000000000' + weiString;
     x = x.replace(/\D/g, '');
-    x = x.replace(/^(\d+)(\d{18})$/, "$1.$2");
-    x = x.replace(/^0+([1-9])/, "$1")
+    x = x.replace(/^(\d+)(\d{18})$/, '$1.$2');
+    x = x.replace(/^0+([1-9])/, '$1');
     return parseFloat(x);
   }
 
   private loadPointsWhenTransactionsChange() {
     let self = this;
     firebase.database().ref(`/users/${self.auth.currentUserId}/transactions`).orderByChild('sortKey').on('value', (snapshot) => {
-      let transactions: any[] = _.values(snapshot.val())
+      let transactions: any[] = _.values(snapshot.val());
       self.transactions = _.sortBy(_.filter(transactions, 'sortKey'), 'sortKey');
       self.loadPointsAndCalculateMetaData(self.duration, self.unitOfTime);
     });

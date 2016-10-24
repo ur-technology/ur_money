@@ -3,13 +3,10 @@ import {FirebaseModel} from './firebase-model';
 export class InviteModel extends FirebaseModel {
   createdAt: number;
   inviteCode: string;
-  // app: string;
   inviterUserId: string;
   inviteeUserId: string;
   inviteeIp: string;
-  // inviteeUserId: string;
-  // inviteeGeolocation: string;
-  contact: any
+  contact: any;
 
   constructor(public _containerPath: string, fieldValues: Object) {
     super(_containerPath, fieldValues);
@@ -18,14 +15,12 @@ export class InviteModel extends FirebaseModel {
   }
 
   private generateInviteCode(): string {
-    let code = ''
-    let letters = "ABCDEFGHKMNPRSTWXYZ2345689";
+    let code = '';
+    let letters = 'ABCDEFGHKMNPRSTWXYZ2345689';
     for (var i = 0; i < 6; i++) {
       let position = Math.floor(Math.random() * letters.length);
       code = code + letters.charAt(position);
     }
     return code;
   }
-
-
 }

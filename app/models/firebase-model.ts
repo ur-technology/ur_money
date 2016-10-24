@@ -1,4 +1,4 @@
-import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
 
@@ -19,7 +19,6 @@ export class FirebaseModel {
   }
 
   static all(containerPath, key: string): Promise<any> {
-    let self = this;
     return new Promise((resolve, reject) => {
       FirebaseModel.referenceByKey(containerPath, key).once('value', (snapshot) => {
         let allValues = snapshot.val();
@@ -27,7 +26,7 @@ export class FirebaseModel {
           value.key = key;
         });
         resolve(allValues);
-      })
+      });
     });
   }
 
@@ -39,7 +38,7 @@ export class FirebaseModel {
         let instance = new self(containerPath, fieldValues);
         instance.key = snapshot.key;
         resolve(instance);
-      })
+      });
     });
   }
 
@@ -55,7 +54,7 @@ export class FirebaseModel {
       this[fieldName] = fieldValues[fieldName];
     }
     for (let fieldName of Object.getOwnPropertyNames(this)) {
-      if (/[\w]At$/.test(fieldName) && this[fieldName] == undefined) {
+      if (/[\w]At$/.test(fieldName) && this[fieldName] === undefined) {
         this[fieldName] = firebase.database.ServerValue.TIMESTAMP;
       }
     }
@@ -101,10 +100,10 @@ export class FirebaseModel {
       object = this;
     }
     object = _.omitBy(object, (value, fieldName) => {
-      return value == undefined ||
+      return value === undefined ||
         /^_/.test(fieldName) ||
-        fieldName == 'key' ||
-        fieldName == '$key' ||
+        fieldName === 'key' ||
+        fieldName === '$key' ||
         _.includes(excludedFields, fieldName) ||
         value instanceof Function;
     });

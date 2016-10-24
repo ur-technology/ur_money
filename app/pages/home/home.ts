@@ -1,21 +1,15 @@
-import {Page, NavController, NavParams, Alert, Modal, Platform} from 'ionic-angular';
+import {Page, NavController, NavParams, Platform} from 'ionic-angular';
 import {ChartDataService} from '../../services/chart-data';
-import {Component, OnInit, ElementRef, Inject, ViewChild} from '@angular/core';
+import {ElementRef, Inject} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
-import {RequestPage} from '../request/request';
-import {SendPage} from '../send/send';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
-import {ChatPage} from '../chat/chat';
-import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Round} from '../../pipes/round';
 import {EventListComponent} from '../../components/event-list/event-list';
-import {LocalNotifications} from 'ionic-native';
-import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
+import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
-import {UserModel} from '../../models/user';
-import {BigNumber} from 'bignumber.js'
+import {BigNumber} from 'bignumber.js';
 
 declare var jQuery: any;
 
@@ -46,7 +40,7 @@ export class HomePage {
   }
 
   startNewChat() {
-    this.nav.push(ContactsAndChatsPage, { goal: "chat" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: 'chat' }, { animate: true, direction: 'forward' });
   }
 
   setRoot(page) {
@@ -117,15 +111,15 @@ export class HomePage {
   }
 
   send() {
-    this.nav.push(ContactsAndChatsPage, { goal: "send" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: 'send' }, { animate: true, direction: 'forward' });
   }
 
   request() {
-    this.nav.push(ContactsAndChatsPage, { goal: "request" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: 'request' }, { animate: true, direction: 'forward' });
   }
 
   invite() {
-    this.nav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
   }
 
   formatUR(amount: number): string {

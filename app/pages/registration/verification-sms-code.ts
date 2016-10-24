@@ -1,7 +1,7 @@
 import {Page, NavController, NavParams, AlertController, LoadingController, ToastController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import * as log from 'loglevel';
-import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
 @Page({
   templateUrl: 'build/pages/registration/verification-sms-code.html',
@@ -23,18 +23,18 @@ export class VerificationSmsCodePage {
   }
 
   submit() {
-    let loading = this.loadingController.create({content: this.translate.instant("pleaseWait"), dismissOnPageChange: true });
+    let loading = this.loadingController.create({content: this.translate.instant('pleaseWait'), dismissOnPageChange: true });
     loading.present();
     this.auth.checkVerificationCode(this.verificationCode).then((result: any) => {
-      loading.dismiss().then(()=>{
+      loading.dismiss().then(() => {
         this.verificationCode = '';
         if (result.error) {
           log.debug(result.error);
-          this.showErrorAlert(this.translate.instant("verification-sms-code.errorVerificationSms"));
+          this.showErrorAlert(this.translate.instant('verification-sms-code.errorVerificationSms'));
         } else if (result.codeMatch) {
           loading.dismiss();
         } else {
-          this.showErrorAlert(this.translate.instant("verification-sms-code.errorCode"));
+          this.showErrorAlert(this.translate.instant('verification-sms-code.errorCode'));
         }
       });
     });
@@ -42,12 +42,12 @@ export class VerificationSmsCodePage {
 
   smsAgain() {
     this.verificationCode = '';
-    let loading = this.loadingController.create({content: this.translate.instant("pleaseWait"), dismissOnPageChange: true });
+    let loading = this.loadingController.create({content: this.translate.instant('pleaseWait'), dismissOnPageChange: true });
     loading.present();
     this.auth.requestPhoneVerification(this.phone, this.countryCode).then((state: string) => {
       loading.dismiss();
-      if (state != "code_generation_completed_and_sms_sent") {
-        this.showErrorAlert(this.translate.instant("verification-sms-code.errorSendingSmsAgain"));
+      if (state !== 'code_generation_completed_and_sms_sent') {
+        this.showErrorAlert(this.translate.instant('verification-sms-code.errorSendingSmsAgain'));
       }
     });
   }
@@ -59,9 +59,9 @@ export class VerificationSmsCodePage {
     toast.present();
   }
 
-  add(number) {
+  add(numberVar) {
     if (this.verificationCode.length < 6)
-      this.verificationCode = `${this.verificationCode}${number}`;
+      this.verificationCode = `${this.verificationCode}${numberVar}`;
   }
 
   delete() {

@@ -29,10 +29,10 @@ export class UserModel extends FirebaseModel {
 
   setProfilePhotoUrl() {
     var colorScheme = _.sample([
-      { background: "DD4747", foreground: "FFFFFF" },
-      { background: "ED6D54", foreground: "FFFFFF" },
-      { background: "FFBE5B", foreground: "FFFFFF" },
-      { background: "FFE559", foreground: "FFFFFF" }
+      { background: 'DD4747', foreground: 'FFFFFF' },
+      { background: 'ED6D54', foreground: 'FFFFFF' },
+      { background: 'FFBE5B', foreground: 'FFFFFF' },
+      { background: 'FFE559', foreground: 'FFFFFF' }
     ]);
     var initials = 'XX';
     if (this.firstName) {
@@ -42,7 +42,7 @@ export class UserModel extends FirebaseModel {
       initials = initials + lastNameFirstLetter[0];
       initials = initials.toUpperCase();
     }
-    this.profilePhotoUrl = "https://dummyimage.com/100x100/" + colorScheme.background + "/" + colorScheme.foreground + "&text=" + initials;
+    this.profilePhotoUrl = 'https://dummyimage.com/100x100/' + colorScheme.background + '/' + colorScheme.foreground + '&text=' + initials;
   }
 
   static fullName(user: any) {

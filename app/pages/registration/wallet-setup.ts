@@ -1,8 +1,5 @@
-import {ViewChild, ElementRef, Inject} from '@angular/core';
-import {Page, NavController, Platform, AlertController, ToastController, LoadingController} from 'ionic-angular';
-import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
-import {AngularFire} from 'angularfire2'
-import * as _ from 'lodash';
+import {Page, NavController, AlertController, ToastController, LoadingController} from 'ionic-angular';
+import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl} from '@angular/forms';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
 
@@ -12,7 +9,7 @@ import {AuthService} from '../../services/auth';
 import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
 import {HomePage} from '../home/home';
-import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import { Keyboard } from 'ionic-native';
 
 declare var jQuery: any;
@@ -36,35 +33,35 @@ export class WalletSetupPage {
     private toastCtrl: ToastController, private loadingController: LoadingController,  private translate: TranslateService
   ) {
     this.mainForm = new FormGroup({
-      secretPhrase: new FormControl("", CustomValidator.secretPhraseValidator)
+      secretPhrase: new FormControl('', CustomValidator.secretPhraseValidator)
     });
     this.profile = {
       secretPhrase: '',
     };
     this.loadingModal = this.loadingController.create({
-      content: this.translate.instant("pleaseWait"),
+      content: this.translate.instant('pleaseWait'),
       dismissOnPageChange: true
     });
   }
 
   suggestSecretPhrase() {
     var secureRandword = require('secure-randword');
-    this.profile.secretPhrase = secureRandword(5).join(' ');;
+    this.profile.secretPhrase = secureRandword(5).join(' ');
     this.mainForm.controls['secretPhrase'].markAsDirty();
     return false;
   }
 
   confirmSecretPhraseWrittenDown() {
-    let message1 = this.translate.instant("wallet-setup.confirmWrittenDownMessage1");
-    let message2 = this.translate.instant("wallet-setup.confirmWrittenDownMessage2");
-    let message3 = this.translate.instant("wallet-setup.confirmWrittenDownMessage3");
+    let message1 = this.translate.instant('wallet-setup.confirmWrittenDownMessage1');
+    let message2 = this.translate.instant('wallet-setup.confirmWrittenDownMessage2');
+    let message3 = this.translate.instant('wallet-setup.confirmWrittenDownMessage3');
     let alert = this.alertCtrl.create({
-      title: this.translate.instant("wallet-setup.confirmWrittenDownTitle"),
+      title: this.translate.instant('wallet-setup.confirmWrittenDownTitle'),
       message: `<p>${message1}</p><p><b>${this.profile.secretPhrase}</b></p><p>${message2}</p><p>${message3}</p>`,
       buttons: [
-        { text: this.translate.instant("cancel"), handler: () => { alert.dismiss(); } },
+        { text: this.translate.instant('cancel'), handler: () => { alert.dismiss(); } },
         {
-          text: this.translate.instant("wallet-setup.confirmWrittenDownButton"), handler: () => {
+          text: this.translate.instant('wallet-setup.confirmWrittenDownButton'), handler: () => {
             alert.dismiss().then(() => {
               this.reenterSecretPhrase();
             });
@@ -76,31 +73,31 @@ export class WalletSetupPage {
   }
 
   reenterSecretPhrase(retrying?) {
-    let message = this.translate.instant("wallet-setup.reenterSecretPhraseMessage");
+    let message = this.translate.instant('wallet-setup.reenterSecretPhraseMessage');
     if (retrying) {
-      message = `<p class='incorrect-secret-phrase'>${ this.translate.instant("wallet-setup.renterSecretPhraseRetryMessage") }</p><p>${message}</p>`;
+      message = `<p class='incorrect-secret-phrase'>${ this.translate.instant('wallet-setup.renterSecretPhraseRetryMessage') }</p><p>${message}</p>`;
     }
     let prompt = this.alertCtrl.create({
-      title: this.translate.instant("wallet-setup.reenterSecretPhraseTitle"),
+      title: this.translate.instant('wallet-setup.reenterSecretPhraseTitle'),
       message: message,
-      inputs: [{ type: 'password', name: 'secretPhrase', placeholder: this.translate.instant("wallet-setup.renterSecretPhrasePlaceholder") }],
+      inputs: [{ type: 'password', name: 'secretPhrase', placeholder: this.translate.instant('wallet-setup.renterSecretPhrasePlaceholder') }],
       buttons: [
         {
-          text: this.translate.instant("cancel"),
+          text: this.translate.instant('cancel'),
           role: 'cancel',
           handler: data => {
             // do nothing
           }
         },
         {
-          text: this.translate.instant("continue"),
+          text: this.translate.instant('continue'),
           handler: data => {
             prompt.dismiss().then(() => {
-              if (data.secretPhrase == this.profile.secretPhrase) {
+              if (data.secretPhrase === this.profile.secretPhrase) {
                 Keyboard.close();
                 this.loadingModal.present().then(() => {
                   this.generateAddress();
-                })
+                });
               } else {
                 setTimeout(() => {
                   this.reenterSecretPhrase(true);
@@ -113,11 +110,6 @@ export class WalletSetupPage {
       ]
     });
     prompt.present();
-    // .then(() => {
-    //   let alertInput = jQuery("input.alert-input");
-    //   alertInput.attr("autocorrect", "off");
-    //   alertInput.attr("autocapitalize", "none");
-    // });
   }
 
   generateAddress() {
@@ -143,12 +135,12 @@ export class WalletSetupPage {
         createdAt: firebase.database.ServerValue.TIMESTAMP
       }
     }).then(() => {
-      firebase.database().ref("/identityAnnouncementQueue/tasks").push({
+      firebase.database().ref('/identityAnnouncementQueue/tasks').push({
         userId: this.auth.currentUserId
       });
-      self.loadingModal.dismiss().then(()=>{
+      self.loadingModal.dismiss().then(() => {
         self.toastCtrl.create({
-          message: this.translate.instant("wallet-setup.youWillReceiveBonus"),
+          message: this.translate.instant('wallet-setup.youWillReceiveBonus'),
           duration: 5000,
           position: 'bottom'
         }).present();

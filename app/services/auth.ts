@@ -1,6 +1,6 @@
-import {Injectable, Inject, ViewChild} from '@angular/core'
+import {Injectable} from '@angular/core';
 import {Nav, Platform} from 'ionic-angular';
-import {AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods} from 'angularfire2'
+import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
@@ -10,7 +10,7 @@ import {Sim} from 'ionic-native';
 
 @Injectable()
 export class AuthService {
-  public currentUserId: string
+  public currentUserId: string;
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
   public countryCode: string;
@@ -29,27 +29,27 @@ export class AuthService {
         self.currentUserRef = self.angularFire.database.object(`/users/${self.currentUserId}`);
         let userSubscription: Subscription = self.currentUserRef.subscribe((currentUser) => {
           if (userSubscription && !userSubscription.isUnsubscribed) {
-            userSubscription.unsubscribe()
+            userSubscription.unsubscribe();
           }
           self.currentUser = currentUser;
           self.getSimCountryCode().then((countryCode) => {
             self.countryCode = countryCode || currentUser.countryCode;
-            if (_.trim((self.countryCode || "")) == "") {
-              log.warn("country code not defined for this user");
+            if (_.trim((self.countryCode || '')) === '') {
+              log.warn('country code not defined for this user');
             }
             self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
           });
-          let status = _.trim((currentUser.registration && currentUser.registration.status) || "") || "initial";
+          let status = _.trim((currentUser.registration && currentUser.registration.status) || '') || 'initial';
           nav.setRoot({
-            "initial": pages.profileSetupPage,
-            "verification-requested": pages.verificationPendingPage,
-            "verification-pending": pages.verificationPendingPage,
-            "verification-failed": pages.verificationFailedPage,
-            "verification-succeeded": currentUser.wallet && currentUser.wallet.address ? pages.homePage : pages.walletSetupPage,
-            "announcement-started": pages.homePage,
-            "announcement-requested": pages.homePage,
-            "announcement-failed": pages.homePage,
-            "announcement-succeeded": pages.homePage
+            'initial': pages.profileSetupPage,
+            'verification-requested': pages.verificationPendingPage,
+            'verification-pending': pages.verificationPendingPage,
+            'verification-failed': pages.verificationFailedPage,
+            'verification-succeeded': currentUser.wallet && currentUser.wallet.address ? pages.homePage : pages.walletSetupPage,
+            'announcement-started': pages.homePage,
+            'announcement-requested': pages.homePage,
+            'announcement-failed': pages.homePage,
+            'announcement-succeeded': pages.homePage
           }[status]);
         });
       } else {
@@ -77,13 +77,13 @@ export class AuthService {
     let self = this;
     return new Promise((resolve) => {
       let taskRef = firebase.database().ref('/phoneAuthenticationQueue/tasks').push({ phone: phone, countryCode: countryCode });
-      self.taskId = taskRef.key
+      self.taskId = taskRef.key;
       taskRef.then((xxx) => {
         log.debug(`task queued to /phoneAuthenticationQueue/tasks/${self.taskId}`);
-        let stateRef = taskRef.child("_state");
+        let stateRef = taskRef.child('_state');
         stateRef.on('value', (snapshot) => {
           let state = snapshot.val();
-          if (state != undefined && state != null && state != "code_generation_in_progress") {
+          if (state !== undefined && state !== null && state !== 'code_generation_in_progress') {
             stateRef.off('value');
             resolve(state);
           }
@@ -98,13 +98,13 @@ export class AuthService {
       let taskRef = firebase.database().ref(`/phoneAuthenticationQueue/tasks/${self.taskId}`);
       taskRef.update({
         submittedVerificationCode: submittedVerificationCode,
-        _state: "code_matching_requested" // TODO: add rule that allows only this client-initiated state change
+        _state: 'code_matching_requested' // TODO: add rule that allows only this client-initiated state change
       }).then((xxx) => {
         log.debug(`set submittedVerificationCode to ${submittedVerificationCode} at ${taskRef.toString()}`);
-        let verificationResultRef = taskRef.child("verificationResult");
+        let verificationResultRef = taskRef.child('verificationResult');
         verificationResultRef.on('value', (snapshot) => {
           let verificationResult = snapshot.val();
-          if (verificationResult == undefined) {
+          if (verificationResult === undefined) {
             return;
           }
           verificationResultRef.off('value');
@@ -121,7 +121,7 @@ export class AuthService {
             }).catch((error) => {
               log.warn('Authentication failed!');
               taskRef.update({ authenticationError: error });
-              resolve({ error: "Authentication failed" });
+              resolve({ error: 'Authentication failed' });
               resolve(false);
             });
           } else {
@@ -144,7 +144,7 @@ export class AuthService {
       Sim.getSimInfo().then((info) => {
         resolve(info.countryCode.toUpperCase());
       }, (error) => {
-        log.debug("unable to get country code from sim", error);
+        log.debug('unable to get country code from sim', error);
         resolve(undefined);
       });
     });

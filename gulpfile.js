@@ -36,12 +36,13 @@ var buildSass = require('ionic-gulp-sass-build');
 var copyHTML = require('ionic-gulp-html-copy');
 var copyFonts = require('ionic-gulp-fonts-copy');
 var copyScripts = require('ionic-gulp-scripts-copy');
+var tslint = require('ionic-gulp-tslint');
 
 var isRelease = argv.indexOf('--release') > -1;
 
 gulp.task('watch', ['clean'], function (done) {
   runSequence(
-    ['sass', 'html', 'fonts', 'scripts'],
+    ['lint', 'sass', 'html', 'fonts', 'scripts'],
     function () {
       gulpWatch('app/**/*.scss', function () { gulp.start('sass'); });
       gulpWatch('app/**/*.html', function () { gulp.start('html'); });
@@ -57,7 +58,7 @@ gulp.task('build', function (done) {
 
 gulp.task('baseBuild', ['clean'], function (done) {
   runSequence(
-    ['sass', 'html', 'fonts', 'scripts'],
+    ['lint', 'sass', 'html', 'fonts', 'scripts'],
     function () {
       buildBrowserify({
         minify: isRelease,
@@ -79,7 +80,7 @@ gulp.task('scripts', copyScripts);
 gulp.task('clean', ['cleanGo'], function () {
   return del('www/build');
 });
-
+gulp.task('lint', tslint);
 
 
 
@@ -112,4 +113,16 @@ gulp.task('plugins', function (done) {
   if (count === 0) {
     done();
   }
+});
+
+// run tslint against all typescript
+gulp.task('lint', function() {
+
+  var tslint = require('gulp-tslint');
+
+  return gulp.src('app/**/*.ts')
+    .pipe(tslint({
+        formatter: 'verbose',
+    }))
+    .pipe(tslint.report());
 });

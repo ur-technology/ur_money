@@ -13,7 +13,7 @@ import { Injectable, Pipe } from '@angular/core';
 export class FilterPipe {
 
   isMatch(value: string, filter: string) {
-    return value.toLocaleLowerCase().indexOf(filter) != -1;
+    return value.toLocaleLowerCase().indexOf(filter) !== -1;
   }
   transform(value: any, args: string) {
     let filter: string = args ? args.toLocaleLowerCase() : null;

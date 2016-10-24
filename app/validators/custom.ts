@@ -5,11 +5,11 @@ export class CustomValidator {
   static normalizedPhone(phone) {
     let p = phone;
     p = p.replace(/\D/g, '');
-    p = p.replace(/^011/, "+");
-    p = p.replace(/^664(\d{7})$/, "+521664$1");
-    p = p.replace(/^\+?521?(\d{10})$/, "+521$1");
-    p = p.replace(/^(\d{10})$/, "+1$1");
-    p = p.replace(/^1(\d{10})$/, "+1$1");
+    p = p.replace(/^011/, '+');
+    p = p.replace(/^664(\d{7})$/, '+521664$1');
+    p = p.replace(/^\+?521?(\d{10})$/, '+521$1');
+    p = p.replace(/^(\d{10})$/, '+1$1');
+    p = p.replace(/^1(\d{10})$/, '+1$1');
     return p;
   }
 
@@ -65,15 +65,15 @@ export class CustomValidator {
   }
 
   static matchingSecretPhrases(controlName1: string, controlName2: string) {
-    return (group: FormGroup)=> {
+    return (group: FormGroup) => {
       let control1 = group.controls[controlName1];
       let control2 = group.controls[controlName2];
-      if (!control1 || !control1.value || !control2 || !control2.value || control1.value != control2.value) {
+      if (!control1 || !control1.value || !control2 || !control2.value || control1.value !== control2.value) {
         return {
           notEquivalent: true
         };
       }
-    }
+    };
   }
 
   static positiveNumberValidator(control) {

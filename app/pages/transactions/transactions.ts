@@ -1,11 +1,8 @@
 import {Page, NavController, Platform} from 'ionic-angular';
 import {TransactionComponent} from '../../components/transaction/transaction';
 import {HomePage} from '../home/home';
-import {RequestPage} from '../request/request';
-import {SendPage} from '../send/send';
 import {ContactsAndChatsPage} from '../../pages/contacts-and-chats/contacts-and-chats';
-import {ViewChild} from '@angular/core';
-import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslatePipe} from 'ng2-translate/ng2-translate';
 
 @Page({
   templateUrl: 'build/pages/transactions/transactions.html',
@@ -13,7 +10,7 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
   pipes: [TranslatePipe]
 })
 export class TransactionsPage {
-  segmentSelected: any = "sent";
+  segmentSelected: any = 'sent';
 
   constructor(public nav: NavController, public platform: Platform) {
   }
@@ -24,13 +21,13 @@ export class TransactionsPage {
         this.nav.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
         break;
       case 'request':
-        this.nav.push(ContactsAndChatsPage, { goal: "request" }, { animate: true, direction: 'forward' });
+        this.nav.push(ContactsAndChatsPage, { goal: 'request' }, { animate: true, direction: 'forward' });
         break;
       case 'send':
-        this.nav.push(ContactsAndChatsPage, { goal: "send" }, { animate: true, direction: 'forward' });
+        this.nav.push(ContactsAndChatsPage, { goal: 'send' }, { animate: true, direction: 'forward' });
         break;
       case 'invite':
-        this.nav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
+        this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
         break;
     }
 

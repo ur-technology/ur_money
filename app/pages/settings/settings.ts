@@ -1,17 +1,12 @@
-import {ViewChild} from '@angular/core';
-import {ControlGroup, Validators} from '@angular/common';
 import {FormGroup, FormControl} from '@angular/forms';
-import {Page, NavController, Platform, AlertController, ToastController} from 'ionic-angular';
+import {Page, NavController, AlertController, ToastController} from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-
 import {UserModel} from '../../models/user';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
-import {FocuserDirective} from '../../directives/focuser';
-
 import {HomePage} from '../home/home';
-import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
 @Page({
   templateUrl: 'build/pages/settings/settings.html',
@@ -26,7 +21,7 @@ export class SettingsPage {
   profile: any;
   constructor(
     public nav: NavController,
-    public auth: AuthService,    
+    public auth: AuthService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,  private translate: TranslateService
   ) {
@@ -35,37 +30,37 @@ export class SettingsPage {
 
   ionViewLoaded() {
     this.countries = require('country-data').countries.all.sort((a, b) => {
-      return (a.name < b.name) ? -1 : ((a.name == b.name) ? 0 : 1);
+      return (a.name < b.name) ? -1 : ((a.name === b.name) ? 0 : 1);
     });
     // remove Cuba, Iran, North Korea, Sudan, Syria
     this.countries = _.filter(this.countries, (country) => {
-      return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) == -1;
+      return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
     });
     this.allStates = require('provinces');
     this.mainForm = new FormGroup({
-      firstName: new FormControl("", CustomValidator.nameValidator),
-      middleName: new FormControl("", CustomValidator.optionalNameValidator),
-      lastName: new FormControl("", CustomValidator.nameValidator),
-      stateName: new FormControl("", CustomValidator.nameValidator),
-      city: new FormControl("", CustomValidator.nameValidator)
+      firstName: new FormControl('', CustomValidator.nameValidator),
+      middleName: new FormControl('', CustomValidator.optionalNameValidator),
+      lastName: new FormControl('', CustomValidator.nameValidator),
+      stateName: new FormControl('', CustomValidator.nameValidator),
+      city: new FormControl('', CustomValidator.nameValidator)
     });
     let authUser = this.auth.currentUser;
     this.profile = {
-      firstName: authUser.firstName || "",
-      middleName: authUser.middleName || "",
-      lastName: authUser.lastName || "",
+      firstName: authUser.firstName || '',
+      middleName: authUser.middleName || '',
+      lastName: authUser.lastName || '',
       city: authUser.city,
-      country: this.countries.find((x) => { return x.alpha2 == (authUser.countryCode || "US"); })
+      country: this.countries.find((x) => { return x.alpha2 === (authUser.countryCode || 'US'); })
     };
-    let defaultStateName = (authUser.countryCode == this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
+    let defaultStateName = (authUser.countryCode === this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
     this.countrySelected(defaultStateName);
   }
 
   countrySelected(defaultStateName) {
     this.profile.countryCode = this.profile.country.alpha2;
-    this.states = _.filter(this.allStates, (state) => { return state.country == this.profile.country.alpha2; });
+    this.states = _.filter(this.allStates, (state) => { return state.country === this.profile.country.alpha2; });
     if (this.states.length > 0) {
-      this.profile.state = (defaultStateName && this.states.find((x) => { return x.name == defaultStateName; })) || this.states[0];
+      this.profile.state = (defaultStateName && this.states.find((x) => { return x.name === defaultStateName; })) || this.states[0];
       this.stateSelected();
     } else {
       this.profile.state = undefined;
@@ -84,14 +79,14 @@ export class SettingsPage {
 
   signOut() {
     let alert = this.alertCtrl.create({
-      title:  this.translate.instant("signOut")+"?",
+      title:  this.translate.instant('signOut') + '?',
       buttons: [
-        this.translate.instant("cancel")]
+        this.translate.instant('cancel')]
     });
     alert.addButton({
-      text:  this.translate.instant("ok"),
+      text:  this.translate.instant('ok'),
       handler: () => {
-        this.auth.angularFire.auth.logout()
+        this.auth.angularFire.auth.logout();
       }
     });
     alert.present();
@@ -99,7 +94,7 @@ export class SettingsPage {
 
   saveProfile() {
     let self = this;
-    let profile ={
+    let profile = {
       firstName: self.profile.firstName,
       middleName: self.profile.middleName,
       lastName: self.profile.lastName,
@@ -110,7 +105,7 @@ export class SettingsPage {
     };
     self.auth.currentUserRef.update(_.omitBy(profile, _.isNil)).then(() => {
       self.auth.reloadCurrentUser();
-      let toast = this.toastCtrl.create({ message: this.translate.instant("settings.profileUpdated"), duration: 3000, position: 'bottom' });
+      let toast = this.toastCtrl.create({ message: this.translate.instant('settings.profileUpdated'), duration: 3000, position: 'bottom' });
       toast.present();
       this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
     }).catch((error) => {

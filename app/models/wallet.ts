@@ -2,7 +2,6 @@ import * as log from 'loglevel';
 
 export class WalletModel {
 
-  private static ScryptWorkFactor_N: number = 75;
   private static ScryptBlocksize_r: number = 16;
   private static ScryptParallelization_p: number = 1;
   private static ScryptOutputSize: number = 64;
@@ -12,7 +11,7 @@ export class WalletModel {
   private _wallet: any;
 
   public static validateCredentials(seed: string, salt: string) {
-    return (typeof seed != 'undefined' && seed != '' && typeof salt != 'undefined' && salt != '');
+    return (typeof seed !== 'undefined' && seed !== '' && typeof salt !== 'undefined' && salt !== '');
   }
 
   public static generate(seed: string, salt: string) {
@@ -27,14 +26,14 @@ export class WalletModel {
           hashedSeed = ethUtil.sha3(hashedSeed);
         }
         resolve(ethWallet.fromPrivateKey(hashedSeed));
-      })
+      });
     });
   };
 
   public static web3() {
     if (!this._web3) {
       let Web3 = require('web3');
-      this._web3 = new Web3(new Web3.providers.HttpProvider("http://138.68.52.104:9595"));
+      this._web3 = new Web3(new Web3.providers.HttpProvider('http://138.68.52.104:9595'));
     }
     return this._web3;
   }
@@ -80,7 +79,7 @@ export class WalletModel {
   public validateAddress(address: string) {
     let self = this;
 
-    if (typeof address == 'undefined' || address == '') {
+    if (typeof address === 'undefined' || address === '') {
       return false;
     }
 
@@ -90,13 +89,12 @@ export class WalletModel {
       address = ('0x' + address);
     }
 
-    return ((ethUtil.isValidPublic(address) && address != self.getPublic()) || (ethUtil.isValidAddress(address) && address != self.getAddress()));
+    return ((ethUtil.isValidPublic(address) && address !== self.getPublic()) || (ethUtil.isValidAddress(address) && address !== self.getAddress()));
   }
 
   public sendRawTransaction(to: string, amount: number): Promise<any> {
     let self = this;
     return new Promise<boolean>((resolve, reject) => {
-      let ethUtil = require('ethereumjs-util');
       let ethTx = require('ethereumjs-tx');
       let from = self.getAddress();
       let web3 = WalletModel.web3();
@@ -110,7 +108,7 @@ export class WalletModel {
         gasPrice: eth.gasPrice,
         gasLimit: eth.getBlock(eth.blockNumber).gasLimit
       };
-      rawTx.gas = eth.estimateGas(rawTx)
+      rawTx.gas = eth.estimateGas(rawTx);
       let tx = new ethTx(rawTx);
       let privateKey = self.getPrivate(false);
       tx.sign(privateKey);
@@ -122,10 +120,10 @@ export class WalletModel {
           reject(error);
         } else {
           rawTx.hash = hash;
-          log.debug("sent raw transaction, hash= " + hash);
+          log.debug('sent raw transaction, hash= ' + hash);
           resolve(rawTx);
         }
-      })
+      });
     });
   }
 
@@ -145,16 +143,12 @@ export class WalletModel {
         } else {
           resolve();
         }
-      })
+      });
     });
   }
 
-  private getWallet() {
-    return this._wallet;
-  };
-
-  public getPrivate(string: boolean) {
-    if (string) {
+  public getPrivate(stringVar: boolean) {
+    if (stringVar) {
       return this._wallet.getPrivateKeyString();
     } else {
       return this._wallet.getPrivateKey();

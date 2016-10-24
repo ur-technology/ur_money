@@ -1,5 +1,4 @@
 import {FirebaseModel} from './firebase-model';
-import * as _ from 'lodash';
 
 export class ChatModel extends FirebaseModel {
   messages: Object[];

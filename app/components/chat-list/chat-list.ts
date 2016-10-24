@@ -1,12 +1,11 @@
 import {Component} from '@angular/core';
-import {Subscription} from 'rxjs';
 import {NavController } from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import {ChatPage} from '../../pages/chat/chat';
 import {Timestamp}  from '../../pipes/timestamp';
 import { App } from 'ionic-angular';
-import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
-import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {AngularFire} from 'angularfire2';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
 @Component({
   selector: 'chat-list',
@@ -35,13 +34,10 @@ export class ChatListComponent {
   }
 
   senderLabel(chatSummary: any) {
-    return chatSummary.lastMessage.senderUserId === this.auth.currentUserId ? `${this.translate.instant("you")}: ` : "";
+    return chatSummary.lastMessage.senderUserId === this.auth.currentUserId ? `${this.translate.instant('you')}: ` : '';
   }
 
   displayUser(chatSummary: any) {
-    if (!chatSummary.users[chatSummary.displayUserId]) {
-      let x = 7;
-    }
     return chatSummary.users[chatSummary.displayUserId];
   }
 

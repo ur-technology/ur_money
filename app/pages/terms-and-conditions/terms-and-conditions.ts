@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
-import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import { TranslatePipe} from 'ng2-translate/ng2-translate';
 
 @Component({
   templateUrl: 'build/pages/terms-and-conditions/terms-and-conditions.html',

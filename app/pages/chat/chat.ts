@@ -1,6 +1,6 @@
 import {ViewChild } from '@angular/core';
 import {Page, NavController, NavParams, Content } from 'ionic-angular';
-import {AngularFire, FirebaseRef, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
+import {AngularFire} from 'angularfire2';
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {AuthService} from '../../services/auth';
 import {DateAndTime} from '../../pipes/dateAndTime.pipe';
-import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
 declare var jQuery: any;
 
@@ -45,8 +45,7 @@ export class ChatPage {
       this.loadMessages();
     } else if (this.chatId) {
       this.lookupChatSummaryViaChatIdAndLoadMessages();
-    }
-    else {
+    } else {
       this.lookupChatSummaryViaContactAndLoadMessages();
     }
     this.resetMessageTextArea();
@@ -60,7 +59,7 @@ export class ChatPage {
         this.chatSummary = snapshot.val();
         this.loadMessages();
       } else {
-        log.warn(`could not find chatSummary at ${chatSummaryRef.toString()}`)
+        log.warn(`could not find chatSummary at ${chatSummaryRef.toString()}`);
       }
     });
   }
@@ -69,7 +68,7 @@ export class ChatPage {
     const MESSAGE_TEXT_AREA_MAXIMUM_HEIGHT = 115;
     const MESSAGE_TEXT_AREA_ROW_HEIGHT = 38;
 
-    jQuery("textarea").on("input", event => {
+    jQuery('textarea').on('input', event => {
       this.messageTextAreaHeight = Math.min(event.target.scrollHeight, MESSAGE_TEXT_AREA_MAXIMUM_HEIGHT);
       event.target.rows = this.messageTextAreaHeight / MESSAGE_TEXT_AREA_ROW_HEIGHT;
     });
@@ -81,8 +80,8 @@ export class ChatPage {
       if (chatSummariesSnapshot.exists()) {
         let chatSummaries = chatSummariesSnapshot.val();
         self.chatId = _.findKey(chatSummaries, (chatSummary: any, chatId: string) => {
-          log.debug("chatSummary.users", chatSummary.users);
-          log.debug("_.keys(chatSummary.users)", _.keys(chatSummary.users));
+          log.debug('chatSummary.users', chatSummary.users);
+          log.debug('_.keys(chatSummary.users)', _.keys(chatSummary.users));
           return _.includes(_.keys(chatSummary.users), self.contact.userId);
         });
         if (self.chatId) {
@@ -135,7 +134,7 @@ export class ChatPage {
 
     // copy the message to the 'lastMessage' field of the chat summary associated with this chat
     let chatSummaryRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chatSummaries`).child(this.chatId);
-    chatSummaryRef.child("lastMessage").update(_.merge(message, { messageId: messageRef.key }));
+    chatSummaryRef.child('lastMessage').update(_.merge(message, { messageId: messageRef.key }));
 
     // add item to queue so that message is copied to chats, chatSummaries and notifications of other users
     if (isFirstMessageInChat) {
@@ -158,7 +157,7 @@ export class ChatPage {
     let eventRef = firebase.database().ref(`/users/${this.auth.currentUserId}/events/${this.chatId}`);
     eventRef.set({
       createdAt: firebase.database.ServerValue.TIMESTAMP,
-      messageText: `${this.translate.instant("you")}: ${this.messageText}`,
+      messageText: `${this.translate.instant('you')}: ${this.messageText}`,
       notificationProcessed: 'true',
       profilePhotoUrl: this.chatSummary.users[this.chatSummary.displayUserId].profilePhotoUrl,
       sourceId: this.chatId,
@@ -200,9 +199,8 @@ export class ChatPage {
   displayUser() {
     if (this.contact) {
       return this.contact;
-    }
-    else {
-      return this.chatSummary ? this.chatSummary.users[this.chatSummary.displayUserId] : "";
+    } else {
+      return this.chatSummary ? this.chatSummary.users[this.chatSummary.displayUserId] : '';
     }
   }
 
@@ -211,8 +209,8 @@ export class ChatPage {
   }
 
   resetMessageTextArea() {
-    this.messageText = "";
+    this.messageText = '';
     this.messageTextAreaHeight = 32;
-    jQuery("textarea")[0].rows = 2;
+    jQuery('textarea')[0].rows = 2;
   }
 }

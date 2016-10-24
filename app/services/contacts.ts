@@ -1,5 +1,5 @@
-import {Injectable, EventEmitter} from '@angular/core'
-import {Platform, Alert} from 'ionic-angular';
+import {Injectable, EventEmitter} from '@angular/core';
+import {Platform} from 'ionic-angular';
 import {Contacts} from 'ionic-native';
 import {FakeContactsSource} from '../models/fake-contacts-source';
 import {ContactModel} from '../models/contact';
@@ -32,7 +32,7 @@ export class ContactsService {
       } else {
         self.contactsLoadedEmitter.subscribe((data) => {
           resolve(self.contactGroups);
-        })
+        });
       }
     });
   }
@@ -45,8 +45,8 @@ export class ContactsService {
         contact.formattedPhone = self.e164ToFormattedPhone(contact.phone);
       });
       contacts = _.sortBy(contacts, 'name');
-      let groups = _.groupBy(contacts, function(c) { return c.userId ? "members" : "nonMembers"; });
-      resolve({ members: groups["members"] || [], nonMembers: groups["nonMembers"] || [] });
+      let groups = _.groupBy(contacts, function(c) { return c.userId ? 'members' : 'nonMembers'; });
+      resolve({ members: groups['members'] || [], nonMembers: groups['nonMembers'] || [] });
     });
   }
 
@@ -78,25 +78,25 @@ export class ContactsService {
         let contacts: ContactModel[] = [];
         _.each(rawContacts, (rawContact) => {
           let rawPhones = self.validRawPhones(rawContact.phoneNumbers || []);
-          if (rawPhones.length == 0 || !rawContact.name || !rawContact.name.givenName || !rawContact.name.familyName) {
+          if (rawPhones.length === 0 || !rawContact.name || !rawContact.name.givenName || !rawContact.name.familyName) {
             return;
           }
           let originalContact = {
             id: rawContact.id,
             firstName: rawContact.name.givenName,
-            middleName: rawContact.name.middleName || "",
+            middleName: rawContact.name.middleName || '',
             lastName: rawContact.name.familyName,
             phones: rawPhones,
             email: self.getBestEmail(rawContact.emails),
             profilePhotoUrl: null // TODO: assign this
           };
-          let contact: ContactModel = new ContactModel("", {
+          let contact: ContactModel = new ContactModel('', {
             name: UserModel.fullName(originalContact),
             original: _.omitBy(originalContact, _.isNil) // remove null or undefined fields
           });
           contacts.push(contact);
         });
-        log.debug(`retrieved ${contacts.length} contacts in ${new Date().getTime() - startTime} milliseconds`)
+        log.debug(`retrieved ${contacts.length} contacts in ${new Date().getTime() - startTime} milliseconds`);
         resolve(contacts);
       }, (error) => {
         reject(error);
@@ -120,7 +120,7 @@ export class ContactsService {
         phones: phonesToLookup
       });
       let ref = phoneLookupRef.child('result');
-      log.debug(`waiting for value at ${ref.toString()}`)
+      log.debug(`waiting for value at ${ref.toString()}`);
       ref.on('value', (snapshot) => {
 
         // wait until result element appears on phoneLookupRef
@@ -129,7 +129,7 @@ export class ContactsService {
           return;
         }
 
-        log.debug(`got value at ${ref.toString()}`, result)
+        log.debug(`got value at ${ref.toString()}`, result);
         let phoneToUserMapping: any = result.numMatches > 0 ? result.phoneToUserMapping : {};
         ref.off('value');
         phoneLookupRef.remove();
@@ -198,14 +198,14 @@ export class ContactsService {
 
   private isValidEmail(email: string): boolean {
     var pattern = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.([-a-z0-9_]+)|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-    return pattern.test(email)
+    return pattern.test(email);
   }
 
   private validRawPhones(rawPhones: any) {
     let self = this;
     _.each(rawPhones, (rawPhone: any) => {
       let e164Phone = self.toE164(rawPhone.value);
-      if (e164Phone && (rawPhone.type == 'mobile' || rawPhone.type == 'home') && rawPhone.value != self.currentUserPhone) {
+      if (e164Phone && (rawPhone.type === 'mobile' || rawPhone.type === 'home') && rawPhone.value !== self.currentUserPhone) {
         rawPhone.value = e164Phone;
       } else {
         rawPhone.value = undefined;
@@ -216,7 +216,7 @@ export class ContactsService {
 
   private toE164(phone: string): string {
     let e164Phone;
-    let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();;
+    let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
     let phoneNumberFormat = require('google-libphonenumber').PhoneNumberFormat;
     try {
       let initialPlus = /^\+/.test(phone);
@@ -225,17 +225,17 @@ export class ContactsService {
         return undefined;
       }
       if (initialPlus) {
-        strippedPhone = "+" + strippedPhone;
+        strippedPhone = '+' + strippedPhone;
       }
 
       let phoneNumberObject = phoneNumberUtil.parse(strippedPhone, this.countryCode);
       if (phoneNumberUtil.isValidNumber(phoneNumberObject)) {
         e164Phone = phoneNumberUtil.format(phoneNumberObject, phoneNumberFormat.E164);
-        if (this.countryCode == 'MX' && /^\+52[2-9]/.test(e164Phone)) {
+        if (this.countryCode === 'MX' && /^\+52[2-9]/.test(e164Phone)) {
           // In Mexico, The 1 after +52 indicates that a number is mobile,
           // but it's often left out of contacts because most carriers don't require it.
           // If the 1 is  missing, we add it back to normalize the number.
-          e164Phone = "+521" + e164Phone.substring(3);
+          e164Phone = '+521' + e164Phone.substring(3);
           let phoneNumberObject = phoneNumberUtil.parse(strippedPhone, this.countryCode); // TODO: handle this better
           e164Phone = phoneNumberUtil.format(phoneNumberObject, phoneNumberFormat.E164);
         }
@@ -251,7 +251,7 @@ export class ContactsService {
 
   private e164ToFormattedPhone(e164Phone: string): string {
     let formattedPhone;
-    let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();;
+    let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
     let phoneNumberFormat = require('google-libphonenumber').PhoneNumberFormat;
     try {
       let phoneNumberObject = phoneNumberUtil.parse(e164Phone, this.countryCode);

@@ -1,4 +1,4 @@
-import {ViewChild, Component, Type, provide} from '@angular/core';
+import {ViewChild, Component, provide} from '@angular/core';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import {Http, HTTP_PROVIDERS } from '@angular/http';
 import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
@@ -23,9 +23,6 @@ import {WalletSetupPage} from './pages/registration/wallet-setup';
 import {VerificationPendingPage} from './pages/registration/verification-pending';
 import {VerificationFailedPage} from './pages/registration/verification-failed';
 import {HomePage} from './pages/home/home';
-import {ChatPage} from './pages/chat/chat';
-import {SendPage} from './pages/send/send';
-import {RequestPage} from './pages/request/request';
 import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';
@@ -62,9 +59,9 @@ class UrMoney {
   initializeApp() {
     this.menuItems = [
       { title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home', value: 'home' },
-      { title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: "chat" }, icon: 'icon menu-icon menu-icon-chat', value: 'chat' },
-      { title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: "send" }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' },
-      // { title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: "request" }, icon: 'icon menu-icon menu-icon-request-ur', value: 'request' },
+      { title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: 'chat' }, icon: 'icon menu-icon menu-icon-chat', value: 'chat' },
+      { title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: 'send' }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' },
+      // { title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: 'request' }, icon: 'icon menu-icon menu-icon-request-ur', value: 'request' },
       { title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'transactions' },
       { title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' }
     ];
@@ -75,7 +72,7 @@ class UrMoney {
         StatusBar.styleDefault();
       }
 
-      let logLevel = { "trace": 0, "debug": 1, "info": 2, "warn": 3, "error": 4, "silent": 5 }[Config.logLevel] || 1;
+      let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
       log.setDefaultLevel(logLevel);
 
       if (/^\/app/.test(window.location.pathname) || /^\?app/.test(window.location.search)) {
@@ -96,19 +93,19 @@ class UrMoney {
   }
 
   translateMenu() {
-    this.translate.get("app.home").subscribe((res: string) => {
+    this.translate.get('app.home').subscribe((res: string) => {
       this.menuItems[_.findIndex(this.menuItems, ['value', 'home'])].title = res;
     });
-    this.translate.get("app.chat").subscribe((res: string) => {
+    this.translate.get('app.chat').subscribe((res: string) => {
       this.menuItems[_.findIndex(this.menuItems, ['value', 'chat'])].title = res;
     });
-    this.translate.get("app.sendUr").subscribe((res: string) => {
+    this.translate.get('app.sendUr').subscribe((res: string) => {
       this.menuItems[_.findIndex(this.menuItems, ['value', 'send'])].title = res;
     });
-    this.translate.get("app.transactions").subscribe((res: string) => {
+    this.translate.get('app.transactions').subscribe((res: string) => {
       this.menuItems[_.findIndex(this.menuItems, ['value', 'transactions'])].title = res;
     });
-    this.translate.get("app.about").subscribe((res: string) => {
+    this.translate.get('app.about').subscribe((res: string) => {
       this.menuItems[_.findIndex(this.menuItems, ['value', 'about'])].title = res;
     });
   }
@@ -124,7 +121,7 @@ class UrMoney {
 
   openPage(menuItem) {
     this.menu.close();
-    if (menuItem.page == HomePage) {
+    if (menuItem.page === HomePage) {
       this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
     } else {
       this.nav.push(menuItem.page, menuItem.pageParams || {}, { animate: true, direction: 'forward' });
@@ -138,7 +135,7 @@ class UrMoney {
 
   invite() {
     this.menu.close();
-    this.nav.push(ContactsAndChatsPage, { goal: "invite" }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
   }
 
 }
