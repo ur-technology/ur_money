@@ -43,6 +43,11 @@ export class TransactionComponent {
     this.lastUpdated = this.filteredTransactions.length > 0 ? _.last(_.sortBy(this.filteredTransactions, 'updatedAt')).updatedAt : '';
   }
 
+  weiToURString(amount: any): string {
+    let convertedAmount = (new BigNumber(amount)).dividedBy(1000000000000000000);
+    return convertedAmount.toFormat(2);
+  }
+
   private loadTransactionsByType() {
     let self = this;
     self.showSpinner = true;
