@@ -27,27 +27,27 @@
         "errorSendingSmsAgain": "There was an unexpected problem sending the SMS. Please try again later"
     },
     "profile-setup": {
-        "title": "Set up profile",
-        "firstName": "First name",
-        "middleName": "Middle name (optional)",
-        "lastName": "Last name",
-        "address": "Street address",
-        "state": "State or province",
+        "title": "Set Up Profile",
+        "firstName": "First Name",
+        "middleName": "Middle Name (optional)",
+        "lastName": "Last Name",
+        "address": "Street Address",
+        "state": "State or Province",
         "city": "City",
-        "zipCode": "Zip/Postal code"
+        "postalCode": "Zip/Postal Code"
     },
     "identity-info-setup": {
-        "title": "Identification document",
-        "birthDay": "Birth day",
-        "birthMonth": "Birth month",
-        "birthYear": "Birth year",
-        "driverLicence": "Drive license number",
-        "MRI1": "Machine readable info - Line 1",
-        "MRI2": "Machine readable info - Line 2",
-        "passportNumber": "Passport number",
-        "passportDay": "Expiration day",
-        "passportMonth": "Expiration month",
-        "passportYear": "Expiration year"
+        "title": "Identification Document",
+        "dateOfBirth": "Date of Birth",
+        "idType": "ID Type",
+        "driverLicenseState": "Driver License State",
+        "driverLicenseNumber": "Driver License Number",
+        "MRI1": "Machine readable Line 1",
+        "MRI2": "Machine readable Line 2",
+        "passportNumber": "Passport Number",
+        "passportExpirationDay": "Expiration Day",
+        "passportExpirationMonth": "Expiration Month",
+        "passportExpirationYear": "Expiration Year"
     },
     "wallet-setup": {
         "title": "Wallet setup",
@@ -144,8 +144,8 @@
     "about": {
         "about": "About UR",
         "message1": "UR is an advanced cryptocurrency made for everyday people and everyday expenditures. 2,000 UR is distributed to every human being who chooses to join the UR community and proves his / her identity. There is no cost to join or to receive this distribution. UR community members may earn additional UR by referring and for helping to support the integrity, security, and usefulness of UR currency and the UR community.",
-        "message2": "UR Capital is a corporation whose mission is to create a secure, stable, and useful world currency available to every human being.",
-        "learnMore": "Learn more about UR Capital"
+        "message2": "UR Technology is a corporation whose mission is to create a secure, stable, and useful world currency available to every human being.",
+        "learnMore": "Learn more about UR Technology"
     },
     "settings": {
         "title": "Settings",

@@ -2,7 +2,7 @@
 
 ## First, make sure a local version of gur is running
 ```script
-git clone git@github.com-urcapital:urcapital/go-ur.git
+git clone git@github.com:ur-technology/go-ur.git
 cd go-ur
 apt-get install -y build-essential libgmp3-dev golang zip unzip
 make gur

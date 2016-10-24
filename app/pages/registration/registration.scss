@@ -17,7 +17,7 @@
   display: block;
 }
 
-.profile-setup {
+.-setup {
   ion-input.ng-dirty.ng-invalid,
   ion-input.ng-touched.ng-invalid {
     border-left: 5px solid red;
@@ -26,15 +26,12 @@
 /*--------------------------------------------------
     Registration Screen / Verification Screen
 ----------------------------------------------------*/
-.profile-setup-page {
+.profile-setup-page, .identity-info-setup-page {
   .right {
     float: right;
   }
-}
-
-.identity-info-setup-page {
-  .right {
-    float: right;
+  ion-label {
+    min-width: 200px;
   }
 }
 
@@ -55,7 +52,7 @@
       text-align: center;
 
       .filler {
-        height: 200px;
+        height: 400px;
       }
 
     }

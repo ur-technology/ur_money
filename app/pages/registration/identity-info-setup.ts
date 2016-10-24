@@ -35,6 +35,7 @@ export class IdentityInfoSetupPage {
   identificationTypes: any[];
   genders: any[];
   identificationType: string;
+  dateOfBirth: string;
 
   constructor(
     public nav: NavController,
@@ -61,6 +62,8 @@ export class IdentityInfoSetupPage {
 
     let user = this.auth.currentUser;
     this.identificationType = this.identificationTypes[0].value;
+
+    this.dateOfBirth = "foo";
 
     this.verification = {
       "PersonInfo": {
@@ -104,9 +107,7 @@ export class IdentityInfoSetupPage {
 
     let formElements: any = {
       gender: new FormControl("", CustomValidator.nameValidator),
-      dayOfBirth: new FormControl("", CustomValidator.nameValidator),
-      monthOfBirth: new FormControl("", CustomValidator.nameValidator),
-      yearOfBirth: new FormControl("", CustomValidator.nameValidator),
+      dateOfBirth: new FormControl("", CustomValidator.nameValidator),
       identificationType: new FormControl("", CustomValidator.nameValidator),
       driverLicenseNumber: new FormControl("", CustomValidator.conditionalNameValidator),
       driverLicenseState: new FormControl("", CustomValidator.conditionalNameValidator),
@@ -114,9 +115,9 @@ export class IdentityInfoSetupPage {
       passportMrz1: new FormControl("", CustomValidator.conditionalNameValidator),
       passportMrz2: new FormControl("", CustomValidator.conditionalNameValidator),
       passportNumber: new FormControl("", CustomValidator.conditionalNameValidator),
-      passportDayOfExpiry: new FormControl("", CustomValidator.conditionalNameValidator),
-      passportMonthOfExpiry: new FormControl("", CustomValidator.conditionalNameValidator),
-      passportYearOfExpiry: new FormControl("", CustomValidator.conditionalNameValidator)
+      passportExpirationDayOfExpiry: new FormControl("", CustomValidator.conditionalNameValidator),
+      passportExpirationMonthOfExpiry: new FormControl("", CustomValidator.conditionalNameValidator),
+      passportExpirationYearOfExpiry: new FormControl("", CustomValidator.conditionalNameValidator)
     };
     _.each(formElements, (control, name) => {
       (control as any).name = name;
@@ -140,9 +141,9 @@ export class IdentityInfoSetupPage {
     (formElements.passportMrz1 as any).controlEnabled = identificationTypePassport;
     (formElements.passportMrz2 as any).controlEnabled = identificationTypePassport;
     (formElements.passportNumber as any).controlEnabled = identificationTypePassport;
-    (formElements.passportDayOfExpiry as any).controlEnabled = identificationTypePassport;
-    (formElements.passportMonthOfExpiry as any).controlEnabled = identificationTypePassport;
-    (formElements.passportYearOfExpiry as any).controlEnabled = identificationTypePassport;
+    (formElements.passportExpirationDayOfExpiry as any).controlEnabled = identificationTypePassport;
+    (formElements.passportExpirationMonthOfExpiry as any).controlEnabled = identificationTypePassport;
+    (formElements.passportExpirationYearOfExpiry as any).controlEnabled = identificationTypePassport;
 
     this.mainForm = new FormGroup(formElements);
   }
@@ -155,15 +156,26 @@ export class IdentityInfoSetupPage {
     });
     loader.present();
 
-    let task: any = _.pick(self.verification, ['PersonInfo', 'Location', 'Communication']);
-    if (self.identificationType == 'Driver License') {
-      task.DriverLicence = self.verification.DriverLicense; // note Canadian spelling of 'Driver Licence'
-    } else if (self.identificationType == 'National Id') {
-      task.NationalIds = [ self.verification.NationalId ];
-    } else if (self.identificationType == 'Passport') {
-      task.Passport = self.verification.Passport;
+    let task: any = {
+      userId: self.auth.currentUserId,
+      verificationArgs: {
+        AcceptTruliooTermsAndConditions: true,
+        Demo: false,
+        CleansedAddress: true,
+        ConfigurationName: "Identity Verification",
+        CountryCode: self.verification.Location.Country,
+        DataFields: _.pick(self.verification, ['PersonInfo', 'Location', 'Communication'])
+      }
     };
-    task.userId = self.auth.currentUserId;
+
+    if (self.identificationType == 'Driver License') {
+      task.verificationArgs.DataFields.DriverLicence = self.verification.DriverLicense; // NOTE: using Canadian spelling of 'Driver Licence'
+    } else if (self.identificationType == 'National Id') {
+      task.verificationArgs.DataFields.NationalIds = [ self.verification.NationalId ];
+    } else if (self.identificationType == 'Passport') {
+      task.verificationArgs.DataFields.Passport = self.verification.Passport;
+    };
+
     let taskRef = firebase.database().ref(`/identityVerificationQueue/tasks`).push(task);
     let resultRef = taskRef.child('result');
     log.debug(`waiting for value at ${resultRef.toString()}`)
@@ -213,4 +225,13 @@ export class IdentityInfoSetupPage {
     }
   }
 
+  dobChanged() {
+    let dateParts = this.dateOfBirth.split("-");
+    if (dateParts.length == 3) {
+      this.verification.PersonInfo.YearOfBirth = dateParts[0];
+      this.verification.PersonInfo.MonthOfBirth = dateParts[1];
+      this.verification.PersonInfo.DayOfBirth = dateParts[2];
+    }
+
+  }
 }

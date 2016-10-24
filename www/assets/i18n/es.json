@@ -34,20 +34,20 @@
         "address": "Dirección",
         "state": "Estado o provincia",
         "city": "Ciudad",
-        "zipCode": "Código postal"
+        "postalCode": "Código postal"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",
-        "birthDay": "Día de nacimiento",
-        "birthMonth": "Mes de nacimiento",
-        "birthYear": "Año de nacimiento",
-        "driverLicence": "Número de licencia de conducir",
-        "MRI1": "Lectura mecánica - Línea 1",
-        "MRI2": "Lectura mecánica - Línea 2",
+        "dateOfBirth": "Fecha de Nacimiento",
+        "idType": "Typo de Identification",
+        "driverLicenseState": "Estado de licencia de conducir",
+        "driverLicenseNumber": "Número de licencia de conducir",
+        "MRI1": "Lectura mecánica Línea 1",
+        "MRI2": "Lectura mecánica Línea 2",
         "passportNumber": "Número de pasaporte",
-        "passportDay": "Día de caducidad",
-        "passportMonth": "Mes de caducidad",
-        "passportYear": "Año de caducidad"
+        "passportExpirationDay": "Día de caducidad",
+        "passportExpirationMonth": "Mes de caducidad",
+        "passportExpirationYear": "Año de caducidad"
     },
     "wallet-setup": {
         "title": "Configuración de la billetera",
@@ -140,8 +140,8 @@
     "about": {
         "about": "Acerca UR",
         "message1": "UR es una criptomoneda avanzada hecha para la gente común y para los gastos de todos los días. 2.000 UR se distribuye a cada ser humano que decide unirse a la comunidad UR y comprueba su identidad. No hay ningún costo para inscribirse o para recibir esta distribución. Lo miembros de la comunidad UR pueden ganar UR adicional refiriendo o ayudando a la integridad, seguridad y utilidad de la moneda y la comunidad UR.",
-        "message2": "UR Capital es una empresa cuya misión es crear una moneda mundial segura, estable y útil, disponible para cada ser humano.",
-        "learnMore": "Conocer más de UR Capital"
+        "message2": "UR Technology es una empresa cuya misión es crear una moneda mundial segura, estable y útil, disponible para cada ser humano.",
+        "learnMore": "Conocer más de UR Technology"
     },
     "settings": {
         "title": "Configuración",

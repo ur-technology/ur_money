@@ -36,7 +36,7 @@ export class EventListComponent {
   listenForNewEvents() {
     firebase.database().ref(`/users/${this.auth.currentUserId}/events`)
       .orderByChild("notificationProcessed")
-      .equalTo("false")
+      .equalTo(false)
       .on('child_added', eventSnapshot => {
         let event = eventSnapshot.val();
         LocalNotifications.schedule({
@@ -47,7 +47,7 @@ export class EventListComponent {
           sound: this._soundFile(event.sourceType),
           data: { sourceId: event.sourceId, sourceType: event.sourceType }
         });
-        eventSnapshot.ref.update({ notificationProcessed: "true" });
+        eventSnapshot.ref.update({ notificationProcessed: true });
       });
   }
 
