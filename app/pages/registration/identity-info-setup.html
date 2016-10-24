@@ -10,7 +10,7 @@
 </ion-header>
 <ion-content padding class="registration profile-setup">
   {{ mainForm._errors}}
-    <form [formGroup]="mainForm">
+    <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
       <ion-item-group>
         <ion-item>
             <ion-label fixed>Gender</ion-label>
@@ -29,6 +29,9 @@
           <ion-select [(ngModel)]="identificationType" formControlName="identificationType" (ionChange)="identificationTypeSelected()">
               <ion-option [value]="t.value" *ngFor="let t of identificationTypes">{{t.name}}</ion-option>
           </ion-select>
+        </ion-item>
+        <ion-item class="item item-input input-item-data" style="position: absolute; left: -9999px; width: 1px; height: 1px;">
+          <ion-input type="submit">.</ion-input>
         </ion-item>
       </ion-item-group>
 

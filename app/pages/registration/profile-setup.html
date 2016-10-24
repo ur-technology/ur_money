@@ -9,7 +9,7 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding class="registration profile-setup">
-    <form [formGroup]="mainForm">
+    <form [formGroup]="mainForm" (ngSubmit)="submit()">
         <ion-item-group>
             <ion-item>
                 <ion-label fixed>{{'profile-setup.firstName' | translate}}</ion-label>
@@ -46,6 +46,9 @@
             <ion-item>
                 <ion-label fixed>{{'profile-setup.postalCode' | translate}}</ion-label>
                 <ion-input type="text" [(ngModel)]="profile.postalCode" formControlName="postalCode"></ion-input>
+            </ion-item>
+            <ion-item class="item item-input input-item-data" style="position: absolute; left: -9999px; width: 1px; height: 1px;">
+              <ion-input type="submit">.</ion-input>
             </ion-item>
         </ion-item-group>
     </form>
