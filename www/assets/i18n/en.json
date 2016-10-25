@@ -31,7 +31,7 @@
         "firstName": "First Name",
         "middleName": "Middle Name (optional)",
         "lastName": "Last Name",
-        "address": "Street Address",
+        "address": "Address",
         "state": "State or Province",
         "city": "City",
         "postalCode": "Zip/Postal Code"

@@ -2,30 +2,25 @@
     <ion-navbar>
         <ion-title>{{"wallet-setup.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="!mainForm.valid"
-              (click)="confirmSecretPhraseWrittenDown()">
+          <button [disabled]="!mainForm.valid" type="submit"
+              form="myForm">
               {{"done" | translate}}
           </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content padding class="registration profile-setup">
-    <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && confirmSecretPhraseWrittenDown()">
-      <p>
+    <form id="myForm" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && confirmSecretPhraseWrittenDown()">
+      <p text-justify>
         UR Money requires a 5-10 word passphrase called a brain wallet. This passphrase will not be recorded on our servers and we can never recover it for you. You must WRITE DOWN your passphrase and STORE IT SOMEWHERE SAFE. If you lose your passphrase, you will lose all of your UR money forever.
       </p>
-      <p>
+      <p text-justify>
         It is important that your words be unpredictable to avoid your passphrase being hacked and all of your UR being stolen. Do not use a phrase that exists in a song or book or anywhere on the internet.
       </p>
-      <p>
+      <p text-justify>
         If you need help coming up with a passphrase, tap the button below to generate a passphrase at random. You may continue to generate possible passphrases until you have one you like.
       </p>
       <ion-item>
-          <button
-            type="submit"
-            style="position: absolute; left: -9999px; width: 1px; height: 1px;">
-              x
-          </button>
           <button type="text"
               secondary
               (click)="suggestSecretPhrase()">
@@ -41,6 +36,6 @@
               [(ngModel)]="secretPhrase"
               placeholder="{{'wallet-setup.secretPhrasePlaceholder' | translate}}"></ion-input>
       </ion-item>
-      <div class="filler">&nbsp;</div>
+
     </form>
 </ion-content>

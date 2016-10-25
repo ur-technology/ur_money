@@ -41,23 +41,6 @@
     float: right;
   }
 
-  scroll-content {
-    display: table !important;
-    width: 100% !important;
-    height: 100% !important;
-
-    form {
-      display: table-cell;
-      vertical-align: middle;
-      text-align: center;
-
-      .filler {
-        height: 400px;
-      }
-
-    }
-  }
-
 }
 
 
