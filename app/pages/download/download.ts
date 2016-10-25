@@ -2,6 +2,7 @@ import {Page, NavController, Platform} from 'ionic-angular';
 import {Config} from '../../config/config';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {AngularFire} from 'angularfire2';
+import * as firebase from 'firebase';
 
 @Page({
   templateUrl: 'build/pages/download/download.html',
