@@ -5,6 +5,7 @@ import { App } from 'ionic-angular';
 import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 import {EventsService} from '../../services/events';
 import {ChatPage} from '../../pages/chat/chat';
+import {TransactionsPage} from '../../pages/transactions/transactions';
 import {LocalNotifications} from 'ionic-native';
 import {AuthService} from '../../services/auth';
 
@@ -56,8 +57,7 @@ export class EventListComponent {
     if (sourceType === 'message') {
       this.app.getRootNav().push(ChatPage, { chatId: sourceId }, { animate: true, direction: 'forward' });
     } else if (sourceType === 'transaction') {
-      let toast = this.toastCtrl.create({ message: 'Not implemented yet. It should open the transaction page', duration: 3000, position: 'bottom' });
-      toast.present();
+      this.app.getRootNav().push(TransactionsPage, {}, { animate: true, direction: 'forward' });
     }
   }
 

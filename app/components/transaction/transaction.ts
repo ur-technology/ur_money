@@ -51,14 +51,15 @@ export class TransactionComponent {
   private loadTransactionsByType() {
     let self = this;
     self.showSpinner = true;
-    firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/`)
-      .orderByChild('type')
-      .equalTo(self.transactionType)
-      .once('value', snapshot => {
-        self.showSpinner = false;
-        self.transactions = _.values(snapshot.val());
-        self.filterTransactions();
-      });
+    let query = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/`).orderByChild('type');
+    if (self.transactionType !== 'all') {
+      query = query.equalTo(self.transactionType);
+    }
+    query.once('value', snapshot => {
+      self.showSpinner = false;
+      self.transactions = _.values(snapshot.val());
+      self.filterTransactions();
+    });
   }
 
   ngOnChanges() {
@@ -88,13 +89,15 @@ export class TransactionComponent {
   }
 
   getTransactionType(): string {
-    if (this.transactionType === 'sent') {
-      return this.translate.instant('transaction.sent');
-    } else if (this.transactionType === 'received') {
-      return this.translate.instant('transaction.received');
-    } else {
-      return this.translate.instant('transaction.earned');
+    switch (this.transactionType) {
+      case 'sent':
+        return this.translate.instant('transaction.sent');
+      case 'received':
+        return this.translate.instant('transaction.received');
+      case 'earned':
+        return this.translate.instant('transaction.earned');
+      default:
+        return '';
     }
   }
-
 }

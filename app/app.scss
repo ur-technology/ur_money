@@ -179,6 +179,18 @@ i.menu-icon {
     background: url("../../img/earned-icon.png") no-repeat center;
 }
 
+.ion-ios-all-icon {
+    content: url("../../img/all-icon-active.png");
+}
+
+.ion-md-all-icon {
+    content: url("../../img/all-icon-active.png");
+}
+
+.ion-ios-all-icon-on {
+    background: url("../../img/all-icon-active.png") no-repeat center;
+}
+
 .ur-menu {
     background: rgba(224, 81, 81, 1);
     background: -moz-linear-gradient(top, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);

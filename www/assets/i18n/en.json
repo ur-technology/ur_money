@@ -133,7 +133,8 @@
         "title": "Transactions",
         "sent": "Sent",
         "received": "Received",
-        "earned": "Earned"
+        "earned": "Earned",
+        "all": "All"
     },
     "send": {
         "title": "Send UR",

@@ -7,7 +7,7 @@
   .toolbar {
     padding: 0;
 
-  
+
     .right {
       float: right;
 
@@ -188,6 +188,10 @@
 .transaction-earned .filter-box {
   background-color: #ef3f37;
 }
+
+.transaction-all .filter-box {
+  background-color: #d8ad1e;
+}
 /*---------------------------------*/
 .transaction-chat {
   background-color: #dedede;
@@ -241,6 +245,19 @@
   font-size: 9px;
   line-height: 1.3em;
   color: #546a79;
+}
+
+.transaction-chat .item p .transaction-filter-earned{
+  color: #ef3f37;
+  text-transform: uppercase;
+}
+.transaction-chat .item p .transaction-filter-sent{
+  color: #eb3f97;
+  text-transform: uppercase;
+}
+.transaction-chat .item p .transaction-filter-received{
+  color: #3aade2;
+  text-transform: uppercase;
 }
 
 .transaction-chat .trans-ur {

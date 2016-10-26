@@ -10,7 +10,7 @@ import {TranslatePipe} from 'ng2-translate/ng2-translate';
   pipes: [TranslatePipe]
 })
 export class TransactionsPage {
-  segmentSelected: any = 'sent';
+  segmentSelected: any = 'all';
 
   constructor(public nav: NavController, public platform: Platform) {
   }

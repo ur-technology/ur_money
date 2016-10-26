@@ -106,18 +106,18 @@
       }
     },
     "-KLwWedxw2DHDhTdTK9-" : {
-      "countryCode" : "EC",
+      "countryCode" : "US",
       "createdAt" : 1467746790141,
       "downlineLevel" : 3,
-      "firstName" : "Xavier",
+      "firstName" : "Karina",
       "identityVerification": {
         "requestedAt": 1472751891913,
         "verifiedAt": 1465446952757
       },
-      "lastName" : "Pérez",
+      "lastName" : "Simpson",
       "memberId" : 303,
-      "name" : "Xavier Pérez",
-      "phone" : "+593998016833",
+      "name" : "Karina Simpson",
+      "phone" : "+19373964400",
       "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XP",
       "sponsor" : {
         "name" : "John Reitano",
@@ -126,30 +126,6 @@
       },
       "wallet" : {
         "address" : "0xa6bff828f64d04ad58a029b75bce0556133941e6",
-        "createdAt" : 1470525317195
-      }
-    },
-    "-KNEKfk_nwPeckdg79HU" : {
-      "countryCode" : "EC",
-      "createdAt" : 1467746790141,
-      "downlineLevel" : 4,
-      "firstName" : "Horacio",
-      "identityVerification": {
-        "requestedAt": 1472751891913,
-        "verifiedAt": 1465446952757
-      },
-      "lastName" : "Pérez",
-      "memberId" : 304,
-      "name" : "Horacio Pérez",
-      "phone" : "+593998739913",
-      "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=HP",
-      "sponsor" : {
-        "name" : "Xavier Pérez",
-        "profilePhotoUrl" : "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XP",
-        "userId" : "-KLwWedxw2DHDhTdTK9-"
-      },
-      "wallet" : {
-        "address" : "0xb361ff1d4acc8583177735dae9d00e555c57607e",
         "createdAt" : 1470525317195
       }
     }

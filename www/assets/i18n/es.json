@@ -129,7 +129,8 @@
         "title": "Transacciones",
         "sent": "Enviado",
         "received": "Recibido",
-        "earned": "Ganado"
+        "earned": "Ganado",
+        "all": "Todas"
     },
     "send": {
         "title": "Enviar UR",

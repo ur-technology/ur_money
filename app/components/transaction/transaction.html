@@ -44,7 +44,8 @@
                 <img src="img/avatar.jpg">
             </ion-avatar>
             <h2>{{transaction.name}} <span class="item-date-time">{{transaction.createdAt|dateAndTime}}</span></h2>
-            <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">{{"transaction.seeMore" | translate}}</a></span></p>
+            <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">{{"transaction.seeMore" | translate}}</a></span>
+              <span class="transaction-filter-{{transaction.type}}">{{transaction.type}}</span></p>
             <span class="icon trans-ur"
                 item-right>{{weiToURString(transaction.amount)}}<br/>  UR</span>
         </ion-item>

@@ -10,6 +10,12 @@
     [fullscreen]="false">
     <ion-segment [(ngModel)]="segmentSelected"
         class="transactions-tab-nav">
+        <ion-segment-button value="all">
+            <a class="tab-buttons has-title has-icon">
+                <ion-icon name="all-icon"></ion-icon>
+                <span>{{"transactions.all" | translate}}</span>
+            </a>
+        </ion-segment-button>
         <ion-segment-button value="sent">
             <a class="tab-buttons has-title has-icon">
                 <ion-icon name="sent-icon"></ion-icon>
