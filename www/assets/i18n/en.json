@@ -59,7 +59,7 @@
         "passportExpirationYear": "Expiration Year"
     },
     "wallet-setup": {
-        "title": "Wallet setup",
+        "title": "Secret Phrase Setup",
         "suggestSecretPhrase": "Suggest secret phrase",
         "secretPhrasePlaceholder": "Enter at least 5 words",
         "confirmWrittenDownTitle": "Write It Down!",

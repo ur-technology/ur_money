@@ -59,7 +59,7 @@
         "passportExpirationYear": "Año de caducidad"
     },
     "wallet-setup": {
-        "title": "Configuración de la billetera",
+        "title": "Configuración de Frase Secreta",
         "suggestSecretPhrase": "Sugerir frase secreta",
         "secretPhrasePlaceholder": "Introduce al menos 5 palabras",
         "confirmWrittenDownTitle": "Escríbelo!",

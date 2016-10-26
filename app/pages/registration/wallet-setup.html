@@ -12,14 +12,14 @@
 <ion-content padding class="registration profile-setup">
     <form id="myForm" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && confirmSecretPhraseWrittenDown()">
       <p text-justify>
-        UR Money requires a 5-10 word passphrase called a brain wallet. This passphrase will not be recorded on our servers and we can never recover it for you. You must WRITE DOWN your passphrase and STORE IT SOMEWHERE SAFE. If you lose your passphrase, you will lose all of your UR money forever.
+          Choose a 5-10 word secret phrase:
       </p>
-      <p text-justify>
-        It is important that your words be unpredictable to avoid your passphrase being hacked and all of your UR being stolen. Do not use a phrase that exists in a song or book or anywhere on the internet.
-      </p>
-      <p text-justify>
-        If you need help coming up with a passphrase, tap the button below to generate a passphrase at random. You may continue to generate possible passphrases until you have one you like.
-      </p>
+      <ul>
+          <li>It lets you control your money.</li>
+          <li>Only you know it. It can never be recovered if lost.</li>
+          <li>It’s a string of words that’s never appeared in print or online—ever!</li>
+      </ul>
+      <p text-justify>Click the button below to automatically generate a secret phrase (recommended).</p>
       <ion-item>
           <button type="text"
               secondary
