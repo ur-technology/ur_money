@@ -6,7 +6,7 @@ import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {FocuserDirective} from '../../directives/focuser';
 import {UserModel} from '../../models/user';
 import {AuthService} from '../../services/auth';
-import {DeviceIdentityService} from '../../services/device-identity';
+// import {DeviceIdentityService} from '../../services/device-identity';
 import {CustomValidator} from '../../validators/custom';
 import {IdentityInfoSetupPage} from './identity-info-setup';
 
@@ -25,8 +25,8 @@ export class ProfileSetupPage {
   profile: any;
   constructor(
     public nav: NavController,
-    public auth: AuthService,
-    public deviceIdentityService: DeviceIdentityService
+    public auth: AuthService
+    // public deviceIdentityService: DeviceIdentityService
   ) {
 
     this.profile = _.pick(this.auth.currentUser, ['firstName', 'middleName', 'lastName', 'address', 'city', 'postalCode', 'countryCode', 'stateName']);
@@ -85,8 +85,8 @@ export class ProfileSetupPage {
 
   submit() {
     let newValues = _.merge(this.profile, {
-      name: UserModel.fullName(this.profile),
-      deviceIdentity: this.deviceIdentityService.deviceIdentity
+      name: UserModel.fullName(this.profile)
+      // deviceIdentity: this.deviceIdentityService.deviceIdentity
     });
     this.auth.currentUserRef.update(newValues).then(() => {
       _.merge(this.auth.currentUser, newValues);

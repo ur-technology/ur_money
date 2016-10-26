@@ -13,7 +13,7 @@ import {AuthService} from './services/auth';
 import {ChartDataService} from './services/chart-data';
 import {CountryListService} from './services/country-list';
 import {ContactsService} from './services/contacts';
-import {DeviceIdentityService} from './services/device-identity';
+// import {DeviceIdentityService} from './services/device-identity';
 import {EventsService} from './services/events';
 
 import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
@@ -33,7 +33,7 @@ import {DownloadPage} from './pages/download/download';
   templateUrl: 'build/app.html',
   providers: [
     AuthService,
-    DeviceIdentityService,
+    // DeviceIdentityService,
     ContactsService,
     EventsService,
     CountryListService,

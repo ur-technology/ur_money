@@ -69,14 +69,12 @@
     "tslint-ionic-rules": "0.0.7"
   },
   "cordovaPlugins": [
-    "cordova-plugin-device",
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
     "cordova-plugin-sim",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    "phonegap-plugin-barcodescanner",
     "cordova-plugin-file",
     "cordova-plugin-x-socialsharing",
     {
@@ -91,8 +89,7 @@
       "locator": "cordova-plugin-facebook4",
       "id": "cordova-plugin-facebook4"
     },
-    "cordova-plugin-contacts",
-    "cordova-plugin-geolocation"
+    "cordova-plugin-contacts"
   ],
   "cordovaPlatforms": [
     {

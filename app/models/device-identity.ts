@@ -1,5 +1,5 @@
-export class DeviceIdentityModel {
-  ipAddress: string;
-  deviceInfromation: Object;
-  geolocation: Object;
-}
+// export class DeviceIdentityModel {
+//   ipAddress: string;
+//   deviceInfromation: Object;
+//   geolocation: Object;
+// }
