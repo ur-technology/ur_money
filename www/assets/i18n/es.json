@@ -10,7 +10,7 @@
         "learnMore": "Conocer más"
     },
     "phone-number": {
-        "title": "Enter Phone Number",
+        "title": "Ingresa tu número de teléfono",
         "heading": "Por favor, confirma tu código de país e ingresa tu número de teléfono",
         "phoneNumber": "Número de teléfono",
         "numberConfirmation": "Confirmación de número",
@@ -28,12 +28,12 @@
         "errorSendingSmsAgain": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"
     },
     "intro": {
-        "title": "Set Up Profile",
-        "notNow": "Not now",
-        "pleaseContinue": "Yes, please continue.",
-        "notReadyTitle": "Stop the bus?",
-        "notReadyMessage": "Since identity verification is required for the use of the UR Money app, you will need to sign out for now. Are you sure you want to sign out?",
-        "yesSignOut": "Yes, sign me out."
+        "title": "Configurar perfil",
+        "notNow": "Ahora no",
+        "pleaseContinue": "Sí, por favor continuar",
+        "notReadyTitle": "Parar?",
+        "notReadyMessage": "Debido que se requiere la verificación de tu identidad para el uso de la aplicación UR Money, tendrás que cerrar sesión por ahora. ¿Seguro que quieres salir?",
+        "yesSignOut": "Sí, cerrar sesión."
     },
     "profile-setup": {
         "title": "Configurar perfil",
@@ -43,7 +43,8 @@
         "address": "Dirección",
         "state": "Estado o provincia",
         "city": "Ciudad",
-        "postalCode": "Código postal"
+        "postalCode": "Código postal",
+        "country": "País"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",
@@ -59,7 +60,7 @@
         "passportExpirationYear": "Año de caducidad"
     },
     "wallet-setup": {
-        "title": "Configuración de Frase Secreta",
+        "title": "Configuración de frase secreta",
         "suggestSecretPhrase": "Sugerir frase secreta",
         "secretPhrasePlaceholder": "Introduce al menos 5 palabras",
         "confirmWrittenDownTitle": "Escríbelo!",

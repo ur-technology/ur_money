@@ -43,7 +43,8 @@
         "address": "Address",
         "state": "State or Province",
         "city": "City",
-        "postalCode": "Zip/Postal Code"
+        "postalCode": "Zip/Postal Code",
+        "country": "Country"
     },
     "identity-info-setup": {
         "title": "Identification Document",

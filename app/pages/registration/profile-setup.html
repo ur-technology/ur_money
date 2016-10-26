@@ -9,18 +9,18 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding class="registration profile-setup">
-    <form [formGroup]="mainForm" (ngSubmit)="submit()">
+    <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
         <ion-item-group>
             <ion-item>
-                <ion-label fixed>{{'profile-setup.firstName' | translate}}</ion-label>
+                <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
                 <ion-input [focuser] type="text" [(ngModel)]="profile.firstName" formControlName="firstName"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label fixed>{{'profile-setup.middleName' | translate}}</ion-label>
+                <ion-label floating>{{'profile-setup.middleName' | translate}}</ion-label>
                 <ion-input type="text" [(ngModel)]="profile.middleName" formControlName="middleName"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label fixed>{{'profile-setup.lastName' | translate}}</ion-label>
+                <ion-label floating>{{'profile-setup.lastName' | translate}}</ion-label>
                 <ion-input type="text" [(ngModel)]="profile.lastName" formControlName="lastName"></ion-input>
             </ion-item>
             <!-- <ion-item>
@@ -29,22 +29,22 @@
                 </ion-select>
             </ion-item> -->
             <ion-item>
-                <ion-label fixed>{{'profile-setup.state' | translate}}</ion-label>
+                <ion-label floating>{{'profile-setup.state' | translate}}</ion-label>
                 <ion-select *ngIf="states.length>0" (ionChange)="onStateSelected($event)" formControlName="stateName">
                     <ion-option [value]="s" *ngFor="let s of states">{{s.name}}</ion-option>
                 </ion-select>
                 <ion-input *ngIf="states.length==0" type="text" [(ngModel)]="profile.stateName" formControlName="stateName"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label fixed>{{'profile-setup.address' | translate}}</ion-label>
-                <ion-input type="text" [(ngModel)]="profile.address" formControlName="address" placeholder="{{'profile-setup.address' | translate}}"></ion-input>
+                <ion-label floating>{{'profile-setup.address' | translate}}</ion-label>
+                <ion-input type="text" [(ngModel)]="profile.address" formControlName="address"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label fixed>{{'profile-setup.city' | translate}}</ion-label>
+                <ion-label floating>{{'profile-setup.city' | translate}}</ion-label>
                 <ion-input type="text" [(ngModel)]="profile.city" formControlName="city"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label fixed>{{'profile-setup.postalCode' | translate}}</ion-label>
+                <ion-label floating>{{'profile-setup.postalCode' | translate}}</ion-label>
                 <ion-input type="text" [(ngModel)]="profile.postalCode" formControlName="postalCode"></ion-input>
             </ion-item>
             <ion-item class="item item-input input-item-data" style="position: absolute; left: -9999px; width: 1px; height: 1px;">
