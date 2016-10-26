@@ -41,7 +41,7 @@ export class AuthService {
           });
           let status = _.trim((currentUser.registration && currentUser.registration.status) || '') || 'initial';
           nav.setRoot({
-            'initial': pages.profileSetupPage,
+            'initial': pages.introPage,
             'verification-requested': pages.verificationPendingPage,
             'verification-pending': pages.verificationPendingPage,
             'verification-failed': pages.verificationFailedPage,

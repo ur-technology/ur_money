@@ -10,6 +10,7 @@
         "learnMore": "Learn more"
     },
     "phone-number": {
+        "title": "Enter Phone Number",
         "heading": "Please confirm your country code and enter your phone number",
         "phoneNumber": "Phone number",
         "numberConfirmation": "Number confirmation",
@@ -25,6 +26,14 @@
         "errorVerificationSms": "We were unable to process your verification code. Please try again later",
         "errorCode": "The verification code you entered is incorrect or expired. Please try again.",
         "errorSendingSmsAgain": "There was an unexpected problem sending the SMS. Please try again later"
+    },
+    "intro": {
+        "title": "Set Up Profile",
+        "notNow": "Not now",
+        "pleaseContinue": "Yes, please continue.",
+        "notReadyTitle": "Stop the bus?",
+        "notReadyMessage": "Since identity verification is required for the use of the UR Money app, you will need to sign out for now. Are you sure you want to sign out?",
+        "yesSignOut": "Yes, sign me out."
     },
     "profile-setup": {
         "title": "Set Up Profile",

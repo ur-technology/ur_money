@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, AlertController, LoadingController, ToastController} from 'ionic-angular';
+import {Page, NavController, NavParams, LoadingController, ToastController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
@@ -15,7 +15,7 @@ export class VerificationSmsCodePage {
 
   constructor(public nav: NavController, public navParams: NavParams,
     public auth: AuthService,
-    private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
+    private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
     this.countryCode = this.navParams.get('countryCode');
@@ -30,11 +30,11 @@ export class VerificationSmsCodePage {
         this.verificationCode = '';
         if (result.error) {
           log.debug(result.error);
-          this.showErrorAlert(this.translate.instant('verification-sms-code.errorVerificationSms'));
+          this.showErrorMessage(this.translate.instant('verification-sms-code.errorVerificationSms'));
         } else if (result.codeMatch) {
           loading.dismiss();
         } else {
-          this.showErrorAlert(this.translate.instant('verification-sms-code.errorCode'));
+          this.showErrorMessage(this.translate.instant('verification-sms-code.errorCode'));
         }
       });
     });
@@ -47,12 +47,12 @@ export class VerificationSmsCodePage {
     this.auth.requestPhoneVerification(this.phone, this.countryCode).then((state: string) => {
       loading.dismiss();
       if (state !== 'code_generation_completed_and_sms_sent') {
-        this.showErrorAlert(this.translate.instant('verification-sms-code.errorSendingSmsAgain'));
+        this.showErrorMessage(this.translate.instant('verification-sms-code.errorSendingSmsAgain'));
       }
     });
   }
 
-  showErrorAlert(message) {
+  showErrorMessage(message) {
     let toast = this.toastCtrl.create({
       message: message, duration: 3500, position: 'bottom'
     });

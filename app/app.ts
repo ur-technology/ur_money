@@ -18,6 +18,7 @@ import {EventsService} from './services/events';
 
 import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
 import {WelcomePage} from './pages/registration/welcome';
+import {IntroPage} from './pages/registration/intro';
 import {ProfileSetupPage} from './pages/registration/profile-setup';
 import {WalletSetupPage} from './pages/registration/wallet-setup';
 import {VerificationPendingPage} from './pages/registration/verification-pending';
@@ -81,6 +82,7 @@ class UrMoney {
       }
       this.auth.respondToAuth(this.nav, {
         welcomePage: WelcomePage,
+        introPage: IntroPage,
         profileSetupPage: ProfileSetupPage,
         verificationPendingPage: VerificationPendingPage,
         verificationFailedPage: VerificationFailedPage,

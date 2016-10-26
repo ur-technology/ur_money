@@ -1,4 +1,4 @@
-import {Page, NavController, AlertController, Platform, LoadingController, ToastController } from 'ionic-angular';
+import {Page, NavController, Platform, LoadingController, ToastController } from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
@@ -20,7 +20,7 @@ export class PhoneNumberPage implements OnInit {
   countries: any;
   selected: any;
   selectedCountry: any;
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public countryListService: CountryListService, private alertCtrl: AlertController, private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public countryListService: CountryListService, private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
     this.elementRef = elementRef;
     this.phoneForm = new FormGroup({
       phone: new FormControl('', (control) => {
@@ -54,50 +54,28 @@ export class PhoneNumberPage implements OnInit {
     }
 
     let phone = this.selectedCountry.code + extraIsoCode + corePhone;
-    let alert = this.alertCtrl.create({
-      title: this.translate.instant('phone-number.numberConfirmation'),
-      message: '<p>' + phone + '</p><p>' + this.translate.instant('phone-number.phoneCorrect') + '</p>',
-      buttons: [
-        {
-          text: this.translate.instant('edit'),
-          role: 'cancel',
-          handler: () => {
-            // do nothing
-          }
-        },
-        {
-          text: this.translate.instant('yes'),
-          handler: () => {
-            alert.dismiss().then(() => {
-              let loading = this.loadingController.create({
-                content: this.translate.instant('pleaseWait'),
-                dismissOnPageChange: true
-              });
-              loading.present();
-
-              this.auth.requestPhoneVerification(phone, this.selectedCountry.code).then((state: string) => {
-                loading.dismiss().then(() => {
-                  if (state === 'code_generation_canceled_because_user_from_not_supported_country') {
-                    this.nav.setRoot(CountryNotSupportedPage);
-                  } else if (state === 'code_generation_completed_and_sms_sent') {
-                    this.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: this.selectedCountry.code });
-                  } else if (state === 'code_generation_canceled_because_user_not_invited') {
-                    this.showErrorAlert(this.translate.instant('phone-number.errorInvitation'), phoneInput);
-                  } else {
-                    this.showErrorAlert(this.translate.instant('phone-number.errorSms'), phoneInput);
-                  }
-                });
-              });
-            });
-          }
-        }
-      ]
+    let loading = this.loadingController.create({
+      content: this.translate.instant('pleaseWait'),
+      dismissOnPageChange: true
     });
-    alert.present();
+    loading.present();
 
+    this.auth.requestPhoneVerification(phone, this.selectedCountry.code).then((state: string) => {
+      loading.dismiss().then(() => {
+        if (state === 'code_generation_canceled_because_user_from_not_supported_country') {
+          this.nav.setRoot(CountryNotSupportedPage);
+        } else if (state === 'code_generation_completed_and_sms_sent') {
+          this.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: this.selectedCountry.code });
+        } else if (state === 'code_generation_canceled_because_user_not_invited') {
+          this.showErrorMessage(this.translate.instant('phone-number.errorInvitation'), phoneInput);
+        } else {
+          this.showErrorMessage(this.translate.instant('phone-number.errorSms'), phoneInput);
+        }
+      });
+    });
   }
 
-  showErrorAlert(message, phoneInput) {
+  showErrorMessage(message, phoneInput) {
     let toast = this.toastCtrl.create({
       message: message, duration: 9000, position: 'bottom'
     });

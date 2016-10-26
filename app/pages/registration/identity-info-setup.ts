@@ -1,4 +1,4 @@
-import {Page, NavController, AlertController, ToastController, LoadingController} from 'ionic-angular';
+import {Page, NavController, LoadingController} from 'ionic-angular';
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -32,8 +32,6 @@ export class IdentityInfoSetupPage {
   constructor(
     public nav: NavController,
     public auth: AuthService,
-    private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,  private translate: TranslateService
   ) {
     this.genders = [

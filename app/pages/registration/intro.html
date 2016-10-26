@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"intro.title" | translate}}</ion-title>
+        <ion-buttons end>
+          <button (click)="pleaseContinue()">
+              {{"continue" | translate}}
+          </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding class="registration intro">
+    <h2>Welcome to UR Money</h2>
+    <p>You’re just a few steps away from claiming your free 2,000 UR!</p>
+    <p>In order to protect the UR economy, we need to verify your identity. Are you ready to get started?</p>
+    <form>
+        <button (click)="notNow()">{{"intro.notNow" | translate}}</button>
+        <button (click)="pleaseContinue()">{{"intro.pleaseContinue" | translate}}</button>
+    </form>
+</ion-content>

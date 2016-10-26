@@ -1,4 +1,4 @@
-import {Page, NavController, AlertController, ToastController} from 'ionic-angular';
+import {Page, NavController} from 'ionic-angular';
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
@@ -26,9 +26,7 @@ export class ProfileSetupPage {
   constructor(
     public nav: NavController,
     public auth: AuthService,
-    public deviceIdentityService: DeviceIdentityService,
-    private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    public deviceIdentityService: DeviceIdentityService
   ) {
 
     this.profile = _.pick(this.auth.currentUser, ['firstName', 'middleName', 'lastName', 'address', 'city', 'postalCode', 'countryCode', 'stateName']);
