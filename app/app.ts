@@ -40,7 +40,7 @@ import {TransactionsPage} from './pages/transactions/transactions';
     FIREBASE_PROVIDERS,
     HTTP_PROVIDERS,
     defaultFirebase({
-      apiKey: `${Config.firebaseApiKey}`,
+      apiKey: Config.firebaseApiKey,
       authDomain: `${Config.firebaseProjectId}.firebaseapp.com`,
       databaseURL: `https://${Config.firebaseProjectId}.firebaseio.com`,
       storageBucket: `${Config.firebaseProjectId}.appspot.com`
