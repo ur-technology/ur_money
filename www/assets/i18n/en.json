@@ -153,10 +153,13 @@
         "amountGreaterBalance": "Amount cannot be greater than available balance"
     },
     "about": {
-        "about": "About UR",
-        "message1": "UR is an advanced cryptocurrency made for everyday people and everyday expenditures. 2,000 UR is distributed to every human being who chooses to join the UR community and proves his / her identity. There is no cost to join or to receive this distribution. UR community members may earn additional UR by referring and for helping to support the integrity, security, and usefulness of UR currency and the UR community.",
-        "message2": "UR Technology is a corporation whose mission is to create a secure, stable, and useful world currency available to every human being.",
-        "learnMore": "Learn more about UR Technology"
+        "heading": "About UR",
+        "urCurrency": "UR is an advanced cryptocurrency made for everyday people and everyday expenditures. 2,000 UR is distributed to every human being who chooses to join the UR community and proves his or her identity. There is no cost to join or to receive this distribution. UR community members may earn additional UR by referring other members and for helping to support the integrity, security, and usefulness of UR currency and the UR community.",
+        "urTechnologyInc": "UR Technology Inc. is a company whose mission is to create a secure, stable, and useful world currency available to every human being.",
+        "feedbackPart1": "To send us feedback on on the UR Money app (bugs, feature requests, etc.), please join our slack team by visiting",
+        "feedbackPart2": "and send us a message in the #ur-money-feedback channel, or send us an email at",
+        "abuse": "To report abuse by other members, please send us an email at",
+        "learnMore": "To learn more about UR, and UR Technology visit us at"
     },
     "settings": {
         "title": "Settings",
