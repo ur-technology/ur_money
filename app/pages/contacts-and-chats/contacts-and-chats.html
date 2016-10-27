@@ -1,5 +1,6 @@
 <ion-header>
     <ion-navbar>
+      <ion-title>{{getPageTitle()}}</ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content class="contacts-and-chats-page contentPage">
@@ -11,13 +12,13 @@
               <span>{{"contacts-and-chats.contacts" | translate}}</span>
           </a>
       </ion-segment-button>
-      <ion-segment-button value="chats" >
+      <ion-segment-button value="chats" *ngIf="goal ==='chat'">
           <a class="tab-buttons has-title has-icon">
               <ion-icon name="chats-icon"></ion-icon>
               <span>{{"contacts-and-chats.chats" | translate}}</span>
           </a>
       </ion-segment-button>
   </ion-segment>
-  <contacts goal={{goal}} *ngIf="segmentSelected==='contacts'"></contacts>
+  <contacts goal={{goal}} *ngIf="segmentSelected==='contacts'" (goalChange)=goalChanged($event)></contacts>
   <chat-list *ngIf="segmentSelected==='chats'"></chat-list>
 </ion-content>

@@ -1,7 +1,7 @@
 import {Page, NavController, NavParams, Platform} from 'ionic-angular';
 import {ContactsComponent} from '../../components/contacts/contacts';
 import {ChatListComponent} from '../../components/chat-list/chat-list';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 declare var jQuery: any;
 
 @Page({
@@ -15,12 +15,29 @@ export class ContactsAndChatsPage {
   chatsPage: any;
   segmentSelected: string = 'contacts';
 
-  constructor(private nav: NavController, private navParams: NavParams, public platform: Platform) {
+  constructor(private nav: NavController, private navParams: NavParams, public platform: Platform, private translate: TranslateService) {
     this.goal = navParams.get('goal');
   }
 
   ngOnInit() {
     jQuery('.contentPage').css('top', this.platform.is('ios') ? '63px' : '43px');
+  }
+
+  goalChanged(data) {
+    this.goal = data.goal;
+  }
+
+  getPageTitle() {
+    switch (this.goal) {
+      case 'chat':
+        return this.translate.instant('contacts-and-chats.titleChat');
+      case 'send':
+        return this.translate.instant('contacts-and-chats.titleSend');
+      case 'request':
+        return this.translate.instant('contacts-and-chats.titleRequest');
+      case 'invite':
+        return this.translate.instant('contacts-and-chats.titleInvite');
+    }
   }
 
 }

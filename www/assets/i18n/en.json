@@ -103,11 +103,18 @@
         "chat": "Chat",
         "inviteMessage": "I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit ",
         "toastMessage": "Pick an app and type a message. Or you can paste the simple message that we've placed in your clipboard.",
-        "toastTitle": "Pick an app"
+        "toastTitle": "Pick an app",
+        "messageNoContacts": "It looks like you don't have contacts yet. Invite a friend",
+        "messageContactNotPresent": "Contact not in list? Invite a friend"
+
     },
     "contacts-and-chats": {
         "contacts": "Contacts",
-        "chats": "Chats"
+        "chats": "Chats",
+        "titleChat":"Chat with",
+        "titleSend":"Send UR to",
+        "titleRequest":"Request UR from",
+        "titleInvite":"Invite a friend"
     },
     "chat": {
         "typeMessage": "Type your message"

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {NavController, NavParams, Platform, AlertController} from 'ionic-angular';
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
 import {ContactsService} from '../../services/contacts';
@@ -25,7 +25,9 @@ export class ContactsComponent {
   paginatedContacts: any[] = [];
   displayableContacts: any[];
   startTime: number;
+  showSpinner: boolean = true;
   @Input() goal: string;
+  @Output() goalChange: EventEmitter<any> = new EventEmitter();
   public memberActionLabel: string;
 
   constructor(
@@ -52,17 +54,26 @@ export class ContactsComponent {
   }
 
   ngAfterViewInit() {
+    this.loadContactsList();
+  }
+
+  loadContactsList() {
     let self = this;
     this.memberActionLabel = this.determineMemberActionLabel();
     self.contactsService.getContacts().then((contactGroups: any) => {
-      let contacts = self.goal === 'invite' ? contactGroups.nonMembers.concat(contactGroups.members) : contactGroups.members.concat(contactGroups.nonMembers);
+      let contacts = self.goal === 'invite' ? contactGroups.nonMembers : contactGroups.members;
+      console.log('contacts', contacts);
       self.paginatedContacts = _.chunk(contacts, self.PAGE_SIZE);
+      console.log('self.paginatedContacts', self.paginatedContacts);
       self.numberOfPages = self.paginatedContacts.length;
+      console.log('self.numberOfPages', self.numberOfPages);
       self.displayableContacts = self.paginatedContacts[0];
+      console.log('self.displayableContacts', self.displayableContacts);
       let timeElapsed = (new Date()).getTime() - self.startTime;
       log.debug('milliseconds elapsed', timeElapsed);
       log.debug('contactGroups.nonMembers.length', contactGroups.nonMembers.length);
       log.debug('contactGroups.members.length', contactGroups.members.length);
+      this.showSpinner = false;
     });
   }
 
@@ -81,7 +92,7 @@ export class ContactsComponent {
     if (!contact.userId) {
       this.inviteContact(contact);
     } else if (this.goal === 'send') {
-      this.nav.pop({ animate: false, duration: 0, transitionDelay: 0,  progressAnimation: false  }).then(data => {
+      this.nav.pop({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(data => {
         this.app.getRootNav().push(SendPage, { contact: contact });
       });
     } else if (this.goal === 'request') {
@@ -146,4 +157,13 @@ export class ContactsComponent {
     return code;
   }
 
+  inviteFriend() {
+    this.goal = 'invite';
+    this.goalChange.emit({ goal: this.goal });
+    this.loadContactsList();
+  }
+
+  getInviteItemMessage() {
+    return this.displayableContacts ? this.translate.instant('contacts.messageContactNotPresent') : this.translate.instant('contacts.messageNoContacts');
+  }
 }

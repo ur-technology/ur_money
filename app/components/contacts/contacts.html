@@ -1,12 +1,12 @@
 <ion-content class="contacts">
-  <div *ngIf="!displayableContacts">
+  <div *ngIf="showSpinner">
       <ion-row>
           <ion-col text-center>
               <ion-spinner></ion-spinner>
           </ion-col>
       </ion-row>
   </div>
-  <ion-list class="contacts-list" *ngIf="displayableContacts">
+  <ion-list class="contacts-list" *ngIf="!showSpinner">
 
     <ion-item  detail-none *ngFor="let contact of displayableContacts" (click)="contactSelected(contact)" class="item item-avatar">
       <ion-avatar item-left> <ion-img [src]="contact.profilePhotoUrl"></ion-img></ion-avatar>
@@ -16,9 +16,9 @@
       <button type="button" [hidden]="!contact.userId" primary item-right>{{memberActionLabel}}</button>
     </ion-item>
 
-    <ion-item *ngIf="pageIndex == numberOfPages" detail-none (click)="inviteFriend()">
-      <ion-avatar item-left> <ion-img></ion-img></ion-avatar>
-      <h2>Invite Friend</h2>
+    <ion-item text-wrap detail-none (click)="inviteFriend()" class="item item-avatar" *ngIf="goal !== 'invite'">
+      <ion-avatar item-right><ion-icon name="add-person-icon"></ion-icon></ion-avatar>
+      <p>{{getInviteItemMessage()}}</p>
     </ion-item>
 
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

@@ -78,6 +78,10 @@
         "title": "Verificación pendiente",
         "message": "Gracias por enviar su solicitud de verificación. La mayoría de las solicitudes se procesan dentro de 24 horas. Le notificaremos mediante un mensaje de texto cuando hayamos terminado de procesar su solicitud."
     },
+    "verification-failed": {
+        "title": "Verificación fallida",
+        "message": "Lo sentimos. No hemos podido verificar tu identidad. Te enviaremos un correo electrónico con los detalles de cómo se puede volver a aplicar."
+    },
     "country-not-supported": {
         "title": "UR Money",
         "message": "Gracias por tu interés en UR Money. Cuando lancemos nuestro servicio en tu país, te lo notificaremos."
@@ -99,11 +103,17 @@
         "chat": "Chat",
         "inviteMessage": "He descargado la aplicación UR Money y tengo 2.000 unidades de criptomoneda de forma gratuita. Para obtener más información y obtener el tuyo, visita ",
         "toastMessage": "Elije una aplicación y escribe un mensaje. O bien, puedes pegar el mensaje que hemos colocado en el portapapeles.",
-        "toastTitle": "Compartir mediante"
+        "toastTitle": "Compartir mediante",
+        "messageNoContacts": "Parece que no tienes contactos todavía. Invita a un amigo.",
+        "messageContactNotPresent": "El contacto no está en la lista? Invita a un amigo."
     },
     "contacts-and-chats": {
         "contacts": "Contactos",
-        "chats": "Chats"
+        "chats": "Chats",
+        "titleChat":"Chatear con",
+        "titleSend":"Enviar UR a",
+        "titleRequest":"Solicitar UR de",
+        "titleInvite":"Invita a un amigo"
     },
     "chat": {
         "typeMessage": "Escribe tu mensaje"
