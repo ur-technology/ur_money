@@ -13,3 +13,4 @@ Thumbs.db
 firebase-debug.log
 www/go/
 app/config/env.json
+app/config/env.production.json

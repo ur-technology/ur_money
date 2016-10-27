@@ -164,11 +164,6 @@
         "city": "Ciudad",
         "profileUpdated": "Tu perfil ha sido actualizado"
     },
-    "download": {
-        "urMoneyversion": "UR Money App - Versión",
-        "download": "Descarga e instala UR Money",
-        "toInstallMessage": "Para instalar UR Money, abre el siguiente enlace desde tu dispositivo iPhone, iPad o Android:"
-    },
     "request": {
         "balance": "Saldo disponible:",
         "enterMessage": "Mensaje (opcional)",
@@ -186,7 +181,6 @@
     "ok": "Aceptar",
     "you": "Tu",
     "pleaseWait": "Por favor espere...",
-    "version": "Versión",
     "save": "Guardar",
     "signOut": "Salir"
 }

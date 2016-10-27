@@ -27,7 +27,6 @@ import {HomePage} from './pages/home/home';
 import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';
-import {DownloadPage} from './pages/download/download';
 
 @Component({
   templateUrl: 'build/app.html',
@@ -40,7 +39,12 @@ import {DownloadPage} from './pages/download/download';
     ChartDataService,
     FIREBASE_PROVIDERS,
     HTTP_PROVIDERS,
-    defaultFirebase(Config.firebase),
+    defaultFirebase({
+      apiKey: `${Config.firebaseApiKey}`,
+      authDomain: `${Config.firebaseProjectId}.firebaseapp.com`,
+      databaseURL: `https://${Config.firebaseProjectId}.firebaseio.com`,
+      storageBucket: `${Config.firebaseProjectId}.appspot.com`
+    }),
     firebaseAuthConfig({
       provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
     })
@@ -76,10 +80,6 @@ class UrMoney {
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
       log.setDefaultLevel(logLevel);
 
-      if (/^\/app/.test(window.location.pathname) || /^\?app/.test(window.location.search)) {
-        this.nav.setRoot(DownloadPage, {}, { animate: true, direction: 'forward' });
-        return;
-      }
       this.auth.respondToAuth(this.nav, {
         welcomePage: WelcomePage,
         introPage: IntroPage,

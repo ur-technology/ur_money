@@ -159,7 +159,8 @@
         "feedbackPart1": "To send us feedback on on the UR Money app (bugs, feature requests, etc.), please join our slack team by visiting",
         "feedbackPart2": "and send us a message in the #ur-money-feedback channel, or send us an email at",
         "abuse": "To report abuse by other members, please send us an email at",
-        "learnMore": "To learn more about UR, and UR Technology visit us at"
+        "learnMore": "To learn more about UR, and UR Technology visit us at",
+        "version": "Version"
     },
     "settings": {
         "title": "Settings",
@@ -170,11 +171,6 @@
         "state": "State or province",
         "city": "City",
         "profileUpdated": "Your profile has been updated"
-    },
-    "download": {
-        "urMoneyversion": "UR Money App - Version",
-        "download": "Download and install UR Money",
-        "toInstallMessage": "To install UR Money, please open the following link from within an iPhone, iPad or Android device:"
     },
     "request": {
         "balance": "Balance:",
@@ -193,7 +189,6 @@
     "ok": "Ok",
     "you": "You",
     "pleaseWait": "Please wait...",
-    "version": "Version",
     "save": "Save",
     "signOut": "Sign out"
 }

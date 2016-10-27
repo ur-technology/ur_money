@@ -104,7 +104,7 @@ export class AuthService {
         let verificationResultRef = taskRef.child('verificationResult');
         verificationResultRef.on('value', (snapshot) => {
           let verificationResult = snapshot.val();
-          if (verificationResult === undefined) {
+          if (!verificationResult) {
             return;
           }
           verificationResultRef.off('value');

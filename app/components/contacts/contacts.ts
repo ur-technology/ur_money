@@ -6,7 +6,6 @@ import {AuthService} from '../../services/auth';
 import {SendPage} from '../../pages/send/send';
 import {RequestPage} from '../../pages/request/request';
 import {ChatPage} from '../../pages/chat/chat';
-import {Config} from '../../config/config';
 import { App } from 'ionic-angular';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -112,7 +111,7 @@ export class ContactsComponent {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
           file: 'https://ur-money-staging.firebaseapp.com/img/icon.png',
-          url: `${Config.generalAppDownloadUrl}`,
+          url: 'https://www.ur.international',
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions; saving dowlineUser');
