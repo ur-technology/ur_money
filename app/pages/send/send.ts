@@ -1,8 +1,10 @@
 import {Page, AlertController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
+import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {BigNumber} from 'bignumber.js';
 
 import {HomePage} from '../home/home';
 import {WalletModel} from '../../models/wallet';
@@ -18,7 +20,8 @@ declare var jQuery: any;
 export class SendPage {
   contact: any;
   mainForm: FormGroup;
-  balance: number;
+  availableBalance: number;
+  displayableAvailableBalance: string;
   private wallet: WalletModel;
 
   constructor(
@@ -26,21 +29,37 @@ export class SendPage {
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private authService: AuthService,  private translate: TranslateService
+    private auth: AuthService,  private translate: TranslateService
   ) {
     this.contact = this.navParams.get('contact');
     this.mainForm = new FormGroup({
-      amount: new FormControl('', [CustomValidator.positiveNumberValidator, Validators.required]),
+      amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       message: new FormControl(''),
-      balance: new FormControl('')
+      availableBalance: new FormControl('')
     });
   }
 
   ngOnInit() {
-    WalletModel.availableBalanceAsync(this.authService.currentUser.wallet.address)
-      .then(availableBalance => {
-        this.balance = availableBalance;
-      });
+    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address).then(rawAvailableBalance => {
+      // TODO: determine pending outbound amounts
+      let pendingAmounts: number = 0;
+      this.availableBalance = _.floor(rawAvailableBalance - pendingAmounts, 2);
+      this.displayableAvailableBalance = (new BigNumber(this.availableBalance)).toFormat(2);
+      CustomValidator.maxValidAmount = this.availableBalance;
+      CustomValidator.minValidAmount = 0;
+    }, (error) => {
+      this.availableBalance = this.displayableAvailableBalance = CustomValidator.minValidAmount = CustomValidator.maxValidAmount = undefined;
+    });
+  }
+
+  missingAmount(): boolean {
+    let control = this.mainForm.find('amount');
+    return (control.touched || control.dirty) && control.hasError('required');
+  }
+
+  numberOutOfRange(): boolean {
+    let control = this.mainForm.find('amount');
+    return !this.missingAmount() && (control.touched || control.dirty) && control.hasError('numberOutOfRange');
   }
 
   sendUR() {
@@ -50,7 +69,7 @@ export class SendPage {
     }).then(() => {
       return self.wallet.sendRawTransaction(self.contact.wallet.address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
-      let transactionRef = firebase.database().ref(`/users/${self.authService.currentUserId}/transactions/${urTransaction.hash}`);
+      let transactionRef = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/${urTransaction.hash}`);
       return transactionRef.set({
         createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
@@ -61,12 +80,14 @@ export class SendPage {
       toast.present();
       this.nav.setRoot(HomePage);
     }, (error: any) => {
-      self.toastCtrl.create({
-        message: error.displayMessage ? error.displayMessage : this.translate.instant('send.errorMessage'),
-        duration: 3000,
-        position: 'bottom'
-      }).present();
-      log.debug(error.logMessage || error);
+      if (error && error.logMessage !== 'cancel clicked') {
+        self.toastCtrl.create({
+          message: error.displayMessage ? error.displayMessage : this.translate.instant('send.errorMessage'),
+          duration: 3000,
+          position: 'bottom'
+        }).present();
+        log.debug(error.logMessage || error);
+      }
       // give up trying to send
     });
   }
@@ -77,7 +98,7 @@ export class SendPage {
       let prompt = self.alertCtrl.create({
         title: this.translate.instant('send.secretPhrase'),
         message: this.translate.instant('send.enterSecret'),
-        inputs: [{ name: 'secretPhrase', placeholder: this.translate.instant('send.secretPhrase')}], // value: 'apple apple apple apple apple'
+        inputs: [{ type: 'password', name: 'secretPhrase', placeholder: this.translate.instant('send.secretPhrase')}], // value: 'apple apple apple apple apple'
         buttons: [
           {
             text: this.translate.instant('cancel'),
@@ -91,9 +112,9 @@ export class SendPage {
             handler: data => {
               let secretPhrase = data.secretPhrase;
               prompt.dismiss().then(() => {
-                WalletModel.generate(secretPhrase, self.authService.currentUserId).then((data) => {
+                WalletModel.generate(secretPhrase, self.auth.currentUserId).then((data) => {
                   self.wallet = new WalletModel(data);
-                  if (self.wallet.getAddress() === self.authService.currentUser.wallet.address) {
+                  if (self.wallet.getAddress() === self.auth.currentUser.wallet.address) {
                     resolve();
                   } else {
                     reject({ displayMessage: this.translate.instant('send.phraseIncorrect') });

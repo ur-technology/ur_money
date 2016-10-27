@@ -1,4 +1,6 @@
+import * as _ from 'lodash';
 import {Page, NavController, NavParams, Platform} from 'ionic-angular';
+import {WalletModel} from '../../models/wallet';
 import {ChartDataService} from '../../services/chart-data';
 import {ElementRef, Inject} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
@@ -10,6 +12,7 @@ import {EventListComponent} from '../../components/event-list/event-list';
 import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {BigNumber} from 'bignumber.js';
+import {CustomValidator} from '../../validators/custom';
 
 declare var jQuery: any;
 
@@ -21,6 +24,8 @@ declare var jQuery: any;
 export class HomePage {
   elementRef: ElementRef;
   android: boolean;
+  availableBalance: number;
+  displayableAvailableBalance: string;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
@@ -29,7 +34,20 @@ export class HomePage {
     this.android = this.platform.is('android');
   }
 
-  onPageDidEnter() {
+onPageWillEnter() {
+  WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address).then(rawAvailableBalance => {
+    // TODO: determine pending outbound amounts
+    let pendingAmounts: number = 0;
+    this.availableBalance = _.floor(rawAvailableBalance - pendingAmounts, 2);
+    this.displayableAvailableBalance = (new BigNumber(this.availableBalance)).toFormat(2);
+    CustomValidator.maxValidAmount = this.availableBalance;
+    CustomValidator.minValidAmount = 0;
+  }, (error) => {
+    this.availableBalance = this.displayableAvailableBalance = CustomValidator.minValidAmount = CustomValidator.maxValidAmount = undefined;
+  });
+}
+
+onPageDidEnter() {
     var self = this;
     if (self.chartData.pointsLoaded) {
       self.renderChart();

@@ -41,7 +41,7 @@
     "scrypt-async": "^1.2.0",
     "secure-randword": "^0.1.4",
     "web3": "^0.17.0-alpha",
-    "zone.js": "0.6.12"
+    "zone.js": "^0.6.10"
   },
   "devDependencies": {
     "browserify": "13.0.0",

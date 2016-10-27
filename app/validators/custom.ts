@@ -2,6 +2,9 @@ import {FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
 
 export class CustomValidator {
+  static minValidAmount: number;
+  static maxValidAmount: number;
+
   static normalizedPhone(phone) {
     let p = phone;
     p = p.replace(/\D/g, '');
@@ -76,10 +79,9 @@ export class CustomValidator {
     };
   }
 
-  static positiveNumberValidator(control) {
-    var pattern = /^\s*(?=.*[1-9])\d*(?:\.\d{1,18})?\s*$/;
-    if (!control.value.match(pattern)) {
-      return { 'invalidPositiveNumber': true };
+  static numericRangeValidator(control) {
+    if (control.value !== undefined && CustomValidator.minValidAmount !== undefined && CustomValidator.maxValidAmount !== undefined && (control.value < CustomValidator.minValidAmount || control.value > CustomValidator.maxValidAmount)) {
+      return { 'numberOutOfRange': true };
     }
   }
 

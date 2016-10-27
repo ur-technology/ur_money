@@ -246,7 +246,20 @@ export class FakeContactsSource {
             'value': '+5216643332223',
             'type': 'mobile'
           }],
-        'id': '20'
+        'id': '21'
+      }, {
+        'name': {
+          'givenName': 'Staci',
+          'familyName': 'Glover'
+        },
+        'profilePhotoUrl': 'https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117',
+        'phoneNumbers': [{
+          'id': '187',
+          'pref': false,
+          'value': '+16159746651',
+          'type': 'mobile'
+          }],
+        'id': '22'
       }, {
         'name': {
           'givenName': 'Kappa',
@@ -259,12 +272,12 @@ export class FakeContactsSource {
           'value': '+16197778015',
           'type': 'home'
         }, {
-            'id': '86',
-            'pref': false,
-            'value': '+16197778016',
-            'type': 'mobile'
-          }],
-        'id': '20'
+          'id': '86',
+          'pref': false,
+          'value': '+16197778016',
+          'type': 'mobile'
+        }],
+        'id': '23'
       }
     ];
   }

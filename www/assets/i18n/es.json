@@ -155,8 +155,8 @@
         "phraseIncorrect": "La frase secreta no es correcta.",
         "confirmation": "Confirmación",
         "amountRequired": "Se requiere la cantidad",
-        "amountGreater0": "La cantidad tiene que ser mayor que 0",
-        "amountGreaterBalance": "La cantidad sobrepasa el saldo disponible"
+        "numberOutOfRange": "La cantidad tiene que ser entre 0 y el saldo disponible",
+        "notAvailable": "No Disponible"
     },
     "about": {
         "about": "Acerca UR",

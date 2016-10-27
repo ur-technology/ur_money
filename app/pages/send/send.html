@@ -16,7 +16,10 @@
         </ion-item>
         <div class="card send-requestinput">
             <label class="item item-input disabled">
-                <span>{{"send.availableBalance" | translate}}: {{balance|number:'1.2-18'}}</span>
+                <span>{{"send.availableBalance" | translate}}:
+                  <span *ngIf="displayableAvailableBalance !== undefined">{{displayableAvailableBalance}}</span>
+                  <span *ngIf="displayableAvailableBalance === undefined">{{"send.notAvailable" | translate}}</span>
+                </span>
                 <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
             </label>
         </div>
@@ -25,15 +28,13 @@
                 <input formControlName="amount"
                     placeholder="{{'send.enterAmount' | translate}}"
                     class="amount"
-                    type="text" />
+                    type="number" />
                 <ion-note class="item-note"> UR </ion-note>
             </label>
             <div class="validatorError"
-                *ngIf="mainForm.find('amount').touched && mainForm.find('amount').hasError('required')">{{"send.amountRequired" | translate}}</div>
+                *ngIf="missingAmount()">{{"send.amountRequired" | translate}}</div>
             <div class="validatorError"
-                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidPositiveNumber') && !mainForm.find('amount').hasError('required')">{{"send.amountGreater0" | translate}}</div>
-            <div class="validatorError"
-                *ngIf="mainForm.find('amount').dirty && mainForm.find('amount').hasError('invalidBalance')">{{"send.amountGreaterBalance" | translate}}</div>
+                *ngIf="numberOutOfRange()">{{"send.numberOutOfRange" | translate}}</div>
         </div>
         <div class="card send-requesttextarea">
             <label class="item item-input">

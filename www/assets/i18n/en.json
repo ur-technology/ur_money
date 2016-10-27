@@ -156,8 +156,8 @@
         "phraseIncorrect": "The secret phrase you entered was not correct.",
         "confirmation": "Confirmation",
         "amountRequired": "Amount is required",
-        "amountGreater0": "Amount has to be greater than 0",
-        "amountGreaterBalance": "Amount cannot be greater than available balance"
+        "numberOutOfRange": "Amount must be between 0 and available balance",
+        "notAvailable": "Not Available"
     },
     "about": {
         "heading": "About UR",

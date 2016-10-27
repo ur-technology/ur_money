@@ -47,7 +47,7 @@
             <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">{{"transaction.seeMore" | translate}}</a></span>
               <span class="transaction-filter-{{transaction.type}}">{{transaction.type}}</span></p>
             <span class="icon trans-ur"
-                item-right>{{weiToURString(transaction.amount)}}<br/>  UR</span>
+                item-right>{{weiToURString(transaction.amount || "0")}}<br/>  UR</span>
         </ion-item>
     </div>
 
