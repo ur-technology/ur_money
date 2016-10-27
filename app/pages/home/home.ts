@@ -35,15 +35,13 @@ export class HomePage {
   }
 
 onPageWillEnter() {
-  WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address).then(rawAvailableBalance => {
-    // TODO: determine pending outbound amounts
-    let pendingAmounts: number = 0;
-    this.availableBalance = _.floor(rawAvailableBalance - pendingAmounts, 2);
-    this.displayableAvailableBalance = (new BigNumber(this.availableBalance)).toFormat(2);
-    CustomValidator.maxValidAmount = this.availableBalance;
-    CustomValidator.minValidAmount = 0;
+  // TODO: determine pending outbound amounts
+  let pendingAmounts: number = 0;
+  WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(availableBalance => {
+    this.availableBalance = availableBalance;
+    this.displayableAvailableBalance = this.formatUR(this.availableBalance);
   }, (error) => {
-    this.availableBalance = this.displayableAvailableBalance = CustomValidator.minValidAmount = CustomValidator.maxValidAmount = undefined;
+    this.availableBalance = this.displayableAvailableBalance = undefined;
   });
 }
 
@@ -141,6 +139,10 @@ onPageDidEnter() {
   }
 
   formatUR(amount: number): string {
-    return (new BigNumber(amount || 0)).toFormat(2);
+    if (amount) {
+      return (new BigNumber(amount)).toFormat(2);
+    } else {
+      return "";
+    }
   }
 }

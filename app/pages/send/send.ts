@@ -40,15 +40,16 @@ export class SendPage {
   }
 
   ngOnInit() {
-    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address).then(rawAvailableBalance => {
-      // TODO: determine pending outbound amounts
-      let pendingAmounts: number = 0;
-      this.availableBalance = _.floor(rawAvailableBalance - pendingAmounts, 2);
-      this.displayableAvailableBalance = (new BigNumber(this.availableBalance)).toFormat(2);
+    // TODO: determine pending outbound amounts
+    let pendingAmounts: number = 0;
+    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(availableBalance => {
+      this.availableBalance = availableBalance;
+      this.displayableAvailableBalance = this.formatUR(this.availableBalance);
       CustomValidator.maxValidAmount = this.availableBalance;
       CustomValidator.minValidAmount = 0;
     }, (error) => {
-      this.availableBalance = this.displayableAvailableBalance = CustomValidator.minValidAmount = CustomValidator.maxValidAmount = undefined;
+      this.availableBalance = this.displayableAvailableBalance = undefined;
+      CustomValidator.minValidAmount = CustomValidator.maxValidAmount = undefined;
     });
   }
 
@@ -162,5 +163,13 @@ export class SendPage {
       });
       prompt.present();
     });
+  }
+
+  formatUR(amount: number): string {
+    if (amount) {
+      return (new BigNumber(amount)).toFormat(2);
+    } else {
+      return "";
+    }
   }
 }

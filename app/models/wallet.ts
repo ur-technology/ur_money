@@ -1,4 +1,5 @@
 import * as log from 'loglevel';
+import * as _ from 'lodash';
 import {Config} from '../config/config';
 
 export class WalletModel {
@@ -39,14 +40,18 @@ export class WalletModel {
     return this._web3;
   }
 
-  public static availableBalance(address) {
+  public static availableBalance(address, rounding?: boolean, pendingAmount?: number) {
     let balanceInWei = this.web3().eth.getBalance(address);
     let balance = this.web3().fromWei(parseFloat(balanceInWei));
     let gasPrice = this.web3().fromWei(this.web3().eth.gasPrice);
-    return Math.max(balance - gasPrice * this.GasLimit, 0);
+    let availableBalance = Math.max(balance - gasPrice * this.GasLimit - (pendingAmount || 0), 0);
+    if (rounding) {
+      availableBalance = _.floor(availableBalance, 2);
+    }
+    return availableBalance;
   }
 
-  public static availableBalanceAsync(address): Promise<any> {
+  public static availableBalanceAsync(address: string, rounding?: boolean, pendingAmount?: number): Promise<any> {
     return new Promise((resolve, reject) => {
       this.web3().eth.getBalance(address, (error, balanceInWei) => {
         if (error) {
@@ -56,7 +61,10 @@ export class WalletModel {
           let balance = this.web3().fromWei(parseFloat(balanceInWei));
           this.web3().fromWei(this.web3().eth.getGasPrice((error, result) => {
             let gasPrice = this.web3().fromWei(result);
-            let availableBalance = Math.max(balance - gasPrice * this.GasLimit, 0);
+            let availableBalance = Math.max(balance - gasPrice * this.GasLimit - (pendingAmount || 0), 0);
+            if (rounding) {
+              availableBalance = _.floor(availableBalance, 2);
+            }
             resolve(availableBalance);
           }));
         }
