@@ -1,5 +1,5 @@
 import {ViewChild } from '@angular/core';
-import {Page, NavController, NavParams, Content } from 'ionic-angular';
+import {Page, NavController, NavParams, Content, AlertController } from 'ionic-angular';
 import {AngularFire} from 'angularfire2';
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
@@ -27,7 +27,7 @@ export class ChatPage {
   messageTextAreaHeight: number;
   @ViewChild(Content) content: Content;
 
-  constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: AuthService, private translate: TranslateService) {
+  constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: AuthService, private translate: TranslateService, private alertCtrl: AlertController) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
@@ -212,5 +212,30 @@ export class ChatPage {
     this.messageText = '';
     this.messageTextAreaHeight = 32;
     jQuery('textarea')[0].rows = 2;
+  }
+
+  blockContact() {
+    let alert = this.alertCtrl.create({
+      message: this.translate.instant('chat.blockMessage', { value: this.displayUser().name }),
+      buttons: [
+        {
+          text: this.translate.instant('cancel'),
+          role: 'cancel'
+        },
+        {
+          text: this.translate.instant('ok'),
+          handler: () => {
+            alert.dismiss().then(() => {
+              this.setBlockContactInDB();
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  setBlockContactInDB() {
+    console.log('blocked');
   }
 }

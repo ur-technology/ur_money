@@ -1,6 +1,9 @@
 <ion-header>
     <ion-navbar>
         <ion-title class="chat-title">{{displayUser().name}}</ion-title>
+        <ion-buttons end>
+            <button (click)="blockContact()"><ion-icon name="block-person-icon"></ion-icon></button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content class="chat-page">
@@ -21,8 +24,7 @@
     </ion-list>
 </ion-content>
 <ion-footer>
-    <ion-toolbar
-        [style.min-height]="messageTextAreaHeight+20+'px'"
+    <ion-toolbar [style.min-height]="messageTextAreaHeight+20+'px'"
         class="bar item-input-inset">
         <div class="ur-message-send">
             <label class="item-input-wrapper">

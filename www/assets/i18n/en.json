@@ -106,7 +106,6 @@
         "toastTitle": "Pick an app",
         "messageNoContacts": "It looks like you don't have contacts yet. Invite a friend",
         "messageContactNotPresent": "Contact not in list? Invite a friend"
-
     },
     "contacts-and-chats": {
         "contacts": "Contacts",
@@ -117,7 +116,8 @@
         "titleInvite":"Invite a friend"
     },
     "chat": {
-        "typeMessage": "Type your message"
+        "typeMessage": "Type your message",
+        "blockMessage": "Block {{value}}? Blocked contacts will no longer be able to send you messages."
     },
     "chat-list": {
         "noChatsYet": "No chats yet"

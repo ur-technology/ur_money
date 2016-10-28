@@ -116,7 +116,8 @@
         "titleInvite":"Invita a un amigo"
     },
     "chat": {
-        "typeMessage": "Escribe tu mensaje"
+        "typeMessage": "Escribe tu mensaje",
+        "blockMessage": "¿Bloquear a {{value}}? Los contactos bloqueados ya no podrán enviarte mensajes."
     },
     "chat-list": {
         "noChatsYet": "Aún no hay chats"
