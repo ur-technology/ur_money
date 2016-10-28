@@ -1,5 +1,5 @@
 <ion-list class="events-list">
-    <ion-item detail-none
+    <ion-item detail-none text-wrap
         (click)="openPageByEventType(event.sourceType, event.sourceId)"
         class="item item-avatar"
         *ngFor="let event of eventsService.events">
@@ -11,8 +11,8 @@
         <ion-note item-right
             class="item-note">{{event.updatedAt|dateAndTime}}</ion-note>
         <h2 class="text-cut">  {{event.title}}</h2>
-        <div class="columnMessage">
-            <p class="text-cut">{{event.messageText}}</p>
+        <div text-wrap class="columnMessage">
+            <p>{{event.messageText}}</p>
         </div>
     </ion-item>
 </ion-list>
