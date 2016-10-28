@@ -77,7 +77,7 @@ export class SendPage {
         sender: _.merge(_.pick(self.auth.currentUser, ['name', 'profilePhotoUrl']), { userId: self.auth.currentUserId }),
         receiver: _.pick(self.contact, ['name', 'profilePhotoUrl', 'userId']),
         createdBy: 'UR Money',
-        type: "sent",
+        type: 'sent',
         urTransaction: urTransaction
       });
     }).then(() => {
