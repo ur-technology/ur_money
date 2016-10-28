@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as moment from 'moment';
 import {AuthService} from '../services/auth';
+import {WalletModel} from '../models/wallet';
 
 @Injectable()
 export class ChartDataService {
@@ -14,10 +15,13 @@ export class ChartDataService {
   public points: any[]; // array of points, with points represented as 2-element arrays
   public pointsLoaded: boolean = false;
   public pointsLoadedEmitter = new EventEmitter();
+  public balanceUpdatedEmitter = new EventEmitter();
   public startingBalance: number;
   public endingBalance: number;
   public balanceChange: number;
   public percentageChange: number;
+  public balanceInfo: any;
+  public balanceUpdated: boolean = false;
 
   constructor(public auth: AuthService) {
     this.pointsLoaded = false;
@@ -48,6 +52,7 @@ export class ChartDataService {
 
   loadPointsAndCalculateMetaData(newDuration: number, newUnitOfTime: moment.UnitOfTime) {
     this.pointsLoaded = false;
+    this.balanceUpdated = false;
 
     this.duration = newDuration;
     this.unitOfTime = newUnitOfTime;
@@ -64,6 +69,14 @@ export class ChartDataService {
 
     this.pointsLoaded = true;
     this.pointsLoadedEmitter.emit({});
+
+    let pendingAmounts: number = 0;
+
+    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(balanceInfo => {
+      this.balanceInfo = balanceInfo;
+      this.balanceUpdated = true;
+      this.balanceUpdatedEmitter.emit(balanceInfo);
+    });
   }
 
   private loadPointsCorrespondingToTransactionsWithinTimeRage() {

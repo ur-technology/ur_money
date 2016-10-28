@@ -1,4 +1,5 @@
 import {Page, AlertController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {NgZone} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -8,6 +9,7 @@ import {BigNumber} from 'bignumber.js';
 
 import {HomePage} from '../home/home';
 import {WalletModel} from '../../models/wallet';
+import {ChartDataService} from '../../services/chart-data';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 
@@ -21,7 +23,6 @@ export class SendPage {
   contact: any;
   mainForm: FormGroup;
   spendableBalance: number;
-  formattedSpendableBalance: string;
   private wallet: WalletModel;
 
   constructor(
@@ -29,7 +30,10 @@ export class SendPage {
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private auth: AuthService,  private translate: TranslateService
+    private auth: AuthService,
+    private translate: TranslateService,
+    public chartData: ChartDataService,
+    private ngZone: NgZone
   ) {
     this.contact = this.navParams.get('contact');
     this.mainForm = new FormGroup({
@@ -39,17 +43,21 @@ export class SendPage {
     });
   }
 
+  reflectSpendableBalanceOnPage() {
+    this.spendableBalance = this.chartData.balanceInfo.availableBalance.minus(this.chartData.balanceInfo.fee);
+    CustomValidator.maxValidAmount = this.spendableBalance;
+    CustomValidator.minValidAmount = 0;
+  }
+
   ngOnInit() {
-    // TODO: determine pending outbound amounts
-    let pendingAmounts: number = 0;
-    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(balanceInfo => {
-      this.spendableBalance = balanceInfo.spendableBalance;
-      this.formattedSpendableBalance = this.formatUR(this.spendableBalance);
-      CustomValidator.maxValidAmount = this.spendableBalance;
-      CustomValidator.minValidAmount = 0;
-    }, (error) => {
-      this.spendableBalance = this.formattedSpendableBalance = undefined;
-      CustomValidator.minValidAmount = CustomValidator.maxValidAmount = undefined;
+    let self = this;
+    if (self.chartData.balanceUpdated) {
+      self.reflectSpendableBalanceOnPage();
+    }
+    self.chartData.balanceUpdatedEmitter.subscribe(() => {
+      self.ngZone.run(() => {
+        self.reflectSpendableBalanceOnPage();
+      });
     });
   }
 

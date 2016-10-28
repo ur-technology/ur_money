@@ -34,8 +34,8 @@ export class AuthService {
           self.currentUser = currentUser;
           let status = _.trim((currentUser.registration && currentUser.registration.status) || '') || 'initial';
           self.getSimCountryCode().then((countryCode) => {
-            self.countryCode = countryCode || currentUser.countryCode;
-            if (_.trim((self.countryCode || '')) === '') {
+            self.countryCode = _.trim(countryCode || currentUser.countryCode || '');
+            if (!self.countryCode) {
               log.warn('country code not defined for this user');
             }
             if (status !== 'initial') {

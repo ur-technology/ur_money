@@ -1,7 +1,6 @@
 import {Page, NavController, NavParams, Platform} from 'ionic-angular';
-import {WalletModel} from '../../models/wallet';
 import {ChartDataService} from '../../services/chart-data';
-import {ElementRef, Inject} from '@angular/core';
+import {ElementRef, Inject, NgZone} from '@angular/core';
 import {OrderBy}  from '../../pipes/orderBy';
 import {Timestamp}  from '../../pipes/timestamp';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
@@ -22,25 +21,17 @@ declare var jQuery: any;
 export class HomePage {
   elementRef: ElementRef;
   android: boolean;
-  availableBalance: number;
-  formattedAvailableBalance: string;
+  availableBalance: BigNumber;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
-    private angularFire: AngularFire, private auth: AuthService) {
+    private angularFire: AngularFire, private auth: AuthService, private ngZone: NgZone) {
     this.elementRef = elementRef;
     this.android = this.platform.is('android');
   }
 
-  onPageWillEnter() {
-    // TODO: determine pending outbound amounts
-    let pendingAmounts: number = 0;
-    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(balanceInfo => {
-      this.availableBalance = balanceInfo.availableBalance;
-      this.formattedAvailableBalance = this.formatUR(this.availableBalance);
-    }, (error) => {
-      this.availableBalance = this.formattedAvailableBalance = undefined;
-    });
+  reflectAvailableBalanceOnPage() {
+    this.availableBalance = this.chartData.balanceInfo.availableBalance;
   }
 
   onPageDidEnter() {
@@ -50,6 +41,15 @@ export class HomePage {
     }
     self.chartData.pointsLoadedEmitter.subscribe((data) => {
       self.renderChart();
+    });
+
+    if (self.chartData.balanceUpdated) {
+      self.reflectAvailableBalanceOnPage();
+    }
+    self.chartData.balanceUpdatedEmitter.subscribe((balanceInfo) => {
+      self.ngZone.run(() => {
+        self.reflectAvailableBalanceOnPage();
+      });
     });
   }
 
@@ -136,11 +136,4 @@ export class HomePage {
     this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
   }
 
-  formatUR(amount: number): string {
-    if (amount === 0 || amount) {
-      return (new BigNumber(amount)).toFormat(2);
-    } else {
-      return '';
-    }
-  }
 }

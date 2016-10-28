@@ -1,6 +1,6 @@
 import * as log from 'loglevel';
-import * as _ from 'lodash';
 import {Config} from '../config/config';
+import {BigNumber} from 'bignumber.js';
 
 export class WalletModel {
 
@@ -8,7 +8,6 @@ export class WalletModel {
   private static ScryptParallelization_p: number = 1;
   private static ScryptOutputSize: number = 64;
   private static BrainWalletRepetitions = 16384;
-  private static GasLimit = 50000;
   private static _web3: any;
   private _wallet: any;
 
@@ -41,33 +40,49 @@ export class WalletModel {
   }
 
   private static calculateBalanceInfo(balanceInWei, rounding?: boolean, pendingAmount?: number): any {
-    let balance = this.web3().fromWei(parseFloat(balanceInWei));
-    let gasPrice = this.web3().fromWei(this.web3().eth.gasPrice);
-    let availableBalance = Math.max(balance - (pendingAmount || 0), 0);
+    let currentBalance = new BigNumber(balanceInWei).dividedBy("1000000000000000000");
     if (rounding) {
-      availableBalance = _.floor(availableBalance, 2);
+      currentBalance = currentBalance.round(2, BigNumber.ROUND_DOWN);
     }
-    let spendableBalance = Math.max(availableBalance - gasPrice * this.GasLimit, 0);
-    if (rounding) {
-      spendableBalance = _.floor(spendableBalance, 2);
-    }
-    return { availableBalance: availableBalance, spendableBalance: spendableBalance };
-  }
 
+    let availableBalance = BigNumber.max(currentBalance.minus(pendingAmount || 0), 0);
+    if (rounding) {
+      availableBalance = availableBalance.round(2, BigNumber.ROUND_DOWN);
+    }
+
+    let gas = new BigNumber(21000);
+    let gasPrice = this.web3().eth.gasPrice;
+    let fee = gas.times(gasPrice);
+    if (rounding) {
+      fee = fee.round(2, BigNumber.ROUND_UP);
+    }
+
+    let spendableBalance = BigNumber.max(availableBalance.minus(fee), 0);
+    if (rounding) {
+      spendableBalance = spendableBalance.round(2, BigNumber.ROUND_DOWN);
+    }
+
+    return {
+      currentBalance: currentBalance,
+      availableBalance: availableBalance,
+      fee: fee
+    };
+  }
 
   public static availableBalance(address, rounding?: boolean, pendingAmount?: number): any {
     let balanceInWei = this.web3().eth.getBalance(address);
-    return WalletModel.calculateBalanceInfo(balanceInWei, rounding, pendingAmount);
+    return this.calculateBalanceInfo(balanceInWei, rounding, pendingAmount);
   }
 
   public static availableBalanceAsync(address: string, rounding?: boolean, pendingAmount?: number): Promise<any> {
+    let self = this;
     return new Promise((resolve, reject) => {
-      this.web3().eth.getBalance(address, (error, balanceInWei) => {
+      self.web3().eth.getBalance(address, (error, balanceInWei) => {
         if (error) {
           log.error(error);
           reject(error);
         } else {
-          resolve(WalletModel.calculateBalanceInfo(balanceInWei, rounding, pendingAmount));
+          resolve(self.calculateBalanceInfo(balanceInWei, rounding, pendingAmount));
         }
       });
     });

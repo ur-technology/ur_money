@@ -30,7 +30,9 @@ export class WalletSetupPage {
     public auth: AuthService,
     public contactsService: ContactsService,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController, private loadingController: LoadingController,  private translate: TranslateService
+    private toastCtrl: ToastController,
+    private loadingController: LoadingController,
+    private translate: TranslateService
   ) {
     this.mainForm = new FormGroup({
       secretPhrase: new FormControl('', CustomValidator.secretPhraseValidator)

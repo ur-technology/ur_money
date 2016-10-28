@@ -17,8 +17,8 @@
         <div class="card send-requestinput">
             <label class="item item-input disabled">
                 <span>{{"send.spendableBalance" | translate}}:
-                  <span *ngIf="formattedSpendableBalance !== undefined">{{formattedSpendableBalance}}</span>
-                  <span *ngIf="formattedSpendableBalance === undefined">{{"send.pleaseWait" | translate}}</span>
+                  <span *ngIf="spendableBalance !== undefined">{{spendableBalance.toFormat(2)}}</span>
+                  <span *ngIf="spendableBalance === undefined">{{"send.pleaseWait" | translate}}</span>
                 </span>
                 <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
             </label>
