@@ -1,0 +1,870 @@
+{
+    "identityAnnouncementQueue": {
+        "specs": {
+            "announce_identity": {
+                "error_state": "error",
+                "in_progress_state": "processing",
+                "retries": 5,
+                "timeout": 120000
+            }
+        }
+    },
+    "identityVerificationQueue": {
+        "specs": {
+            "verify_identity": {
+                "error_state": "error",
+                "finished_state": "finished",
+                "in_progress_state": "processing",
+                "retries": 5,
+                "timeout": 120000
+            }
+        }
+    },
+    "invitationQueue": {
+        "specs": {
+            "process_invitation": {
+                "error_state": "error",
+                "in_progress_state": "processing",
+                "retries": 5,
+                "timeout": 120000
+            }
+        }
+    },
+    "phoneAuthenticationQueue": {
+        "specs": {
+            "code_generation": {
+                "error_state": "code_generation_error",
+                "finished_state": "code_generation_completed_and_sms_sent",
+                "in_progress_state": "code_generation_in_progress",
+                "timeout": 15000
+            },
+            "code_matching": {
+                "error_state": "code_matching_error",
+                "finished_state": "code_matching_completed",
+                "in_progress_state": "code_matching_in_progress",
+                "start_state": "code_matching_requested",
+                "timeout": 15000
+            }
+        },
+        "tasks": {
+            "-KUyThhuI7WU80OK_jqo": {
+                "_id": "-KUyThhuI7WU80OK_jqo",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477443257897,
+                "countryCode": "+1",
+                "phone": "+16158566616",
+                "submittedVerificationCode": "991070",
+                "userId": "-KJn47TvHAlfQocDX_ES",
+                "verificationCode": "991070",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm40N1R2SEFsZlFvY0RYX0VTIiwiaWF0IjoxNDc3NDQzMjU3LCJleHAiOjE0Nzc0NDY4NTcsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.WeAH5v7PFM8KL_6cgOHaS2G0OgS3uoLALcEcJErLeSYVMKl7ZGGGeiQY7BAPD-VpxzwQmtcONm6zZSjniqWWVXtrHzQUzKwRmxEWsoICsK5jIsOEYfD8IQm2FxnqjPt1OzmdDjtcwTN1zKP6IUa227JL0izEdkFsbIlut5FMP7_DB-FS3NvANWFjCaDC6W3wHjiwjgEP1Nb_ArUV0abZPlGAufkorCrmTPso682bKDMeopH7TU89GS7e8FnlY93PzuUd7r_5Rbkg7H7M33DiscFnoJD7BKd_Cp2N3PZXuEHAtv3RmHlmc5QE0GW51g41vOrW3XSojmtJrTtNk85mKQ",
+                    "codeMatch": true
+                }
+            },
+            "-KUyU-hMocE-EUGc4QUD": {
+                "_id": "-KUyU-hMocE-EUGc4QUD",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477443335608,
+                "countryCode": "+1",
+                "phone": "+16158566616",
+                "submittedVerificationCode": "589803",
+                "userId": "-KJn47TvHAlfQocDX_ES",
+                "verificationCode": "589803",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm40N1R2SEFsZlFvY0RYX0VTIiwiaWF0IjoxNDc3NDQzMzM1LCJleHAiOjE0Nzc0NDY5MzUsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.VGrKTJr_lz2j5vaHToN3oLfk1LeZJq-yziAzje-U8rkTpKaMRjRmOF-q0iZf2ut8eWjd43Gbn3HBgsIgU89qXZSjeac0Uo5Qgg0JXEO4fcSIK2ijjVCqKPxXMMBAHPbWQ17KNUMuUz4lywubXwmaX3IkLZkqsEHrQ-zvMCagbZru0hLzsFkdJ0E-p_B1vw_zJGxUmLq3U6jvL8P9IZWiTIqg_IMG9QsPYPXt4SEnpBf4R1T1q4zWRV9j3GPdZlVpThSihEOCgvXhmemNNUQCZUcseafR4v8otEFZuNvtQoK4WIXJflB-OYGl_QDhAd-kS2BbzyIVEY_8nCkuRHTIBg",
+                    "codeMatch": true
+                }
+            },
+            "-KUyUxtJVgExR3u4CCvA": {
+                "_id": "-KUyUxtJVgExR3u4CCvA",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477443585606,
+                "countryCode": "+1",
+                "phone": "+16158566616",
+                "submittedVerificationCode": "591121",
+                "userId": "-KJn47TvHAlfQocDX_ES",
+                "verificationCode": "591121",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm40N1R2SEFsZlFvY0RYX0VTIiwiaWF0IjoxNDc3NDQzNTg1LCJleHAiOjE0Nzc0NDcxODUsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.ewcn6LQDEmPxwMPptsbIpqprEx2Jd88Sta30R-Z6U_L_ng4-jfLgouT7Sd4gyRlANm75oxgGyqtSwHiPbXIcw6HO9kK8y2s6bvLV1I_N6Bv9_QINO2W2REyXQ0DPiN2TYkAl4SCeKbsTnVZ46lIEvWQpNGfZTxXALLMjowfVP5KqlStQ2TRWQTwK6GLsB71ZymluXhU3SXDZHw6oKwhYZ7Bg-F_CytxoBOrJQYA3fYF1782VMrLYxcK410mk4V6zTD2md6391HSNejH-yo8u8PfbFK6ETUUwyDNOobE8eVrhZZBBjhci5eGAA_H6QYNWMrx8CGLNz4lQm2cq9UtEyg",
+                    "codeMatch": true
+                }
+            },
+            "-KV-ywF-MI5cj8pZDqMc": {
+                "_id": "-KV-ywF-MI5cj8pZDqMc",
+                "_progress": 100,
+                "_state": "code_generation_completed_and_sms_sent",
+                "_state_changed": 1477485253467,
+                "countryCode": "+1",
+                "phone": "+19373964400",
+                "userId": "-KLwWedxw2DHDhTdTK9-",
+                "verificationCode": "558251"
+            },
+            "-KV1YlPCtAYe7GzT1U54": {
+                "_id": "-KV1YlPCtAYe7GzT1U54",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477511691412,
+                "countryCode": "+1",
+                "phone": "+16158566616",
+                "submittedVerificationCode": "355134",
+                "userId": "-KJn47TvHAlfQocDX_ES",
+                "verificationCode": "355134",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm40N1R2SEFsZlFvY0RYX0VTIiwiaWF0IjoxNDc3NTExNjkxLCJleHAiOjE0Nzc1MTUyOTEsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.SfUEKDMVwqKCTLOzZHHUkhE82GK3Ew0VFNrMxasM7KJ3jWGctHJC3s17nchoaDYnPKRqPBiVBW8q7j2PJFODLzsRSEYD8HYEQc1FZrVWOjhToYr7OCbWDy7PN3hfPj9RnkZOwewtOb3_wTRWo9hTiThfTBjGk3GX6gTqNt7JSgeC9Knk99Bm9RMKk_V91CHBdK7XPhzeuFmkvcMfMKiL4RppYPPlbPr4JuvknMROUpRKUiFbEQZVXxouvy1CrDBJuCgzjDH3jtU1LGQ9lqoecy9dgd3cgJPNTHdsXI12MiU9bTOBLK9Cnp4be8BEIANgk3C68FqJ1rAqBiS4s_5-3A",
+                    "codeMatch": true
+                }
+            },
+            "-KV1ZS0Sl-Acwr5EhPrr": {
+                "_id": "-KV1ZS0Sl-Acwr5EhPrr",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477511868472,
+                "countryCode": "+1",
+                "phone": "+16158566616",
+                "submittedVerificationCode": "750852",
+                "userId": "-KJn47TvHAlfQocDX_ES",
+                "verificationCode": "750852",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm40N1R2SEFsZlFvY0RYX0VTIiwiaWF0IjoxNDc3NTExODY4LCJleHAiOjE0Nzc1MTU0NjgsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.HEhg4r0w7Xl0iVP3M10fOUTTYZK4tcjPcN819qw0Ip6gVEy2sm2TIk5O9uniH8CvEwuLEYE3spRp797R12LHtajFh0upckysBuIWW8CymbTn3q5fGGXjMTjWc_Y3PSo0BuQYzPwnreN2Aja-oYXCgafkPjswHWO0PVAPCKyGqpegudhOXJl0bO9c8xCPXt526F5kFixhknkOLnE0UFHqqi49802GvFHBaJOvmhQ9-2uY64VrmXHhdAIZEK71Xn3IWTBLX-6bMqut-Y-_g9mI8kQ11VO5Tt6ak1rG_wWU7ipqagSTNAuzKJTUcUhS32-Z6SdH3pO7rRQoouuPcnM9vA",
+                    "codeMatch": true
+                }
+            },
+            "-KV3-JoEWzEjjdClCfP2": {
+                "_id": "-KV3-JoEWzEjjdClCfP2",
+                "_progress": 100,
+                "_state": "code_generation_completed_and_sms_sent",
+                "_state_changed": 1477535947905,
+                "countryCode": "+1",
+                "phone": "+12038154853",
+                "userId": "-KUtVKFIMTSut4z3ScSk",
+                "verificationCode": "936307"
+            },
+            "-KV30s61IGwVxcRchz8P": {
+                "_id": "-KV30s61IGwVxcRchz8P",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477536364087,
+                "countryCode": "+1",
+                "phone": "+16196746211",
+                "submittedVerificationCode": "783112",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv",
+                "verificationCode": "783112",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm5SVHVMOEExWmRmVnZ3QWJ2IiwiaWF0IjoxNDc3NTM2MzY0LCJleHAiOjE0Nzc1Mzk5NjQsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.OaGKZB8tdLpof1ZRHeeL2oFOxJnfdRljforzoOPRkLCQadkYYIoAx7UV0tAovTExy9yJVvXKCs1PeWCwTlR6wfuxcYIaN_QeYg2IlzO_175sWR78k7itTQ1J-sAdmIc9AB3U26CCxtcTH6Px_X9c9ihmqI3KqUI0-OZSfhoGHdp29dDcjL7yLv3KPADxVblHpI93Dg6x7QHGX4K1znfrx4yLnXZjpLbcHl6c3vBZC20REGHQ09hJxY_DXWY9VRvRH9ywPpXWXEqkii9YMCe8khvXx7Stojd4FHFYA9yLyTydnLJaaSpIXlyJRzKs7Yp7Ozdh1wLlSWVN6Co3iIBvpQ",
+                    "codeMatch": true
+                }
+            },
+            "-KV3KLvDbKdtoVbIdYFt": {
+                "_id": "-KV3KLvDbKdtoVbIdYFt",
+                "_progress": 100,
+                "_state": "code_generation_completed_and_sms_sent",
+                "_state_changed": 1477541459010,
+                "countryCode": "+1",
+                "phone": "+16196746211",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv",
+                "verificationCode": "280054"
+            },
+            "-KV3Q4es_heWy2jolCSH": {
+                "_id": "-KV3Q4es_heWy2jolCSH",
+                "_progress": 100,
+                "_state": "code_generation_completed_and_sms_sent",
+                "_state_changed": 1477542962387,
+                "countryCode": "+1",
+                "phone": "+16196746211",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv",
+                "verificationCode": "970784"
+            },
+            "-KV3ZAxhwCjm_OeLH_wq": {
+                "_id": "-KV3ZAxhwCjm_OeLH_wq",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477545379450,
+                "authenticationError": {
+                    "code": "auth/invalid-api-key",
+                    "message": "Your API key is invalid, please check you have copied it correctly."
+                },
+                "countryCode": "+1",
+                "phone": "+16196746211",
+                "submittedVerificationCode": "619327",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv",
+                "verificationCode": "619327",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm5SVHVMOEExWmRmVnZ3QWJ2IiwiaWF0IjoxNDc3NTQ1Mzc5LCJleHAiOjE0Nzc1NDg5NzksImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.RS4lkjdwNYTb7ojtGwhTQTY88Fky4W21a3GimcRFPb2r16HSogJuxu1XBcQMNLlJe5vf6UYPWqM4byUKaA1FpaOghOZgoZWlDLBmpqmVLhHmb5BHYwKp7D08qSaoWuUCkmP_vDIe1iXmlY7r1Vjfon_uNxuvLQCOkX82aJxDDkSJHbIyzrCbSmMz60uDlTBBzsTB6-JXwPw-In1Wh73ucIvUXSQLkpcFOc0Hr7ChyYae_SmnEu-MGQ4pA8LpExuD5owxwNH8NzMZ-1UKFS2noAXh__55KVITssBsOJ_NxCrFtsvukQ4xfGVWpRpychwB9ipOVc9Wmz6dCAPryDvxBg",
+                    "codeMatch": true
+                }
+            },
+            "-KV3ZKWVYamz7_HtA19l": {
+                "_id": "-KV3ZKWVYamz7_HtA19l",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477545401172,
+                "authenticationError": {
+                    "code": "auth/invalid-api-key",
+                    "message": "Your API key is invalid, please check you have copied it correctly."
+                },
+                "countryCode": "+1",
+                "phone": "+16196746211",
+                "submittedVerificationCode": "913847",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv",
+                "verificationCode": "913847",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm5SVHVMOEExWmRmVnZ3QWJ2IiwiaWF0IjoxNDc3NTQ1NDAxLCJleHAiOjE0Nzc1NDkwMDEsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.J3ZCpiVFjO9XV54TZaDWzzTW1nI5Hi4L1EIxut12v17YGK-hq0ex8gPaAept2YPGWm3NVmigiBljRMHeSdt2JnAhkwyhA3GiJYjMP-VrxV16gUSbiMKBz2h60jn7epK8JLmA7UKFcvz57k0XLM-hVY8B377WR09_RDKTZHlnZiRdXrzFuIC2eYSXi_tQdChQ3yyzM9rYI-lSjaqWKAxZMXdZyXo6M_97j8apsQHPbaGYkyfiwqR2Q0HbxeJ1sQWvG3-MSVhEoJ7ozfGJMkKnWEnWSHjgmBbSevoETqhXvIuy63rBOJ0M6KMOSJNmBsqDzMIvVfmIaL-dGfMS_aWUkg",
+                    "codeMatch": true
+                }
+            },
+            "-KV3ZpLg73c13xz9r2Pd": {
+                "_id": "-KV3ZpLg73c13xz9r2Pd",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477545557678,
+                "authenticationError": {
+                    "code": "auth/invalid-api-key",
+                    "message": "Your API key is invalid, please check you have copied it correctly."
+                },
+                "countryCode": "+1",
+                "phone": "+16196746211",
+                "submittedVerificationCode": "173058",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv",
+                "verificationCode": "173058",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm5SVHVMOEExWmRmVnZ3QWJ2IiwiaWF0IjoxNDc3NTQ1NTU3LCJleHAiOjE0Nzc1NDkxNTcsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.hoYYo3cFV93QTBO_iIOQD7jIBeB4Z_2BRYZObXxUD7PM1JH8wMZxPJcusmxUBUhl6jn7OrUtvexwI8vsUusFiOIrroQbAoi52fS01vDZLTOEil_LZ5Hs9ly5YD-xvMsDpAC43UyPkYlgqmji3rrKHdZAU_qSf6BoTbzpsCXagNwrBWi-yxK7fZx__Cirbxrkq6m7mqMHPPJO8ISSd80PBvfqnral9k_oaY8phfJHNTGWMtV13hiM4g08aldGf1ijD71VEqhS6XbIyKbKKXDJnhYRLL4FaExAR4AHFD_taQtyT4dPqbU-b5FAvpd2Vo0u_ift-GwnWogfan9b22iyyA",
+                    "codeMatch": true
+                }
+            },
+            "-KV4fNCJLtVRSFbWzK43": {
+                "_id": "-KV4fNCJLtVRSFbWzK43",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477564020586,
+                "countryCode": "+1",
+                "phone": "+16158566616",
+                "submittedVerificationCode": "612629",
+                "userId": "-KJn47TvHAlfQocDX_ES",
+                "verificationCode": "612692"
+            },
+            "-KV5IjQUIdQydUje4J1c": {
+                "_id": "-KV5IjQUIdQydUje4J1c",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477574618573,
+                "authenticationError": {
+                    "code": "auth/invalid-api-key",
+                    "message": "Your API key is invalid, please check you have copied it correctly."
+                },
+                "countryCode": "+1",
+                "phone": "+19373964400",
+                "submittedVerificationCode": "646105",
+                "userId": "-KLwWedxw2DHDhTdTK9-",
+                "verificationCode": "646105",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LTHdXZWR4dzJESERoVGRUSzktIiwiaWF0IjoxNDc3NTc0NjE4LCJleHAiOjE0Nzc1NzgyMTgsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.CXoPx71u1qbUci4ads16FWcMW-XNfSKYsqK6SUQTe9ilFvr8narIKjcz3mn1PUzmMPSxK1juzlST5wZxHgnbPC3Cv9TcBD-aC1k7-sr11fWk-bO6PwFBWTI8trx7v_OumBpcpJb67hw57Mfue_LdjZi_ojPvnq0oItjSElT_xC8WDD5Cki6En7W5n_Ipk9seSQOiMcezDKlgbrd5IbFRZQAdZZQlj_9E5rpcV1yzJ6vQnF7FaH_ipgbOOl6lB6yg5bRpUODFPJsvbnWCSbBA2q9gP5stnZoNDh5i47dcooRmlavS0XHP-rZ_Spm0pldOJVc24gArsyi3AxwpC-b7Eg",
+                    "codeMatch": true
+                }
+            },
+            "-KV5NYCrRuPnJEaL5x-a": {
+                "_id": "-KV5NYCrRuPnJEaL5x-a",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477575868977,
+                "authenticationError": {
+                    "code": "auth/invalid-api-key",
+                    "message": "Your API key is invalid, please check you have copied it correctly."
+                },
+                "countryCode": "+1",
+                "phone": "+16196746211",
+                "submittedVerificationCode": "137960",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv",
+                "verificationCode": "137960",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm5SVHVMOEExWmRmVnZ3QWJ2IiwiaWF0IjoxNDc3NTc1ODY4LCJleHAiOjE0Nzc1Nzk0NjgsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.UXXbsdJIgNd4_YMbn4KuOMCM9X_hXr-mEj2l4hvR-lZ6OxVxwFWJSI_leJAug5zaeCygxyhB9MuPU4fc4wgFBmSxqdPhCHcSwgMhD4aQ5WtRFOqXubiHEyEnB7_dBfxChGzCZ1Qy3wro2pdIwi19_LlGRVeBexNotHfSuFiSvE3izWTx_8ZaObItcNjQeh1R5ml4aEQhSDqdlCyuyLUTMkPtUJ9RdJmnWfvXW143ktyYSRHOtWV90zKo4a5o8-MNundWe9Nq54_1Ta3JNNWsM6TaNfiUeVJjvhg_zLx8jglMrU9SnP-yQK71DIHMHcoKrnqy6KRynEdJAl_N3ttraQ",
+                    "codeMatch": true
+                }
+            },
+            "-KV5NhydfwZ2DqcI_JBw": {
+                "_id": "-KV5NhydfwZ2DqcI_JBw",
+                "_progress": 100,
+                "_state": "code_matching_completed",
+                "_state_changed": 1477575909303,
+                "authenticationError": {
+                    "code": "auth/invalid-api-key",
+                    "message": "Your API key is invalid, please check you have copied it correctly."
+                },
+                "countryCode": "+1",
+                "phone": "+16196746211",
+                "submittedVerificationCode": "824197",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv",
+                "verificationCode": "824197",
+                "verificationResult": {
+                    "authToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJjbGFpbXMiOnsic29tZSI6ImFyYml0cmFyeSIsInRhc2siOiJoZXJlIn0sInVpZCI6Ii1LSm5SVHVMOEExWmRmVnZ3QWJ2IiwiaWF0IjoxNDc3NTc1OTA5LCJleHAiOjE0Nzc1Nzk1MDksImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoibm90aWZpZXJAdXItbW9uZXktc3RhZ2luZy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6Im5vdGlmaWVyQHVyLW1vbmV5LXN0YWdpbmcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20ifQ.FDXQ5yGAUH-rvCHzAt8oaYrdbLAcsR86oonBUbmIHI5J0HwyjDvGQ_T-2e6m5ub2Pc6gzFQbFX5Cdy2Nh3N7xCV965yzrjlVEoEjQA0om5wqYZ9e__eud5YPnnwKtod9A0ozunQpz4YolTyc3rXEhKGiLa-XMH1VFTbdgBu2lov786kYMsestr6gH9ifHdOSpuoDNLpgWKNK8ZLp65DU5I2Mfd9HU5GezbVKWIjaBsBrOxi92T8u5LzbY-tDjpYTvgVn8JffjRIZVIQwq-4EhvfwPruRDmfTXKU4UdF5-stbA3lW3bWr7sgLXbl_E_zY58aLoDTyn2BOXcMqRxpwbw",
+                    "codeMatch": true
+                }
+            },
+            "-KV7QJrgSkoZQN9DGn8V": {
+                "_id": "-KV7QJrgSkoZQN9DGn8V",
+                "_progress": 100,
+                "_state": "code_generation_completed_and_sms_sent",
+                "_state_changed": 1477610218148,
+                "countryCode": "+1",
+                "phone": "+16158566616",
+                "userId": "-KJn47TvHAlfQocDX_ES",
+                "verificationCode": "442749"
+            }
+        }
+    },
+    "phoneLookupQueue": {
+        "specs": {
+            "phone_lookup": {
+                "error_state": "error",
+                "finished_state": "finished",
+                "in_progress_state": "in_progress",
+                "timeout": 30000
+            }
+        }
+    },
+    "urTransactionImportQueue": {
+        "specs": {
+            "import": {
+                "error_state": "error",
+                "in_progress_state": "processing",
+                "retries": 5,
+                "start_state": "ready_to_import",
+                "timeout": 120000
+            },
+            "wait": {
+                "error_state": "error",
+                "in_progress_state": "waiting",
+                "retries": 5,
+                "start_state": "ready_to_wait",
+                "timeout": 120000
+            }
+        },
+        "tasks": {
+            "45690": {
+                "_id": "45690",
+                "_owner": "wait:0:0c28132f-c7b2-4360-b160-d7c846107f45:861",
+                "_progress": 0,
+                "_state": "waiting",
+                "_state_changed": 1477628869855,
+                "createdAt": 1477628869545
+            }
+        }
+    },
+    "users": {
+        "-KJn47TvHAlfQocDX_ES": {
+            "address": "700 Lynnbrook Rd. ",
+            "admin": true,
+            "city": "Nashville",
+            "countryCode": "US",
+            "createdAt": 1465440831526,
+            "downlineLevel": 1,
+            "downlineUsers": {
+                "-KJnRTuL8A1ZdfVvwAbv": {
+                    "name": "John Reitano",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR"
+                },
+                "-KUvXkqstdI_c1EXGI8K": {
+                    "name": "Aaron FitzSimmons",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX"
+                },
+                "-KUvXpj4qH2cagP6Eo0o": {
+                    "name": "Abby Perkins",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=XX"
+                },
+                "-KUv_8YMZ7QP5Ag-qu6b": {
+                    "name": "Abby Perkins",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX"
+                },
+                "-KUv__ew7OTECod0mfBU": {
+                    "name": "Abbey Snow",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX"
+                },
+                "-KV4eTyaRQb7W9aLWMQ-": {
+                    "name": "Aaron FitzSimmons",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX"
+                },
+                "-KV4egYXFfBTA4APeND_": {
+                    "name": "Bob Lowe",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX"
+                },
+                "-KV4eizKNpjGHu-ycaoQ": {
+                    "name": "Bob Lowe",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX"
+                },
+                "-KV66E6S4IUFQ8_U-2QD": {
+                    "name": "Aaron FitzSimmons",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX"
+                },
+                "-KV66FjVBffTmzd7yrlR": {
+                    "name": "Aaron FitzSimmons",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX"
+                },
+                "-KV66Hfw20mVSYgt5gvF": {
+                    "name": "Abigail Dillon",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX"
+                },
+                "-KV66PAdSvM9IcHRxHmG": {
+                    "name": "Abby Kamensky",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX"
+                },
+                "-KV66SrzicV8U2luZcKk": {
+                    "name": "Abby Kamensky",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX"
+                },
+                "-KV7yfq1rUJ8wph7SzRl": {
+                    "name": "Aaron FitzSimmons",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX"
+                },
+                "-KV7ylBdmcDB9-JdPwO0": {
+                    "name": "Aaron FitzSimmons",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX"
+                }
+            },
+            "firstName": "Howard",
+            "lastName": "Glover",
+            "memberId": 1,
+            "middleName": "Eiland",
+            "name": "Howard Eiland Glover",
+            "phone": "+16158566616",
+            "postalCode": "37215",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+            "stateCode": "TN",
+            "stateName": "Tennessee"
+        },
+        "-KJnRTuL8A1ZdfVvwAbv": {
+            "address": "1928 Clearbrook Dr",
+            "admin": true,
+            "city": "Chula Vista",
+            "countryCode": "US",
+            "createdAt": 1465446952757,
+            "downlineLevel": 2,
+            "downlineUsers": {
+                "-KLqYxC3-j6MhstbXiED": {
+                    "name": "TestFirstname TestLastname",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=TT"
+                },
+                "-KLwWedxw2DHDhTdTK8-": {
+                    "name": "TestF TestL",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=TT"
+                },
+                "-KLwWedxw2DHDhTdTK9-": {
+                    "name": "TestFirstname TestLastname",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=TT"
+                },
+                "-KUtVKFIMTSut4z3ScSk": {
+                    "name": "Adam King",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX"
+                },
+                "-KV2767PQ7nErFgg2PHd": {
+                    "name": "Staci Glover",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX"
+                },
+                "-KV58Lx2EYxKSwl6ANUh": {
+                    "name": "Jasmine Reitano",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX"
+                }
+            },
+            "firstName": "John",
+            "lastName": "Reitano",
+            "memberId": 2,
+            "name": "John Reitano",
+            "phone": "+16196746211",
+            "postalCode": "91913",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR",
+            "sponsor": {
+                "name": "Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            },
+            "stateCode": "CA",
+            "stateName": "California"
+        },
+        "-KLqYxC3-j6MhstbXiED": {
+            "countryCode": "US",
+            "createdAt": 1467646727200,
+            "downlineLevel": 3,
+            "firstName": "TestFirstname",
+            "lastName": "TestLastname",
+            "memberId": 301,
+            "name": "TestFirstname TestLastname",
+            "phone": "+16193611786",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=TT",
+            "sponsor": {
+                "name": "John Reitano",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=JR",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv"
+            }
+        },
+        "-KLwWedxw2DHDhTdTK9-": {
+            "address": "3626 Sequoia Dr",
+            "city": "Beavercreek",
+            "countryCode": "US",
+            "createdAt": 1467746790141,
+            "downlineLevel": 3,
+            "downlineUsers": {
+                "-KUtr26PefqCaDBBYe6a": {
+                    "name": "Amy Calahorrano (SRI)",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=XX"
+                },
+                "-KV6-O5r_BlwKcGyaq_m": {
+                    "name": "Adelita Galvez (SRI)",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX"
+                },
+                "-KV6NxuOvNrAbSuucimj": {
+                    "name": "Caro Rojas (Liderando)",
+                    "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX"
+                }
+            },
+            "firstName": "Karina",
+            "lastName": "Simpson",
+            "memberId": 303,
+            "name": "Karina Simpson",
+            "phone": "+19373964400",
+            "postalCode": "45431",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=KS",
+            "sponsor": {
+                "name": "John Reitano",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=JR",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv"
+            },
+            "stateCode": "OH",
+            "stateName": "Ohio"
+        },
+        "-KNEKfk_nwPeckdg79HU": {
+            "countryCode": "EC",
+            "createdAt": 1467746790141,
+            "downlineLevel": 4,
+            "firstName": "Horacio",
+            "lastName": "Pérez",
+            "memberId": 304,
+            "name": "Horacio Pérez",
+            "phone": "+593998739913",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=HP",
+            "sponsor": {
+                "name": "Xavier Pérez",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XP",
+                "userId": "-KLwWedxw2DHDhTdTK9-"
+            }
+        },
+        "-KUtVKFIMTSut4z3ScSk": {
+            "address": "Ca",
+            "city": "San diego",
+            "countryCode": "US",
+            "createdAt": 1477359788991,
+            "downlineLevel": 3,
+            "firstName": "Adam",
+            "lastName": "King",
+            "middleName": "",
+            "name": "Adam King",
+            "phone": "+12038154853",
+            "postalCode": "92115",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "John Reitano",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv"
+            },
+            "stateCode": "CA",
+            "stateName": "California"
+        },
+        "-KUtr26PefqCaDBBYe6a": {
+            "createdAt": 1477365740032,
+            "downlineLevel": 4,
+            "firstName": "Amy",
+            "lastName": "(SRI)",
+            "middleName": "Calahorrano",
+            "name": "Amy Calahorrano (SRI)",
+            "phone": "+593998115501",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Karina Simpson",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=KS",
+                "userId": "-KLwWedxw2DHDhTdTK9-"
+            }
+        },
+        "-KUvXkqstdI_c1EXGI8K": {
+            "createdAt": 1477393976796,
+            "downlineLevel": 2,
+            "firstName": "Aaron",
+            "lastName": "FitzSimmons",
+            "middleName": "",
+            "name": "Aaron FitzSimmons",
+            "phone": "+16154983622",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KUvXpj4qH2cagP6Eo0o": {
+            "createdAt": 1477393996774,
+            "downlineLevel": 2,
+            "firstName": "Abby",
+            "lastName": "Perkins",
+            "middleName": "",
+            "name": "Abby Perkins",
+            "phone": "+14046604088",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KUv_8YMZ7QP5Ag-qu6b": {
+            "createdAt": 1477394602232,
+            "downlineLevel": 2,
+            "firstName": "Abby",
+            "lastName": "Perkins",
+            "middleName": "",
+            "name": "Abby Perkins",
+            "phone": "+14046604088",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KUv__ew7OTECod0mfBU": {
+            "createdAt": 1477394717405,
+            "downlineLevel": 2,
+            "firstName": "Abbey",
+            "lastName": "Snow",
+            "middleName": "",
+            "name": "Abbey Snow",
+            "phone": "+16158815363",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV2767PQ7nErFgg2PHd": {
+            "address": "700 Lynnbrook Road",
+            "city": "Nashville",
+            "countryCode": "US",
+            "createdAt": 1477521207867,
+            "downlineLevel": 3,
+            "firstName": "Staci",
+            "lastName": "Glover",
+            "middleName": "",
+            "name": "Staci Glover",
+            "phone": "+16159746651",
+            "postalCode": "37215",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "John Reitano",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv"
+            },
+            "stateCode": "TN",
+            "stateName": "Tennessee"
+        },
+        "-KV4eTyaRQb7W9aLWMQ-": {
+            "createdAt": 1477563772877,
+            "downlineLevel": 2,
+            "firstName": "Aaron",
+            "lastName": "FitzSimmons",
+            "middleName": "",
+            "name": "Aaron FitzSimmons",
+            "phone": "+16154983622",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV4egYXFfBTA4APeND_": {
+            "createdAt": 1477563828485,
+            "downlineLevel": 2,
+            "firstName": "Bob",
+            "lastName": "Lowe",
+            "middleName": "",
+            "name": "Bob Lowe",
+            "phone": "+16153831508",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV4eizKNpjGHu-ycaoQ": {
+            "createdAt": 1477563838461,
+            "downlineLevel": 2,
+            "firstName": "Bob",
+            "lastName": "Lowe",
+            "middleName": "",
+            "name": "Bob Lowe",
+            "phone": "+16153831508",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV58Lx2EYxKSwl6ANUh": {
+            "createdAt": 1477571866466,
+            "downlineLevel": 3,
+            "firstName": "Jasmine",
+            "lastName": "Reitano",
+            "middleName": "",
+            "name": "Jasmine Reitano",
+            "phone": "+16196345036",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "John Reitano",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR",
+                "userId": "-KJnRTuL8A1ZdfVvwAbv"
+            }
+        },
+        "-KV6-O5r_BlwKcGyaq_m": {
+            "createdAt": 1477586293211,
+            "downlineLevel": 4,
+            "firstName": "Adelita",
+            "lastName": "(SRI)",
+            "middleName": "Galvez",
+            "name": "Adelita Galvez (SRI)",
+            "phone": "+593995584790",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Karina Simpson",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=KS",
+                "userId": "-KLwWedxw2DHDhTdTK9-"
+            }
+        },
+        "-KV66E6S4IUFQ8_U-2QD": {
+            "createdAt": 1477588087294,
+            "downlineLevel": 2,
+            "firstName": "Aaron",
+            "lastName": "FitzSimmons",
+            "middleName": "",
+            "name": "Aaron FitzSimmons",
+            "phone": "+16154983622",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV66FjVBffTmzd7yrlR": {
+            "createdAt": 1477588093951,
+            "downlineLevel": 2,
+            "firstName": "Aaron",
+            "lastName": "FitzSimmons",
+            "middleName": "",
+            "name": "Aaron FitzSimmons",
+            "phone": "+16154983622",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV66Hfw20mVSYgt5gvF": {
+            "createdAt": 1477588101917,
+            "downlineLevel": 2,
+            "firstName": "Abigail",
+            "lastName": "Dillon",
+            "middleName": "",
+            "name": "Abigail Dillon",
+            "phone": "+16153064554",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV66PAdSvM9IcHRxHmG": {
+            "createdAt": 1477588132619,
+            "downlineLevel": 2,
+            "firstName": "Abby",
+            "lastName": "Kamensky",
+            "middleName": "",
+            "name": "Abby Kamensky",
+            "phone": "+17062892627",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV66SrzicV8U2luZcKk": {
+            "createdAt": 1477588147746,
+            "downlineLevel": 2,
+            "firstName": "Abby",
+            "lastName": "Kamensky",
+            "middleName": "",
+            "name": "Abby Kamensky",
+            "phone": "+17062892627",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV6NxuOvNrAbSuucimj": {
+            "createdAt": 1477592735419,
+            "downlineLevel": 4,
+            "firstName": "Caro",
+            "lastName": "(Liderando)",
+            "middleName": "Rojas",
+            "name": "Caro Rojas (Liderando)",
+            "phone": "+593984678712",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Karina Simpson",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=KS",
+                "userId": "-KLwWedxw2DHDhTdTK9-"
+            }
+        },
+        "-KV7yfq1rUJ8wph7SzRl": {
+            "createdAt": 1477619400102,
+            "downlineLevel": 2,
+            "firstName": "Aaron",
+            "lastName": "FitzSimmons",
+            "middleName": "",
+            "name": "Aaron FitzSimmons",
+            "phone": "+16154983622",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        },
+        "-KV7ylBdmcDB9-JdPwO0": {
+            "createdAt": 1477619422026,
+            "downlineLevel": 2,
+            "firstName": "Aaron",
+            "lastName": "FitzSimmons",
+            "middleName": "",
+            "name": "Aaron FitzSimmons",
+            "phone": "+16154983622",
+            "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=XX",
+            "sponsor": {
+                "name": "Howard Eiland Glover",
+                "profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+                "userId": "-KJn47TvHAlfQocDX_ES"
+            }
+        }
+    },
+    "version": {
+        "androidAppDownloadUrl": "https://i.diawi.com/r9hmUx",
+        "description": "0.14.0 (24-Oct-2016 5:40 PM CT)",
+        "generalAppDownloadUrl": "http://ur-money-staging.firebaseapp.com/app",
+        "iosAppDownloadUrl": "https://i.diawi.com/dxkZWj"
+    }
+}

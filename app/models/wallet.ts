@@ -40,15 +40,24 @@ export class WalletModel {
     return this._web3;
   }
 
-  public static availableBalance(address, rounding?: boolean, pendingAmount?: number) {
-    let balanceInWei = this.web3().eth.getBalance(address);
+  private static calculateBalanceInfo(balanceInWei, rounding?: boolean, pendingAmount?: number): any {
     let balance = this.web3().fromWei(parseFloat(balanceInWei));
     let gasPrice = this.web3().fromWei(this.web3().eth.gasPrice);
-    let availableBalance = Math.max(balance - gasPrice * this.GasLimit - (pendingAmount || 0), 0);
+    let availableBalance = Math.max(balance - (pendingAmount || 0), 0);
     if (rounding) {
       availableBalance = _.floor(availableBalance, 2);
     }
-    return availableBalance;
+    let spendableBalance = Math.max(availableBalance - gasPrice * this.GasLimit, 0);
+    if (rounding) {
+      spendableBalance = _.floor(spendableBalance, 2);
+    }
+    return { availableBalance: availableBalance, spendableBalance: spendableBalance };
+  }
+
+
+  public static availableBalance(address, rounding?: boolean, pendingAmount?: number): any {
+    let balanceInWei = this.web3().eth.getBalance(address);
+    return WalletModel.calculateBalanceInfo(balanceInWei, rounding, pendingAmount);
   }
 
   public static availableBalanceAsync(address: string, rounding?: boolean, pendingAmount?: number): Promise<any> {
@@ -58,15 +67,7 @@ export class WalletModel {
           log.error(error);
           reject(error);
         } else {
-          let balance = this.web3().fromWei(parseFloat(balanceInWei));
-          this.web3().fromWei(this.web3().eth.getGasPrice((error, result) => {
-            let gasPrice = this.web3().fromWei(result);
-            let availableBalance = Math.max(balance - gasPrice * this.GasLimit - (pendingAmount || 0), 0);
-            if (rounding) {
-              availableBalance = _.floor(availableBalance, 2);
-            }
-            resolve(availableBalance);
-          }));
+          resolve(WalletModel.calculateBalanceInfo(balanceInWei, rounding, pendingAmount));
         }
       });
     });

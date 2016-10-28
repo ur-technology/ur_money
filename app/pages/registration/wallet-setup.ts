@@ -6,6 +6,7 @@ import * as log from 'loglevel';
 import {FocuserDirective} from '../../directives/focuser';
 import {WalletModel} from '../../models/wallet';
 import {AuthService} from '../../services/auth';
+import {ContactsService} from '../../services/contacts';
 import {CustomValidator} from '../../validators/custom';
 import {HomePage} from '../home/home';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
@@ -27,6 +28,7 @@ export class WalletSetupPage {
   constructor(
     public nav: NavController,
     public auth: AuthService,
+    public contactsService: ContactsService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController, private loadingController: LoadingController,  private translate: TranslateService
   ) {
@@ -142,6 +144,7 @@ export class WalletSetupPage {
           duration: 5000,
           position: 'bottom'
         }).present();
+        self.contactsService.loadContacts(self.auth.countryCode, self.auth.currentUserId, self.auth.currentUser.phone);
         self.nav.setRoot(HomePage);
       });
     }).catch((error) => {

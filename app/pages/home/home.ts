@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import {Page, NavController, NavParams, Platform} from 'ionic-angular';
 import {WalletModel} from '../../models/wallet';
 import {ChartDataService} from '../../services/chart-data';
@@ -12,7 +11,6 @@ import {EventListComponent} from '../../components/event-list/event-list';
 import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {BigNumber} from 'bignumber.js';
-import {CustomValidator} from '../../validators/custom';
 
 declare var jQuery: any;
 
@@ -25,7 +23,7 @@ export class HomePage {
   elementRef: ElementRef;
   android: boolean;
   availableBalance: number;
-  displayableAvailableBalance: string;
+  formattedAvailableBalance: string;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
@@ -34,14 +32,18 @@ export class HomePage {
     this.android = this.platform.is('android');
   }
 
+  ngOnInit() {
+    self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
+  }
+
 onPageWillEnter() {
   // TODO: determine pending outbound amounts
   let pendingAmounts: number = 0;
-  WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(availableBalance => {
-    this.availableBalance = availableBalance;
-    this.displayableAvailableBalance = this.formatUR(this.availableBalance);
+  WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(balanceInfo => {
+    this.availableBalance = balanceInfo.availableBalance;
+    this.formattedAvailableBalance = this.formatUR(this.availableBalance);
   }, (error) => {
-    this.availableBalance = this.displayableAvailableBalance = undefined;
+    this.availableBalance = this.formattedAvailableBalance = undefined;
   });
 }
 
@@ -139,10 +141,10 @@ onPageDidEnter() {
   }
 
   formatUR(amount: number): string {
-    if (amount) {
+    if (amount == 0 || amount) {
       return (new BigNumber(amount)).toFormat(2);
     } else {
-      return "";
+      return '';
     }
   }
 }

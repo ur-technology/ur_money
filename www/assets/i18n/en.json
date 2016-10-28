@@ -145,7 +145,7 @@
     },
     "send": {
         "title": "Send UR",
-        "availableBalance": "Available balance",
+        "spendableBalance": "Spendable balance",
         "enterAmount": "Amount to send",
         "enterMessage": "Message (optional)",
         "send": "Send",
@@ -156,8 +156,8 @@
         "phraseIncorrect": "The secret phrase you entered was not correct.",
         "confirmation": "Confirmation",
         "amountRequired": "Amount is required",
-        "numberOutOfRange": "Amount must be between 0 and available balance",
-        "notAvailable": "Not Available"
+        "numberOutOfRange": "Amount must be between 0 and spendable balance",
+        "pleaseWait": "Please Wait..."
     },
     "about": {
         "heading": "About UR",

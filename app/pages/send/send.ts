@@ -20,8 +20,8 @@ declare var jQuery: any;
 export class SendPage {
   contact: any;
   mainForm: FormGroup;
-  availableBalance: number;
-  displayableAvailableBalance: string;
+  spendableBalance: number;
+  formattedSpendableBalance: string;
   private wallet: WalletModel;
 
   constructor(
@@ -35,20 +35,20 @@ export class SendPage {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       message: new FormControl(''),
-      availableBalance: new FormControl('')
+      spendableBalance: new FormControl('')
     });
   }
 
   ngOnInit() {
     // TODO: determine pending outbound amounts
     let pendingAmounts: number = 0;
-    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(availableBalance => {
-      this.availableBalance = availableBalance;
-      this.displayableAvailableBalance = this.formatUR(this.availableBalance);
-      CustomValidator.maxValidAmount = this.availableBalance;
+    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(balanceInfo => {
+      this.spendableBalance = balanceInfo.spendableBalance;
+      this.formattedSpendableBalance = this.formatUR(this.spendableBalance);
+      CustomValidator.maxValidAmount = this.spendableBalance;
       CustomValidator.minValidAmount = 0;
     }, (error) => {
-      this.availableBalance = this.displayableAvailableBalance = undefined;
+      this.spendableBalance = this.formattedSpendableBalance = undefined;
       CustomValidator.minValidAmount = CustomValidator.maxValidAmount = undefined;
     });
   }
@@ -74,7 +74,9 @@ export class SendPage {
       return transactionRef.set({
         createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
-        urTransaction: urTransaction
+        sender: _.merge(_.pick(self.auth.currentUser, ['name', 'profilePhotoUrl']), { userId: self.auth.currentUserId }),
+        receiver: _.pick(self.contact, ['name', 'profilePhotoUrl', 'userId']),
+        createdBy: 'UR Money'
       });
     }).then(() => {
       let toast = self.toastCtrl.create({ message: this.translate.instant('send.urSent'), duration: 3000, position: 'bottom' });
@@ -169,7 +171,7 @@ export class SendPage {
     if (amount) {
       return (new BigNumber(amount)).toFormat(2);
     } else {
-      return "";
+      return '';
     }
   }
 }

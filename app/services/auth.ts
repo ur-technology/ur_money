@@ -32,14 +32,16 @@ export class AuthService {
             userSubscription.unsubscribe();
           }
           self.currentUser = currentUser;
+          let status = _.trim((currentUser.registration && currentUser.registration.status) || '') || 'initial';
           self.getSimCountryCode().then((countryCode) => {
             self.countryCode = countryCode || currentUser.countryCode;
             if (_.trim((self.countryCode || '')) === '') {
               log.warn('country code not defined for this user');
             }
-            self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
+            if (status !== 'initial') {
+              self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
+            }
           });
-          let status = _.trim((currentUser.registration && currentUser.registration.status) || '') || 'initial';
           nav.setRoot({
             'initial': pages.introPage,
             'verification-requested': pages.verificationPendingPage,
