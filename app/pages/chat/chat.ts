@@ -64,6 +64,17 @@ export class ChatPage {
     });
   }
 
+  lookupChatSummaryViaChatId() {
+    let chatSummaryRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chatSummaries/${this.chatId}`);
+    chatSummaryRef.once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        this.chatSummary = snapshot.val();
+      } else {
+        log.warn(`could not find chatSummary at ${chatSummaryRef.toString()}`);
+      }
+    });
+  }
+
   adjustMessageTextAreaHeightBasedOnInput() {
     const MESSAGE_TEXT_AREA_MAXIMUM_HEIGHT = 115;
     const MESSAGE_TEXT_AREA_ROW_HEIGHT = 38;
@@ -116,7 +127,29 @@ export class ChatPage {
     return true;
   }
 
-  sendMessage() {
+  alertBlockedContact(isFirstMessageInChat) {
+    let alert = this.alertCtrl.create({
+      message: this.translate.instant('chat.unblockMessage', { value: this.displayUser().name }),
+      buttons: [
+        {
+          text: this.translate.instant('cancel'),
+          role: 'cancel'
+        },
+        {
+          text: this.translate.instant('chat.unblock'),
+          handler: () => {
+            alert.dismiss().then(() => {
+              this.sendMessage(isFirstMessageInChat);
+              this.setBlockContactInDB(false);
+            });
+          }
+        }
+      ]
+    });
+    return alert;
+  }
+
+  sendMessageClick() {
     if (!this.validateMessage()) {
       return;
     }
@@ -126,6 +159,15 @@ export class ChatPage {
       this.saveChatSummary();
     }
 
+    if (this.chatSummary.blocked) {
+      let alert = this.alertBlockedContact(isFirstMessageInChat);
+      alert.present();
+    } else {
+      this.sendMessage(isFirstMessageInChat);
+    }
+  }
+
+  sendMessage(isFirstMessageInChat) {
     // add message to list of messages for this chat
     let messagesRef = firebase.database().ref(`/users/${this.auth.currentUserId}/chats/${this.chatId}/messages`);
     let message = { text: this.messageText, sentAt: firebase.database.ServerValue.TIMESTAMP, senderUserId: this.auth.currentUserId };
@@ -152,6 +194,7 @@ export class ChatPage {
     this.saveEvent();
     this.resetMessageTextArea();
   }
+
 
   saveEvent() {
     let eventRef = firebase.database().ref(`/users/${this.auth.currentUserId}/events/${this.chatId}`);
@@ -226,7 +269,10 @@ export class ChatPage {
           text: this.translate.instant('ok'),
           handler: () => {
             alert.dismiss().then(() => {
-              this.setBlockContactInDB();
+              if (this.chatSummaryUnsaved()) {
+                this.saveChatSummary();
+              }
+              this.setBlockContactInDB(true);
             });
           }
         }
@@ -235,7 +281,10 @@ export class ChatPage {
     alert.present();
   }
 
-  setBlockContactInDB() {
-    console.log('blocked');
+  setBlockContactInDB(value: boolean) {
+    firebase.database().ref(`/users/${this.auth.currentUserId}/chatSummaries/${this.chatId}`)
+      .update({ blocked: value }).then(() => {
+        this.lookupChatSummaryViaChatId();
+      });
   }
 }

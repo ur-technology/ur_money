@@ -117,7 +117,9 @@
     },
     "chat": {
         "typeMessage": "Escribe tu mensaje",
-        "blockMessage": "¿Bloquear a {{value}}? Los contactos bloqueados ya no podrán enviarte mensajes."
+        "blockMessage": "¿Bloquear a {{value}}? Los contactos bloqueados ya no podrán enviarte mensajes.",
+        "unblockMessage": "Desbloquear a {{value}} para enviarle un mensaje.",
+        "unblock": "Desbloquear"
     },
     "chat-list": {
         "noChatsYet": "Aún no hay chats"

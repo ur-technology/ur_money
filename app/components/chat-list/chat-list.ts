@@ -6,6 +6,7 @@ import {Timestamp}  from '../../pipes/timestamp';
 import { App } from 'ionic-angular';
 import {AngularFire} from 'angularfire2';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'chat-list',
@@ -16,7 +17,7 @@ export class ChatListComponent {
   chats: any[];
   x: any[];
 
-  constructor(private nav: NavController, private auth: AuthService, private angularFire: AngularFire, private app: App, private translate: TranslateService ) {
+  constructor(private nav: NavController, private auth: AuthService, private angularFire: AngularFire, private app: App, private translate: TranslateService) {
   }
 
   ngOnInit() {
@@ -29,7 +30,9 @@ export class ChatListComponent {
 
   load() {
     this.angularFire.database.list(`/users/${this.auth.currentUserId}/chatSummaries`).subscribe(data => {
-      this.chats = data;
+      this.chats = _.filter(data, (chatSummary: any) => {
+        return chatSummary.lastMessage;
+      });
     });
   }
 
