@@ -32,22 +32,18 @@ export class HomePage {
     this.android = this.platform.is('android');
   }
 
-  ngOnInit() {
-    self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
+  onPageWillEnter() {
+    // TODO: determine pending outbound amounts
+    let pendingAmounts: number = 0;
+    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(balanceInfo => {
+      this.availableBalance = balanceInfo.availableBalance;
+      this.formattedAvailableBalance = this.formatUR(this.availableBalance);
+    }, (error) => {
+      this.availableBalance = this.formattedAvailableBalance = undefined;
+    });
   }
 
-onPageWillEnter() {
-  // TODO: determine pending outbound amounts
-  let pendingAmounts: number = 0;
-  WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(balanceInfo => {
-    this.availableBalance = balanceInfo.availableBalance;
-    this.formattedAvailableBalance = this.formatUR(this.availableBalance);
-  }, (error) => {
-    this.availableBalance = this.formattedAvailableBalance = undefined;
-  });
-}
-
-onPageDidEnter() {
+  onPageDidEnter() {
     var self = this;
     if (self.chartData.pointsLoaded) {
       self.renderChart();
@@ -141,7 +137,7 @@ onPageDidEnter() {
   }
 
   formatUR(amount: number): string {
-    if (amount == 0 || amount) {
+    if (amount === 0 || amount) {
       return (new BigNumber(amount)).toFormat(2);
     } else {
       return '';

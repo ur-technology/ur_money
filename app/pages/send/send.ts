@@ -76,7 +76,9 @@ export class SendPage {
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
         sender: _.merge(_.pick(self.auth.currentUser, ['name', 'profilePhotoUrl']), { userId: self.auth.currentUserId }),
         receiver: _.pick(self.contact, ['name', 'profilePhotoUrl', 'userId']),
-        createdBy: 'UR Money'
+        createdBy: 'UR Money',
+        type: "sent",
+        urTransaction: urTransaction
       });
     }).then(() => {
       let toast = self.toastCtrl.create({ message: this.translate.instant('send.urSent'), duration: 3000, position: 'bottom' });
