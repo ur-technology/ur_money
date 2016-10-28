@@ -4,6 +4,7 @@
         <ion-buttons end>
           <button [disabled]="verificationCode.length<6"
               (click)="submit()">
+              <ion-icon name="checkmark"></ion-icon>
               {{"done" | translate}}
           </button>
         </ion-buttons>

@@ -3,6 +3,7 @@
         <ion-title>{{"identity-info-setup.title" | translate}}</ion-title>
         <ion-buttons end>
           <button [disabled]="!mainForm.valid" (click)="submit()">
+            <ion-icon name="checkmark"></ion-icon>
               {{"done" | translate}}
           </button>
         </ion-buttons>
@@ -30,7 +31,7 @@
         </ion-item>
         <ion-item class="item item-input input-item-data" style="position: absolute; left: -9999px; width: 1px; height: 1px;">
           <ion-input type="submit">.</ion-input>
-        </ion-item>    
+        </ion-item>
         <ion-item-group *ngIf="identificationType == 'Driver License'">
           <ion-item>
               <ion-label floating>{{'identity-info-setup.driverLicenseState' | translate}}</ion-label>
