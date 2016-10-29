@@ -79,7 +79,7 @@ export class SendPage {
       return self.wallet.sendRawTransaction(self.contact.wallet.address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
       let transactionRef = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/${urTransaction.hash}`);
-      return transactionRef.set({
+      let transaction: any = {
         createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
         sender: _.merge(_.pick(self.auth.currentUser, ['name', 'profilePhotoUrl']), { userId: self.auth.currentUserId }),
@@ -87,7 +87,12 @@ export class SendPage {
         createdBy: 'UR Money',
         type: 'sent',
         urTransaction: urTransaction
-      });
+      };
+      let message = _.trim(self.mainForm.value.message || '');
+      if (message) {
+        transaction.message = message;
+      }
+      return transactionRef.set(transaction);
     }).then(() => {
       let toast = self.toastCtrl.create({ message: this.translate.instant('send.urSent'), duration: 3000, position: 'bottom' });
       toast.present();
