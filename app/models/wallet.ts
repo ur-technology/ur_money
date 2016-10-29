@@ -40,7 +40,7 @@ export class WalletModel {
   }
 
   private static calculateBalanceInfo(balanceInWei, rounding?: boolean, pendingAmount?: number): any {
-    let currentBalance = new BigNumber(balanceInWei).dividedBy("1000000000000000000");
+    let currentBalance = new BigNumber(balanceInWei).dividedBy('1000000000000000000');
     if (rounding) {
       currentBalance = currentBalance.round(2, BigNumber.ROUND_DOWN);
     }
