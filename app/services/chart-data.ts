@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import * as moment from 'moment';
 import {AuthService} from '../services/auth';
 import {WalletModel} from '../models/wallet';
+import {BigNumber} from 'bignumber.js';
 
 @Injectable()
 export class ChartDataService {
@@ -16,8 +17,8 @@ export class ChartDataService {
   public pointsLoaded: boolean = false;
   public pointsLoadedEmitter = new EventEmitter();
   public balanceUpdatedEmitter = new EventEmitter();
-  public startingBalance: number;
-  public endingBalance: number;
+  public startingBalanceWei: BigNumber;
+  public endingBalanceWei: BigNumber;
   public balanceChange: number;
   public percentageChange: number;
   public balanceInfo: any;
@@ -26,6 +27,12 @@ export class ChartDataService {
   constructor(public auth: AuthService) {
     this.pointsLoaded = false;
     this.loadPointsWhenTransactionsChange();
+  }
+
+  public dataSeries() {
+    return _.map(this.points, (point) => {
+      return [point[0], point[1]];
+    });
   }
 
   private ensureStartingTimeIncludedInPoints() {
@@ -37,7 +44,14 @@ export class ChartDataService {
       let priorTransaction = _.findLast(this.transactions, (transaction: any) => {
         return moment(transaction.minedAt, 'x').isBefore(this.startingTime);
       });
-      var priorBalance = priorTransaction ? this.convertWeiStringToApproximateUR(priorTransaction.balance) : 0.0;
+      var priorBalance;
+      if (priorTransaction) {
+        priorBalance = this.convertWeiStringToApproximateUR(priorTransaction.balance);
+        this.startingBalanceWei = new BigNumber(priorTransaction.balance);
+      } else {
+        priorBalance = 0;
+        this.startingBalanceWei = new BigNumber(0);
+      }
       this.points.unshift([this.startingTime.valueOf(), priorBalance]);
     }
   }
@@ -62,10 +76,9 @@ export class ChartDataService {
     this.ensureStartingTimeIncludedInPoints();
     this.ensureEndingTimeIncludedInPoints();
 
-    this.startingBalance = _.first(this.points)[1];
-    this.endingBalance = _.last(this.points)[1];
-    this.balanceChange = this.endingBalance - this.startingBalance;
-    this.percentageChange = this.startingBalance !== 0 ? Math.round(this.balanceChange * 100 / this.startingBalance) : 0;
+    let balanceChangeWei: BigNumber = this.endingBalanceWei.minus(this.startingBalanceWei);
+    this.balanceChange = balanceChangeWei.dividedBy(1000000000000000000).round(2, BigNumber.ROUND_FLOOR).toNumber();
+    this.percentageChange = this.startingBalanceWei.isZero() ? 0 : balanceChangeWei.times(100).dividedBy(this.startingBalanceWei).round(0, BigNumber.ROUND_FLOOR).toNumber();
 
     this.pointsLoaded = true;
     this.pointsLoadedEmitter.emit({});
@@ -86,6 +99,13 @@ export class ChartDataService {
     this.points = _.map(transactionsWithinTimeRange, (transaction) => {
       return [transaction.minedAt, this.convertWeiStringToApproximateUR(transaction.balance)];
     });
+    if (transactionsWithinTimeRange.length > 0) {
+      this.startingBalanceWei = new BigNumber(_.first(transactionsWithinTimeRange).balance);
+      this.endingBalanceWei = new BigNumber(_.last(transactionsWithinTimeRange).balance);
+    } else {
+      this.startingBalanceWei = new BigNumber(0);
+      this.endingBalanceWei = new BigNumber(0);
+    }
   }
 
   private calculateStartingAndEndingTimes() {

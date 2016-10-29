@@ -111,7 +111,7 @@ export class HomePage {
       series: [{
         name: '',
         showInLegend: false,
-        data: this.chartData.points,
+        data: this.chartData.dataSeries(),
         color: '#a5d3e9'
         // step: 'left'
       }],
