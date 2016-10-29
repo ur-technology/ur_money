@@ -278,6 +278,19 @@ export class FakeContactsSource {
           'type': 'mobile'
         }],
         'id': '23'
+      }, {
+        'name': {
+          'givenName': 'Karina',
+          'familyName': 'Simpson'
+        },
+        'profilePhotoUrl': 'https://firebasestorage.googleapis.com/v0/b/ur-money-staging.appspot.com/o/avatars%2FGeneric_Avatar.jpg?alt=media&token=0929f75e-a294-4331-a001-00ce22a8b117',
+        'phoneNumbers': [{
+          'id': '184',
+          'pref': false,
+          'value': '+19373964400',
+          'type': 'mobile'
+        }],
+        'id': '24'
       }
     ];
   }

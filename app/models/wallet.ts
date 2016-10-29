@@ -52,7 +52,7 @@ export class WalletModel {
 
     let gas = new BigNumber(21000);
     let gasPrice = this.web3().eth.gasPrice;
-    let fee = gas.times(gasPrice);
+    let fee = gas.times(gasPrice).dividedBy('1000000000000000000');
     if (rounding) {
       fee = fee.round(2, BigNumber.ROUND_UP);
     }

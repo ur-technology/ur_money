@@ -11,7 +11,7 @@
             <h1 class="chart-title"><span *ngIf="availableBalance">{{availableBalance.toFormat(2)}}</span><span>UR</span></h1>
             <h2 class="chart-subtitle clearfix"><span class="green"><ion-icon [name]="chartData.percentageChange>=0?'md-arrow-up':'md-arrow-down'"></ion-icon> {{chartData.percentageChange|round}}%</span>
         <span class="right">
-        <ion-icon   [name]="chartData.balanceChange>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>{{chartData.balanceChange|round}} </span>
+        <ion-icon   [name]="chartData.balanceChange>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>{{chartData.balanceChange|number:'.2'}} </span>
       </h2>
         </div>
         <div class="container"
