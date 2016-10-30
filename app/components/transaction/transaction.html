@@ -8,7 +8,7 @@
           <button class="button button-outline" (click)="filterTransactions('all')" [ngClass]="{'active':filterOption==='all'}">{{"transaction.allTime" | translate}}</button>
         </div>
 
-        <div class="total-ur">
+        <div class="total-ur" *ngIf="getTransactionType()">
             {{weiToURString(filteredTransactionsTotal)}} {{getTransactionType()}}
         </div>
         <p class="last-update">
