@@ -22,7 +22,9 @@ declare var jQuery: any;
 export class SendPage {
   contact: any;
   mainForm: FormGroup;
-  spendableBalance: number;
+  availableBalance: number;
+  estimatedFee: number;
+  maxAmount: number;
   private wallet: WalletModel;
 
   constructor(
@@ -39,24 +41,26 @@ export class SendPage {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       message: new FormControl(''),
-      spendableBalance: new FormControl('')
+      maxAmount: new FormControl('')
     });
   }
 
-  reflectSpendableBalanceOnPage() {
-    this.spendableBalance = this.chartData.balanceInfo.availableBalance.minus(this.chartData.balanceInfo.estimatedFee);
-    CustomValidator.maxValidAmount = this.spendableBalance;
+  reflectMaxAmountOnPage() {
+    this.availableBalance = this.chartData.balanceInfo.availableBalance;
+    this.estimatedFee = this.chartData.balanceInfo.estimatedFee;
+    this.maxAmount = this.chartData.balanceInfo.availableBalance.minus(this.chartData.balanceInfo.estimatedFee);
+    CustomValidator.maxValidAmount = this.maxAmount;
     CustomValidator.minValidAmount = 0;
   }
 
   ngOnInit() {
     let self = this;
     if (self.chartData.balanceUpdated) {
-      self.reflectSpendableBalanceOnPage();
+      self.reflectMaxAmountOnPage();
     }
     self.chartData.balanceUpdatedEmitter.subscribe(() => {
       self.ngZone.run(() => {
-        self.reflectSpendableBalanceOnPage();
+        self.reflectMaxAmountOnPage();
       });
     });
   }

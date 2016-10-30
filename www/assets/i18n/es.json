@@ -147,7 +147,9 @@
     },
     "send": {
         "title": "Enviar UR",
-        "spendableBalance": "Saldo disponible",
+        "availableBalance": "Saldo Disponible",
+        "estimatedFee": "Estimated Fee",
+        "maxAmount": "Max Amount",
         "enterAmount": "Cantidad a enviar",
         "enterMessage": "Mensaje (opcional)",
         "send": "Enviar",

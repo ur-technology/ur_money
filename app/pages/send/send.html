@@ -16,14 +16,32 @@
         </ion-item>
         <div class="card send-requestinput">
             <label class="item item-input disabled">
-                <span>{{"send.spendableBalance" | translate}}:
-                  <span *ngIf="spendableBalance !== undefined">{{spendableBalance.toFormat(5)}}</span>
-                  <span *ngIf="spendableBalance === undefined">{{"send.pleaseWait" | translate}}</span>
+                <span>{{"send.availableBalance" | translate}}:
+                  <span *ngIf="availableBalance !== undefined">{{availableBalance.toFormat(5)}}</span>
+                  <span *ngIf="availableBalance === undefined">{{"send.pleaseWait" | translate}}</span>
                 </span>
                 <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
             </label>
         </div>
-        <div class="card send-requestur">
+        <div class="card send-requestinput">
+            <label class="item item-input disabled">
+                <span>{{"send.estimatedFee" | translate}}:
+                  <span *ngIf="estimatedFee !== undefined">{{estimatedFee.toFormat(5)}}</span>
+                  <span *ngIf="estimatedFee === undefined">{{"send.pleaseWait" | translate}}</span>
+                </span>
+                <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
+            </label>
+        </div>
+        <div class="card send-requestinput">
+            <label class="item item-input disabled">
+                <span>{{"send.maxAmount" | translate}}:
+                  <span *ngIf="maxAmount !== undefined">{{maxAmount.toFormat(5)}}</span>
+                  <span *ngIf="maxAmount === undefined">{{"send.pleaseWait" | translate}}</span>
+                </span>
+                <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
+            </label>
+      </div>
+      <div class="card send-requestur">
             <label class="item item-input">
                 <input formControlName="amount"
                     placeholder="{{'send.enterAmount' | translate}}"
