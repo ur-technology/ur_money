@@ -1,6 +1,5 @@
 import {Injectable, EventEmitter} from '@angular/core';
 import * as _ from 'lodash';
-import * as log from 'loglevel';
 import * as firebase from 'firebase';
 import * as moment from 'moment';
 import {AuthService} from '../services/auth';
@@ -112,7 +111,7 @@ export class ChartDataService {
     let amount: BigNumber = new BigNumber(0);
     _.each(this.pendingTransactions, (pendingTransaction) => {
       let transactionAmount: BigNumber = new BigNumber(pendingTransaction.urTransaction.value);
-      if (_.includes(['received','earned'], pendingTransaction.type)) {
+      if (_.includes(['received', 'earned'], pendingTransaction.type)) {
         amount = amount.plus(transactionAmount);
       } else {
         amount = amount.minus(transactionAmount).minus(WalletModel.estimatedFeeWei());
