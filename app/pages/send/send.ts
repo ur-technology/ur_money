@@ -44,7 +44,7 @@ export class SendPage {
   }
 
   reflectSpendableBalanceOnPage() {
-    this.spendableBalance = this.chartData.balanceInfo.availableBalance.minus(this.chartData.balanceInfo.fee);
+    this.spendableBalance = this.chartData.balanceInfo.availableBalance.minus(this.chartData.balanceInfo.estimatedFee);
     CustomValidator.maxValidAmount = this.spendableBalance;
     CustomValidator.minValidAmount = 0;
   }

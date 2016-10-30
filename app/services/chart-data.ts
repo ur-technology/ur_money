@@ -1,5 +1,6 @@
 import {Injectable, EventEmitter} from '@angular/core';
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 import * as firebase from 'firebase';
 import * as moment from 'moment';
 import {AuthService} from '../services/auth';
@@ -13,6 +14,7 @@ export class ChartDataService {
   public startingTime: moment.Moment;
   public endingTime: moment.Moment;
   public transactions: any[];
+  public pendingTransactions: any[];
   public points: any[]; // array of points, with points represented as 2-element arrays
   public pointsLoaded: boolean = false;
   public pointsLoadedEmitter = new EventEmitter();
@@ -76,16 +78,14 @@ export class ChartDataService {
     this.ensureStartingTimeIncludedInPoints();
     this.ensureEndingTimeIncludedInPoints();
 
-    let balanceChangeWei: BigNumber = this.endingBalanceWei.minus(this.startingBalanceWei);
-    this.balanceChange = balanceChangeWei.dividedBy(1000000000000000000).round(2, BigNumber.ROUND_FLOOR).toNumber();
-    this.percentageChange = this.startingBalanceWei.isZero() ? 0 : balanceChangeWei.times(100).dividedBy(this.startingBalanceWei).round(0, BigNumber.ROUND_FLOOR).toNumber();
+    let balanceChangeWei: BigNumber = this.endingBalanceWei.minus(this.startingBalanceWei).plus(this.pendingAmountWei());
+    this.balanceChange = balanceChangeWei.dividedBy(1000000000000000000).round(0, BigNumber.ROUND_HALF_FLOOR).toNumber();
+    this.percentageChange = this.startingBalanceWei.isZero() ? 0 : balanceChangeWei.times(100).dividedBy(this.startingBalanceWei).round(0, BigNumber.ROUND_HALF_FLOOR).toNumber();
 
     this.pointsLoaded = true;
     this.pointsLoadedEmitter.emit({});
 
-    let pendingAmounts: number = 0;
-
-    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, pendingAmounts).then(balanceInfo => {
+    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, this.pendingAmountWei()).then(balanceInfo => {
       this.balanceInfo = balanceInfo;
       this.balanceUpdated = true;
       this.balanceUpdatedEmitter.emit(balanceInfo);
@@ -108,6 +108,19 @@ export class ChartDataService {
     }
   }
 
+  private pendingAmountWei(): BigNumber {
+    let amount: BigNumber = new BigNumber(0);
+    _.each(this.pendingTransactions, (pendingTransaction) => {
+      let transactionAmount: BigNumber = new BigNumber(pendingTransaction.urTransaction.value);
+      if (_.includes(['received','earned'], pendingTransaction.type)) {
+        amount = amount.plus(transactionAmount);
+      } else {
+        amount = amount.minus(transactionAmount).minus(WalletModel.estimatedFeeWei());
+      }
+    });
+    return amount;
+  }
+
   private calculateStartingAndEndingTimes() {
     let lastRecord: any = _.last(this.transactions);
     this.endingTime = lastRecord ? moment.max(moment(lastRecord.minedAt, 'x'), moment()) : moment();
@@ -127,6 +140,7 @@ export class ChartDataService {
     firebase.database().ref(`/users/${self.auth.currentUserId}/transactions`).orderByChild('sortKey').on('value', (snapshot) => {
       let transactions: any[] = _.values(snapshot.val());
       self.transactions = _.sortBy(_.filter(transactions, 'sortKey'), 'sortKey');
+      self.pendingTransactions = _.reject(transactions, 'sortKey');
       self.loadPointsAndCalculateMetaData(self.duration, self.unitOfTime);
     });
   }
