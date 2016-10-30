@@ -7,7 +7,7 @@
     class="dash-send-view">
     <form class="send-requestcont"
         [formGroup]="mainForm"
-        (ngSubmit)="sendUR()">
+        (ngSubmit)="mainForm.valid && sendUR()">
         <ion-item detail-none class="item-avatar">
             <ion-avatar item-left>
                 <ion-img [src]="contact.profilePhotoUrl"></ion-img>

@@ -15,7 +15,7 @@
     <p class="sub-heading">
         {{"phone-number.heading" | translate}}
     </p>
-    <form [formGroup]="phoneForm" (ngSubmit)="submit(phoneInput)">
+    <form [formGroup]="phoneForm" (ngSubmit)="phoneForm.valid && submit(phoneInput)">
 
         <div class="list country-code-cont">
             <ion-item>
