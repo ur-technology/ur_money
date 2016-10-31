@@ -1,8 +1,9 @@
-import {Page, NavController, Platform, LoadingController, ToastController } from 'ionic-angular';
+import {Page, NavController, Platform, LoadingController} from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
 import {AuthService} from '../../services/auth';
+import {ToastService} from '../../services/toast';
 import {VerificationSmsCodePage} from './verification-sms-code';
 import {CountryNotSupportedPage} from './country-not-supported';
 import {CountryListService} from '../../services/country-list';
@@ -20,7 +21,17 @@ export class PhoneNumberPage implements OnInit {
   countries: any;
   selected: any;
   selectedCountry: any;
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public platform: Platform, public nav: NavController, public auth: AuthService, public countryListService: CountryListService, private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
+
+  constructor(
+    @Inject(ElementRef) elementRef: ElementRef,
+    public platform: Platform,
+    public nav: NavController,
+    public auth: AuthService,
+    public countryListService: CountryListService,
+    private loadingController: LoadingController,
+    private translate: TranslateService,
+    private toastService: ToastService
+  ) {
     this.elementRef = elementRef;
     this.phoneForm = new FormGroup({
       phone: new FormControl('', (control) => {
@@ -47,40 +58,43 @@ export class PhoneNumberPage implements OnInit {
   }
 
   submit(phoneInput) {
-    let corePhone = this.normalizedPhone(this.phoneForm.value.phone);
+    let self = this;
+    let corePhone = self.normalizedPhone(self.phoneForm.value.phone);
     let extraIsoCode = '';
-    if (this.selectedCountry.isoCode && !corePhone.startsWith(this.selectedCountry.isoCode)) {
-      extraIsoCode = this.selectedCountry.isoCode;
+    if (self.selectedCountry.isoCode && !corePhone.startsWith(self.selectedCountry.isoCode)) {
+      extraIsoCode = self.selectedCountry.isoCode;
     }
 
-    let phone = this.selectedCountry.code + extraIsoCode + corePhone;
-    let loading = this.loadingController.create({
-      content: this.translate.instant('pleaseWait'),
+    let phone = self.selectedCountry.code + extraIsoCode + corePhone;
+    let loadingModal = self.loadingController.create({
+      content: self.translate.instant('pleaseWait'),
       dismissOnPageChange: true
     });
-    loading.present();
 
-    this.auth.requestPhoneVerification(phone, this.selectedCountry.code).then((state: string) => {
-      loading.dismiss().then(() => {
-        if (state === 'code_generation_canceled_because_user_from_not_supported_country') {
-          this.nav.setRoot(CountryNotSupportedPage);
-        } else if (state === 'code_generation_completed_and_sms_sent') {
-          this.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: this.selectedCountry.code });
-        } else if (state === 'code_generation_canceled_because_user_not_invited') {
-          this.showErrorMessage(this.translate.instant('phone-number.errorInvitation'), phoneInput);
-        } else {
-          this.showErrorMessage(this.translate.instant('phone-number.errorSms'), phoneInput);
+    loadingModal.present().then(() => {
+      self.auth.checkFirebaseConnection().then((connected: boolean) => {
+        if (!connected) {
+          loadingModal.dismiss().then(() => {
+            self.toastService.showMessage({messageKey: 'noInternetConnection'});
+          });
+          return;
         }
+
+        return self.auth.requestPhoneVerification(phone, self.selectedCountry.code).then((state: string) => {
+          loadingModal.dismiss().then(() => {
+            if (state === 'code_generation_canceled_because_user_from_not_supported_country') {
+              self.nav.setRoot(CountryNotSupportedPage);
+            } else if (state === 'code_generation_completed_and_sms_sent') {
+              self.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: self.selectedCountry.code });
+            } else if (state === 'code_generation_canceled_because_user_not_invited') {
+              self.toastService.showMessage({messageKey: 'phone-number.errorInvitation'});
+            } else {
+              self.toastService.showMessage({messageKey: 'phone-number.errorSms'});
+            }
+          });
+        });
       });
     });
-  }
-
-  showErrorMessage(message, phoneInput) {
-    let toast = this.toastCtrl.create({
-      message: message, duration: 9000, position: 'bottom'
-    });
-    toast.present();
-    phoneInput.setFocus();
   }
 
   countrySelect(country) {

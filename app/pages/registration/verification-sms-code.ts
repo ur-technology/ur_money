@@ -1,5 +1,6 @@
-import {Page, NavController, NavParams, LoadingController, ToastController} from 'ionic-angular';
+import {Page, NavController, NavParams, LoadingController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
+import {ToastService} from '../../services/toast';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
@@ -15,7 +16,10 @@ export class VerificationSmsCodePage {
 
   constructor(public nav: NavController, public navParams: NavParams,
     public auth: AuthService,
-    private loadingController: LoadingController, private toastCtrl: ToastController, private translate: TranslateService) {
+    private loadingController: LoadingController,
+    private translate: TranslateService,
+    private toastService: ToastService
+  ) {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
     this.countryCode = this.navParams.get('countryCode');
@@ -23,40 +27,56 @@ export class VerificationSmsCodePage {
   }
 
   submit() {
-    let loading = this.loadingController.create({content: this.translate.instant('pleaseWait'), dismissOnPageChange: true });
-    loading.present();
-    this.auth.checkVerificationCode(this.verificationCode).then((result: any) => {
-      loading.dismiss().then(() => {
-        this.verificationCode = '';
-        if (result.error) {
-          log.debug(result.error);
-          this.showErrorMessage(this.translate.instant('verification-sms-code.errorVerificationSms'));
-        } else if (result.codeMatch) {
-          loading.dismiss();
-        } else {
-          this.showErrorMessage(this.translate.instant('verification-sms-code.errorCode'));
-        }
+    let self = this;
+    let loadingModal = this.loadingController.create({content: this.translate.instant('pleaseWait'), dismissOnPageChange: true });
+    loadingModal.present();
+
+    self.auth.checkFirebaseConnection().then((connected: boolean) => {
+      if (!connected) {
+        loadingModal.dismiss().then(() => {
+          self.toastService.showMessage({messageKey: 'noInternetConnection'});
+        });
+        return;
+      }
+
+      this.auth.checkVerificationCode(this.verificationCode).then((result: any) => {
+        loadingModal.dismiss().then(() => {
+          this.verificationCode = '';
+          if (result.error) {
+            log.debug(result.error);
+            self.toastService.showMessage({messageKey: 'verification-sms-code.errorVerificationSms'});
+          } else if (result.codeMatch) {
+            // do nothing
+          } else {
+            self.toastService.showMessage({messageKey: 'verification-sms-code.errorCode'});
+          }
+        });
       });
     });
   }
 
   smsAgain() {
+    let self = this;
     this.verificationCode = '';
-    let loading = this.loadingController.create({content: this.translate.instant('pleaseWait'), dismissOnPageChange: true });
-    loading.present();
-    this.auth.requestPhoneVerification(this.phone, this.countryCode).then((state: string) => {
-      loading.dismiss();
-      if (state !== 'code_generation_completed_and_sms_sent') {
-        this.showErrorMessage(this.translate.instant('verification-sms-code.errorSendingSmsAgain'));
-      }
-    });
-  }
+    let loadingModal = this.loadingController.create({content: this.translate.instant('pleaseWait'), dismissOnPageChange: true });
+    loadingModal.present();
 
-  showErrorMessage(message) {
-    let toast = this.toastCtrl.create({
-      message: message, duration: 3500, position: 'bottom'
+    self.auth.checkFirebaseConnection().then((connected: boolean) => {
+      if (!connected) {
+        loadingModal.dismiss().then(() => {
+          self.toastService.showMessage({messageKey: 'noInternetConnection'});
+        });
+        return;
+      }
+
+      this.auth.requestPhoneVerification(this.phone, this.countryCode).then((state: string) => {
+        loadingModal.dismiss().then(() => {
+          if (state !== 'code_generation_completed_and_sms_sent') {
+            self.toastService.showMessage({messageKey: 'verification-sms-code.errorSendingSmsAgain'});
+          }
+        });
+      });
     });
-    toast.present();
   }
 
   add(numberVar) {

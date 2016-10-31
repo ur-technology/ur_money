@@ -25,7 +25,8 @@ export class HomePage {
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
-    private angularFire: AngularFire, private auth: AuthService, private ngZone: NgZone) {
+    private angularFire: AngularFire, private auth: AuthService, private ngZone: NgZone
+  ) {
     this.elementRef = elementRef;
     this.android = this.platform.is('android');
   }
@@ -35,7 +36,8 @@ export class HomePage {
   }
 
   onPageDidEnter() {
-    var self = this;
+    let self = this;
+
     if (self.chartData.pointsLoaded) {
       self.renderChart();
     }

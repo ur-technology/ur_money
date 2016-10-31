@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Nav, Platform} from 'ionic-angular';
+import {Platform} from 'ionic-angular';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -14,54 +14,63 @@ export class AuthService {
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
   public countryCode: string;
-  public androidPlatform: boolean;
   public taskId: string;
+  private firebaseConnectionCheckInProgress: boolean = false;
 
-  constructor(public angularFire: AngularFire, public contactsService: ContactsService, public platform: Platform) {
-    this.androidPlatform = this.platform.is('android');
+  constructor(
+    public angularFire: AngularFire,
+    public contactsService: ContactsService,
+    public platform: Platform
+  ) {
   }
 
-  respondToAuth(nav: Nav, pages: any) {
+  respondToAuth(nav: any, pages: any) {
     let self = this;
-    firebase.auth().onAuthStateChanged((authData) => {
-      if (authData) {
-        self.currentUserId = authData.uid;
-        self.currentUserRef = self.angularFire.database.object(`/users/${self.currentUserId}`);
-        let userSubscription: Subscription = self.currentUserRef.subscribe((currentUser) => {
-          if (userSubscription && !userSubscription.isUnsubscribed) {
-            userSubscription.unsubscribe();
-          }
-          self.currentUser = currentUser;
-          let status = _.trim((currentUser.registration && currentUser.registration.status) || '') || 'initial';
-          self.getSimCountryCode().then((countryCode) => {
-            self.countryCode = _.trim(countryCode || currentUser.countryCode || '');
-            if (!self.countryCode) {
-              log.warn('country code not defined for this user');
-            }
-            if (status !== 'initial') {
-              self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
-            }
-          });
-          nav.setRoot({
-            'initial': pages.introPage,
-            'verification-requested': pages.verificationPendingPage,
-            'verification-pending': pages.verificationPendingPage,
-            'verification-failed': pages.verificationFailedPage,
-            'verification-succeeded': currentUser.wallet && currentUser.wallet.address ? pages.homePage : pages.walletSetupPage,
-            'announcement-started': pages.homePage,
-            'announcement-requested': pages.homePage,
-            'announcement-failed': pages.homePage,
-            'announcement-succeeded': pages.homePage
-          }[status]);
-        });
-      } else {
-        // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
-        self.currentUserId = undefined;
-        self.currentUserRef = undefined;
-        self.currentUser = undefined;
-        self.countryCode = undefined;
-        nav.setRoot(pages.welcomePage);
+    self.checkFirebaseConnection().then((connected: boolean) => {
+      if (!connected) {
+        nav.setRoot(pages.noInternetConnectionPage);
       }
+
+      firebase.auth().onAuthStateChanged((authData: any) => {
+        if (authData) {
+          self.currentUserId = authData.uid;
+          self.currentUserRef = self.angularFire.database.object(`/users/${self.currentUserId}`);
+          let userSubscription: Subscription = self.currentUserRef.subscribe((currentUser) => {
+            if (userSubscription && !userSubscription.isUnsubscribed) {
+              userSubscription.unsubscribe();
+            }
+            self.currentUser = currentUser;
+            let status = _.trim((currentUser.registration && currentUser.registration.status) || '') || 'initial';
+            self.getSimCountryCode().then((countryCode) => {
+              self.countryCode = _.trim(countryCode || currentUser.countryCode || '');
+              if (!self.countryCode) {
+                log.warn('country code not defined for this user');
+              }
+              if (status !== 'initial') {
+                self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
+              }
+            });
+            nav.setRoot({
+              'initial': pages.introPage,
+              'verification-requested': pages.verificationPendingPage,
+              'verification-pending': pages.verificationPendingPage,
+              'verification-failed': pages.verificationFailedPage,
+              'verification-succeeded': currentUser.wallet && currentUser.wallet.address ? pages.homePage : pages.walletSetupPage,
+              'announcement-started': pages.homePage,
+              'announcement-requested': pages.homePage,
+              'announcement-failed': pages.homePage,
+              'announcement-succeeded': pages.homePage
+            }[status]);
+          });
+        } else {
+          // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
+          self.currentUserId = undefined;
+          self.currentUserRef = undefined;
+          self.currentUser = undefined;
+          self.countryCode = undefined;
+          nav.setRoot(pages.welcomePage);
+        }
+      });
     });
   }
 
@@ -72,6 +81,35 @@ export class AuthService {
         self.currentUser = data.val();
         resolve();
       });
+    });
+  }
+
+  checkFirebaseConnection(): Promise<boolean> {
+    let self = this;
+    self.firebaseConnectionCheckInProgress = true;
+    return new Promise((resolve, reject) => {
+
+      firebase.database().ref('/connectionCheckDummyData').once('value', (snapshot) => {
+        if (self.firebaseConnectionCheckInProgress) {
+          self.firebaseConnectionCheckInProgress = false;
+          resolve(true);
+        }
+      });
+
+      setTimeout(() => {
+        if (self.firebaseConnectionCheckInProgress) {
+          var connectedRef = firebase.database().ref('.info/connected');
+          connectedRef.on('value', (connectedSnapshot) => {
+            connectedRef.off('value');
+            if (self.firebaseConnectionCheckInProgress) {
+              self.firebaseConnectionCheckInProgress = false;
+              let connected = connectedSnapshot.val();
+              log.warn(`timed out getting dummy data, connected=${connected}`);
+              resolve(connected);
+            }
+          });
+        }
+      }, 7 * 1000);
     });
   }
 

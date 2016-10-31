@@ -1,4 +1,9 @@
 {
+    "noInternetConnection": {
+        "title": "Can't Reach the Internet",
+        "body": "Your internet connection has become unavailable. Please reestablish an internet connection and tap the Reload button.",
+        "reload": "Reload"
+    },
     "welcome": {
         "welcomeText": "Welcome to UR",
         "description": "A secure cryptocurrency made for your world",
@@ -201,5 +206,6 @@
     "you": "You",
     "pleaseWait": "Please wait...",
     "save": "Save",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "noInternetConnection": "No internet connection available. Please try again later."
 }

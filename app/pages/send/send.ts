@@ -80,6 +80,11 @@ export class SendPage {
     self.obtainAndValidateSecretPhrase().then(() => {
       return self.confirm();
     }).then(() => {
+      return self.auth.checkFirebaseConnection();
+    }).then((connected: boolean) => {
+      if (!connected) {
+        throw {message: 'Firebase Connection Error'};
+      }
       return self.wallet.sendRawTransaction(self.contact.wallet.address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
       let transactionRef = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/${urTransaction.hash}`);
@@ -98,20 +103,31 @@ export class SendPage {
       }
       return transactionRef.set(transaction);
     }).then(() => {
-      let toast = self.toastCtrl.create({ message: this.translate.instant('send.urSent'), duration: 3000, position: 'bottom' });
-      toast.present();
-      this.nav.setRoot(HomePage);
+      self.showMessage('send.urSent');
+      self.nav.setRoot(HomePage);
     }, (error: any) => {
-      if (error && error.logMessage !== 'cancel clicked') {
-        self.toastCtrl.create({
-          message: error.displayMessage ? error.displayMessage : this.translate.instant('send.errorMessage'),
-          duration: 3000,
-          position: 'bottom'
-        }).present();
+      if (error.message && /CONNECTION ERROR|Firebase Error/i.test(error.message)) {
+        self.showMessage('noInternetConnection');
+        log.debug('no internet connection');
+      } else if (error.displayMessage) {
+        self.showMessage(null, error.displayMessage);
+        log.debug(error.logMessage || error);
+      } else if (error.logMessage === 'cancel clicked') {
+        // do nothing
+      } else {
+        self.showMessage('send.errorMessage');
         log.debug(error.logMessage || error);
       }
       // give up trying to send
     });
+  }
+
+  showMessage(messageKey: string, messageText?: string) {
+    this.toastCtrl.create({
+      message: messageKey ? this.translate.instant(messageKey) : messageText,
+      duration: 3000,
+      position: 'bottom'
+    }).present();
   }
 
   obtainAndValidateSecretPhrase() {
@@ -142,8 +158,9 @@ export class SendPage {
                     reject({ displayMessage: this.translate.instant('send.phraseIncorrect') });
                   }
                 }, (error) => {
+                  let displayMessageKey = _.isString(error) && /CONNECTION ERROR/i.test(error) ? 'noInternetConnection' : 'send.errorMessage';
                   reject({
-                    displayMessage: this.translate.instant('send.errorMessage'),
+                    displayMessage: this.translate.instant(displayMessageKey),
                     logMessage: `cannot send UR: ${error}`
                   });
                 });

@@ -2,6 +2,7 @@ import {Injectable, EventEmitter} from '@angular/core';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as moment from 'moment';
+import * as log from 'loglevel';
 import {AuthService} from '../services/auth';
 import {WalletModel} from '../models/wallet';
 import {BigNumber} from 'bignumber.js';
@@ -88,6 +89,8 @@ export class ChartDataService {
       this.balanceInfo = balanceInfo;
       this.balanceUpdated = true;
       this.balanceUpdatedEmitter.emit(balanceInfo);
+    }, (error) => {
+      log.info(`error getting balance: ${error}`);
     });
   }
 

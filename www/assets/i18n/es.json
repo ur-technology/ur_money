@@ -1,4 +1,9 @@
 {
+    "noInternetConnection": {
+        "title": "Can't Reach the Internet",
+        "body": "Your internet connection has become unavailable. Please reestablish an internet connection and tap the Reload button.",
+        "reload": "Reload"
+    },
     "welcome": {
         "welcomeText": "Bienvenido a UR",
         "description": "Una criptomoneda segura hecha para tu mundo",

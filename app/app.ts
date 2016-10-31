@@ -15,8 +15,10 @@ import {CountryListService} from './services/country-list';
 import {ContactsService} from './services/contacts';
 // import {DeviceIdentityService} from './services/device-identity';
 import {EventsService} from './services/events';
+import {ToastService} from './services/toast';
 
 import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
+import {NoInternetConnectionPage} from './pages/registration/no-internet-connection';
 import {WelcomePage} from './pages/registration/welcome';
 import {IntroPage} from './pages/registration/intro';
 import {ProfileSetupPage} from './pages/registration/profile-setup';
@@ -37,6 +39,7 @@ import {TransactionsPage} from './pages/transactions/transactions';
     EventsService,
     CountryListService,
     ChartDataService,
+    ToastService,
     FIREBASE_PROVIDERS,
     HTTP_PROVIDERS,
     defaultFirebase({
@@ -81,6 +84,7 @@ class UrMoney {
       log.setDefaultLevel(logLevel);
 
       this.auth.respondToAuth(this.nav, {
+        noInternetConnectionPage: NoInternetConnectionPage,
         welcomePage: WelcomePage,
         introPage: IntroPage,
         profileSetupPage: ProfileSetupPage,
