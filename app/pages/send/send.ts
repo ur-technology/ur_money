@@ -95,6 +95,7 @@ export class SendPage {
         receiver: _.pick(self.contact, ['name', 'profilePhotoUrl', 'userId']),
         createdBy: 'UR Money',
         type: 'sent',
+        amount: urTransaction.value,
         urTransaction: urTransaction
       };
       let message = _.trim(self.mainForm.value.message || '');

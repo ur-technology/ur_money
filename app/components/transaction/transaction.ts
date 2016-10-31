@@ -30,17 +30,18 @@ export class TransactionComponent {
   }
 
   filterTransactions(newFilterOption?) {
+    let self = this;
     if (newFilterOption) {
-      this.filterOption = newFilterOption;
+      self.filterOption = newFilterOption;
     }
-    this.filteredTransactions = this.filterOption === 'all' ? this.transactions : _.filter(this.transactions, (transaction: any) => {
-      return moment(transaction.updatedAt).isAfter(this.startTime());
+    self.filteredTransactions = self.filterOption === 'all' ? self.transactions : _.filter(self.transactions, (transaction: any) => {
+      return moment(transaction.updatedAt).isAfter(self.startTime());
     });
-    this.filteredTransactionsTotal = new BigNumber(0);
-    _.each(this.filteredTransactions, transaction => {
-      this.filteredTransactionsTotal = this.filteredTransactionsTotal.plus(transaction.amount);
+    self.filteredTransactionsTotal = new BigNumber(0);
+    _.each(self.filteredTransactions, transaction => {
+      self.filteredTransactionsTotal = self.filteredTransactionsTotal.plus(transaction.amount);
     });
-    this.lastUpdated = this.filteredTransactions.length > 0 ? _.last(_.sortBy(this.filteredTransactions, 'updatedAt')).updatedAt : '';
+    self.lastUpdated = self.filteredTransactions.length > 0 ? _.last(_.sortBy(self.filteredTransactions, 'updatedAt')).updatedAt : '';
   }
 
   weiToURString(amount: any): string {
