@@ -3,8 +3,7 @@
         <ion-title>{{"verification-sms-code.title" | translate}}</ion-title>
         <ion-buttons end>
           <button [disabled]="verificationCode.length<6"
-              (click)="submit()">
-              <ion-icon name="checkmark"></ion-icon>
+              (click)="submit()">              
               {{"done" | translate}}
           </button>
         </ion-buttons>

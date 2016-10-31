@@ -2,8 +2,7 @@
     <ion-navbar>
         <ion-title>{{"profile-setup.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="!mainForm.valid" (click)="submit()">
-            <ion-icon name="checkmark"></ion-icon>
+          <button [disabled]="!mainForm.valid" (click)="submit()">            
               {{"done" | translate}}
           </button>
         </ion-buttons>
