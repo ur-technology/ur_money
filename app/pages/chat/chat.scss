@@ -1,18 +1,10 @@
 .chat-page {
-    .toolbar-background {
+  ion-footer{
+  .toolbar-background {
         background: #fff;
         border: none;
     }
-    .toolbar {
-        padding: 0;      
-        .right {
-            float: right;
-            ion-icon {
-                color: #444;
-                font-weight: bold;
-            }
-        }
-    }
+}
 }
 /*-------------------------*/
 .chat-title .toolbar-title {
