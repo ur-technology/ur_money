@@ -178,6 +178,9 @@ export class SendPage {
           }
         ]
       });
+      prompt.onDidDismiss(() => {
+        Keyboard.close();
+      });
       prompt.present().then(() => {
         let alertInput = jQuery('input.alert-input');
         alertInput.attr('autocapitalize', 'off');
