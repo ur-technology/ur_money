@@ -28,7 +28,7 @@ export class VerificationSmsCodePage {
 
   submit() {
     let self = this;
-    let loadingModal = this.loadingController.create({content: this.translate.instant('pleaseWait'), dismissOnPageChange: true });
+    let loadingModal = this.loadingController.create({content: this.translate.instant('pleaseWait') });
     loadingModal.present();
 
     self.auth.checkFirebaseConnection().then((connected: boolean) => {
