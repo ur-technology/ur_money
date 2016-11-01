@@ -1,4 +1,4 @@
-import {Page, AlertController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {Page, AlertController, NavController, NavParams, LoadingController} from 'ionic-angular';
 import {NgZone} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
@@ -10,8 +10,10 @@ import {BigNumber} from 'bignumber.js';
 import {HomePage} from '../home/home';
 import {WalletModel} from '../../models/wallet';
 import {ChartDataService} from '../../services/chart-data';
+import {ToastService} from '../../services/toast';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
+import { Keyboard } from 'ionic-native';
 
 declare var jQuery: any;
 
@@ -26,12 +28,14 @@ export class SendPage {
   estimatedFee: number;
   maxAmount: number;
   private wallet: WalletModel;
+  private loadingModal: any;
 
   constructor(
     public nav: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
+    private toastService: ToastService,
+    private loadingController: LoadingController,
     private auth: AuthService,
     private translate: TranslateService,
     public chartData: ChartDataService,
@@ -80,10 +84,18 @@ export class SendPage {
     self.obtainAndValidateSecretPhrase().then(() => {
       return self.confirm();
     }).then(() => {
+      self.loadingModal = self.loadingController.create({
+        content: self.translate.instant('pleaseWait'),
+        dismissOnPageChange: true
+      });
+      return self.loadingModal.present();
+    }).then(() => {
       return self.auth.checkFirebaseConnection();
     }).then((connected: boolean) => {
       if (!connected) {
-        throw {message: 'Firebase Connection Error'};
+        self.loadingModal.dismiss().then(() => {
+          throw {message: 'Firebase Connection Error'};
+        });
       }
       return self.wallet.sendRawTransaction(self.contact.wallet.address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
@@ -104,31 +116,25 @@ export class SendPage {
       }
       return transactionRef.set(transaction);
     }).then(() => {
-      self.showMessage('send.urSent');
+      return self.loadingModal.dismiss();
+    }).then(() => {
       self.nav.setRoot(HomePage);
+      return self.toastService.showMessage({messageKey: 'send.urSent'});
     }, (error: any) => {
       if (error.message && /CONNECTION ERROR|Firebase Error/i.test(error.message)) {
-        self.showMessage('noInternetConnection');
+        self.toastService.showMessage({messageKey: 'noInternetConnection'});
         log.debug('no internet connection');
       } else if (error.displayMessage) {
-        self.showMessage(null, error.displayMessage);
+        self.toastService.showMessage({message: error.displayMessage});
         log.debug(error.logMessage || error);
       } else if (error.logMessage === 'cancel clicked') {
         // do nothing
       } else {
-        self.showMessage('send.errorMessage');
+        self.toastService.showMessage({messageKey: 'send.errorMessage'});
         log.debug(error.logMessage || error);
       }
       // give up trying to send
     });
-  }
-
-  showMessage(messageKey: string, messageText?: string) {
-    this.toastCtrl.create({
-      message: messageKey ? this.translate.instant(messageKey) : messageText,
-      duration: 3000,
-      position: 'bottom'
-    }).present();
   }
 
   obtainAndValidateSecretPhrase() {
@@ -143,12 +149,14 @@ export class SendPage {
             text: this.translate.instant('cancel'),
             role: 'cancel',
             handler: data => {
+              Keyboard.close();
               reject({ logMessage: 'cancel clicked' });
             }
           },
           {
             text: this.translate.instant('continue'),
             handler: data => {
+              Keyboard.close();
               let secretPhrase = data.secretPhrase;
               prompt.dismiss().then(() => {
                 WalletModel.generate(secretPhrase, self.auth.currentUserId).then((data) => {

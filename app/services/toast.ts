@@ -13,9 +13,9 @@ export class ToastService {
   ) {
   }
 
-  showMessage(options) {
+  showMessage(options): Promise<any> {
     let self = this;
-    self.dismissPreviousToast().then(() => {
+    return self.dismissPreviousToast().then(() => {
       if (!options.message && options.messageKey) {
         options.message = self.translate.instant(options.messageKey);
       }
@@ -24,8 +24,8 @@ export class ToastService {
         duration: 3000,
         position: 'bottom'
       });
-      this.toast = self.toastController.create(options);
-      this.toast.present();
+      self.toast = self.toastController.create(options);
+      return self.toast.present();
     });
   }
 
