@@ -54,6 +54,18 @@
             <div class="validatorError"
                 *ngIf="numberOutOfRange()">{{"send.numberOutOfRange" | translate}}</div>
         </div>
+        <div class="card send-requestur">
+              <label class="item item-input">
+                  <input formControlName="secretPhrase"
+                      placeholder="{{'send.secretPhrase' | translate}}"
+                      class="amount"
+                      type="password" />
+              </label>
+              <div class="validatorError"
+                  *ngIf="missingSecretPhrase()">{{"send.secretPhraseRequired" | translate}}</div>
+              <div class="validatorError"
+                  *ngIf="incorrectSecretPhrase()">{{"send.incorrectSecretPhrase" | translate}}</div>
+          </div>
         <!-- <div class="card send-requesttextarea">
             <label class="item item-input">
                 <ion-textarea formControlName="message"

@@ -28,29 +28,30 @@ export class VerificationSmsCodePage {
 
   submit() {
     let self = this;
-    let loadingModal = this.loadingController.create({content: this.translate.instant('pleaseWait') });
-    loadingModal.present();
+    let loadingModal = self.loadingController.create({content: self.translate.instant('pleaseWait') });
 
-    self.auth.checkFirebaseConnection().then((connected: boolean) => {
-      if (!connected) {
-        loadingModal.dismiss().then(() => {
-          self.toastService.showMessage({messageKey: 'noInternetConnection'});
-        });
-        return;
+    let verificationResult;
+
+    loadingModal.present().then(() => {
+      return self.auth.checkFirebaseConnection();
+    }).then(() => {
+      return self.auth.checkVerificationCode(self.verificationCode);
+    }).then((result: any) => {
+      verificationResult = result;
+      return loadingModal.dismiss();
+    }).then(() => {
+      this.verificationCode = '';
+      if (verificationResult.error) {
+        log.debug(verificationResult.error);
+        self.toastService.showMessage({messageKey: 'verification-sms-code.errorVerificationSms'});
+      } else if (verificationResult.codeMatch) {
+        // do nothing AuthService will handle a redirect
+      } else {
+        self.toastService.showMessage({messageKey: 'verification-sms-code.errorCode'});
       }
-
-      this.auth.checkVerificationCode(this.verificationCode).then((result: any) => {
-        loadingModal.dismiss().then(() => {
-          this.verificationCode = '';
-          if (result.error) {
-            log.debug(result.error);
-            self.toastService.showMessage({messageKey: 'verification-sms-code.errorVerificationSms'});
-          } else if (result.codeMatch) {
-            // do nothing
-          } else {
-            self.toastService.showMessage({messageKey: 'verification-sms-code.errorCode'});
-          }
-        });
+    }, (error) => {
+      loadingModal.dismiss().then(() => {
+        self.toastService.showMessage({messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
       });
     });
   }
@@ -59,24 +60,30 @@ export class VerificationSmsCodePage {
     let self = this;
     this.verificationCode = '';
     let loadingModal = this.loadingController.create({content: this.translate.instant('pleaseWait'), dismissOnPageChange: true });
-    loadingModal.present();
 
-    self.auth.checkFirebaseConnection().then((connected: boolean) => {
-      if (!connected) {
-        loadingModal.dismiss().then(() => {
-          self.toastService.showMessage({messageKey: 'noInternetConnection'});
-        });
-        return;
-      }
+    let taskState: string;
 
-      this.auth.requestPhoneVerification(this.phone, this.countryCode).then((state: string) => {
+    setTimeout(() => {
+
+      loadingModal.present().then(() => {
+        return self.auth.checkFirebaseConnection();
+      }).then(() => {
+        return self.auth.requestPhoneVerification(self.phone, self.countryCode);
+      }).then((newTaskState: string) => {
+        taskState = newTaskState;
+        return loadingModal.dismiss();
+      }).then(() => {
+        if (taskState === 'code_generation_completed_and_sms_sent') {
+          self.toastService.showMessage({messageKey: 'verification-sms-code.smsResent'});
+        } else {
+          self.toastService.showMessage({messageKey: 'verification-sms-code.errorSendingSmsAgain'});
+        }
+      }, (error) => {
         loadingModal.dismiss().then(() => {
-          if (state !== 'code_generation_completed_and_sms_sent') {
-            self.toastService.showMessage({messageKey: 'verification-sms-code.errorSendingSmsAgain'});
-          }
+          self.toastService.showMessage({messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
         });
       });
-    });
+    }, 4000);
   }
 
   add(numberVar) {

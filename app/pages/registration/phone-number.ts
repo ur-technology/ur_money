@@ -71,28 +71,28 @@ export class PhoneNumberPage implements OnInit {
       dismissOnPageChange: true
     });
 
-    loadingModal.present().then(() => {
-      self.auth.checkFirebaseConnection().then((connected: boolean) => {
-        if (!connected) {
-          loadingModal.dismiss().then(() => {
-            self.toastService.showMessage({messageKey: 'noInternetConnection'});
-          });
-          return;
-        }
+    let taskState: string;
 
-        return self.auth.requestPhoneVerification(phone, self.selectedCountry.code).then((state: string) => {
-          loadingModal.dismiss().then(() => {
-            if (state === 'code_generation_canceled_because_user_from_not_supported_country') {
-              self.nav.setRoot(CountryNotSupportedPage);
-            } else if (state === 'code_generation_completed_and_sms_sent') {
-              self.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: self.selectedCountry.code });
-            } else if (state === 'code_generation_canceled_because_user_not_invited') {
-              self.toastService.showMessage({messageKey: 'phone-number.errorInvitation'});
-            } else {
-              self.toastService.showMessage({messageKey: 'phone-number.errorSms'});
-            }
-          });
-        });
+    loadingModal.present().then(() => {
+      return self.auth.checkFirebaseConnection();
+    }).then(() => {
+      return self.auth.requestPhoneVerification(phone, self.selectedCountry.code);
+    }).then((newTaskState: string) => {
+      taskState = newTaskState;
+      return loadingModal.dismiss();
+    }).then(() => {
+      if (taskState === 'code_generation_canceled_because_user_from_not_supported_country') {
+        self.nav.setRoot(CountryNotSupportedPage);
+      } else if (taskState === 'code_generation_completed_and_sms_sent') {
+        self.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: self.selectedCountry.code });
+      } else if (taskState === 'code_generation_canceled_because_user_not_invited') {
+        self.toastService.showMessage({messageKey: 'phone-number.errorInvitation'});
+      } else {
+        self.toastService.showMessage({messageKey: 'phone-number.errorSms'});
+      }
+    }, (error) => {
+      loadingModal.dismiss().then(() => {
+        self.toastService.showMessage({messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
       });
     });
   }

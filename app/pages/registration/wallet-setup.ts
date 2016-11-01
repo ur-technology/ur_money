@@ -10,7 +10,6 @@ import {ContactsService} from '../../services/contacts';
 import {CustomValidator} from '../../validators/custom';
 import {HomePage} from '../home/home';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
-import { Keyboard } from 'ionic-native';
 
 declare var jQuery: any;
 
@@ -65,53 +64,15 @@ export class WalletSetupPage {
         {
           text: this.translate.instant('wallet-setup.confirmWrittenDownButton'), handler: () => {
             alert.dismiss().then(() => {
-              this.reenterSecretPhrase();
+              this.loadingModal.present().then(() => {
+                this.generateAddress();
+              });
             });
           }
         }
       ]
     });
     alert.present();
-  }
-
-  reenterSecretPhrase(retrying?) {
-    let message = this.translate.instant('wallet-setup.reenterSecretPhraseMessage');
-    if (retrying) {
-      message = `<p class='incorrect-secret-phrase'>${ this.translate.instant('wallet-setup.renterSecretPhraseRetryMessage') }</p><p>${message}</p>`;
-    }
-    let prompt = this.alertCtrl.create({
-      title: this.translate.instant('wallet-setup.reenterSecretPhraseTitle'),
-      message: message,
-      inputs: [{ type: 'password', name: 'secretPhrase', placeholder: this.translate.instant('wallet-setup.renterSecretPhrasePlaceholder') }],
-      buttons: [
-        {
-          text: this.translate.instant('cancel'),
-          role: 'cancel',
-          handler: data => {
-            // do nothing
-          }
-        },
-        {
-          text: this.translate.instant('continue'),
-          handler: data => {
-            prompt.dismiss().then(() => {
-              if (data.secretPhrase === this.profile.secretPhrase) {
-                Keyboard.close();
-                this.loadingModal.present().then(() => {
-                  this.generateAddress();
-                });
-              } else {
-                setTimeout(() => {
-                  this.reenterSecretPhrase(true);
-                }, 1);
-                return false;
-              }
-            });
-          }
-        }
-      ]
-    });
-    prompt.present();
   }
 
   generateAddress() {

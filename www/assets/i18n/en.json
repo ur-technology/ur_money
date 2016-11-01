@@ -160,13 +160,13 @@
         "enterMessage": "Message (optional)",
         "send": "Send",
         "urSent": "Your UR has been sent!",
-        "errorMessage": "An unexpected error has occurred. Please try again later.",
+        "incorrectSecretPhrase": "The secret phrase you entered was not correct.",
         "secretPhrase": "Secret phrase",
         "enterSecret": "Enter your account's secret phrase",
-        "phraseIncorrect": "The secret phrase you entered was not correct.",
         "confirmation": "Confirmation",
         "amountRequired": "Amount is required",
-        "numberOutOfRange": "Amount must be between 0 and spendable balance",
+        "numberOutOfRange": "Amount must be between 0 and max amount.",
+        "secretPhraseRequired": "Secret phrase is required",
         "pleaseWait": "Please Wait..."
     },
     "about": {
@@ -208,5 +208,6 @@
     "pleaseWait": "Please wait...",
     "save": "Save",
     "signOut": "Sign out",
-    "noInternetConnection": "No internet connection available. Please try again later."
+    "noInternetConnection": "No internet connection available. Please try again later.",
+    "unexpectedErrorMessage": "An unexpected error has occurred. Please try again later."
 }

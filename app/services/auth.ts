@@ -26,11 +26,7 @@ export class AuthService {
 
   respondToAuth(nav: any, pages: any) {
     let self = this;
-    self.checkFirebaseConnection().then((connected: boolean) => {
-      if (!connected) {
-        nav.setRoot(pages.noInternetConnectionPage);
-      }
-
+    self.checkFirebaseConnection().then(() => {
       firebase.auth().onAuthStateChanged((authData: any) => {
         if (authData) {
           self.currentUserId = authData.uid;
@@ -71,6 +67,12 @@ export class AuthService {
           nav.setRoot(pages.welcomePage);
         }
       });
+    }, (error) => {
+      if (error.messageKey === 'noInternetConnection') {
+        nav.setRoot(pages.noInternetConnectionPage);
+      } else {
+        log.warn(`got error: ${error}`);
+      }
     });
   }
 
@@ -84,7 +86,7 @@ export class AuthService {
     });
   }
 
-  checkFirebaseConnection(): Promise<boolean> {
+  checkFirebaseConnection(): Promise<any> {
     let self = this;
     self.firebaseConnectionCheckInProgress = true;
     return new Promise((resolve, reject) => {
@@ -92,7 +94,7 @@ export class AuthService {
       firebase.database().ref('/connectionCheckDummyData').once('value', (snapshot) => {
         if (self.firebaseConnectionCheckInProgress) {
           self.firebaseConnectionCheckInProgress = false;
-          resolve(true);
+          resolve();
         }
       });
 
@@ -104,8 +106,11 @@ export class AuthService {
             if (self.firebaseConnectionCheckInProgress) {
               self.firebaseConnectionCheckInProgress = false;
               let connected = connectedSnapshot.val();
-              log.warn(`timed out getting dummy data, connected=${connected}`);
-              resolve(connected);
+              if (connected) {
+                resolve();
+              } else {
+                reject({messageKey: 'noInternetConnection'});
+              }
             }
           });
         }

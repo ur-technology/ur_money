@@ -13,7 +13,6 @@ import {ChartDataService} from '../../services/chart-data';
 import {ToastService} from '../../services/toast';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
-import { Keyboard } from 'ionic-native';
 
 declare var jQuery: any;
 
@@ -26,7 +25,7 @@ export class SendPage {
   mainForm: FormGroup;
   availableBalance: number;
   estimatedFee: number;
-  maxAmount: number;
+  maxAmount: BigNumber;
   private wallet: WalletModel;
   private loadingModal: any;
 
@@ -45,6 +44,7 @@ export class SendPage {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       message: new FormControl(''),
+      secretPhrase: new FormControl(''),
       maxAmount: new FormControl('')
     });
   }
@@ -52,8 +52,8 @@ export class SendPage {
   reflectMaxAmountOnPage() {
     this.availableBalance = this.chartData.balanceInfo.availableBalance;
     this.estimatedFee = this.chartData.balanceInfo.estimatedFee;
-    this.maxAmount = this.chartData.balanceInfo.availableBalance.minus(this.chartData.balanceInfo.estimatedFee);
-    CustomValidator.maxValidAmount = this.maxAmount;
+    this.maxAmount = BigNumber.max(this.chartData.balanceInfo.availableBalance.minus(this.chartData.balanceInfo.estimatedFee), 0);
+    CustomValidator.maxValidAmount = this.maxAmount.toNumber();
     CustomValidator.minValidAmount = 0;
   }
 
@@ -79,112 +79,95 @@ export class SendPage {
     return !this.missingAmount() && (control.touched || control.dirty) && control.hasError('numberOutOfRange');
   }
 
+  missingSecretPhrase(): boolean {
+    let control = this.mainForm.find('secretPhrase');
+    return (control.touched || control.dirty) && control.hasError('required');
+  }
+
+  incorrectSecretPhrase(): boolean {
+    let control = this.mainForm.find('secretPhrase');
+    return !this.missingSecretPhrase() && (control.touched || control.dirty) && control.hasError('incorrectSecretPhrase');
+  }
+
+  showLoadingModal(): Promise<any> {
+    this.loadingModal = this.loadingController.create({
+      content: this.translate.instant('pleaseWait'),
+      dismissOnPageChange: true
+    });
+    return this.loadingModal.present();
+  }
+
+  saveTransaction(urTransaction: any): Promise<any> {
+    let transactionRef = firebase.database().ref(`/users/${this.auth.currentUserId}/transactions/${urTransaction.hash}`);
+    let transaction: any = {
+      createdAt: firebase.database.ServerValue.TIMESTAMP,
+      updatedAt: firebase.database.ServerValue.TIMESTAMP,
+      sender: _.merge(_.pick(this.auth.currentUser, ['name', 'profilePhotoUrl']), { userId: this.auth.currentUserId }),
+      receiver: _.pick(this.contact, ['name', 'profilePhotoUrl', 'userId']),
+      createdBy: 'UR Money',
+      type: 'sent',
+      amount: urTransaction.value,
+      urTransaction: urTransaction
+    };
+    let message = _.trim(this.mainForm.value.message || '');
+    if (message) {
+      transaction.message = message;
+    }
+    return transactionRef.set(transaction);
+  }
+
   sendUR() {
     let self = this;
-    self.obtainAndValidateSecretPhrase().then(() => {
-      return self.confirm();
+    self.confirm().then(() => {
+      return self.showLoadingModal();
     }).then(() => {
-      self.loadingModal = self.loadingController.create({
-        content: self.translate.instant('pleaseWait'),
-        dismissOnPageChange: true
-      });
-      return self.loadingModal.present();
+      return self.validateSecretPhrase();
     }).then(() => {
       return self.auth.checkFirebaseConnection();
-    }).then((connected: boolean) => {
-      if (!connected) {
-        self.loadingModal.dismiss().then(() => {
-          throw {message: 'Firebase Connection Error'};
-        });
-      }
+    }).then(() => {
       return self.wallet.sendRawTransaction(self.contact.wallet.address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
-      let transactionRef = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/${urTransaction.hash}`);
-      let transaction: any = {
-        createdAt: firebase.database.ServerValue.TIMESTAMP,
-        updatedAt: firebase.database.ServerValue.TIMESTAMP,
-        sender: _.merge(_.pick(self.auth.currentUser, ['name', 'profilePhotoUrl']), { userId: self.auth.currentUserId }),
-        receiver: _.pick(self.contact, ['name', 'profilePhotoUrl', 'userId']),
-        createdBy: 'UR Money',
-        type: 'sent',
-        amount: urTransaction.value,
-        urTransaction: urTransaction
-      };
-      let message = _.trim(self.mainForm.value.message || '');
-      if (message) {
-        transaction.message = message;
-      }
-      return transactionRef.set(transaction);
+      return self.saveTransaction(urTransaction);
     }).then(() => {
       return self.loadingModal.dismiss();
     }).then(() => {
       self.nav.setRoot(HomePage);
       return self.toastService.showMessage({messageKey: 'send.urSent'});
     }, (error: any) => {
-      if (error.message && /CONNECTION ERROR|Firebase Error/i.test(error.message)) {
-        self.toastService.showMessage({messageKey: 'noInternetConnection'});
-        log.debug('no internet connection');
-      } else if (error.displayMessage) {
-        self.toastService.showMessage({message: error.displayMessage});
-        log.debug(error.logMessage || error);
-      } else if (error.logMessage === 'cancel clicked') {
-        // do nothing
-      } else {
-        self.toastService.showMessage({messageKey: 'send.errorMessage'});
-        log.debug(error.logMessage || error);
-      }
-      // give up trying to send
+      self.loadingModal.dismiss().then(() => {
+        if (error.messageKey === 'canceled') {
+          // do nothing
+        } else {
+          let messageKey = 'unexpectedErrorMessage';
+          if (_.isString(error.message) && /CONNECTION ERROR/i.test(error.message)) {
+            messageKey = 'noInternetConnection';
+          } else if (error.messageKey) {
+            messageKey = error.messageKey;
+          }
+          self.toastService.showMessage({messageKey: messageKey});
+          if (!error.messageKey) {
+            log.debug(error.message || error);
+          }
+          // give up trying to send
+        }
+      });
     });
   }
 
-  obtainAndValidateSecretPhrase() {
+  validateSecretPhrase() {
     let self = this;
     return new Promise((resolve, reject) => {
-      let prompt = self.alertCtrl.create({
-        title: this.translate.instant('send.secretPhrase'),
-        message: this.translate.instant('send.enterSecret'),
-        inputs: [{ type: 'password', name: 'secretPhrase', placeholder: this.translate.instant('send.secretPhrase')}], // value: 'apple apple apple apple apple'
-        buttons: [
-          {
-            text: this.translate.instant('cancel'),
-            role: 'cancel',
-            handler: data => {
-              Keyboard.close();
-              reject({ logMessage: 'cancel clicked' });
-            }
-          },
-          {
-            text: this.translate.instant('continue'),
-            handler: data => {
-              Keyboard.close();
-              let secretPhrase = data.secretPhrase;
-              prompt.dismiss().then(() => {
-                WalletModel.generate(secretPhrase, self.auth.currentUserId).then((data) => {
-                  self.wallet = new WalletModel(data);
-                  if (self.wallet.getAddress() === self.auth.currentUser.wallet.address) {
-                    resolve();
-                  } else {
-                    reject({ displayMessage: this.translate.instant('send.phraseIncorrect') });
-                  }
-                }, (error) => {
-                  let displayMessageKey = _.isString(error) && /CONNECTION ERROR/i.test(error) ? 'noInternetConnection' : 'send.errorMessage';
-                  reject({
-                    displayMessage: this.translate.instant(displayMessageKey),
-                    logMessage: `cannot send UR: ${error}`
-                  });
-                });
-              });
-            }
-          }
-        ]
-      });
-      prompt.onDidDismiss(() => {
-        Keyboard.close();
-      });
-      prompt.present().then(() => {
-        let alertInput = jQuery('input.alert-input');
-        alertInput.attr('autocapitalize', 'off');
-        alertInput.attr('autocorrect', 'off');
+      WalletModel.generate(self.mainForm.value.secretPhrase, self.auth.currentUserId).then((data) => {
+        self.wallet = new WalletModel(data);
+        if (self.wallet.getAddress() === self.auth.currentUser.wallet.address) {
+          resolve();
+        } else {
+          reject({ messageKey: 'send.incorrectSecretPhrase' });
+        }
+      }, (error) => {
+        let message = `cannot generate wallet: ${error}`;
+        log.warn(message);
+        reject({message: message});
       });
     });
   }
@@ -200,7 +183,8 @@ export class SendPage {
             text: this.translate.instant('cancel'),
             role: 'cancel',
             handler: data => {
-              reject({ logMessage: 'cancel clicked' });
+              log.debug('send canceled');
+              reject({ messageKey: 'canceled' });
             }
           },
           {

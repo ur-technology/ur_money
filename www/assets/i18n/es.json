@@ -160,13 +160,13 @@
         "enterMessage": "Mensaje (opcional)",
         "send": "Enviar",
         "urSent": "Tu UR ha sido enviado!",
-        "errorMessage": "Ha ocurrido un error inesperado. Por favor, inténtalo más tarde.",
+        "incorrectSecretPhrase": "La frase secreta no es correcta.",
         "secretPhrase": "Frase secreta",
         "enterSecret": "Ingresa la frase secreta de tu cuenta",
-        "phraseIncorrect": "La frase secreta no es correcta.",
         "confirmation": "Confirmación",
         "amountRequired": "Se requiere la cantidad",
         "numberOutOfRange": "La cantidad tiene que ser entre 0 y el saldo disponible",
+        "secretPhraseRequired": "Secret phrase is required",
         "pleaseWait": "Por favor espere..."
     },
     "about": {
@@ -207,5 +207,7 @@
     "you": "Tu",
     "pleaseWait": "Por favor espere...",
     "save": "Guardar",
-    "signOut": "Salir"
+    "signOut": "Salir",
+    "noInternetConnection": "No internet connection available. Please try again later.",
+    "unexpectedErrorMessage": "Ha ocurrido un error inesperado. Por favor, inténtalo más tarde."
 }
