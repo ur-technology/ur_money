@@ -2,6 +2,8 @@ import {Page, NavController, NavParams, Platform} from 'ionic-angular';
 import {ContactsComponent} from '../../components/contacts/contacts';
 import {ChatListComponent} from '../../components/chat-list/chat-list';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {AuthService} from '../../services/auth';
+
 declare var jQuery: any;
 
 @Page({
@@ -15,7 +17,7 @@ export class ContactsAndChatsPage {
   chatsPage: any;
   segmentSelected: string = 'contacts';
 
-  constructor(private nav: NavController, private navParams: NavParams, public platform: Platform, private translate: TranslateService) {
+  constructor(private nav: NavController, private navParams: NavParams, public platform: Platform, private translate: TranslateService, public auth: AuthService) {
     this.goal = navParams.get('goal');
   }
 

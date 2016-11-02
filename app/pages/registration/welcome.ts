@@ -3,6 +3,7 @@ import {Type} from '@angular/core';
 import {PhoneNumberPage} from './phone-number';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {TermsAndConditionsPage} from '../terms-and-conditions/terms-and-conditions';
+import {AuthService} from '../../services/auth';
 
 @Page({
   templateUrl: 'build/pages/registration/welcome.html',
@@ -11,7 +12,8 @@ import {TermsAndConditionsPage} from '../terms-and-conditions/terms-and-conditio
 export class WelcomePage {
   public phoneNumberPage: Type;
 
-  constructor(public nav: NavController, private platform: Platform, private modalCtrl: ModalController) {
+  constructor(public nav: NavController, private platform: Platform, private modalCtrl: ModalController,
+    public env: AuthService) {
     this.phoneNumberPage = PhoneNumberPage;
   }
 

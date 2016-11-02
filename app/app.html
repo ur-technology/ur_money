@@ -8,6 +8,7 @@
       <button clear light class="right" (click)="openSettings()">
          <ion-icon name="settings"></ion-icon>
       </button>
+      <div class="right">{{auth.envMode()}}</div>
     </div>
     <div class="menu-profile" *ngIf="auth.currentUser">
       <img class="menu-avatar" [src]="auth.currentUser.profilePhotoUrl" alt="">

@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-
+      {{auth.envMode()}}
     </ion-navbar>
 </ion-header>
 <ion-content padding
@@ -35,7 +35,7 @@
             <br>
             <br>
             <br>
-            Version Number: {{versionNumber}}
+            Version Number: {{versionNumber}} {{auth.envMode()}}
         </p>
     </div>
 </ion-content>
