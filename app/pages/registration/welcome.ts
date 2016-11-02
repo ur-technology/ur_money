@@ -13,7 +13,7 @@ export class WelcomePage {
   public phoneNumberPage: Type;
 
   constructor(public nav: NavController, private platform: Platform, private modalCtrl: ModalController,
-    public env: AuthService) {
+    public auth: AuthService) {
     this.phoneNumberPage = PhoneNumberPage;
   }
 
