@@ -1,8 +1,8 @@
 {
-    "noInternetConnection": {
-        "title": "Can't Reach the Internet",
-        "body": "Your internet connection has become unavailable. Please reestablish an internet connection and tap the Reload button.",
-        "reload": "Reload"
+    "no-internet-connection": {
+        "title": "No se puede acceder a Internet",
+        "body": "Su conexión a Internet no está disponible. Establezca una conexión a Internet y pulse el botón Recargar.",
+        "reload": "Recargar"
     },
     "welcome": {
         "welcomeText": "Bienvenido a UR",

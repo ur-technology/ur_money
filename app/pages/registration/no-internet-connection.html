@@ -1,18 +1,13 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{"noInternetConnection.title" | translate}}</ion-title>
-        <ion-buttons end>
-          <button (click)="pleaseContinue()">
-              {{"noInternetConnection.reload" | translate}}
-          </button>
-        </ion-buttons>
+        <ion-title>{{"no-internet-connection.title" | translate}}</ion-title>      
     </ion-navbar>
 </ion-header>
 <ion-content padding class="registration no-internet-connection">
     <p>
-      {{"noInternetConnection.body" | translate}}
+      {{"no-internet-connection.body" | translate}}
     </p>
     <form>
-        <button (click)="reload()">{{"noInternetConnection.reload" | translate}}</button>
+        <button (click)="reload()">{{"no-internet-connection.reload" | translate}}</button>
     </form>
 </ion-content>
