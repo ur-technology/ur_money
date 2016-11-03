@@ -15,7 +15,7 @@ import {AuthService} from '../../services/auth';
   pipes: [DateAndTime]
 })
 export class EventListComponent {
-  constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService, private toastCtrl: ToastController,  private app: App) {
+  constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService, private toastCtrl: ToastController, private app: App) {
     this.listenForNewEvents();
     this.listenForNotificationSelection();
   }
@@ -36,15 +36,26 @@ export class EventListComponent {
       .equalTo(false)
       .on('child_added', eventSnapshot => {
         let event = eventSnapshot.val();
-        LocalNotifications.schedule({
-          id: Math.floor(Math.random() * 3000) + 1,
+
+        let obj = {
+          id: this.getUniqueInteger(event.sourceId),
           text: `${event.title}: ${event.messageText}`,
           icon: 'res://icon',
           smallIcon: 'stat_notify_chat',
           sound: this._soundFile(event.sourceType),
           data: { sourceId: event.sourceId, sourceType: event.sourceType }
+        };
+        LocalNotifications.isPresent(obj.id).then(present => {
+          if (!present) {
+            LocalNotifications.schedule(obj);
+            eventSnapshot.ref.update({ notificationProcessed: true });
+          } else {
+            LocalNotifications.clear(obj.id).then(() => {
+              LocalNotifications.schedule(obj);
+              eventSnapshot.ref.update({ notificationProcessed: true });
+            });
+          }
         });
-        eventSnapshot.ref.update({ notificationProcessed: true });
       });
   }
 
@@ -60,5 +71,17 @@ export class EventListComponent {
       this.app.getRootNav().push(TransactionsPage, {}, { animate: true, direction: 'forward' });
     }
   }
+
+  getUniqueInteger(varString: string) {
+    let hash = 0, i, chr, len;
+    if (varString.length === 0) return hash;
+    for (i = 0, len = varString.length; i < len; i++) {
+      chr = varString.charCodeAt(i);
+      hash = ((hash << 5) - hash) + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+  }
+
 
 }
