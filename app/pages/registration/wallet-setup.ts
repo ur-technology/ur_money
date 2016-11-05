@@ -10,12 +10,13 @@ import {ContactsService} from '../../services/contacts';
 import {CustomValidator} from '../../validators/custom';
 import {HomePage} from '../home/home';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/registration/wallet-setup.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective],
+  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective, KeyboardAttachDirective],
   pipes: [TranslatePipe]
 })
 export class WalletSetupPage {

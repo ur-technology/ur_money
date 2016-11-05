@@ -6,7 +6,7 @@
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content class="chat-page">
+<ion-content class="chat-page" #content>
     <ion-list class="list messages-list">
         <ion-item text-wrap
             class="item item-text-wrap"
@@ -23,7 +23,7 @@
         </ion-item>
     </ion-list>
 </ion-content>
-<ion-footer>
+<ion-footer [keyboardAttach]="content">
     <ion-toolbar [style.min-height]="messageTextAreaHeight+20+'px'"
         class="bar item-input-inset">
         <div class="ur-message-send">

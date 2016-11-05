@@ -1,5 +1,6 @@
+import { ViewChild } from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
-import {Page, NavController, AlertController, ToastController} from 'ionic-angular';
+import {Page, NavController, AlertController, ToastController, Content} from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import {UserModel} from '../../models/user';
@@ -7,10 +8,12 @@ import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 import {HomePage} from '../home/home';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
 
 @Page({
   templateUrl: 'build/pages/settings/settings.html',
-  pipes: [TranslatePipe]
+  pipes: [TranslatePipe],
+  directives: [KeyboardAttachDirective]
 })
 export class SettingsPage {
   mainForm: FormGroup;
@@ -19,11 +22,13 @@ export class SettingsPage {
   allStates: any[];
   states: any[];
   profile: any;
+  @ViewChild(Content) content: Content;
+
   constructor(
     public nav: NavController,
     public auth: AuthService,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController,  private translate: TranslateService
+    private toastCtrl: ToastController, private translate: TranslateService
   ) {
 
   }
@@ -79,12 +84,12 @@ export class SettingsPage {
 
   signOut() {
     let alert = this.alertCtrl.create({
-      title:  this.translate.instant('signOut') + '?',
+      title: this.translate.instant('signOut') + '?',
       buttons: [
         this.translate.instant('cancel')]
     });
     alert.addButton({
-      text:  this.translate.instant('ok'),
+      text: this.translate.instant('ok'),
       handler: () => {
         this.auth.angularFire.auth.logout();
       }
@@ -112,5 +117,4 @@ export class SettingsPage {
       log.warn('unable to save profile');
     });
   };
-
 }

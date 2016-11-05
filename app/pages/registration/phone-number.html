@@ -3,13 +3,13 @@
         <ion-title>{{"phone-number.title" | translate}}</ion-title>
         <ion-buttons end>
           <button [disabled]="!phoneForm.valid"
-              (click)="submit(phoneInput)">              
+              (click)="submit(phoneInput)">
               {{"done" | translate}}
           </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding
+<ion-content padding #content
     class="phone-number registration">
     <p class="sub-heading">
         {{"phone-number.heading" | translate}}
@@ -48,3 +48,6 @@
         </div>
     </form>
 </ion-content>
+<ion-footer [keyboardAttach]="content">
+    
+</ion-footer>

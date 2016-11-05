@@ -3,13 +3,13 @@
         <ion-title>{{"wallet-setup.title" | translate}}</ion-title>
         <ion-buttons end>
           <button [disabled]="!mainForm.valid" type="submit"
-              form="myForm">              
+              form="myForm">
               {{"done" | translate}}
           </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding class="registration profile-setup">
+<ion-content padding class="registration profile-setup" #content>
     <form id="myForm" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && confirmSecretPhraseWrittenDown()">
       <p text-justify>
           Choose a 5-10 word secret phrase:
@@ -39,3 +39,6 @@
 
     </form>
 </ion-content>
+<ion-footer [keyboardAttach]="content">
+
+</ion-footer>

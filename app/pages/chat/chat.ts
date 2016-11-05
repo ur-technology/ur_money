@@ -10,12 +10,14 @@ import {AuthService} from '../../services/auth';
 import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {PopoverChatPage} from './popover-chat';
+import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/chat/chat.html',
-  pipes: [Timestamp, DateAndTime, TranslatePipe]
+  pipes: [Timestamp, DateAndTime, TranslatePipe],
+  directives: [KeyboardAttachDirective]
 })
 export class ChatPage {
   messages: any[];

@@ -3,16 +3,15 @@
         <ion-title>{{"settings.title" | translate}}</ion-title>
         <ion-buttons end>
             <button [disabled]="!mainForm.valid"
-                (click)="submit()">                
+                (click)="submit()">
             {{"save" | translate}}
         </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding
+<ion-content padding #content
     class="settings">
     <form [formGroup]="mainForm">
-
             <ion-item-divider light>{{"settings.profileInfo" | translate}}</ion-item-divider>
             <ion-item>
                 <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
@@ -67,7 +66,7 @@
 
     </form>
 </ion-content>
-<ion-footer>
+<ion-footer [keyboardAttach]="content">
     <button class="sign-out-button"
         full
         type="text"

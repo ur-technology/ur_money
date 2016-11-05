@@ -9,12 +9,13 @@ import {AuthService} from '../../services/auth';
 import {CustomValidator} from '../../validators/custom';
 import {WalletSetupPage} from './wallet-setup';
 import {VerificationPendingPage} from './verification-pending';
+import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
 
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/registration/identity-info-setup.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective],
+  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective, KeyboardAttachDirective],
   pipes: [TranslatePipe]
 })
 export class IdentityInfoSetupPage {

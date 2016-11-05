@@ -2,13 +2,13 @@
     <ion-navbar>
         <ion-title>{{"identity-info-setup.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="!mainForm.valid" (click)="submit()">            
+          <button [disabled]="!mainForm.valid" (click)="submit()">
               {{"done" | translate}}
           </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding class="registration profile-setup">
+<ion-content padding class="registration profile-setup" #content>
   {{ mainForm._errors}}
     <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
 
@@ -79,3 +79,6 @@
         </ion-item-group>
     </form>
 </ion-content>
+<ion-footer [keyboardAttach]="content">
+
+</ion-footer>
