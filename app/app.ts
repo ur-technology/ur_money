@@ -14,6 +14,7 @@ import {ChartDataService} from './services/chart-data';
 import {CountryListService} from './services/country-list';
 import {ContactsService} from './services/contacts';
 // import {DeviceIdentityService} from './services/device-identity';
+import {Splashscreen} from 'ionic-native';
 import {EventsService} from './services/events';
 import {ToastService} from './services/toast';
 
@@ -79,6 +80,7 @@ class UrMoney {
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
       }
+      this.hideSplashScreen();
 
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
       log.setDefaultLevel(logLevel);
@@ -142,6 +144,14 @@ class UrMoney {
   invite() {
     this.menu.close();
     this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
+  }
+
+  hideSplashScreen() {
+    if (Splashscreen) {
+      setTimeout(() => {
+        Splashscreen.hide();
+      }, 100);
+    }
   }
 
 }
