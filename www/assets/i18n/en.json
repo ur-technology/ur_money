@@ -20,7 +20,8 @@
         "phoneNumber": "Phone number",
         "numberConfirmation": "Number confirmation",
         "phoneCorrect": "Is your phone number above correct?",
-        "errorInvitation": "Use of UR Money is currently available by invitation only, and your phone number was not on the invitee list.",
+        "errorUserNotInvited": "Use of UR Money is currently available by invitation only, and your phone number was not on the invitee list.",
+        "errorUserDisabled": "You user account has been disabled.",
         "errorSms": "There was an unexpected problem sending the SMS. Please try again later"
     },
     "verification-sms-code": {
@@ -111,8 +112,8 @@
         "toastTitle": "Pick an app",
         "messageNoContacts": "It looks like you don't have contacts yet. Invite a friend",
         "messageContactNotPresent": "Contact not in list? Invite a friend",
-        "contacts.invitesDisabled": "Invites Disabled",
-        "contacts.sorryInvitesDisabled": "Sorry, invites are disabled for this account."
+        "invitesDisabled": "Invites Disabled",
+        "sorryInvitesDisabled": "Sorry, invites are disabled for this account."
     },
     "contacts-and-chats": {
         "contacts": "Contacts",

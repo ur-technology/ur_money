@@ -20,7 +20,8 @@
         "phoneNumber": "Número de teléfono",
         "numberConfirmation": "Confirmación de número",
         "phoneCorrect": "Es el número de teléfono indicado anteriormente correcto?",
-        "errorInvitation": "El uso de UR Money está disponible sólo por invitación y tu número de teléfono no está en la lista de invitados.",
+        "errorUserNotInvited": "El uso de UR Money está disponible sólo por invitación y tu número de teléfono no está en la lista de invitados.",
+        "errorUserDisabled": "You user account has been disabled.",
         "errorSms": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"
     },
     "verification-sms-code": {
@@ -111,8 +112,8 @@
         "toastTitle": "Compartir mediante",
         "messageNoContacts": "Parece que no tienes contactos todavía. Invita a un amigo.",
         "messageContactNotPresent": "El contacto no está en la lista? Invita a un amigo.",
-        "contacts.invitesDisabled": "Invites Disabled",
-        "contacts.sorryInvitesDisabled": "Sorry, invites are disabled for this account."
+        "invitesDisabled": "Invites Disabled",
+        "sorryInvitesDisabled": "Sorry, invites are disabled for this account."
     },
     "contacts-and-chats": {
         "contacts": "Contactos",

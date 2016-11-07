@@ -86,7 +86,9 @@ export class PhoneNumberPage implements OnInit {
       } else if (taskState === 'code_generation_completed_and_sms_sent') {
         self.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: self.selectedCountry.code });
       } else if (taskState === 'code_generation_canceled_because_user_not_invited') {
-        self.toastService.showMessage({messageKey: 'phone-number.errorInvitation'});
+        self.toastService.showMessage({messageKey: 'phone-number.errorUserNotInvited'});
+      } else if (taskState === 'code_generation_canceled_because_user_disabled') {
+        self.toastService.showMessage({messageKey: 'phone-number.errorUserDisabled'});
       } else {
         self.toastService.showMessage({messageKey: 'phone-number.errorSms'});
       }
