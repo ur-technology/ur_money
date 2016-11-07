@@ -110,7 +110,9 @@
         "toastMessage": "Pick an app and type a message. Or you can paste the simple message that we've placed in your clipboard.",
         "toastTitle": "Pick an app",
         "messageNoContacts": "It looks like you don't have contacts yet. Invite a friend",
-        "messageContactNotPresent": "Contact not in list? Invite a friend"
+        "messageContactNotPresent": "Contact not in list? Invite a friend",
+        "contacts.invitesDisabled": "Invites Disabled",
+        "contacts.sorryInvitesDisabled": "Sorry, invites are disabled for this account."
     },
     "contacts-and-chats": {
         "contacts": "Contacts",

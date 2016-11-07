@@ -108,6 +108,15 @@ export class ContactsComponent {
 
   inviteContact(contact: any) {
     let self = this;
+    if (self.auth.currentUser.invitesDisabled) {
+      self.alertCtrl.create({
+        title: self.translate.instant('contacts.invitesDisabled'),
+        message: self.translate.instant('contacts.sorryInvitesDisabled'),
+        buttons: ['Ok']
+      }).present();
+      return;
+    }
+
     let invitationCode = self.generateInvitationCode();
     if (!self.platform.is('cordova')) {
       // HACK: this code is here to test invitations in ionic serve
