@@ -108,33 +108,37 @@
 .transaction-filter-top .invite-and-earn {
   position: absolute;
   background-color: #fa4c44;
-  font-size: 10px;
+  font-size: 1rem;
   line-height: 1.1;
   color: #d0d0d0;
   right: -57px;
-  bottom: -39px;
-  padding: 8px 50px 40px 15px;
+  bottom: 0px;
+  // padding: 8px 45px 40px 5px;
   text-align: center;
-  width: 180px;
+  width: 50%;
+  padding-right: 55px;
+  padding-top: 10px;
   border-radius: 59% 70% 20% 80%;
 
   p {
     color: #d0d0d0;
-    margin: 0 0 10px;
+    margin: 0 3px 10px;
   }
 }
 
 .transaction-filter-top .invite-and-earn .button {
-  font-size: 10px;
-  padding: 5px 10px;
+  font-size: 1.1rem;
+  // padding: 5px 10px;
   line-height: 1em;
-  min-height: 24px;
-  width: 85px;
+  min-height: 20px;
+  width: 50px;
   border: 1px solid #ffffff;
-  height: 24px;
+  height: 20px;
   border-color: #ddd;
   background: transparent;
   color: #ddd;
+  margin-top: -8px;
+  margin-left: 20px;
 }
 
 .transaction-earned .has-tabs-top,
