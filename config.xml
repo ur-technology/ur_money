@@ -2,7 +2,7 @@
 <widget id="technology.ur.urmoney" version="1.0.44" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>UR Money</name>
   <description>Participate in the UR-cononmy</description>
-  <author email="admin@ur.technology" href="https://www.ur.technology/">UR Technology Inc.</author>
+  <author email="support@ur.technology" href="https://www.ur.technology/">UR Technology Inc.</author>
   <content src="index.html"/>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
