@@ -1,7 +1,7 @@
 import { Component, Input} from '@angular/core';
 import { NavController} from 'ionic-angular';
 import {BigNumber} from 'bignumber.js';
-
+import {ChartDataService} from '../../services/chart-data';
 import {AuthService} from '../../services/auth';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -24,9 +24,17 @@ export class TransactionComponent {
   filteredTransactionsTotal: BigNumber = new BigNumber(0);
   lastUpdated: any;
   filterOption: string = 'all';
+  availableBalance: number;
   @Input() transactionType: string;
 
-  constructor(private auth: AuthService, private nav: NavController, private app: App, private translate: TranslateService) {
+  constructor(private auth: AuthService, private nav: NavController, private app: App, private translate: TranslateService, private chartData: ChartDataService) {
+  }
+
+  ngOnInit() {
+    let self = this;
+    if (self.chartData.balanceUpdated) {
+      this.availableBalance = this.chartData.balanceInfo.availableBalance;
+    }
   }
 
   filterTransactions(newFilterOption?) {
@@ -39,21 +47,22 @@ export class TransactionComponent {
     });
     self.filteredTransactionsTotal = new BigNumber(0);
     _.each(self.filteredTransactions, transaction => {
-      if ((transaction.type === 'earned') || (transaction.type === 'received')) {
-        self.filteredTransactionsTotal = self.filteredTransactionsTotal.plus(transaction.amount);
-      } else {
-        self.filteredTransactionsTotal = self.filteredTransactionsTotal.minus(transaction.amount);
-      }
+      self.filteredTransactionsTotal = self.filteredTransactionsTotal.plus(transaction.amount);
     });
     self.lastUpdated = self.filteredTransactions.length > 0 ? _.last(_.sortBy(self.filteredTransactions, 'updatedAt')).updatedAt : '';
   }
 
   weiToURString(amount: any): string {
     let convertedAmount = (new BigNumber(amount)).dividedBy(1000000000000000000);
-    if (this.getTransactionType() === 'sent') {
-      convertedAmount = convertedAmount.negated();
-    }
     return convertedAmount.toFormat(2);
+  }
+
+  getTransactionsTypeTotal(): string {
+    if (this.transactionType === 'all') {
+      return (new BigNumber(this.availableBalance)).toFormat(2);
+    } else {
+      return this.weiToURString(this.filteredTransactionsTotal);
+    }
   }
 
   private loadTransactionsByType() {
