@@ -11,6 +11,7 @@ import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {PopoverChatPage} from './popover-chat';
 import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
+import { Keyboard } from 'ionic-native';
 
 declare var jQuery: any;
 
@@ -35,12 +36,17 @@ export class ChatPage {
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
     this.chatId = this.navParams.get('chatId'); // TODO: maybe include this field in chatSummary
+    Keyboard.onKeyboardShow().subscribe(e => this.onKeyboardShow(e));
+  }
+
+  onKeyboardShow(e) {
+    this.scrollToBottom();
   }
 
   scrollToBottom() {
     setTimeout(() => {
       this.content.scrollToBottom();
-    }, 1);
+    }, 50);
   }
 
   ionViewLoaded() {
