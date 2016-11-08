@@ -39,7 +39,12 @@
         "pleaseContinue": "Yes, please continue.",
         "notReadyTitle": "Stop the bus?",
         "notReadyMessage": "Since identity verification is required for the use of the UR Money app, you will need to sign out for now. Are you sure you want to sign out?",
-        "yesSignOut": "Yes, sign me out."
+        "yesSignOut": "Yes, sign me out.",
+        "welcome": "Welcome to UR Money",
+        "message1": "You’re just a few steps away from claiming your free 2,000 UR!",
+        "message2": "In order to provide a safe environment, we ask all community members to verify their identity. To do this, we will need to ask you for several pieces of identifying information including mobile phone number, name, address, date of birth, etc., and then share this info with Trulioo, Inc., a Canada-based identity verification service.",
+        "message3": "We will also need to import your contacts so you can invite them, chat with them and send them UR.",
+        "message4": "Do you give UR Technology (the maker of UR Money) permission to share your identity info with Trulioo, Inc. and to import your contacts?"
     },
     "profile-setup": {
         "title": "Set Up Profile",
@@ -63,7 +68,8 @@
         "passportNumber": "Passport Number",
         "passportExpirationDay": "Expiration Day",
         "passportExpirationMonth": "Expiration Month",
-        "passportExpirationYear": "Expiration Year"
+        "passportExpirationYear": "Expiration Year",
+        "gender": "Gender"
     },
     "wallet-setup": {
         "title": "Secret Phrase Setup",
@@ -78,7 +84,12 @@
         "reenterSecretPhraseMessage": "Please confirm your secret phrase by re-entering it.",
         "renterSecretPhraseRetryMessage": "INCORRECT - PLEASE TRY AGAIN",
         "renterSecretPhrasePlaceholder": "Re-enter your secret phrase",
-        "youWillReceiveBonus": "You will receive your 2,000 UR bonus soon!"
+        "youWillReceiveBonus": "You will receive your 2,000 UR bonus soon!",
+        "chooseSecret": "Choose a 5-10 word secret phrase:",
+        "message1": "It lets you control your money.",
+        "message2": "Only you know it. It can never be recovered if lost.",
+        "message3": "It’s a string of words that’s never appeared in print or online—ever!",
+        "message4": "Click the button below to automatically generate a secret phrase (recommended)."
     },
     "verification-pending": {
         "title": "Verification pending",
@@ -118,10 +129,10 @@
     "contacts-and-chats": {
         "contacts": "Contacts",
         "chats": "Chats",
-        "titleChat":"Chat with",
-        "titleSend":"Send UR to",
-        "titleRequest":"Request UR from",
-        "titleInvite":"Invite a friend"
+        "titleChat": "Chat with",
+        "titleSend": "Send UR to",
+        "titleRequest": "Request UR from",
+        "titleInvite": "Invite a friend"
     },
     "chat": {
         "typeMessage": "Type your message",

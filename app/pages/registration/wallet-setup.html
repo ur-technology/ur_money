@@ -12,14 +12,14 @@
 <ion-content padding class="registration profile-setup" #content>
     <form id="myForm" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && confirmSecretPhraseWrittenDown()">
       <p text-justify>
-          Choose a 5-10 word secret phrase:
+          {{"wallet-setup.chooseSecret" | translate}}
       </p>
       <ul>
-          <li>It lets you control your money.</li>
-          <li>Only you know it. It can never be recovered if lost.</li>
-          <li>It’s a string of words that’s never appeared in print or online—ever!</li>
+          <li>{{"wallet-setup.message1" | translate}}</li>
+          <li>{{"wallet-setup.message2" | translate}}</li>
+          <li>{{"wallet-setup.message3" | translate}}</li>
       </ul>
-      <p text-justify>Click the button below to automatically generate a secret phrase (recommended).</p>
+      <p text-justify>{{"wallet-setup.message4" | translate}}</p>
       <ion-item>
           <button type="text"
               secondary

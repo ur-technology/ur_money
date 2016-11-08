@@ -21,7 +21,7 @@
         "numberConfirmation": "Confirmación de número",
         "phoneCorrect": "Es el número de teléfono indicado anteriormente correcto?",
         "errorUserNotInvited": "El uso de UR Money está disponible sólo por invitación y tu número de teléfono no está en la lista de invitados.",
-        "errorUserDisabled": "You user account has been disabled.",
+        "errorUserDisabled": "Tu cuenta ha sido deshabilitada.",
         "errorSms": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"
     },
     "verification-sms-code": {
@@ -39,7 +39,12 @@
         "pleaseContinue": "Sí, por favor continuar",
         "notReadyTitle": "Parar?",
         "notReadyMessage": "Debido que se requiere la verificación de tu identidad para el uso de la aplicación UR Money, tendrás que cerrar sesión por ahora. ¿Seguro que quieres salir?",
-        "yesSignOut": "Sí, cerrar sesión."
+        "yesSignOut": "Sí, cerrar sesión.",
+        "welcome": "Bienvenido a UR Money",
+        "message1": "Estás a unos pasos de reclamar tus 2000 UR!",
+        "message2": "A fin de proporcionar un ambiente seguro, pedimos a todos los miembros de la comunidad que verifiquen su identidad. Para ello, tendremos que pedirte información de identificación, incluyendo el número de teléfono móvil, el nombre, la dirección, la fecha de nacimiento, etc., y luego compartir esta información con Trulioo, Inc., un servicio de verificación de identidad basado en Canadá.",
+        "message3": "También necesitaremos importar tus contactos para que puedas invitarlos, chatear con ellos y enviarles UR.",
+        "message4": "¿Le das permiso a UR Technology (el creador de UR Money) para compartir tu información de identidad con Trulioo, Inc. e importar tus contactos?"
     },
     "profile-setup": {
         "title": "Configurar perfil",
@@ -63,7 +68,8 @@
         "passportNumber": "Número de pasaporte",
         "passportExpirationDay": "Día de caducidad",
         "passportExpirationMonth": "Mes de caducidad",
-        "passportExpirationYear": "Año de caducidad"
+        "passportExpirationYear": "Año de caducidad",
+        "gender": "Género"
     },
     "wallet-setup": {
         "title": "Configuración de frase secreta",
@@ -78,7 +84,12 @@
         "reenterSecretPhraseMessage": "Por favor vuelve a ingresar tu frase secreta para confirmarla.",
         "renterSecretPhraseRetryMessage": "INCORECTO - INTENTA DE NUEVO",
         "renterSecretPhrasePlaceholder": "Vuelve a ingresar tu frase secreta",
-        "youWillReceiveBonus": "Recibirás tu bono de 2.000 UR pronto!"
+        "youWillReceiveBonus": "Recibirás tu bono de 2.000 UR pronto!",
+        "chooseSecret": "Ingresa de 5 a 10 palabras para tu contraseña",
+        "message1": "Te permite controlar tu dinero.",
+        "message2": "Solo tú lo sabes. Nunca podrá ser recuperado si se pierde.",
+        "message3": "Ingresa palabras para tu contraseña",
+        "message4": "Presiona el botón de abajo para generar automáticamente una frase de contraseña (recomendado)."
     },
     "verification-pending": {
         "title": "Verificación pendiente",
@@ -112,16 +123,16 @@
         "toastTitle": "Compartir mediante",
         "messageNoContacts": "Parece que no tienes contactos todavía. Invita a un amigo.",
         "messageContactNotPresent": "El contacto no está en la lista? Invita a un amigo.",
-        "invitesDisabled": "Invites Disabled",
-        "sorryInvitesDisabled": "Sorry, invites are disabled for this account."
+        "invitesDisabled": "Invitaciones deshabilitadas",
+        "sorryInvitesDisabled": "Las invitaciones están deshabilitadas para esta cuenta."
     },
     "contacts-and-chats": {
         "contacts": "Contactos",
         "chats": "Chats",
-        "titleChat":"Chatear con",
-        "titleSend":"Enviar UR a",
-        "titleRequest":"Solicitar UR de",
-        "titleInvite":"Invita a un amigo"
+        "titleChat": "Chatear con",
+        "titleSend": "Enviar UR a",
+        "titleRequest": "Solicitar UR de",
+        "titleInvite": "Invita a un amigo"
     },
     "chat": {
         "typeMessage": "Escribe tu mensaje",

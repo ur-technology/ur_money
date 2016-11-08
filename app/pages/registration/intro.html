@@ -1,32 +1,22 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{"intro.title" | translate}}</ion-title>
-        <ion-buttons end>
-          <button (click)="pleaseContinue()">            
-              {{"continue" | translate}}
-          </button>
-        </ion-buttons>
+        <ion-title>{{"intro.title" | translate}}</ion-title>      
     </ion-navbar>
 </ion-header>
-<ion-content padding class="registration intro">
-    <h2>Welcome to UR Money</h2>
+<ion-content padding
+    class="registration intro">
+    <h2>{{"intro.welcome" | translate}}</h2>
     <p>
-      You’re just a few steps away from claiming your free 2,000 UR!
+        {{"intro.message1" | translate}}
     </p>
     <p>
-      In order to provide a safe environment, we ask all community members
-      to verify their identity. To do this, we will need to ask you for
-      several pieces of identifying information including mobile
-      phone number, name, address, date of birth, etc., and then share this
-      info with Trulioo, Inc., a Canada-based identity verification service.
+        {{"intro.message2" | translate}}
     </p>
     <p>
-      We will also need to import your contacts so you can invite them, chat
-      with them and send them UR.
+        {{"intro.message3" | translate}}
     </p>
     <p>
-      Do you give UR Technology (the maker of UR Money) permission to share
-      your identity info with Trulioo, Inc. and to import your contacts?
+        {{"intro.message4" | translate}}
     </p>
     <form>
         <button (click)="notNow()">{{"intro.notNow" | translate}}</button>
