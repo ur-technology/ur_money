@@ -39,13 +39,20 @@ export class TransactionComponent {
     });
     self.filteredTransactionsTotal = new BigNumber(0);
     _.each(self.filteredTransactions, transaction => {
-      self.filteredTransactionsTotal = self.filteredTransactionsTotal.plus(transaction.amount);
+      if ((transaction.type === 'earned') || (transaction.type === 'received')) {
+        self.filteredTransactionsTotal = self.filteredTransactionsTotal.plus(transaction.amount);
+      } else {
+        self.filteredTransactionsTotal = self.filteredTransactionsTotal.minus(transaction.amount);
+      }
     });
     self.lastUpdated = self.filteredTransactions.length > 0 ? _.last(_.sortBy(self.filteredTransactions, 'updatedAt')).updatedAt : '';
   }
 
   weiToURString(amount: any): string {
     let convertedAmount = (new BigNumber(amount)).dividedBy(1000000000000000000);
+    if (this.getTransactionType() === 'sent') {
+      convertedAmount = convertedAmount.negated();
+    }
     return convertedAmount.toFormat(2);
   }
 
@@ -98,7 +105,7 @@ export class TransactionComponent {
       case 'earned':
         return this.translate.instant('transaction.earned');
       default:
-        return '';
+        return 'UR';
     }
   }
 }
