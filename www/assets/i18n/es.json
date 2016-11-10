@@ -159,7 +159,6 @@
         "earned": "ganado",
         "earnedSignUpBonus": "Earned-Sign Up Bonus",
         "earnedReferralBonus": "Earned-Referral Bonus"
-
     },
     "transactions": {
         "title": "Transacciones",
@@ -170,9 +169,9 @@
     },
     "send": {
         "title": "Enviar UR",
-        "availableBalance": "Saldo Disponible",
-        "estimatedFee": "Estimated Fee",
-        "maxAmount": "Max Amount",
+        "availableBalance": "Saldo disponible",
+        "estimatedFee": "Tarifa estimada",
+        "maxAmount": "Cantidad máxima",
         "enterAmount": "Cantidad a enviar",
         "enterMessage": "Mensaje (opcional)",
         "send": "Enviar",
@@ -183,8 +182,9 @@
         "confirmation": "Confirmación",
         "amountRequired": "Se requiere la cantidad",
         "numberOutOfRange": "La cantidad tiene que ser entre 0 y el saldo disponible",
-        "secretPhraseRequired": "Secret phrase is required",
-        "pleaseWait": "Por favor espere..."
+        "secretPhraseRequired": "La frase de contraseña es requerida",
+        "pleaseWait": "Por favor espere...",
+        "sendTo": "Enviar a"
     },
     "about": {
         "heading": "Acerca UR",
@@ -225,6 +225,6 @@
     "pleaseWait": "Por favor espere...",
     "save": "Guardar",
     "signOut": "Salir",
-    "noInternetConnection": "No internet connection available. Please try again later.",
+    "noInternetConnection": "No hay conexión a Internet disponible. Por favor, inténtelo de nuevo más tarde.",
     "unexpectedErrorMessage": "Ha ocurrido un error inesperado. Por favor, inténtalo más tarde."
 }

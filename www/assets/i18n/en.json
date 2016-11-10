@@ -169,9 +169,9 @@
     },
     "send": {
         "title": "Send UR",
-        "availableBalance": "Available Balance",
-        "estimatedFee": "Estimated Fee",
-        "maxAmount": "Max Amount",
+        "availableBalance": "Available balance",
+        "estimatedFee": "Estimated fee",
+        "maxAmount": "Max amount",
         "enterAmount": "Amount to send",
         "enterMessage": "Message (optional)",
         "send": "Send",
@@ -183,7 +183,8 @@
         "amountRequired": "Amount is required",
         "numberOutOfRange": "Amount must be between 0 and max amount.",
         "secretPhraseRequired": "Secret phrase is required",
-        "pleaseWait": "Please Wait..."
+        "pleaseWait": "Please Wait...",
+        "sendTo": "Send to"
     },
     "about": {
         "heading": "About UR",

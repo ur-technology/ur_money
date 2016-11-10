@@ -4,78 +4,55 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding
-    class="dash-send-view">
-    <form class="send-requestcont"
+    class="dash-send-viewx">
+    <form class="send-requestcontx"
         [formGroup]="mainForm"
         (ngSubmit)="mainForm.valid && sendUR()">
-        <ion-item detail-none class="item-avatar">
-            <ion-avatar item-left>
-                <ion-img [src]="contact.profilePhotoUrl"></ion-img>
-            </ion-avatar>
-            <h2>{{contact.name}}</h2>
+        <ion-item>
+            <ion-label floating>{{"send.sendTo" | translate}}</ion-label>
+            <ion-input type="text"
+                value="{{contact.name}}"></ion-input>
         </ion-item>
-        <div class="card send-requestinput">
-            <label class="item item-input disabled">
-                <span>{{"send.availableBalance" | translate}}:
-                  <span *ngIf="availableBalance !== undefined">{{availableBalance.toFormat(5)}}</span>
-                  <span *ngIf="availableBalance === undefined">{{"send.pleaseWait" | translate}}</span>
-                </span>
-                <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
-            </label>
-        </div>
-        <div class="card send-requestinput">
-            <label class="item item-input disabled">
-                <span>{{"send.estimatedFee" | translate}}:
-                  <span *ngIf="estimatedFee !== undefined">{{estimatedFee.toFormat(5)}}</span>
-                  <span *ngIf="estimatedFee === undefined">{{"send.pleaseWait" | translate}}</span>
-                </span>
-                <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
-            </label>
-        </div>
-        <div class="card send-requestinput">
-            <label class="item item-input disabled">
-                <span>{{"send.maxAmount" | translate}}:
-                  <span *ngIf="maxAmount !== undefined">{{maxAmount.toFormat(5)}}</span>
-                  <span *ngIf="maxAmount === undefined">{{"send.pleaseWait" | translate}}</span>
-                </span>
-                <ion-note style="padding-right:10px" class="item-note"> UR </ion-note>
-            </label>
-      </div>
-      <div class="card send-requestur">
-            <label class="item item-input">
-                <input formControlName="amount"
-                    placeholder="{{'send.enterAmount' | translate}}"
-                    class="amount"
-                    type="number" />
-                <ion-note class="item-note"> UR </ion-note>
-            </label>
-            <div class="validatorError"
-                *ngIf="missingAmount()">{{"send.amountRequired" | translate}}</div>
-            <div class="validatorError"
-                *ngIf="numberOutOfRange()">{{"send.numberOutOfRange" | translate}}</div>
-        </div>
-        <div class="card send-requestur">
-              <label class="item item-input">
-                  <input formControlName="secretPhrase"
-                      placeholder="{{'send.secretPhrase' | translate}}"
-                      class="amount"
-                      type="password" />
-              </label>
-              <div class="validatorError"
-                  *ngIf="missingSecretPhrase()">{{"send.secretPhraseRequired" | translate}}</div>
-              <div class="validatorError"
-                  *ngIf="incorrectSecretPhrase()">{{"send.incorrectSecretPhrase" | translate}}</div>
-          </div>
+        <ion-item>
+            <ion-label floating>{{"send.availableBalance" | translate}}</ion-label>
+            <ion-input disabled="true"
+                value="{{availableBalance.toFormat(5)}}"></ion-input>
+            <ion-note item-right> UR </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>{{"send.estimatedFee" | translate}}</ion-label>
+            <ion-input disabled="true"
+                value="{{estimatedFee.toFormat(5)}}"></ion-input>
+            <ion-note item-right> UR </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>{{"send.maxAmount" | translate}}</ion-label>
+            <ion-input disabled="true"
+                value="{{maxAmount.toFormat(5)}}"></ion-input>
+            <ion-note item-right> UR </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>{{'send.enterAmount' | translate}}</ion-label>
+            <ion-input formControlName="amount" (focus)="focusInput()"
+                type="number"></ion-input>
+            <ion-note item-right> UR </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>{{'send.secretPhrase' | translate}}</ion-label>
+            <ion-input formControlName="secretPhrase" (focus)="focusInput()"
+                type="password"></ion-input>
+        </ion-item>
+
         <!-- <div class="card send-requesttextarea">
             <label class="item item-input">
                 <ion-textarea formControlName="message"
                     placeholder="{{'send.enterMessage' | translate}}"></ion-textarea>
             </label>
         </div> -->
-
-
-        <button class="button button-light button-outline button-block button-large send-requestbtn"
-            type="submit"
-            [disabled]="!mainForm.valid">{{"send.send" | translate}}</button>
+            <button round
+                block
+                class="send-requestbtn"
+                type="submit"
+                [disabled]="!mainForm.valid">{{"send.send" | translate}}</button>
     </form>
 </ion-content>

@@ -1,5 +1,5 @@
-import {Page, AlertController, NavController, NavParams, LoadingController} from 'ionic-angular';
-import {NgZone} from '@angular/core';
+import {Page, AlertController, Content, NavController, NavParams, LoadingController} from 'ionic-angular';
+import {NgZone, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -28,6 +28,7 @@ export class SendPage {
   maxAmount: BigNumber;
   private wallet: WalletModel;
   private loadingModal: any;
+  @ViewChild(Content) content: Content;
 
   constructor(
     public nav: NavController,
@@ -44,7 +45,7 @@ export class SendPage {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       message: new FormControl(''),
-      secretPhrase: new FormControl(''),
+      secretPhrase: new FormControl('', [Validators.required]),
       maxAmount: new FormControl('')
     });
   }
@@ -132,7 +133,7 @@ export class SendPage {
       return self.loadingModal.dismiss();
     }).then(() => {
       self.nav.setRoot(HomePage);
-      return self.toastService.showMessage({messageKey: 'send.urSent'});
+      return self.toastService.showMessage({ messageKey: 'send.urSent' });
     }, (error: any) => {
       self.loadingModal.dismiss().then(() => {
         if (error.messageKey === 'canceled') {
@@ -144,7 +145,7 @@ export class SendPage {
           } else if (error.messageKey) {
             messageKey = error.messageKey;
           }
-          self.toastService.showMessage({messageKey: messageKey});
+          self.toastService.showMessage({ messageKey: messageKey });
           if (!error.messageKey) {
             log.debug(error.message || error);
           }
@@ -167,7 +168,7 @@ export class SendPage {
       }, (error) => {
         let message = `cannot generate wallet: ${error}`;
         log.warn(message);
-        reject({message: message});
+        reject({ message: message });
       });
     });
   }
@@ -205,5 +206,15 @@ export class SendPage {
     } else {
       return '';
     }
+  }
+
+  focusInput() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom();
+    }, 500);
   }
 }
