@@ -69,7 +69,9 @@ export class TransactionComponent {
     let self = this;
     self.showSpinner = true;
     let query = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/`).orderByChild('type');
-    if (self.transactionType !== 'all') {
+    if (self.transactionType == 'earned') {
+      query = query.startAt('earned-referral').endAt('earned-signup');
+    } else if (self.transactionType !== 'all') {
       query = query.equalTo(self.transactionType);
     }
     query.once('value', snapshot => {
@@ -117,4 +119,20 @@ export class TransactionComponent {
         return 'UR';
     }
   }
+
+  displayableTransactionType(transaction): string {
+    switch (transaction.type) {
+      case 'sent':
+        return this.translate.instant('transaction.sent');
+      case 'received':
+        return this.translate.instant('transaction.received');
+      case 'earned-signup':
+        return this.translate.instant('transaction.earnedSignUpBonus');
+      case 'earned-referral':
+        return this.translate.instant('transaction.earnedReferralBonus');
+      default:
+        return '';
+    }
+  }
+
 }

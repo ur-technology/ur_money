@@ -53,7 +53,6 @@ export class AuthService {
               'verification-pending': pages.verificationPendingPage,
               'verification-failed': pages.verificationFailedPage,
               'verification-succeeded': currentUser.wallet && currentUser.wallet.address ? pages.homePage : pages.walletSetupPage,
-              'announcement-started': pages.homePage,
               'announcement-requested': pages.homePage,
               'announcement-failed': pages.homePage,
               'announcement-succeeded': pages.homePage

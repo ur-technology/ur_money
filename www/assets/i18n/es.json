@@ -156,7 +156,10 @@
         "seeMore": "Ver más",
         "sent": "enviado",
         "received": "recibido",
-        "earned": "ganado"
+        "earned": "ganado",
+        "earnedSignUpBonus": "Earned-Sign Up Bonus",
+        "earnedReferralBonus": "Earned-Referral Bonus"
+
     },
     "transactions": {
         "title": "Transacciones",

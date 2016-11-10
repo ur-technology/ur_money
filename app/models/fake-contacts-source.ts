@@ -291,6 +291,18 @@ export class FakeContactsSource {
           'type': 'mobile'
         }],
         'id': '24'
+      }, {
+        'name': {
+          'givenName': 'Alexei',
+          'familyName': 'Dulub'
+        },
+        'phoneNumbers': [{
+          'id': '185',
+          'pref': false,
+          'value': '+375297700730',
+          'type': 'mobile'
+        }],
+        'id': '25'
       }
     ];
   }
