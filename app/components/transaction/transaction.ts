@@ -57,7 +57,7 @@ export class TransactionComponent {
     return convertedAmount.toFormat(2);
   }
 
-  getTransactionsTypeTotal(): string {
+  selectedTransactionTypeTotal(): string {
     if (this.transactionType === 'all') {
       return (new BigNumber(this.availableBalance)).toFormat(2);
     } else {
@@ -107,8 +107,12 @@ export class TransactionComponent {
     this.app.getRootNav().push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
   }
 
-  getTransactionType(): string {
-    switch (this.transactionType) {
+  selectedTransactionType(): string {
+    return this.displayableTransactionType(this.transactionType);
+  }
+
+  displayableTransactionType(type): string {
+    switch (type) {
       case 'sent':
         return this.translate.instant('transaction.sent');
       case 'received':
@@ -117,21 +121,6 @@ export class TransactionComponent {
         return this.translate.instant('transaction.earned');
       default:
         return 'UR';
-    }
-  }
-
-  displayableTransactionType(transaction): string {
-    switch (transaction.type) {
-      case 'sent':
-        return this.translate.instant('transaction.sent');
-      case 'received':
-        return this.translate.instant('transaction.received');
-      case 'earned-signup':
-        return this.translate.instant('transaction.earnedSignUpBonus');
-      case 'earned-referral':
-        return this.translate.instant('transaction.earnedReferralBonus');
-      default:
-        return '';
     }
   }
 

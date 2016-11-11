@@ -9,7 +9,7 @@
         </div>
 
         <div class="total-ur">
-            {{getTransactionsTypeTotal()}} {{getTransactionType()}}
+            {{selectedTransactionTypeTotal()}} {{selectedTransactionType()}}
         </div>
         <p class="last-update">
             <ion-icon name="ios-clock-outline"></ion-icon> {{"transaction.lastUpdated" | translate}} {{lastUpdated|timestamp}}
@@ -44,8 +44,8 @@
                 <img src="img/icon.png">
             </ion-avatar>
             <h2>{{transaction.title}} <span class="item-date-time">{{transaction.createdAt|dateAndTime}}</span></h2>
-            <p>{{transaction.message}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">{{"transaction.seeMore" | translate}}</a></span>
-              <span class="transaction-filter-{{transaction.type}}">{{displayableTransactionType(transaction)}}</span></p>
+            <p>{{transaction.messageText}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">{{"transaction.seeMore" | translate}}</a></span>
+              <span class="transaction-filter-{{transaction.type}}">{{displayableTransactionType(transaction.type)}}</span></p>
             <span class="icon trans-ur"
                 item-right>{{weiToURString(transaction.amount || "0")}}<br/>  UR</span>
         </ion-item>
