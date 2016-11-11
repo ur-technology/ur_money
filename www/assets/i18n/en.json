@@ -225,6 +225,7 @@
     "pleaseWait": "Please wait...",
     "save": "Save",
     "signOut": "Sign out",
+    "search": "Search",
     "noInternetConnection": "No internet connection available. Please try again later.",
     "unexpectedErrorMessage": "An unexpected error has occurred. Please try again later."
 }

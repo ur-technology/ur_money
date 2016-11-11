@@ -24,6 +24,7 @@ export class ContactsComponent {
   PAGE_SIZE = 15;
   paginatedContacts: any[] = [];
   displayableContacts: any[];
+  contacts: any[];
   startTime: number;
   showSpinner: boolean = true;
   @Input() goal: string;
@@ -61,20 +62,16 @@ export class ContactsComponent {
     let self = this;
     this.memberActionLabel = this.determineMemberActionLabel();
     self.contactsService.getContacts().then((contactGroups: any) => {
-      let contacts = self.goal === 'invite' ? contactGroups.nonMembers : contactGroups.members;
-      console.log('contacts', contacts);
-      self.paginatedContacts = _.chunk(contacts, self.PAGE_SIZE);
-      console.log('self.paginatedContacts', self.paginatedContacts);
-      self.numberOfPages = self.paginatedContacts.length;
-      console.log('self.numberOfPages', self.numberOfPages);
-      self.displayableContacts = self.paginatedContacts[0];
-      console.log('self.displayableContacts', self.displayableContacts);
-      let timeElapsed = (new Date()).getTime() - self.startTime;
-      log.debug('milliseconds elapsed', timeElapsed);
-      log.debug('contactGroups.nonMembers.length', contactGroups.nonMembers.length);
-      log.debug('contactGroups.members.length', contactGroups.members.length);
+      self.contacts = self.goal === 'invite' ? contactGroups.nonMembers : contactGroups.members;
+      this.fillContactFilterArrays(self.contacts);
       this.showSpinner = false;
     });
+  }
+
+  fillContactFilterArrays(contacts) {
+    this.paginatedContacts = _.chunk(contacts, this.PAGE_SIZE);
+    this.numberOfPages = this.paginatedContacts.length;
+    this.displayableContacts = this.paginatedContacts[0];
   }
 
   doInfinite(infiniteScroll) {
@@ -174,5 +171,16 @@ export class ContactsComponent {
 
   getInviteItemMessage() {
     return this.displayableContacts ? this.translate.instant('contacts.messageContactNotPresent') : this.translate.instant('contacts.messageNoContacts');
+  }
+
+  filterItems(ev) {
+    let val = ev.target.value;
+    let tempContacts: any[] = this.contacts;
+    if (val && val.trim() !== '') {
+      tempContacts = _.filter(tempContacts, contact => {
+        return contact.name.toLowerCase().indexOf(val.toLowerCase()) !== -1;
+      });
+    }
+    this.fillContactFilterArrays(tempContacts);
   }
 }
