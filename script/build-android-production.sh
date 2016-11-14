@@ -3,6 +3,8 @@
 set -e
 cp app/config/env.production.json app/config/env.json
 cordova plugin rm cordova-plugin-console
+npm install
+typings install
 ionic build --release android
 
 read -s -p "Type passphrase for keystore: " PASSPHRASE
