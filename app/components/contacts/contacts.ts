@@ -127,8 +127,8 @@ export class ContactsComponent {
       Toast.show(this.translate.instant('contacts.toastMessage'), 'long', 'top').subscribe((toast) => {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
-          file: 'https://ur-money-staging.firebaseapp.com/img/icon.png',
-          url: 'https://www.ur.international',
+          file: 'https://ur.technology/wp-content/uploads/2016/11/icon-android-192x192.png',
+          url: 'https://ur.technology',
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions; saving dowlineUser');
