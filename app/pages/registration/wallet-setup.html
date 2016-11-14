@@ -36,7 +36,14 @@
               [(ngModel)]="secretPhrase"
               placeholder="{{'wallet-setup.secretPhrasePlaceholder' | translate}}"></ion-input>
       </ion-item>
+      <ion-list-header>
 
+      </ion-list-header>
+      <ion-item text-wrap>
+         <ion-label>Store a local copy of secret phrase on device for emergencies?</ion-label>
+         <ion-checkbox formControlName="savePhrase"></ion-checkbox>
+         <button item-right outline dark (click)="alertSecretPhrase()">Learn more</button>
+       </ion-item>
     </form>
 </ion-content>
 <ion-footer [keyboardAttach]="content">

@@ -6,15 +6,17 @@ import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BigNumber} from 'bignumber.js';
-
+import { NativeStorage } from 'ionic-native';
 import {HomePage} from '../home/home';
 import {WalletModel} from '../../models/wallet';
 import {ChartDataService} from '../../services/chart-data';
 import {ToastService} from '../../services/toast';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
+import {EncryptionService} from '../../services/encryption';
 
 declare var jQuery: any;
+
 
 @Page({
   templateUrl: 'build/pages/send/send.html',
@@ -28,6 +30,7 @@ export class SendPage {
   maxAmount: BigNumber;
   private wallet: WalletModel;
   private loadingModal: any;
+  private phraseSaved;
   @ViewChild(Content) content: Content;
 
   constructor(
@@ -39,7 +42,8 @@ export class SendPage {
     private auth: AuthService,
     private translate: TranslateService,
     public chartData: ChartDataService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private encryptionService: EncryptionService
   ) {
     this.contact = this.navParams.get('contact');
     this.mainForm = new FormGroup({
@@ -59,6 +63,16 @@ export class SendPage {
   }
 
   ngOnInit() {
+    NativeStorage.getItem('phrase')
+      .then(
+      data => {
+        let value = this.encryptionService.decrypt(data.property);
+        this.phraseSaved = value;
+      },
+      error => {
+        this.phraseSaved = null;
+      }
+      );
     let self = this;
     if (self.chartData.balanceUpdated) {
       self.reflectMaxAmountOnPage();
@@ -138,6 +152,34 @@ export class SendPage {
       self.loadingModal.dismiss().then(() => {
         if (error.messageKey === 'canceled') {
           // do nothing
+        } else if (error.messageKey === 'send.incorrectSecretPhrase') {
+          if (this.phraseSaved) {
+            let alert = this.alertCtrl.create({
+              title: 'Secret phrase incorrect',
+              message: 'Did you forget the secret phrase? Tap Recover to show your secret phrase.',
+              buttons: [{
+                text: 'Cancel',
+                role: 'cancel'
+              },
+                {
+                  text: 'Recover',
+                  handler: () => {
+                    alert.dismiss().then(() => {
+                      let showPassAlert = this.alertCtrl.create({
+                        title: 'Secret phrase',
+                        message: this.phraseSaved,
+                        buttons: ['Ok']
+                      });
+                      showPassAlert.present();
+                    });
+                  }
+                }]
+            });
+            alert.present();
+          } else {
+            self.toastService.showMessage({ messageKey: error.messageKey });
+          }
+
         } else {
           let messageKey = 'unexpectedErrorMessage';
           if (_.isString(error.message) && /CONNECTION ERROR/i.test(error.message)) {

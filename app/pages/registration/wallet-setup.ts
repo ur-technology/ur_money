@@ -2,7 +2,7 @@ import {Page, NavController, AlertController, ToastController, LoadingController
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl} from '@angular/forms';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
-
+import { NativeStorage } from 'ionic-native';
 import {FocuserDirective} from '../../directives/focuser';
 import {WalletModel} from '../../models/wallet';
 import {AuthService} from '../../services/auth';
@@ -11,6 +11,7 @@ import {CustomValidator} from '../../validators/custom';
 import {HomePage} from '../home/home';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
+import {EncryptionService} from '../../services/encryption';
 
 declare var jQuery: any;
 
@@ -32,10 +33,12 @@ export class WalletSetupPage {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private loadingController: LoadingController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private encryptionService: EncryptionService
   ) {
     this.mainForm = new FormGroup({
-      secretPhrase: new FormControl('', CustomValidator.secretPhraseValidator)
+      secretPhrase: new FormControl('', CustomValidator.secretPhraseValidator),
+      savePhrase: new FormControl('true')
     });
     this.profile = {
       secretPhrase: '',
@@ -81,11 +84,43 @@ export class WalletSetupPage {
     WalletModel.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
       let wallet: WalletModel = new WalletModel(walletData);
       self.profile.address = wallet.getAddress();
-      self.saveWallet();
+      NativeStorage.clear().then(() => {
+        self.savePassPhrase().then(() => {
+          self.saveWallet();
+        });
+      });
     }).catch((error) => {
       self.loadingModal.dismiss();
       log.warn('unable to get address!');
     });
+  }
+
+  private savePassPhrase() {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      if ((self.mainForm.value.savePhrase === 'true') || (self.mainForm.value.savePhrase)) {
+        let valueEncrypted = self.encryptionService.encrypt(self.mainForm.value.secretPhrase);
+        NativeStorage.setItem('phrase', { property: valueEncrypted })
+          .then(
+          () => {
+            resolve();
+          },
+          error => {
+            resolve();
+          }
+          );
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  alertSecretPhrase() {
+    let alert = this.alertCtrl.create({
+      message: `If you forgot your secret phrase you can recover it later`,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
   saveWallet() {
@@ -115,5 +150,5 @@ export class WalletSetupPage {
       self.loadingModal.dismiss();
       log.warn('unable to save profile and wallet info');
     });
-  };
+  }
 }

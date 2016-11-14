@@ -13,6 +13,7 @@ import {AuthService} from './services/auth';
 import {ChartDataService} from './services/chart-data';
 import {CountryListService} from './services/country-list';
 import {ContactsService} from './services/contacts';
+import {EncryptionService} from './services/encryption';
 // import {DeviceIdentityService} from './services/device-identity';
 import {Splashscreen} from 'ionic-native';
 import {EventsService} from './services/events';
@@ -37,6 +38,7 @@ import {TransactionsPage} from './pages/transactions/transactions';
     AuthService,
     // DeviceIdentityService,
     ContactsService,
+    EncryptionService,
     EventsService,
     CountryListService,
     ChartDataService,
