@@ -40,9 +40,9 @@
 
       </ion-list-header>
       <ion-item text-wrap>
-         <ion-label>Store a local copy of secret phrase on device for emergencies?</ion-label>
+         <ion-label>{{'wallet-setup.saveSecretPhrase' | translate}}</ion-label>
          <ion-checkbox formControlName="savePhrase"></ion-checkbox>
-         <button item-right outline dark (click)="alertSecretPhrase()">Learn more</button>
+         <button type="text" item-right outline (click)="alertSecretPhrase()" form="aa">{{'wallet-setup.learnMore' | translate}}</button>
        </ion-item>
     </form>
 </ion-content>

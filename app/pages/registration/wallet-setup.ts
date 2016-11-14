@@ -116,11 +116,18 @@ export class WalletSetupPage {
   }
 
   alertSecretPhrase() {
-    let alert = this.alertCtrl.create({
-      message: `If you forgot your secret phrase you can recover it later`,
-      buttons: ['Ok']
+
+    let alerta = this.alertCtrl.create({
+      message: this.translate.instant('wallet-setup.learnSavePhrase'),
+      buttons: [{
+        text: this.translate.instant('ok'),
+        handler: () => {
+          alerta.dismiss();
+        }
+      }
+      ]
     });
-    alert.present();
+    alerta.present();
   }
 
   saveWallet() {

@@ -89,7 +89,10 @@
         "message1": "Te permite controlar tu dinero.",
         "message2": "Solo tú lo sabes. Nunca podrá ser recuperado si se pierde.",
         "message3": "Ingresa palabras para tu contraseña",
-        "message4": "Presiona el botón de abajo para generar automáticamente una frase de contraseña (recomendado)."
+        "message4": "Presiona el botón de abajo para generar automáticamente una frase de contraseña (recomendado).",
+        "learnSavePhrase": "Si te olvidas tu frase secreta puedes recuperarla mas tarde",
+        "saveSecretPhrase": "Almacenar una copia local de la frase secreta en el dispositivo para emergencias?",
+        "learnMore": "Conocer más"
     },
     "verification-pending": {
         "title": "Verificación pendiente",

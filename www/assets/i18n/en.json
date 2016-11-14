@@ -89,7 +89,10 @@
         "message1": "It lets you control your money.",
         "message2": "Only you know it. It can never be recovered if lost.",
         "message3": "It’s a string of words that’s never appeared in print or online—ever!",
-        "message4": "Click the button below to automatically generate a secret phrase (recommended)."
+        "message4": "Click the button below to automatically generate a secret phrase (recommended).",
+        "learnSavePhrase": "If you forgot your secret phrase you can recover it later",
+        "saveSecretPhrase": "Store a local copy of secret phrase on device for emergencies?",
+        "learnMore": "Learn more"
     },
     "verification-pending": {
         "title": "Verification pending",
