@@ -90,8 +90,8 @@
         "message2": "Only you know it. It can never be recovered if lost.",
         "message3": "It’s a string of words that’s never appeared in print or online—ever!",
         "message4": "Click the button below to automatically generate a secret phrase (recommended).",
-        "learnSavePhrase": "By checking this box, you are choosing to store your your secret phrase on your device. This approach to safeguarding your secret phrase has an advantage and a disadvantage. The main advantage is that, if your forget your secret phrase and also lose your written copy of your secret phrase, you will usually be able to recover your secret phrase. The main disadvantage is that you could increase the chances of having your secret phrase stolen if someone gets physical or remote access to your device. Furthermore, saving the phrase to your device is NOT 100% reliable, so please continue to write down your secret phrase and store it in a safe place.",
-        "saveSecretPhrase": "Store a local copy of secret phrase on device for emergencies?",
+        "learnSavePhrase": "By checking this box, you are choosing to store your your secret phrase on your device. This approach to safeguarding your secret phrase has advantages and disadvantages. The main advantage is that, if your forget your secret phrase and also lose your written copy of it, you will usually be able to recover it using this approach. The main disadvantage is that you could increase the chances of having your secret phrase stolen if someone gets physical or remote access to your device. Furthermore, saving your secret phrase to your device is NOT 100% reliable, so please continue to write down your secret phrase and store it in a safe place.",
+        "saveSecretPhrase": "Store a copy of your secret phrase on device for emergencies?",
         "learnMore": "Learn more"
     },
     "verification-pending": {
