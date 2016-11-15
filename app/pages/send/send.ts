@@ -14,7 +14,6 @@ import {ToastService} from '../../services/toast';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 import {EncryptionService} from '../../services/encryption';
-
 declare var jQuery: any;
 
 
@@ -31,6 +30,7 @@ export class SendPage {
   private wallet: WalletModel;
   private loadingModal: any;
   private phraseSaved;
+  refreshIntervalId: any;
   @ViewChild(Content) content: Content;
 
   constructor(
@@ -164,13 +164,24 @@ export class SendPage {
                 {
                   text: 'Recover',
                   handler: () => {
+
                     alert.dismiss().then(() => {
                       let showPassAlert = this.alertCtrl.create({
                         title: 'Secret phrase',
-                        message: this.phraseSaved,
-                        buttons: ['Ok']
+                        message: `Showing in <span>01:00</span><p hidden>${this.phraseSaved}</p>`,
+                        buttons: [{
+                          text: 'Ok',
+                          handler: () => {
+                            clearInterval(this.refreshIntervalId);
+                            showPassAlert.dismiss();
+                          }
+                        }]
                       });
-                      showPassAlert.present();
+                      showPassAlert.present().then(() => {
+                        let fiveMinutes = 60 * 1;
+                        let display = jQuery('.alert-message span');
+                        this.startTimer(fiveMinutes, display);
+                      });
                     });
                   }
                 }]
@@ -197,6 +208,27 @@ export class SendPage {
     });
   }
 
+
+  startTimer(duration: any, display) {
+    let timer: any = duration;
+    let minutes: any;
+    let seconds: any;
+    let self = this;
+    self.refreshIntervalId = setInterval(function() {
+      minutes = parseInt((timer / 60).toString(), 10);
+      seconds = parseInt((timer % 60).toString(), 10);
+      minutes = minutes < 10 ? '0' + minutes : minutes.toString();
+      seconds = seconds < 10 ? '0' + seconds : seconds.toString();
+      display.text(minutes + ':' + seconds);
+
+      if (--timer < 0) {
+        clearInterval(self.refreshIntervalId);
+        timer = duration;
+        let display = jQuery('.alert-message p');
+        display.removeAttr('hidden');
+      }
+    }, 1000);
+  }
   validateSecretPhrase() {
     let self = this;
     return new Promise((resolve, reject) => {
@@ -259,4 +291,5 @@ export class SendPage {
       this.content.scrollToBottom();
     }, 500);
   }
+
 }
