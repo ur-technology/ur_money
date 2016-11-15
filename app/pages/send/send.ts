@@ -166,22 +166,7 @@ export class SendPage {
                   handler: () => {
 
                     alert.dismiss().then(() => {
-                      let showPassAlert = this.alertCtrl.create({
-                        title: 'Secret phrase',
-                        message: `Showing in <span>01:00</span><p hidden>${this.phraseSaved}</p>`,
-                        buttons: [{
-                          text: 'Ok',
-                          handler: () => {
-                            clearInterval(this.refreshIntervalId);
-                            showPassAlert.dismiss();
-                          }
-                        }]
-                      });
-                      showPassAlert.present().then(() => {
-                        let fiveMinutes = 60 * 1;
-                        let display = jQuery('.alert-message span');
-                        this.startTimer(fiveMinutes, display);
-                      });
+                      this.countDown();
                     });
                   }
                 }]
@@ -209,26 +194,58 @@ export class SendPage {
   }
 
 
-  startTimer(duration: any, display) {
-    let timer: any = duration;
-    let minutes: any;
-    let seconds: any;
+  countDown() {
     let self = this;
-    self.refreshIntervalId = setInterval(function() {
-      minutes = parseInt((timer / 60).toString(), 10);
-      seconds = parseInt((timer % 60).toString(), 10);
-      minutes = minutes < 10 ? '0' + minutes : minutes.toString();
-      seconds = seconds < 10 ? '0' + seconds : seconds.toString();
-      display.text(minutes + ':' + seconds);
 
-      if (--timer < 0) {
-        clearInterval(self.refreshIntervalId);
-        timer = duration;
-        let display = jQuery('.alert-message p');
-        display.removeAttr('hidden');
-      }
-    }, 1000);
+
+    let countDownAlert = this.alertCtrl.create({
+      title: 'Recovering Secret Phrase',
+      message: `<p class='seconds-remaining'><span>60</span> seconds remaining...</p><p class='secret-phrase' hidden>${this.phraseSaved}</p>`,
+      buttons: [{
+        text: 'Cancel',
+        handler: () => {
+          clearInterval(this.refreshIntervalId);
+          countDownAlert.dismiss();
+        }
+      }]
+    });
+    countDownAlert.present().then(() => {
+      let secondsRemaining: number = 60;
+      let secondsRemainingDisplay = jQuery('.alert-message p.seconds-remaining span');
+
+      self.refreshIntervalId = setInterval(function() {
+        secondsRemainingDisplay.text(secondsRemaining.toString());
+
+        if (--secondsRemaining <= 0) {
+          clearInterval(self.refreshIntervalId);
+          countDownAlert.dismiss().then(() => {
+            self.confirmSecretPhraseWrittenDown();
+          });
+        }
+      }, 1000);
+    });
   }
+
+  confirmSecretPhraseWrittenDown() {
+    let message1 = this.translate.instant('wallet-setup.confirmWrittenDownMessage1');
+    let message2 = this.translate.instant('wallet-setup.confirmWrittenDownMessage2');
+    let message3 = this.translate.instant('wallet-setup.confirmWrittenDownMessage3');
+    let alert = this.alertCtrl.create({
+      title: this.translate.instant('wallet-setup.confirmWrittenDownTitle'),
+      message: `<p>${message1}</p><p><b>${this.phraseSaved}</b></p><p>${message2}</p><p>${message3}</p>`,
+      buttons: [
+        {
+          text: this.translate.instant('wallet-setup.confirmWrittenDownButton'), handler: () => {
+            alert.dismiss().then(() => {
+              this.mainForm.value.secretPhrase = '';
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   validateSecretPhrase() {
     let self = this;
     return new Promise((resolve, reject) => {
