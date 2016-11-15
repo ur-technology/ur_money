@@ -78,7 +78,7 @@
         "confirmWrittenDownTitle": "Escríbelo!",
         "confirmWrittenDownMessage1": "Esta es tu frase secreta:",
         "confirmWrittenDownMessage2": "Escribe esta frase en un papel y guárdalo en un lugar seguro.",
-        "confirmWrittenDownMessage3": "ADVERTENCIA: UR Technology no guarda tu frase secreta y NO PUEDE recuperarla si se pierde o se olvida.",
+        "confirmWrittenDownMessage3": "ADVERTENCIA: UR Technology no guarda tu frase secreta en nuestros servidores y NO PUEDE recuperarla si se pierde, se olvida o se corrompe.",
         "confirmWrittenDownButton": "Lo escribí!",
         "reenterSecretPhraseTitle": "Confirma tu frase secreta",
         "reenterSecretPhraseMessage": "Por favor vuelve a ingresar tu frase secreta para confirmarla.",
