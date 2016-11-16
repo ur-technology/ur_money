@@ -107,7 +107,7 @@
         "message": "Thank you for your interest in UR money. When we launch in your country, we will notify you."
     },
     "app": {
-        "inviteMessage": "Invite your loved ones and get",
+        "inviteMessage": "Invite your friends and get more UR",
         "invite": "Invite",
         "home": "Home",
         "chat": "Chat",
@@ -153,7 +153,7 @@
         "last60Days": "Last 60 days",
         "allTime": "All time",
         "lastUpdated": "Last updated: ",
-        "inviteFriends": "Invite your friends & earn 2000 UR",
+        "inviteFriends": "Invite your friends and get more UR",
         "invite": "Invite",
         "noTransactionsyet": "No transactions yet",
         "seeMore": "See more",
