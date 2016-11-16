@@ -3,7 +3,6 @@ import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl} from '@angular/forms';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import { NativeStorage } from 'ionic-native';
-import {FocuserDirective} from '../../directives/focuser';
 import {WalletModel} from '../../models/wallet';
 import {AuthService} from '../../services/auth';
 import {ContactsService} from '../../services/contacts';
@@ -17,7 +16,7 @@ declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/registration/wallet-setup.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective, KeyboardAttachDirective],
+  directives: [REACTIVE_FORM_DIRECTIVES, KeyboardAttachDirective],
   pipes: [TranslatePipe]
 })
 export class WalletSetupPage {

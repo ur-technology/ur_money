@@ -15,14 +15,14 @@
             <ion-item-divider light>{{"settings.profileInfo" | translate}}</ion-item-divider>
             <ion-item>
                 <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
-                <ion-input [focuser]
+                <ion-input
                     type="text"
                     [(ngModel)]="profile.firstName"
                     formControlName="firstName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'profile-setup.middleName' | translate}}</ion-label>
-                <ion-input [focuser]
+                <ion-input
                     type="text"
                     [(ngModel)]="profile.middleName"
                     formControlName="middleName"></ion-input>

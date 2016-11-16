@@ -4,7 +4,6 @@ import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
-import {FocuserDirective} from '../../directives/focuser';
 import {AuthService} from '../../services/auth';
 import {CustomValidator} from '../../validators/custom';
 import {WalletSetupPage} from './wallet-setup';
@@ -15,7 +14,7 @@ declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/registration/identity-info-setup.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, FocuserDirective, KeyboardAttachDirective],
+  directives: [REACTIVE_FORM_DIRECTIVES, KeyboardAttachDirective],
   pipes: [TranslatePipe]
 })
 export class IdentityInfoSetupPage {

@@ -35,7 +35,7 @@
                 <ion-input class="phone-country-code"
                     [ngModelOptions]="{standalone: true}"
                     [value]="selectedCountry.code"> </ion-input>
-                <ion-input [focuser]
+                <ion-input
                     #phoneInput
                     class="phone-input"
                     formControlName="phone"
@@ -49,5 +49,5 @@
     </form>
 </ion-content>
 <ion-footer [keyboardAttach]="content">
-    
+
 </ion-footer>

@@ -55,7 +55,8 @@
         "state": "Estado o provincia",
         "city": "Ciudad",
         "postalCode": "Código postal",
-        "country": "País"
+        "country": "País",
+        "email": "Email"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",

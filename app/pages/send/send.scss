@@ -1,9 +1,5 @@
 .send-page {
-  ion-input.ng-dirty.ng-invalid,
-  ion-input.ng-touched.ng-invalid {
-    border-left: 5px solid red;
-  }
-
+  
   .send-requestbtn{
     margin-top: 15px;
     text-transform: uppercase;
