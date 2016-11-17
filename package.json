@@ -3,7 +3,7 @@
   "description": "An app for tracking your UR transactions and messages",
   "private": true,
   "scripts": {
-    "test": "karma start test/karma.conf.js"
+    "test": "karma start karma.conf.js"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.4",
@@ -50,12 +50,12 @@
     "del": "2.2.0",
     "gulp": "3.9.1",
     "gulp-tslint": "6.1.1",
-    "ionic-gulp-tslint": "^1.1.0",
     "gulp-watch": "4.3.5",
     "ionic-gulp-fonts-copy": "^1.0.0",
     "ionic-gulp-html-copy": "^1.0.0",
     "ionic-gulp-sass-build": "^1.0.0",
     "ionic-gulp-scripts-copy": "^2.0.0",
+    "ionic-gulp-tslint": "^1.1.0",
     "isparta": "4.0.0",
     "jasmine-as-promised": "0.0.8",
     "jasmine-core": "^2.4.1",
@@ -64,6 +64,7 @@
     "karma-chrome-launcher": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-opera-launcher": "^1.0.0",
+    "karma-spec-reporter": "0.0.26",
     "run-sequence": "1.1.5",
     "shelljs": "^0.7.0",
     "tsify": "0.16.0",
