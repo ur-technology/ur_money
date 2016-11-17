@@ -18,7 +18,7 @@ export class CustomValidator {
 
   static emailValidator(control) {
     var pattern = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.([-a-z0-9_]+)|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-    if (!control.value.match(pattern)) {
+    if (control.value && !control.value.match(pattern)) {
       return { 'invalidEmailAddress': true };
     }
   }

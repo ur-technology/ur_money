@@ -1,4 +1,4 @@
-import {Page, NavController, AlertController, ToastController, LoadingController} from 'ionic-angular';
+import {Page, NavController, Platform, AlertController, ToastController, LoadingController} from 'ionic-angular';
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl} from '@angular/forms';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
@@ -29,6 +29,7 @@ export class WalletSetupPage {
     public nav: NavController,
     public auth: AuthService,
     public contactsService: ContactsService,
+    private platform: Platform,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private loadingController: LoadingController,
@@ -80,14 +81,19 @@ export class WalletSetupPage {
 
   generateAddress() {
     let self = this;
+
     WalletModel.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
       let wallet: WalletModel = new WalletModel(walletData);
       self.profile.address = wallet.getAddress();
-      NativeStorage.clear().then(() => {
-        self.savePassPhrase().then(() => {
-          self.saveWallet();
+      if (self.platform.is('cordova')) {
+        NativeStorage.clear().then(() => {
+          self.savePassPhrase().then(() => {
+            self.saveWallet();
+          });
         });
-      });
+      } else {
+        self.saveWallet();
+      }
     }).catch((error) => {
       self.loadingModal.dismiss();
       log.warn('unable to get address!');
@@ -96,6 +102,7 @@ export class WalletSetupPage {
 
   private savePassPhrase() {
     let self = this;
+
     return new Promise((resolve, reject) => {
       if ((self.mainForm.value.savePhrase === 'true') || (self.mainForm.value.savePhrase)) {
         let valueEncrypted = self.encryptionService.encrypt(self.mainForm.value.secretPhrase);
@@ -115,7 +122,6 @@ export class WalletSetupPage {
   }
 
   alertSecretPhrase() {
-
     let alerta = this.alertCtrl.create({
       message: this.translate.instant('wallet-setup.learnSavePhrase'),
       buttons: [{
@@ -140,7 +146,6 @@ export class WalletSetupPage {
         createdAt: firebase.database.ServerValue.TIMESTAMP
       }
     }).then(() => {
-
       self.loadingModal.dismiss().then(() => {
         self.contactsService.loadContacts(self.auth.countryCode, self.auth.currentUserId, self.auth.currentUser.phone);
         self.nav.setRoot(HomePage);
