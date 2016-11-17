@@ -2,8 +2,7 @@
     <ion-navbar>
         <ion-title>{{"phone-number.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="!phoneForm.valid"
-              (click)="submit(phoneInput)">
+          <button [disabled]="!phoneForm.valid" (click)="submit()">
               {{"done" | translate}}
           </button>
         </ion-buttons>
@@ -14,9 +13,12 @@
     <p class="sub-heading">
         {{"phone-number.heading" | translate}}
     </p>
-    <form [formGroup]="phoneForm" (ngSubmit)="phoneForm.valid && submit(phoneInput)">
+    <form [formGroup]="phoneForm" (ngSubmit)="phoneForm.valid && submit()">
 
         <div class="list country-code-cont">
+            <ion-item *ngIf="auth.authenticatedEmail">
+                <ion-label>Verified Beta Program Email Address {{auth.authenticatedEmail}}</ion-label>
+            </ion-item>
             <ion-item>
                 <ion-label>{{selectedCountry.name}}</ion-label>
                 <ion-select [(ngModel)]="selected"
@@ -36,7 +38,6 @@
                     [ngModelOptions]="{standalone: true}"
                     [value]="selectedCountry.code"> </ion-input>
                 <ion-input
-                    #phoneInput
                     class="phone-input"
                     formControlName="phone"
                     placeholder="{{'phone-number.phoneNumber' | translate}}"

@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"email-address.title" | translate}}</ion-title>
+        <ion-buttons end>
+          <button [disabled]="!mainForm.valid" (click)="submit()">
+              {{"done" | translate}}
+          </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding #content
+    class="email-address registration">
+    <p class="sub-heading">
+        {{"email-address.heading" | translate}}
+    </p>
+    <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
+
+        <div class="list country-code-cont">
+            <ion-item class="item item-input input-item-data">
+                <ion-input
+                    class="email-input"
+                    formControlName="email"
+                    placeholder="{{'email-address.placeholder' | translate}}"
+                    type="tel"></ion-input>
+            </ion-item>
+            <ion-item class="item item-input input-item-data" style="position: absolute; left: -9999px; width: 1px; height: 1px;">
+              <ion-input type="submit">.</ion-input>
+            </ion-item>
+        </div>
+    </form>
+</ion-content>
+
+<ion-footer [keyboardAttach]="content">
+</ion-footer>

@@ -20,18 +20,30 @@
         "phoneNumber": "Phone number",
         "numberConfirmation": "Number confirmation",
         "phoneCorrect": "Is your phone number above correct?",
-        "errorUserNotInvited": "Use of UR Money is currently available by invitation only, and your phone number was not on the invitee list.",
-        "errorUserDisabled": "You user account has been disabled.",
-        "errorSms": "There was an unexpected problem sending the SMS. Please try again later"
+        "errorUserDisabled": "Youf user account has been disabled.",
+        "errorSms": "There was an unexpected problem sending the SMS. Please try again later",
+        "noInviteFoundTitle": "Invitation Not Found",
+        "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
+        "betaProgramButton": "I'm in the UR Money Beta Program"
     },
-    "verification-sms-code": {
-        "title": "Verification code",
-        "heading1": "We have sent you an SMS with a code.",
-        "heading2": " To complete your phone number verification, please enter the 6-digit activation code.",
-        "smsAgain": "Didn't receive SMS? Send again",
-        "errorVerificationSms": "We were unable to process your verification code. Please try again later",
-        "errorCode": "The verification code you entered is incorrect or expired. Please try again.",
-        "errorSendingSmsAgain": "There was an unexpected problem sending the SMS. Please try again later"
+    "email-address": {
+        "title": "Enter Email Address",
+        "heading": "Please enter the email address that you have registed in the UR Money Beta Program",
+        "placeholder": "Enter Your Email Address",
+        "errorUserDisabled": "Youf user account has been disabled.",
+        "unexpectedProblem": "There was an unexpected problem sending you an email. Please try again later",
+        "noInviteFoundTitle": "Invitation Not Found",
+        "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
+        "betaProgramButton": "I'm in the UR Money Beta Program"
+    },
+    "authentication-code": {
+        "title": "Verification Code",
+        "heading1-sms": "We have sent you an SMS with a verification code.",
+        "heading1-email": "We have sent you an email with a verification code.",
+        "heading2": "To complete your phone number verification, please enter the 6-digit verification code.",
+        "resendCode": "Didn't receive verification code? Send again",
+        "unableToProcessCode": "We were unable to process your verification code. Please try again later",
+        "invalidCode": "The verification code you entered is incorrect or expired. Please try again."
     },
     "intro": {
         "title": "Set Up Profile",

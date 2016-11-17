@@ -15,7 +15,7 @@ export interface ContactGroups {
 
 @Injectable()
 export class ContactsService {
-  countryCode: string;
+  currentUserCountryCode: string;
   currentUserId: string;
   currentUserPhone: string;
   contactGroups: any;
@@ -50,11 +50,11 @@ export class ContactsService {
     });
   }
 
-  loadContacts(countryCode: string, currentUserId: string, currentUserPhone: string) {
+  loadContacts(currentUserId: string, currentUserPhone: string, currentUserCountryCode: string) {
     let self = this;
-    self.countryCode = countryCode;
     self.currentUserId = currentUserId;
     self.currentUserPhone = currentUserPhone;
+    self.currentUserCountryCode = currentUserCountryCode;
     self.retrieveContactsFromDevice().then((contacts: ContactModel[]) => {
       return self.retrieveUserInfo(contacts);
     }).then((contactsWithUserInfo: ContactModel[]) => {
@@ -228,15 +228,15 @@ export class ContactsService {
         strippedPhone = '+' + strippedPhone;
       }
 
-      let phoneNumberObject = phoneNumberUtil.parse(strippedPhone, this.countryCode);
+      let phoneNumberObject = phoneNumberUtil.parse(strippedPhone, this.currentUserCountryCode);
       if (phoneNumberUtil.isValidNumber(phoneNumberObject)) {
         e164Phone = phoneNumberUtil.format(phoneNumberObject, phoneNumberFormat.E164);
-        if (this.countryCode === 'MX' && /^\+52[2-9]/.test(e164Phone)) {
+        if (this.currentUserCountryCode === 'MX' && /^\+52[2-9]/.test(e164Phone)) {
           // In Mexico, The 1 after +52 indicates that a number is mobile,
           // but it's often left out of contacts because most carriers don't require it.
           // If the 1 is  missing, we add it back to normalize the number.
           e164Phone = '+521' + e164Phone.substring(3);
-          let phoneNumberObject = phoneNumberUtil.parse(strippedPhone, this.countryCode); // TODO: handle this better
+          let phoneNumberObject = phoneNumberUtil.parse(strippedPhone, this.currentUserCountryCode); // TODO: handle this better
           e164Phone = phoneNumberUtil.format(phoneNumberObject, phoneNumberFormat.E164);
         }
 
@@ -254,7 +254,7 @@ export class ContactsService {
     let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
     let phoneNumberFormat = require('google-libphonenumber').PhoneNumberFormat;
     try {
-      let phoneNumberObject = phoneNumberUtil.parse(e164Phone, this.countryCode);
+      let phoneNumberObject = phoneNumberUtil.parse(e164Phone, this.currentUserCountryCode);
       formattedPhone = phoneNumberUtil.format(phoneNumberObject, phoneNumberFormat.INTERNATIONAL);
     } catch (e) {
       log.debug(`error formatting phone number '${formattedPhone}': ${e.message}`);

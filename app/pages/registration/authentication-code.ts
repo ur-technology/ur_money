@@ -1,0 +1,78 @@
+import {Page, NavController, NavParams, LoadingController} from 'ionic-angular';
+import {AuthService} from '../../services/auth';
+import {ToastService} from '../../services/toast';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {PhoneNumberPage} from './phone-number';
+import {EmailAddressPage} from './email-address';
+
+@Page({
+  templateUrl: 'build/pages/registration/authentication-code.html',
+  pipes: [TranslatePipe]
+})
+export class AuthenticationCodePage {
+  authenticationCode: string = '';
+  authenticationType: string;
+
+  constructor(public nav: NavController, public navParams: NavParams,
+    public auth: AuthService,
+    private loadingController: LoadingController,
+    private translate: TranslateService,
+    private toastService: ToastService
+  ) {
+    this.nav = nav;
+    this.authenticationType = this.navParams.get('authenticationType');
+  }
+
+  checkCode() {
+    let self = this;
+    let loadingModal = self.loadingController.create({content: self.translate.instant('pleaseWait') });
+
+    let authenticationResult;
+
+    loadingModal.present().then(() => {
+      return self.auth.checkFirebaseConnection();
+    }).then(() => {
+      if (self.authenticationType === 'email') {
+        return self.auth.checkEmailAuthenticationCode(self.authenticationCode);
+      } else {
+        return self.auth.checkSmsAuthenticationCode(self.authenticationCode);
+      }
+    }).then((result: any) => {
+      authenticationResult = result;
+      return loadingModal.dismiss();
+    }).then(() => {
+      this.authenticationCode = '';
+      if (authenticationResult.codeMatch) {
+        if (this.authenticationType === 'email') {
+          // email is now authenticated, but we still need to authenticate phone number
+          this.nav.setRoot(PhoneNumberPage);
+
+        } else {
+          // do nothing AuthService will handle a redirect
+        }
+      } else {
+        self.toastService.showMessage({messageKey: 'authentication-code.invalidCode'});
+      }
+    }, (error) => {
+      loadingModal.dismiss().then(() => {
+        self.toastService.showMessage({messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
+      });
+    });
+  }
+
+  resendCode() {
+    this.nav.setRoot(this.authenticationType === 'email' ? EmailAddressPage : PhoneNumberPage );
+  }
+
+  add(numberVar) {
+    if (this.authenticationCode.length < 6)
+      this.authenticationCode = `${this.authenticationCode}${numberVar}`;
+  }
+
+  delete() {
+    if (this.authenticationCode.length > 0) {
+      this.authenticationCode = this.authenticationCode.substring(0, this.authenticationCode.length - 1);
+    }
+  }
+
+}

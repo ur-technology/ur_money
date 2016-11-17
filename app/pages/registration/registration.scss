@@ -111,27 +111,27 @@
 }
 
 .phone-number-page,
-.verification-sms-code-page {
+.authentication-code-page {
   ion-select {
     width: 0;
     padding: 0;
   }
 }
 
-.phone-number-verification .bar-light,
+.phone-number-authentication .bar-light,
 .registration .bar-light {
   background-color: #ededed;
   color: #323232;
 }
 
-.phone-number-verification .bar-light .title,
+.phone-number-authentication .bar-light .title,
 .registration .bar-light .title {
   font-size: 15px;
   font-weight: 700;
   color: #323232;
 }
 
-.phone-number-verification .bar-light .button.done-btn,
+.phone-number-authentication .bar-light .button.done-btn,
 .registration .bar-light .button.done-btn {
   font-size: 15px;
   font-weight: 700;
@@ -191,25 +191,25 @@
   min-width: 0;
 }
 
-.phone-number-verification .unlock-keypad,
+.phone-number-authentication .unlock-keypad,
 .registration .unlock-keypad {
   position: absolute;
   bottom: 0;
   width: 100%;
 }
 
-.phone-number-verification .unlock-keypad .row,
+.phone-number-authentication .unlock-keypad .row,
 .registration .unlock-keypad .row {
   border-bottom: 1px solid rgba(196, 196, 196, 0.8);
 }
 
-.phone-number-verification .unlock-keypad .row .col.col-33.mid-col,
+.phone-number-authentication .unlock-keypad .row .col.col-33.mid-col,
 .registration .unlock-keypad .row .col.col-33.mid-col {
   border-left: 1px solid rgba(196, 196, 196, 0.8);
   border-right: 1px solid rgba(196, 196, 196, 0.8);
 }
 
-.phone-number-verification .unlock-keypad .pin-btn,
+.phone-number-authentication .unlock-keypad .pin-btn,
 .registration .unlock-keypad .pin-btn {
   color: #323232;
 }
@@ -234,11 +234,11 @@
   color: #ffffff;
 }
 
-.pin-input-cont {
+.pin-input-container {
   text-align: center;
 }
 
-.pin-input-cont .pin-input {
+.pin-input-container .pin-input {
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -283,18 +283,18 @@
   }
 }
 /*------------------------------------------*/
-.phone-number-verification .sub-heading {
+.phone-number-authentication .sub-heading {
   font-size: 1.6rem;
   text-align: center;
   color: #323232;
   margin: 30px 6%;
 }
 
-.verification-cont .pin-input-cont {
+.authentication-code-container .pin-input-container {
   margin-bottom: 30px;
 }
 
-.verification-cont .pin-input {
+.authentication-code-container .pin-input {
   border-color: #e2e2e2;
   color: #323232;
 }

@@ -14,7 +14,6 @@ import {IdentityVerificationIntroPage} from '../identity-verification/identity-v
 import {CountryNotSupportedPage} from '../registration/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
 import {VerificationFailedPage} from '../registration/verification-failed';
-import * as _ from 'lodash';
 declare var jQuery: any;
 
 @Page({
@@ -33,8 +32,6 @@ export class HomePage {
   ) {
     this.elementRef = elementRef;
     this.android = this.platform.is('android');
-
-
   }
 
   reflectAvailableBalanceOnPage() {

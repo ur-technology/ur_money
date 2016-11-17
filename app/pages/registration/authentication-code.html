@@ -1,44 +1,44 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{"verification-sms-code.title" | translate}}</ion-title>
+        <ion-title>{{"authentication-code.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="verificationCode.length<6"
-              (click)="submit()">              
+          <button [disabled]="authenticationCode.length<6"
+              (click)="checkCode()">
               {{"done" | translate}}
           </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content class="phone-number phone-number-verification">
-    <p class="sub-heading">{{"verification-sms-code.heading1" | translate}}
-        <br/>{{"verification-sms-code.heading2" | translate}}
+<ion-content class="phone-number phone-number-authentication">
+    <p class="sub-heading">{{"authentication-code.heading1-" + authenticationType | translate}}
+        <br/>{{"authentication-code.heading2" | translate}}
     </p>
-    <div class="verification-cont">
-        <div class="pin-input-cont">
+    <div class="authentication-code-container">
+        <div class="pin-input-container">
             <div class="pin-input">
-                {{verificationCode.length>=1?verificationCode.substring(0, 1):''}}
+                {{authenticationCode.length>=1?authenticationCode.substring(0, 1):''}}
             </div>
             <div class="pin-input">
-                {{verificationCode.length>=2?verificationCode.substring(1, 2):''}}
+                {{authenticationCode.length>=2?authenticationCode.substring(1, 2):''}}
             </div>
             <div class="pin-input">
-                {{verificationCode.length>=3?verificationCode.substring(2, 3):''}}
+                {{authenticationCode.length>=3?authenticationCode.substring(2, 3):''}}
             </div>
             <div class="pin-input">
-                {{verificationCode.length>=4?verificationCode.substring(3, 4):''}}
+                {{authenticationCode.length>=4?authenticationCode.substring(3, 4):''}}
             </div>
             <div class="pin-input">
-                {{verificationCode.length>=5?verificationCode.substring(4, 5):''}}
+                {{authenticationCode.length>=5?authenticationCode.substring(4, 5):''}}
             </div>
             <div class="pin-input">
-                {{verificationCode.length>=6?verificationCode.substring(5,6):''}}
+                {{authenticationCode.length>=6?authenticationCode.substring(5,6):''}}
             </div>
         </div>
 
         <div class="verify-btns">
             <button clear
-                (click)="smsAgain()"
-                class="button button-light">{{"verification-sms-code.smsAgain" | translate}}</button>
+                (click)="resendCode()"
+                class="button button-light">{{"authentication-code.resendCode" | translate}}</button>
         </div>
     </div>
 

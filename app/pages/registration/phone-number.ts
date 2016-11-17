@@ -1,10 +1,11 @@
-import {Page, NavController, Platform, LoadingController} from 'ionic-angular';
+import {Page, NavController, Platform, AlertController, LoadingController} from 'ionic-angular';
 import {OnInit, ElementRef, Inject} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
 import {AuthService} from '../../services/auth';
 import {ToastService} from '../../services/toast';
-import {VerificationSmsCodePage} from './verification-sms-code';
+import {AuthenticationCodePage} from './authentication-code';
+import {EmailAddressPage} from './email-address';
 import {CountryListService} from '../../services/country-list';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
@@ -26,6 +27,7 @@ export class PhoneNumberPage implements OnInit {
     public platform: Platform,
     public nav: NavController,
     public auth: AuthService,
+    private alertCtrl: AlertController,
     public countryListService: CountryListService,
     private loadingController: LoadingController,
     private translate: TranslateService,
@@ -45,7 +47,7 @@ export class PhoneNumberPage implements OnInit {
         }
       })
     });
-    this.selectedCountry = { name: 'United States', code: '+1', iso: 'US', isoCode: '' };
+    this.selectedCountry = { name: 'United States', code: '+1', iso: 'US' };
     this.countries = this.countryListService.getCountryData();
   }
 
@@ -56,15 +58,15 @@ export class PhoneNumberPage implements OnInit {
     return (phone || '').replace(/\D/g, '');
   }
 
-  submit(phoneInput) {
+  submit() {
     let self = this;
     let corePhone = self.normalizedPhone(self.phoneForm.value.phone);
-    let extraIsoCode = '';
-    if (self.selectedCountry.isoCode && !corePhone.startsWith(self.selectedCountry.isoCode)) {
-      extraIsoCode = self.selectedCountry.isoCode;
+    let mobileAreaCodePrefix = '';
+    if (self.selectedCountry.mobileAreaCodePrefix && !corePhone.startsWith(self.selectedCountry.mobileAreaCodePrefix)) {
+      mobileAreaCodePrefix = self.selectedCountry.mobileAreaCodePrefix;
     }
 
-    let phone = self.selectedCountry.code + extraIsoCode + corePhone;
+    let phone = self.selectedCountry.code + mobileAreaCodePrefix + corePhone;
     let loadingModal = self.loadingController.create({
       content: self.translate.instant('pleaseWait'),
       dismissOnPageChange: true
@@ -75,19 +77,40 @@ export class PhoneNumberPage implements OnInit {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.requestPhoneVerification(phone, self.selectedCountry.code);
+      return self.auth.requestSmsAuthenticationCode(phone, self.selectedCountry.code);
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();
     }).then(() => {
-      if (taskState === 'code_generation_completed_and_sms_sent') {
-        self.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: self.selectedCountry.code, countryIso: self.selectedCountry.iso });
-      } else if (taskState === 'code_generation_canceled_because_user_not_invited') {
-        self.toastService.showMessage({messageKey: 'phone-number.errorUserNotInvited'});
-      } else if (taskState === 'code_generation_canceled_because_user_disabled') {
-        self.toastService.showMessage({messageKey: 'phone-number.errorUserDisabled'});
-      } else {
-        self.toastService.showMessage({messageKey: 'phone-number.errorSms'});
+      switch (taskState) {
+        case 'sms_code_generation_completed_and_code_sent':
+          self.nav.setRoot(AuthenticationCodePage, { authenticationType: 'sms' });
+          break;
+
+        case 'sms_code_generation_canceled_because_user_not_invited':
+          let alert = this.alertCtrl.create({
+            title: this.translate.instant('phone-number.noInviteFoundTitle'),
+            message: this.translate.instant('phone-number.noInviteFoundMessage'),
+            buttons: [
+              { text: this.translate.instant('cancel'), handler: () => { alert.dismiss(); } },
+              {
+                text: this.translate.instant('phone-number.betaProgramButton'), handler: () => {
+                  alert.dismiss().then(() => {
+                    this.nav.setRoot(EmailAddressPage);
+                  });
+                }
+              }
+            ]
+          });
+          alert.present();
+          break;
+
+        case 'sms_code_generation_canceled_because_user_disabled':
+          self.toastService.showMessage({messageKey: 'phone-number.errorUserDisabled'});
+          break;
+
+        default:
+          self.toastService.showMessage({messageKey: 'phone-number.errorSms'});
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
@@ -97,7 +120,7 @@ export class PhoneNumberPage implements OnInit {
   }
 
   countrySelect(country) {
-    this.selectedCountry = _.find(this.countries, { code: this.selected }) || { name: 'United States', code: '+1', iso: 'US', isoCode: '' };
+    this.selectedCountry = _.find(this.countries, { code: this.selected }) || { name: 'United States', code: '+1', iso: 'US' };
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();
   }
 }

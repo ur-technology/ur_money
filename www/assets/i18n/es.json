@@ -20,15 +20,37 @@
         "phoneNumber": "Número de teléfono",
         "numberConfirmation": "Confirmación de número",
         "phoneCorrect": "Es el número de teléfono indicado anteriormente correcto?",
-        "errorUserNotInvited": "El uso de UR Money está disponible sólo por invitación y tu número de teléfono no está en la lista de invitados.",
         "errorUserDisabled": "Tu cuenta ha sido deshabilitada.",
         "errorSms": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"
     },
-    "verification-sms-code": {
-        "title": "Código de verificación",
+    "authentication-code": {
+        "title": "Verification Code",
+        "heading1-sms": "We have sent you an SMS with a verification code.",
+        "heading1-email": "We have sent you an email with a verification code.",
+        "heading2": "To complete your phone number verification, please enter the 6-digit verification code.",
+        "resendCode": "Didn't receive verification code? Send again",
+        "unableToProcessCode": "We were unable to process your verification code. Please try again later",
+        "invalidCode": "The verification code you entered is incorrect or expired. Please try again."
+    },
+    "authentication-code": {
+      "title": "Código de Verificación",
+        "heading1": {
+          "sms": "Te hemos enviado un SMS con un código.",
+          "email": "Te hemos enviado un correo con un código."
+        },
+        "heading2": {
+          "sms": "Para completar la verificación del número de teléfono, ingresa el código de activación de 6 dígitos.",
+          "email": "Para completar la verificación del correo electronico, ingresa el código de activación de 6 dígitos."
+        },
+        "resendCode": "Didn't receive verification code? Send again",
+        "unableToProcessCode": "We were unable to process your verification code. Please try again later",
+        "invalidCode": "The verification code you entered is incorrect or expired. Please try again."
+    },
         "heading1": "Te hemos enviado un SMS con un código.",
-        "heading2": " Para completar la verificación del número de teléfono, ingresa el código de activación de 6 dígitos.",
-        "smsAgain": "No llegó el SMS? Enviar de nuevo",
+        "resendCode": "No llegó el SMS? Enviar de nuevo",
+        "unableToProcessCode": "We were unable to process your verification code. Please try again later",
+        "invalidCode": "The verification code you entered is incorrect or expired. Please try again."
+
         "errorVerificationSms": "No hemos podido procesar el código de verificación. Por favor, inténtalo más tarde",
         "errorCode": "El código de verificación que has introducido es incorrecto o ha caducado. Por favor, inténtalo de nuevo.",
         "errorSendingSmsAgain": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"

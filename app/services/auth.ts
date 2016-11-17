@@ -13,8 +13,11 @@ export class AuthService {
   public currentUserId: string;
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
-  public countryCode: string;
+  public alphaCountryCodeAssociatedWithPhone: string;
   public taskId: string;
+  public authenticatedEmailTaskId: string;
+  public authenticatedEmail: string;
+  public unauthenticatedEmail: string;
   private firebaseConnectionCheckInProgress: boolean = false;
 
   constructor(
@@ -36,15 +39,15 @@ export class AuthService {
               userSubscription.unsubscribe();
             }
             self.currentUser = currentUser;
-            if (self.countryCode) {
-              self.currentUser.countryCode = self.countryCode;
-              this.currentUserRef.update({ countryCode: self.countryCode });
+            if (!self.currentUser.countryCode && self.alphaCountryCodeAssociatedWithPhone) {
+              self.currentUser.countryCode = self.alphaCountryCodeAssociatedWithPhone;
+              this.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
             let status = self.getUserStatus();
             if (status === 'initial') {
               nav.setRoot(pages.introPage);
             } else {
-              self.contactsService.loadContacts(self.currentUser.countryCode, self.currentUserId, self.currentUser.phone);
+              self.contactsService.loadContacts(self.currentUserId, self.currentUser.phone, self.currentUser.countryCode);
               nav.setRoot(pages.homePage);
             }
           });
@@ -53,7 +56,7 @@ export class AuthService {
           self.currentUserId = undefined;
           self.currentUserRef = undefined;
           self.currentUser = undefined;
-          self.countryCode = undefined;
+          self.alphaCountryCodeAssociatedWithPhone = undefined;
           nav.setRoot(pages.welcomePage);
         }
       });
@@ -108,63 +111,128 @@ export class AuthService {
     });
   }
 
-  requestPhoneVerification(phone: string, countryCode: string) {
+  requestSmsAuthenticationCode(phone: string, alphaCountryCodeAssociatedWithPhone: string) {
     let self = this;
-    return new Promise((resolve) => {
-      let taskRef = firebase.database().ref('/phoneAuthenticationQueue/tasks').push({ phone: phone, countryCode: countryCode });
-      self.taskId = taskRef.key;
-      taskRef.then((xxx) => {
-        log.debug(`task queued to /phoneAuthenticationQueue/tasks/${self.taskId}`);
+    self.alphaCountryCodeAssociatedWithPhone = alphaCountryCodeAssociatedWithPhone;
+    return new Promise((resolve, reject) => {
+      let baseRef = firebase.database().ref('/authenticationQueue/tasks');
+      self.taskId = self.authenticatedEmailTaskId || baseRef.push().key;
+      let taskRef = baseRef.child(self.taskId);
+      taskRef.update({ _state: 'sms_code_generation_requested', phone: phone }).then((xxx) => {
+        log.debug(`sms auth code request queued to /authenticationQueue/tasks/${self.taskId}`);
         let stateRef = taskRef.child('_state');
         stateRef.on('value', (snapshot) => {
           let state = snapshot.val();
-          if (state !== undefined && state !== null && state !== 'code_generation_in_progress') {
+          if (!_.includes([undefined, null, 'sms_code_generation_requested', 'sms_code_generation_in_progress'], state)) {
+            stateRef.off('value');
+            self.alphaCountryCodeAssociatedWithPhone = alphaCountryCodeAssociatedWithPhone;
+            resolve(state);
+          }
+        });
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  requestEmailAuthenticationCode(email: string) {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      self.authenticatedEmailTaskId = undefined;
+      self.unauthenticatedEmail = email;
+      let taskRef = firebase.database().ref(`/authenticationQueue/tasks/${self.taskId}`);
+      taskRef.update({
+        email: email,
+        _state: 'email_code_generation_requested',
+        _progress: null,
+        _state_changed: firebase.database.ServerValue.TIMESTAMP
+      }).then((xxx) => {
+        log.debug(`email auth code request made at ${taskRef.toString}`);
+        let stateRef = taskRef.child('_state');
+        stateRef.on('value', (snapshot) => {
+          let state = snapshot.val();
+          if (!_.includes([undefined, null, 'email_code_generation_requested', 'email_code_generation_in_progress'], state)) {
             stateRef.off('value');
             resolve(state);
           }
+        });
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  checkSmsAuthenticationCode(submittedSmsAuthenticationCode: string) {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      let taskRef = firebase.database().ref(`/authenticationQueue/tasks/${self.taskId}`);
+      taskRef.update({
+        submittedSmsAuthenticationCode: submittedSmsAuthenticationCode,
+        _state: 'sms_code_matching_requested', // TODO: add rule that restricts client-initiated state change
+        _progress: null,
+        _state_changed: null,
+        _id: null
+      }).then((xxx) => {
+        log.debug(`set submittedSmsAuthenticationCode to ${submittedSmsAuthenticationCode} at ${taskRef.toString()}`);
+        let smsAuthenticationResultRef = taskRef.child('smsAuthenticationResult');
+        smsAuthenticationResultRef.on('value', (snapshot) => {
+          let smsAuthenticationResult = snapshot.val();
+          if (!smsAuthenticationResult) {
+            return;
+          }
+          smsAuthenticationResultRef.off('value');
+
+          if (!smsAuthenticationResult.codeMatch) {
+            log.debug('Submitted authentication code was not correct.');
+            resolve({ codeMatch: false });
+            return;
+          }
+
+          log.debug('Submitted authentication code was correct.');
+          self.authenticatedEmailTaskId = undefined;
+          firebase.auth().signInWithCustomToken(smsAuthenticationResult.authToken).then((authData) => {
+            log.debug('Authentication succeded!');
+            resolve({ codeMatch: true });
+            taskRef.remove();
+          }).catch((error) => {
+            taskRef.update({ authenticationError: error });
+            log.warn('Unable to authenticate!');
+            reject('Unable to authenticate');
+          });
         });
       });
     });
   }
 
-  checkVerificationCode(submittedVerificationCode: string, countryIso: string) {
-    this.countryCode = countryIso;
+  checkEmailAuthenticationCode(submittedEmailAuthenticationCode: string) {
     let self = this;
-    return new Promise((resolve) => {
-      let taskRef = firebase.database().ref(`/phoneAuthenticationQueue/tasks/${self.taskId}`);
+    return new Promise((resolve, reject) => {
+      let taskRef = firebase.database().ref(`/authenticationQueue/tasks/${self.taskId}`);
       taskRef.update({
-        submittedVerificationCode: submittedVerificationCode,
-        _state: 'code_matching_requested' // TODO: add rule that allows only this client-initiated state change
+        submittedEmailAuthenticationCode: submittedEmailAuthenticationCode,
+        _state: 'email_code_matching_requested' // TODO: add rule that restricts client-initiated state change
       }).then((xxx) => {
-        log.debug(`set submittedVerificationCode to ${submittedVerificationCode} at ${taskRef.toString()}`);
-        let verificationResultRef = taskRef.child('verificationResult');
-        verificationResultRef.on('value', (snapshot) => {
-          let verificationResult = snapshot.val();
-          if (!verificationResult) {
+        log.debug(`set submittedEmailAuthenticationCode to ${submittedEmailAuthenticationCode} at ${taskRef.toString()}`);
+        let emailAuthenticationResultRef = taskRef.child('emailAuthenticationResult');
+        emailAuthenticationResultRef.on('value', (snapshot) => {
+          let emailAuthenticationResult = snapshot.val();
+          if (!emailAuthenticationResult) {
             return;
           }
-          verificationResultRef.off('value');
-          if (verificationResult.error) {
-            resolve({ error: verificationResult.error });
-          } else if (verificationResult.codeMatch) {
-            log.debug('Submitted verification code was correct.');
+          emailAuthenticationResultRef.off('value');
 
-
-            firebase.auth().signInWithCustomToken(verificationResult.authToken).then((authData) => {
-              log.debug('Authentication succeded!');
-              resolve({ codeMatch: true });
-              taskRef.remove();
-            }).catch((error) => {
-              log.warn('Authentication failed!');
-              taskRef.update({ authenticationError: error });
-              resolve({ error: 'Authentication failed' });
-              resolve(false);
-            });
-          } else {
-            log.debug('Submitted verification code was not correct.');
+          if (!emailAuthenticationResult.codeMatch) {
+            log.debug('Submitted authentication code was not correct.');
             resolve({ codeMatch: false });
-            verificationResultRef.remove();
+            return;
           }
+
+          log.debug('Submitted authentication code was correct.');
+          // save this info related to this email authentication for later
+          self.authenticatedEmailTaskId = self.taskId;
+          self.authenticatedEmail = self.unauthenticatedEmail;
+          self.unauthenticatedEmail = undefined;
+          resolve({ codeMatch: true });
         });
       });
     });

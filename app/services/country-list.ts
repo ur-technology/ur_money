@@ -678,7 +678,7 @@ export class CountryListService {
                 'code': '+52',
                 'name': 'Mexico',
                 'iso': 'MX',
-                'isoCode': '1'
+                'mobileAreaCodePrefix': '1'
             },
             {
                 'code': '+691',
