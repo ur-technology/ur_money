@@ -27,7 +27,7 @@ export class AuthenticationCodePage {
     let self = this;
     let loadingModal = self.loadingController.create({content: self.translate.instant('pleaseWait') });
 
-    let authenticationResult;
+    let authenticationCodeMatch;
 
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
@@ -37,12 +37,12 @@ export class AuthenticationCodePage {
       } else {
         return self.auth.checkSmsAuthenticationCode(self.authenticationCode);
       }
-    }).then((result: any) => {
-      authenticationResult = result;
+    }).then((codeMatch: boolean) => {
+      authenticationCodeMatch = codeMatch;
       return loadingModal.dismiss();
     }).then(() => {
       this.authenticationCode = '';
-      if (authenticationResult.codeMatch) {
+      if (authenticationCodeMatch) {
         if (this.authenticationType === 'email') {
           // email is now authenticated, but we still need to authenticate phone number
           this.nav.setRoot(PhoneNumberPage);

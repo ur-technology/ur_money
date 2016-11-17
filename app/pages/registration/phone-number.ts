@@ -83,11 +83,11 @@ export class PhoneNumberPage implements OnInit {
       return loadingModal.dismiss();
     }).then(() => {
       switch (taskState) {
-        case 'sms_code_generation_completed_and_code_sent':
+        case 'completed':
           self.nav.setRoot(AuthenticationCodePage, { authenticationType: 'sms' });
           break;
 
-        case 'sms_code_generation_canceled_because_user_not_invited':
+        case 'canceled_because_user_not_invited':
           let alert = this.alertCtrl.create({
             title: this.translate.instant('phone-number.noInviteFoundTitle'),
             message: this.translate.instant('phone-number.noInviteFoundMessage'),
@@ -105,12 +105,12 @@ export class PhoneNumberPage implements OnInit {
           alert.present();
           break;
 
-        case 'sms_code_generation_canceled_because_user_disabled':
+        case 'canceled_because_user_disabled':
           self.toastService.showMessage({messageKey: 'phone-number.errorUserDisabled'});
           break;
 
         default:
-          self.toastService.showMessage({messageKey: 'phone-number.errorSms'});
+          self.toastService.showMessage({messageKey: 'phone-number.unexpectedProblem'});
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {

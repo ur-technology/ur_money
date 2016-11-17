@@ -21,7 +21,7 @@
         "numberConfirmation": "Number confirmation",
         "phoneCorrect": "Is your phone number above correct?",
         "errorUserDisabled": "Youf user account has been disabled.",
-        "errorSms": "There was an unexpected problem sending the SMS. Please try again later",
+        "unexpectedProblem": "There was an unexpected problem sending the SMS. Please try again later",
         "noInviteFoundTitle": "Invitation Not Found",
         "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
         "betaProgramButton": "I'm in the UR Money Beta Program"

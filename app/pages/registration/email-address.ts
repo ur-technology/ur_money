@@ -46,15 +46,15 @@ export class EmailAddressPage {
       return loadingModal.dismiss();
     }).then(() => {
       switch (taskState) {
-        case 'email_code_generation_completed_and_code_sent':
+        case 'completed':
           self.nav.setRoot(AuthenticationCodePage, { authenticationType: 'email' });
           break;
 
-        case 'email_code_generation_canceled_because_user_not_invited':
+        case 'canceled_because_user_not_invited':
           self.toastService.showMessage({messageKey: 'email-address.errorUserNotInBetaProgram'});
           break;
 
-        case 'email_code_generation_canceled_because_user_disabled':
+        case 'canceled_because_user_disabled':
           self.toastService.showMessage({messageKey: 'email-address.errorUserDisabled'});
           break;
 
