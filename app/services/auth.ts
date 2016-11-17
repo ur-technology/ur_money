@@ -38,6 +38,9 @@ export class AuthService {
             }
             self.currentUser = currentUser;
             let status = _.trim((currentUser.registration && currentUser.registration.status) || '') || 'initial';
+            if ((currentUser.wallet && currentUser.wallet.address) && (status === 'initial')) {
+              status = 'wallet-generated';
+            }
             self.getSimCountryCode().then((countryCode) => {
               self.countryCode = _.trim(countryCode || currentUser.countryCode || '');
               if (!self.countryCode) {
@@ -49,10 +52,11 @@ export class AuthService {
             });
             nav.setRoot({
               'initial': pages.introPage,
-              'verification-requested': pages.verificationPendingPage,
-              'verification-pending': pages.verificationPendingPage,
-              'verification-failed': pages.verificationFailedPage,
-              'verification-succeeded': currentUser.wallet && currentUser.wallet.address ? pages.homePage : pages.walletSetupPage,
+              'wallet-generated': pages.homePage,
+              'verification-requested': pages.homePage,
+              'verification-pending': pages.homePage,
+              'verification-failed': pages.homePage,
+              'verification-succeeded': pages.homePage,
               'announcement-requested': pages.homePage,
               'announcement-failed': pages.homePage,
               'announcement-succeeded': pages.homePage
@@ -109,7 +113,7 @@ export class AuthService {
               if (connected) {
                 resolve();
               } else {
-                reject({messageKey: 'noInternetConnection'});
+                reject({ messageKey: 'noInternetConnection' });
               }
             }
           });

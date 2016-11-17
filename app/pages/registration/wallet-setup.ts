@@ -140,15 +140,8 @@ export class WalletSetupPage {
         createdAt: firebase.database.ServerValue.TIMESTAMP
       }
     }).then(() => {
-      firebase.database().ref('/identityAnnouncementQueue/tasks').push({
-        userId: this.auth.currentUserId
-      });
+
       self.loadingModal.dismiss().then(() => {
-        self.toastCtrl.create({
-          message: this.translate.instant('wallet-setup.youWillReceiveBonus'),
-          duration: 5000,
-          position: 'bottom'
-        }).present();
         self.contactsService.loadContacts(self.auth.countryCode, self.auth.currentUserId, self.auth.currentUser.phone);
         self.nav.setRoot(HomePage);
       });

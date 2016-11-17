@@ -72,6 +72,9 @@
         "passportExpirationYear": "Expiration Year",
         "gender": "Gender"
     },
+    "identity-verification": {
+        "title": "Identity verification"
+    },
     "wallet-setup": {
         "title": "Secret Phrase Setup",
         "suggestSecretPhrase": "Suggest secret phrase",

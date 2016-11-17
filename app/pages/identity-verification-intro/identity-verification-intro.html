@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"identity-verification.title" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-content text-justify>
+      <img src="img/ur-logo.png"
+        class="slide-image" />
+      <h2 class="slide-title">You’re just a few steps away from claiming your <b>free 2,000 UR!</b></h2><br />
+      <p>In order to provide a safe environment, we ask all community members to verify their identity. To do this, we will need to ask you for several pieces of identifying information including mobile phone number, name, address, date of birth, etc., and then share this info with Trulioo, Inc., a Canada-based identity verification service.</p>          
+    </ion-card-content>
+    <ion-item class="footer-card">
+      <button
+        item-right
+        clear
+        (click)="goToProfile()">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-card>
+</ion-content>

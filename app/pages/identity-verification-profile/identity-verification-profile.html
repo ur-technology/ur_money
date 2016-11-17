@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"identity-verification.title" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding
+  #content>
+  <form [formGroup]="mainForm"
+    (ngSubmit)="mainForm.valid && submit()">
+    <ion-card>
+      <ion-card-header>
+        <ion-label text-center primary>Address</ion-label>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label floating>{{'profile-setup.state' | translate}}</ion-label>
+            <ion-select *ngIf="states.length>0"
+              (ionChange)="onStateSelected($event)"
+              formControlName="stateName">
+              <ion-option [value]="s"
+                *ngFor="let s of states">{{s.name}}</ion-option>
+            </ion-select>
+            <ion-input *ngIf="states.length==0"
+              type="text"
+              [(ngModel)]="profile.stateName"
+              formControlName="stateName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>{{'profile-setup.address' | translate}}</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="profile.address"
+              formControlName="address"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>{{'profile-setup.city' | translate}}</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="profile.city"
+              formControlName="city"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>{{'profile-setup.postalCode' | translate}}</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="profile.postalCode"
+              formControlName="postalCode"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+      <ion-item class="footer-card">
+        <button item-right
+          clear
+          [disabled]="!mainForm.valid"
+          (click)="submit()">
+              Continue
+              <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+      </ion-item>
+    </ion-card>
+
+  </form>
+</ion-content>
+<ion-footer [keyboardAttach]="content">
+
+</ion-footer>

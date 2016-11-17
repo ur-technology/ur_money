@@ -10,7 +10,8 @@ import {EventListComponent} from '../../components/event-list/event-list';
 import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {BigNumber} from 'bignumber.js';
-
+import {IdentityVerificationIntroPage} from '../identity-verification-intro/identity-verification-intro';
+import * as _ from 'lodash';
 declare var jQuery: any;
 
 @Page({
@@ -29,6 +30,8 @@ export class HomePage {
   ) {
     this.elementRef = elementRef;
     this.android = this.platform.is('android');
+
+
   }
 
   reflectAvailableBalanceOnPage() {
@@ -46,10 +49,12 @@ export class HomePage {
     });
 
     if (self.chartData.balanceUpdated) {
+      this.auth.reloadCurrentUser();
       self.reflectAvailableBalanceOnPage();
     }
     self.chartData.balanceUpdatedEmitter.subscribe((balanceInfo) => {
       self.ngZone.run(() => {
+        this.auth.reloadCurrentUser();
         self.reflectAvailableBalanceOnPage();
       });
     });
@@ -138,4 +143,13 @@ export class HomePage {
     this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
   }
 
+  isIdentityVerified() {
+    let status = _.trim((this.auth.currentUser.registration && this.auth.currentUser.registration.status) || '') || 'initial';
+    return status === 'announcement-succeeded' ? true : false;
+  }
+
+  completeProfile() {
+    this.nav.push(IdentityVerificationIntroPage);
+
+  }
 }

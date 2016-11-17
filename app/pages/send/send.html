@@ -1,58 +1,69 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>{{"send.title" | translate}} {{auth.envMode()}}</ion-title>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title>{{"send.title" | translate}} {{auth.envMode()}}</ion-title>
+  </ion-navbar>
 </ion-header>
 <ion-content padding
-    class="dash-send-viewx">
-    <form class="send-requestcontx"
-        [formGroup]="mainForm"
-        (ngSubmit)="mainForm.valid && sendUR()">
-        <ion-item>
-            <ion-label floating>{{"send.sendTo" | translate}}</ion-label>
-            <ion-input type="text"
-                value="{{contact.name}}"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>{{"send.availableBalance" | translate}}</ion-label>
-            <ion-input disabled="true"
-                value="{{availableBalance.toFormat(5)}}"></ion-input>
-            <ion-note item-right> UR </ion-note>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>{{"send.estimatedFee" | translate}}</ion-label>
-            <ion-input disabled="true"
-                value="{{estimatedFee.toFormat(5)}}"></ion-input>
-            <ion-note item-right> UR </ion-note>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>{{"send.maxAmount" | translate}}</ion-label>
-            <ion-input disabled="true"
-                value="{{maxAmount.toFormat(5)}}"></ion-input>
-            <ion-note item-right> UR </ion-note>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>{{'send.enterAmount' | translate}}</ion-label>
-            <ion-input formControlName="amount" (focus)="focusInput()"
-                type="number"></ion-input>
-            <ion-note item-right> UR </ion-note>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>{{'send.secretPhrase' | translate}}</ion-label>
-            <ion-input formControlName="secretPhrase" (focus)="focusInput()"
-                type="password"></ion-input>
-        </ion-item>
+  class="dash-send-viewx">
+  <form class="send-requestcontx"
+    [formGroup]="mainForm"
+    (ngSubmit)="mainForm.valid && sendUR()">
+    <ion-item>
+      <ion-label floating>{{"send.sendTo" | translate}}</ion-label>
+      <ion-input type="text"
+        value="{{contact.name}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{"send.availableBalance" | translate}}</ion-label>
+      <ion-input disabled="true"
+        value="{{availableBalance.toFormat(5)}}"></ion-input>
+      <ion-note item-right> UR </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{"send.estimatedFee" | translate}}</ion-label>
+      <ion-input disabled="true"
+        value="{{estimatedFee.toFormat(5)}}"></ion-input>
+      <ion-note item-right> UR </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{"send.maxAmount" | translate}}</ion-label>
+      <ion-input disabled="true"
+        value="{{maxAmount.toFormat(5)}}"></ion-input>
+      <ion-note item-right> UR </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'send.enterAmount' | translate}}</ion-label>
+      <ion-input formControlName="amount"
+        (focus)="focusInput()"
+        type="number"></ion-input>
+      <ion-note item-right> UR </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'send.secretPhrase' | translate}}</ion-label>
+      <ion-input formControlName="secretPhrase"
+        (focus)="focusInput()"
+        type="password"></ion-input>
+    </ion-item>
+    <br />
+    <div class="validatorError"
+      *ngIf="missingAmount()">{{"send.amountRequired" | translate}}</div>
+    <div class="validatorError"
+      *ngIf="numberOutOfRange()">{{"send.numberOutOfRange" | translate}}</div>
+    <div class="validatorError"
+      *ngIf="missingSecretPhrase()">{{"send.secretPhraseRequired" | translate}}</div>
+    <div class="validatorError"
+      *ngIf="incorrectSecretPhrase()">{{"send.incorrectSecretPhrase" | translate}}</div>
 
-        <!-- <div class="card send-requesttextarea">
+    <!-- <div class="card send-requesttextarea">
             <label class="item item-input">
                 <ion-textarea formControlName="message"
                     placeholder="{{'send.enterMessage' | translate}}"></ion-textarea>
             </label>
         </div> -->
-            <button round
-                block
-                class="send-requestbtn"
-                type="submit"
-                [disabled]="!mainForm.valid">{{"send.send" | translate}}</button>
-    </form>
+    <button round
+      block
+      class="send-requestbtn"
+      type="submit"
+      [disabled]="!mainForm.valid">{{"send.send" | translate}}</button>
+  </form>
 </ion-content>

@@ -72,6 +72,9 @@
         "passportExpirationYear": "Año de caducidad",
         "gender": "Género"
     },
+    "identity-verification": {
+        "title": "Verificación de identidad"
+    },
     "wallet-setup": {
         "title": "Configuración de frase secreta",
         "suggestSecretPhrase": "Sugerir frase secreta",

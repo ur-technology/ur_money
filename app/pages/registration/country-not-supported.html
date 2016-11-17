@@ -1,9 +1,14 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>{{"country-not-supported.title" | translate}}</ion-title>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title>{{"country-not-supported.title" | translate}}</ion-title>
+  </ion-navbar>
 </ion-header>
-<ion-content padding
-    class="registration">
-    {{"country-not-supported.message" | translate}}
+<ion-content padding>
+  <ion-card>
+    <ion-card-content text-justify>
+      <img src="img/ur-logo.png"
+        class="slide-image" />
+      <h2 class="slide-title">  {{"country-not-supported.message" | translate}}</h2><br />
+    </ion-card-content>
+  </ion-card>
 </ion-content>
