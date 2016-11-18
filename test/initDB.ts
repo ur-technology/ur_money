@@ -10,3 +10,5 @@ export var defaultDB = defaultFirebase({
 export var configDB = firebaseAuthConfig({
     provider: AuthProviders.Custom, method: AuthMethods.CustomToken, remember: 'default' // scope: ['email']
 });
+
+export var af = new AngularFire(`https://${Config.firebaseProjectId}.firebaseio.com`, `${Config.firebaseProjectId}.firebaseapp.com`, `${Config.firebaseProjectId}.appspot.com`);
