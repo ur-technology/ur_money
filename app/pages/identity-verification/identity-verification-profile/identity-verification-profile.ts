@@ -5,12 +5,12 @@ import {IdentityVerificationTrulioPage} from '../identity-verification-trulio/id
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {UserModel} from '../../models/user';
-import {AuthService} from '../../services/auth';
-import {CustomValidator} from '../../validators/custom';
+import {UserModel} from '../../../models/user';
+import {AuthService} from '../../../services/auth';
+import {CustomValidator} from '../../../validators/custom';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification-profile/identity-verification-profile.html',
+  templateUrl: 'build/pages/identity-verification/identity-verification-profile/identity-verification-profile.html',
   pipes: [TranslatePipe]
 })
 export class IdentityVerificationProfilePage {

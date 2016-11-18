@@ -4,7 +4,7 @@ import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {IdentityVerificationProfilePage} from '../identity-verification-profile/identity-verification-profile';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification-intro/identity-verification-intro.html',
+  templateUrl: 'build/pages/identity-verification/identity-verification-intro/identity-verification-intro.html',
   pipes: [TranslatePipe]
 })
 export class IdentityVerificationIntroPage {

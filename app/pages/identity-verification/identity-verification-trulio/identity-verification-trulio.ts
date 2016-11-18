@@ -6,13 +6,13 @@ import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
-import {AuthService} from '../../services/auth';
-import {CustomValidator} from '../../validators/custom';
-import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
-import {VerificationPendingPage} from '../registration/verification-pending';
+import {AuthService} from '../../../services/auth';
+import {CustomValidator} from '../../../validators/custom';
+import {KeyboardAttachDirective} from '../../../directives/keyboard-attach.directive';
+import {VerificationPendingPage} from '../../registration/verification-pending';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification-trulio/identity-verification-trulio.html',
+  templateUrl: 'build/pages/identity-verification/identity-verification-trulio/identity-verification-trulio.html',
   directives: [REACTIVE_FORM_DIRECTIVES, KeyboardAttachDirective],
   pipes: [TranslatePipe]
 })

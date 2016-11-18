@@ -5,7 +5,6 @@ import * as _ from 'lodash';
 import {AuthService} from '../../services/auth';
 import {ToastService} from '../../services/toast';
 import {VerificationSmsCodePage} from './verification-sms-code';
-import {CountryNotSupportedPage} from './country-not-supported';
 import {CountryListService} from '../../services/country-list';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
@@ -81,9 +80,7 @@ export class PhoneNumberPage implements OnInit {
       taskState = newTaskState;
       return loadingModal.dismiss();
     }).then(() => {
-      if (taskState === 'code_generation_canceled_because_user_from_not_supported_country') {
-        self.nav.setRoot(CountryNotSupportedPage);
-      } else if (taskState === 'code_generation_completed_and_sms_sent') {
+      if (taskState === 'code_generation_completed_and_sms_sent') {
         self.nav.setRoot(VerificationSmsCodePage, { phone: phone, countryCode: self.selectedCountry.code });
       } else if (taskState === 'code_generation_canceled_because_user_not_invited') {
         self.toastService.showMessage({messageKey: 'phone-number.errorUserNotInvited'});

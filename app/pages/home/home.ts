@@ -10,7 +10,7 @@ import {EventListComponent} from '../../components/event-list/event-list';
 import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {BigNumber} from 'bignumber.js';
-import {IdentityVerificationIntroPage} from '../identity-verification-intro/identity-verification-intro';
+import {IdentityVerificationIntroPage} from '../identity-verification/identity-verification-intro/identity-verification-intro';
 import * as _ from 'lodash';
 declare var jQuery: any;
 
