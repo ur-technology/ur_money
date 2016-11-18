@@ -21,10 +21,20 @@ describe('Auth service', () => {
         AuthService
     ]);
 
-    it('check auth service dependency', inject([AngularFire], (angularFire) => {
+    it('check auth service dependency', inject([AuthService, AngularFire], (authService, angularFire) => {
         // Expectations
-        expect(false).toBeFalsy();
+        // expect(false).toBeFalsy();
 
+        return authService.checkFirebaseConnection().then(
+            ()=>{
+                console.log("success");
+                done();
+            },
+            ()=>{
+                console.log("error");
+                done();
+            }
+        );
     }));
 
 });
