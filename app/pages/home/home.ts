@@ -11,6 +11,9 @@ import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {BigNumber} from 'bignumber.js';
 import {IdentityVerificationIntroPage} from '../identity-verification/identity-verification-intro/identity-verification-intro';
+import {CountryNotSupportedPage} from '../registration/country-not-supported';
+import {VerificationPendingPage} from '../registration/verification-pending';
+import {VerificationFailedPage} from '../registration/verification-failed';
 import * as _ from 'lodash';
 declare var jQuery: any;
 
@@ -49,7 +52,6 @@ export class HomePage {
     });
 
     if (self.chartData.balanceUpdated) {
-      this.auth.reloadCurrentUser();
       self.reflectAvailableBalanceOnPage();
     }
     self.chartData.balanceUpdatedEmitter.subscribe((balanceInfo) => {
@@ -144,12 +146,21 @@ export class HomePage {
   }
 
   isIdentityVerified() {
-    let status = _.trim((this.auth.currentUser.registration && this.auth.currentUser.registration.status) || '') || 'initial';
-    return status === 'announcement-succeeded' ? true : false;
+    return this.auth.getUserStatus() === 'announcement-succeeded' ? true : false;
   }
 
   completeProfile() {
-    this.nav.push(IdentityVerificationIntroPage);
-
+    let status = this.auth.getUserStatus();
+    if (this.auth.isUserInSupportedCountry()) {
+      this.nav.push({
+        'verification-requested': VerificationPendingPage,
+        'verification-pending': VerificationPendingPage,
+        'verification-failed': VerificationFailedPage,
+        'wallet-generated': IdentityVerificationIntroPage
+      }[status]);
+    } else {
+      this.nav.push(CountryNotSupportedPage);
+    }
   }
+
 }

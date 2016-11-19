@@ -23,10 +23,6 @@ import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chat
 import {NoInternetConnectionPage} from './pages/registration/no-internet-connection';
 import {WelcomePage} from './pages/registration/welcome';
 import {IntroPage} from './pages/registration/intro';
-import {ProfileSetupPage} from './pages/registration/profile-setup';
-import {WalletSetupPage} from './pages/registration/wallet-setup';
-import {VerificationPendingPage} from './pages/registration/verification-pending';
-import {VerificationFailedPage} from './pages/registration/verification-failed';
 import {HomePage} from './pages/home/home';
 import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
@@ -91,10 +87,6 @@ class UrMoney {
         noInternetConnectionPage: NoInternetConnectionPage,
         welcomePage: WelcomePage,
         introPage: IntroPage,
-        profileSetupPage: ProfileSetupPage,
-        verificationPendingPage: VerificationPendingPage,
-        verificationFailedPage: VerificationFailedPage,
-        walletSetupPage: WalletSetupPage,
         homePage: HomePage
       });
 

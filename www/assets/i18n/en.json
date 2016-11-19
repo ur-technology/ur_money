@@ -56,7 +56,8 @@
         "city": "City",
         "postalCode": "Zip/Postal Code",
         "country": "Country",
-        "email": "Email"
+        "email": "Email",
+        "name": "Full name"
     },
     "identity-info-setup": {
         "title": "Identification Document",

@@ -23,28 +23,17 @@ export class ProfileSetupPage {
     public nav: NavController,
     public auth: AuthService
   ) {
-
-    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'countryCode', 'email']);
-    this.profile.countryCode = 'US';
+    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'middleName', 'email', 'countryCode']);
+    this.profile.name = `${this.auth.currentUser.firstName} ${this.auth.currentUser.lastName}`;
 
     let formElements: any = {
       firstName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       lastName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
-      country: new FormControl(this.profile.countryCode, Validators.required),
+      middleName: new FormControl(''),
+      name: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       email: new FormControl('', [Validators.required, CustomValidator.emailValidator])
     };
     this.mainForm = new FormGroup(formElements);
-    this.fillCountriesArray();
-  }
-
-  fillCountriesArray() {
-    this.countries = require('country-data').countries.all.sort((a, b) => {
-      return (a.name < b.name) ? -1 : ((a.name === b.name) ? 0 : 1);
-    });
-    // remove Cuba, Iran, North Korea, Sudan, Syria
-    this.countries = _.filter(this.countries, (country) => {
-      return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
-    });
   }
 
   submit() {
@@ -55,7 +44,7 @@ export class ProfileSetupPage {
       _.merge(this.auth.currentUser, newValues);
       this.nav.setRoot(WalletSetupPage);
     }).catch((error) => {
-      log.warn('unable to save address info');
+      log.warn('unable to save profile info');
     });
   };
 }

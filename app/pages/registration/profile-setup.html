@@ -15,18 +15,20 @@
           <ion-input type="text" [(ngModel)]="profile.firstName" formControlName="firstName"></ion-input>
       </ion-item>
       <ion-item>
+          <ion-label floating>{{'profile-setup.middleName' | translate}}</ion-label>
+          <ion-input type="text" [(ngModel)]="profile.middleName" formControlName="middleName"></ion-input>
+      </ion-item>
+      <ion-item>
           <ion-label floating>{{'profile-setup.lastName' | translate}}</ion-label>
           <ion-input type="text" [(ngModel)]="profile.lastName" formControlName="lastName"></ion-input>
       </ion-item>
       <ion-item>
-          <ion-label floating>{{'profile-setup.country' | translate}}</ion-label>
-          <ion-select [(ngModel)]="profile.countryCode" formControlName="country">
-              <ion-option [value]="c.alpha2" *ngFor="let c of countries">{{c.name}}</ion-option>
-          </ion-select>
+          <ion-label floating>{{'profile-setup.name' | translate}}</ion-label>
+          <ion-input type="text" [(ngModel)]="profile.name" formControlName="name"></ion-input>
       </ion-item>
       <ion-item>
           <ion-label floating>{{'profile-setup.email' | translate}}</ion-label>
-          <ion-input type="text" [(ngModel)]="profile.email" formControlName="email"></ion-input>
+          <ion-input type="email" [(ngModel)]="profile.email" formControlName="email"></ion-input>
       </ion-item>
     </form>
 </ion-content>

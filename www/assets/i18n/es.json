@@ -56,7 +56,8 @@
         "city": "Ciudad",
         "postalCode": "Código postal",
         "country": "País",
-        "email": "Email"
+        "email": "Email",
+        "name": "Nombre completo"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",

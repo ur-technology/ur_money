@@ -6,7 +6,6 @@ import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {Subscription} from 'rxjs';
 import {ContactsService} from '../services/contacts';
-import {Sim} from 'ionic-native';
 import {Config} from '../config/config';
 
 @Injectable()
@@ -37,30 +36,17 @@ export class AuthService {
               userSubscription.unsubscribe();
             }
             self.currentUser = currentUser;
-            let status = _.trim((currentUser.registration && currentUser.registration.status) || '') || 'initial';
-            if ((currentUser.wallet && currentUser.wallet.address) && (status === 'initial')) {
-              status = 'wallet-generated';
+            if (self.countryCode) {
+              self.currentUser.countryCode = self.countryCode;
+              this.currentUserRef.update({ countryCode: self.countryCode });
             }
-            self.getSimCountryCode().then((countryCode) => {
-              self.countryCode = _.trim(countryCode || currentUser.countryCode || '');
-              if (!self.countryCode) {
-                log.warn('country code not defined for this user');
-              }
-              if (status !== 'initial') {
-                self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
-              }
-            });
-            nav.setRoot({
-              'initial': pages.introPage,
-              'wallet-generated': pages.homePage,
-              'verification-requested': pages.homePage,
-              'verification-pending': pages.homePage,
-              'verification-failed': pages.homePage,
-              'verification-succeeded': pages.homePage,
-              'announcement-requested': pages.homePage,
-              'announcement-failed': pages.homePage,
-              'announcement-succeeded': pages.homePage
-            }[status]);
+            let status = self.getUserStatus();
+            if (status === 'initial') {
+              nav.setRoot(pages.introPage);
+            } else {
+              self.contactsService.loadContacts(self.currentUser.countryCode, self.currentUserId, self.currentUser.phone);
+              nav.setRoot(pages.homePage);
+            }
           });
         } else {
           // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
@@ -141,7 +127,8 @@ export class AuthService {
     });
   }
 
-  checkVerificationCode(submittedVerificationCode: string) {
+  checkVerificationCode(submittedVerificationCode: string, countryIso: string) {
+    this.countryCode = countryIso;
     let self = this;
     return new Promise((resolve) => {
       let taskRef = firebase.database().ref(`/phoneAuthenticationQueue/tasks/${self.taskId}`);
@@ -187,16 +174,21 @@ export class AuthService {
     return !!this.currentUser;
   }
 
+  private getSupportedCountryCodes() {
+    let supportedCountries: Array<string> = ['US'];
+    return supportedCountries;
+  }
 
-  private getSimCountryCode(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      Sim.getSimInfo().then((info) => {
-        resolve(info.countryCode.toUpperCase());
-      }, (error) => {
-        log.debug('unable to get country code from sim', error);
-        resolve(undefined);
-      });
-    });
+  isUserInSupportedCountry() {
+    return this.getSupportedCountryCodes().indexOf(this.currentUser.countryCode) !== -1;
+  }
+
+  getUserStatus() {
+    let status = _.trim((this.currentUser.registration && this.currentUser.registration.status) || '') || 'initial';
+    if ((this.currentUser.wallet && this.currentUser.wallet.address) && (status === 'initial')) {
+      status = 'wallet-generated';
+    }
+    return status;
   }
 
   envMode() {

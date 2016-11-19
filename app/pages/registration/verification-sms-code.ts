@@ -13,6 +13,7 @@ export class VerificationSmsCodePage {
   errorMessage: string;
   phone: string;
   countryCode: string;
+  countryIso: string;
 
   constructor(public nav: NavController, public navParams: NavParams,
     public auth: AuthService,
@@ -23,6 +24,7 @@ export class VerificationSmsCodePage {
     this.nav = nav;
     this.phone = this.navParams.get('phone');
     this.countryCode = this.navParams.get('countryCode');
+    this.countryIso = this.navParams.get('countryIso');
     this.verificationCode = '';
   }
 
@@ -35,7 +37,7 @@ export class VerificationSmsCodePage {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.checkVerificationCode(self.verificationCode);
+      return self.auth.checkVerificationCode(self.verificationCode, this.countryIso);
     }).then((result: any) => {
       verificationResult = result;
       return loadingModal.dismiss();

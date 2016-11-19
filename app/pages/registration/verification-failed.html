@@ -3,7 +3,21 @@
         <ion-title>{{"verification-failed.title" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content padding
-    class="registration">
-    {{"verification-failed.message" | translate}}
+<ion-content padding>
+  <ion-card>
+    <ion-card-content text-justify>
+      <img src="img/ur-logo.png"
+        class="slide-image" />
+      <h2 class="slide-title">{{"verification-failed.message" | translate}}</h2><br />
+    </ion-card-content>
+    <ion-item class="footer-card">
+      <button large
+        item-right
+        clear
+        (click)="goToHome()">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-card>
 </ion-content>

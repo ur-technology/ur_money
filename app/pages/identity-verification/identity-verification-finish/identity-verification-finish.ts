@@ -15,7 +15,6 @@ export class IdentityVerificationFinishPage {
   }
 
   goToHome() {
-    this.auth.reloadCurrentUser();
     this.navCtrl.setRoot(HomePage);
   }
 }
