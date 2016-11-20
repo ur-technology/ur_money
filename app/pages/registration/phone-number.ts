@@ -77,7 +77,7 @@ export class PhoneNumberPage implements OnInit {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.requestSmsAuthenticationCode(phone, self.selectedCountry.code);
+      return self.auth.requestSmsAuthenticationCode(phone, self.selectedCountry.code, self.selectedCountry.iso);
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();

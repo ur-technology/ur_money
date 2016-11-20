@@ -14,6 +14,7 @@ export class AuthService {
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
   public alphaCountryCodeAssociatedWithPhone: string;
+  public alphaCountryCodeIsoAssociatedWithPhone: string;
   public taskId: string;
   public authenticatedEmailTaskId: string;
   public authenticatedEmail: string;
@@ -41,13 +42,14 @@ export class AuthService {
             self.currentUser = currentUser;
             if (!self.currentUser.countryCode && self.alphaCountryCodeAssociatedWithPhone) {
               self.currentUser.countryCode = self.alphaCountryCodeAssociatedWithPhone;
-              this.currentUserRef.update({ countryCode: self.currentUser.countryCode });
+              self.currentUser.countryCodeIso = self.alphaCountryCodeIsoAssociatedWithPhone;
+              this.currentUserRef.update({ countryCode: self.currentUser.countryCode, countryCodeIso: self.currentUser.countryCodeIso });
             }
             let status = self.getUserStatus();
             if (status === 'initial') {
               nav.setRoot(pages.introPage);
             } else {
-              self.contactsService.loadContacts(self.currentUserId, self.currentUser.phone, self.currentUser.countryCode);
+              self.contactsService.loadContacts(self.currentUserId, self.currentUser.phone, self.currentUser.countryCodeIso);
               nav.setRoot(pages.homePage);
             }
           });
@@ -57,6 +59,7 @@ export class AuthService {
           self.currentUserRef = undefined;
           self.currentUser = undefined;
           self.alphaCountryCodeAssociatedWithPhone = undefined;
+          self.alphaCountryCodeIsoAssociatedWithPhone = undefined;
           nav.setRoot(pages.welcomePage);
         }
       });
@@ -111,9 +114,10 @@ export class AuthService {
     });
   }
 
-  requestSmsAuthenticationCode(phone: string, alphaCountryCodeAssociatedWithPhone: string) {
+  requestSmsAuthenticationCode(phone: string, alphaCountryCodeAssociatedWithPhone: string, alphaCountryCodeIsoAssociatedWithPhone: string) {
     let self = this;
     self.alphaCountryCodeAssociatedWithPhone = alphaCountryCodeAssociatedWithPhone;
+    self.alphaCountryCodeIsoAssociatedWithPhone = alphaCountryCodeIsoAssociatedWithPhone;
     return new Promise((resolve, reject) => {
       let baseRef = firebase.database().ref('/authenticationQueue/tasks');
       self.taskId = self.authenticatedEmailTaskId || baseRef.push().key;
@@ -248,7 +252,7 @@ export class AuthService {
   }
 
   isUserInSupportedCountry() {
-    return this.getSupportedCountryCodes().indexOf(this.currentUser.countryCode) !== -1;
+    return this.getSupportedCountryCodes().indexOf(this.currentUser.countryCodeIso) !== -1;
   }
 
   getUserStatus() {

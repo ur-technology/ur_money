@@ -147,7 +147,7 @@ export class WalletSetupPage {
       }
     }).then(() => {
       self.loadingModal.dismiss().then(() => {
-        self.contactsService.loadContacts(self.auth.currentUserId, self.auth.currentUser.phone, self.auth.currentUser.countryCode);
+        self.contactsService.loadContacts(self.auth.currentUserId, self.auth.currentUser.phone, self.auth.currentUser.countryCodeIso);
         self.nav.setRoot(HomePage);
       });
     }).catch((error) => {

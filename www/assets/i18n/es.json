@@ -21,7 +21,20 @@
         "numberConfirmation": "Confirmación de número",
         "phoneCorrect": "Es el número de teléfono indicado anteriormente correcto?",
         "errorUserDisabled": "Tu cuenta ha sido deshabilitada.",
-        "errorSms": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"
+        "errorSms": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde",
+        "noInviteFoundTitle": "Invitation Not Found",
+        "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
+        "betaProgramButton": "I'm in the UR Money Beta Program"
+    },
+    "email-address": {
+        "title": "Enter Email Address",
+        "heading": "Please enter the email address that you have registed in the UR Money Beta Program",
+        "placeholder": "Enter Your Email Address",
+        "errorUserDisabled": "Youf user account has been disabled.",
+        "unexpectedProblem": "There was an unexpected problem sending you an email. Please try again later",
+        "noInviteFoundTitle": "Invitation Not Found",
+        "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
+        "betaProgramButton": "I'm in the UR Money Beta Program"
     },
     "authentication-code": {
         "title": "Verification Code",
@@ -31,29 +44,6 @@
         "resendCode": "Didn't receive verification code? Send again",
         "unableToProcessCode": "We were unable to process your verification code. Please try again later",
         "invalidCode": "The verification code you entered is incorrect or expired. Please try again."
-    },
-    "authentication-code": {
-      "title": "Código de Verificación",
-        "heading1": {
-          "sms": "Te hemos enviado un SMS con un código.",
-          "email": "Te hemos enviado un correo con un código."
-        },
-        "heading2": {
-          "sms": "Para completar la verificación del número de teléfono, ingresa el código de activación de 6 dígitos.",
-          "email": "Para completar la verificación del correo electronico, ingresa el código de activación de 6 dígitos."
-        },
-        "resendCode": "Didn't receive verification code? Send again",
-        "unableToProcessCode": "We were unable to process your verification code. Please try again later",
-        "invalidCode": "The verification code you entered is incorrect or expired. Please try again."
-    },
-        "heading1": "Te hemos enviado un SMS con un código.",
-        "resendCode": "No llegó el SMS? Enviar de nuevo",
-        "unableToProcessCode": "We were unable to process your verification code. Please try again later",
-        "invalidCode": "The verification code you entered is incorrect or expired. Please try again."
-
-        "errorVerificationSms": "No hemos podido procesar el código de verificación. Por favor, inténtalo más tarde",
-        "errorCode": "El código de verificación que has introducido es incorrecto o ha caducado. Por favor, inténtalo de nuevo.",
-        "errorSendingSmsAgain": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde"
     },
     "intro": {
         "title": "Configurar perfil",

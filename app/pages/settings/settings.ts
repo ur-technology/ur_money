@@ -55,14 +55,14 @@ export class SettingsPage {
       middleName: authUser.middleName || '',
       lastName: authUser.lastName || '',
       city: authUser.city,
-      country: this.countries.find((x) => { return x.alpha2 === (authUser.countryCode || 'US'); })
+      country: this.countries.find((x) => { return x.alpha2 === (authUser.countryCodeIso || 'US'); })
     };
-    let defaultStateName = (authUser.countryCode === this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
+    let defaultStateName = (authUser.countryCodeIso === this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
     this.countrySelected(defaultStateName);
   }
 
   countrySelected(defaultStateName) {
-    this.profile.countryCode = this.profile.country.alpha2;
+    this.profile.countryCodeIso = this.profile.country.alpha2;
     this.states = _.filter(this.allStates, (state) => { return state.country === this.profile.country.alpha2; });
     if (this.states.length > 0) {
       this.profile.state = (defaultStateName && this.states.find((x) => { return x.name === defaultStateName; })) || this.states[0];
@@ -106,7 +106,7 @@ export class SettingsPage {
       name: UserModel.fullName(self.profile),
       city: self.profile.city,
       stateName: self.profile.stateName,
-      countryCode: self.profile.countryCode
+      countryCodeIso: self.profile.countryCodeIso
     };
     self.auth.currentUserRef.update(_.omitBy(profile, _.isNil)).then(() => {
       self.auth.reloadCurrentUser();

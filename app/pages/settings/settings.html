@@ -15,7 +15,7 @@
             <ion-item-divider light>{{"settings.profileInfo" | translate}}</ion-item-divider>
             <ion-item>
                 <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
-                <ion-input
+                <ion-input disabled="true"
                     type="text"
                     [(ngModel)]="profile.firstName"
                     formControlName="firstName"></ion-input>
@@ -23,19 +23,19 @@
             <ion-item>
                 <ion-label floating>{{'profile-setup.middleName' | translate}}</ion-label>
                 <ion-input
-                    type="text"
+                    type="text" disabled="true"
                     [(ngModel)]="profile.middleName"
                     formControlName="middleName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'profile-setup.lastName' | translate}}</ion-label>
-                <ion-input type="text"
+                <ion-input type="text" disabled="true"
                     [(ngModel)]="profile.lastName"
                     formControlName="lastName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'profile-setup.country' | translate}}</ion-label>
-                <ion-select [(ngModel)]="profile.country"
+                <ion-select [(ngModel)]="profile.country" disabled="true"
                     [ngModelOptions]="{standalone: true}"
                     (ionChange)="countrySelected()">
                     <ion-option [value]="c"

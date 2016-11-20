@@ -41,12 +41,12 @@ export class IdentityVerificationTrulioPage {
       { name: this.nationalIdPlaceholder(), value: 'National Id' },
       { name: 'Passport', value: 'Passport' }
     ];
-    if (_.includes(['US', 'AU', 'NZ'], this.auth.currentUser.countryCode)) {
+    if (_.includes(['US', 'AU', 'NZ'], this.auth.currentUser.countryCodeIso)) {
       this.identificationTypes.unshift({ name: 'Driver License', value: 'Driver License' });
     }
 
     let allStates: any[] = require('provinces');
-    let states = _.filter(allStates, (state) => { return state.country === this.auth.currentUser.countryCode; });
+    let states = _.filter(allStates, (state) => { return state.country === this.auth.currentUser.countryCodeIso; });
     this.driverLicenseStates = _.map(states, (state) => { return state.name; });
 
     let user = this.auth.currentUser;
@@ -70,7 +70,7 @@ export class IdentityVerificationTrulioPage {
         },
         'City': user.city,
         'StateProvinceCode': user.stateCode,
-        'Country': user.countryCode,
+        'Country': user.countryCodeIso,
         'PostalCode': user.postalCode
       },
       'Communication': {
@@ -212,11 +212,11 @@ export class IdentityVerificationTrulioPage {
   }
 
   private nationalIdPlaceholder() {
-    if (this.auth.currentUser.countryCode === 'US') {
+    if (this.auth.currentUser.countryCodeIso === 'US') {
       return 'Social Security Number';
-    } else if (this.auth.currentUser.countryCode === 'CA') {
+    } else if (this.auth.currentUser.countryCodeIso === 'CA') {
       return 'Social Insurance Number';
-    } else if (this.auth.currentUser.countryCode === 'MX') {
+    } else if (this.auth.currentUser.countryCodeIso === 'MX') {
       return 'Número de Credencial de Elector';
     } else {
       return 'National Id Number';
