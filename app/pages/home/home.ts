@@ -14,11 +14,12 @@ import {IdentityVerificationIntroPage} from '../identity-verification/identity-v
 import {CountryNotSupportedPage} from '../registration/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
 import {VerificationFailedPage} from '../registration/verification-failed';
+import {TranslatePipe} from 'ng2-translate/ng2-translate';
 declare var jQuery: any;
 
 @Page({
   templateUrl: 'build/pages/home/home.html',
-  pipes: [OrderBy, Timestamp, Round],
+  pipes: [OrderBy, Timestamp, Round, TranslatePipe],
   directives: [EventListComponent]
 })
 export class HomePage {

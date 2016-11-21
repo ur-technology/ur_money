@@ -149,6 +149,9 @@
         "transactions": "Transacciones",
         "about": "Acerca UR"
     },
+    "home":{
+      "unlockMessage": "<span class='small'>Desbloquea tus </span><br />2000<span>&nbsp;UR</span>"
+    },
     "contacts": {
         "invite": "Invitar",
         "sendUr": "Enviar UR",

@@ -149,6 +149,9 @@
         "transactions": "Transactions",
         "about": "About UR"
     },
+    "home":{
+      "unlockMessage": "<span class='small'>Unlock your</span><br />2000<span>&nbsp;UR</span>"
+    },
     "contacts": {
         "invite": "Invite",
         "sendUr": "Send UR",
