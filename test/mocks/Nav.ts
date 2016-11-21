@@ -22,5 +22,6 @@ export class NavMock {
 
     public setRoot(page): any {
         return page;
+
     }
 }

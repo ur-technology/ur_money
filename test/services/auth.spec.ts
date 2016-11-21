@@ -1,4 +1,4 @@
-import {beforeEachProviders, it, describe, expect, inject, async, tick, fakeAsync, beforeEach} from '@angular/core/testing';
+import {beforeEachProviders, it, describe, expect, inject} from '@angular/core/testing';
 import {provide} from '@angular/core';
 import {Platform} from 'ionic-angular';
 import {defaultDB, configDB} from '../initDB';
@@ -69,7 +69,7 @@ describe('Auth service', () => {
 
         console.log(auth.isSignedIn(), "SIGNED");
 
-        auth.requestPhoneVerification(config.registration.phone, '111111')
+        auth.requestPhoneVerification(config.registration.phone, config.registration.code)
             .then(((taskState: string)=>{
 
                 //Check if sms send
