@@ -20,7 +20,7 @@ export class NavMock {
         };
     }
 
-    public setRoot(): any {
-        return true;
+    public setRoot(page): any {
+        return page;
     }
 }

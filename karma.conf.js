@@ -1,6 +1,5 @@
 // Karma configuration
 // Generated on Wed Jul 13 2016 13:09:50 GMT+0300 (MSK)
-
 module.exports = function(config) {
   config.set({
 
@@ -27,6 +26,8 @@ module.exports = function(config) {
       'node_modules/zone.js/dist/jasmine-patch.js',
       'node_modules/zone.js/dist/async-test.js',
       'node_modules/zone.js/dist/fake-async-test.js',
+
+      'karma-test-shim.js',
       'test/initDB.ts',
       'test/**/*.spec.ts'
       // {pattern: 'node_modules/reflect-metadata/Reflect.js.map', included: false, served: true}, // 404 on the same

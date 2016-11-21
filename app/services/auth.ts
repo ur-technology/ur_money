@@ -47,6 +47,7 @@ export class AuthService {
                 self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
               }
             });
+            console.log(currentUser.phone);
             nav.setRoot({
               'initial': pages.introPage,
               'verification-requested': pages.verificationPendingPage,
@@ -158,21 +159,19 @@ export class AuthService {
           } else if (verificationResult.codeMatch) {
             log.debug('Submitted verification code was correct.');
 
-
             firebase.auth().signInWithCustomToken(verificationResult.authToken).then((authData) => {
               log.debug('Authentication succeded!');
-              resolve({ codeMatch: true });
               taskRef.remove();
+              resolve({ codeMatch: true });
             }).catch((error) => {
               log.warn('Authentication failed!');
               taskRef.update({ authenticationError: error });
               resolve({ error: 'Authentication failed' });
-              resolve(false);
             });
           } else {
             log.debug('Submitted verification code was not correct.');
-            resolve({ codeMatch: false });
             verificationResultRef.remove();
+            resolve({ codeMatch: false });
           }
         });
       });

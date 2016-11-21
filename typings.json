@@ -9,6 +9,7 @@
     "firebase": "file:node_modules/angularfire2/firebase3.d.ts",
     "firebase3-fixes": "file:app/config/firebase3-fixes.d.ts",
     "google-libphonenumber": "registry:global/google-libphonenumber#1.0.22+20160622193708",
+    "jasmine": "registry:dt/jasmine#2.5.0+20161025102649",
     "loglevel": "registry:dt/loglevel#1.4.0+20160412141402",
     "require": "registry:dt/require#2.1.20+20160316155526"
   }
