@@ -186,7 +186,10 @@ export class IdentityVerificationTrulioPage {
               firebase.database().ref('/identityAnnouncementQueue/tasks').push({
                 userId: this.auth.currentUserId
               });
-              self.nav.push(IdentityVerificationFinishPage);
+              self.nav.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(() => {
+                self.nav.push(IdentityVerificationFinishPage);
+              });
+
             });
           } else {
             if (self.auth.currentUser.registration.status !== 'verification-pending') {
@@ -194,7 +197,10 @@ export class IdentityVerificationTrulioPage {
             }
 
             loader.dismiss().then(() => {
-              self.nav.push(VerificationPendingPage);
+              self.nav.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(() => {
+                self.nav.push(VerificationPendingPage);
+              });
+
             });
 
           }
