@@ -59,7 +59,7 @@ export class EmailAddressPage {
           break;
 
         default:
-          self.toastService.showMessage({messageKey: 'email-address.errorSms'});
+          self.toastService.showMessage({messageKey: 'email-address.unexpectedProblem'});
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {

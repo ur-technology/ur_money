@@ -34,7 +34,9 @@
         "unexpectedProblem": "There was an unexpected problem sending you an email. Please try again later",
         "noInviteFoundTitle": "Invitation not found",
         "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
-        "betaProgramButton": "I'm in the UR Money Beta Program"
+        "betaProgramButton": "I'm in the UR Money Beta Program",
+        "errorUserNotInBetaProgram": "We do not have a record of that email being registered in our beta program.",
+        "unexpectedProblem": "There was an unexpected problem sending the email. Please try again later"
     },
     "authentication-code": {
         "title": "Verification code",
@@ -57,6 +59,20 @@
         "message2": "In order to provide a safe environment, we ask all community members to verify their identity. To do this, we will need to ask you for several pieces of identifying information including mobile phone number, name, address, date of birth, etc., and then share this info with Trulioo, Inc., a Canada-based identity verification service.",
         "message3": "We will also need to import your contacts so you can invite them, chat with them and send them UR.",
         "message4": "Do you give UR Technology (the maker of UR Money) permission to share your identity info with Trulioo, Inc. and to import your contacts?"
+    },
+    "identity-verification-intro": {
+        "slideTitle": "You’re just a few steps away from claiming your <b>free 2,000 UR!</b>",
+        "slideMessage": "In order to provide a safe environment, we ask all community members to verify their identity. To do this, we will need to ask you for several pieces of identifying information including mobile phone number, name, address, date of birth, etc., and then share this info with Trulioo, Inc., a Canada-based identity verification service."
+    },
+    "identity-verification-profile": {
+        "slideTitle": "Step 1 of 2 "
+    },
+    "identity-verification-trulio": {
+        "slideTitle": "Step 2 of 2 "
+    },
+    "identity-verification-finish": {
+        "slideTitle": "<b>Congratulations!</b> You just got your <b>2000 UR</b>",
+        "slideMessage": "You will see your 2,000 UR bonus in your homepage soon!"
     },
     "profile-setup": {
         "title": "Set Up Profile",

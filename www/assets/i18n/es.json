@@ -21,7 +21,7 @@
         "numberConfirmation": "Confirmación de número",
         "phoneCorrect": "Es el número de teléfono indicado anteriormente correcto?",
         "errorUserDisabled": "Tu cuenta ha sido deshabilitada.",
-        "errorSms": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde",
+        "unexpectedProblem": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde",
         "noInviteFoundTitle": "Invitación no encontrada",
         "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
         "betaProgramButton": "Estoy en el programa UR Money Beta"
@@ -34,7 +34,9 @@
         "unexpectedProblem": "Se produjo un problema inesperado al enviarte un correo electrónico. Por favor, inténtalo de nuevo más tarde",
         "noInviteFoundTitle": "Invitación no encontrada",
         "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
-        "betaProgramButton": "Estoy en el programa UR Money Beta"
+        "betaProgramButton": "Estoy en el programa UR Money Beta",
+        "errorUserNotInBetaProgram": "No tenemos un registro de ese correo electrónico registrado en nuestro programa beta.",
+        "unexpectedProblem": "Hubo un problema inesperado al enviar el correo. Por favor, inténtalo más tarde"
     },
     "authentication-code": {
         "title": "Código de verificación",
@@ -57,6 +59,20 @@
         "message2": "A fin de proporcionar un ambiente seguro, pedimos a todos los miembros de la comunidad que verifiquen su identidad. Para ello, tendremos que pedirte información de identificación, incluyendo el número de teléfono móvil, el nombre, la dirección, la fecha de nacimiento, etc., y luego compartir esta información con Trulioo, Inc., un servicio de verificación de identidad basado en Canadá.",
         "message3": "También necesitaremos importar tus contactos para que puedas invitarlos, chatear con ellos y enviarles UR.",
         "message4": "¿Le das permiso a UR Technology (el creador de UR Money) para compartir tu información de identidad con Trulioo, Inc. e importar tus contactos?"
+    },
+    "identity-verification-intro":{
+      "slideTitle": "Estás a unos pasos de reclamar tus <b>2000 2000 UR gratis!</b>",
+      "slideMessage": "A fin de proporcionar un ambiente seguro, pedimos a todos los miembros de la comunidad que verifiquen su identidad. Para ello, tendremos que pedirte información de identificación, incluyendo el número de teléfono móvil, el nombre, la dirección, la fecha de nacimiento, etc., y luego compartir esta información con Trulioo, Inc., un servicio de verificación de identidad basado en Canadá."
+    },
+    "identity-verification-profile": {
+        "slideTitle": "Paso 1 de 2 "
+    },
+    "identity-verification-trulio": {
+        "slideTitle": "Paso 2 de 2 "
+    },
+    "identity-verification-finish": {
+        "slideTitle": "<b>¡Felicitaciones!</b> Acabas de obtener tus <b>2000 UR</b>",
+        "slideMessage": "Verás pronto tu bono de 2.000 UR en tu página de inicio!"
     },
     "profile-setup": {
         "title": "Configurar perfil",

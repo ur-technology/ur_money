@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {IdentityVerificationFinishPage} from '../identity-verification-finish/identity-verification-finish';
-import { NavController, LoadingController} from 'ionic-angular';
+import { NavController, LoadingController, Content} from 'ionic-angular';
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -27,6 +27,7 @@ export class IdentityVerificationTrulioPage {
   genders: any[];
   identificationType: string;
   dateOfBirth: string;
+  @ViewChild(Content) content: Content;
 
   constructor(
     public nav: NavController,
@@ -230,6 +231,15 @@ export class IdentityVerificationTrulioPage {
       this.verification.PersonInfo.MonthOfBirth = dateParts[1];
       this.verification.PersonInfo.DayOfBirth = dateParts[2];
     }
+  }
 
+  focusInput() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom();
+    }, 500);
   }
 }

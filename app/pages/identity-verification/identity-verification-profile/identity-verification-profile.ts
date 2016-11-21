@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, Content } from 'ionic-angular';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {IdentityVerificationTrulioPage} from '../identity-verification-trulio/identity-verification-trulio';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
@@ -14,7 +14,7 @@ import {CustomValidator} from '../../../validators/custom';
   pipes: [TranslatePipe]
 })
 export class IdentityVerificationProfilePage {
-
+  @ViewChild(Content) content: Content;
   mainForm: FormGroup;
   errorMessage: string;
   countries: any[];
@@ -86,5 +86,16 @@ export class IdentityVerificationProfilePage {
     }).catch((error) => {
       log.warn('unable to save address info');
     });
-  };
+  }
+
+  focusInput() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom();
+    }, 500);
+  }
+
 }

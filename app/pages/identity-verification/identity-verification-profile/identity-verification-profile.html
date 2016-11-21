@@ -10,7 +10,7 @@
     (ngSubmit)="mainForm.valid && submit()">
     <ion-card>
       <ion-card-header>
-        <ion-label text-center primary>Step 1 of 2</ion-label>
+        <ion-label text-center primary>{{"identity-verification-profile.slideTitle" | translate}}</ion-label>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
@@ -35,13 +35,13 @@
           </ion-item>
           <ion-item>
             <ion-label floating>{{'profile-setup.city' | translate}}</ion-label>
-            <ion-input type="text"
+            <ion-input type="text" (focus)="focusInput()"
               [(ngModel)]="profile.city"
               formControlName="city"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{'profile-setup.postalCode' | translate}}</ion-label>
-            <ion-input type="text"
+            <ion-input type="text" (focus)="focusInput()"
               [(ngModel)]="profile.postalCode"
               formControlName="postalCode"></ion-input>
           </ion-item>

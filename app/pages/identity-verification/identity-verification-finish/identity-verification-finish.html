@@ -10,16 +10,16 @@
     <ion-card-content text-justify>
       <img src="img/ur-logo.png"
         class="slide-image" />
-      <h2 class="slide-title"><b>Congratulations!</b> You just got your <b>2000 UR</b></h2>
+      <h2 class="slide-title" innerHTML='{{"identity-verification-finish.slideTitle" | translate}}'></h2>
       <br />
-      <p>You will see your 2,000 UR bonus in your home page soon!</p>
+      <p>{{"identity-verification-finish.slideMessage" | translate}}</p>
     </ion-card-content>
     <ion-item class="footer-card">
       <button large
         item-right
         clear
         (click)="goToHome()">
-        Continue
+        {{"continue" | translate}}
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
     </ion-item>

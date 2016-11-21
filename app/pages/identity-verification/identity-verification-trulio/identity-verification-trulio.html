@@ -42,14 +42,14 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'identity-info-setup.driverLicenseNumber' | translate}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verification.DriverLicense.Number" formControlName="driverLicenseNumber"></ion-input>
+                <ion-input type="text" [(ngModel)]="verification.DriverLicense.Number" formControlName="driverLicenseNumber"  (focus)="focusInput()"></ion-input>
             </ion-item>
           </ion-item-group>
 
           <ion-item-group *ngIf="identificationType == 'National Id'">
             <ion-item>
               <ion-label floating>{{nationalIdPlaceholder()}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verification.NationalId.Number" formControlName="nationalIdNumber"></ion-input>
+                <ion-input type="text" [(ngModel)]="verification.NationalId.Number" formControlName="nationalIdNumber" (focus)="focusInput()"></ion-input>
             </ion-item>
           </ion-item-group>
 
@@ -68,15 +68,15 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'identity-info-setup.passportExpirationDay' | translate}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verification.Passport.DayOfExpiry" formControlName="passportExpirationDayOfExpiry"></ion-input>
+                <ion-input type="text" [(ngModel)]="verification.Passport.DayOfExpiry" formControlName="passportExpirationDayOfExpiry" (focus)="focusInput()"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'identity-info-setup.passportExpirationMonth' | translate}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verification.Passport.MonthOfExpiry" formControlName="passportExpirationMonthOfExpiry"></ion-input>
+                <ion-input type="text" [(ngModel)]="verification.Passport.MonthOfExpiry" formControlName="passportExpirationMonthOfExpiry" (focus)="focusInput()"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'identity-info-setup.passportExpirationYear' | translate}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verification.Passport.YearOfExpiry" formControlName="passportExpirationYearOfExpiry"></ion-input>
+                <ion-input type="text" [(ngModel)]="verification.Passport.YearOfExpiry" formControlName="passportExpirationYearOfExpiry" (focus)="focusInput()"></ion-input>
             </ion-item>
           </ion-item-group>
         </ion-list>
