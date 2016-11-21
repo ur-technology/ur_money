@@ -15,29 +15,29 @@
         "learnMore": "Learn more"
     },
     "phone-number": {
-        "title": "Enter Phone Number",
+        "title": "Enter phone number",
         "heading": "Please confirm your country code and enter your phone number",
         "phoneNumber": "Phone number",
         "numberConfirmation": "Number confirmation",
         "phoneCorrect": "Is your phone number above correct?",
-        "errorUserDisabled": "Youf user account has been disabled.",
+        "errorUserDisabled": "Your user account has been disabled.",
         "unexpectedProblem": "There was an unexpected problem sending the SMS. Please try again later",
-        "noInviteFoundTitle": "Invitation Not Found",
+        "noInviteFoundTitle": "Invitation not found",
         "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
         "betaProgramButton": "I'm in the UR Money Beta Program"
     },
     "email-address": {
-        "title": "Enter Email Address",
-        "heading": "Please enter the email address that you have registed in the UR Money Beta Program",
-        "placeholder": "Enter Your Email Address",
-        "errorUserDisabled": "Youf user account has been disabled.",
+        "title": "Enter email address",
+        "heading": "Please enter the email address that you have registered in the UR Money Beta Program",
+        "placeholder": "Enter your email address",
+        "errorUserDisabled": "Your user account has been disabled.",
         "unexpectedProblem": "There was an unexpected problem sending you an email. Please try again later",
-        "noInviteFoundTitle": "Invitation Not Found",
+        "noInviteFoundTitle": "Invitation not found",
         "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
         "betaProgramButton": "I'm in the UR Money Beta Program"
     },
     "authentication-code": {
-        "title": "Verification Code",
+        "title": "Verification code",
         "heading1-sms": "We have sent you an SMS with a verification code.",
         "heading1-email": "We have sent you an email with a verification code.",
         "heading2": "To complete your phone number verification, please enter the 6-digit verification code.",
