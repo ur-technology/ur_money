@@ -55,7 +55,7 @@ import {TransactionsPage} from './pages/transactions/transactions';
 })
 class UrMoney {
   @ViewChild(Nav) nav: Nav;
-  menuItems: Array<{ title: string, page: any, pageParams?: any, icon: string, value: string }>;
+  menuItems: any[];
 
   constructor(private platform: Platform, private menu: MenuController, public auth: AuthService, private translate: TranslateService) {
     this.initializeApp();
@@ -74,9 +74,14 @@ class UrMoney {
     ];
 
     this.platform.ready().then(() => {
-
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
+      }
+      if (this.platform.is('ios')) {
+        let removed: any[] = _.remove(this.menuItems, (menu) => {
+          return menu.value === 'send';
+        });
+        this.menuItems = _.pull(this.menuItems, removed);
       }
       this.hideSplashScreen();
 
@@ -102,7 +107,10 @@ class UrMoney {
       this.menuItems[_.findIndex(this.menuItems, ['value', 'chat'])].title = res;
     });
     this.translate.get('app.sendUr').subscribe((res: string) => {
-      this.menuItems[_.findIndex(this.menuItems, ['value', 'send'])].title = res;
+      let index = _.findIndex(this.menuItems, ['value', 'send']);
+      if (index !== -1) {
+        this.menuItems[index].title = res;
+      }
     });
     this.translate.get('app.transactions').subscribe((res: string) => {
       this.menuItems[_.findIndex(this.menuItems, ['value', 'transactions'])].title = res;

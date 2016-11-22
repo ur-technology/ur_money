@@ -1,41 +1,35 @@
 <ion-header>
-    <ion-navbar>
-      {{auth.envMode()}}
-    </ion-navbar>
+  <ion-navbar>
+    {{auth.envMode()}}
+  </ion-navbar>
 </ion-header>
 <ion-content padding
-    class="about about-us">
-    <div class="ur-logo">
-        <img src="img/ur-logo.png"
-            alt="logo">
-    </div>
+  class="about about-us">
+  <div class="ur-logo">
+    <img src="img/ur-logo.png"
+      alt="logo">
+  </div>
 
-    <div class="about-text">
-        <h1 class="heading">{{"about.heading" | translate}}</h1>
-        <p>
-            {{"about.urCurrency" | translate}}
-            <br>
-            <br>
-            {{"about.urTechnologyInc" | translate}}
-            <br>
-            <br>
-            {{"about.feedbackPart1" | translate}}
-            <a href="https://urtechnology.signup.team">https://urtechnology.signup.team</a>
-            {{"about.feedbackPart2" | translate}}
-            <a href="mailto://ur-money-feedback@ur.technology">feedback@ur.technology</a>
-            <br>
-            <br>
-            {{"about.abuse" | translate}}
-            <a href="mailto://ur-money-abuse@ur.technology">ur-money-abuse@ur.technology</a>
-            <br>
-            <br>
-            {{"about.learnMore" | translate}}
-            <a href='https://www.ur.technology'>https://www.ur.technology</a>
-            <br>
-            <br>
-            <br>
-            <br>
-            Version Number: {{versionNumber}} {{auth.envMode()}}
-        </p>
-    </div>
+  <div class="about-text">
+    <h1 class="heading">{{"about.heading" | translate}}</h1>
+    <p>
+      {{getTextUrCurrency()}}
+      <br>
+      <br> {{"about.urTechnologyInc" | translate}}
+      <br>
+      <br> {{"about.feedbackPart1" | translate}}
+      <a href="https://urtechnology.signup.team">https://urtechnology.signup.team</a> {{"about.feedbackPart2" | translate}}
+      <a href="mailto://ur-money-feedback@ur.technology">feedback@ur.technology</a>
+      <br>
+      <br> {{"about.abuse" | translate}}
+      <a href="mailto://ur-money-abuse@ur.technology">ur-money-abuse@ur.technology</a>
+      <br>
+      <br> {{"about.learnMore" | translate}}
+      <a href='https://www.ur.technology'>https://www.ur.technology</a>
+      <br>
+      <br>
+      <br>
+      <br> Version Number: {{versionNumber}} {{auth.envMode()}}
+    </p>
+  </div>
 </ion-content>

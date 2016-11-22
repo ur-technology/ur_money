@@ -24,7 +24,7 @@ declare var jQuery: any;
 })
 export class HomePage {
   elementRef: ElementRef;
-  android: boolean;
+  ios: boolean;
   availableBalance: BigNumber;
   isElegibleToVerifyAccount: boolean;
 
@@ -33,7 +33,7 @@ export class HomePage {
     private angularFire: AngularFire, private auth: AuthService, private ngZone: NgZone
   ) {
     this.elementRef = elementRef;
-    this.android = this.platform.is('android');
+    this.ios = this.platform.is('ios');
   }
 
   reflectAvailableBalanceOnPage() {
