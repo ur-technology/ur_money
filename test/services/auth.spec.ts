@@ -64,95 +64,87 @@ describe('Auth service', () => {
         }
     };
 
-    it('phone verification. registration', (done) => {
-        let nav = new NavMock();
-
-        console.log(auth.isSignedIn(), "SIGNED");
-
-        auth.requestPhoneVerification(config.registration.phone, config.registration.code)
-            .then(((taskState: string)=>{
-
-                //Check if sms send
-                expect(taskState).toBe('code_generation_completed_and_sms_sent');
-
-                console.log("code send");
-
-                spyOn(nav, 'setRoot').and.callFake(page => {
-
-                    console.log(page);
-                    //Successful authorization redirects to home page
-                    // expect(page).toBe('homePage');
-                    done();
-                });
-
-                auth.respondToAuth(nav, {
-                    'introPage'                 : 'introPage',
-                    'verificationPendingPage'   : 'verificationPendingPage',
-                    'verificationFailedPage'    : 'verificationFailedPage',
-                    'homePage'                  : 'homePage',
-                    'walletSetupPage'           : 'walletSetupPage',
-                    'welcomePage'               : 'welcomePage'
-                });
-
-                return auth.checkVerificationCode(config.registration.sms);
-            }))
-            .then((result)=>{
-                console.log("code match");
-                //Sent code is correct
-                expect(typeof result).toBe('object');
-                expect(result.codeMatch).toBe(true);
-            });
-
-    });
-
-    // it('phone verification. existed', (done) => {
+    // it('phone verification. registration', (done) => {
     //     let nav = new NavMock();
     //
-    //     spyOn(nav, 'setRoot').and.callFake(page => {
-    //
-    //         //Successful authorization redirects to home page
-    //         expect(page).toBe('homePage');
-    //
-    //         //Check if logged
-    //         expect(auth.isSignedIn()).toBe(true);
-    //
-    //         firebase.database().ref(`/users/${auth.currentUserId}`).once('value', snapshot=>{
-    //             auth.reloadCurrentUser().then(()=>{
-    //
-    //                 //Reload user
-    //                 expect(JSON.stringify(snapshot.val())).toBe(JSON.stringify(auth.currentUser));
-    //                 done();
-    //             });
-    //         });
-    //     });
-    //
-    //     auth.respondToAuth(nav, {
-    //         'homePage' : 'homePage'
-    //     });
-    //
-    //     auth.requestPhoneVerification(config.existed.phone, config.existed.code)
+    //     auth.requestPhoneVerification(config.registration.phone, config.registration.code)
     //         .then(((taskState: string)=>{
     //
     //             //Check if sms send
     //             expect(taskState).toBe('code_generation_completed_and_sms_sent');
     //
-    //             return auth.checkVerificationCode('000000');
+    //             spyOn(nav, 'setRoot').and.callFake(page => {
+    //
+    //                 //Set user in respond
+    //                 expect(auth.isSignedIn()).toBe(true);
+    //                 //Successful authorization redirects to intro page
+    //                 expect(page).toBe('introPage');
+    //             });
+    //
+    //             auth.respondToAuth(nav, {
+    //                 'introPage' : 'introPage'
+    //             });
+    //
+    //             return auth.checkVerificationCode(config.registration.sms);
     //         }))
     //         .then((result)=>{
-    //
-    //             //Sent code is not correct
-    //             expect(typeof result).toBe('object');
-    //             expect(result.codeMatch).toBe(false);
-    //             return auth.checkVerificationCode(config.existed.sms);
-    //         })
-    //         .then((result)=>{
-    //
     //             //Sent code is correct
     //             expect(typeof result).toBe('object');
     //             expect(result.codeMatch).toBe(true);
+    //
+    //             done();
     //         });
     //
     // });
+
+    it('phone verification. existed', (done) => {
+        let nav = new NavMock();
+
+        auth.requestPhoneVerification(config.existed.phone, config.existed.code)
+            .then(((taskState: string)=>{
+
+                //Check if sms send
+                expect(taskState).toBe('code_generation_completed_and_sms_sent');
+
+                return auth.checkVerificationCode('000000');
+            }))
+            .then((result)=>{
+
+                //Sent code is not correct
+                expect(typeof result).toBe('object');
+                expect(result.codeMatch).toBe(false);
+
+                spyOn(nav, 'setRoot').and.callFake(page => {
+
+                    //Set user in respond
+                    expect(auth.isSignedIn()).toBe(true);
+                    //Successful authorization redirects to home page
+                    expect(page).toBe('homePage');
+                });
+
+                auth.respondToAuth(nav, {
+                    'homePage' : 'homePage'
+                });
+
+                return auth.checkVerificationCode(config.existed.sms);
+            })
+            .then((result)=>{
+
+                //Sent code is correct
+                expect(typeof result).toBe('object');
+                expect(result.codeMatch).toBe(true);
+
+                firebase.database().ref(`/users/${auth.currentUserId}`).once('value', snapshot=>{
+                    auth.reloadCurrentUser().then(()=>{
+
+                        //Reload user
+                        expect(JSON.stringify(snapshot.val())).toBe(JSON.stringify(auth.currentUser));
+                        done();
+                    });
+                });
+            });
+
+    });
 
     // it('phone verification. not existed', (done) => {
     //     auth.requestPhoneVerification(config.notExisted.phone, config.notExisted.code).then(((taskState: string)=>{

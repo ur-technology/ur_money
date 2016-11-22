@@ -47,7 +47,6 @@ export class AuthService {
                 self.contactsService.loadContacts(self.countryCode, self.currentUserId, self.currentUser.phone);
               }
             });
-            console.log(currentUser.phone);
             nav.setRoot({
               'initial': pages.introPage,
               'verification-requested': pages.verificationPendingPage,
