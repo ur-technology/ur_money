@@ -8,8 +8,8 @@
 <ion-content class="background-pic" >
     <div class="dash-chart-cont">
         <div>
-            <h1  *ngIf="isIdentityVerified()" class="chart-title">{{availableBalance?availableBalance.toFormat(2):''}}<span>&nbsp;UR</span></h1>
-            <div tappable *ngIf="!isIdentityVerified()" (click)="completeProfile()">
+            <h1  *ngIf="!isElegibleToVerifyAccount" class="chart-title">{{availableBalance?availableBalance.toFormat(2):''}}<span>&nbsp;UR</span></h1>
+            <div tappable *ngIf="isElegibleToVerifyAccount" (click)="completeProfile()">
 
               <h1  class="chart-title" innerHTML='{{"home.unlockMessage" | translate}}'> </h1>
             </div>

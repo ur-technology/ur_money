@@ -26,6 +26,7 @@ export class HomePage {
   elementRef: ElementRef;
   android: boolean;
   availableBalance: BigNumber;
+  isElegibleToVerifyAccount: boolean;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
@@ -41,6 +42,8 @@ export class HomePage {
 
   onPageDidEnter() {
     let self = this;
+
+    self.checkIfIsElegibleToVerifyAccount();
 
     if (self.chartData.pointsLoaded) {
       self.renderChart();
@@ -143,8 +146,10 @@ export class HomePage {
     this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
   }
 
-  isIdentityVerified() {
-    return this.auth.getUserStatus() === 'announcement-succeeded' ? true : false;
+  checkIfIsElegibleToVerifyAccount() {
+    let isSponsorAnnounced = (this.auth.currentUser.sponsor.signUpAnnounced || false) && this.auth.currentUser.sponsor.signUpAnnounced === true;
+    let status = this.auth.getUserStatus();
+    this.isElegibleToVerifyAccount = ((isSponsorAnnounced) && (status !== 'announcement-succeeded')) ? true : false;
   }
 
   completeProfile() {
