@@ -85,8 +85,8 @@ export class AuthService {
       return true;
     } else {
       return !!this.currentUser.sponsor &&
-        !!this.currentUser.sponsor.announcementTransactionConfirmed &&
-        _.includes(['wallet-generated', 'verification-failed'], this.getUserStatus());
+          !!this.currentUser.sponsor.announcementTransactionConfirmed &&
+          !_.includes(['announcement-confirmed'], this.getUserStatus());
     }
   }
 

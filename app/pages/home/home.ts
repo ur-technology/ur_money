@@ -13,8 +13,9 @@ import {BigNumber} from 'bignumber.js';
 import {IdentityVerificationIntroPage} from '../identity-verification/identity-verification-intro/identity-verification-intro';
 import {CountryNotSupportedPage} from '../registration/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
-import {VerificationFailedPage} from '../registration/verification-failed';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
+import {AnnouncementInitiatedPage} from '../registration/announcement-initiated';
+import * as _ from 'lodash';
 declare var jQuery: any;
 
 @Page({
@@ -26,11 +27,12 @@ export class HomePage {
   elementRef: ElementRef;
   ios: boolean;
   availableBalance: BigNumber;
-  isElegibleToVerifyAccount: boolean;
+  needsToCompleteProfile: boolean;
+  balanceTitle: string;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
-    private angularFire: AngularFire, private auth: AuthService, private ngZone: NgZone
+    private angularFire: AngularFire, private auth: AuthService, private ngZone: NgZone, private translate: TranslateService
   ) {
     this.elementRef = elementRef;
     this.ios = this.platform.is('ios');
@@ -43,7 +45,7 @@ export class HomePage {
   onPageDidEnter() {
     let self = this;
 
-    self.checkIfIsElegibleToVerifyAccount();
+    self.checkIfNeedsToCompleteProfile();
 
     if (self.chartData.pointsLoaded) {
       self.renderChart();
@@ -146,19 +148,30 @@ export class HomePage {
     this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
   }
 
-  checkIfIsElegibleToVerifyAccount() {
-    this.isElegibleToVerifyAccount = this.auth.eligibleToVerifyAccount();
+  checkIfNeedsToCompleteProfile() {
+    this.needsToCompleteProfile = this.auth.eligibleToVerifyAccount();
+
+    this.balanceTitle = this.translate.instant({
+      'verification-requested': 'home.verificationPending',
+      'verification-pending': 'home.verificationPending',
+      'verification-failed': 'home.unlockMessage',
+      'wallet-generated': 'home.unlockMessage',
+      'announcement-requested': 'home.bonusGenerating',
+      'announcement-initiated': 'home.bonusGenerating'
+    }[this.auth.getUserStatus()]);
+
   }
 
   completeProfile() {
-    let status = this.auth.getUserStatus();
     if (this.auth.isUserInSupportedCountry()) {
       this.nav.push({
         'verification-requested': VerificationPendingPage,
         'verification-pending': VerificationPendingPage,
-        'verification-failed': VerificationFailedPage,
-        'wallet-generated': IdentityVerificationIntroPage
-      }[status]);
+        'verification-failed': IdentityVerificationIntroPage,
+        'wallet-generated': IdentityVerificationIntroPage,
+        'announcement-initiated': AnnouncementInitiatedPage,
+        'announcement-requested': AnnouncementInitiatedPage
+      }[this.auth.getUserStatus()]);
     } else {
       this.nav.push(CountryNotSupportedPage);
     }

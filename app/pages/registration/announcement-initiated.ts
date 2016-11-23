@@ -1,17 +1,13 @@
 import {Page, NavController} from 'ionic-angular';
-import {AuthService} from '../../services/auth';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {HomePage} from '../home/home';
 
 @Page({
-  templateUrl: 'build/pages/registration/country-not-supported.html',
+  templateUrl: 'build/pages/registration/announcement-initiated.html',
   pipes: [TranslatePipe]
 })
-export class CountryNotSupportedPage {
-  constructor(
-    public nav: NavController,
-    public auth: AuthService
-  ) {
+export class AnnouncementInitiatedPage {
+  constructor(public nav: NavController) {
   }
 
   goToHome() {

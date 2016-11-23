@@ -129,11 +129,15 @@
     },
     "verification-pending": {
         "title": "Verificación pendiente",
-        "message": "Gracias por enviar su solicitud de verificación. La mayoría de las solicitudes se procesan dentro de 24 horas. Le notificaremos mediante un mensaje de texto cuando hayamos terminado de procesar su solicitud."
+        "message": "Gracias por enviar su solicitud de verificación. La mayoría de las solicitudes se procesan dentro de 72 horas. Le notificaremos mediante un mensaje de texto cuando hayamos terminado de procesar su solicitud."
     },
     "verification-failed": {
         "title": "Verificación fallida",
         "message": "Lo sentimos. No hemos podido verificar tu identidad. Te enviaremos un correo electrónico con los detalles de cómo se puede volver a aplicar."
+    },
+    "announcement-initiated":{
+      "title": "Generación de bonificación en curso",
+      "message": "La transacción de bonificación puede tardar unas horas en aparecer en tu cuenta, por favor espere."
     },
     "country-not-supported": {
         "title": "UR Money",
@@ -150,7 +154,9 @@
         "about": "Acerca UR"
     },
     "home":{
-      "unlockMessage": "<span class='small'>Desbloquea tus </span><br />2000<span>&nbsp;UR</span>"
+      "unlockMessage": "<span class='small'>Desbloquea tus </span><br />2000<span>&nbsp;UR</span>",
+      "bonusGenerating": "<span class='small'>Generación de bonificación en curso</span>",
+      "verificationPending": "<span class='small'>Verificación pendiente</span>"
     },
     "contacts": {
         "invite": "Invitar",

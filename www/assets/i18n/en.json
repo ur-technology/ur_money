@@ -129,11 +129,15 @@
     },
     "verification-pending": {
         "title": "Verification pending",
-        "message": "Thank you for submitting your verification request. Most requests are processed within 24 hours. We will notify you via text message when we are finished processing your request."
+        "message": "Thank you for submitting your verification request. Most requests are processed within 72 hours. We will notify you via text message when we are finished processing your request."
     },
     "verification-failed": {
         "title": "Verification Failed",
         "message": "We're sorry. We were unable to verify your identity. We will send you an email with details on how you can re-apply."
+    },
+    "announcement-initiated":{
+      "title": "Bonus generation in progress",
+      "message": "Bonus transaction may take a few hours to show up in your account, please be patient."
     },
     "country-not-supported": {
         "title": "UR Money",
@@ -150,7 +154,9 @@
         "about": "About UR"
     },
     "home":{
-      "unlockMessage": "<span class='small'>Unlock your</span><br />2000<span>&nbsp;UR</span>"
+      "unlockMessage": "<span class='small'>Unlock your</span><br />2000<span>&nbsp;UR</span>",
+      "bonusGenerating": "<span class='small'>Bonus generation in progress</span>",
+      "verificationPending": "<span class='small'>Verification pending</span>"
     },
     "contacts": {
         "invite": "Invite",
