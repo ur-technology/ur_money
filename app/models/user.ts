@@ -8,8 +8,6 @@ export class UserModel extends FirebaseModel {
   city: string;
   countryCode: string;
   createdAt: number;
-  deviceCountryCode: string;
-  deviceIdentity: any;
   downlineLevel: number;
   inviteCode: string;
   inviter: any;

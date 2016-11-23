@@ -21,13 +21,13 @@
             </ion-item>
             <ion-item>
                 <ion-label>{{selectedCountry.name}}</ion-label>
-                <ion-select [(ngModel)]="selected"
+                <ion-select [(ngModel)]="selectedTelephoneCountryCode"
                     [ngModelOptions]="{standalone: true}"
                     (ionChange)="countrySelect()">
-                    <ion-option value="{{country.code}}"
+                    <ion-option value="{{country.telephoneCountryCode}}"
                         *ngFor="let country of countries">
                         {{country.name}}
-                        <span item-right>{{country.code}}</span>
+                        <span item-right>{{country.telephoneCountryCode}}</span>
                     </ion-option>
                 </ion-select>
                 <ion-icon name="arrow-forward"
@@ -36,7 +36,7 @@
             <ion-item class="item item-input input-item-data">
                 <ion-input class="phone-country-code"
                     [ngModelOptions]="{standalone: true}"
-                    [value]="selectedCountry.code"> </ion-input>
+                    [value]="selectedCountry.telephoneCountryCode"> </ion-input>
                 <ion-input
                     class="phone-input"
                     formControlName="phone"

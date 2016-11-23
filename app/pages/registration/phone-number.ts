@@ -19,7 +19,7 @@ export class PhoneNumberPage implements OnInit {
   elementRef: ElementRef;
   phoneForm: FormGroup;
   countries: any;
-  selected: any;
+  selectedTelephoneCountryCode: string;
   selectedCountry: any;
 
   constructor(
@@ -38,7 +38,7 @@ export class PhoneNumberPage implements OnInit {
       phone: new FormControl('', (control) => {
         try {
           let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-          let phoneNumberObject = phoneNumberUtil.parse(control.value, this.selectedCountry.iso);
+          let phoneNumberObject = phoneNumberUtil.parse(control.value, this.selectedCountry.countryCode);
           if (!phoneNumberUtil.isValidNumber(phoneNumberObject)) {
             return { 'invalidPhone': true };
           }
@@ -47,7 +47,7 @@ export class PhoneNumberPage implements OnInit {
         }
       })
     });
-    this.selectedCountry = { name: 'United States', code: '+1', iso: 'US' };
+    this.selectedCountry = { name: 'United States', telephoneCountryCode: '+1', countryCode: 'US' };
     this.countries = this.countryListService.getCountryData();
   }
 
@@ -66,7 +66,7 @@ export class PhoneNumberPage implements OnInit {
       mobileAreaCodePrefix = self.selectedCountry.mobileAreaCodePrefix;
     }
 
-    let phone = self.selectedCountry.code + mobileAreaCodePrefix + corePhone;
+    let phone = self.selectedCountry.telephoneCountryCode + mobileAreaCodePrefix + corePhone;
     let loadingModal = self.loadingController.create({
       content: self.translate.instant('pleaseWait'),
       dismissOnPageChange: true
@@ -77,7 +77,7 @@ export class PhoneNumberPage implements OnInit {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.requestSmsAuthenticationCode(phone, self.selectedCountry.code, self.selectedCountry.iso);
+      return self.auth.requestSmsAuthenticationCode(phone, self.selectedCountry.countryCode);
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();
@@ -120,7 +120,7 @@ export class PhoneNumberPage implements OnInit {
   }
 
   countrySelect(country) {
-    this.selectedCountry = _.find(this.countries, { code: this.selected }) || { name: 'United States', code: '+1', iso: 'US' };
+    this.selectedCountry = _.find(this.countries, { telephoneCountryCode: this.selectedTelephoneCountryCode }) || { name: 'United States', telephoneCountryCode: '+1', countryCode: 'US' };
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();
   }
 }

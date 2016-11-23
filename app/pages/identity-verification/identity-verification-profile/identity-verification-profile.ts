@@ -25,14 +25,14 @@ export class IdentityVerificationProfilePage {
     public auth: AuthService
   ) {
 
-    this.profile = _.pick(this.auth.currentUser, ['firstName', 'middleName', 'lastName', 'address', 'city', 'postalCode', 'countryCodeIso', 'stateName']);
+    this.profile = _.pick(this.auth.currentUser, ['firstName', 'middleName', 'lastName', 'address', 'city', 'postalCode', 'countryCode', 'stateName']);
 
     let formElements: any = {
       address: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       city: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       stateName: new FormControl('', Validators.required),
       postalCode: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
-      country: new FormControl(this.profile.countryCodeIso, Validators.required),
+      country: new FormControl(this.profile.countryCode, Validators.required),
       stateCode: new FormControl('')
     };
     this.mainForm = new FormGroup(formElements);
@@ -53,7 +53,7 @@ export class IdentityVerificationProfilePage {
 
   fillStatesArray() {
     let allStates = require('provinces');
-    this.states = _.filter(allStates, (state: any) => { return state.country === this.profile.countryCodeIso; });
+    this.states = _.filter(allStates, (state: any) => { return state.country === this.profile.countryCode; });
     let state = _.find(this.states, { 'name': this.auth.currentUser.stateName });
 
     if (this.states.length > 0) {

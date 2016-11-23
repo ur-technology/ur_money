@@ -147,9 +147,7 @@ export class HomePage {
   }
 
   checkIfIsElegibleToVerifyAccount() {
-    let isSponsorAnnounced = (this.auth.currentUser.sponsor.signUpAnnounced || false) && this.auth.currentUser.sponsor.signUpAnnounced === true;
-    let status = this.auth.getUserStatus();
-    this.isElegibleToVerifyAccount = ((isSponsorAnnounced) && (status !== 'announcement-succeeded')) ? true : false;
+    this.isElegibleToVerifyAccount = this.auth.eligibleToVerifyAccount();
   }
 
   completeProfile() {

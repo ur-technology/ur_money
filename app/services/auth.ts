@@ -13,8 +13,7 @@ export class AuthService {
   public currentUserId: string;
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
-  public alphaCountryCodeAssociatedWithPhone: string;
-  public alphaCountryCodeIsoAssociatedWithPhone: string;
+  public authenticationRequestCountryCode: string;
   public taskId: string;
   public priorTaskType: string;
   public authenticatedEmail: string;
@@ -40,16 +39,16 @@ export class AuthService {
               userSubscription.unsubscribe();
             }
             self.currentUser = currentUser;
-            if (!self.currentUser.countryCode && self.alphaCountryCodeAssociatedWithPhone) {
-              self.currentUser.countryCode = self.alphaCountryCodeAssociatedWithPhone;
-              self.currentUser.countryCodeIso = self.alphaCountryCodeIsoAssociatedWithPhone;
-              this.currentUserRef.update({ countryCode: self.currentUser.countryCode, countryCodeIso: self.currentUser.countryCodeIso });
+            if (self.authenticationRequestCountryCode &&
+              (!self.currentUser.countryCode || !self.currentUser.countryCode.match(/^[A-Z]{2}$/))) {
+              self.currentUser.countryCode = self.authenticationRequestCountryCode;
+              this.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
             let status = self.getUserStatus();
             if (status === 'initial') {
               nav.setRoot(pages.introPage);
             } else {
-              self.contactsService.loadContacts(self.currentUserId, self.currentUser.phone, self.currentUser.countryCodeIso);
+              self.contactsService.loadContacts(self.currentUserId, self.currentUser.phone, self.currentUser.countryCode);
               nav.setRoot(pages.homePage);
             }
           });
@@ -58,8 +57,7 @@ export class AuthService {
           self.currentUserId = undefined;
           self.currentUserRef = undefined;
           self.currentUser = undefined;
-          self.alphaCountryCodeAssociatedWithPhone = undefined;
-          self.alphaCountryCodeIsoAssociatedWithPhone = undefined;
+          self.authenticationRequestCountryCode = undefined;
           nav.setRoot(pages.welcomePage);
         }
       });
@@ -80,6 +78,16 @@ export class AuthService {
         resolve();
       });
     });
+  }
+
+  eligibleToVerifyAccount(): boolean {
+    if (this.currentUser.downlineLevel === 1) {
+      return true;
+    } else {
+      return !!this.currentUser.sponsor &&
+        !!this.currentUser.sponsor.announcementTransactionConfirmed &&
+        _.includes(['wallet-generated', 'verification-failed'], this.getUserStatus());
+    }
   }
 
   checkFirebaseConnection(): Promise<any> {
@@ -114,10 +122,9 @@ export class AuthService {
     });
   }
 
-  requestSmsAuthenticationCode(phone: string, alphaCountryCodeAssociatedWithPhone: string, alphaCountryCodeIsoAssociatedWithPhone: string) {
+  requestSmsAuthenticationCode(phone: string, countryCode: string) {
     let self = this;
-    self.alphaCountryCodeAssociatedWithPhone = alphaCountryCodeAssociatedWithPhone;
-    self.alphaCountryCodeIsoAssociatedWithPhone = alphaCountryCodeIsoAssociatedWithPhone;
+    self.authenticationRequestCountryCode = countryCode;
     return new Promise((resolve, reject) => {
       let baseRef = firebase.database().ref('/smsAuthCodeGenerationQueue/tasks');
       self.taskId = self.priorTaskType === 'emailAuthCodeMatching' ? self.taskId : baseRef.push().key;
@@ -258,13 +265,12 @@ export class AuthService {
     return !!this.currentUser;
   }
 
-  private getSupportedCountryCodes() {
-    let supportedCountries: Array<string> = ['US'];
-    return supportedCountries;
+  private supportedCountryCodes() {
+    return ['US'];
   }
 
   isUserInSupportedCountry() {
-    return this.getSupportedCountryCodes().indexOf(this.currentUser.countryCodeIso) !== -1;
+    return this.supportedCountryCodes().indexOf(this.currentUser.countryCode) !== -1;
   }
 
   getUserStatus() {

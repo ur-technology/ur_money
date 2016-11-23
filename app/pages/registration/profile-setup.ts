@@ -23,7 +23,7 @@ export class ProfileSetupPage {
     public nav: NavController,
     public auth: AuthService
   ) {
-    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'middleName', 'email', 'countryCode']);
+    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'middleName', 'email']);
     this.profile.name = `${this.auth.currentUser.firstName} ${this.auth.currentUser.lastName}`;
 
     let formElements: any = {

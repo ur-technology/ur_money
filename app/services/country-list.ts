@@ -20,1095 +20,1095 @@ export class CountryListService {
     populateCountries() {
         this.countries = [
             {
-                'code': '+93',
+                'telephoneCountryCode': '+93',
                 'name': 'Afghanistan',
-                'iso': 'AF'
+                'countryCode': 'AF'
             },
             {
-                'code': '+355',
+                'telephoneCountryCode': '+355',
                 'name': 'Albania',
-                'iso': 'AL'
+                'countryCode': 'AL'
             },
             {
-                'code': '+213',
+                'telephoneCountryCode': '+213',
                 'name': 'Algeria',
-                'iso': 'DZ'
+                'countryCode': 'DZ'
             },
             {
-                'code': '+1 684',
+                'telephoneCountryCode': '+1 684',
                 'name': 'American Samoa',
-                'iso': 'AS'
+                'countryCode': 'AS'
             },
             {
-                'code': '+376',
+                'telephoneCountryCode': '+376',
                 'name': 'Andorra',
-                'iso': 'AD'
+                'countryCode': 'AD'
             },
             {
-                'code': '+244',
+                'telephoneCountryCode': '+244',
                 'name': 'Angola',
-                'iso': 'AO'
+                'countryCode': 'AO'
             },
             {
-                'code': '+1 264',
+                'telephoneCountryCode': '+1 264',
                 'name': 'Anguilla',
-                'iso': 'AI'
+                'countryCode': 'AI'
             },
             {
-                'code': '+1 268',
+                'telephoneCountryCode': '+1 268',
                 'name': 'Antigua and Barbuda',
-                'iso': 'AG'
+                'countryCode': 'AG'
             },
             {
-                'code': '+54',
+                'telephoneCountryCode': '+54',
                 'name': 'Argentina',
-                'iso': 'AR'
+                'countryCode': 'AR'
             },
             {
-                'code': '+374',
+                'telephoneCountryCode': '+374',
                 'name': 'Armenia',
-                'iso': 'AM'
+                'countryCode': 'AM'
             },
             {
-                'code': '+297',
+                'telephoneCountryCode': '+297',
                 'name': 'Aruba',
-                'iso': 'AW'
+                'countryCode': 'AW'
             },
             {
-                'code': '+61',
+                'telephoneCountryCode': '+61',
                 'name': 'Australia',
-                'iso': 'AU'
+                'countryCode': 'AU'
             },
             {
-                'code': '+994',
+                'telephoneCountryCode': '+994',
                 'name': 'Azerbaijan',
-                'iso': 'AZ'
+                'countryCode': 'AZ'
             },
             {
-                'code': '+1 242',
+                'telephoneCountryCode': '+1 242',
                 'name': 'Bahamas',
-                'iso': 'BS'
+                'countryCode': 'BS'
             },
             {
-                'code': '+973',
+                'telephoneCountryCode': '+973',
                 'name': 'Bahrain',
-                'iso': 'BH'
+                'countryCode': 'BH'
             },
             {
-                'code': '+880',
+                'telephoneCountryCode': '+880',
                 'name': 'Bangladesh',
-                'iso': 'BD'
+                'countryCode': 'BD'
             },
             {
-                'code': '+1 246',
+                'telephoneCountryCode': '+1 246',
                 'name': 'Barbados',
-                'iso': 'BB'
+                'countryCode': 'BB'
             },
             {
-                'code': '+375',
+                'telephoneCountryCode': '+375',
                 'name': 'Belarus',
-                'iso': 'By'
+                'countryCode': 'By'
             },
             {
-                'code': '+32',
+                'telephoneCountryCode': '+32',
                 'name': 'Belgium',
-                'iso': 'BE'
+                'countryCode': 'BE'
             },
             {
-                'code': '+501',
+                'telephoneCountryCode': '+501',
                 'name': 'Belize',
-                'iso': 'BZ'
+                'countryCode': 'BZ'
             },
             {
-                'code': '+229',
+                'telephoneCountryCode': '+229',
                 'name': 'Benin',
-                'iso': 'BJ'
+                'countryCode': 'BJ'
             },
             {
-                'code': '+1 441',
+                'telephoneCountryCode': '+1 441',
                 'name': 'Bermuda',
-                'iso': 'BM'
+                'countryCode': 'BM'
             },
             {
-                'code': '+975',
+                'telephoneCountryCode': '+975',
                 'name': 'Bhutan',
-                'iso': 'BT'
+                'countryCode': 'BT'
             },
             {
-                'code': '+591',
+                'telephoneCountryCode': '+591',
                 'name': 'Bolivia',
-                'iso': 'BO'
+                'countryCode': 'BO'
             },
             {
-                'code': '+387',
+                'telephoneCountryCode': '+387',
                 'name': 'Bosnia and Herzegovina',
-                'iso': 'BA'
+                'countryCode': 'BA'
             },
             {
-                'code': '+267',
+                'telephoneCountryCode': '+267',
                 'name': 'Botswana',
-                'iso': 'BW'
+                'countryCode': 'BW'
             },
             {
-                'code': '+55',
+                'telephoneCountryCode': '+55',
                 'name': 'Brazil',
-                'iso': 'BR'
+                'countryCode': 'BR'
             },
             {
-                'code': '+246',
+                'telephoneCountryCode': '+246',
                 'name': 'British Indian Ocean Territory',
-                'iso': 'IO'
+                'countryCode': 'IO'
             },
             {
-                'code': '+1 284',
+                'telephoneCountryCode': '+1 284',
                 'name': 'British Virgin Islands',
-                'iso': 'VG'
+                'countryCode': 'VG'
             },
             {
-                'code': '+673',
+                'telephoneCountryCode': '+673',
                 'name': 'Brunei',
-                'iso': 'BN'
+                'countryCode': 'BN'
             },
             {
-                'code': '+359',
+                'telephoneCountryCode': '+359',
                 'name': 'Bulgaria',
-                'iso': 'BG'
+                'countryCode': 'BG'
             },
             {
-                'code': '+226',
+                'telephoneCountryCode': '+226',
                 'name': 'Burkina Faso',
-                'iso': 'BG'
+                'countryCode': 'BG'
             },
             {
-                'code': '+257',
+                'telephoneCountryCode': '+257',
                 'name': 'Burundi',
-                'iso': 'BI'
+                'countryCode': 'BI'
             },
             {
-                'code': '+855',
+                'telephoneCountryCode': '+855',
                 'name': 'Cambodia',
-                'iso': 'KH'
+                'countryCode': 'KH'
             },
             {
-                'code': '+237',
+                'telephoneCountryCode': '+237',
                 'name': 'Cameroon',
-                'iso': 'CM'
+                'countryCode': 'CM'
             },
             {
-                'code': '+1',
+                'telephoneCountryCode': '+1',
                 'name': 'Canada',
-                'iso': 'CA'
+                'countryCode': 'CA'
             },
             {
-                'code': '+238',
+                'telephoneCountryCode': '+238',
                 'name': 'Cape Verde',
-                'iso': 'CV'
+                'countryCode': 'CV'
             },
             {
-                'code': '+599',
+                'telephoneCountryCode': '+599',
                 'name': 'Caribbean Netherlands',
-                'iso': 'BQ'
+                'countryCode': 'BQ'
             },
             {
-                'code': '+ 345',
+                'telephoneCountryCode': '+ 345',
                 'name': 'Cayman Islands',
-                'iso': 'KY'
+                'countryCode': 'KY'
             },
             {
-                'code': '+236',
+                'telephoneCountryCode': '+236',
                 'name': 'Central African Republic',
-                'iso': 'CF'
+                'countryCode': 'CF'
             },
             {
-                'code': '+235',
+                'telephoneCountryCode': '+235',
                 'name': 'Chad',
-                'iso': 'TD'
+                'countryCode': 'TD'
             },
             {
-                'code': '+56',
+                'telephoneCountryCode': '+56',
                 'name': 'Chile',
-                'iso': 'CL'
+                'countryCode': 'CL'
             },
             {
-                'code': '+86',
+                'telephoneCountryCode': '+86',
                 'name': 'China',
-                'iso': 'CN'
+                'countryCode': 'CN'
             },
             {
-                'code': '+61',
+                'telephoneCountryCode': '+61',
                 'name': 'Christmas Island',
-                'iso': 'CX'
+                'countryCode': 'CX'
             },
             {
-                'code': '+61',
+                'telephoneCountryCode': '+61',
                 'name': 'Cocos-Keeling Islands',
-                'iso': 'CC'
+                'countryCode': 'CC'
             },
             {
-                'code': '+57',
+                'telephoneCountryCode': '+57',
                 'name': 'Colombia',
-                'iso': 'CO'
+                'countryCode': 'CO'
             },
             {
-                'code': '+269',
+                'telephoneCountryCode': '+269',
                 'name': 'Comoros',
-                'iso': 'KM'
+                'countryCode': 'KM'
             },
             {
-                'code': '+242',
+                'telephoneCountryCode': '+242',
                 'name': 'Congo',
-                'iso': 'CG'
+                'countryCode': 'CG'
             },
             {
-                'code': '+243',
+                'telephoneCountryCode': '+243',
                 'name': 'Congo, Dem. Rep. of (Zaire)',
-                'iso': 'CD'
+                'countryCode': 'CD'
             },
             {
-                'code': '+682',
+                'telephoneCountryCode': '+682',
                 'name': 'Cook Islands',
-                'iso': 'CK'
+                'countryCode': 'CK'
             },
             {
-                'code': '+506',
+                'telephoneCountryCode': '+506',
                 'name': 'Costa Rica',
-                'iso': 'CR'
+                'countryCode': 'CR'
             },
             {
-                'code': '+385',
+                'telephoneCountryCode': '+385',
                 'name': 'Croatia',
-                'iso': 'HR'
+                'countryCode': 'HR'
             },
             {
-                'code': '+599',
+                'telephoneCountryCode': '+599',
                 'name': 'Curacao',
-                'iso': 'CW'
+                'countryCode': 'CW'
             },
             {
-                'code': '+537',
+                'telephoneCountryCode': '+537',
                 'name': 'Cyprus',
-                'iso': 'CY'
+                'countryCode': 'CY'
             },
             {
-                'code': '+420',
+                'telephoneCountryCode': '+420',
                 'name': 'Czech Republic',
-                'iso': 'CZ'
+                'countryCode': 'CZ'
             },
             {
-                'code': '+45',
+                'telephoneCountryCode': '+45',
                 'name': 'Denmark',
-                'iso': 'DK'
+                'countryCode': 'DK'
             },
             {
-                'code': '+253',
+                'telephoneCountryCode': '+253',
                 'name': 'Djibouti',
-                'iso': 'DJ'
+                'countryCode': 'DJ'
             },
             {
-                'code': '+1 767',
+                'telephoneCountryCode': '+1 767',
                 'name': 'Dominica',
-                'iso': 'DM'
+                'countryCode': 'DM'
             },
             {
-                'code': '+1 809',
+                'telephoneCountryCode': '+1 809',
                 'name': 'Dominican Republic',
-                'iso': 'DO'
+                'countryCode': 'DO'
             },
             {
-                'code': '+593',
+                'telephoneCountryCode': '+593',
                 'name': 'Ecuador',
-                'iso': 'EC'
+                'countryCode': 'EC'
             },
             {
-                'code': '+20',
+                'telephoneCountryCode': '+20',
                 'name': 'Egypt',
-                'iso': 'EG'
+                'countryCode': 'EG'
             },
             {
-                'code': '+503',
+                'telephoneCountryCode': '+503',
                 'name': 'El Salvador',
-                'iso': 'SV'
+                'countryCode': 'SV'
             },
             {
-                'code': '+240',
+                'telephoneCountryCode': '+240',
                 'name': 'Equatorial Guinea',
-                'iso': 'GQ'
+                'countryCode': 'GQ'
             },
             {
-                'code': '+291',
+                'telephoneCountryCode': '+291',
                 'name': 'Eritrea',
-                'iso': 'ER'
+                'countryCode': 'ER'
             },
             {
-                'code': '+372',
+                'telephoneCountryCode': '+372',
                 'name': 'Estonia',
-                'iso': 'EE'
+                'countryCode': 'EE'
             },
             {
-                'code': '+251',
+                'telephoneCountryCode': '+251',
                 'name': 'Ethiopia',
-                'iso': 'ET'
+                'countryCode': 'ET'
             },
             {
-                'code': '+500',
+                'telephoneCountryCode': '+500',
                 'name': 'Falkland Islands',
-                'iso': 'FK'
+                'countryCode': 'FK'
             },
             {
-                'code': '+298',
+                'telephoneCountryCode': '+298',
                 'name': 'Faroe Islands',
-                'iso': 'FO'
+                'countryCode': 'FO'
             },
             {
-                'code': '+679',
+                'telephoneCountryCode': '+679',
                 'name': 'Fiji',
-                'iso': 'FJ'
+                'countryCode': 'FJ'
             },
             {
-                'code': '+358',
+                'telephoneCountryCode': '+358',
                 'name': 'Finland',
-                'iso': 'FI'
+                'countryCode': 'FI'
             },
             {
-                'code': '+33',
+                'telephoneCountryCode': '+33',
                 'name': 'France',
-                'iso': 'FR'
+                'countryCode': 'FR'
             },
             {
-                'code': '+596',
+                'telephoneCountryCode': '+596',
                 'name': 'French Antilles',
-                'iso': 'FR'
+                'countryCode': 'FR'
             },
             {
-                'code': '+594',
+                'telephoneCountryCode': '+594',
                 'name': 'French Guiana',
-                'iso': 'GF'
+                'countryCode': 'GF'
             },
             {
-                'code': '+689',
+                'telephoneCountryCode': '+689',
                 'name': 'French Polynesia',
-                'iso': 'PF'
+                'countryCode': 'PF'
             },
             {
-                'code': '+241',
+                'telephoneCountryCode': '+241',
                 'name': 'Gabon',
-                'iso': 'GA'
+                'countryCode': 'GA'
             },
             {
-                'code': '+220',
+                'telephoneCountryCode': '+220',
                 'name': 'Gambia',
-                'iso': 'GM'
+                'countryCode': 'GM'
             },
             {
-                'code': '+995',
+                'telephoneCountryCode': '+995',
                 'name': 'Georgia',
-                'iso': 'GE'
+                'countryCode': 'GE'
             },
             {
-                'code': '+49',
+                'telephoneCountryCode': '+49',
                 'name': 'Germany',
-                'iso': 'DE'
+                'countryCode': 'DE'
             },
             {
-                'code': '+233',
+                'telephoneCountryCode': '+233',
                 'name': 'Ghana',
-                'iso': 'GH'
+                'countryCode': 'GH'
             },
             {
-                'code': '+350',
+                'telephoneCountryCode': '+350',
                 'name': 'Gibraltar',
-                'iso': 'GI'
+                'countryCode': 'GI'
             },
             {
-                'code': '+30',
+                'telephoneCountryCode': '+30',
                 'name': 'Greece',
-                'iso': 'GR'
+                'countryCode': 'GR'
             },
             {
-                'code': '+299',
+                'telephoneCountryCode': '+299',
                 'name': 'Greenland',
-                'iso': 'GL'
+                'countryCode': 'GL'
             },
             {
-                'code': '+1 473',
+                'telephoneCountryCode': '+1 473',
                 'name': 'Grenada',
-                'iso': 'GD'
+                'countryCode': 'GD'
             },
             {
-                'code': '+590',
+                'telephoneCountryCode': '+590',
                 'name': 'Guadeloupe',
-                'iso': 'GP'
+                'countryCode': 'GP'
             },
             {
-                'code': '+1 671',
+                'telephoneCountryCode': '+1 671',
                 'name': 'Guam',
-                'iso': 'GU'
+                'countryCode': 'GU'
             },
             {
-                'code': '+502',
+                'telephoneCountryCode': '+502',
                 'name': 'Guatemala',
-                'iso': 'GT'
+                'countryCode': 'GT'
             },
             {
-                'code': '+224',
+                'telephoneCountryCode': '+224',
                 'name': 'Guinea',
-                'iso': 'GN'
+                'countryCode': 'GN'
             },
             {
-                'code': '+245',
+                'telephoneCountryCode': '+245',
                 'name': 'Guinea-Bissau',
-                'iso': 'GW'
+                'countryCode': 'GW'
             },
             {
-                'code': '+595',
+                'telephoneCountryCode': '+595',
                 'name': 'Guyana',
-                'iso': 'GY'
+                'countryCode': 'GY'
             },
             {
-                'code': '+509',
+                'telephoneCountryCode': '+509',
                 'name': 'Haiti',
-                'iso': 'HT'
+                'countryCode': 'HT'
             },
             {
-                'code': '+504',
+                'telephoneCountryCode': '+504',
                 'name': 'Honduras',
-                'iso': 'HN'
+                'countryCode': 'HN'
             },
             {
-                'code': '+852',
+                'telephoneCountryCode': '+852',
                 'name': 'Hong Kong SAR China',
-                'iso': 'HK'
+                'countryCode': 'HK'
             },
             {
-                'code': '+36',
+                'telephoneCountryCode': '+36',
                 'name': 'Hungary',
-                'iso': 'HU'
+                'countryCode': 'HU'
             },
             {
-                'code': '+354',
+                'telephoneCountryCode': '+354',
                 'name': 'Iceland',
-                'iso': 'IS'
+                'countryCode': 'IS'
             },
             {
-                'code': '+91',
+                'telephoneCountryCode': '+91',
                 'name': 'India',
-                'iso': 'IN'
+                'countryCode': 'IN'
             },
             {
-                'code': '+62',
+                'telephoneCountryCode': '+62',
                 'name': 'Indonesia',
-                'iso': 'ID'
+                'countryCode': 'ID'
             },
             {
-                'code': '+964',
+                'telephoneCountryCode': '+964',
                 'name': 'Iraq',
-                'iso': 'IQ'
+                'countryCode': 'IQ'
             },
             {
-                'code': '+353',
+                'telephoneCountryCode': '+353',
                 'name': 'Ireland',
-                'iso': 'IR'
+                'countryCode': 'IR'
             },
             {
-                'code': '+44',
+                'telephoneCountryCode': '+44',
                 'name': 'Isle of Man',
-                'iso': 'IM'
+                'countryCode': 'IM'
             },
             {
-                'code': '+972',
+                'telephoneCountryCode': '+972',
                 'name': 'Israel',
-                'iso': 'IL'
+                'countryCode': 'IL'
             },
             {
-                'code': '+39',
+                'telephoneCountryCode': '+39',
                 'name': 'Italy',
-                'iso': 'IT'
+                'countryCode': 'IT'
             },
             {
-                'code': '+1 876',
+                'telephoneCountryCode': '+1 876',
                 'name': 'Jamaica',
-                'iso': 'JM'
+                'countryCode': 'JM'
             },
             {
-                'code': '+81',
+                'telephoneCountryCode': '+81',
                 'name': 'Japan',
-                'iso': 'JP'
+                'countryCode': 'JP'
             },
             {
-                'code': '+962',
+                'telephoneCountryCode': '+962',
                 'name': 'Jordan',
-                'iso': 'JO'
+                'countryCode': 'JO'
             },
             {
-                'code': '+77',
+                'telephoneCountryCode': '+77',
                 'name': 'Kazakhstan',
-                'iso': 'KZ'
+                'countryCode': 'KZ'
             },
             {
-                'code': '+254',
+                'telephoneCountryCode': '+254',
                 'name': 'Kenya',
-                'iso': 'KE'
+                'countryCode': 'KE'
             },
             {
-                'code': '+686',
+                'telephoneCountryCode': '+686',
                 'name': 'Kiribati',
-                'iso': 'KI'
+                'countryCode': 'KI'
             },
             {
-                'code': '+965',
+                'telephoneCountryCode': '+965',
                 'name': 'Kuwait',
-                'iso': 'KW'
+                'countryCode': 'KW'
             },
             {
-                'code': '+996',
+                'telephoneCountryCode': '+996',
                 'name': 'Kyrgyzstan',
-                'iso': 'KG'
+                'countryCode': 'KG'
             },
             {
-                'code': '+856',
+                'telephoneCountryCode': '+856',
                 'name': 'Laos',
-                'iso': 'LA'
+                'countryCode': 'LA'
             },
             {
-                'code': '+371',
+                'telephoneCountryCode': '+371',
                 'name': 'Latvia',
-                'iso': 'LV'
+                'countryCode': 'LV'
             },
             {
-                'code': '+961',
+                'telephoneCountryCode': '+961',
                 'name': 'Lebanon',
-                'iso': 'LB'
+                'countryCode': 'LB'
             },
             {
-                'code': '+266',
+                'telephoneCountryCode': '+266',
                 'name': 'Lesotho',
-                'iso': 'LS'
+                'countryCode': 'LS'
             },
             {
-                'code': '+231',
+                'telephoneCountryCode': '+231',
                 'name': 'Liberia',
-                'iso': 'LR'
+                'countryCode': 'LR'
             },
             {
-                'code': '+218',
+                'telephoneCountryCode': '+218',
                 'name': 'Libya',
-                'iso': 'LY'
+                'countryCode': 'LY'
             },
             {
-                'code': '+423',
+                'telephoneCountryCode': '+423',
                 'name': 'Liechtenstein',
-                'iso': 'LI'
+                'countryCode': 'LI'
             },
             {
-                'code': '+370',
+                'telephoneCountryCode': '+370',
                 'name': 'Lithuania',
-                'iso': 'LT'
+                'countryCode': 'LT'
             },
             {
-                'code': '+352',
+                'telephoneCountryCode': '+352',
                 'name': 'Luxembourg',
-                'iso': 'LU'
+                'countryCode': 'LU'
             },
             {
-                'code': '+853',
+                'telephoneCountryCode': '+853',
                 'name': 'Macau SAR China',
-                'iso': 'MO'
+                'countryCode': 'MO'
             },
             {
-                'code': '+389',
+                'telephoneCountryCode': '+389',
                 'name': 'Macedonia',
-                'iso': 'MK'
+                'countryCode': 'MK'
             },
             {
-                'code': '+261',
+                'telephoneCountryCode': '+261',
                 'name': 'Madagascar',
-                'iso': 'MG'
+                'countryCode': 'MG'
             },
             {
-                'code': '+265',
+                'telephoneCountryCode': '+265',
                 'name': 'Malawi',
-                'iso': 'MW'
+                'countryCode': 'MW'
             },
             {
-                'code': '+60',
+                'telephoneCountryCode': '+60',
                 'name': 'Malaysia',
-                'iso': 'MY'
+                'countryCode': 'MY'
             },
             {
-                'code': '+960',
+                'telephoneCountryCode': '+960',
                 'name': 'Maldives',
-                'iso': 'MV'
+                'countryCode': 'MV'
             },
             {
-                'code': '+223',
+                'telephoneCountryCode': '+223',
                 'name': 'Mali',
-                'iso': 'ML'
+                'countryCode': 'ML'
             },
             {
-                'code': '+356',
+                'telephoneCountryCode': '+356',
                 'name': 'Malta',
-                'iso': 'MT'
+                'countryCode': 'MT'
             },
             {
-                'code': '+692',
+                'telephoneCountryCode': '+692',
                 'name': 'Marshall Islands',
-                'iso': 'MH'
+                'countryCode': 'MH'
             },
             {
-                'code': '+596',
+                'telephoneCountryCode': '+596',
                 'name': 'Martinique',
-                'iso': 'MQ'
+                'countryCode': 'MQ'
             },
             {
-                'code': '+222',
+                'telephoneCountryCode': '+222',
                 'name': 'Mauritania',
-                'iso': 'MR'
+                'countryCode': 'MR'
             },
             {
-                'code': '+230',
+                'telephoneCountryCode': '+230',
                 'name': 'Mauritius',
-                'iso': 'MU'
+                'countryCode': 'MU'
             },
             {
-                'code': '+262',
+                'telephoneCountryCode': '+262',
                 'name': 'Mayotte',
-                'iso': 'YT'
+                'countryCode': 'YT'
             },
             {
-                'code': '+52',
+                'telephoneCountryCode': '+52',
                 'name': 'Mexico',
-                'iso': 'MX',
+                'countryCode': 'MX',
                 'mobileAreaCodePrefix': '1'
             },
             {
-                'code': '+691',
+                'telephoneCountryCode': '+691',
                 'name': 'Micronesia',
-                'iso': 'FM'
+                'countryCode': 'FM'
             },
             {
-                'code': '+373',
+                'telephoneCountryCode': '+373',
                 'name': 'Moldova',
-                'iso': 'MD'
+                'countryCode': 'MD'
             },
             {
-                'code': '+377',
+                'telephoneCountryCode': '+377',
                 'name': 'Monaco',
-                'iso': 'MC'
+                'countryCode': 'MC'
             },
             {
-                'code': '+976',
+                'telephoneCountryCode': '+976',
                 'name': 'Mongolia',
-                'iso': 'MN'
+                'countryCode': 'MN'
             },
             {
-                'code': '+382',
+                'telephoneCountryCode': '+382',
                 'name': 'Montenegro',
-                'iso': 'ME'
+                'countryCode': 'ME'
             },
             {
-                'code': '+1664',
+                'telephoneCountryCode': '+1664',
                 'name': 'Montserrat',
-                'iso': 'MS'
+                'countryCode': 'MS'
             },
             {
-                'code': '+212',
+                'telephoneCountryCode': '+212',
                 'name': 'Morocco',
-                'iso': 'MA'
+                'countryCode': 'MA'
             },
             {
-                'code': '+95',
+                'telephoneCountryCode': '+95',
                 'name': 'Myanmar',
-                'iso': 'MM'
+                'countryCode': 'MM'
             },
             {
-                'code': '+264',
+                'telephoneCountryCode': '+264',
                 'name': 'Namibia',
-                'iso': 'NA'
+                'countryCode': 'NA'
             },
             {
-                'code': '+674',
+                'telephoneCountryCode': '+674',
                 'name': 'Nauru',
-                'iso': 'NR'
+                'countryCode': 'NR'
             },
             {
-                'code': '+977',
+                'telephoneCountryCode': '+977',
                 'name': 'Nepal',
-                'iso': 'NP'
+                'countryCode': 'NP'
             },
             {
-                'code': '+31',
+                'telephoneCountryCode': '+31',
                 'name': 'Netherlands',
-                'iso': 'NL'
+                'countryCode': 'NL'
             },
             {
-                'code': '+599',
+                'telephoneCountryCode': '+599',
                 'name': 'Netherlands Antilles',
-                'iso': 'NC'
+                'countryCode': 'NC'
             },
             {
-                'code': '+64',
+                'telephoneCountryCode': '+64',
                 'name': 'New Zealand',
-                'iso': 'NZ'
+                'countryCode': 'NZ'
             },
             {
-                'code': '+505',
+                'telephoneCountryCode': '+505',
                 'name': 'Nicaragua',
-                'iso': 'NI'
+                'countryCode': 'NI'
             },
             {
-                'code': '+227',
+                'telephoneCountryCode': '+227',
                 'name': 'Niger',
-                'iso': 'NE'
+                'countryCode': 'NE'
             },
             {
-                'code': '+234',
+                'telephoneCountryCode': '+234',
                 'name': 'Nigeria',
-                'iso': 'NG'
+                'countryCode': 'NG'
             },
             {
-                'code': '+683',
+                'telephoneCountryCode': '+683',
                 'name': 'Niue',
-                'iso': 'NU'
+                'countryCode': 'NU'
             },
             {
-                'code': '+672',
+                'telephoneCountryCode': '+672',
                 'name': 'Norfolk Island',
-                'iso': 'NF'
+                'countryCode': 'NF'
             },
             {
-                'code': '+1 670',
+                'telephoneCountryCode': '+1 670',
                 'name': 'Northern Mariana Islands',
-                'iso': 'MP'
+                'countryCode': 'MP'
             },
             {
-                'code': '+47',
+                'telephoneCountryCode': '+47',
                 'name': 'Norway',
-                'iso': 'NO'
+                'countryCode': 'NO'
             },
             {
-                'code': '+968',
+                'telephoneCountryCode': '+968',
                 'name': 'Oman',
-                'iso': 'OM'
+                'countryCode': 'OM'
             },
             {
-                'code': '+92',
+                'telephoneCountryCode': '+92',
                 'name': 'Pakistan',
-                'iso': 'PK'
+                'countryCode': 'PK'
             },
             {
-                'code': '+680',
+                'telephoneCountryCode': '+680',
                 'name': 'Palau',
-                'iso': 'PW'
+                'countryCode': 'PW'
             },
             {
-                'code': '+970',
+                'telephoneCountryCode': '+970',
                 'name': 'Palestinian Territory',
-                'iso': 'PS'
+                'countryCode': 'PS'
             },
             {
-                'code': '+507',
+                'telephoneCountryCode': '+507',
                 'name': 'Panama',
-                'iso': 'PA'
+                'countryCode': 'PA'
             },
             {
-                'code': '+675',
+                'telephoneCountryCode': '+675',
                 'name': 'Papua New Guinea',
-                'iso': 'PG'
+                'countryCode': 'PG'
             },
             {
-                'code': '+595',
+                'telephoneCountryCode': '+595',
                 'name': 'Paraguay',
-                'iso': 'PY'
+                'countryCode': 'PY'
             },
             {
-                'code': '+51',
+                'telephoneCountryCode': '+51',
                 'name': 'Peru',
-                'iso': 'PE'
+                'countryCode': 'PE'
             },
             {
-                'code': '+63',
+                'telephoneCountryCode': '+63',
                 'name': 'Philippines',
-                'iso': 'PH'
+                'countryCode': 'PH'
             },
             {
-                'code': '+48',
+                'telephoneCountryCode': '+48',
                 'name': 'Poland',
-                'iso': 'PL'
+                'countryCode': 'PL'
             },
             {
-                'code': '+351',
+                'telephoneCountryCode': '+351',
                 'name': 'Portugal',
-                'iso': 'PT'
+                'countryCode': 'PT'
             },
             {
-                'code': '+1 787',
+                'telephoneCountryCode': '+1 787',
                 'name': 'Puerto Rico',
-                'iso': 'PR'
+                'countryCode': 'PR'
             },
             {
-                'code': '+974',
+                'telephoneCountryCode': '+974',
                 'name': 'Qatar',
-                'iso': 'QA'
+                'countryCode': 'QA'
             },
             {
-                'code': '+262',
+                'telephoneCountryCode': '+262',
                 'name': 'Reunion',
-                'iso': 'RE'
+                'countryCode': 'RE'
             },
             {
-                'code': '+40',
+                'telephoneCountryCode': '+40',
                 'name': 'Romania',
-                'iso': 'RO'
+                'countryCode': 'RO'
             },
             {
-                'code': '+7',
+                'telephoneCountryCode': '+7',
                 'name': 'Russia',
-                'iso': 'RU'
+                'countryCode': 'RU'
             },
             {
-                'code': '+250',
+                'telephoneCountryCode': '+250',
                 'name': 'Rwanda',
-                'iso': ''
+                'countryCode': ''
             },
             {
-                'code': '+685',
+                'telephoneCountryCode': '+685',
                 'name': 'Samoa',
-                'iso': 'WS'
+                'countryCode': 'WS'
             },
             {
-                'code': '+378',
+                'telephoneCountryCode': '+378',
                 'name': 'San Marino',
-                'iso': 'SM'
+                'countryCode': 'SM'
             },
             {
-                'code': '+966',
+                'telephoneCountryCode': '+966',
                 'name': 'Saudi Arabia',
-                'iso': 'SA'
+                'countryCode': 'SA'
             },
             {
-                'code': '+221',
+                'telephoneCountryCode': '+221',
                 'name': 'Senegal',
-                'iso': 'SN'
+                'countryCode': 'SN'
             },
             {
-                'code': '+381',
+                'telephoneCountryCode': '+381',
                 'name': 'Serbia',
-                'iso': 'RS'
+                'countryCode': 'RS'
             },
             {
-                'code': '+248',
+                'telephoneCountryCode': '+248',
                 'name': 'Seychelles',
-                'iso': 'SC'
+                'countryCode': 'SC'
             },
             {
-                'code': '+232',
+                'telephoneCountryCode': '+232',
                 'name': 'Sierra Leone',
-                'iso': 'SL'
+                'countryCode': 'SL'
             },
             {
-                'code': '+65',
+                'telephoneCountryCode': '+65',
                 'name': 'Singapore',
-                'iso': 'SG'
+                'countryCode': 'SG'
             },
             {
-                'code': '+421',
+                'telephoneCountryCode': '+421',
                 'name': 'Slovakia',
-                'iso': 'SK'
+                'countryCode': 'SK'
             },
             {
-                'code': '+386',
+                'telephoneCountryCode': '+386',
                 'name': 'Slovenia',
-                'iso': 'SI'
+                'countryCode': 'SI'
             },
             {
-                'code': '+677',
+                'telephoneCountryCode': '+677',
                 'name': 'Solomon Islands',
-                'iso': 'SB'
+                'countryCode': 'SB'
             },
             {
-                'code': '+27',
+                'telephoneCountryCode': '+27',
                 'name': 'South Africa',
-                'iso': 'ZA'
+                'countryCode': 'ZA'
             },
             {
-                'code': '+82',
+                'telephoneCountryCode': '+82',
                 'name': 'South Korea',
-                'iso': 'KR'
+                'countryCode': 'KR'
             },
             {
-                'code': '+34',
+                'telephoneCountryCode': '+34',
                 'name': 'Spain',
-                'iso': 'ES'
+                'countryCode': 'ES'
             },
             {
-                'code': '+94',
+                'telephoneCountryCode': '+94',
                 'name': 'Sri Lanka',
-                'iso': 'LK'
+                'countryCode': 'LK'
             },
             {
-                'code': '+597',
+                'telephoneCountryCode': '+597',
                 'name': 'Suriname',
-                'iso': 'SR'
+                'countryCode': 'SR'
             },
             {
-                'code': '+268',
+                'telephoneCountryCode': '+268',
                 'name': 'Swaziland',
-                'iso': 'SZ'
+                'countryCode': 'SZ'
             },
             {
-                'code': '+46',
+                'telephoneCountryCode': '+46',
                 'name': 'Sweden',
-                'iso': 'SE'
+                'countryCode': 'SE'
             },
             {
-                'code': '+41',
+                'telephoneCountryCode': '+41',
                 'name': 'Switzerland',
-                'iso': 'CH'
+                'countryCode': 'CH'
             },
             {
-                'code': '+886',
+                'telephoneCountryCode': '+886',
                 'name': 'Taiwan',
-                'iso': 'TW'
+                'countryCode': 'TW'
             },
             {
-                'code': '+992',
+                'telephoneCountryCode': '+992',
                 'name': 'Tajikistan',
-                'iso': 'TJ'
+                'countryCode': 'TJ'
             },
             {
-                'code': '+255',
+                'telephoneCountryCode': '+255',
                 'name': 'Tanzania',
-                'iso': 'TZ'
+                'countryCode': 'TZ'
             },
             {
-                'code': '+66',
+                'telephoneCountryCode': '+66',
                 'name': 'Thailand',
-                'iso': 'TH'
+                'countryCode': 'TH'
             },
             {
-                'code': '+670',
+                'telephoneCountryCode': '+670',
                 'name': 'Timor Leste',
-                'iso': 'TL'
+                'countryCode': 'TL'
             },
             {
-                'code': '+228',
+                'telephoneCountryCode': '+228',
                 'name': 'Togo',
-                'iso': 'TG'
+                'countryCode': 'TG'
             },
             {
-                'code': '+690',
+                'telephoneCountryCode': '+690',
                 'name': 'Tokelau',
-                'iso': 'TK'
+                'countryCode': 'TK'
             },
             {
-                'code': '+676',
+                'telephoneCountryCode': '+676',
                 'name': 'Tonga',
-                'iso': 'TO'
+                'countryCode': 'TO'
             },
             {
-                'code': '+1 868',
+                'telephoneCountryCode': '+1 868',
                 'name': 'Trinidad and Tobago',
-                'iso': 'TT'
+                'countryCode': 'TT'
             },
             {
-                'code': '+216',
+                'telephoneCountryCode': '+216',
                 'name': 'Tunisia',
-                'iso': 'TN'
+                'countryCode': 'TN'
             },
             {
-                'code': '+90',
+                'telephoneCountryCode': '+90',
                 'name': 'Turkey',
-                'iso': 'TR'
+                'countryCode': 'TR'
             },
             {
-                'code': '+993',
+                'telephoneCountryCode': '+993',
                 'name': 'Turkmenistan',
-                'iso': 'TM'
+                'countryCode': 'TM'
             },
             {
-                'code': '+1 649',
+                'telephoneCountryCode': '+1 649',
                 'name': 'Turks and Caicos Islands',
-                'iso': 'TC'
+                'countryCode': 'TC'
             },
             {
-                'code': '+688',
+                'telephoneCountryCode': '+688',
                 'name': 'Tuvalu',
-                'iso': 'TV'
+                'countryCode': 'TV'
             },
             {
-                'code': '+1 340',
+                'telephoneCountryCode': '+1 340',
                 'name': 'U.S. Virgin Islands',
-                'iso': 'VI'
+                'countryCode': 'VI'
             },
             {
-                'code': '+256',
+                'telephoneCountryCode': '+256',
                 'name': 'Uganda',
-                'iso': 'UG'
+                'countryCode': 'UG'
             },
             {
-                'code': '+380',
+                'telephoneCountryCode': '+380',
                 'name': 'Ukraine',
-                'iso': 'UA'
+                'countryCode': 'UA'
             },
             {
-                'code': '+44',
+                'telephoneCountryCode': '+44',
                 'name': 'United Kingdom',
-                'iso': 'GB'
+                'countryCode': 'GB'
             },
             {
-                'code': '+971',
+                'telephoneCountryCode': '+971',
                 'name': 'United Arab Emirates',
-                'iso': 'AE'
+                'countryCode': 'AE'
             },
             {
-                'code': '+1',
+                'telephoneCountryCode': '+1',
                 'name': 'United States',
-                'iso': 'US'
+                'countryCode': 'US'
             },
             {
-                'code': '+598',
+                'telephoneCountryCode': '+598',
                 'name': 'Uruguay',
-                'iso': 'UY'
+                'countryCode': 'UY'
             },
             {
-                'code': '+998',
+                'telephoneCountryCode': '+998',
                 'name': 'Uzbekistan',
-                'iso': 'UZ'
+                'countryCode': 'UZ'
             },
             {
-                'code': '+678',
+                'telephoneCountryCode': '+678',
                 'name': 'Vanuatu',
-                'iso': 'VU'
+                'countryCode': 'VU'
             },
             {
-                'code': '+58',
+                'telephoneCountryCode': '+58',
                 'name': 'Venezuela',
-                'iso': 'VE'
+                'countryCode': 'VE'
             },
             {
-                'code': '+84',
+                'telephoneCountryCode': '+84',
                 'name': 'Vietnam',
-                'iso': 'VN'
+                'countryCode': 'VN'
             },
             {
-                'code': '+681',
+                'telephoneCountryCode': '+681',
                 'name': 'Wallis and Futuna',
-                'iso': 'WF'
+                'countryCode': 'WF'
             },
             {
-                'code': '+967',
+                'telephoneCountryCode': '+967',
                 'name': 'Yemen',
-                'iso': 'YE'
+                'countryCode': 'YE'
             },
             {
-                'code': '+260',
+                'telephoneCountryCode': '+260',
                 'name': 'Zambia',
-                'iso': 'ZM'
+                'countryCode': 'ZM'
             },
             {
-                'code': '+263',
+                'telephoneCountryCode': '+263',
                 'name': 'Zimbabwe',
-                'iso': 'ZW'
+                'countryCode': 'ZW'
             }
         ];
     }
