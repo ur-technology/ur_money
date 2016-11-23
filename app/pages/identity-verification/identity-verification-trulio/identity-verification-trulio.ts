@@ -53,7 +53,7 @@ export class IdentityVerificationTrulioPage {
     let user = this.auth.currentUser;
     this.identificationType = this.identificationTypes[0].value;
 
-    this.dateOfBirth = 'foo';
+    this.dateOfBirth = '';
 
     this.verification = {
       'PersonInfo': {
