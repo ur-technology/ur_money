@@ -35,6 +35,7 @@ export class HomePage {
   ) {
     this.elementRef = elementRef;
     this.ios = this.platform.is('ios');
+
   }
 
   reflectAvailableBalanceOnPage() {
@@ -156,7 +157,8 @@ export class HomePage {
       'verification-failed': 'home.unlockMessage',
       'wallet-generated': 'home.unlockMessage',
       'announcement-requested': 'home.bonusGenerating',
-      'announcement-initiated': 'home.bonusGenerating'
+      'announcement-initiated': 'home.bonusGenerating',
+      'verification-succeeded': 'home.bonusGenerating'
     }[this.auth.getUserStatus()]);
 
   }
@@ -169,7 +171,8 @@ export class HomePage {
         'verification-failed': IdentityVerificationIntroPage,
         'wallet-generated': IdentityVerificationIntroPage,
         'announcement-initiated': AnnouncementInitiatedPage,
-        'announcement-requested': AnnouncementInitiatedPage
+        'announcement-requested': AnnouncementInitiatedPage,
+        'verification-succeeded': AnnouncementInitiatedPage
       }[this.auth.getUserStatus()]);
     } else {
       this.nav.push(CountryNotSupportedPage);
