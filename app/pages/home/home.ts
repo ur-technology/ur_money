@@ -15,7 +15,6 @@ import {CountryNotSupportedPage} from '../registration/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 import {AnnouncementInitiatedPage} from '../registration/announcement-initiated';
-import * as _ from 'lodash';
 declare var jQuery: any;
 
 @Page({
