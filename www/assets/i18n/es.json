@@ -154,9 +154,9 @@
         "about": "Acerca UR"
     },
     "home":{
-      "unlockMessage": "<span class='small'>Desbloquea tus </span><br />2000<span>&nbsp;UR</span>",
-      "bonusGenerating": "<span class='small'>Generación de bonificación en curso</span>",
-      "verificationPending": "<span class='small'>Verificación pendiente</span>"
+      "unlockMessage": "<span class='small'>Desbloquea Tus</span><br />2000<span>&nbsp;UR</span>",
+      "bonusGenerating": "<span class='small'>Generación De Bonificación En Curso</span><br />2000<span>&nbsp;UR</span>",
+      "verificationPending": "<span class='small'>Verificación En Curso</span><br />2000<span>&nbsp;UR</span>"
     },
     "contacts": {
         "invite": "Invitar",

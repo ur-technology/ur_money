@@ -27,7 +27,6 @@ export class HomePage {
   ios: boolean;
   availableBalance: BigNumber;
   needsToCompleteProfile: boolean;
-  balanceTitle: string;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
@@ -44,8 +43,6 @@ export class HomePage {
 
   onPageDidEnter() {
     let self = this;
-
-    self.checkIfNeedsToCompleteProfile();
 
     if (self.chartData.pointsLoaded) {
       self.renderChart();
@@ -148,35 +145,43 @@ export class HomePage {
     this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
   }
 
-  checkIfNeedsToCompleteProfile() {
-    this.needsToCompleteProfile = this.auth.eligibleToVerifyAccount();
-
-    this.balanceTitle = this.translate.instant({
-      'verification-requested': 'home.verificationPending',
-      'verification-pending': 'home.verificationPending',
-      'verification-failed': 'home.unlockMessage',
-      'wallet-generated': 'home.unlockMessage',
-      'announcement-requested': 'home.bonusGenerating',
-      'announcement-initiated': 'home.bonusGenerating',
-      'verification-succeeded': 'home.bonusGenerating'
-    }[this.auth.getUserStatus()]);
-
+  accountReady() {
+    return this.auth.getUserStatus() === 'announcement-confirmed';
   }
 
-  completeProfile() {
-    if (this.auth.isUserInSupportedCountry()) {
-      this.nav.push({
-        'verification-requested': VerificationPendingPage,
-        'verification-pending': VerificationPendingPage,
-        'verification-failed': IdentityVerificationIntroPage,
-        'wallet-generated': IdentityVerificationIntroPage,
-        'announcement-initiated': AnnouncementInitiatedPage,
-        'announcement-requested': AnnouncementInitiatedPage,
-        'verification-succeeded': AnnouncementInitiatedPage
-      }[this.auth.getUserStatus()]);
+  balanceTitle() {
+    if (this.accountReady()) {
+      if (this.availableBalance) {
+        return `${this.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
+      } else {
+        return '...';
+      }
     } else {
-      this.nav.push(CountryNotSupportedPage);
+      return this.translate.instant(
+        {
+          'verification-requested': 'home.verificationPending',
+          'verification-pending': 'home.verificationPending',
+          'announcement-requested': 'home.bonusGenerating',
+          'announcement-initiated': 'home.bonusGenerating',
+          'verification-succeeded': 'home.bonusGenerating'
+        }[this.auth.getUserStatus()] || 'home.unlockMessage'
+      );
     }
   }
 
+  goToNextStep() {
+    if (this.accountReady()) {
+      this.nav.push(CountryNotSupportedPage);
+    } else if (!this.auth.isUserInSupportedCountry()) {
+      this.nav.push(CountryNotSupportedPage);
+    } else {
+      this.nav.push({
+        'verification-requested': VerificationPendingPage,
+        'verification-pending': VerificationPendingPage,
+        'announcement-initiated': AnnouncementInitiatedPage,
+        'announcement-requested': AnnouncementInitiatedPage,
+        'verification-succeeded': AnnouncementInitiatedPage
+      }[this.auth.getUserStatus()] || IdentityVerificationIntroPage);
+    }
+  }
 }
