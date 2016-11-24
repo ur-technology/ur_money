@@ -2,7 +2,10 @@
 
 set -e
 cp app/config/env.production.json app/config/env.json
-cordova plugin rm cordova-plugin-console
+if [[ `cordova plugin ls | grep cordova-plugin-console` = *[!\ ]* ]]; then
+  echo "\$param contains characters other than space";
+  cordova plugin rm cordova-plugin-console
+fi
 npm install
 typings install
 ionic build --release android
