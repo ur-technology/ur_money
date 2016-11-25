@@ -72,7 +72,6 @@
   "cordovaPlugins": [
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
-    "cordova-plugin-sim",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
