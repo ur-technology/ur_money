@@ -15,6 +15,7 @@ import {CountryNotSupportedPage} from '../registration/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 import {AnnouncementInitiatedPage} from '../registration/announcement-initiated';
+import {TransactionsPage} from './../transactions/transactions';
 declare var jQuery: any;
 
 @Page({
@@ -171,7 +172,7 @@ export class HomePage {
 
   goToNextStep() {
     if (this.accountReady()) {
-      this.nav.push(CountryNotSupportedPage);
+      this.nav.push(TransactionsPage);
     } else if (!this.auth.isUserInSupportedCountry()) {
       this.nav.push(CountryNotSupportedPage);
     } else {
