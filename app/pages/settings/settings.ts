@@ -42,14 +42,16 @@ export class SettingsPage {
       return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
     });
     this.allStates = require('provinces');
+
+    let authUser = this.auth.currentUser;
     this.mainForm = new FormGroup({
       firstName: new FormControl('', CustomValidator.nameValidator),
       middleName: new FormControl('', CustomValidator.optionalNameValidator),
       lastName: new FormControl('', CustomValidator.nameValidator),
       stateName: new FormControl('', CustomValidator.nameValidator),
-      city: new FormControl('', CustomValidator.nameValidator)
+      city: new FormControl('', CustomValidator.nameValidator),
+      wallet: new FormControl(authUser.wallet.address || ''),
     });
-    let authUser = this.auth.currentUser;
     this.profile = {
       firstName: authUser.firstName || '',
       middleName: authUser.middleName || '',
@@ -57,6 +59,7 @@ export class SettingsPage {
       city: authUser.city,
       country: this.countries.find((x) => { return x.alpha2 === (authUser.countryCode || 'US'); })
     };
+
     let defaultStateName = (authUser.countryCode === this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
     this.countrySelected(defaultStateName);
   }

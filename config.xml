@@ -88,7 +88,7 @@
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <plugin name="cordova-plugin-x-toast" spec="~2.5.2" />
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="~0.8.4" />
-    <plugin name="cordova-plugin-facebook4" spec="~1.7.1">
+    <plugin name="cordova-plugin-facebook4" spec="1.7.1">
         <variable name="APP_ID" value="146177489140384" />
         <variable name="APP_NAME" value="UR Money" />
     </plugin>
@@ -96,4 +96,5 @@
     <plugin name="cordova-plugin-app-version" spec="~0.1.9" />
     <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git" />
     <plugin name="cordova-plugin-nativestorage" spec="~2.0.2" />
+    <plugin name="cordova-plugin-inapppurchase" spec="~1.0.0" />
 </widget>

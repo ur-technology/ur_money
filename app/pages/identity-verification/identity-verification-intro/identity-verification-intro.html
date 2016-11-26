@@ -9,12 +9,16 @@
     <ion-card-content text-justify>
       <img src="img/ur-logo.png"
         class="slide-image" />
-      <h2 class="slide-title" innerHTML='{{"identity-verification-intro.slideTitle" | translate}}'></h2><br />
+      <h2 class="slide-title"
+        innerHTML='{{"identity-verification-intro.slideTitle" | translate}}'></h2><br />
       <p>{{"identity-verification-intro.slideMessage" | translate}}</p>
+      <br />
+      <p>
+        <b>{{purchaseMessage}}</b>
+      </p>
     </ion-card-content>
     <ion-item class="footer-card">
-      <button
-        item-right
+      <button item-right
         clear
         (click)="goToProfile()">
         {{"continue" | translate}}

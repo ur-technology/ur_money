@@ -1,78 +1,86 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>{{"settings.title" | translate}}</ion-title>
-        <ion-buttons end>
-            <button [disabled]="!mainForm.valid"
-                (click)="submit()">
+  <ion-navbar>
+    <ion-title>{{"settings.title" | translate}}</ion-title>
+    <ion-buttons end>
+      <button [disabled]="!mainForm.valid"
+        (click)="submit()">
             {{"save" | translate}}
         </button>
-        </ion-buttons>
-    </ion-navbar>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
-<ion-content padding #content
-    class="settings">
-    <form [formGroup]="mainForm">
-            <ion-item-divider light>{{"settings.profileInfo" | translate}}</ion-item-divider>
-            <ion-item>
-                <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
-                <ion-input disabled="true"
-                    type="text"
-                    [(ngModel)]="profile.firstName"
-                    formControlName="firstName"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label floating>{{'profile-setup.middleName' | translate}}</ion-label>
-                <ion-input
-                    type="text" disabled="true"
-                    [(ngModel)]="profile.middleName"
-                    formControlName="middleName"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label floating>{{'profile-setup.lastName' | translate}}</ion-label>
-                <ion-input type="text" disabled="true"
-                    [(ngModel)]="profile.lastName"
-                    formControlName="lastName"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label floating>{{'profile-setup.country' | translate}}</ion-label>
-                <ion-select [(ngModel)]="profile.country" disabled="true"
-                    [ngModelOptions]="{standalone: true}"
-                    (ionChange)="countrySelected()">
-                    <ion-option [value]="c"
-                        *ngFor="let c of countries">{{c.name}}</ion-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label floating>{{'profile-setup.state' | translate}}</ion-label>
-                <ion-select [hidden]="!states || !states.length"
-                    [(ngModel)]="profile.state"
-                    [ngModelOptions]="{standalone: true}"
-                    (ionChange)="stateSelected()">
-                    <ion-option [value]="s"
-                        *ngFor="let s of states">{{s.name}}</ion-option>
-                </ion-select>
-                <ion-input [hidden]="states && states.length"
-                    type="text"
-                    [(ngModel)]="profile.stateName"
-                    [ngModelOptions]="{standalone: true}"
-                    formControlName="stateName"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label floating>{{'profile-setup.city' | translate}}</ion-label>
-                <ion-input type="text"
-                    [(ngModel)]="profile.city"
-                    formControlName="city"></ion-input>
-            </ion-item>
-
-    </form>
+<ion-content padding
+  #content
+  class="settings">
+  <form [formGroup]="mainForm">
+    <ion-item-divider light>{{"settings.profileInfo" | translate}}</ion-item-divider>
+    <ion-item>
+      <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
+      <ion-input disabled="true"
+        type="text"
+        [(ngModel)]="profile.firstName"
+        formControlName="firstName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'profile-setup.middleName' | translate}}</ion-label>
+      <ion-input type="text"
+        disabled="true"
+        [(ngModel)]="profile.middleName"
+        formControlName="middleName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'profile-setup.lastName' | translate}}</ion-label>
+      <ion-input type="text"
+        disabled="true"
+        [(ngModel)]="profile.lastName"
+        formControlName="lastName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'profile-setup.country' | translate}}</ion-label>
+      <ion-select [(ngModel)]="profile.country"
+        disabled="true"
+        [ngModelOptions]="{standalone: true}"
+        (ionChange)="countrySelected()">
+        <ion-option [value]="c"
+          *ngFor="let c of countries">{{c.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'profile-setup.state' | translate}}</ion-label>
+      <ion-select [hidden]="!states || !states.length"
+        [(ngModel)]="profile.state"
+        [ngModelOptions]="{standalone: true}"
+        (ionChange)="stateSelected()">
+        <ion-option [value]="s"
+          *ngFor="let s of states">{{s.name}}</ion-option>
+      </ion-select>
+      <ion-input [hidden]="states && states.length"
+        type="text"
+        [(ngModel)]="profile.stateName"
+        [ngModelOptions]="{standalone: true}"
+        formControlName="stateName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'profile-setup.city' | translate}}</ion-label>
+      <ion-input type="text"
+        [(ngModel)]="profile.city"
+        formControlName="city"></ion-input>
+    </ion-item>
+    <ion-item-divider light>Wallet</ion-item-divider>
+    <ion-item>
+      <ion-label floating>Wallet address</ion-label>
+      <ion-input type="text" 
+        formControlName="wallet"></ion-input>
+    </ion-item>
+  </form>
 </ion-content>
 <ion-footer [keyboardAttach]="content">
-    <button class="sign-out-button"
-        full
-        type="text"
-        danger
-        small
-        (click)="signOut()">
+  <button class="sign-out-button"
+    full
+    type="text"
+    danger
+    small
+    (click)="signOut()">
         <ion-icon name="power"></ion-icon>{{"signOut" | translate}}
     </button>
 </ion-footer>
