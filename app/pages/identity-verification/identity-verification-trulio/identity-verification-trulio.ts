@@ -1,7 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import {NgZone, Component, ViewChild } from '@angular/core';
 import {IdentityVerificationFinishPage} from '../identity-verification-finish/identity-verification-finish';
 import { NavController, LoadingController, Content} from 'ionic-angular';
-import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl} from '@angular/forms';
+import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
@@ -10,6 +10,9 @@ import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
 import {KeyboardAttachDirective} from '../../../directives/keyboard-attach.directive';
 import {VerificationPendingPage} from '../../registration/verification-pending';
+import {InAppPurchase} from 'ionic-native';
+import { DatePicker } from 'ionic-native';
+import * as moment from 'moment';
 
 @Component({
   templateUrl: 'build/pages/identity-verification/identity-verification-trulio/identity-verification-trulio.html',
@@ -26,13 +29,13 @@ export class IdentityVerificationTrulioPage {
   identificationTypes: any[];
   genders: any[];
   identificationType: string;
-  dateOfBirth: string;
+  verificationProductId: string = 'technology.ur.urmoneyapp.verify_identity';
   @ViewChild(Content) content: Content;
 
   constructor(
     public nav: NavController,
     public auth: AuthService,
-    private loadingCtrl: LoadingController, private translate: TranslateService
+    private loadingCtrl: LoadingController, private translate: TranslateService, private ngZone: NgZone
   ) {
     this.genders = [
       { name: 'Male', value: 'M' },
@@ -53,7 +56,6 @@ export class IdentityVerificationTrulioPage {
     let user = this.auth.currentUser;
     this.identificationType = this.identificationTypes[0].value;
 
-    this.dateOfBirth = '';
 
     this.verification = {
       'PersonInfo': {
@@ -97,7 +99,7 @@ export class IdentityVerificationTrulioPage {
 
     let formElements: any = {
       gender: new FormControl('', CustomValidator.nameValidator),
-      dateOfBirth: new FormControl('', CustomValidator.nameValidator),
+      dateOfBirth: new FormControl('', [Validators.required]),
       identificationType: new FormControl('', CustomValidator.nameValidator),
       driverLicenseNumber: new FormControl('', CustomValidator.conditionalNameValidator),
       driverLicenseState: new FormControl('', CustomValidator.conditionalNameValidator),
@@ -139,6 +141,19 @@ export class IdentityVerificationTrulioPage {
   }
 
   submit() {
+    let self = this;
+
+    InAppPurchase
+      .buy(self.verificationProductId)
+      .then((data: any) => {
+        InAppPurchase.consume(data.type, data.receipt, data.signature);
+      })
+      .then(() => {
+        self.verifyWithTrulio();
+      });
+  }
+
+  verifyWithTrulio() {
     let self = this;
     let loader = self.loadingCtrl.create({
       content: self.translate.instant('pleaseWait'),
@@ -230,13 +245,24 @@ export class IdentityVerificationTrulioPage {
     }
   }
 
-  dobChanged() {
-    let dateParts = this.dateOfBirth.split('-');
-    if (dateParts.length === 3) {
-      this.verification.PersonInfo.YearOfBirth = dateParts[0];
-      this.verification.PersonInfo.MonthOfBirth = dateParts[1];
-      this.verification.PersonInfo.DayOfBirth = dateParts[2];
-    }
+  showDatePicker() {
+    let self = this;
+
+    DatePicker.show({
+      date: new Date(),
+      mode: 'date',
+      androidTheme: 3
+    }).then(
+      date => {
+        self.ngZone.run(() => {
+          let control: FormControl = <FormControl>self.mainForm.find('dateOfBirth');
+          control.updateValue(moment(date).format('MM/DD/YYYY'));
+        });
+
+        self.verification.PersonInfo.YearOfBirth = date.getFullYear();
+        self.verification.PersonInfo.MonthOfBirth = date.getMonth();
+        self.verification.PersonInfo.DayOfBirth = date.getDate();
+      });
   }
 
   focusInput() {

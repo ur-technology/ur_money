@@ -63,7 +63,7 @@
     "identity-verification-intro": {
         "slideTitle": "You’re just a few steps away from claiming your <b>2,000 UR!</b>",
         "slideMessage": "In order to provide a safe environment, we ask all community members to verify their identity. To do this, we will need to ask you for several pieces of identifying information including mobile phone number, name, address, date of birth, etc., and then share this info with Trulioo, Inc., a Canada-based identity verification service.",
-        "costToBuy":"The cost of verifying the identity will be 0.99 USD",
+        "costToBuy":"The cost of verifying the identity will be {{value}}",
         "verificationPurchased":"You have already bought the verification. Please, continue to verify your identity."
     },
     "identity-verification-profile": {
