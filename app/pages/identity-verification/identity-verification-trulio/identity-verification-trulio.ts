@@ -1,6 +1,6 @@
 import {NgZone, Component, ViewChild } from '@angular/core';
 import {IdentityVerificationFinishPage} from '../identity-verification-finish/identity-verification-finish';
-import { NavController, LoadingController, Content} from 'ionic-angular';
+import { NavController, LoadingController, Content, AlertController} from 'ionic-angular';
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -35,6 +35,7 @@ export class IdentityVerificationTrulioPage {
   constructor(
     public nav: NavController,
     public auth: AuthService,
+    private alertCtrl: AlertController,
     private loadingCtrl: LoadingController, private translate: TranslateService, private ngZone: NgZone
   ) {
     this.genders = [
@@ -142,15 +143,28 @@ export class IdentityVerificationTrulioPage {
 
   submit() {
     let self = this;
-
-    InAppPurchase
-      .buy(self.verificationProductId)
-      .then((data: any) => {
-        InAppPurchase.consume(data.type, data.receipt, data.signature);
-      })
-      .then(() => {
-        self.verifyWithTrulio();
-      });
+    let alert = self.alertCtrl.create({
+      title: this.translate.instant('identity-verification-trulio.reviewTitle'),
+      message: this.translate.instant('identity-verification-trulio.reviewData'),
+      buttons: [
+        { text: this.translate.instant('cancel'), handler: () => { alert.dismiss(); } },
+        {
+          text: this.translate.instant('ok'), handler: () => {
+            alert.dismiss().then(() => {
+              InAppPurchase
+                .buy(self.verificationProductId)
+                .then((data: any) => {
+                  InAppPurchase.consume(data.type, data.receipt, data.signature);
+                })
+                .then(() => {
+                  self.verifyWithTrulio();
+                });
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   verifyWithTrulio() {

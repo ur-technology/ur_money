@@ -70,7 +70,9 @@
         "slideTitle": "Paso 1 de 2 "
     },
     "identity-verification-trulio": {
-        "slideTitle": "Paso 2 de 2 "
+        "slideTitle": "Paso 2 de 2 ",
+        "reviewTitle": "Revise su información",
+        "reviewData": "Revise que la información que introdujo es correcta. En el siguiente paso, la verificación de identidad tendrá un costo."
     },
     "identity-verification-finish": {
         "slideTitle": "<b>¡Felicitaciones!</b> Acabas de ganar tus <b>2000 UR</b>",
@@ -135,7 +137,8 @@
     },
     "verification-failed": {
         "title": "Verificación fallida",
-        "message": "Lo sentimos. No hemos podido verificar tu identidad."
+        "slideTitle": "Verificación de identidad fallida",
+        "message": "Lo sentimos. No hemos podido verificar tu identidad. <br />Si tiene alguna pregunta sobre su verificación de identidad fallida, comuníquese con nosotros por correo electrónico a <b>support@ur.technology</b> <br />Cuando se comunique con nosotros, por favor proporcione su nombre, dirección y cualquier otra información que necesitemos para identificarle."
     },
     "announcement-initiated":{
       "title": "Generación de bonificación en curso",
