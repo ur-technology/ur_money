@@ -9,7 +9,7 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
 import {KeyboardAttachDirective} from '../../../directives/keyboard-attach.directive';
-import {VerificationPendingPage} from '../../registration/verification-pending';
+import {VerificationFailedPage} from '../../registration/verification-failed';
 import {InAppPurchase} from 'ionic-native';
 import { DatePicker } from 'ionic-native';
 import * as moment from 'moment';
@@ -213,7 +213,7 @@ export class IdentityVerificationTrulioPage {
 
             loader.dismiss().then(() => {
               self.nav.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(() => {
-                self.nav.push(VerificationPendingPage);
+                self.nav.push(VerificationFailedPage);
               });
 
             });
@@ -254,14 +254,14 @@ export class IdentityVerificationTrulioPage {
       androidTheme: 3
     }).then(
       date => {
+        let dateMoment = moment(date);
         self.ngZone.run(() => {
           let control: FormControl = <FormControl>self.mainForm.find('dateOfBirth');
-          control.updateValue(moment(date).format('MM/DD/YYYY'));
+          control.updateValue(dateMoment.format('MM/DD/YYYY'));
         });
-
-        self.verification.PersonInfo.YearOfBirth = date.getFullYear();
-        self.verification.PersonInfo.MonthOfBirth = date.getMonth();
-        self.verification.PersonInfo.DayOfBirth = date.getDate();
+        self.verification.PersonInfo.YearOfBirth = dateMoment.year();
+        self.verification.PersonInfo.MonthOfBirth = dateMoment.month() + 1;
+        self.verification.PersonInfo.DayOfBirth = dateMoment.date();
       });
   }
 

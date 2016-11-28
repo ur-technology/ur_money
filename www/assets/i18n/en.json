@@ -135,7 +135,7 @@
     },
     "verification-failed": {
         "title": "Verification Failed",
-        "message": "We're sorry. We were unable to verify your identity. We will send you an email with details on how you can re-apply."
+        "message": "We're sorry. We were unable to verify your identity."
     },
     "announcement-initiated":{
       "title": "Bonus generation in progress",
@@ -158,7 +158,8 @@
     "home":{
       "unlockMessage": "<span class='small'>Unlock Your</span><br />2000<span>&nbsp;UR</span>",
       "bonusGenerating": "<span class='small'>Bonus Generation In Progress</span><br />2000<span>&nbsp;UR</span>",
-      "verificationPending": "<span class='small'>Verification In Progress</span><br />2000<span>&nbsp;UR</span>"
+      "verificationPending": "<span class='small'>Verification In Progress</span><br />2000<span>&nbsp;UR</span>",
+      "verificationFailed": "<span class='small'>Verification failed</span><br />2000<span>&nbsp;UR</span>"
     },
     "contacts": {
         "invite": "Invite",

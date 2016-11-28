@@ -161,7 +161,8 @@ export class HomePage {
       return this.translate.instant(
         {
           'verification-requested': 'home.verificationPending',
-          'verification-pending': 'home.verificationPending',
+          'verification-pending': 'home.verificationFailed',
+          'verification-failed': 'home.verificationFailed',
           'announcement-requested': 'home.bonusGenerating',
           'announcement-initiated': 'home.bonusGenerating',
           'verification-succeeded': 'home.bonusGenerating'
@@ -178,7 +179,8 @@ export class HomePage {
     } else {
       this.nav.push({
         'verification-requested': VerificationPendingPage,
-        'verification-pending': VerificationPendingPage,
+        'verification-pending': IdentityVerificationIntroPage,
+        'verification-failed': IdentityVerificationIntroPage,
         'announcement-initiated': AnnouncementInitiatedPage,
         'announcement-requested': AnnouncementInitiatedPage,
         'verification-succeeded': AnnouncementInitiatedPage

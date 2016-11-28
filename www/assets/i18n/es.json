@@ -135,7 +135,7 @@
     },
     "verification-failed": {
         "title": "Verificación fallida",
-        "message": "Lo sentimos. No hemos podido verificar tu identidad. Te enviaremos un correo electrónico con los detalles de cómo se puede volver a aplicar."
+        "message": "Lo sentimos. No hemos podido verificar tu identidad."
     },
     "announcement-initiated":{
       "title": "Generación de bonificación en curso",
@@ -158,7 +158,8 @@
     "home":{
       "unlockMessage": "<span class='small'>Desbloquea Tus</span><br />2000<span>&nbsp;UR</span>",
       "bonusGenerating": "<span class='small'>Generación De Bonificación En Curso</span><br />2000<span>&nbsp;UR</span>",
-      "verificationPending": "<span class='small'>Verificación En Curso</span><br />2000<span>&nbsp;UR</span>"
+      "verificationPending": "<span class='small'>Verificación En Curso</span><br />2000<span>&nbsp;UR</span>",
+      "verificationFailed": "<span class='small'>Verificación fallida</span><br />2000<span>&nbsp;UR</span>"
     },
     "contacts": {
         "invite": "Invitar",
