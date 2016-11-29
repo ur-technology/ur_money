@@ -74,6 +74,9 @@
         "reviewTitle": "Review your info",
         "reviewData": "Review that the information you entered is correct. <br/> In the next step, the identity verification will have a cost."
     },
+    "identity-verification-summary": {
+        "slideTitle": "Review your information"
+    },
     "identity-verification-finish": {
         "slideTitle": "<b>Congratulations!</b> You just earned your <b>2000 UR</b>",
         "slideMessage": "You will see your 2,000 UR bonus in your homepage soon!"

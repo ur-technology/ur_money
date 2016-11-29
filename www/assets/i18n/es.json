@@ -74,6 +74,9 @@
         "reviewTitle": "Revise su información",
         "reviewData": "Revise que la información que introdujo es correcta. En el siguiente paso, la verificación de identidad tendrá un costo."
     },
+    "identity-verification-summary": {
+        "slideTitle": "Confirme su información"
+    },
     "identity-verification-finish": {
         "slideTitle": "<b>¡Felicitaciones!</b> Acabas de ganar tus <b>2000 UR</b>",
         "slideMessage": "Verás pronto tu bono de 2.000 UR en tu página de inicio!"

@@ -1,22 +1,18 @@
 import {NgZone, Component, ViewChild } from '@angular/core';
-import {IdentityVerificationFinishPage} from '../identity-verification-finish/identity-verification-finish';
-import { NavController, LoadingController, Content, AlertController} from 'ionic-angular';
-import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
+import { NavController, Content} from 'ionic-angular';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
-import * as log from 'loglevel';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
 import {KeyboardAttachDirective} from '../../../directives/keyboard-attach.directive';
-import {VerificationFailedPage} from '../../registration/verification-failed';
-import {InAppPurchase} from 'ionic-native';
 import { DatePicker } from 'ionic-native';
 import * as moment from 'moment';
+import {IdentityVerificationSummaryPage} from '../identity-verification-summary/identity-verification-summary';
 
 @Component({
   templateUrl: 'build/pages/identity-verification/identity-verification-trulio/identity-verification-trulio.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, KeyboardAttachDirective],
+  directives: [KeyboardAttachDirective],
   pipes: [TranslatePipe]
 })
 export class IdentityVerificationTrulioPage {
@@ -29,14 +25,12 @@ export class IdentityVerificationTrulioPage {
   identificationTypes: any[];
   genders: any[];
   identificationType: string;
-  verificationProductId: string = 'technology.ur.urmoneyapp.verify_identity';
   @ViewChild(Content) content: Content;
 
   constructor(
     public nav: NavController,
     public auth: AuthService,
-    private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController, private translate: TranslateService, private ngZone: NgZone
+    private ngZone: NgZone
   ) {
     this.genders = [
       { name: 'Male', value: 'M' },
@@ -141,39 +135,9 @@ export class IdentityVerificationTrulioPage {
     this.mainForm = new FormGroup(formElements);
   }
 
+
   submit() {
     let self = this;
-    let alert = self.alertCtrl.create({
-      title: this.translate.instant('identity-verification-trulio.reviewTitle'),
-      message: this.translate.instant('identity-verification-trulio.reviewData'),
-      buttons: [
-        { text: this.translate.instant('cancel'), handler: () => { alert.dismiss(); } },
-        {
-          text: this.translate.instant('ok'), handler: () => {
-            alert.dismiss().then(() => {
-              InAppPurchase
-                .buy(self.verificationProductId)
-                .then((data: any) => {
-                  InAppPurchase.consume(data.type, data.receipt, data.signature);
-                })
-                .then(() => {
-                  self.verifyWithTrulio();
-                });
-            });
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-
-  verifyWithTrulio() {
-    let self = this;
-    let loader = self.loadingCtrl.create({
-      content: self.translate.instant('pleaseWait'),
-      dismissOnPageChange: true
-    });
-    loader.present();
 
     let task: any = {
       userId: self.auth.currentUserId,
@@ -195,50 +159,9 @@ export class IdentityVerificationTrulioPage {
       task.verificationArgs.DataFields.Passport = self.verification.Passport;
     };
 
-    let taskRef = firebase.database().ref(`/identityVerificationQueue/tasks`).push(task);
-    let resultRef = taskRef.child('result');
-    log.debug(`waiting for value at ${resultRef.toString()}`);
-    resultRef.on('value', (snapshot) => {
-      // wait until result element appears on phoneLookupRef
-      let result: any = snapshot.val();
-      if (!result) {
-        return;
-      }
-      resultRef.off('value');
-      taskRef.remove();
-      log.debug(`got value at ${resultRef.toString()}`, result);
 
-      loader.dismiss().then(() => {
-        self.auth.reloadCurrentUser().then(() => {
-          if (self.auth.currentUser.registration.status === 'verification-succeeded') {
-            loader.dismiss().then(() => {
-              firebase.database().ref('/identityAnnouncementQueue/tasks').push({
-                userId: this.auth.currentUserId
-              });
-              self.nav.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(() => {
-                self.nav.push(IdentityVerificationFinishPage);
-              });
+    this.nav.push(IdentityVerificationSummaryPage, { summaryData: task });
 
-            });
-          } else {
-            if (self.auth.currentUser.registration.status !== 'verification-pending') {
-              console.log(`unexpected registration status ${self.auth.currentUser.registration.status}`);
-            }
-
-            loader.dismiss().then(() => {
-              self.nav.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(() => {
-                self.nav.push(VerificationFailedPage);
-              });
-
-            });
-
-          }
-        });
-      });
-    }, (error: any) => {
-      loader.dismiss();
-      log.warn(`unable to get match results: ${error}`);
-    });
   }
 
   identificationTypeSelected() {
