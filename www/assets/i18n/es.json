@@ -60,11 +60,11 @@
         "message3": "También necesitaremos importar tus contactos para que puedas invitarlos, chatear con ellos y enviarles UR.",
         "message4": "¿Le das permiso a UR Technology (el creador de UR Money) para compartir tu información de identidad con Trulioo, Inc. e importar tus contactos?"
     },
-    "identity-verification-intro":{
-      "slideTitle": "Estás a unos pasos de reclamar tus <b>2000 2000 UR gratis!</b>",
-      "slideMessage": "A fin de proporcionar un ambiente seguro, pedimos a todos los miembros de la comunidad que verifiquen su identidad. Para ello, tendremos que pedirte información de identificación, incluyendo el número de teléfono móvil, el nombre, la dirección, la fecha de nacimiento, etc., y luego compartir esta información con Trulioo, Inc., un servicio de verificación de identidad basado en Canadá.",
-      "costToBuy":"El costo de verificar la identidad es de {{value}}",
-      "verificationPurchased":"Ya has comprado la verificación. Por favor, continúa verificando tu identidad."
+    "identity-verification-intro": {
+        "slideTitle": "Estás a unos pasos de reclamar tus <b>2000 2000 UR!</b>",
+        "slideMessage": "A fin de proporcionar un ambiente seguro, pedimos a todos los miembros de la comunidad que verifiquen su identidad. Para ello, tendremos que pedirte información de identificación, incluyendo el número de teléfono móvil, el nombre, la dirección, la fecha de nacimiento, etc., y luego compartir esta información con Trulioo, Inc., un servicio de verificación de identidad basado en Canadá.",
+        "costToBuy": "El costo de verificar la identidad es de {{value}}",
+        "verificationPurchased": "Ya has comprado la verificación. Por favor, continúa verificando tu identidad."
     },
     "identity-verification-profile": {
         "slideTitle": "Paso 1 de 2 "
@@ -75,7 +75,11 @@
         "reviewData": "Revise que la información que introdujo es correcta. En el siguiente paso, la verificación de identidad tendrá un costo."
     },
     "identity-verification-summary": {
-        "slideTitle": "Confirme su información"
+        "slideTitle": "Confirme su información",
+        "personalInfo": "Información personal",
+        "location": "Lugar",
+        "aditionaInfo": "Información adicional",
+        "verifyMyInfo": "Verificar mi información"
     },
     "identity-verification-finish": {
         "slideTitle": "<b>¡Felicitaciones!</b> Acabas de ganar tus <b>2000 UR</b>",
@@ -143,9 +147,9 @@
         "slideTitle": "Verificación de identidad fallida",
         "message": "Lo sentimos. No hemos podido verificar tu identidad. <br />Si tiene alguna pregunta sobre su verificación de identidad fallida, comuníquese con nosotros por correo electrónico a <b>support@ur.technology</b> <br />Cuando se comunique con nosotros, por favor proporcione su nombre, dirección y cualquier otra información que necesitemos para identificarle."
     },
-    "announcement-initiated":{
-      "title": "Generación de bonificación en curso",
-      "message": "La transacción de bonificación puede tardar unas horas en aparecer en tu cuenta, por favor espere."
+    "announcement-initiated": {
+        "title": "Generación de bonificación en curso",
+        "message": "La transacción de bonificación puede tardar unas horas en aparecer en tu cuenta, por favor espere."
     },
     "country-not-supported": {
         "title": "UR Money",
@@ -161,11 +165,11 @@
         "transactions": "Transacciones",
         "about": "Acerca UR"
     },
-    "home":{
-      "unlockMessage": "<span class='small'>Desbloquea Tus</span><br />2000<span>&nbsp;UR</span>",
-      "bonusGenerating": "<span class='small'>Generación De Bonificación En Curso</span><br />2000<span>&nbsp;UR</span>",
-      "verificationPending": "<span class='small'>Verificación En Curso</span><br />2000<span>&nbsp;UR</span>",
-      "verificationFailed": "<span class='small'>Verificación fallida</span><br />2000<span>&nbsp;UR</span>"
+    "home": {
+        "unlockMessage": "<span class='small'>Desbloquea Tus</span><br />2000<span>&nbsp;UR</span>",
+        "bonusGenerating": "<span class='small'>Generación De Bonificación En Curso</span><br />2000<span>&nbsp;UR</span>",
+        "verificationPending": "<span class='small'>Verificación En Curso</span><br />2000<span>&nbsp;UR</span>",
+        "verificationFailed": "<span class='small'>Verificación fallida</span><br />2000<span>&nbsp;UR</span>"
     },
     "contacts": {
         "invite": "Invitar",
@@ -243,7 +247,7 @@
     "about": {
         "heading": "Acerca UR",
         "urCurrency": "UR es una criptomoneda avanzada hecha para la gente común y para los gastos de todos los días. 2.000 UR se distribuye a cada ser humano que decide unirse a la comunidad UR y comprueba su identidad. No hay ningún costo para inscribirse o para recibir esta distribución. Lo miembros de la comunidad UR pueden ganar UR adicional refiriendo o ayudando a la integridad, seguridad y utilidad de la moneda y la comunidad UR.",
-        "urCurrencyApple":" ",
+        "urCurrencyApple": " ",
         "urTechnologyInc": "UR Technology Inc. es una empresa cuya misión es crear una moneda mundial segura, estable y útil, disponible para cada ser humano.",
         "feedbackPart1": "Para enviar comentarios sobre la aplicación UR Money (bugs, peticiones, etc.), por favor unirse a nuestro equipo Slack visitando",
         "feedbackPart2": "y envíanos un mensaje en el canal #ur-money-feedback, o envía un correo electrónico a",

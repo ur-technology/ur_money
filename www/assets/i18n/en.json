@@ -63,8 +63,8 @@
     "identity-verification-intro": {
         "slideTitle": "You’re just a few steps away from claiming your <b>2,000 UR!</b>",
         "slideMessage": "In order to provide a safe environment, we ask all community members to verify their identity. To do this, we will need to ask you for several pieces of identifying information including mobile phone number, name, address, date of birth, etc., and then share this info with Trulioo, Inc., a Canada-based identity verification service.",
-        "costToBuy":"The cost of verifying the identity will be {{value}}",
-        "verificationPurchased":"You have already bought the verification. Please, continue to verify your identity."
+        "costToBuy": "The cost of verifying the identity will be {{value}}",
+        "verificationPurchased": "You have already bought the verification. Please, continue to verify your identity."
     },
     "identity-verification-profile": {
         "slideTitle": "Step 1 of 2 "
@@ -75,7 +75,11 @@
         "reviewData": "Review that the information you entered is correct. <br/> In the next step, the identity verification will have a cost."
     },
     "identity-verification-summary": {
-        "slideTitle": "Review your information"
+        "slideTitle": "Review your information",
+        "personalInfo": "Personal information",
+        "location": "Location",
+        "aditionaInfo":"Additional info",
+        "verifyMyInfo": "Verify my info"
     },
     "identity-verification-finish": {
         "slideTitle": "<b>Congratulations!</b> You just earned your <b>2000 UR</b>",
@@ -143,9 +147,9 @@
         "slideTitle": "Identity verification failed",
         "message": "We're sorry. We were unable to verify your identity.<br/> If you have any questions about your failed identity verification, contact us via email at <b>support@ur.technology</b> <br/> When you contact us please provide us with your name, address, and any other information we may need to identify you."
     },
-    "announcement-initiated":{
-      "title": "Bonus generation in progress",
-      "message": "Bonus transaction may take a few hours to show up in your account, please be patient."
+    "announcement-initiated": {
+        "title": "Bonus generation in progress",
+        "message": "Bonus transaction may take a few hours to show up in your account, please be patient."
     },
     "country-not-supported": {
         "title": "UR Money",
@@ -161,11 +165,11 @@
         "transactions": "Transactions",
         "about": "About UR"
     },
-    "home":{
-      "unlockMessage": "<span class='small'>Unlock Your</span><br />2000<span>&nbsp;UR</span>",
-      "bonusGenerating": "<span class='small'>Bonus Generation In Progress</span><br />2000<span>&nbsp;UR</span>",
-      "verificationPending": "<span class='small'>Verification In Progress</span><br />2000<span>&nbsp;UR</span>",
-      "verificationFailed": "<span class='small'>Verification failed</span><br />2000<span>&nbsp;UR</span>"
+    "home": {
+        "unlockMessage": "<span class='small'>Unlock Your</span><br />2000<span>&nbsp;UR</span>",
+        "bonusGenerating": "<span class='small'>Bonus Generation In Progress</span><br />2000<span>&nbsp;UR</span>",
+        "verificationPending": "<span class='small'>Verification In Progress</span><br />2000<span>&nbsp;UR</span>",
+        "verificationFailed": "<span class='small'>Verification failed</span><br />2000<span>&nbsp;UR</span>"
     },
     "contacts": {
         "invite": "Invite",
@@ -243,7 +247,7 @@
     "about": {
         "heading": "About UR",
         "urCurrency": "UR is an advanced cryptocurrency made for everyday people and everyday expenditures. 2,000 UR is distributed to every human being who chooses to join the UR community and proves his or her identity. There is no cost to join or to receive this distribution. UR community members may earn additional UR by referring other members and for helping to support the integrity, security, and usefulness of UR currency and the UR community.",
-        "urCurrencyApple":" ",
+        "urCurrencyApple": " ",
         "urTechnologyInc": "UR Technology Inc. is a company whose mission is to create a secure, stable, and useful world currency available to every human being.",
         "feedbackPart1": "To send us feedback on on the UR Money app (bugs, feature requests, etc.), please join our slack team by visiting",
         "feedbackPart2": "and send us a message in the #ur-money-feedback channel, or send us an email at",

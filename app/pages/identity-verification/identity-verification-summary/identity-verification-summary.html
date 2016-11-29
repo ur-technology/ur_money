@@ -14,16 +14,11 @@
     <ion-card-content>
       <br />
       <ion-list>
-        <ion-item-divider light>Personal information</ion-item-divider>
+        <ion-item-divider light>{{"identity-verification-summary.personalInfo" | translate}}</ion-item-divider>
         <ion-item>
-          <ion-label fixed>{{'profile-setup.firstName' | translate}}</ion-label>
+          <ion-label fixed>{{'profile-setup.name' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{summaryData.verificationArgs.DataFields.PersonInfo.FirstGivenName}}"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label fixed>{{'profile-setup.lastName' | translate}}</ion-label>
-          <ion-input disabled="true"
-            value={{summaryData.verificationArgs.DataFields.PersonInfo.FirstSurName}}></ion-input>
+            value="{{summaryData.verificationArgs.DataFields.PersonInfo.FirstGivenName}} {{summaryData.verificationArgs.DataFields.PersonInfo.FirstSurName}}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label fixed>{{'identity-info-setup.dateOfBirth' | translate}}</ion-label>
@@ -35,7 +30,7 @@
           <ion-input disabled="true"
             value={{gender}}></ion-input>
         </ion-item>
-        <ion-item-divider light>Location</ion-item-divider>
+        <ion-item-divider light>{{"identity-verification-summary.location" | translate}}</ion-item-divider>
         <ion-item>
           <ion-label fixed>{{'profile-setup.country' | translate}}</ion-label>
           <ion-input disabled="true"
@@ -56,7 +51,7 @@
           <ion-input disabled="true"
             value="{{summaryData.verificationArgs.DataFields.Location.PostalCode}}"></ion-input>
         </ion-item>
-        <ion-item-divider light>Additional info</ion-item-divider>
+        <ion-item-divider light>{{"identity-verification-summary.aditionaInfo" | translate}}</ion-item-divider>
         <ion-item-group *ngIf="identificationType == 'Driver License'">
           <ion-item>
             <ion-label fixed>{{'identity-info-setup.driverLicenseNumber' | translate}}</ion-label>
@@ -84,7 +79,7 @@
       <button item-right
         clear
         (click)=submit()>
-            Continue
+            {{"identity-verification-summary.verifyMyInfo" | translate}}
             <ion-icon name="arrow-forward"></ion-icon>
           </button>
     </ion-item>

@@ -7,6 +7,8 @@ import {IdentityVerificationFinishPage} from '../identity-verification-finish/id
 import {VerificationFailedPage} from '../../registration/verification-failed';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import * as firebase from 'firebase';
+import * as log from 'loglevel';
 
 @Component({
   templateUrl: 'build/pages/identity-verification/identity-verification-summary/identity-verification-summary.html',
@@ -30,7 +32,7 @@ export class IdentityVerificationSummaryPage {
       this.identificationType = 'Passport';
     }
 
-    let dateMoment = moment(new Date(this.summaryData.verificationArgs.DataFields.PersonInfo.YearOfBirth, this.summaryData.verificationArgs.DataFields.PersonInfo.MonthOfBirth, this.summaryData.verificationArgs.DataFields.PersonInfo.DayOfBirth));
+    let dateMoment = moment(new Date(this.summaryData.verificationArgs.DataFields.PersonInfo.YearOfBirth, this.summaryData.verificationArgs.DataFields.PersonInfo.MonthOfBirth - 1, this.summaryData.verificationArgs.DataFields.PersonInfo.DayOfBirth));
     this.dateOfBirth = dateMoment.format('MM/DD/YYYY');
     this.gender = this.summaryData.verificationArgs.DataFields.PersonInfo.Gender === 'M' ? 'Male' : 'Female';
     let countries: any[] = require('country-data').countries.all;
@@ -76,7 +78,7 @@ export class IdentityVerificationSummaryPage {
     });
     loader.present();
 
-    let taskRef = firebase.database().ref(`/identityVerificationQueue/tasks`).push(this.summaryData);
+    let taskRef = firebase.database().ref(`/identityVerificationQueue/tasks`).push(self.summaryData);
     let resultRef = taskRef.child('result');
     log.debug(`waiting for value at ${resultRef.toString()}`);
     resultRef.on('value', (snapshot) => {
