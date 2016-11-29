@@ -9,7 +9,6 @@ import {Round} from '../../pipes/round';
 import {EventListComponent} from '../../components/event-list/event-list';
 import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
-import {BigNumber} from 'bignumber.js';
 import {IdentityVerificationIntroPage} from '../identity-verification/identity-verification-intro/identity-verification-intro';
 import {CountryNotSupportedPage} from '../registration/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
@@ -26,8 +25,8 @@ declare var jQuery: any;
 export class HomePage {
   elementRef: ElementRef;
   ios: boolean;
-  availableBalance: BigNumber;
   needsToCompleteProfile: boolean;
+  balanceTitle: string;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
@@ -39,7 +38,24 @@ export class HomePage {
   }
 
   reflectAvailableBalanceOnPage() {
-    this.availableBalance = this.chartData.balanceInfo.availableBalance;
+    if (this.accountReady()) {
+      if (this.chartData.balanceUpdated) {
+        this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
+      } else {
+        this.balanceTitle = '...';
+      }
+    } else {
+      this.balanceTitle = this.translate.instant(
+        {
+          'verification-requested': 'home.verificationPending',
+          'verification-pending': 'home.verificationFailed',
+          'verification-failed': 'home.verificationFailed',
+          'announcement-requested': 'home.bonusGenerating',
+          'announcement-initiated': 'home.bonusGenerating',
+          'verification-succeeded': 'home.bonusGenerating'
+        }[this.auth.getUserStatus()] || 'home.unlockMessage'
+      );
+    }
   }
 
   onPageDidEnter() {
@@ -52,9 +68,7 @@ export class HomePage {
       self.renderChart();
     });
 
-    if (self.chartData.balanceUpdated) {
-      self.reflectAvailableBalanceOnPage();
-    }
+    self.reflectAvailableBalanceOnPage();
     self.chartData.balanceUpdatedEmitter.subscribe((balanceInfo) => {
       self.ngZone.run(() => {
         this.auth.reloadCurrentUser();
@@ -148,27 +162,6 @@ export class HomePage {
 
   accountReady() {
     return this.auth.getUserStatus() === 'announcement-confirmed';
-  }
-
-  balanceTitle() {
-    if (this.accountReady()) {
-      if (this.availableBalance) {
-        return `${this.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
-      } else {
-        return '...';
-      }
-    } else {
-      return this.translate.instant(
-        {
-          'verification-requested': 'home.verificationPending',
-          'verification-pending': 'home.verificationFailed',
-          'verification-failed': 'home.verificationFailed',
-          'announcement-requested': 'home.bonusGenerating',
-          'announcement-initiated': 'home.bonusGenerating',
-          'verification-succeeded': 'home.bonusGenerating'
-        }[this.auth.getUserStatus()] || 'home.unlockMessage'
-      );
-    }
   }
 
   goToNextStep() {
