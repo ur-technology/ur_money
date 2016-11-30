@@ -184,14 +184,13 @@ export class IdentityVerificationTrulioPage {
 
   showDatePicker() {
     let self = this;
-    let mindate = moment(new Date());
-    mindate = mindate.subtract(16, 'years');
+    let mindate = moment(new Date()).subtract(16, 'years');
 
     DatePicker.show({
-      date: mindate.toDate(),
+      date: new Date(mindate.year(), 0, 1),
       mode: 'date',
       androidTheme: 3,
-      maxDate: mindate.valueOf()
+      maxDate: mindate.valueOf(),
     }).then(
       date => {
         let dateMoment = moment(date);
