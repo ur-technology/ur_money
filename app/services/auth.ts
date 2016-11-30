@@ -268,7 +268,7 @@ export class AuthService {
     if ((this.currentUser.wallet && this.currentUser.wallet.address) && (status === 'initial')) {
       status = 'wallet-generated';
     }
-    if (!this.currentUser.sponsor.announcementTransactionConfirmed) {
+    if ((this.currentUser.sponsor) && (!this.currentUser.sponsor.announcementTransactionConfirmed)) {
       status = 'waiting-sponsor';
     }
     return status;

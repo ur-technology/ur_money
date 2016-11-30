@@ -69,9 +69,7 @@ export class TransactionComponent {
     let self = this;
     self.showSpinner = true;
     let query = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/`).orderByChild('type');
-    if (self.transactionType === 'earned') {
-      query = query.startAt('earned-referral').endAt('earned-signup');
-    } else if (self.transactionType !== 'all') {
+    if (self.transactionType !== 'all') {
       query = query.equalTo(self.transactionType);
     }
     query.once('value', snapshot => {
