@@ -109,10 +109,10 @@ export class ChatPage {
           self.loadMessages();
         }
       }
-      if (!self.chatSummary) {
-        this.buildNewChatSummary();
-      }
     });
+    if (!self.chatSummary) {
+      this.buildNewChatSummary();
+    }
   }
 
   loadMessages() {
@@ -167,8 +167,7 @@ export class ChatPage {
     if (this.chatSummaryUnsaved()) {
       this.saveChatSummary();
     }
-
-    if (this.chatSummary.blocked) {
+    if (this.chatSummary.blocked || false) {
       let alert = this.alertBlockedContact(isFirstMessageInChat);
       alert.present();
     } else {

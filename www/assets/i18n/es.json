@@ -87,7 +87,8 @@
     },
     "identity-verification-sponsor-wait": {
         "slideTitle": "<b>Esperando que tu patrocinador verifique su identidad</b>",
-        "slideMessage": "Actualmente estamos esperando que <b>{{sponsor}}</b> verifique su identidad antes de que tu puedas verificar tu identidad."
+        "slideMessage": "Actualmente estamos esperando que <b>{{sponsor}}</b> verifique su identidad antes de que tu puedas verificar tu identidad.",
+        "sendMessage": "Enviar mensaje a {{sponsor}}"
     },
     "profile-setup": {
         "title": "Configurar perfil",
