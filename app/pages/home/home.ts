@@ -40,7 +40,9 @@ export class HomePage {
   reflectAvailableBalanceOnPage() {
     if (this.accountReady()) {
       if (this.chartData.balanceUpdated) {
-        this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
+        this.ngZone.run(() => {
+          this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
+        });
       } else {
         this.balanceTitle = '...';
       }
@@ -67,13 +69,11 @@ export class HomePage {
     self.chartData.pointsLoadedEmitter.subscribe((data) => {
       self.renderChart();
     });
-
     self.reflectAvailableBalanceOnPage();
     self.chartData.balanceUpdatedEmitter.subscribe((balanceInfo) => {
-      self.ngZone.run(() => {
-        this.auth.reloadCurrentUser();
-        self.reflectAvailableBalanceOnPage();
-      });
+        this.auth.reloadCurrentUser().then(() => {
+          self.reflectAvailableBalanceOnPage();
+        });
     });
   }
 
