@@ -15,6 +15,7 @@ import {VerificationPendingPage} from '../registration/verification-pending';
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 import {AnnouncementInitiatedPage} from '../registration/announcement-initiated';
 import {TransactionsPage} from './../transactions/transactions';
+import {IdentityVerificationSponsorWaitPage} from '../identity-verification/identity-verification-sponsor-wait/identity-verification-sponsor-wait';
 declare var jQuery: any;
 
 @Page({
@@ -54,7 +55,8 @@ export class HomePage {
           'verification-failed': 'home.verificationFailed',
           'announcement-requested': 'home.bonusGenerating',
           'announcement-initiated': 'home.bonusGenerating',
-          'verification-succeeded': 'home.bonusGenerating'
+          'verification-succeeded': 'home.bonusGenerating',
+          'waiting-sponsor': 'home.waitingSponsor'
         }[this.auth.getUserStatus()] || 'home.unlockMessage'
       );
     }
@@ -71,9 +73,9 @@ export class HomePage {
     });
     self.reflectAvailableBalanceOnPage();
     self.chartData.balanceUpdatedEmitter.subscribe((balanceInfo) => {
-        this.auth.reloadCurrentUser().then(() => {
-          self.reflectAvailableBalanceOnPage();
-        });
+      this.auth.reloadCurrentUser().then(() => {
+        self.reflectAvailableBalanceOnPage();
+      });
     });
   }
 
@@ -176,7 +178,8 @@ export class HomePage {
         'verification-failed': IdentityVerificationIntroPage,
         'announcement-initiated': AnnouncementInitiatedPage,
         'announcement-requested': AnnouncementInitiatedPage,
-        'verification-succeeded': AnnouncementInitiatedPage
+        'verification-succeeded': AnnouncementInitiatedPage,
+        'waiting-sponsor': IdentityVerificationSponsorWaitPage
       }[this.auth.getUserStatus()] || IdentityVerificationIntroPage);
     }
   }

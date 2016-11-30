@@ -4,7 +4,6 @@
 // By default each design mode includes these shared imports.
 // App Shared Sass variables belong in app.variables.scss.
 @import "../app";
-
 @import "../pages/about/about";
 @import "../pages/chat/chat";
 @import "../pages/settings/settings";
@@ -20,3 +19,4 @@
 @import "../pages/identity-verification/identity-verification-trulio/identity-verification-trulio.scss";
 @import "../pages/identity-verification/identity-verification-finish/identity-verification-finish.scss";
 @import "../pages/identity-verification/identity-verification-summary/identity-verification-summary.scss";
+@import "../pages/identity-verification/identity-verification-sponsor-wait/identity-verification-sponsor-wait.scss";

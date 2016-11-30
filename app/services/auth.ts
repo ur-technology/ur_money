@@ -80,16 +80,6 @@ export class AuthService {
     });
   }
 
-  eligibleToVerifyAccount(): boolean {
-    if (this.currentUser.downlineLevel === 1) {
-      return true;
-    } else {
-      return !!this.currentUser.sponsor &&
-          !!this.currentUser.sponsor.announcementTransactionConfirmed &&
-          !_.includes(['announcement-confirmed'], this.getUserStatus());
-    }
-  }
-
   checkFirebaseConnection(): Promise<any> {
     let self = this;
     self.firebaseConnectionCheckInProgress = true;
@@ -277,6 +267,9 @@ export class AuthService {
     let status = _.trim((this.currentUser.registration && this.currentUser.registration.status) || '') || 'initial';
     if ((this.currentUser.wallet && this.currentUser.wallet.address) && (status === 'initial')) {
       status = 'wallet-generated';
+    }
+    if (!this.currentUser.sponsor.announcementTransactionConfirmed) {
+      status = 'waiting-sponsor';
     }
     return status;
   }

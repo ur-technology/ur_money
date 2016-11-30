@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"identity-verification.title" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding
+  #content>
+  <ion-card>
+    <ion-card-content text-justify>
+      <img src="img/ur-logo.png"
+        class="slide-image" />
+      <h2 class="slide-title"
+        innerHTML='{{"identity-verification-sponsor-wait.slideTitle" | translate}}'></h2>
+      <br />
+      <p innerHTML='{{"identity-verification-sponsor-wait.slideMessage" | translate:param}}'></p>
+    </ion-card-content>
+    <ion-item class="footer-card">
+      <button large
+        item-right
+        clear
+        (click)="goToHome()">
+        {{"continue" | translate}}
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-card>
+</ion-content>

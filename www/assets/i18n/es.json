@@ -85,6 +85,10 @@
         "slideTitle": "<b>¡Felicitaciones!</b> Acabas de ganar tus <b>2000 UR</b>",
         "slideMessage": "Verás pronto tu bono de 2.000 UR en tu página de inicio!"
     },
+    "identity-verification-sponsor-wait": {
+        "slideTitle": "<b>Esperando que tu patrocinador verifique su identidad</b>",
+        "slideMessage": "Actualmente estamos esperando que <b>{{sponsor}}</b> verifique su identidad antes de que tu puedas verificar tu identidad."
+    },
     "profile-setup": {
         "title": "Configurar perfil",
         "firstName": "Nombre",
@@ -169,7 +173,8 @@
         "unlockMessage": "<span class='small'>Desbloquea Tus</span><br />2000<span>&nbsp;UR</span>",
         "bonusGenerating": "<span class='small'>Generación De Bonificación En Curso</span><br />2000<span>&nbsp;UR</span>",
         "verificationPending": "<span class='small'>Verificación En Curso</span><br />2000<span>&nbsp;UR</span>",
-        "verificationFailed": "<span class='small'>Verificación fallida</span><br />2000<span>&nbsp;UR</span>"
+        "verificationFailed": "<span class='small'>Verificación fallida</span><br />2000<span>&nbsp;UR</span>",
+        "waitingSponsor": "<span class='small'>Esperando a patrocinador validar identidad...</span><br />2000<span>&nbsp;UR</span>"
     },
     "contacts": {
         "invite": "Invitar",
