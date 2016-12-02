@@ -256,7 +256,7 @@ export class AuthService {
   }
 
   private supportedCountryCodes() {
-    return ['US', 'AU', 'AT', 'BE', 'DK', 'FR', 'DE', 'MY', 'MX', 'NZ', 'NO', 'ZA', 'SE', 'TR', 'GB'];
+    return ['US'];
   }
 
   isUserInSupportedCountry() {
