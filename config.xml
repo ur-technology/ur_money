@@ -98,4 +98,5 @@
     <plugin name="cordova-plugin-nativestorage" spec="~2.0.2" />
     <plugin name="cordova-plugin-inapppurchase" spec="~1.0.0" />
     <plugin name="cordova-plugin-datepicker" spec="~0.9.3" />
+    <plugin name="cordova-plugin-contacts" spec="~2.2.0" />
 </widget>

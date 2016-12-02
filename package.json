@@ -72,12 +72,18 @@
   "cordovaPlugins": [
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
-    "cordova-plugin-sim",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
+    "cordova-plugin-x-toast",
+    "de.appplant.cordova.plugin.local-notification",
     "cordova-plugin-file",
     "cordova-plugin-x-socialsharing",
+    "cordova-plugin-app-version",
+    "cordova-plugin-nativestorage",
+    "cordova-plugin-inapppurchase",
+    "cordova-plugin-datepicker",
+    "cordova-plugin-contacts",
     {
       "locator": "https://github.com/VersoSolutions/CordovaClipboard.git",
       "id": "com.verso.cordova.clipboard"
@@ -89,8 +95,7 @@
       },
       "locator": "cordova-plugin-facebook4",
       "id": "cordova-plugin-facebook4"
-    },
-    "cordova-plugin-contacts"
+    }
   ],
   "cordovaPlatforms": [
     {
