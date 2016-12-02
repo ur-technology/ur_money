@@ -80,6 +80,11 @@ export class CountryListService {
                 'countryCode': 'AU'
             },
             {
+                'telephoneCountryCode': '+43',
+                'name': 'Austria',
+                'countryCode': 'AT'
+            },
+            {
                 'telephoneCountryCode': '+994',
                 'name': 'Azerbaijan',
                 'countryCode': 'AZ'
