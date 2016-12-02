@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone} from '@angular/core';
 import { NavController, Platform, ToastController} from 'ionic-angular';
 import * as firebase from 'firebase';
 import { App } from 'ionic-angular';
@@ -15,9 +15,16 @@ import {AuthService} from '../../services/auth';
   pipes: [DateAndTime]
 })
 export class EventListComponent {
-  constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService, private toastCtrl: ToastController, private app: App) {
+  events = [];
+  constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService, private toastCtrl: ToastController, private app: App, private ngZone: NgZone) {
     this.listenForNewEvents();
     this.listenForNotificationSelection();
+
+    this.eventsService.eventChanged.subscribe(() => {
+      this.ngZone.run(() => {
+        this.events = this.eventsService.events;
+      });
+    });
   }
 
   ngOnInit() {
@@ -36,7 +43,6 @@ export class EventListComponent {
       .equalTo(false)
       .on('child_added', eventSnapshot => {
         let event = eventSnapshot.val();
-
         let obj = {
           id: this.getUniqueInteger(event.sourceId),
           text: `${event.title}: ${event.messageText}`,

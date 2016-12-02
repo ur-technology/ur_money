@@ -2,7 +2,7 @@
     <ion-item detail-none text-wrap
         (click)="openPageByEventType(event.sourceType, event.sourceId)"
         class="item item-avatar"
-        *ngFor="let event of eventsService.events">
+        *ngFor="let event of events">
 
         <ion-avatar item-left>
             <ion-img [src]="event.profilePhotoUrl"

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import {AuthService} from './auth';
@@ -6,6 +6,7 @@ import {AuthService} from './auth';
 @Injectable()
 export class EventsService {
   events = [];
+  eventChanged = new EventEmitter();
 
   constructor(private auth: AuthService) {
     this.loadEvents();
@@ -16,6 +17,7 @@ export class EventsService {
       .on('child_added', snapshot => {
         this.events.push(snapshot.val());
         this.events = _.orderBy(_.values(this.events), ['updatedAt'], ['desc']);
+        this.eventChanged.emit({});
       });
 
     firebase.database().ref(`/users/${this.auth.currentUserId}/events/`)
@@ -23,6 +25,7 @@ export class EventsService {
         let index = _.findIndex(this.events, _.pick(snapshot.val(), 'sourceId'));
         this.events.splice(index, 1, snapshot.val());
         this.events = _.orderBy(_.values(this.events), ['updatedAt'], ['desc']);
+        this.eventChanged.emit({});
       });
   }
 }
