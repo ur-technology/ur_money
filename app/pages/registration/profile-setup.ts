@@ -23,8 +23,10 @@ export class ProfileSetupPage {
     public nav: NavController,
     public auth: AuthService
   ) {
-    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'middleName', 'email', 'countryCode']);
-    this.profile.name = `${this.auth.currentUser.firstName} ${this.auth.currentUser.lastName}`;
+    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'middleName', 'email', 'countryCode', 'name']);
+    if (_.isEmpty(_.trim(this.profile.name || ''))) {
+      this.profile.name = `${this.auth.currentUser.firstName} ${this.auth.currentUser.lastName}`;
+    }
 
     let formElements: any = {
       firstName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
@@ -53,6 +55,7 @@ export class ProfileSetupPage {
     this.countries = _.filter(this.countries, (country) => {
       return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
     });
+    this.countries = _.filter(this.countries, { status: 'assigned' });
 
     let country = this.countries.find((x) => { return x.alpha2 === (this.auth.currentUser.countryCode || 'US'); });
     (<FormControl>this.mainForm.controls['countryCode']).updateValue(country);

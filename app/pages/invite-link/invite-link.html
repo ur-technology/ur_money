@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"invite-link.title" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding #content class="invite-link">
+  <p>{{"invite-link.explanation1" | translate}}</p>
+  <p>{{"invite-link.explanation2" | translate}}</p>
+  <p>{{"invite-link.explanation3" | translate}}</p>
+  <form [formGroup]="mainForm">
+    <ion-item>
+      <ion-label floating>{{'invite-link.personalizedReferralLink' | translate}}</ion-label>
+      <ion-input id="referral-link-input" readonly
+        type="text"
+        [(ngModel)]="referralLink"
+        formControlName="referralLink"></ion-input>
+    </ion-item>
+    <ion-item>
+      <button id="copy-button" type="text" secondary small data-clipboard-target="#referral-link-input input">
+        <ion-icon name="clipboard"></ion-icon>{{"invite-link.copyToClipboard" | translate}}
+      </button>
+    </ion-item>
+  </form>
+</ion-content>

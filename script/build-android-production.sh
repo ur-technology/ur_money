@@ -2,6 +2,12 @@
 
 set -e
 cp app/config/env.production.json app/config/env.json
+
+sed -i '' -e "s/UNKNOWN_TARGET_PLATFORM/android/g" app/config/env.json
+
+VERSION_NUMBER=`sed -n 's/.*version="\([^"]*\).*/\1/p' config.xml`
+sed -i '' -e "s/UNKNOWN_VERSION_NUMBER/$VERSION_NUMBER/g" app/config/env.json
+
 if [[ `cordova plugin ls | grep cordova-plugin-console` = *[!\ ]* ]]; then
   echo "\$param contains characters other than space";
   cordova plugin rm cordova-plugin-console

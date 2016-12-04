@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Platform} from 'ionic-angular';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -22,8 +21,7 @@ export class AuthService {
 
   constructor(
     public angularFire: AngularFire,
-    public contactsService: ContactsService,
-    public platform: Platform
+    public contactsService: ContactsService
   ) {
   }
 
@@ -45,7 +43,7 @@ export class AuthService {
               this.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
             let status = self.getUserStatus();
-            if (status === 'initial') {
+            if (status === 'initial' || !self.currentUser.wallet || !self.currentUser.wallet.address) {
               nav.setRoot(pages.introPage);
             } else {
               self.contactsService.loadContacts(self.currentUserId, self.currentUser.phone, self.currentUser.countryCode);
@@ -424,5 +422,9 @@ export class AuthService {
     } else {
       return '';
     }
+  }
+
+  referralLink() {
+    return this.currentUser ? `https://ur.technology?r=${this.currentUser.referralCode}` : '';
   }
 }

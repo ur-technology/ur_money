@@ -31,7 +31,6 @@ export class IdentityVerificationDocumentPage {
     private ngZone: NgZone
   ) {
 
-
     this.fillIdentificationTypesList();
 
     let allStates: any[] = require('provinces');
@@ -132,30 +131,27 @@ export class IdentityVerificationDocumentPage {
   submit() {
     let self = this;
 
-    let task: any = {
-      userId: self.auth.currentUserId,
-      verificationArgs: {
-        AcceptTruliooTermsAndConditions: true,
-        Demo: false,
-        CleansedAddress: true,
-        ConfigurationName: 'Identity Verification',
-        CountryCode: self.verification.Location.Country,
-        DataFields: _.pick(self.verification, ['PersonInfo', 'Location', 'Communication'])
-      }
+    let verificationArgs: any = {
+      AcceptTruliooTermsAndConditions: true,
+      Demo: false,
+      CleansedAddress: true,
+      ConfigurationName: 'Identity Verification',
+      CountryCode: self.verification.Location.Country,
+      DataFields: _.pick(self.verification, ['PersonInfo', 'Location', 'Communication'])
     };
 
     if (self.identificationType === 'Driver License') {
-      task.verificationArgs.DataFields.DriverLicence = self.verification.DriverLicense; // NOTE: using Canadian spelling of 'Driver Licence'
+      verificationArgs.DataFields.DriverLicence = self.verification.DriverLicense; // NOTE: using Canadian spelling of 'Driver Licence'
     } else if (self.identificationType === 'National Id') {
       self.verification.NationalId.Type = self.getNationalIdType();
-      task.verificationArgs.DataFields.NationalIds = [self.verification.NationalId];
+      verificationArgs.DataFields.NationalIds = [self.verification.NationalId];
     } else if (self.identificationType === 'Passport') {
-      task.verificationArgs.DataFields.Passport = self.verification.Passport;
+      verificationArgs.DataFields.Passport = self.verification.Passport;
     };
     this.verification.Location.AdditionalFields = { Address1: `${this.verification.Location.BuildingNumber} ${this.verification.Location.StreetName}` };
 
     this.addCountrySpecificFields();
-    this.nav.push(IdentityVerificationSummaryPage, { summaryData: task });
+    this.nav.push(IdentityVerificationSummaryPage, { verificationArgs: verificationArgs });
   }
 
   addCountrySpecificFields() {

@@ -16,7 +16,6 @@ import {AuthService} from '../../services/auth';
 import {EncryptionService} from '../../services/encryption';
 declare var jQuery: any;
 
-
 @Page({
   templateUrl: 'build/pages/send/send.html',
   pipes: [TranslatePipe]
@@ -24,9 +23,9 @@ declare var jQuery: any;
 export class SendPage {
   contact: any;
   mainForm: FormGroup;
-  availableBalance: number;
-  estimatedFee: number;
-  maxAmount: BigNumber;
+  availableBalance: BigNumber = new BigNumber(0);
+  estimatedFee: BigNumber = new BigNumber(0);
+  maxAmount: BigNumber = new BigNumber(0);
   private wallet: WalletModel;
   private loadingModal: any;
   private phraseSaved;

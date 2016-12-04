@@ -1,22 +1,14 @@
 {
   "hosting": {
     "public": "www",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**",
-      "**/typings/**"
-    ],
-    "rewrites": [ {
-      "source": "**",
-      "destination": "/index.html"
-    } ],
-    "headers": [ {
-      "source" : "**/*",
-      "headers" : [ {
-        "key" : "Cache-Control",
-        "value" : "max-age=5"
-      } ]
-    } ]
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "database": {
+    "rules": "db/database.rules.json"
   }
 }

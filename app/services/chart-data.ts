@@ -85,13 +85,17 @@ export class ChartDataService {
     this.pointsLoaded = true;
     this.pointsLoadedEmitter.emit({});
 
-    WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, this.pendingAmountWei()).then(balanceInfo => {
-      this.balanceInfo = balanceInfo;
-      this.balanceUpdated = true;
-      this.balanceUpdatedEmitter.emit(balanceInfo);
-    }, (error) => {
-      log.info(`error getting balance: ${error}`);
-    });
+    if (this.auth.currentUser.wallet && this.auth.currentUser.wallet.address) {
+      WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, this.pendingAmountWei()).then(balanceInfo => {
+        this.balanceInfo = balanceInfo;
+        this.balanceUpdated = true;
+        this.balanceUpdatedEmitter.emit(balanceInfo);
+      }, (error) => {
+        log.warn(`error getting balance: ${error}`);
+      });
+    } else {
+      log.warn(`error getting balance: no wallet address available`);
+    }
   }
 
   private loadPointsCorrespondingToTransactionsWithinTimeRage() {

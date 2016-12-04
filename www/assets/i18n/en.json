@@ -173,8 +173,8 @@
         "invite": "Invite",
         "home": "Home",
         "chat": "Chat",
-        "sendUr": "Send UR",
-        "requestUr": "Request UR",
+        "send": "Send UR",
+        "request": "Request UR",
         "transactions": "Transactions",
         "about": "About UR"
     },
@@ -257,6 +257,14 @@
         "secretPhraseRequired": "Secret phrase is required",
         "pleaseWait": "Please Wait...",
         "sendTo": "Send to"
+    },
+    "invite-link": {
+      "title": "Invite Friends",
+      "explanation1": "The more people of your friends who join UR Money, the more UR you can earn.",
+      "explanation2": "To get credit for your referrals, make sure to have your friends sign up by using your personalized referral link below.",
+      "explanation3": "You can send this link using your favorite messaging app, or post it to your social network for all your friends to see.",
+      "personalizedReferralLink": "Personalized Referral Link",
+      "copyToClipboard": "Copy To Clipboard"
     },
     "about": {
         "heading": "About UR",

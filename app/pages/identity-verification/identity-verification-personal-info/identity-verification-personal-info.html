@@ -31,7 +31,8 @@
           </ion-item>
           <ion-item>
             <ion-label floating>{{'identity-info-setup.dateOfBirth' | translate}}</ion-label>
-            <ion-input (click)="showDatePicker()" [(ngModel)]="profile.dateOfBirth" formControlName="dateOfBirth"></ion-input>
+            <ion-input *ngIf="!targetPlatformWeb" (click)="showDatePicker()" [(ngModel)]="profile.dateOfBirth" formControlName="dateOfBirth"></ion-input>
+            <ion-datetime *ngIf="targetPlatformWeb" (click)="showDatePicker()" [(ngModel)]="profile.dateOfBirth" formControlName="dateOfBirth" displayFormat="YYYY MMM D" min="1906" max="2000" (ionChange)="updateProfileDateOfBirth()"></ion-datetime>
           </ion-item>
         </ion-list>
       </ion-card-content>

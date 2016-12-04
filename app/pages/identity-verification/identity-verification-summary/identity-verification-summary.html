@@ -18,7 +18,7 @@
         <ion-item>
           <ion-label fixed>{{'profile-setup.name' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{summaryData.verificationArgs.DataFields.PersonInfo.FirstGivenName}} {{summaryData.verificationArgs.DataFields.PersonInfo.FirstSurName}}"></ion-input>
+            value="{{verificationArgs.DataFields.PersonInfo.FirstGivenName}} {{verificationArgs.DataFields.PersonInfo.FirstSurName}}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label fixed>{{'identity-info-setup.dateOfBirth' | translate}}</ion-label>
@@ -39,43 +39,43 @@
         <ion-item>
           <ion-label fixed>{{'profile-setup.city' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{summaryData.verificationArgs.DataFields.Location.City}}"></ion-input>
+            value="{{verificationArgs.DataFields.Location.City}}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label fixed>{{'profile-setup.streetName' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{summaryData.verificationArgs.DataFields.Location.StreetName}}"></ion-input>
+            value="{{verificationArgs.DataFields.Location.StreetName}}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label fixed>{{'profile-setup.buildingNumber' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{summaryData.verificationArgs.DataFields.Location.BuildingNumber}}"></ion-input>
+            value="{{verificationArgs.DataFields.Location.BuildingNumber}}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label fixed>{{'profile-setup.postalCode' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{summaryData.verificationArgs.DataFields.Location.PostalCode}}"></ion-input>
+            value="{{verificationArgs.DataFields.Location.PostalCode}}"></ion-input>
         </ion-item>
         <ion-item-divider light>{{"identity-verification-summary.aditionaInfo" | translate}}</ion-item-divider>
         <ion-item-group *ngIf="identificationType == 'Driver License'">
           <ion-item>
             <ion-label fixed>{{'identity-info-setup.driverLicenseNumber' | translate}}</ion-label>
             <ion-input disabled="true"
-              value="{{summaryData.verificationArgs.DataFields.DriverLicence.Number}}"></ion-input>
+              value="{{verificationArgs.DataFields.DriverLicence.Number}}"></ion-input>
           </ion-item>
         </ion-item-group>
         <ion-item-group *ngIf="identificationType == 'National Id'">
           <ion-item>
             <ion-label fixed>ID</ion-label>
             <ion-input disabled="true"
-              value="{{summaryData.verificationArgs.DataFields.NationalIds[0].Number}}"></ion-input>
+              value="{{verificationArgs.DataFields.NationalIds[0].Number}}"></ion-input>
           </ion-item>
         </ion-item-group>
         <ion-item-group *ngIf="identificationType == 'Passport'">
           <ion-item>
             <ion-label fixed>{{'identity-info-setup.passportNumber' | translate}}</ion-label>
             <ion-input disabled="true"
-              value="{{summaryData.verificationArgs.DataFields.Passport.Number}}"></ion-input>
+              value="{{verificationArgs.DataFields.Passport.Number}}"></ion-input>
           </ion-item>
         </ion-item-group>
       </ion-list>

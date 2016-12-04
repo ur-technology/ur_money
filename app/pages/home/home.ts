@@ -9,13 +9,16 @@ import {Round} from '../../pipes/round';
 import {EventListComponent} from '../../components/event-list/event-list';
 import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
+import {Config} from '../../config/config';
 import {IdentityVerificationIntroPage} from '../identity-verification/identity-verification-intro/identity-verification-intro';
 import {CountryNotSupportedPage} from '../registration/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 import {AnnouncementInitiatedPage} from '../registration/announcement-initiated';
 import {TransactionsPage} from './../transactions/transactions';
+import {SendPage} from './../send/send';
 import {IdentityVerificationSponsorWaitPage} from '../identity-verification/identity-verification-sponsor-wait/identity-verification-sponsor-wait';
+import {InviteLinkPage} from './../invite-link/invite-link';
 declare var jQuery: any;
 
 @Page({
@@ -25,17 +28,20 @@ declare var jQuery: any;
 })
 export class HomePage {
   elementRef: ElementRef;
-  ios: boolean;
+  sendButtonHidden: boolean;
+  sendButtonDisabled: boolean;
   needsToCompleteProfile: boolean;
   balanceTitle: string;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
-    private angularFire: AngularFire, private auth: AuthService, private ngZone: NgZone, private translate: TranslateService
+    private angularFire: AngularFire, private auth: AuthService, private ngZone: NgZone,
+    private translate: TranslateService
+
   ) {
     this.elementRef = elementRef;
-    this.ios = this.platform.is('ios');
-
+    this.sendButtonHidden = Config.targetPlatform === 'ios';
+    this.sendButtonDisabled = true;
   }
 
   reflectAvailableBalanceOnPage() {
@@ -43,6 +49,7 @@ export class HomePage {
       if (this.chartData.balanceUpdated) {
         this.ngZone.run(() => {
           this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
+          this.sendButtonDisabled = false;
         });
       } else {
         this.balanceTitle = '...';
@@ -151,7 +158,11 @@ export class HomePage {
   }
 
   send() {
-    this.nav.push(ContactsAndChatsPage, { goal: 'send' }, { animate: true, direction: 'forward' });
+    if (Config.targetPlatform === 'web') {
+      this.nav.push(SendPage, { contact: {} }, { animate: true, direction: 'forward' });
+    } else {
+      this.nav.push(ContactsAndChatsPage, { goal: 'send' }, { animate: true, direction: 'forward' });
+    }
   }
 
   request() {
@@ -159,7 +170,11 @@ export class HomePage {
   }
 
   invite() {
-    this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
+    if (Config.targetPlatform === 'web') {
+      this.nav.push(InviteLinkPage, { animate: true, direction: 'forward' });
+    } else {
+      this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
+    }
   }
 
   accountReady() {

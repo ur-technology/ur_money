@@ -41,7 +41,6 @@ export class ContactsComponent {
     private app: App, private translate: TranslateService
   ) {
     this.startTime = (new Date()).getTime();
-
   }
 
   private determineMemberActionLabel() {
@@ -88,7 +87,13 @@ export class ContactsComponent {
   contactSelected(contact: any) {
     if (!contact.userId) {
       this.inviteContact(contact);
-    } else if (this.goal === 'send') {
+    } else {
+      this.goToGoalPage(contact);
+    }
+  }
+
+  goToGoalPage(contact: any) {
+    if (this.goal === 'send') {
       this.nav.pop({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(data => {
         this.app.getRootNav().push(SendPage, { contact: contact });
       });

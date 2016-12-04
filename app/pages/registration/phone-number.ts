@@ -19,7 +19,7 @@ export class PhoneNumberPage implements OnInit {
   elementRef: ElementRef;
   phoneForm: FormGroup;
   countries: any;
-  selectedTelephoneCountryCode: string;
+  selectedCountryCode: string;
   selectedCountry: any;
 
   constructor(
@@ -120,7 +120,7 @@ export class PhoneNumberPage implements OnInit {
   }
 
   countrySelect(country) {
-    this.selectedCountry = _.find(this.countries, { telephoneCountryCode: this.selectedTelephoneCountryCode }) || { name: 'United States', telephoneCountryCode: '+1', countryCode: 'US' };
+    this.selectedCountry = _.find(this.countries, { countryCode: this.selectedCountryCode }) || { name: 'United States', telephoneCountryCode: '+1', countryCode: 'US' };
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();
   }
 }

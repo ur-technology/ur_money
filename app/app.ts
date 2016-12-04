@@ -20,10 +20,12 @@ import {EventsService} from './services/events';
 import {ToastService} from './services/toast';
 
 import {ContactsAndChatsPage} from './pages/contacts-and-chats/contacts-and-chats';
+import {InviteLinkPage} from './pages/invite-link/invite-link';
 import {NoInternetConnectionPage} from './pages/registration/no-internet-connection';
 import {WelcomePage} from './pages/registration/welcome';
 import {IntroPage} from './pages/registration/intro';
 import {HomePage} from './pages/home/home';
+import {SendPage} from './pages/send/send';
 import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';
@@ -64,24 +66,24 @@ class UrMoney {
   }
 
   initializeApp() {
-    this.menuItems = [
-      { title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home', value: 'home' },
-      { title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: 'chat' }, icon: 'icon menu-icon menu-icon-chat', value: 'chat' },
-      { title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: 'send' }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' },
-      // { title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: 'request' }, icon: 'icon menu-icon menu-icon-request-ur', value: 'request' },
-      { title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'transactions' },
-      { title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' }
-    ];
+    this.menuItems = [];
+    this.menuItems.push({ title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home', value: 'home' });
+    if (Config.targetPlatform !== 'web') {
+      this.menuItems.push({ title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: 'chat' }, icon: 'icon menu-icon menu-icon-chat', value: 'chat' });
+    }
+    if (Config.targetPlatform === 'android') {
+      this.menuItems.push({ title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: 'send' }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' });
+    } else if (Config.targetPlatform === 'web') {
+      this.menuItems.push({ title: 'Send UR', page: SendPage, pageParams: { contact: {} }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' });
+    }
+    // this.menuItems.push({ title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: 'request' }, icon: 'icon menu-icon menu-icon-request-ur', value: 'request' });
+    this.menuItems.push({ title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'transactions' });
+    this.menuItems.push({ title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' });
+
 
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
-      }
-      if (this.platform.is('ios')) {
-        let removed: any[] = _.remove(this.menuItems, (menu) => {
-          return menu.value === 'send';
-        });
-        this.menuItems = _.pull(this.menuItems, removed);
       }
       this.hideSplashScreen();
 
@@ -100,23 +102,10 @@ class UrMoney {
   }
 
   translateMenu() {
-    this.translate.get('app.home').subscribe((res: string) => {
-      this.menuItems[_.findIndex(this.menuItems, ['value', 'home'])].title = res;
-    });
-    this.translate.get('app.chat').subscribe((res: string) => {
-      this.menuItems[_.findIndex(this.menuItems, ['value', 'chat'])].title = res;
-    });
-    this.translate.get('app.sendUr').subscribe((res: string) => {
-      let index = _.findIndex(this.menuItems, ['value', 'send']);
-      if (index !== -1) {
-        this.menuItems[index].title = res;
-      }
-    });
-    this.translate.get('app.transactions').subscribe((res: string) => {
-      this.menuItems[_.findIndex(this.menuItems, ['value', 'transactions'])].title = res;
-    });
-    this.translate.get('app.about').subscribe((res: string) => {
-      this.menuItems[_.findIndex(this.menuItems, ['value', 'about'])].title = res;
+    _.each(this.menuItems, (menuItem) => {
+      this.translate.get(`app.${menuItem.value}`).subscribe((res: string) => {
+        menuItem.title = res;
+      });
     });
   }
 
@@ -145,7 +134,11 @@ class UrMoney {
 
   invite() {
     this.menu.close();
-    this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
+    if (Config.targetPlatform === 'web') {
+      this.nav.push(InviteLinkPage, { animate: true, direction: 'forward' });
+    } else {
+      this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
+    }
   }
 
   hideSplashScreen() {

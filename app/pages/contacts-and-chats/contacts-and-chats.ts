@@ -3,6 +3,7 @@ import {ContactsComponent} from '../../components/contacts/contacts';
 import {ChatListComponent} from '../../components/chat-list/chat-list';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../services/auth';
+import {Config} from '../../config/config';
 
 declare var jQuery: any;
 
@@ -22,7 +23,7 @@ export class ContactsAndChatsPage {
   }
 
   ngOnInit() {
-    jQuery('.contentPage').css('top', this.platform.is('ios') ? '63px' : '43px');
+    jQuery('.contentPage').css('top', Config.targetPlatform === 'ios' ? '63px' : '43px');
   }
 
   goalChanged(data) {

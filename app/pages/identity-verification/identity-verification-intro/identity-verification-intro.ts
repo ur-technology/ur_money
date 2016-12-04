@@ -1,5 +1,5 @@
 import { NgZone, Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, Platform} from 'ionic-angular';
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 import {IdentityVerificationPersonalInfoPage} from '../identity-verification-personal-info/identity-verification-personal-info';
 import {InAppPurchase} from 'ionic-native';
@@ -12,7 +12,7 @@ export class IdentityVerificationIntroPage {
   verificationProductId: string = 'technology.ur.urmoneyapp.verify_identity';
   purchaseMessage: string;
 
-  constructor(private nav: NavController, private translateService: TranslateService, private ngZone: NgZone) {
+  constructor(private nav: NavController, private platform: Platform, private translateService: TranslateService, private ngZone: NgZone) {
   }
 
   ngOnInit() {
@@ -25,15 +25,19 @@ export class IdentityVerificationIntroPage {
 
   getProductPrice() {
     let self = this;
-    InAppPurchase
-      .getProducts([this.verificationProductId])
-      .then((products) => {
+    if (self.platform.is('cordova')) {
+      InAppPurchase.getProducts([this.verificationProductId]).then((products) => {
         self.ngZone.run(() => {
-          this.purchaseMessage = self.translateService.instant('identity-verification-intro.costToBuy', { value: products[0].price });
+          self.setPurchaseMessage(products[0].price);
         });
-      })
-      .catch(function(err) {
+      }).catch(function(err) {
       });
+    } else {
+      self.setPurchaseMessage(2.99);
+    }
   }
 
+  setPurchaseMessage(price) {
+    this.purchaseMessage = this.translateService.instant('identity-verification-intro.costToBuy', { value: price });
+  }
 }

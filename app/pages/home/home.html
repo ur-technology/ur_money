@@ -69,8 +69,8 @@
     <div class="bar bar-footer dash-footer">
         <div class="button-bar footer-btns">
             <button class="button button-calm"><i class="home-icon"></i></button>
-            <button (click)="send()" [disabled]="ios"
-                class="button button-calm"><i class="plane-icon" [hidden]="ios"></i></button>
+            <button (click)="send()" [disabled]="sendButtonDisabled"
+                class="button button-calm"><i class="plane-icon" [hidden]="sendButtonHidden"></i></button>
             <button (click)="invite()"
                 class="button button-calm"><i class="invite-icon"></i></button>
         </div>

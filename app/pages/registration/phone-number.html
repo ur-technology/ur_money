@@ -21,10 +21,10 @@
             </ion-item>
             <ion-item>
                 <ion-label>{{selectedCountry.name}}</ion-label>
-                <ion-select [(ngModel)]="selectedTelephoneCountryCode"
+                <ion-select [(ngModel)]="selectedCountryCode"
                     [ngModelOptions]="{standalone: true}"
                     (ionChange)="countrySelect()">
-                    <ion-option value="{{country.telephoneCountryCode}}"
+                    <ion-option value="{{country.countryCode}}"
                         *ngFor="let country of countries">
                         {{country.name}}
                         <span item-right>{{country.telephoneCountryCode}}</span>

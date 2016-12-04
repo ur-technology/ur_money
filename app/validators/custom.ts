@@ -81,7 +81,7 @@ export class CustomValidator {
   }
 
   static validateDateMoment(control) {
-    if (!moment(control.value, 'MM/DD/YYYY').isValid()) {
+    if (!moment(control.value, 'MM/DD/YYYY').isValid() && !moment(control.value, 'YYYY-MM-DD').isValid()) {
       return { 'invalidDate': true };
     }
   }
