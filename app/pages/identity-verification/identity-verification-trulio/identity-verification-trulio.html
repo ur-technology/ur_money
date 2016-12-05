@@ -48,7 +48,7 @@
 
           <ion-item-group *ngIf="identificationType == 'National Id'">
             <ion-item>
-              <ion-label floating>{{nationalIdPlaceholder()}}</ion-label>
+              <ion-label floating>ID</ion-label>
                 <ion-input type="text" [(ngModel)]="verification.NationalId.Number" formControlName="nationalIdNumber" (focus)="focusInput()"></ion-input>
             </ion-item>
           </ion-item-group>

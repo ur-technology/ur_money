@@ -40,18 +40,6 @@ export class IdentityVerificationSummaryPage {
     this.country = countryObject.name;
   }
 
-  nationalIdPlaceholder() {
-    if (this.auth.currentUser.countryCode === 'US') {
-      return 'Social Security Number';
-    } else if (this.auth.currentUser.countryCode === 'CA') {
-      return 'Social Insurance Number';
-    } else if (this.auth.currentUser.countryCode === 'MX') {
-      return 'Número de Credencial de Elector';
-    } else {
-      return 'National Id Number';
-    }
-  }
-
   ionViewLoaded() {
 
   }

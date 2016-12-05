@@ -255,12 +255,70 @@ export class AuthService {
     return !!this.currentUser;
   }
 
-  private supportedCountryCodes() {
-    return ['US'];
+  supportedCountries() {
+    return {
+        'AT': {
+            'Passport': 'Passport'
+        },
+        'AU': {
+            'Passport': 'Passport',
+            'Driver License': 'Driver Licence'
+        },
+        'BE': {
+            'Passport': 'Passport'
+        },
+        'DE': {
+            'Passport': 'Passport'
+        },
+        'DK': {
+            'Passport': 'Passport',
+            'National Id': 'National Id Number'
+        },
+        'FR': {
+            'Passport': 'Passport',
+            'National Id': 'Insee Number'
+        },
+        'MX': {
+            'Passport': 'Passport',
+            'National Id': 'CURPID Number'
+        },
+        'MY': {
+            'Passport': 'Passport',
+            'National Id': 'NRIC Number'
+        },
+        'NO': {
+            'Passport': 'Passport'
+        },
+        'NZ': {
+            'Passport': 'Passport',
+            'Driver License': 'Drive Licence'
+        },
+        'ZA': {
+            'Passport': 'Passport',
+            'National Id': 'National Id Number'
+        },
+        'SE': {
+            'Passport': 'Passport',
+            'National Id': 'Pin Number'
+        },
+        'TR': {
+            'Passport': 'Passport',
+            'National Id': 'Türkiye Cumhuriyeti Kimlik Numarası'
+        },
+        'GB': {
+            'Passport': 'Passport',
+            'National Id': 'NHS Number'
+        },
+        'US': {
+            'Driver License': 'Driver License',
+            'National Id': 'Social Security Number',
+            'Passport': 'Passport'
+        }
+    };
   }
 
   isUserInSupportedCountry() {
-    return this.supportedCountryCodes().indexOf(this.currentUser.countryCode) !== -1;
+    return this.supportedCountries()[this.currentUser.countryCode];
   }
 
   getUserStatus() {

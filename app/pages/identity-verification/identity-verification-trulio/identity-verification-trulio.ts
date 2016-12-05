@@ -22,10 +22,12 @@ export class IdentityVerificationTrulioPage {
   driverLicenseStates: string[];
   driverLicenseState: string;
   identificationTypeControl: any;
-  identificationTypes: any[];
+  identificationTypes: any[] = [];
   genders: any[];
   identificationType: string;
   @ViewChild(Content) content: Content;
+
+
 
   constructor(
     public nav: NavController,
@@ -36,13 +38,8 @@ export class IdentityVerificationTrulioPage {
       { name: 'Male', value: 'M' },
       { name: 'Female', value: 'F' }
     ];
-    this.identificationTypes = [
-      { name: this.nationalIdPlaceholder(), value: 'National Id' },
-      { name: 'Passport', value: 'Passport' }
-    ];
-    if (_.includes(['US', 'AU', 'NZ'], this.auth.currentUser.countryCode)) {
-      this.identificationTypes.unshift({ name: 'Driver License', value: 'Driver License' });
-    }
+
+    this.fillIdentificationTypesList();
 
     let allStates: any[] = require('provinces');
     let states = _.filter(allStates, (state) => { return state.country === this.auth.currentUser.countryCode; });
@@ -135,6 +132,11 @@ export class IdentityVerificationTrulioPage {
     this.mainForm = new FormGroup(formElements);
   }
 
+  fillIdentificationTypesList() {
+    _.forIn(this.auth.supportedCountries()[this.auth.currentUser.countryCode], (value, key) => {
+      this.identificationTypes.push({ name: value, value: key });
+    });
+  }
 
   submit() {
     let self = this;
@@ -167,18 +169,6 @@ export class IdentityVerificationTrulioPage {
   identificationTypeSelected() {
     for (let name in this.mainForm.controls) {
       this.mainForm.controls[name].setErrors(null);
-    }
-  }
-
-  private nationalIdPlaceholder() {
-    if (this.auth.currentUser.countryCode === 'US') {
-      return 'Social Security Number';
-    } else if (this.auth.currentUser.countryCode === 'CA') {
-      return 'Social Insurance Number';
-    } else if (this.auth.currentUser.countryCode === 'MX') {
-      return 'Número de Credencial de Elector';
-    } else {
-      return 'National Id Number';
     }
   }
 
