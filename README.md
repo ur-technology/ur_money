@@ -1,7 +1,11 @@
 # ur_money
 
 ## Install global dependencies (skip if already installed)
-`npm install -g ionic@beta, cordova, gulp, typings`
+```script
+npm install -g ionic@2.0.0-beta.37
+npm install -g cordova@6.3.1
+npm install -g gulp, typings
+```
 
 ## Install local dependencies
 ```script
