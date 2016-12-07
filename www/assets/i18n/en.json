@@ -101,7 +101,10 @@
         "postalCode": "Zip/Postal Code",
         "country": "Country",
         "email": "Email",
-        "name": "Full name"
+        "name": "Full name",
+        "streetName": "Street Name",
+        "buildingNumber": "Building/house Number",
+        "suburb": "Suburb"
     },
     "identity-info-setup": {
         "title": "Identification Document",
@@ -112,6 +115,7 @@
         "MRI1": "Machine readable Line 1",
         "MRI2": "Machine readable Line 2",
         "passportNumber": "Passport Number",
+        "passportExpirationDate": "Expiration Date",
         "passportExpirationDay": "Expiration Day",
         "passportExpirationMonth": "Expiration Month",
         "passportExpirationYear": "Expiration Year",

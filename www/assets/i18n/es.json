@@ -101,7 +101,10 @@
         "postalCode": "Código postal",
         "country": "País",
         "email": "Email",
-        "name": "Nombre completo"
+        "name": "Nombre completo",
+        "streetName": "Nombre de la calle",
+        "buildingNumber": "Número de edificio/casa",
+        "suburb": "Suburbio"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",
@@ -112,6 +115,7 @@
         "MRI1": "Lectura mecánica Línea 1",
         "MRI2": "Lectura mecánica Línea 2",
         "passportNumber": "Número de pasaporte",
+        "passportExpirationDate": "Fecha de caducidad",
         "passportExpirationDay": "Día de caducidad",
         "passportExpirationMonth": "Mes de caducidad",
         "passportExpirationYear": "Año de caducidad",

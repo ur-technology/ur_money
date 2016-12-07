@@ -25,15 +25,17 @@ export class IdentityVerificationProfilePage {
     public auth: AuthService
   ) {
 
-    this.profile = _.pick(this.auth.currentUser, ['firstName', 'middleName', 'lastName', 'address', 'city', 'postalCode', 'countryCode', 'stateName']);
+    this.profile = _.pick(this.auth.currentUser, ['firstName', 'middleName', 'lastName', 'streetName', 'buildingNumber', 'city', 'postalCode', 'countryCode', 'stateName', 'suburb']);
 
     let formElements: any = {
-      address: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
+      buildingNumber: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
+      streetName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       city: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       stateName: new FormControl('', Validators.required),
       postalCode: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       country: new FormControl(this.profile.countryCode, Validators.required),
-      stateCode: new FormControl('')
+      stateCode: new FormControl(''),
+      suburb: new FormControl('')
     };
     this.mainForm = new FormGroup(formElements);
     // this.fillCountriesArray();

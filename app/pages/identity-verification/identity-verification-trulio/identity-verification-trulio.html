@@ -34,7 +34,7 @@
             <ion-input type="submit">.</ion-input>
           </ion-item>
           <ion-item-group *ngIf="identificationType == 'Driver License'">
-            <ion-item>
+            <ion-item *ngIf="auth.currentUser.countryCode == 'US'">
                 <ion-label floating>{{'identity-info-setup.driverLicenseState' | translate}}</ion-label>
                 <ion-select [(ngModel)]="verification.DriverLicense.State" formControlName="driverLicenseState">
                     <ion-option [value]="s" *ngFor="let s of driverLicenseStates">{{s}}</ion-option>

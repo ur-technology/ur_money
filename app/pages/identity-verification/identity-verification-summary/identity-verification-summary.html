@@ -42,9 +42,14 @@
             value="{{summaryData.verificationArgs.DataFields.Location.City}}"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label fixed>{{'profile-setup.address' | translate}}</ion-label>
+          <ion-label fixed>{{'profile-setup.streetName' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{summaryData.verificationArgs.DataFields.Location.AdditionalFields.Address1}}"></ion-input>
+            value="{{summaryData.verificationArgs.DataFields.Location.StreetName}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>{{'profile-setup.buildingNumber' | translate}}</ion-label>
+          <ion-input disabled="true"
+            value="{{summaryData.verificationArgs.DataFields.Location.BuildingNumber}}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label fixed>{{'profile-setup.postalCode' | translate}}</ion-label>

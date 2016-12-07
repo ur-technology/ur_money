@@ -257,63 +257,86 @@ export class AuthService {
 
   supportedCountries() {
     return {
-        'AT': {
-            'Passport': 'Passport'
+      'AT': {
+        'Passport': { displayName: 'Passport' }
+      },
+      'AU': {
+        'Driver License': { displayName: 'Driver Licence' },
+        'Passport': { displayName: 'Passport' }
+      },
+      'BE': {
+        'Passport': { displayName: 'Passport' }
+      },
+      'DE': {
+        'Passport': { displayName: 'Passport' }
+      },
+      'DK': {
+        'National Id': {
+          displayName: 'National Id Number',
+          type: 'NationalID'
         },
-        'AU': {
-            'Passport': 'Passport',
-            'Driver License': 'Driver Licence'
+        'Passport': { displayName: 'Passport' }
+      },
+      'FR': {
+        'National Id': {
+          displayName: 'Insee Number',
+          type: 'NationalID'
         },
-        'BE': {
-            'Passport': 'Passport'
+        'Passport': { displayName: 'Passport' },
+      },
+      'MX': {
+        'National Id': {
+          displayName: 'CURPID Number',
+          type: 'NationalID'
         },
-        'DE': {
-            'Passport': 'Passport'
+        'Passport': { displayName: 'Passport' }
+      },
+      'MY': {
+        'National Id': {
+          displayName: 'NRIC Number',
+          type: 'NationalID'
         },
-        'DK': {
-            'Passport': 'Passport',
-            'National Id': 'National Id Number'
+        'Passport': { displayName: 'Passport' }
+      },
+      'NO': {
+        'Passport': { displayName: 'Passport' }
+      },
+      'NZ': {
+        'Driver License': { displayName: 'Driver Licence' },
+        'Passport': { displayName: 'Passport' }
+      },
+      'ZA': {
+        'National Id': {
+          displayName: 'National Id Number',
+          type: 'NationalID'
         },
-        'FR': {
-            'Passport': 'Passport',
-            'National Id': 'Insee Number'
+        'Passport': { displayName: 'Passport' }
+      },
+      'SE': {
+        'National Id': {
+          displayName: 'PIN Number',
+          type: 'NationalID'
         },
-        'MX': {
-            'Passport': 'Passport',
-            'National Id': 'CURPID Number'
+        'Passport': { displayName: 'Passport' }
+      },
+      'TR': {    
+        'Passport': { displayName: 'Passport' }
+      },
+      'GB': {
+        'National Id': {
+          displayName: 'NHS Number',
+          type: 'Health'
         },
-        'MY': {
-            'Passport': 'Passport',
-            'National Id': 'NRIC Number'
+        'Passport': { displayName: 'Passport' }
+      },
+      'US': {
+        'Driver License': { displayName: 'Driver Licence' },
+        'National Id': {
+          displayName: 'Social Security Number',
+          type: 'SocialService'
         },
-        'NO': {
-            'Passport': 'Passport'
-        },
-        'NZ': {
-            'Passport': 'Passport',
-            'Driver License': 'Drive Licence'
-        },
-        'ZA': {
-            'Passport': 'Passport',
-            'National Id': 'National Id Number'
-        },
-        'SE': {
-            'Passport': 'Passport',
-            'National Id': 'Pin Number'
-        },
-        'TR': {
-            'Passport': 'Passport',
-            'National Id': 'Türkiye Cumhuriyeti Kimlik Numarası'
-        },
-        'GB': {
-            'Passport': 'Passport',
-            'National Id': 'NHS Number'
-        },
-        'US': {
-            'Driver License': 'Driver License',
-            'National Id': 'Social Security Number',
-            'Passport': 'Passport'
-        }
+        'Passport': { displayName: 'Passport' }
+      }
     };
   }
 

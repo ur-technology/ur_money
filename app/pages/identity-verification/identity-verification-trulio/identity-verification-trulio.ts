@@ -60,11 +60,10 @@ export class IdentityVerificationTrulioPage {
         'Gender': 'M'
       },
       'Location': {
-        'AdditionalFields': {
-          'Address1': user.address
-        },
+        'BuildingNumber': user.buildingNumber,
+        'StreetName': user.streetName,
         'City': user.city,
-        'StateProvinceCode': user.stateCode,
+        'StateProvinceCode': user.stateCode ? user.stateCode : user.stateName,
         'Country': user.countryCode,
         'PostalCode': user.postalCode
       },
@@ -73,11 +72,11 @@ export class IdentityVerificationTrulioPage {
       },
       'DriverLicense': {
         'Number': '',
-        'State': this.auth.currentUser.stateName,
+        'State': user.stateName,
       },
       'NationalId': {
         'Number': '',
-        'Type': 'SocialService'
+        'Type': ''
       },
       'Passport': {
         'Mrz1': '',
@@ -134,7 +133,7 @@ export class IdentityVerificationTrulioPage {
 
   fillIdentificationTypesList() {
     _.forIn(this.auth.supportedCountries()[this.auth.currentUser.countryCode], (value, key) => {
-      this.identificationTypes.push({ name: value, value: key });
+      this.identificationTypes.push({ name: value.displayName, value: key });
     });
   }
 
@@ -156,14 +155,27 @@ export class IdentityVerificationTrulioPage {
     if (self.identificationType === 'Driver License') {
       task.verificationArgs.DataFields.DriverLicence = self.verification.DriverLicense; // NOTE: using Canadian spelling of 'Driver Licence'
     } else if (self.identificationType === 'National Id') {
+      self.verification.NationalId.Type = self.getNationalIdType();
       task.verificationArgs.DataFields.NationalIds = [self.verification.NationalId];
     } else if (self.identificationType === 'Passport') {
       task.verificationArgs.DataFields.Passport = self.verification.Passport;
     };
+    this.verification.Location.AdditionalFields = { Address1: `${this.verification.Location.BuildingNumber} ${this.verification.Location.StreetName}` };
 
-
+    this.addCountrySpecificFields();
+    console.log('task', task);
     this.nav.push(IdentityVerificationSummaryPage, { summaryData: task });
+  }
 
+  addCountrySpecificFields() {
+    this.verification.PersonInfo.AdditionalFields = { FullName: `${this.verification.PersonInfo.FirstSurName} ${this.verification.PersonInfo.FirstGivenName}` };
+    if (this.auth.currentUser.suburb) {
+      this.verification.Location.Suburb = this.auth.currentUser.suburb;
+    }
+  }
+
+  getNationalIdType() {
+    return this.auth.supportedCountries()[this.auth.currentUser.countryCode]['National Id'].type;
   }
 
   identificationTypeSelected() {

@@ -28,16 +28,28 @@
               formControlName="stateName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>{{'profile-setup.address' | translate}}</ion-label>
+            <ion-label floating>{{'profile-setup.streetName' | translate}}</ion-label>
             <ion-input type="text"
-              [(ngModel)]="profile.address"
-              formControlName="address"></ion-input>
+              [(ngModel)]="profile.streetName"
+              formControlName="streetName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>{{'profile-setup.buildingNumber' | translate}}</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="profile.buildingNumber"
+              formControlName="buildingNumber"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{'profile-setup.city' | translate}}</ion-label>
             <ion-input type="text" (focus)="focusInput()"
               [(ngModel)]="profile.city"
               formControlName="city"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="auth.currentUser.countryCode == 'ZA'">
+            <ion-label floating>{{'profile-setup.suburb' | translate}}</ion-label>
+            <ion-input type="text" (focus)="focusInput()"
+              [(ngModel)]="profile.suburb"
+              formControlName="suburb"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{'profile-setup.postalCode' | translate}}</ion-label>
