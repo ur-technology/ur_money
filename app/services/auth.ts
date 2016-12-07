@@ -319,7 +319,7 @@ export class AuthService {
         },
         'Passport': { displayName: 'Passport' }
       },
-      'TR': {    
+      'TR': {
         'Passport': { displayName: 'Passport' }
       },
       'GB': {

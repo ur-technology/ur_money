@@ -66,10 +66,10 @@
         "costToBuy": "The cost of verifying the identity will be {{value}}",
         "verificationPurchased": "You have already bought the verification. Please, continue to verify your identity."
     },
-    "identity-verification-profile": {
+    "identity-verification-personal-info": {
         "slideTitle": "Step 1 of 2 "
     },
-    "identity-verification-trulio": {
+    "identity-verification-document": {
         "slideTitle": "Step 2 of 2 ",
         "reviewTitle": "Review your info",
         "reviewData": "Review that the information you entered is correct. <br/> In the next step, the identity verification will have a cost."

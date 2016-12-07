@@ -1,7 +1,7 @@
 import { NgZone, Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
-import {IdentityVerificationProfilePage} from '../identity-verification-profile/identity-verification-profile';
+import {IdentityVerificationPersonalInfoPage} from '../identity-verification-personal-info/identity-verification-personal-info';
 import {InAppPurchase} from 'ionic-native';
 
 @Component({
@@ -20,7 +20,7 @@ export class IdentityVerificationIntroPage {
   }
 
   goToProfile() {
-    this.nav.push(IdentityVerificationProfilePage);
+    this.nav.push(IdentityVerificationPersonalInfoPage);
   }
 
   getProductPrice() {

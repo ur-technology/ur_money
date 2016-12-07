@@ -11,11 +11,11 @@ import * as moment from 'moment';
 import {IdentityVerificationSummaryPage} from '../identity-verification-summary/identity-verification-summary';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification/identity-verification-trulio/identity-verification-trulio.html',
+  templateUrl: 'build/pages/identity-verification/identity-verification-document/identity-verification-document.html',
   directives: [KeyboardAttachDirective],
   pipes: [TranslatePipe]
 })
-export class IdentityVerificationTrulioPage {
+export class IdentityVerificationDocumentPage {
   mainForm: FormGroup;
   errorMessage: string;
   verification: any;
@@ -163,7 +163,6 @@ export class IdentityVerificationTrulioPage {
     this.verification.Location.AdditionalFields = { Address1: `${this.verification.Location.BuildingNumber} ${this.verification.Location.StreetName}` };
 
     this.addCountrySpecificFields();
-    console.log('task', task);
     this.nav.push(IdentityVerificationSummaryPage, { summaryData: task });
   }
 

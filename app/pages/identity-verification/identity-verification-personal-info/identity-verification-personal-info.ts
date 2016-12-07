@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Content } from 'ionic-angular';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
-import {IdentityVerificationTrulioPage} from '../identity-verification-trulio/identity-verification-trulio';
+import {IdentityVerificationDocumentPage} from '../identity-verification-document/identity-verification-document';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
@@ -10,10 +10,10 @@ import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification/identity-verification-profile/identity-verification-profile.html',
+  templateUrl: 'build/pages/identity-verification/identity-verification-personal-info/identity-verification-personal-info.html',
   pipes: [TranslatePipe]
 })
-export class IdentityVerificationProfilePage {
+export class IdentityVerificationPersonalInfoPage {
   @ViewChild(Content) content: Content;
   mainForm: FormGroup;
   errorMessage: string;
@@ -84,7 +84,7 @@ export class IdentityVerificationProfilePage {
     });
     this.auth.currentUserRef.update(newValues).then(() => {
       _.merge(this.auth.currentUser, newValues);
-      this.nav.push(IdentityVerificationTrulioPage);
+      this.nav.push(IdentityVerificationDocumentPage);
     }).catch((error) => {
       log.warn('unable to save address info');
     });
