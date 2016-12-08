@@ -23,7 +23,7 @@ export class ProfileSetupPage {
     public nav: NavController,
     public auth: AuthService
   ) {
-    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'middleName', 'email']);
+    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'middleName', 'email', 'countryCode']);
     this.profile.name = `${this.auth.currentUser.firstName} ${this.auth.currentUser.lastName}`;
 
     let formElements: any = {
@@ -31,9 +31,31 @@ export class ProfileSetupPage {
       lastName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       middleName: new FormControl(''),
       name: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
+      countryCode: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, CustomValidator.emailValidator])
     };
     this.mainForm = new FormGroup(formElements);
+  }
+
+  ionViewLoaded() {
+    this.fillCountriesArray();
+  }
+
+  onCountrySelected(countrySelected) {
+    this.profile.countryCode = countrySelected.alpha2;
+  }
+
+  fillCountriesArray() {
+    this.countries = require('country-data').countries.all.sort((a, b) => {
+      return (a.name < b.name) ? -1 : ((a.name === b.name) ? 0 : 1);
+    });
+    // remove Cuba, Iran, North Korea, Sudan, Syria
+    this.countries = _.filter(this.countries, (country) => {
+      return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
+    });
+
+    let country = this.countries.find((x) => { return x.alpha2 === (this.auth.currentUser.countryCode || 'US'); });
+    (<FormControl>this.mainForm.controls['countryCode']).updateValue(country);
   }
 
   submit() {

@@ -11,6 +11,16 @@
 <ion-content padding class="registration profile-setup" #content>
     <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
       <ion-item>
+          <ion-label floating>{{'profile-setup.country' | translate}}</ion-label>
+          <ion-select formControlName="countryCode"
+              (ionChange)="onCountrySelected($event)">
+              <ion-option [value]="c"
+                  *ngFor="let c of countries">
+                  {{c.name}}
+              </ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item>
           <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
           <ion-input type="text" [(ngModel)]="profile.firstName" formControlName="firstName"></ion-input>
       </ion-item>
