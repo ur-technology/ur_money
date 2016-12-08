@@ -67,10 +67,13 @@
         "verificationPurchased": "Ya has comprado la verificación. Por favor, continúa verificando tu identidad."
     },
     "identity-verification-personal-info": {
-        "slideTitle": "Paso 1 de 2 "
+        "slideTitle": "Paso 1 de 3 - Información personal"
+    },
+    "identity-verification-address": {
+        "slideTitle": "Paso 2 de 3 - Dirección"
     },
     "identity-verification-document": {
-        "slideTitle": "Paso 2 de 2 ",
+        "slideTitle": "Paso 3 de 3 - Documento de verificación",
         "reviewTitle": "Revise su información",
         "reviewData": "Revise que la información que introdujo es correcta. En el siguiente paso, la verificación de identidad tendrá un costo."
     },

@@ -15,16 +15,6 @@
       <ion-card-content>
         <ion-list>
           <ion-item>
-              <ion-label floating>{{'identity-info-setup.gender' | translate}}</ion-label>
-              <ion-select [(ngModel)]="verification.PersonInfo.Gender" formControlName="gender">
-                  <ion-option [value]="s.value" *ngFor="let s of genders">{{s.name}}</ion-option>
-              </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{'identity-info-setup.dateOfBirth' | translate}}</ion-label>
-              <ion-input (click)="showDatePicker()" [(ngModel)]="dateOfBirth" formControlName="dateOfBirth" ></ion-input>
-          </ion-item>
-          <ion-item>
             <ion-label floating>{{'identity-info-setup.idType' | translate}}</ion-label>
             <ion-select [(ngModel)]="identificationType" formControlName="identificationType" (ionChange)="identificationTypeSelected()">
                 <ion-option [value]="t.value" *ngFor="let t of identificationTypes">{{t.name}}</ion-option>

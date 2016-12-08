@@ -1,13 +1,12 @@
 import {NgZone, Component, ViewChild } from '@angular/core';
 import { NavController, Content} from 'ionic-angular';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
 import {KeyboardAttachDirective} from '../../../directives/keyboard-attach.directive';
-import { DatePicker } from 'ionic-native';
-import * as moment from 'moment';
 import {IdentityVerificationSummaryPage} from '../identity-verification-summary/identity-verification-summary';
 
 @Component({
@@ -23,21 +22,15 @@ export class IdentityVerificationDocumentPage {
   driverLicenseState: string;
   identificationTypeControl: any;
   identificationTypes: any[] = [];
-  genders: any[];
   identificationType: string;
   @ViewChild(Content) content: Content;
-
-
 
   constructor(
     public nav: NavController,
     public auth: AuthService,
     private ngZone: NgZone
   ) {
-    this.genders = [
-      { name: 'Male', value: 'M' },
-      { name: 'Female', value: 'F' }
-    ];
+
 
     this.fillIdentificationTypesList();
 
@@ -54,10 +47,10 @@ export class IdentityVerificationDocumentPage {
         'FirstGivenName': user.firstName,
         'MiddleName': user.middleName || '',
         'FirstSurName': user.lastName,
-        'DayOfBirth': '',
-        'MonthOfBirth': '',
-        'YearOfBirth': '',
-        'Gender': 'M'
+        'DayOfBirth': moment(user.dateOfBirth, 'MM/DD/YYYY').date(),
+        'MonthOfBirth': moment(user.dateOfBirth, 'MM/DD/YYYY').month() + 1,
+        'YearOfBirth': moment(user.dateOfBirth, 'MM/DD/YYYY').year(),
+        'Gender': user.gender
       },
       'Location': {
         'BuildingNumber': user.buildingNumber,
@@ -89,8 +82,6 @@ export class IdentityVerificationDocumentPage {
     };
 
     let formElements: any = {
-      gender: new FormControl('', CustomValidator.nameValidator),
-      dateOfBirth: new FormControl('', [Validators.required]),
       identificationType: new FormControl('', CustomValidator.nameValidator),
       driverLicenseNumber: new FormControl('', CustomValidator.conditionalNameValidator),
       driverLicenseState: new FormControl('', CustomValidator.conditionalNameValidator),
@@ -183,26 +174,7 @@ export class IdentityVerificationDocumentPage {
     }
   }
 
-  showDatePicker() {
-    let self = this;
-    let maxDate = moment(new Date()).subtract(16, 'years');
-    DatePicker.show({
-      date: new Date(maxDate.year() - 10, 0, 1),
-      mode: 'date',
-      androidTheme: 3,
-      maxDate: maxDate.valueOf(),
-    }).then(
-      date => {
-        let dateMoment = moment(date);
-        self.ngZone.run(() => {
-          let control: FormControl = <FormControl>self.mainForm.find('dateOfBirth');
-          control.updateValue(dateMoment.format('MM/DD/YYYY'));
-        });
-        self.verification.PersonInfo.YearOfBirth = dateMoment.year();
-        self.verification.PersonInfo.MonthOfBirth = dateMoment.month() + 1;
-        self.verification.PersonInfo.DayOfBirth = dateMoment.date();
-      });
-  }
+
 
   focusInput() {
     this.scrollToBottom();

@@ -1,5 +1,6 @@
 import {FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 export class CustomValidator {
   static minValidAmount: number;
@@ -77,6 +78,12 @@ export class CustomValidator {
         };
       }
     };
+  }
+
+  static validateDateMoment(control) {
+    if (!moment(control.value, 'MM/DD/YYYY').isValid()) {
+      return { 'invalidDate': true };
+    }
   }
 
   static numericRangeValidator(control) {
