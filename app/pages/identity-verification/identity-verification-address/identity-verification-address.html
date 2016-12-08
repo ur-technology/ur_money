@@ -18,7 +18,7 @@
           <ion-item>
               <ion-label floating>{{'profile-setup.country' | translate}}</ion-label>
               <ion-select formControlName="countryCode"
-                  (ionChange)="onCountrySelected()">
+                  (ionChange)="onCountrySelected($event)">
                   <ion-option [value]="c"
                       *ngFor="let c of countries">
                       {{c.name}}
@@ -33,7 +33,10 @@
               <ion-option [value]="s"
                 *ngFor="let s of states">{{s.name}}</ion-option>
             </ion-select>
-
+            <ion-input *ngIf="states.length==0"
+               type="text"
+               [(ngModel)]="profile.stateName"
+               formControlName="stateName"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{'profile-setup.streetName' | translate}}</ion-label>

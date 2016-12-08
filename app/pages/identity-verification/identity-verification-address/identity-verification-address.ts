@@ -25,7 +25,7 @@ export class IdentityVerificationAddressPage {
     public auth: AuthService,
     public countryListService: CountryListService
   ) {
-    this.profile = _.pick(this.auth.currentUser, ['streetName', 'buildingNumber', 'city', 'postalCode', 'countryCode', 'stateName', 'suburb']);
+    this.profile = _.pick(this.auth.currentUser, ['streetName', 'buildingNumber', 'city', 'postalCode', 'countryCode', 'stateName', 'stateCode', 'suburb']);
 
     let formElements: any = {
       buildingNumber: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
@@ -69,13 +69,11 @@ export class IdentityVerificationAddressPage {
       state = state ? state : this.states[0];
       (<FormControl>this.mainForm.controls['stateName']).updateValue(state);
       this.onStateSelected(state);
-    } else {
-      this.profile.stateName = '';
     }
   }
 
-  onCountrySelected() {
-    this.profile.countryCode = this.profile.country.alpha2;
+  onCountrySelected(countrySelected) {
+    this.profile.countryCode = countrySelected.alpha2;
     this.fillStatesArray();
   }
 
