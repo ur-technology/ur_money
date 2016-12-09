@@ -258,84 +258,144 @@ export class AuthService {
   supportedCountries() {
     return {
       'AT': {
-        'Passport': { displayName: 'Passport' }
+        name: 'Austria',
+        countryCode: 'AT',
+        validationTypes: {
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'AU': {
-        'Driver License': { displayName: 'Driver Licence' },
-        'Passport': { displayName: 'Passport' }
+        name: 'Australia',
+        countryCode: 'AU',
+        validationTypes: {
+          'Driver License': { displayName: 'Driver Licence' },
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'BE': {
-        'Passport': { displayName: 'Passport' }
+        name: 'Belgium',
+        countryCode: 'BE',
+        validationTypes: {
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'DE': {
-        'Passport': { displayName: 'Passport' }
+        name: 'Germany',
+        countryCode: 'DE',
+        validationTypes: {
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'DK': {
-        'National Id': {
-          displayName: 'National Id Number',
-          type: 'NationalID'
-        },
-        'Passport': { displayName: 'Passport' }
+        name: 'Denmark',
+        countryCode: 'DK',
+        validationTypes: {
+          'National Id': {
+            displayName: 'National Id Number',
+            type: 'NationalID'
+          },
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'FR': {
-        'National Id': {
-          displayName: 'Insee Number',
-          type: 'NationalID'
-        },
-        'Passport': { displayName: 'Passport' },
+        name: 'France',
+        countryCode: 'FR',
+        validationTypes: {
+          'National Id': {
+            displayName: 'Insee Number',
+            type: 'NationalID'
+          },
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'MX': {
-        'National Id': {
-          displayName: 'CURPID Number',
-          type: 'NationalID'
-        },
-        'Passport': { displayName: 'Passport' }
+        name: 'Mexico',
+        countryCode: 'MX',
+        validationTypes: {
+          'National Id': {
+            displayName: 'CURPID Number',
+            type: 'NationalID'
+          },
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'MY': {
-        'National Id': {
-          displayName: 'NRIC Number',
-          type: 'NationalID'
-        },
-        'Passport': { displayName: 'Passport' }
+        name: 'Malaysia',
+        countryCode: 'MY',
+        validationTypes: {
+          'National Id': {
+            displayName: 'NRIC Number',
+            type: 'NationalID'
+          },
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'NO': {
-        'Passport': { displayName: 'Passport' }
+        name: 'Norway',
+        countryCode: 'NO',
+        validationTypes: {
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'NZ': {
-        'Driver License': { displayName: 'Driver Licence' },
-        'Passport': { displayName: 'Passport' }
+        name: 'New Zealand',
+        countryCode: 'NZ',
+        validationTypes: {
+          'Driver License': { displayName: 'Driver Licence' },
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'ZA': {
-        'National Id': {
-          displayName: 'National Id Number',
-          type: 'NationalID'
-        },
-        'Passport': { displayName: 'Passport' }
+        name: 'South Africa',
+        countryCode: 'ZA',
+        validationTypes: {
+          'National Id': {
+            displayName: 'National Id Number',
+            type: 'NationalID'
+          },
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'SE': {
-        'National Id': {
-          displayName: 'PIN Number',
-          type: 'NationalID'
-        },
-        'Passport': { displayName: 'Passport' }
+        name: 'Sweden',
+        countryCode: 'SE',
+        validationTypes: {
+          'National Id': {
+            displayName: 'PIN Number',
+            type: 'NationalID'
+          },
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'TR': {
-        'Passport': { displayName: 'Passport' }
+        name: 'Turkey',
+        countryCode: 'TR',
+        validationTypes: {
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'GB': {
-        'National Id': {
-          displayName: 'NHS Number',
-          type: 'Health'
-        },
-        'Passport': { displayName: 'Passport' }
+        name: 'United Kingdom',
+        countryCode: 'GB',
+        validationTypes: {
+          'National Id': {
+            displayName: 'NHS Number',
+            type: 'Health'
+          },
+          'Passport': { displayName: 'Passport' }
+        }
       },
       'US': {
-        'Driver License': { displayName: 'Driver Licence' },
-        'National Id': {
-          displayName: 'Social Security Number',
-          type: 'SocialService'
-        },
-        'Passport': { displayName: 'Passport' }
+        name: 'United States',
+        countryCode: 'US',
+        validationTypes: {
+          'Driver License': { displayName: 'Driver Licence' },
+          'National Id': {
+            displayName: 'Social Security Number',
+            type: 'SocialService'
+          },
+          'Passport': { displayName: 'Passport' }
+        }
       }
     };
   }

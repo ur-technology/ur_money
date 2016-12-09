@@ -57,15 +57,8 @@ export class IdentityVerificationAddressPage {
   }
 
   fillCountriesArray() {
-    this.countries = require('country-data').countries.all.sort((a, b) => {
-      return (a.name < b.name) ? -1 : ((a.name === b.name) ? 0 : 1);
-    });
-    // remove Cuba, Iran, North Korea, Sudan, Syria
-    this.countries = _.filter(this.countries, (country) => {
-      return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
-    });
-
-    let country = this.countries.find((x) => { return x.alpha2 === (this.auth.currentUser.countryCode || 'US'); });
+    this.countries = _.values(this.auth.supportedCountries());
+    let country = this.countries.find((x) => { return x.countryCode === (this.auth.currentUser.countryCode || 'US'); });
     (<FormControl>this.mainForm.controls['countryCode']).updateValue(country);
   }
 
@@ -84,7 +77,7 @@ export class IdentityVerificationAddressPage {
   }
 
   onCountrySelected(countrySelected) {
-    this.profile.countryCode = countrySelected.alpha2;
+    this.profile.countryCode = countrySelected.countryCode;
     this.fillStatesArray();
   }
 

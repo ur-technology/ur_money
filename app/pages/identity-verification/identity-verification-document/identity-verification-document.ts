@@ -124,7 +124,7 @@ export class IdentityVerificationDocumentPage {
   }
 
   fillIdentificationTypesList() {
-    _.forIn(this.auth.supportedCountries()[this.auth.currentUser.countryCode], (value, key) => {
+    _.forIn(this.auth.supportedCountries()[this.auth.currentUser.countryCode].validationTypes, (value, key) => {
       this.identificationTypes.push({ name: value.displayName, value: key });
     });
   }
