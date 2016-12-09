@@ -340,8 +340,9 @@ export class AuthService {
     };
   }
 
-  isUserInSupportedCountry() {
-    return this.supportedCountries()[this.currentUser.countryCode];
+  userCountryNotSupported() {
+    let sanitizedCountryCode = _.trim(this.currentUser.countryCode || '');
+    return sanitizedCountryCode && !this.supportedCountries()[sanitizedCountryCode];
   }
 
   getUserStatus() {

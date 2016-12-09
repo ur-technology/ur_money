@@ -169,7 +169,7 @@ export class HomePage {
   goToNextStep() {
     if (this.accountReady()) {
       this.nav.push(TransactionsPage);
-    } else if (!this.auth.isUserInSupportedCountry()) {
+    } else if (this.auth.userCountryNotSupported()) {
       this.nav.push(CountryNotSupportedPage);
     } else {
       this.nav.push({
