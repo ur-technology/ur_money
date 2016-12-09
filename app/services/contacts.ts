@@ -96,7 +96,7 @@ export class ContactsService {
           });
           contacts.push(contact);
         });
-        log.debug(`retrieved ${contacts.length} contacts in ${new Date().getTime() - startTime} milliseconds`);
+        log.trace(`retrieved ${contacts.length} contacts in ${new Date().getTime() - startTime} milliseconds`);
         resolve(contacts);
       }, (error) => {
         reject(error);
@@ -120,7 +120,7 @@ export class ContactsService {
         phones: phonesToLookup
       });
       let ref = phoneLookupRef.child('result');
-      log.debug(`waiting for value at ${ref.toString()}`);
+      log.trace(`waiting for value at ${ref.toString()}`);
       ref.on('value', (snapshot) => {
 
         // wait until result element appears on phoneLookupRef
@@ -129,7 +129,7 @@ export class ContactsService {
           return;
         }
 
-        log.debug(`got value at ${ref.toString()}`, result);
+        log.trace(`got value at ${ref.toString()}`, result);
         let phoneToUserMapping: any = result.numMatches > 0 ? result.phoneToUserMapping : {};
         ref.off('value');
         phoneLookupRef.remove();
@@ -153,7 +153,7 @@ export class ContactsService {
             contact.phoneType = contact.original.phones[0].type;
           }
         });
-        log.debug(`retrieved ${contacts.length} contacts in ${new Date().getTime() - startTime} milliseconds`);
+        log.trace(`retrieved ${contacts.length} contacts in ${new Date().getTime() - startTime} milliseconds`);
         resolve(contacts);
       }, (error) => {
         reject(error);

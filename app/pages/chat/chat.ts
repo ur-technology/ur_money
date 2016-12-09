@@ -1,5 +1,5 @@
 import {ViewChild } from '@angular/core';
-import {Page, NavController, NavParams, Content, AlertController, PopoverController } from 'ionic-angular';
+import {Page, NavController, NavParams, Platform, Content, AlertController, PopoverController } from 'ionic-angular';
 import {AngularFire} from 'angularfire2';
 import {Subscription} from 'rxjs';
 import {Timestamp}  from '../../pipes/timestamp';
@@ -11,7 +11,7 @@ import {DateAndTime} from '../../pipes/dateAndTime.pipe';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {PopoverChatPage} from './popover-chat';
 import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
-import { Keyboard } from 'ionic-native';
+import {Keyboard} from 'ionic-native';
 
 declare var jQuery: any;
 
@@ -31,12 +31,14 @@ export class ChatPage {
   messageTextAreaHeight: number;
   @ViewChild(Content) content: Content;
 
-  constructor(private nav: NavController, public navParams: NavParams, private angularFire: AngularFire, private auth: AuthService, private translate: TranslateService, private alertCtrl: AlertController, private popoverCtrl: PopoverController) {
+  constructor(private nav: NavController, public navParams: NavParams, private platform: Platform, private angularFire: AngularFire, private auth: AuthService, private translate: TranslateService, private alertCtrl: AlertController, private popoverCtrl: PopoverController) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
     this.chatId = this.navParams.get('chatId'); // TODO: maybe include this field in chatSummary
-    Keyboard.onKeyboardShow().subscribe(e => this.onKeyboardShow(e));
+    if (this.platform.is('cordova')) {
+      Keyboard.onKeyboardShow().subscribe(e => this.onKeyboardShow(e));
+    }
   }
 
   onKeyboardShow(e) {

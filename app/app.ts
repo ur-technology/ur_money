@@ -84,8 +84,12 @@ class UrMoney {
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
+        if (Splashscreen) {
+          setTimeout(() => {
+            Splashscreen.hide();
+          }, 100);
+        }
       }
-      this.hideSplashScreen();
 
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
       log.setDefaultLevel(logLevel);
@@ -138,14 +142,6 @@ class UrMoney {
       this.nav.push(InviteLinkPage, { animate: true, direction: 'forward' });
     } else {
       this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
-    }
-  }
-
-  hideSplashScreen() {
-    if (Splashscreen) {
-      setTimeout(() => {
-        Splashscreen.hide();
-      }, 100);
     }
   }
 

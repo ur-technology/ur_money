@@ -1,4 +1,4 @@
-import {Page, AlertController, Content, NavController, NavParams, LoadingController} from 'ionic-angular';
+import {Page, AlertController, Content, NavController, NavParams, Platform, LoadingController} from 'ionic-angular';
 import {NgZone, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
@@ -6,7 +6,7 @@ import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BigNumber} from 'bignumber.js';
-import { NativeStorage } from 'ionic-native';
+import {NativeStorage} from 'ionic-native';
 import {HomePage} from '../home/home';
 import {WalletModel} from '../../models/wallet';
 import {ChartDataService} from '../../services/chart-data';
@@ -35,6 +35,7 @@ export class SendPage {
   constructor(
     public nav: NavController,
     public navParams: NavParams,
+    private platform: Platform,
     private alertCtrl: AlertController,
     private toastService: ToastService,
     private loadingController: LoadingController,
@@ -62,17 +63,15 @@ export class SendPage {
   }
 
   ngOnInit() {
-    NativeStorage.getItem('phrase')
-      .then(
-      data => {
-        let value = this.encryptionService.decrypt(data.property);
-        this.phraseSaved = value;
-      },
-      error => {
-        this.phraseSaved = null;
-      }
-      );
     let self = this;
+    if (self.platform.is('cordova')) {
+      NativeStorage.getItem('phrase').then(data => {
+        let value = self.encryptionService.decrypt(data.property);
+        self.phraseSaved = value;
+      }, error => {
+        self.phraseSaved = null;
+      });
+    }
     if (self.chartData.balanceUpdated) {
       self.reflectMaxAmountOnPage();
     }

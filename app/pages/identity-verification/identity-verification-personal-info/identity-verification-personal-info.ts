@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavController, Content } from 'ionic-angular';
+import { NavController, Platform, Content } from 'ionic-angular';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {IdentityVerificationAddressPage} from '../identity-verification-address/identity-verification-address';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import * as log from 'loglevel';
 import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
-import { DatePicker } from 'ionic-native';
+import {DatePicker} from 'ionic-native';
 import * as moment from 'moment';
 import {Config} from '../../../config/config';
 
@@ -24,6 +24,7 @@ export class IdentityVerificationPersonalInfoPage {
 
   constructor(
     public nav: NavController,
+    private platform: Platform,
     public auth: AuthService,
     private ngZone: NgZone
   ) {
@@ -51,10 +52,7 @@ export class IdentityVerificationPersonalInfoPage {
     let self = this;
     let maxDate = moment(new Date()).subtract(16, 'years');
     let initialDate = self.profile.dateOfBirth ? moment(self.profile.dateOfBirth, 'MM/DD/YYYY') : maxDate.subtract(10, 'years');
-    if (self.targetPlatformWeb) {
-      let control: FormControl = <FormControl>self.mainForm.find('dateOfBirth');
-      control.updateValue(initialDate.format('YYYY-MM-DD'));
-    } else {
+    if (self.platform.is('cordova')) {
       DatePicker.show({
         date: initialDate.toDate(),
         mode: 'date',
@@ -67,6 +65,9 @@ export class IdentityVerificationPersonalInfoPage {
           control.updateValue(self.profile.dateOfBirth);
         });
       });
+    } else {
+      let control: FormControl = <FormControl>self.mainForm.find('dateOfBirth');
+      control.updateValue(initialDate.format('YYYY-MM-DD'));
     }
   }
 

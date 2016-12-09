@@ -17,8 +17,10 @@ import {AuthService} from '../../services/auth';
 export class EventListComponent {
   events = [];
   constructor(private eventsService: EventsService, private nav: NavController, private platform: Platform, private auth: AuthService, private toastCtrl: ToastController, private app: App, private ngZone: NgZone) {
-    this.listenForNewEvents();
-    this.listenForNotificationSelection();
+    if (platform.is('cordova')) {
+      this.listenForNewEvents();
+      this.listenForNotificationSelection();
+    }
 
     this.eventsService.eventChanged.subscribe(() => {
       this.ngZone.run(() => {

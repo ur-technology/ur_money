@@ -2,7 +2,7 @@ import {Page, NavController, Platform, AlertController, ToastController, Loading
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl} from '@angular/forms';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
-import { NativeStorage } from 'ionic-native';
+import {NativeStorage} from 'ionic-native';
 import {WalletModel} from '../../models/wallet';
 import {AuthService} from '../../services/auth';
 import {ContactsService} from '../../services/contacts';

@@ -116,7 +116,7 @@ export class IdentityVerificationSummaryPage {
     }
     let taskRef = firebase.database().ref(`/identityVerificationQueue/tasks`).push(task);
     let resultRef = taskRef.child('result');
-    log.debug(`waiting for value at ${resultRef.toString()}`);
+    log.trace(`waiting for value at ${resultRef.toString()}`);
     resultRef.on('value', (snapshot) => {
       // wait until result element appears on phoneLookupRef
       let result: any = snapshot.val();
@@ -125,7 +125,7 @@ export class IdentityVerificationSummaryPage {
       }
       resultRef.off('value');
       taskRef.remove();
-      log.debug(`got value at ${resultRef.toString()}`, result);
+      log.trace(`got value at ${resultRef.toString()}`, result);
 
       loader.dismiss().then(() => {
         self.auth.reloadCurrentUser().then(() => {
