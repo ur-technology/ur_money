@@ -58,7 +58,8 @@ export class IdentityVerificationDocumentPage {
         'City': user.city,
         'StateProvinceCode': user.stateCode ? user.stateCode : user.stateName,
         'Country': user.countryCode,
-        'PostalCode': user.postalCode
+        'PostalCode': user.postalCode,
+        'StreetType': user.streetType
       },
       'Communication': {
         'Telephone': user.phone

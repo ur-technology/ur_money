@@ -107,7 +107,8 @@
         "name": "Full name",
         "streetName": "Street Name",
         "buildingNumber": "Building/house Number",
-        "suburb": "Suburb"
+        "suburb": "Suburb",
+        "streetType": "Street type"
     },
     "identity-info-setup": {
         "title": "Identification Document",

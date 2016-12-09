@@ -19,13 +19,23 @@ export class IdentityVerificationAddressPage {
   errorMessage: string;
   countries: any[];
   states: any[];
+  streetTypes: any[];
   profile: any;
   constructor(
     public nav: NavController,
     public auth: AuthService,
     public countryListService: CountryListService
   ) {
-    this.profile = _.pick(this.auth.currentUser, ['streetName', 'buildingNumber', 'city', 'postalCode', 'countryCode', 'stateName', 'stateCode', 'suburb']);
+
+    this.streetTypes = [
+      { name: 'Street', value: 'St' },
+      { name: 'Avenue', value: 'Av' },
+      { name: 'Drive', value: 'Dr' },
+      { name: 'Boulevard', value: 'Blvd' },
+      { name: 'Road', value: 'Rd' },
+      { name: 'Parkway', value: 'Pkwy' }
+    ];
+    this.profile = _.pick(this.auth.currentUser, ['streetName', 'buildingNumber', 'city', 'postalCode', 'countryCode', 'stateName', 'stateCode', 'suburb', 'streetType']);
 
     let formElements: any = {
       buildingNumber: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
@@ -35,7 +45,8 @@ export class IdentityVerificationAddressPage {
       postalCode: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       countryCode: new FormControl('', Validators.required),
       stateCode: new FormControl(''),
-      suburb: new FormControl('')
+      suburb: new FormControl(''),
+      streetType: new FormControl('')
     };
     this.mainForm = new FormGroup(formElements);
   }

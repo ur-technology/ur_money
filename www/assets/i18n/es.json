@@ -107,7 +107,8 @@
         "name": "Nombre completo",
         "streetName": "Nombre de la calle",
         "buildingNumber": "Número de edificio/casa",
-        "suburb": "Suburbio"
+        "suburb": "Suburbio",
+        "streetType": "Tipo de calle"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",
