@@ -387,7 +387,7 @@ export class AuthService {
         name: 'United States',
         countryCode: 'US',
         validationTypes: {
-          'Driver License': { displayName: 'Driver Licence' },
+          'Driver License': { displayName: 'Driver License' },
           'National Id': {
             displayName: 'Social Security Number',
             type: 'SocialService'
