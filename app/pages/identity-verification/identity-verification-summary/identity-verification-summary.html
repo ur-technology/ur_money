@@ -32,27 +32,57 @@
         </ion-item>
         <ion-item-divider light>{{"identity-verification-summary.location" | translate}}</ion-item-divider>
         <ion-item>
-          <ion-label fixed>{{'profile-setup.country' | translate}}</ion-label>
+          <ion-label fixed>{{'identity-verification-address.countryCode' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{country}}"></ion-input>
+            value="{{countryName}}"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label fixed>{{'profile-setup.city' | translate}}</ion-label>
-          <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.City}}"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label fixed>{{'profile-setup.streetName' | translate}}</ion-label>
-          <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.StreetName}}"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label fixed>{{'profile-setup.buildingNumber' | translate}}</ion-label>
+        <ion-item *ngIf="showField('buildingNumber')">
+          <ion-label fixed>{{'identity-verification-address.buildingNumber' | translate}}</ion-label>
           <ion-input disabled="true"
             value="{{verificationArgs.DataFields.Location.BuildingNumber}}"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label fixed>{{'profile-setup.postalCode' | translate}}</ion-label>
+        <ion-item *ngIf="showField('streetName')">
+          <ion-label fixed>{{'identity-verification-address.streetName' | translate}}</ion-label>
+          <ion-input disabled="true"
+            value="{{verificationArgs.DataFields.Location.StreetName}}"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showField('streetType')">
+          <ion-label fixed>{{'identity-verification-address.streetType' | translate}}</ion-label>
+          <ion-input disabled="true"
+            value="{{verificationArgs.DataFields.Location.StreetType}}"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showField('unitNumber')">
+          <ion-label fixed>{{'identity-verification-address.unitNumber' | translate}}</ion-label>
+          <ion-input disabled="true"
+            value="{{verificationArgs.DataFields.Location.UnitNumber}}"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showField('buildingName')">
+          <ion-label fixed>{{'identity-verification-address.buildingName' | translate}}</ion-label>
+          <ion-input disabled="true"
+            value="{{verificationArgs.DataFields.Location.BuildingName}}"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showField('address1')">
+          <ion-label fixed>{{'identity-verification-address.address1' | translate}}</ion-label>
+          <ion-input disabled="true"
+            value="{{verificationArgs.AdditionalFields.Address1}}"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showField('city')">
+          <ion-label fixed>{{'identity-verification-address.city' | translate}}</ion-label>
+          <ion-input disabled="true"
+            value="{{verificationArgs.DataFields.Location.City}}"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showField('suburb')">
+          <ion-label fixed>{{'identity-verification-address.suburb' | translate}}</ion-label>
+          <ion-input disabled="true"
+            value="{{verificationArgs.DataFields.Location.Suburb}}"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showField('stateCode')">
+          <ion-label fixed>{{'identity-verification-address.stateCode' | translate}}</ion-label>
+          <ion-input disabled="true"
+            value="{{verificationArgs.DataFields.Location.StateProvinceCode}}"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showField('postalCode')">
+          <ion-label fixed>{{'identity-verification-address.postalCode' | translate}}</ion-label>
           <ion-input disabled="true"
             value="{{verificationArgs.DataFields.Location.PostalCode}}"></ion-input>
         </ion-item>

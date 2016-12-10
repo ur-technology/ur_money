@@ -70,7 +70,18 @@
         "slideTitle": "Step 1 of 3 - Personal Info"
     },
     "identity-verification-address": {
-        "slideTitle": "Step 2 of 3 - Address "
+        "slideTitle": "Step 2 of 3 - Address ",
+        "countryCode": "Country",
+        "buildingNumber": "Building/House Number",
+        "streetName": "Street Name",
+        "streetType": "Street type",
+        "unitNumber": "Unit Number",
+        "buildingName": "Building Name",
+        "address1": "Address",
+        "city": "City",
+        "suburb": "Suburb",
+        "stateCode": "State or Province",
+        "postalCode": "Zip/Postal Code"
     },
     "identity-verification-document": {
         "slideTitle": "Step 3 of 3 - Verification Document",
@@ -98,17 +109,8 @@
         "firstName": "First Name",
         "middleName": "Middle Name (optional)",
         "lastName": "Last Name",
-        "address": "Address",
-        "state": "State or Province",
-        "city": "City",
-        "postalCode": "Zip/Postal Code",
-        "country": "Country",
-        "email": "Email",
         "name": "Full name",
-        "streetName": "Street Name",
-        "buildingNumber": "Building/house Number",
-        "suburb": "Suburb",
-        "streetType": "Street type"
+        "email": "Email"
     },
     "identity-info-setup": {
         "title": "Identification Document",

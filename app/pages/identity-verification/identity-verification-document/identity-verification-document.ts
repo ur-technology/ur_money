@@ -44,7 +44,7 @@ export class IdentityVerificationDocumentPage {
     this.verification = {
       'PersonInfo': {
         'FirstGivenName': user.firstName,
-        'MiddleName': user.middleName || '',
+        'MiddleName': user.middleName,
         'FirstSurName': user.lastName,
         'DayOfBirth': moment(user.dateOfBirth, 'MM/DD/YYYY').date(),
         'MonthOfBirth': moment(user.dateOfBirth, 'MM/DD/YYYY').month() + 1,
@@ -54,11 +54,14 @@ export class IdentityVerificationDocumentPage {
       'Location': {
         'BuildingNumber': user.buildingNumber,
         'StreetName': user.streetName,
+        'StreetType': user.streetType,
+        'UnitNumber': user.unitNumber,
+        'BuildingName': user.streetName,
+        'Address1': user.address1,
         'City': user.city,
-        'StateProvinceCode': user.stateCode ? user.stateCode : user.stateName,
-        'Country': user.countryCode,
+        'Suburb': user.suburb,
+        'StateProvinceCode': user.stateCode,
         'PostalCode': user.postalCode,
-        'StreetType': user.streetType ? user.streetType : ''
       },
       'Communication': {
         'Telephone': user.phone
@@ -136,10 +139,18 @@ export class IdentityVerificationDocumentPage {
       Demo: false,
       CleansedAddress: true,
       ConfigurationName: 'Identity Verification',
-      CountryCode: self.verification.Location.Country,
-      DataFields: _.pick(self.verification, ['PersonInfo', 'Location', 'Communication'])
+      CountryCode: self.auth.currentUser.countryCode,
+      DataFields: _.pick(self.verification, ['PersonInfo', 'Communication'])
     };
 
+    verificationArgs.DataFields.Location = _.pickBy(self.verification.Location, (fieldValue, fieldName) => {
+      let hasNonBlankValue = !!_.trim(fieldValue || '');
+      return this.auth.showLocationField(this.auth.currentUser.countryCode, fieldName) && hasNonBlankValue;
+    });
+    if (verificationArgs.DataFields.Location.Address1) {
+      verificationArgs.DataFields.Location.AdditonalFields.Address1 = verificationArgs.DataFields.Location.Address1;
+      delete verificationArgs.DataFields.Location.Address1;
+    }
     if (self.identificationType === 'Driver License') {
       verificationArgs.DataFields.DriverLicence = self.verification.DriverLicense; // NOTE: using Canadian spelling of 'Driver Licence'
     } else if (self.identificationType === 'National Id') {
@@ -148,21 +159,12 @@ export class IdentityVerificationDocumentPage {
     } else if (self.identificationType === 'Passport') {
       verificationArgs.DataFields.Passport = self.verification.Passport;
     };
-    this.verification.Location.AdditionalFields = { Address1: `${this.verification.Location.BuildingNumber} ${this.verification.Location.StreetName}` };
 
-    this.addCountrySpecificFields();
     this.nav.push(IdentityVerificationSummaryPage, { verificationArgs: verificationArgs });
   }
 
-  addCountrySpecificFields() {
-    this.verification.PersonInfo.AdditionalFields = { FullName: `${this.verification.PersonInfo.FirstSurName} ${this.verification.PersonInfo.FirstGivenName}` };
-    if (this.auth.currentUser.suburb) {
-      this.verification.Location.Suburb = this.auth.currentUser.suburb;
-    }
-  }
-
   getNationalIdType() {
-    return this.auth.supportedCountries()[this.auth.currentUser.countryCode]['National Id'].type;
+    return this.auth.supportedCountries()[this.auth.currentUser.countryCode]['validationTypes']['National Id'].type;
   }
 
   identificationTypeSelected() {
@@ -170,8 +172,6 @@ export class IdentityVerificationDocumentPage {
       this.mainForm.controls[name].setErrors(null);
     }
   }
-
-
 
   focusInput() {
     this.scrollToBottom();

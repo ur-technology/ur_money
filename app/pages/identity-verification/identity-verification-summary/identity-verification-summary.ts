@@ -21,11 +21,13 @@ export class IdentityVerificationSummaryPage {
   identificationType: string;
   dateOfBirth: string;
   gender: string;
-  country: string;
+  countryName: string;
+  stateName: string;
   stripeCheckoutHandler: any;
 
   constructor(public nav: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, private platform: Platform, public auth: AuthService, public translate: TranslateService) {
     this.verificationArgs = this.navParams.get('verificationArgs');
+
     if (this.verificationArgs.DataFields.DriverLicence) {
       this.identificationType = 'Driver License';
     } else if (this.verificationArgs.DataFields.NationalIds) {
@@ -38,8 +40,13 @@ export class IdentityVerificationSummaryPage {
     this.dateOfBirth = dateMoment.format('MM/DD/YYYY');
     this.gender = this.verificationArgs.DataFields.PersonInfo.Gender === 'M' ? 'Male' : 'Female';
     let countries: any[] = require('country-data').countries.all;
-    let countryObject = _.find(countries, ['alpha2', this.verificationArgs.DataFields.Location.Country]);
-    this.country = countryObject.name;
+    let country = _.find(countries, { alpha2: this.verificationArgs.CountryCode });
+    this.countryName = country.name;
+    if (this.verificationArgs.StateProvinceCode) {
+      let allStates = require('provinces');
+      let state: any = _.find(allStates, { country: this.verificationArgs.CountryCode, short: this.verificationArgs.StateProvinceCode });
+      this.stateName = state && state.name
+    }
   }
 
   ionViewLoaded() {
@@ -54,6 +61,10 @@ export class IdentityVerificationSummaryPage {
         }
       });
     }
+  }
+
+  showField(fieldName) {
+    return this.auth.showLocationField(this.verificationArgs.CountryCode, fieldName);
   }
 
   private silenceStripeError() {

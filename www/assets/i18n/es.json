@@ -70,7 +70,18 @@
         "slideTitle": "Paso 1 de 3 - Información personal"
     },
     "identity-verification-address": {
-        "slideTitle": "Paso 2 de 3 - Dirección"
+        "slideTitle": "Paso 2 de 3 - Dirección",
+        "countryCode": "País",
+        "buildingNumber": "Número de edificio/casa",
+        "streetName": "Nombre de la calle",
+        "streetType": "Tipo de calle",
+        "unitNumber": "Número de unidad",
+        "buildingName": "Nombre de edificio",
+        "address1": "Dirección",
+        "city": "Ciudad",
+        "stateCode": "Estado o provincia",
+        "suburb": "Suburbio",
+        "postalCode": "Código postal"
     },
     "identity-verification-document": {
         "slideTitle": "Paso 3 de 3 - Documento de verificación",
@@ -97,18 +108,9 @@
         "title": "Configurar perfil",
         "firstName": "Nombre",
         "middleName": "Segundo nombre (opcional)",
-        "lastName": "Apellido",
-        "address": "Dirección",
-        "state": "Estado o provincia",
-        "city": "Ciudad",
-        "postalCode": "Código postal",
-        "country": "País",
-        "email": "Email",
+        "lastName": "Apellido(s)",
         "name": "Nombre completo",
-        "streetName": "Nombre de la calle",
-        "buildingNumber": "Número de edificio/casa",
-        "suburb": "Suburbio",
-        "streetType": "Tipo de calle"
+        "email": "Email"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",

@@ -35,20 +35,35 @@ export class IdentityVerificationAddressPage {
       { name: 'Road', value: 'Rd' },
       { name: 'Parkway', value: 'Pkwy' }
     ];
-    this.profile = _.pick(this.auth.currentUser, ['streetName', 'buildingNumber', 'city', 'postalCode', 'countryCode', 'stateName', 'stateCode', 'suburb', 'streetType']);
 
-    let formElements: any = {
-      buildingNumber: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
-      streetName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
-      city: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
-      stateName: new FormControl('', Validators.required),
-      postalCode: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
-      countryCode: new FormControl('', Validators.required),
-      stateCode: new FormControl(''),
-      suburb: new FormControl(''),
-      streetType: new FormControl('')
-    };
+    this.profile = _.pick(this.auth.currentUser, this.auth.locationFieldNames());
+    if (!this.profile.countryCode) {
+      this.profile.countryCode = 'US';
+    }
+    let formElements: any = {};
+    _.each(this.auth.locationFieldNames(), (fieldName) => {
+      formElements[fieldName] = new FormControl('', this.fieldValidator(fieldName));
+    });
     this.mainForm = new FormGroup(formElements);
+  }
+
+  showField(fieldName) {
+    return this.auth.showLocationField(this.profile.countryCode, fieldName);
+  }
+
+  private fieldValidator(fieldName) {
+    let self = this;
+    return (control) => {
+      if (_.includes(['unitNumber', 'buildingName'], fieldName)) {
+        return;
+      }
+      if (self.auth.showLocationField(this.profile.countryCode, fieldName) &&
+        control &&
+        _.isString(control.value) &&
+        !control.value.match(/\w+/)) {
+        return { 'invalidName': true };
+      }
+    };
   }
 
   ionViewLoaded() {
@@ -62,16 +77,15 @@ export class IdentityVerificationAddressPage {
     (<FormControl>this.mainForm.controls['countryCode']).updateValue(country);
   }
 
-
-
   fillStatesArray() {
+    if (!this.auth.showLocationField(this.profile.countryCode, 'stateCode')) {
+      return;
+    }
     let allStates = require('provinces');
     this.states = _.filter(allStates, (state: any) => { return state.country === this.profile.countryCode; });
-    let state = _.find(this.states, { 'name': this.auth.currentUser.stateName });
-
+    let state = _.find(this.states, { 'short': this.auth.currentUser.stateCode });
     if (this.states.length > 0) {
       state = state ? state : this.states[0];
-      (<FormControl>this.mainForm.controls['stateName']).updateValue(state);
       this.onStateSelected(state);
     }
   }
@@ -82,13 +96,7 @@ export class IdentityVerificationAddressPage {
   }
 
   onStateSelected(state) {
-    (<FormControl>this.mainForm.controls['stateName']).updateValue(state);
-    this.profile.stateName = state.name;
-    if (state.short) {
-      this.profile.stateCode = state.short;
-    } else {
-      delete this.profile.stateCode;
-    }
+    this.profile.stateCode = state.short;
   }
 
   submit() {

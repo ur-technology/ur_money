@@ -13,44 +13,55 @@
       <ion-card-content>
         <ion-list>
           <ion-item>
-            <ion-label floating>{{'profile-setup.country' | translate}}</ion-label>
+            <ion-label floating>{{'identity-verification-address.countryCode' | translate}}</ion-label>
             <ion-select formControlName="countryCode" (ionChange)="onCountrySelected($event)">
               <ion-option [value]="c" *ngFor="let c of countries">
                 {{c.name}}
               </ion-option>
             </ion-select>
           </ion-item>
-          <ion-item>
-            <ion-label floating>{{'profile-setup.state' | translate}}</ion-label>
-            <ion-select *ngIf="states.length>0" (ionChange)="onStateSelected($event)" formControlName="stateName">
-              <ion-option [value]="s" *ngFor="let s of states">{{s.name}}</ion-option>
-            </ion-select>
-            <ion-input *ngIf="states.length==0" type="text" [(ngModel)]="profile.stateName" formControlName="stateName"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>{{'profile-setup.buildingNumber' | translate}}</ion-label>
+          <ion-item *ngIf="showField('buildingNumber')">
+            <ion-label floating>{{'identity-verification-address.buildingNumber' | translate}}</ion-label>
             <ion-input type="text" [(ngModel)]="profile.buildingNumber" formControlName="buildingNumber"></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label floating>{{'profile-setup.streetName' | translate}}</ion-label>
+          <ion-item *ngIf="showField('streetName')">
+            <ion-label floating>{{'identity-verification-address.streetName' | translate}}</ion-label>
             <ion-input type="text" [(ngModel)]="profile.streetName" formControlName="streetName"></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label floating>{{'profile-setup.streetType' | translate}}</ion-label>
+          <ion-item *ngIf="showField('streetType')">
+            <ion-label floating>{{'identity-verification-address.streetType' | translate}}</ion-label>
             <ion-select [(ngModel)]="profile.streetType" formControlName="streetType">
               <ion-option [value]="s.value" *ngFor="let s of streetTypes">{{s.name}}</ion-option>
             </ion-select>
           </ion-item>
-          <ion-item>
-            <ion-label floating>{{'profile-setup.city' | translate}}</ion-label>
+          <ion-item *ngIf="showField('unitNumber')">
+            <ion-label floating>{{'identity-verification-address.unitNumber' | translate}}</ion-label>
+            <ion-input type="text" [(ngModel)]="profile.unitNumber" formControlName="unitNumber"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="showField('buildingName')">
+            <ion-label floating>{{'identity-verification-address.buildingName' | translate}}</ion-label>
+            <ion-input type="text" [(ngModel)]="profile.buildingName" formControlName="buildingName"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="showField('address1')">
+            <ion-label floating>{{'identity-verification-address.address1' | translate}}</ion-label>
+            <ion-input type="text" [(ngModel)]="profile.address1" formControlName="address1"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="showField('city')">
+            <ion-label floating>{{'identity-verification-address.city' | translate}}</ion-label>
             <ion-input type="text" (focus)="focusInput()" [(ngModel)]="profile.city" formControlName="city"></ion-input>
           </ion-item>
-          <ion-item *ngIf="auth.currentUser.countryCode == 'ZA'">
-            <ion-label floating>{{'profile-setup.suburb' | translate}}</ion-label>
+          <ion-item *ngIf="showField('suburb')">
+            <ion-label floating>{{'identity-verification-address.suburb' | translate}}</ion-label>
             <ion-input type="text" (focus)="focusInput()" [(ngModel)]="profile.suburb" formControlName="suburb"></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label floating>{{'profile-setup.postalCode' | translate}}</ion-label>
+          <ion-item *ngIf="showField('stateCode')">
+            <ion-label floating>{{'identity-verification-address.stateCode' | translate}}</ion-label>
+            <ion-select (ionChange)="onStateSelected($event)" formControlName="stateCode">
+              <ion-option [value]="s" *ngFor="let s of states">{{s.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item *ngIf="showField('postalCode')">
+            <ion-label floating>{{'identity-verification-address.postalCode' | translate}}</ion-label>
             <ion-input type="text" (focus)="focusInput()" [(ngModel)]="profile.postalCode" formControlName="postalCode"></ion-input>
           </ion-item>
         </ion-list>

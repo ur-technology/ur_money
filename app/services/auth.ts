@@ -260,7 +260,8 @@ export class AuthService {
         countryCode: 'AT',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
       },
       'AU': {
         name: 'Australia',
@@ -268,21 +269,24 @@ export class AuthService {
         validationTypes: {
           'Driver License': { displayName: 'Driver Licence' },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['unitNumber', 'buildingNumber', 'streetName', 'streetType', 'suburb', 'stateCode', 'postalCode']
       },
       'BE': {
         name: 'Belgium',
         countryCode: 'BE',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
       },
       'DE': {
         name: 'Germany',
         countryCode: 'DE',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
       },
       'DK': {
         name: 'Denmark',
@@ -293,7 +297,8 @@ export class AuthService {
             type: 'NationalID'
           },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
       },
       'FR': {
         name: 'France',
@@ -304,7 +309,8 @@ export class AuthService {
             type: 'NationalID'
           },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
       },
       'MX': {
         name: 'Mexico',
@@ -315,7 +321,8 @@ export class AuthService {
             type: 'NationalID'
           },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['address1', 'postalCode']
       },
       'MY': {
         name: 'Malaysia',
@@ -326,14 +333,16 @@ export class AuthService {
             type: 'NationalID'
           },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['address1', 'city', 'postalCode']
       },
       'NO': {
         name: 'Norway',
         countryCode: 'NO',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
       },
       'NZ': {
         name: 'New Zealand',
@@ -341,7 +350,8 @@ export class AuthService {
         validationTypes: {
           'Driver License': { displayName: 'Driver Licence' },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['unitNumber', 'buildingNumber', 'streetName', 'streetType', 'city', 'suburb', 'postalCode']
       },
       'ZA': {
         name: 'South Africa',
@@ -352,7 +362,8 @@ export class AuthService {
             type: 'NationalID'
           },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['address1', 'city', 'suburb', 'stateCode', 'postalCode']
       },
       'SE': {
         name: 'Sweden',
@@ -363,14 +374,16 @@ export class AuthService {
             type: 'NationalID'
           },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
       },
       'TR': {
         name: 'Turkey',
         countryCode: 'TR',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['address1', 'city', 'stateCode', 'postalCode']
       },
       'GB': {
         name: 'United Kingdom',
@@ -381,7 +394,8 @@ export class AuthService {
             type: 'Health'
           },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['unitNumber', 'buildingName', 'buildingNumber', 'streetName', 'city', 'postalCode']
       },
       'US': {
         name: 'United States',
@@ -393,7 +407,8 @@ export class AuthService {
             type: 'SocialService'
           },
           'Passport': { displayName: 'Passport' }
-        }
+        },
+        locationFieldNames: ['unitNumber', 'buildingNumber', 'streetName', 'streetType', 'city', 'stateCode', 'postalCode']
       }
     };
   }
@@ -401,6 +416,23 @@ export class AuthService {
   userCountryNotSupported() {
     let sanitizedCountryCode = _.trim(this.currentUser.countryCode || '');
     return sanitizedCountryCode && !this.supportedCountries()[sanitizedCountryCode];
+  }
+
+  locationFieldNames() {
+    return ['countryCode', 'buildingNumber', 'streetName', 'streetType', 'unitNumber', 'buildingName', 'address1', 'city', 'suburb', 'stateCode', 'postalCode'];
+  }
+
+  showLocationField(countryCode: string, fieldName: string) {
+    fieldName = _.lowerFirst(fieldName);
+    if (fieldName === 'stateProvinceCode') {
+      fieldName = 'stateCode';
+    }
+    if (fieldName === 'countryCode') {
+      return true;
+    }
+
+    let countryInfo = this.supportedCountries()[countryCode];
+    return !!countryInfo && _.includes(countryInfo.locationFieldNames, fieldName);
   }
 
   getUserStatus() {
