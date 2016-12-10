@@ -67,7 +67,9 @@
         "verificationPurchased": "Ya has comprado la verificación. Por favor, continúa verificando tu identidad."
     },
     "identity-verification-personal-info": {
-        "slideTitle": "Paso 1 de 3 - Información personal"
+        "slideTitle": "Paso 1 de 3 - Información personal",
+        "gender": "Género"
+        "dateOfBirth": "Fecha de nacimiento"
     },
     "identity-verification-address": {
         "slideTitle": "Paso 2 de 3 - Dirección",
@@ -79,20 +81,29 @@
         "buildingName": "Nombre de edificio",
         "address1": "Dirección",
         "city": "Ciudad",
-        "stateCode": "Estado o provincia",
+        "stateProvinceCode": "Estado o provincia",
         "suburb": "Suburbio",
         "postalCode": "Código postal"
     },
     "identity-verification-document": {
         "slideTitle": "Paso 3 de 3 - Documento de verificación",
-        "reviewTitle": "Revise su información",
-        "reviewData": "Revise que la información que introdujo es correcta. En el siguiente paso, la verificación de identidad tendrá un costo."
+        "idType": "Tipo de identificación",
+        "driverLicenceState": "Estado de licencia de conducir",
+        "driverLicenceNumber": "Número de licencia de conducir",
+        "MRI1": "Lectura mecánica Línea 1",
+        "MRI2": "Lectura mecánica Línea 2",
+        "passportNumber": "Número de pasaporte",
+        "passportExpirationDate": "Fecha de caducidad",
+        "passportExpirationDay": "Día de caducidad",
+        "passportExpirationMonth": "Mes de caducidad",
+        "passportExpirationYear": "Año de caducidad"
     },
     "identity-verification-summary": {
         "slideTitle": "Confirme su información",
         "personalInfo": "Información personal",
+        "name": "Nombre completo",
         "location": "Lugar",
-        "aditionaInfo": "Información adicional",
+        "additionaInfo": "Información adicional",
         "verifyMyInfo": "Verificar mi información"
     },
     "identity-verification-finish": {
@@ -116,8 +127,8 @@
         "title": "Documento de identificación",
         "dateOfBirth": "Fecha de nacimiento",
         "idType": "Tipo de identificación",
-        "driverLicenseState": "Estado de licencia de conducir",
-        "driverLicenseNumber": "Número de licencia de conducir",
+        "driverLicenceState": "Estado de licencia de conducir",
+        "driverLicenceNumber": "Número de licencia de conducir",
         "MRI1": "Lectura mecánica Línea 1",
         "MRI2": "Lectura mecánica Línea 2",
         "passportNumber": "Número de pasaporte",

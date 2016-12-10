@@ -24,28 +24,27 @@ export class IdentityVerificationSummaryPage {
   countryName: string;
   stateName: string;
   stripeCheckoutHandler: any;
+  nationalIdDisplayName: string;
 
   constructor(public nav: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, private platform: Platform, public auth: AuthService, public translate: TranslateService) {
     this.verificationArgs = this.navParams.get('verificationArgs');
-
-    if (this.verificationArgs.DataFields.DriverLicence) {
-      this.identificationType = 'Driver License';
-    } else if (this.verificationArgs.DataFields.NationalIds) {
-      this.identificationType = 'National Id';
-    } else if (this.verificationArgs.DataFields.Passport) {
-      this.identificationType = 'Passport';
-    }
-
-    let dateMoment = moment(new Date(this.verificationArgs.DataFields.PersonInfo.YearOfBirth, this.verificationArgs.DataFields.PersonInfo.MonthOfBirth - 1, this.verificationArgs.DataFields.PersonInfo.DayOfBirth));
-    this.dateOfBirth = dateMoment.format('MM/DD/YYYY');
-    this.gender = this.verificationArgs.DataFields.PersonInfo.Gender === 'M' ? 'Male' : 'Female';
+    this.dateOfBirth = moment({
+      year: this.verificationArgs.PersonInfo.YearOfBirth,
+      month: this.verificationArgs.PersonInfo.MonthOfBirth,
+      day: this.verificationArgs.PersonInfo.DayOfBirth
+    }).format('MM/DD/YYYY');
+    this.gender = this.verificationArgs.PersonInfo.Gender === 'M' ? 'Male' : 'Female';
     let countries: any[] = require('country-data').countries.all;
     let country = _.find(countries, { alpha2: this.verificationArgs.CountryCode });
     this.countryName = country.name;
-    if (this.verificationArgs.StateProvinceCode) {
+    if (this.verificationArgs.Location.StateProvinceCode) {
       let allStates = require('provinces');
-      let state: any = _.find(allStates, { country: this.verificationArgs.CountryCode, short: this.verificationArgs.StateProvinceCode });
-      this.stateName = state && state.name
+      let state: any = _.find(allStates, { country: this.verificationArgs.CountryCode, short: this.verificationArgs.Location.StateProvinceCode });
+      this.stateName = state && state.name;
+    }
+    if (this.verificationArgs.IdentificationType === 'National Id') {
+      let countryInfo: any = this.auth.supportedCountries()[this.verificationArgs.CountryCode];
+      this.nationalIdDisplayName = countryInfo && countryInfo.validationTypes && countryInfo.validationTypes.validationTypes['National Id'] && countryInfo.validationTypes.validationTypes['National Id'].displayName;
     }
   }
 
@@ -63,7 +62,7 @@ export class IdentityVerificationSummaryPage {
     }
   }
 
-  showField(fieldName) {
+  showLocationField(fieldName) {
     return this.auth.showLocationField(this.verificationArgs.CountryCode, fieldName);
   }
 
@@ -90,24 +89,25 @@ export class IdentityVerificationSummaryPage {
 
   submit() {
     let self = this;
-
-    if (self.platform.is('cordova')) {
-      InAppPurchase.buy(
-        self.verificationProductId
-      ).then((data: any) => {
-        InAppPurchase.consume(data.type, data.receipt, data.signature);
-      }).then(() => {
-        self.verifyWithTrulio();
-      });
-    } else if (Config.targetPlatform === 'web') {
-      self.stripeCheckoutHandler.open({
-        name: 'UR Money',
-        description: 'Payment for Id Verification',
-        amount: 299,
-        zipCode: true,
-        allowRememberMe: false
-      });
-    }
+    self.auth.updateVerificationArgs(self.verificationArgs).then(() => {
+      if (self.platform.is('cordova')) {
+        InAppPurchase.buy(
+          self.verificationProductId
+        ).then((data: any) => {
+          InAppPurchase.consume(data.type, data.receipt, data.signature);
+        }).then(() => {
+          self.verifyWithTrulio();
+        });
+      } else if (Config.targetPlatform === 'web') {
+        self.stripeCheckoutHandler.open({
+          name: 'UR Money',
+          description: 'Payment for Id Verification',
+          amount: 299,
+          zipCode: true,
+          allowRememberMe: false
+        });
+      }
+    });
   }
 
   verifyWithTrulio(stripeTokenId?: string) {
@@ -120,6 +120,7 @@ export class IdentityVerificationSummaryPage {
 
     let task: any = {
       verificationArgs: self.verificationArgs,
+      version: 2,
       userId: self.auth.currentUserId
     };
     if (stripeTokenId) {
@@ -159,9 +160,7 @@ export class IdentityVerificationSummaryPage {
               self.nav.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(() => {
                 self.nav.push(VerificationFailedPage);
               });
-
             });
-
           }
         });
       });

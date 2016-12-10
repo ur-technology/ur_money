@@ -257,40 +257,40 @@ export class AuthService {
     return {
       'AT': {
         name: 'Austria',
-        countryCode: 'AT',
+        CountryCode: 'AT',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'AU': {
         name: 'Australia',
-        countryCode: 'AU',
+        CountryCode: 'AU',
         validationTypes: {
-          'Driver License': { displayName: 'Driver Licence' },
+          'Driver Licence': { displayName: 'Driver Licence' },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['unitNumber', 'buildingNumber', 'streetName', 'streetType', 'suburb', 'stateCode', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'Suburb', 'StateProvinceCode', 'PostalCode']
       },
       'BE': {
         name: 'Belgium',
-        countryCode: 'BE',
+        CountryCode: 'BE',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'DE': {
         name: 'Germany',
-        countryCode: 'DE',
+        CountryCode: 'DE',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'DK': {
         name: 'Denmark',
-        countryCode: 'DK',
+        CountryCode: 'DK',
         validationTypes: {
           'National Id': {
             displayName: 'National Id Number',
@@ -298,11 +298,11 @@ export class AuthService {
           },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'FR': {
         name: 'France',
-        countryCode: 'FR',
+        CountryCode: 'FR',
         validationTypes: {
           'National Id': {
             displayName: 'Insee Number',
@@ -310,11 +310,11 @@ export class AuthService {
           },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'MX': {
         name: 'Mexico',
-        countryCode: 'MX',
+        CountryCode: 'MX',
         validationTypes: {
           'National Id': {
             displayName: 'CURPID Number',
@@ -322,11 +322,11 @@ export class AuthService {
           },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['address1', 'postalCode']
+        locationFieldNames: ['Address1', 'PostalCode']
       },
       'MY': {
         name: 'Malaysia',
-        countryCode: 'MY',
+        CountryCode: 'MY',
         validationTypes: {
           'National Id': {
             displayName: 'NRIC Number',
@@ -334,28 +334,28 @@ export class AuthService {
           },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['address1', 'city', 'postalCode']
+        locationFieldNames: ['Address1', 'City', 'PostalCode']
       },
       'NO': {
         name: 'Norway',
-        countryCode: 'NO',
+        CountryCode: 'NO',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'NZ': {
         name: 'New Zealand',
-        countryCode: 'NZ',
+        CountryCode: 'NZ',
         validationTypes: {
-          'Driver License': { displayName: 'Driver Licence' },
+          'Driver Licence': { displayName: 'Driver Licence' },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['unitNumber', 'buildingNumber', 'streetName', 'streetType', 'city', 'suburb', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'City', 'Suburb', 'PostalCode']
       },
       'ZA': {
         name: 'South Africa',
-        countryCode: 'ZA',
+        CountryCode: 'ZA',
         validationTypes: {
           'National Id': {
             displayName: 'National Id Number',
@@ -363,11 +363,11 @@ export class AuthService {
           },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['address1', 'city', 'suburb', 'stateCode', 'postalCode']
+        locationFieldNames: ['Address1', 'City', 'Suburb', 'StateProvinceCode', 'PostalCode']
       },
       'SE': {
         name: 'Sweden',
-        countryCode: 'SE',
+        CountryCode: 'SE',
         validationTypes: {
           'National Id': {
             displayName: 'PIN Number',
@@ -375,19 +375,19 @@ export class AuthService {
           },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['buildingNumber', 'streetName', 'city', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'TR': {
         name: 'Turkey',
-        countryCode: 'TR',
+        CountryCode: 'TR',
         validationTypes: {
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['address1', 'city', 'stateCode', 'postalCode']
+        locationFieldNames: ['Address1', 'City', 'StateProvinceCode', 'PostalCode']
       },
       'GB': {
         name: 'United Kingdom',
-        countryCode: 'GB',
+        CountryCode: 'GB',
         validationTypes: {
           'National Id': {
             displayName: 'NHS Number',
@@ -395,20 +395,20 @@ export class AuthService {
           },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['unitNumber', 'buildingName', 'buildingNumber', 'streetName', 'city', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'UnitNumber', 'BuildingName', 'City', 'PostalCode']
       },
       'US': {
         name: 'United States',
-        countryCode: 'US',
+        CountryCode: 'US',
         validationTypes: {
-          'Driver License': { displayName: 'Driver License' },
+          'Driver Licence': { displayName: 'Driver License' },
           'National Id': {
             displayName: 'Social Security Number',
             type: 'SocialService'
           },
           'Passport': { displayName: 'Passport' }
         },
-        locationFieldNames: ['unitNumber', 'buildingNumber', 'streetName', 'streetType', 'city', 'stateCode', 'postalCode']
+        locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'City', 'StateProvinceCode', 'PostalCode']
       }
     };
   }
@@ -419,20 +419,38 @@ export class AuthService {
   }
 
   locationFieldNames() {
-    return ['countryCode', 'buildingNumber', 'streetName', 'streetType', 'unitNumber', 'buildingName', 'address1', 'city', 'suburb', 'stateCode', 'postalCode'];
+    return ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'BuildingName', 'AdditionalFields.Address1', 'City', 'Suburb', 'StateProvinceCode', 'PostalCode'];
   }
 
   showLocationField(countryCode: string, fieldName: string) {
-    fieldName = _.lowerFirst(fieldName);
-    if (fieldName === 'stateProvinceCode') {
-      fieldName = 'stateCode';
-    }
-    if (fieldName === 'countryCode') {
+    if (fieldName === 'CountryCode') {
       return true;
+    } else {
+      let countryInfo = this.supportedCountries()[countryCode];
+      return !!countryInfo && _.includes(countryInfo.locationFieldNames, fieldName);
     }
+  }
 
-    let countryInfo = this.supportedCountries()[countryCode];
-    return !!countryInfo && _.includes(countryInfo.locationFieldNames, fieldName);
+  verificationArgsRef() {
+    return firebase.database().ref(`/users/${this.currentUserId}/registration/verificationArgs`);
+  }
+
+  updateVerificationArgs(verificationArgs: any): Promise<any> {
+    let self = this;
+    return new Promise((resolve, reject) => {
+
+      // first update args in memory
+      self.currentUser.registration = self.currentUser.registration || {};
+      self.currentUser.registration.verificationArgs = self.currentUser.registration.verificationArgs || {};
+      _.extend(self.currentUser.registration.verificationArgs, verificationArgs);
+
+      // then save args in db
+      self.verificationArgsRef().update(verificationArgs).then(() => {
+        resolve();
+      }, (error) => {
+        reject(error);
+      });
+    });
   }
 
   getUserStatus() {

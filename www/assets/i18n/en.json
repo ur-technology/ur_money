@@ -67,7 +67,9 @@
         "verificationPurchased": "You have already bought the verification. Please, continue to verify your identity."
     },
     "identity-verification-personal-info": {
-        "slideTitle": "Step 1 of 3 - Personal Info"
+        "slideTitle": "Step 1 of 3 - Personal Info",
+        "gender": "Gender",
+        "dateOfBirth": "Date of Birth"
     },
     "identity-verification-address": {
         "slideTitle": "Step 2 of 3 - Address ",
@@ -80,20 +82,30 @@
         "address1": "Address",
         "city": "City",
         "suburb": "Suburb",
-        "stateCode": "State or Province",
+        "stateProvinceCode": "State or Province",
         "postalCode": "Zip/Postal Code"
     },
     "identity-verification-document": {
         "slideTitle": "Step 3 of 3 - Verification Document",
-        "reviewTitle": "Review your info",
-        "reviewData": "Review that the information you entered is correct. <br/> In the next step, the identity verification will have a cost."
+        "idType": "ID Type",
+        "idType": "ID Type",
+        "driverLicenceState": "Driver Licence State",
+        "driverLicenceNumber": "Driver Licence Number",
+        "MRI1": "Machine readable Line 1",
+        "MRI2": "Machine readable Line 2",
+        "passportNumber": "Passport Number",
+        "passportExpirationDate": "Expiration Date",
+        "passportExpirationDay": "Expiration Day",
+        "passportExpirationMonth": "Expiration Month",
+        "passportExpirationYear": "Expiration Year"
     },
     "identity-verification-summary": {
         "slideTitle": "Review your information",
         "personalInfo": "Personal information",
+        "name": "Name",
         "location": "Location",
-        "aditionaInfo":"Additional info",
-        "verifyMyInfo": "Verify my info"
+        "additionaInfo":"Additional Info",
+        "verifyMyInfo": "Verify My Info"
     },
     "identity-verification-finish": {
         "slideTitle": "<b>Congratulations!</b> You just earned your <b>2000 UR</b>",
@@ -116,8 +128,8 @@
         "title": "Identification Document",
         "dateOfBirth": "Date of Birth",
         "idType": "ID Type",
-        "driverLicenseState": "Driver License State",
-        "driverLicenseNumber": "Driver License Number",
+        "driverLicenceState": "Driver Licence State",
+        "driverLicenceNumber": "Driver Licence Number",
         "MRI1": "Machine readable Line 1",
         "MRI2": "Machine readable Line 2",
         "passportNumber": "Passport Number",

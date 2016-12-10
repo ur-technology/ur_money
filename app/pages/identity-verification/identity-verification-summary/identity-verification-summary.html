@@ -16,17 +16,17 @@
       <ion-list>
         <ion-item-divider light>{{"identity-verification-summary.personalInfo" | translate}}</ion-item-divider>
         <ion-item>
-          <ion-label fixed>{{'profile-setup.name' | translate}}</ion-label>
+          <ion-label fixed>{{'identity-verification-summary.name' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.PersonInfo.FirstGivenName}} {{verificationArgs.DataFields.PersonInfo.FirstSurName}}"></ion-input>
+            value="{{verificationArgs.PersonInfo.FirstGivenName}} {{verificationArgs.PersonInfo.FirstSurName}}"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label fixed>{{'identity-info-setup.dateOfBirth' | translate}}</ion-label>
+          <ion-label fixed>{{'identity-verification-personal-info.dateOfBirth' | translate}}</ion-label>
           <ion-input disabled="true"
             value={{dateOfBirth}}></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label fixed>{{'identity-info-setup.gender' | translate}}</ion-label>
+          <ion-label fixed>{{'identity-verification-personal-info.gender' | translate}}</ion-label>
           <ion-input disabled="true"
             value={{gender}}></ion-input>
         </ion-item>
@@ -36,76 +36,76 @@
           <ion-input disabled="true"
             value="{{countryName}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('buildingNumber')">
+        <ion-item *ngIf="showLocationField('BuildingNumber')">
           <ion-label fixed>{{'identity-verification-address.buildingNumber' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.BuildingNumber}}"></ion-input>
+            value="{{verificationArgs.Location.BuildingNumber}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('streetName')">
+        <ion-item *ngIf="showLocationField('StreetName')">
           <ion-label fixed>{{'identity-verification-address.streetName' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.StreetName}}"></ion-input>
+            value="{{verificationArgs.Location.StreetName}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('streetType')">
+        <ion-item *ngIf="showLocationField('StreetType')">
           <ion-label fixed>{{'identity-verification-address.streetType' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.StreetType}}"></ion-input>
+            value="{{verificationArgs.Location.StreetType}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('unitNumber')">
+        <ion-item *ngIf="showLocationField('UnitNumber')">
           <ion-label fixed>{{'identity-verification-address.unitNumber' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.UnitNumber}}"></ion-input>
+            value="{{verificationArgs.Location.UnitNumber}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('buildingName')">
+        <ion-item *ngIf="showLocationField('BuildingName')">
           <ion-label fixed>{{'identity-verification-address.buildingName' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.BuildingName}}"></ion-input>
+            value="{{verificationArgs.Location.BuildingName}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('address1')">
+        <ion-item *ngIf="showLocationField('AdditionalFields.Address1')">
           <ion-label fixed>{{'identity-verification-address.address1' | translate}}</ion-label>
           <ion-input disabled="true"
             value="{{verificationArgs.AdditionalFields.Address1}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('city')">
+        <ion-item *ngIf="showLocationField('City')">
           <ion-label fixed>{{'identity-verification-address.city' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.City}}"></ion-input>
+            value="{{verificationArgs.Location.City}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('suburb')">
+        <ion-item *ngIf="showLocationField('Suburb')">
           <ion-label fixed>{{'identity-verification-address.suburb' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.Suburb}}"></ion-input>
+            value="{{verificationArgs.Location.Suburb}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('stateCode')">
-          <ion-label fixed>{{'identity-verification-address.stateCode' | translate}}</ion-label>
+        <ion-item *ngIf="showLocationField('StateProvinceCode')">
+          <ion-label fixed>{{'identity-verification-address.stateProvinceCode' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.StateProvinceCode}}"></ion-input>
+            value="{{verificationArgs.Location.StateProvinceCode}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showField('postalCode')">
+        <ion-item *ngIf="showLocationField('PostalCode')">
           <ion-label fixed>{{'identity-verification-address.postalCode' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.DataFields.Location.PostalCode}}"></ion-input>
+            value="{{verificationArgs.Location.PostalCode}}"></ion-input>
         </ion-item>
-        <ion-item-divider light>{{"identity-verification-summary.aditionaInfo" | translate}}</ion-item-divider>
-        <ion-item-group *ngIf="identificationType == 'Driver License'">
+        <ion-item-divider light>{{"identity-verification-summary.additionaInfo" | translate}}</ion-item-divider>
+        <ion-item-group *ngIf="verificationArgs.IdentificationType == 'Driver Licence'">
           <ion-item>
-            <ion-label fixed>{{'identity-info-setup.driverLicenseNumber' | translate}}</ion-label>
+            <ion-label fixed>{{'identity-verification-document.driverLicenceNumber' | translate}}</ion-label>
             <ion-input disabled="true"
-              value="{{verificationArgs.DataFields.DriverLicence.Number}}"></ion-input>
+              value="{{verificationArgs.DriverLicence.Number}}"></ion-input>
           </ion-item>
         </ion-item-group>
-        <ion-item-group *ngIf="identificationType == 'National Id'">
+        <ion-item-group *ngIf="verificationArgs.IdentificationType == 'National Id'">
           <ion-item>
-            <ion-label fixed>ID</ion-label>
+            <ion-label fixed>{{'identity-verification-document.id' | translate}}</ion-label>
             <ion-input disabled="true"
-              value="{{verificationArgs.DataFields.NationalIds[0].Number}}"></ion-input>
+              value="{{verificationArgs.NationalId.Number}}"></ion-input>
           </ion-item>
         </ion-item-group>
-        <ion-item-group *ngIf="identificationType == 'Passport'">
+        <ion-item-group *ngIf="verificationArgs.IdentificationType == 'Passport'">
           <ion-item>
-            <ion-label fixed>{{'identity-info-setup.passportNumber' | translate}}</ion-label>
+            <ion-label fixed>{{'identity-verification-document.passportNumber' | translate}}</ion-label>
             <ion-input disabled="true"
-              value="{{verificationArgs.DataFields.Passport.Number}}"></ion-input>
+              value="{{verificationArgs.Passport.Number}}"></ion-input>
           </ion-item>
         </ion-item-group>
       </ion-list>

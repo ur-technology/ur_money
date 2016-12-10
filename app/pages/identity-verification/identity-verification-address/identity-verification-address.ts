@@ -1,12 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, Content } from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {NavController, NavParams, Content} from 'ionic-angular';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {IdentityVerificationDocumentPage} from '../identity-verification-document/identity-verification-document';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
-import * as log from 'loglevel';
 import {AuthService} from '../../../services/auth';
-import {CustomValidator} from '../../../validators/custom';
 import {CountryListService} from '../../../services/country-list';
 
 @Component({
@@ -20,14 +18,19 @@ export class IdentityVerificationAddressPage {
   countries: any[];
   states: any[];
   streetTypes: any[];
-  profile: any;
+  verificationArgs: any;
+  l: any;
+  formElements: any;
+
   constructor(
     public nav: NavController,
+    public navParams: NavParams,
     public auth: AuthService,
     public countryListService: CountryListService
   ) {
+    let self = this;
 
-    this.streetTypes = [
+    self.streetTypes = [
       { name: 'Street', value: 'St' },
       { name: 'Avenue', value: 'Av' },
       { name: 'Drive', value: 'Dr' },
@@ -36,32 +39,33 @@ export class IdentityVerificationAddressPage {
       { name: 'Parkway', value: 'Pkwy' }
     ];
 
-    this.profile = _.pick(this.auth.currentUser, this.auth.locationFieldNames());
-    if (!this.profile.countryCode) {
-      this.profile.countryCode = 'US';
-    }
-    let formElements: any = {};
-    _.each(this.auth.locationFieldNames(), (fieldName) => {
-      formElements[fieldName] = new FormControl('', this.fieldValidator(fieldName));
+    this.verificationArgs = this.navParams.get('verificationArgs');
+    self.l = self.verificationArgs.Location;
+    this.formElements = {};
+    this.formElements['countryCode'] = new FormControl('', Validators.required);
+    _.each(self.auth.locationFieldNames(), (fieldName) => {
+      this.formElements[_.lowerFirst(fieldName)] = new FormControl('', self.fieldValidator(fieldName));
     });
-    this.mainForm = new FormGroup(formElements);
+    self.mainForm = new FormGroup(this.formElements);
   }
 
-  showField(fieldName) {
-    return this.auth.showLocationField(this.profile.countryCode, fieldName);
+  showLocationField(fieldName) {
+    return this.auth.showLocationField(this.verificationArgs.CountryCode, fieldName);
   }
 
   private fieldValidator(fieldName) {
     let self = this;
     return (control) => {
-      if (_.includes(['unitNumber', 'buildingName'], fieldName)) {
+      if (!control) {
+        return;
+      } else if (_.includes(['UnitNumber', 'BuildingName'], fieldName)) {
         return;
       }
-      if (self.auth.showLocationField(this.profile.countryCode, fieldName) &&
-        control &&
-        _.isString(control.value) &&
-        !control.value.match(/\w+/)) {
-        return { 'invalidName': true };
+      let value = control.value || '';
+      if (_.isString(value) && !value.match(/\w+/)) {
+        if (fieldName === 'CountryCode' || self.auth.showLocationField(self.verificationArgs.CountryCode, fieldName)) {
+          return { 'invalidName': true };
+        }
       }
     };
   }
@@ -73,39 +77,34 @@ export class IdentityVerificationAddressPage {
 
   fillCountriesArray() {
     this.countries = _.values(this.auth.supportedCountries());
-    let country = this.countries.find((x) => { return x.countryCode === (this.auth.currentUser.countryCode || 'US'); });
-    (<FormControl>this.mainForm.controls['countryCode']).updateValue(country);
+    let country = _.find(this.countries, { CountryCode: this.verificationArgs.CountryCode });
+    this.formElements.countryCode.updateValue(country);
   }
 
   fillStatesArray() {
-    if (!this.auth.showLocationField(this.profile.countryCode, 'stateCode')) {
+    if (!this.auth.showLocationField(this.verificationArgs.CountryCode, 'StateProvinceCode')) {
       return;
     }
     let allStates = require('provinces');
-    this.states = _.filter(allStates, (state: any) => { return state.country === this.profile.countryCode; });
-    let state = _.find(this.states, { 'short': this.auth.currentUser.stateCode });
-    if (this.states.length > 0) {
-      state = state ? state : this.states[0];
-      this.onStateSelected(state);
-    }
+    this.states = _.filter(allStates, { country: this.verificationArgs.CountryCode });
+    this.states = _.filter(this.states, 'short');
+    let state = _.find(this.states, { 'short': this.verificationArgs.Location.StateProvinceCode });
+    this.onStateSelected(state);
+    this.formElements.stateProvinceCode.markAsTouched();
   }
 
   onCountrySelected(countrySelected) {
-    this.profile.countryCode = countrySelected.countryCode;
+    this.verificationArgs.CountryCode = countrySelected.CountryCode;
+    this.formElements.stateProvinceCode.updateValue(''); // this clears fields AND forces re-validation
     this.fillStatesArray();
   }
 
   onStateSelected(state) {
-    this.profile.stateCode = state.short;
+    this.verificationArgs.Location.StateProvinceCode = state ? state.short : '';
   }
 
   submit() {
-    this.auth.currentUserRef.update(this.profile).then(() => {
-      _.merge(this.auth.currentUser, this.profile);
-      this.nav.push(IdentityVerificationDocumentPage);
-    }).catch((error) => {
-      log.warn('unable to save address info');
-    });
+    this.nav.push(IdentityVerificationDocumentPage, {verificationArgs: this.verificationArgs});
   }
 
   focusInput() {
