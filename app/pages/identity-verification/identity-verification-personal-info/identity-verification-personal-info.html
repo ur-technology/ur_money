@@ -13,19 +13,19 @@
         <ion-list>
           <ion-item>
             <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]="p.FirstGivenName" formControlName="firstName"></ion-input>
+            <ion-input type="text" [(ngModel)]="verificationArgs.PersonInfo.FirstGivenName" formControlName="firstName"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{'profile-setup.middleName' | translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]="p.MiddleName" formControlName="middleName"></ion-input>
+            <ion-input type="text" [(ngModel)]="verificationArgs.PersonInfo.MiddleName" formControlName="middleName"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{'profile-setup.lastName' | translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]="p.FirstSurName" formControlName="lastName"></ion-input>
+            <ion-input type="text" [(ngModel)]="verificationArgs.PersonInfo.FirstSurName" formControlName="lastName"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>{{'identity-verification-personal-info.gender' | translate}}</ion-label>
-            <ion-select [(ngModel)]="p.Gender" formControlName="gender">
+            <ion-select [(ngModel)]="verificationArgs.PersonInfo.Gender" formControlName="gender">
               <ion-option [value]="s.value" *ngFor="let s of genders">{{s.name}}</ion-option>
             </ion-select>
           </ion-item>

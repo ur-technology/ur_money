@@ -66,9 +66,8 @@ export class IdentityVerificationPersonalInfoPage {
     self.p = self.verificationArgs.PersonInfo;
 
     self.auth.verificationArgsRef().once('value').then((snapshot) => {
-      if (snapshot.exists() && snapshot.val().version === 2) {
-        self.verificationArgs = snapshot.val();
-        self.p = self.verificationArgs.PersonInfo;
+      let existingVerificationArgs = snapshot.val();
+      if (existingVerificationArgs && existingVerificationArgs.Version === 2) {
         _.defaultsDeep(self.verificationArgs, defaultVerificationArgs);
         self.copyDobFromArgsToControl();
       }
