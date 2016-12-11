@@ -70,6 +70,7 @@ export class IdentityVerificationDocumentPage {
       control.setErrors(null);
     });
   }
+
   focusInput() {
     this.scrollToBottom();
   }

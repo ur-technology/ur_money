@@ -98,6 +98,13 @@ export class IdentityVerificationAddressPage {
     this.verificationArgs.CountryCode = countrySelected.CountryCode;
     this.formElements.stateProvinceCode.updateValue(''); // this clears fields AND forces re-validation
     this.fillStatesArray();
+    this.clearFormErrors();
+  }
+
+  clearFormErrors() {
+    _.each(this.formElements, (control) => {
+      control.setErrors(null);
+    });
   }
 
   onStateSelected(state) {
