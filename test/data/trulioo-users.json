@@ -1,0 +1,624 @@
+{
+    "AT": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "AT",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Lukas",
+                "FirstSurName": "Berger",
+                "DayOfBirth": 4,
+                "MonthOfBirth": 8,
+                "YearOfBirth": 1988
+            },
+            "Location": {
+                "BuildingNumber": "12",
+                "StreetName": "Unt Feldstr",
+                "City": "Innsbruck",
+                "PostalCode": "8326"
+            },
+            "Communication": {
+                "Telephone": "948371694"
+            },
+            "DriverLicence": {},
+            "Passport": {
+                "Mrz1": "P<BERGER<<LUKAS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1AUT1101018M1207046110101111<<<<<94",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            }
+        }
+    },
+
+    "AU": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "AU",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "John",
+                "MiddleName": "Henry",
+                "FirstSurName": "Smith",
+                "DayOfBirth": 5,
+                "MonthOfBirth": 3,
+                "YearOfBirth": 1983
+            },
+            "Location": {
+                "BuildingNumber": "10",
+                "UnitNumber": "3",
+                "StreetName": "Lawford",
+                "StreetType": "st",
+                "Suburb": "Doncaster",
+                "StateProvinceCode": "VIC",
+                "PostalCode": "3108"
+            },
+            "Communication": {
+                "Telephone": "03 9896 8785"
+            },
+            "DriverLicence": {
+                "Number": "076310691",
+                "State": "VIC",
+                "DayOfExpiry": 3,
+                "MonthOfExpiry": 4
+            },
+            "Passport": {
+                "Mrz1": "P<SAGSMITH<<JOHN<HENRY<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "N1236548<1AUS8303052359438740809<<<<<<<<<<54",
+                "Number": "N1236548",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 12,
+                "YearOfExpiry": 2018
+            },
+            "CountrySpecific": {
+                "AU": {
+                    "PlaceOfBirth": "Melbourne",
+                    "CountryOfBirth": "AU",
+                    "FamilyNameAtBirth": "Smith",
+                    "FamilyNameAtCitizenship": "Smith"
+                }
+            }
+        }
+    },
+
+    "BE": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "BE",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Luis",
+                "FirstSurName": "Santer",
+                "ISOLatin1Name": "SANTER<<LUIS",
+                "DayOfBirth": 12,
+                "MonthOfBirth": 12,
+                "YearOfBirth": 1978
+            },
+            "Location": {
+                "BuildingNumber": "68",
+                "StreetName": "Hoge Wei",
+                "City": "Zaventem",
+                "PostalCode": "1930"
+            },
+            "Communication": {
+                "Telephone": "6251140504"
+            },
+            "DriverLicence": {},
+            "Passport": {
+                "Mrz1": "P<SAGSANTER<<LUIS<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1CZE1101018M1207046110101111<<<<<94",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            }
+        }
+    },
+
+    "DE": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "DE",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Hanz",
+                "MiddleName": "Baptist",
+                "FirstSurName": "Berger",
+                "DayOfBirth": 4,
+                "MonthOfBirth": 8,
+                "YearOfBirth": 1988,
+                "Gender": "M"
+            },
+            "Location": {
+                "BuildingNumber": "424",
+                "StreetName": "Petersplatz",
+                "City": "Munchen",
+                "PostalCode": "80331"
+            },
+            "Communication": {},
+            "DriverLicence": {},
+            "Passport": {
+                "Mrz1": "P<DEUBERGER<<HANZ<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "C8456324<1DEL8303052359438740809<<<<<<<<<<54",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            },
+            "CountrySpecific": {
+                "DE": {
+                    "MaidenName": "Merkel"
+                }
+            }
+        }
+    },
+
+    "DK": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "DK",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Lukas",
+                "FirstSurName": "Gruber",
+                "DayOfBirth": 4,
+                "MonthOfBirth": 8,
+                "YearOfBirth": 1988
+            },
+            "Location": {
+                "BuildingNumber": "3",
+                "StreetName": "Tingusgade",
+                "City": "København",
+                "PostalCode": "8266"
+            },
+            "Communication": {
+                "Telephone": "948371694"
+            },
+            "DriverLicence": {},
+            "NationalIds": [{
+                "Number": "040888-9877",
+                "Type": "NationalID"
+            }],
+            "Passport": {
+                "Mrz1": "P<SAGGRUBER<<LUKAS<<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1CZE1101018M1207046110101111<<<<<94",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            }
+        }
+    },
+
+    "FR": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "FR",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Alexandre",
+                "FirstSurName": "MOREAU",
+                "DayOfBirth": 4,
+                "MonthOfBirth": 7,
+                "YearOfBirth": 1978
+            },
+            "Location": {
+                "BuildingNumber": "12",
+                "StreetName": "RUE LAURIOS",
+                "City": "Pennautier",
+                "PostalCode": "11610"
+            },
+            "Communication": {
+                "Telephone": "817519358"
+            },
+            "DriverLicence": {},
+            "NationalIds": [{
+                "Number": "178072234534597",
+                "Type": "NationalID"
+            }],
+            "Passport": {
+                "Mrz1": "P<SAGMOREAU<<ALEXANDRE<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1CZE1101018M1207046110101111<<<<<94",
+                "Number": "YA0000000",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            }
+        }
+    },
+
+    "GB": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "GB",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Julia",
+                "MiddleName": "Ronald",
+                "FirstSurName": "Audi",
+                "DayOfBirth": 26,
+                "MonthOfBirth": 10,
+                "YearOfBirth": 1979,
+                "Gender": "M"
+            },
+            "Location": {
+                "BuildingNumber": "12",
+                "BuildingName": "Beck",
+                "UnitNumber": "1",
+                "StreetName": "Moorfoot",
+                "StreetType": "Way",
+                "City": "Liverpool",
+                "PostalCode": "L33 1WZ"
+            },
+            "Communication": {},
+            "DriverLicence": {
+                "Number": "AUDI9710269JR9AB"
+            },
+            "NationalIds": [{
+                "Number": "1634567897",
+                "Type": "Health"
+            }],
+            "Passport": {
+                "Mrz1": "P<SAGAUDI<<JULIA<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1CZE1101018M1207046110101111<<<<<94",
+                "Number": "54846031",
+                "DayOfExpiry": 7,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2015
+            }
+        }
+    },
+
+    "MX": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "MX",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Jose",
+                "FirstSurName": "Santano",
+                "SecondSurname": "Martinez",
+                "DayOfBirth": 12,
+                "MonthOfBirth": 12,
+                "YearOfBirth": 1978,
+                "Gender": "M"
+            },
+            "Location": {
+                "PostalCode": "83010",
+                "AdditionalFields": {
+                    "Address1": "68 Consuelo"
+                }
+            },
+            "Communication": {
+                "Telephone": "6251140504"
+            },
+            "DriverLicence": {},
+            "NationalIds": [{
+                "Number": "HEGG560427MVZRRL05",
+                "Type": "NationalID"
+            }],
+            "Passport": {
+                "Mrz1": "P<SAGSANTANO<MARTINEZ<<JOSE<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1CZE1101018M1207046110101111<<<<<94",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            },
+            "CountrySpecific": {
+                "MX": {
+                    "StateOfBirth": "Sonora"
+                }
+            }
+        }
+    },
+
+    "MY": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "MY",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Wu",
+                "FirstSurName": "Boon Chai",
+                "DayOfBirth": 29,
+                "MonthOfBirth": 11,
+                "YearOfBirth": 1987,
+                "Gender": "M",
+                "AdditionalFields": {
+                    "FullName": "Boon Chai Wu"
+                }
+            },
+            "Location": {
+                "City": "Miri",
+                "PostalCode": "35500",
+                "AdditionalFields": {
+                    "Address1": "BLOCK C, TINGKAT 3"
+                }
+            },
+            "Communication": {
+                "Telephone": "0122323273"
+            },
+            "DriverLicence": {},
+            "NationalIds": [{
+                "Number": "871129134567",
+                "Type": "NationalID"
+            }],
+            "Passport": {
+                "Mrz1": "P<SAGWU<<BOON<<CHAI<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "S8441773<1MYS8303052359438740809<<<<<<<<<<54",
+                "Number": "S8441773",
+                "DayOfExpiry": 20,
+                "MonthOfExpiry": 10,
+                "YearOfExpiry": 2022
+            },
+            "CountrySpecific": {
+                "MY": {
+                    "CountryOfBirth": "MY",
+                    "StateOfBirth": "SRW"
+                }
+            }
+        }
+    },
+
+    "NO": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "NO",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Lukas",
+                "FirstSurName": "Gruber",
+                "DayOfBirth": 4,
+                "MonthOfBirth": 8,
+                "YearOfBirth": 1988
+            },
+            "Location": {
+                "BuildingNumber": "3",
+                "StreetName": "Brynjulf Bulls plass",
+                "City": "Oslo",
+                "PostalCode": "0124"
+            },
+            "Communication": {
+                "Telephone": "948371694"
+            },
+            "DriverLicence": {},
+            "Passport": {
+                "Mrz1": "P<SAGGRUBER<<LUKAS<<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1CZE1101018M1207046110101111<<<<<94",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            }
+        }
+    },
+
+    "NZ": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "NZ",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Snow",
+                "MiddleName": "White",
+                "FirstSurName": "Huntsman",
+                "DayOfBirth": 6,
+                "MonthOfBirth": 3,
+                "YearOfBirth": 1976
+            },
+            "Location": {
+                "BuildingNumber": "2",
+                "UnitNumber": "25D",
+                "StreetName": "Riverglade",
+                "StreetType": "Drive",
+                "City": "Hamilton",
+                "Suburb": "Hamilton",
+                "PostalCode": "3284"
+            },
+            "Communication": {},
+            "DriverLicence": {
+                "Number": "8465341"
+            },
+            "Passport": {
+                "Mrz1": "P<NZLWHITE<<SNOW<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "N8456324<1NZL8303052359438740809<<<<<<<<<<54",
+                "Number": "A7894634",
+                "DayOfExpiry": 4,
+                "MonthOfExpiry": 6,
+                "YearOfExpiry": 2020
+            },
+            "CountrySpecific": {
+                "NZ": {
+                    "DriverLicenceVersionNumber": "3"
+                }
+            }
+        }
+    },
+
+    "SE": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "SE",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Mellisa",
+                "MiddleName": "Anne",
+                "FirstSurName": "Lauren",
+                "DayOfBirth": 12,
+                "MonthOfBirth": 12,
+                "YearOfBirth": 1978,
+                "Gender": "F"
+            },
+            "Location": {
+                "BuildingNumber": "3",
+                "StreetName": "Kappelergasse",
+                "City": "Zürich",
+                "PostalCode": "8033"
+            },
+            "Communication": {
+                "Telephone": "0812345678"
+            },
+            "DriverLicence": {},
+            "NationalIds": [{
+                "Number": "811228-9874",
+                "Type": "NationalID"
+            }],
+            "Passport": {
+                "Mrz1": "P<SAGLAUREN<<MELLISA<ANNE<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1CZE1101018M1207046110101111<<<<<94",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            }
+        }
+    },
+
+
+    "TR": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "TR",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Halide",
+                "MiddleName": "Edip",
+                "FirstSurName": "Adivar",
+                "DayOfBirth": 4,
+                "MonthOfBirth": 8,
+                "YearOfBirth": 1988
+            },
+            "Location": {
+                "City": "Mustafa Kemal Mah",
+                "StateProvinceCode": "Ankara",
+                "PostalCode": "82606",
+                "AdditionalFields": {
+                    "Address1": "Çekmece Mah. 3"
+                }
+            },
+            "Communication": {
+                "Telephone": "948371694"
+            },
+            "DriverLicence": {},
+            "NationalIds": [{
+                "Type": "NationalID"
+            }],
+            "Passport": {
+                "Mrz1": "P<SAGADIVAR<<HALIDE<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1CZE1101018M1207046110101111<<<<<94",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            }
+        }
+    },
+
+    "US": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "US",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Justin",
+                "MiddleName": "Mark",
+                "FirstSurName": "Williams",
+                "DayOfBirth": 4,
+                "MonthOfBirth": 8,
+                "YearOfBirth": 1988
+            },
+            "Location": {
+                "BuildingNumber": "420",
+                "UnitNumber": "18",
+                "StreetName": "9th",
+                "StreetType": "Avenue",
+                "City": "New York",
+                "StateProvinceCode": "NY",
+                "PostalCode": "10001"
+            },
+            "Communication": {
+                "Telephone": "802 660 9697"
+            },
+            "DriverLicence": {
+                "Number": "0812319884104"
+            },
+            "NationalIds": [{
+                "Number": "000568791",
+                "Type": "SocialService"
+            }],
+            "Passport": {
+                "Mrz1": "P<USAWILLIAMS<<JUSTIN<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1USA1101018M1207046110101111<<<<<94",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            }
+        }
+    },
+
+    "ZA": {
+        "AcceptTruliooTermsAndConditions": false,
+        "CleansedAddress": false,
+        "ConfigurationName": "Identity Verification",
+        "CountryCode": "ZA",
+        "DataFields": {
+            "PersonInfo": {
+                "FirstGivenName": "Lukas",
+                "MiddleName": "William",
+                "FirstSurName": "Kenny",
+                "DayOfBirth": 4,
+                "MonthOfBirth": 3,
+                "YearOfBirth": 1976
+            },
+            "Location": {
+                "City": "Pretoria",
+                "Suburb": "Pretoria",
+                "StateProvinceCode": "Eastern Cape",
+                "PostalCode": "9585",
+                "AdditionalFields": {
+                    "Address1": "56 Rodondo Road"
+                }
+            },
+            "Communication": {
+                "MobileNumber": "0835237129",
+                "Telephone": "0258375948"
+            },
+            "DriverLicence": {},
+            "NationalIds": [{
+                "Number": "8001015009087",
+                "Type": "NationalID"
+            }],
+            "Passport": {
+                "Mrz1": "P<SAGKENNY<<LUKAS<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+                "Mrz2": "99003853<1CZE1101018M1207046110101111<<<<<94",
+                "Number": "S85416687",
+                "DayOfExpiry": 5,
+                "MonthOfExpiry": 1,
+                "YearOfExpiry": 2021
+            },
+            "CountrySpecific": {
+                "ZA": {
+                    "Address2": "Carter House",
+                    "WorkTelephone": "0235784592"
+                }
+            }
+        }
+    }
+}
