@@ -51,9 +51,9 @@ export class IdentityVerificationPersonalInfoPage {
         'FirstGivenName': user.firstName || '',
         'MiddleName': user.middleName || '',
         'FirstSurName': user.lastName || '',
-        'DayOfBirth': '',
-        'MonthOfBirth': '',
-        'YearOfBirth': '',
+        // 'DayOfBirth': '',
+        // 'MonthOfBirth': '',
+        // 'YearOfBirth': '',
         'Gender': ''
       },
       'Location': {},
@@ -84,9 +84,9 @@ export class IdentityVerificationPersonalInfoPage {
 
   setDobArgs(date) {
     if (date.isValid()) {
-      this.verificationArgs.PersonInfo.YearOfBirth = moment(date).format('YYYY');
-      this.verificationArgs.PersonInfo.MonthOfBirth = moment(date).format('MM');
-      this.verificationArgs.PersonInfo.DayOfBirth = moment(date).format('DD');
+      this.verificationArgs.PersonInfo.YearOfBirth = moment(date).year();
+      this.verificationArgs.PersonInfo.MonthOfBirth = moment(date).month() + 1;
+      this.verificationArgs.PersonInfo.DayOfBirth = moment(date).date();
     }
   }
 
@@ -97,9 +97,9 @@ export class IdentityVerificationPersonalInfoPage {
 
   copyDobFromArgsToControl() {
     this.setDobControlValue(moment({
-      year: this.verificationArgs.PersonInfo.YearOfBirth,
-      month: this.verificationArgs.PersonInfo.MonthOfBirth,
-      day: this.verificationArgs.PersonInfo.DayOfBirth
+      year: _.toNumber(this.verificationArgs.PersonInfo.YearOfBirth),
+      month: _.toNumber(this.verificationArgs.PersonInfo.MonthOfBirth) - 1,
+      day: _.toNumber(this.verificationArgs.PersonInfo.DayOfBirth)
     }));
   }
 
@@ -115,9 +115,9 @@ export class IdentityVerificationPersonalInfoPage {
 
     if (self.platform.is('cordova')) {
       let date = moment({
-        year: this.verificationArgs.PersonInfo.YearOfBirth,
-        month: this.verificationArgs.PersonInfo.MonthOfBirth,
-        day: this.verificationArgs.PersonInfo.DayOfBirth
+        year: _.toNumber(this.verificationArgs.PersonInfo.YearOfBirth),
+        month: _.toNumber(this.verificationArgs.PersonInfo.MonthOfBirth) - 1,
+        day: _.toNumber(this.verificationArgs.PersonInfo.DayOfBirth)
       });
       DatePicker.show({
         date: date.toDate(),

@@ -29,9 +29,9 @@ export class IdentityVerificationSummaryPage {
   constructor(public nav: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, private platform: Platform, public auth: AuthService, public translate: TranslateService) {
     this.verificationArgs = this.navParams.get('verificationArgs');
     this.dateOfBirth = moment({
-      year: this.verificationArgs.PersonInfo.YearOfBirth,
-      month: this.verificationArgs.PersonInfo.MonthOfBirth,
-      day: this.verificationArgs.PersonInfo.DayOfBirth
+      year: _.toNumber(this.verificationArgs.PersonInfo.YearOfBirth),
+      month: _.toNumber(this.verificationArgs.PersonInfo.MonthOfBirth) - 1,
+      day: _.toNumber(this.verificationArgs.PersonInfo.DayOfBirth)
     }).format('MM/DD/YYYY');
     this.gender = this.verificationArgs.PersonInfo.Gender === 'M' ? 'Male' : 'Female';
     let countries: any[] = require('country-data').countries.all;
@@ -44,12 +44,13 @@ export class IdentityVerificationSummaryPage {
     }
     if (this.verificationArgs.IdentificationType === 'NationalId') {
       let countryInfo: any = this.auth.supportedCountries()[this.verificationArgs.CountryCode];
-      this.nationalIdDisplayName = countryInfo && countryInfo.validationTypes && countryInfo.validationTypes['NationalId'] && countryInfo.validationTypes['NationalId'].displayName;
+      this.nationalIdDisplayName = countryInfo && countryInfo.identificationTypes && countryInfo.identificationTypes['NationalId'] && countryInfo.identificationTypes['NationalId'].displayName;
     }
   }
 
   ionViewLoaded() {
     if (Config.targetPlatform === 'web') {
+      // speed up subsequent payment by running this on page load
       this.silenceStripeError();
       this.stripeCheckoutHandler = (<any>window).StripeCheckout.configure({
         key: 'pk_test_SruvvOMun2cNIrOfiSvBDM8a',
@@ -89,7 +90,6 @@ export class IdentityVerificationSummaryPage {
 
   submit() {
     let self = this;
-    self.verificationArgs.Version = 2;
     self.auth.updateVerificationArgs(self.verificationArgs).then(() => {
       if (self.platform.is('cordova')) {
         InAppPurchase.buy(
@@ -120,8 +120,7 @@ export class IdentityVerificationSummaryPage {
     loader.present();
 
     let task: any = {
-      version: self.verificationArgs.Version,
-      verificationArgs: _.omit(self.verificationArgs, 'Version'),
+      verificationArgs: self.verificationArgs,
       userId: self.auth.currentUserId
     };
     if (stripeTokenId) {
@@ -150,7 +149,6 @@ export class IdentityVerificationSummaryPage {
               self.nav.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(() => {
                 self.nav.push(IdentityVerificationFinishPage);
               });
-
             });
           } else {
             if (self.auth.currentUser.registration.status !== 'verification-pending') {

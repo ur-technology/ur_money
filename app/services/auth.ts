@@ -258,155 +258,131 @@ export class AuthService {
       'AT': {
         name: 'Austria',
         CountryCode: 'AT',
-        validationTypes: {
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'AU': {
         name: 'Australia',
         CountryCode: 'AU',
-        validationTypes: {
-          'DriverLicence': { displayName: 'Driver Licence' },
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'DriverLicence': 'Driver Licence',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'Suburb', 'StateProvinceCode', 'PostalCode']
       },
       'BE': {
         name: 'Belgium',
         CountryCode: 'BE',
-        validationTypes: {
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'DE': {
         name: 'Germany',
         CountryCode: 'DE',
-        validationTypes: {
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'DK': {
         name: 'Denmark',
         CountryCode: 'DK',
-        validationTypes: {
-          'NationalId': {
-            displayName: 'National Id Number',
-            type: 'NationalID'
-          },
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'NationalId': 'National Id Number',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'FR': {
         name: 'France',
         CountryCode: 'FR',
-        validationTypes: {
-          'NationalId': {
-            displayName: 'Insee Number',
-            type: 'NationalID'
-          },
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'NationalId': 'Insee Number',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'MX': {
         name: 'Mexico',
         CountryCode: 'MX',
-        validationTypes: {
-          'NationalId': {
-            displayName: 'CURPID Number',
-            type: 'NationalID'
-          },
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'NationalId': 'CURPID Number',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['Address1', 'PostalCode']
       },
       'MY': {
         name: 'Malaysia',
         CountryCode: 'MY',
-        validationTypes: {
-          'NationalId': {
-            displayName: 'NRIC Number',
-            type: 'NationalID'
-          },
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'NationalId': 'NRIC Number',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['Address1', 'City', 'PostalCode']
       },
       'NO': {
         name: 'Norway',
         CountryCode: 'NO',
-        validationTypes: {
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'NZ': {
         name: 'New Zealand',
         CountryCode: 'NZ',
-        validationTypes: {
-          'DriverLicence': { displayName: 'Driver Licence' },
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'DriverLicence': 'Driver Licence',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'City', 'Suburb', 'PostalCode']
       },
       'ZA': {
         name: 'South Africa',
         CountryCode: 'ZA',
-        validationTypes: {
-          'NationalId': {
-            displayName: 'National Id Number',
-            type: 'NationalID'
-          },
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'NationalId': 'National Id Number',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['Address1', 'City', 'Suburb', 'StateProvinceCode', 'PostalCode']
       },
       'SE': {
         name: 'Sweden',
         CountryCode: 'SE',
-        validationTypes: {
-          'NationalId': {
-            displayName: 'PIN Number',
-            type: 'NationalID'
-          },
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'NationalId': 'PIN Number',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
       },
       'TR': {
         name: 'Turkey',
         CountryCode: 'TR',
-        validationTypes: {
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'Passport': 'Passport'
         },
         locationFieldNames: ['Address1', 'City', 'StateProvinceCode', 'PostalCode']
       },
       'GB': {
         name: 'United Kingdom',
         CountryCode: 'GB',
-        validationTypes: {
-          'NationalId': {
-            displayName: 'NHS Number',
-            type: 'Health'
-          },
-          'Passport': { displayName: 'Passport' }
+        identificationTypes: {
+          'NationalId': 'NHS Number',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'UnitNumber', 'BuildingName', 'City', 'PostalCode']
       },
       'US': {
         name: 'United States',
         CountryCode: 'US',
-        validationTypes: {
+        identificationTypes: {
           'DriverLicence': { displayName: 'Driver License' },
-          'NationalId': {
-            displayName: 'Social Security Number',
-            type: 'SocialService'
-          },
-          'Passport': { displayName: 'Passport' }
+          'NationalId': 'Social Security Number',
+          'Passport': 'Passport'
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'City', 'StateProvinceCode', 'PostalCode']
       }
@@ -438,6 +414,9 @@ export class AuthService {
   updateVerificationArgs(verificationArgs: any): Promise<any> {
     let self = this;
     return new Promise((resolve, reject) => {
+
+      // mark args with version
+      verificationArgs.Version = 2;
 
       // first update args in memory
       self.currentUser.registration = self.currentUser.registration || {};
