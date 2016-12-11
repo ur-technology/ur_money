@@ -419,7 +419,7 @@ export class AuthService {
   }
 
   locationFieldNames() {
-    return ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'BuildingName', 'AdditionalFields.Address1', 'City', 'Suburb', 'StateProvinceCode', 'PostalCode'];
+    return ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'BuildingName', 'Address1', 'City', 'Suburb', 'StateProvinceCode', 'PostalCode'];
   }
 
   showLocationField(countryCode: string, fieldName: string) {

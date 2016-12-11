@@ -61,10 +61,10 @@
           <ion-input disabled="true"
             value="{{verificationArgs.Location.BuildingName}}"></ion-input>
         </ion-item>
-        <ion-item *ngIf="showLocationField('AdditionalFields.Address1')">
+        <ion-item *ngIf="showLocationField('Address1')">
           <ion-label fixed>{{'identity-verification-address.address1' | translate}}</ion-label>
           <ion-input disabled="true"
-            value="{{verificationArgs.AdditionalFields.Address1}}"></ion-input>
+            value="{{verificationArgs.Location.Address1}}"></ion-input>
         </ion-item>
         <ion-item *ngIf="showLocationField('City')">
           <ion-label fixed>{{'identity-verification-address.city' | translate}}</ion-label>
