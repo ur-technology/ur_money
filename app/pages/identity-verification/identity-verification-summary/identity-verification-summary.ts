@@ -89,6 +89,7 @@ export class IdentityVerificationSummaryPage {
 
   submit() {
     let self = this;
+    self.verificationArgs.Version = 2;
     self.auth.updateVerificationArgs(self.verificationArgs).then(() => {
       if (self.platform.is('cordova')) {
         InAppPurchase.buy(
@@ -120,7 +121,6 @@ export class IdentityVerificationSummaryPage {
 
     let task: any = {
       verificationArgs: self.verificationArgs,
-      version: 2,
       userId: self.auth.currentUserId
     };
     if (stripeTokenId) {
