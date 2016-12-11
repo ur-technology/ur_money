@@ -57,7 +57,8 @@ export class HomePage {
     } else {
       this.balanceTitle = this.translate.instant(
         {
-          'verification-requested': 'home.verificationPending',
+          'verification-initiated': 'home.verificationPending',
+          'verification-requested': 'home.verificationPending', // deprecated
           'verification-pending': 'home.verificationFailed',
           'verification-failed': 'home.verificationFailed',
           'announcement-requested': 'home.bonusGenerating',
@@ -188,7 +189,8 @@ export class HomePage {
       this.nav.push(CountryNotSupportedPage);
     } else {
       this.nav.push({
-        'verification-requested': VerificationPendingPage,
+        'verification-initiated': VerificationPendingPage,
+        'verification-requested': VerificationPendingPage, // deprecated
         'verification-pending': IdentityVerificationIntroPage,
         'verification-failed': IdentityVerificationIntroPage,
         'announcement-initiated': AnnouncementInitiatedPage,

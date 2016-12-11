@@ -88,9 +88,10 @@ export class IdentityVerificationAddressPage {
     let allStates = require('provinces');
     this.states = _.filter(allStates, { country: this.verificationArgs.CountryCode });
     this.states = _.filter(this.states, 'short');
-    let state = _.find(this.states, { 'short': this.verificationArgs.Location.StateProvinceCode });
-    this.onStateSelected(state);
-    this.formElements.stateProvinceCode.markAsTouched();
+    let state = _.find(this.states, { 'short': this.verificationArgs.Location.StateProvinceCode }) ||
+      this.states[0];
+    this.verificationArgs.Location.StateProvinceCode = state ? state.short : '';
+    this.formElements.stateProvinceCode.updateValue(state);
   }
 
   onCountrySelected(countrySelected) {

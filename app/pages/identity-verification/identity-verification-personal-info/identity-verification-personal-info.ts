@@ -49,7 +49,7 @@ export class IdentityVerificationPersonalInfoPage {
       'CountryCode': user.countryCode || 'US',
       'PersonInfo': {
         'FirstGivenName': user.firstName || '',
-        'NiddleName': user.middleName || '',
+        'MiddleName': user.middleName || '',
         'FirstSurName': user.lastName || '',
         'DayOfBirth': '',
         'MonthOfBirth': '',
@@ -68,6 +68,7 @@ export class IdentityVerificationPersonalInfoPage {
     self.auth.verificationArgsRef().once('value').then((snapshot) => {
       let existingVerificationArgs = snapshot.val();
       if (existingVerificationArgs && existingVerificationArgs.Version === 2) {
+        self.verificationArgs = existingVerificationArgs;
         _.defaultsDeep(self.verificationArgs, defaultVerificationArgs);
         self.copyDobFromArgsToControl();
       }
@@ -77,7 +78,7 @@ export class IdentityVerificationPersonalInfoPage {
   setDobControlValue(date) {
     if (date.isValid()) {
       let dateOfBirthControl: FormControl = <FormControl>this.mainForm.find('dateOfBirth');
-      dateOfBirthControl.updateValue(date.format(this.targetPlatformWeb ? 'YYYY-MMM-DD' : 'MM/DD/YYYY'));
+      dateOfBirthControl.updateValue(date.format(this.targetPlatformWeb ? 'YYYY-MM-DD' : 'MM/DD/YYYY'));
     }
   }
 

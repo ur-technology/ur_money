@@ -120,7 +120,8 @@ export class IdentityVerificationSummaryPage {
     loader.present();
 
     let task: any = {
-      verificationArgs: self.verificationArgs,
+      version: self.verificationArgs.Version,
+      verificationArgs: _.omit(self.verificationArgs, 'Version'),
       userId: self.auth.currentUserId
     };
     if (stripeTokenId) {
