@@ -62,7 +62,7 @@ export class IdentityVerificationDocumentPage {
   }
 
   getNationalIdType() {
-    return this.auth.supportedCountries()[this.verificationArgs.CountryCode]['validationTypes']['National Id'].type;
+    return this.auth.supportedCountries()[this.verificationArgs.CountryCode]['validationTypes']['NationalId'].type;
   }
 
   clearFormErrors() {

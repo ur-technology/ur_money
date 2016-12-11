@@ -23,7 +23,7 @@
           <ion-item class="item item-input input-item-data" style="position: absolute; left: -9999px; width: 1px; height: 1px;">
             <ion-input type="submit">.</ion-input>
           </ion-item>
-          <ion-item-group *ngIf="verificationArgs.IdentificationType === 'Driver Licence'">
+          <ion-item-group *ngIf="verificationArgs.IdentificationType === 'DriverLicence'">
             <ion-item *ngIf="verificationArgs.CountryCode === 'US'">
                 <ion-label floating>{{'identity-verification-document.driverLicenceState' | translate}}</ion-label>
                 <ion-select [(ngModel)]="verificationArgs.DriverLicence.State" formControlName="driverLicenceState">
@@ -36,7 +36,7 @@
             </ion-item>
           </ion-item-group>
 
-          <ion-item-group *ngIf="verificationArgs.IdentificationType === 'National Id'">
+          <ion-item-group *ngIf="verificationArgs.IdentificationType === 'NationalId'">
             <ion-item>
               <ion-label floating>{{nationalIdDisplayName}}</ion-label>
                 <ion-input type="text" [(ngModel)]="verificationArgs.NationalId.Number" formControlName="nationalIdNumber" (focus)="focusInput()"></ion-input>

@@ -267,7 +267,7 @@ export class AuthService {
         name: 'Australia',
         CountryCode: 'AU',
         validationTypes: {
-          'Driver Licence': { displayName: 'Driver Licence' },
+          'DriverLicence': { displayName: 'Driver Licence' },
           'Passport': { displayName: 'Passport' }
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'Suburb', 'StateProvinceCode', 'PostalCode']
@@ -292,7 +292,7 @@ export class AuthService {
         name: 'Denmark',
         CountryCode: 'DK',
         validationTypes: {
-          'National Id': {
+          'NationalId': {
             displayName: 'National Id Number',
             type: 'NationalID'
           },
@@ -304,7 +304,7 @@ export class AuthService {
         name: 'France',
         CountryCode: 'FR',
         validationTypes: {
-          'National Id': {
+          'NationalId': {
             displayName: 'Insee Number',
             type: 'NationalID'
           },
@@ -316,7 +316,7 @@ export class AuthService {
         name: 'Mexico',
         CountryCode: 'MX',
         validationTypes: {
-          'National Id': {
+          'NationalId': {
             displayName: 'CURPID Number',
             type: 'NationalID'
           },
@@ -328,7 +328,7 @@ export class AuthService {
         name: 'Malaysia',
         CountryCode: 'MY',
         validationTypes: {
-          'National Id': {
+          'NationalId': {
             displayName: 'NRIC Number',
             type: 'NationalID'
           },
@@ -348,7 +348,7 @@ export class AuthService {
         name: 'New Zealand',
         CountryCode: 'NZ',
         validationTypes: {
-          'Driver Licence': { displayName: 'Driver Licence' },
+          'DriverLicence': { displayName: 'Driver Licence' },
           'Passport': { displayName: 'Passport' }
         },
         locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'City', 'Suburb', 'PostalCode']
@@ -357,7 +357,7 @@ export class AuthService {
         name: 'South Africa',
         CountryCode: 'ZA',
         validationTypes: {
-          'National Id': {
+          'NationalId': {
             displayName: 'National Id Number',
             type: 'NationalID'
           },
@@ -369,7 +369,7 @@ export class AuthService {
         name: 'Sweden',
         CountryCode: 'SE',
         validationTypes: {
-          'National Id': {
+          'NationalId': {
             displayName: 'PIN Number',
             type: 'NationalID'
           },
@@ -389,7 +389,7 @@ export class AuthService {
         name: 'United Kingdom',
         CountryCode: 'GB',
         validationTypes: {
-          'National Id': {
+          'NationalId': {
             displayName: 'NHS Number',
             type: 'Health'
           },
@@ -401,8 +401,8 @@ export class AuthService {
         name: 'United States',
         CountryCode: 'US',
         validationTypes: {
-          'Driver Licence': { displayName: 'Driver License' },
-          'National Id': {
+          'DriverLicence': { displayName: 'Driver License' },
+          'NationalId': {
             displayName: 'Social Security Number',
             type: 'SocialService'
           },

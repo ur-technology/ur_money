@@ -42,9 +42,9 @@ export class IdentityVerificationSummaryPage {
       let state: any = _.find(allStates, { country: this.verificationArgs.CountryCode, short: this.verificationArgs.Location.StateProvinceCode });
       this.stateName = state && state.name;
     }
-    if (this.verificationArgs.IdentificationType === 'National Id') {
+    if (this.verificationArgs.IdentificationType === 'NationalId') {
       let countryInfo: any = this.auth.supportedCountries()[this.verificationArgs.CountryCode];
-      this.nationalIdDisplayName = countryInfo && countryInfo.validationTypes && countryInfo.validationTypes.validationTypes['National Id'] && countryInfo.validationTypes.validationTypes['National Id'].displayName;
+      this.nationalIdDisplayName = countryInfo && countryInfo.validationTypes && countryInfo.validationTypes['NationalId'] && countryInfo.validationTypes['NationalId'].displayName;
     }
   }
 

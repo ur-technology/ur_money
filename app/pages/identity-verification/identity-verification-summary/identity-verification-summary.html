@@ -87,14 +87,14 @@
             value="{{verificationArgs.Location.PostalCode}}"></ion-input>
         </ion-item>
         <ion-item-divider light>{{"identity-verification-summary.additionaInfo" | translate}}</ion-item-divider>
-        <ion-item-group *ngIf="verificationArgs.IdentificationType == 'Driver Licence'">
+        <ion-item-group *ngIf="verificationArgs.IdentificationType == 'DriverLicence'">
           <ion-item>
             <ion-label fixed>{{'identity-verification-document.driverLicenceNumber' | translate}}</ion-label>
             <ion-input disabled="true"
               value="{{verificationArgs.DriverLicence.Number}}"></ion-input>
           </ion-item>
         </ion-item-group>
-        <ion-item-group *ngIf="verificationArgs.IdentificationType == 'National Id'">
+        <ion-item-group *ngIf="verificationArgs.IdentificationType == 'NationalId'">
           <ion-item>
             <ion-label fixed>{{'identity-verification-document.id' | translate}}</ion-label>
             <ion-input disabled="true"
