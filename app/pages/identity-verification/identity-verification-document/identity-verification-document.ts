@@ -60,7 +60,7 @@ export class IdentityVerificationDocumentPage {
 
   nationalIdDisplayName() {
     let typeInfo = _.find(this.identificationTypes, {value: this.verificationArgs.IdentificationType});
-    return typeInfo && typeInfo.name
+    return typeInfo && typeInfo.name;
   }
 
   submit() {
