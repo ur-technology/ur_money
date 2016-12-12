@@ -53,7 +53,7 @@ export class IdentityVerificationSummaryPage {
       // speed up subsequent payment by running this on page load
       this.silenceStripeError();
       this.stripeCheckoutHandler = (<any>window).StripeCheckout.configure({
-        key: 'pk_test_SruvvOMun2cNIrOfiSvBDM8a',
+        key: Config.stripePublishableKey,
         locale: 'auto',
         email: this.auth.currentUser.email,
         token: (token: any) => {
