@@ -380,7 +380,7 @@ export class AuthService {
         name: 'United States',
         CountryCode: 'US',
         identificationTypes: {
-          'DriverLicence': { displayName: 'Driver License' },
+          'DriverLicence': 'Driver License',
           'NationalId': 'Social Security Number',
           'Passport': 'Passport'
         },

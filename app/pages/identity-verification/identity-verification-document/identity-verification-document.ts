@@ -48,8 +48,9 @@ export class IdentityVerificationDocumentPage {
   }
 
   fillIdentificationTypesList() {
-    _.forIn(this.auth.supportedCountries()[this.verificationArgs.CountryCode].identificationTypes, (displayName, identificationType) => {
-      this.identificationTypes.push({ name: displayName, value: identificationType });
+    let identificationTypeInfo = this.auth.supportedCountries()[this.verificationArgs.CountryCode].identificationTypes;
+    this.identificationTypes = _.map(identificationTypeInfo, (displayName, identificationType) => {
+      return { name: displayName, value: identificationType };
     });
     let x = _.find(this.identificationTypes, {value: this.verificationArgs.IdentificationType});
     this.verificationArgs.IdentificationType = (x || this.identificationTypes[0]).value;
@@ -57,12 +58,13 @@ export class IdentityVerificationDocumentPage {
     // this.formElements.identificationType.updateValue(this.verificationArgs.IdentificationType);
   }
 
-  submit() {
-    this.nav.push(IdentityVerificationSummaryPage, {verificationArgs: this.verificationArgs});
+  nationalIdDisplayName() {
+    let typeInfo = _.find(this.identificationTypes, {value: this.verificationArgs.IdentificationType});
+    return typeInfo && typeInfo.name
   }
 
-  getNationalIdType() {
-    return this.auth.supportedCountries()[this.verificationArgs.CountryCode]['identificationTypes']['NationalId'].type;
+  submit() {
+    this.nav.push(IdentityVerificationSummaryPage, {verificationArgs: this.verificationArgs});
   }
 
   clearFormErrors() {
