@@ -24,7 +24,6 @@ sed -i '' -e "s/UNKNOWN_VERSION_NUMBER/${VERSION_NUMBER}/g" app/config/env.json
 if [[ "$PLATFORM" == "android" ]]; then
   if [[ "$UR_ENV" == "production" ]]; then
     if [[ `cordova plugin ls | grep cordova-plugin-console` = *[!\ ]* ]]; then
-      echo "\$param contains characters other than space";
       cordova plugin rm cordova-plugin-console
     fi
   else
