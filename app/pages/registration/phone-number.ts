@@ -77,7 +77,11 @@ export class PhoneNumberPage implements OnInit {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.requestSmsAuthenticationCode(phone, self.selectedCountry.countryCode);
+      return self.auth.requestSmsAuthenticationCode(
+        phone,
+        self.selectedCountry.countryCode,
+        window.localStorage.getItem('urMoneyReferralCode')
+      );
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();
@@ -107,6 +111,10 @@ export class PhoneNumberPage implements OnInit {
 
         case 'canceled_because_user_disabled':
           self.toastService.showMessage({messageKey: 'phone-number.errorUserDisabled'});
+          break;
+
+        case 'canceled_because_of_excessive_failed_logins':
+          self.toastService.showMessage({messageKey: 'phone-number.errorExcessiveLogins'});
           break;
 
         default:

@@ -65,7 +65,16 @@ class UrMoney {
     this.translateMenu();
   }
 
+  storeReferralCodeIfPresent() {
+    let params: string = window.location.search || '';
+    let matches: string[] = params.match(/[\?\&]r\=([a-zA-Z0-9]+)/);
+    if (matches && matches[1]) {
+      window.localStorage.setItem('urMoneyReferralCode', matches[1]);
+    }
+  }
+
   initializeApp() {
+    this.storeReferralCodeIfPresent();
     this.menuItems = [];
     this.menuItems.push({ title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home', value: 'home' });
     if (Config.targetPlatform !== 'web') {

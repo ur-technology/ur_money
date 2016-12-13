@@ -12,17 +12,82 @@ export class AuthService {
   public currentUserId: string;
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
-  public authenticationRequestCountryCode: string;
-  public taskId: string;
-  public priorTaskType: string;
+  private authenticationRequestCountryCode: string;
+  private smsTaskId: string;
+  private emailTaskId: string;
   public authenticatedEmail: string;
-  public unauthenticatedEmail: string;
+  private unauthenticatedEmail: string;
   private firebaseConnectionCheckInProgress: boolean = false;
 
   constructor(
     public angularFire: AngularFire,
     public contactsService: ContactsService
   ) {
+  }
+
+  requestSmsAuthenticationCode(phone: string, countryCode: string, referralCode: string) {
+    let self = this;
+    self.authenticationRequestCountryCode = countryCode;
+    return new Promise((resolve, reject) => {
+      let baseRef = firebase.database().ref('/smsAuthCodeGenerationQueue/tasks');
+      self.smsTaskId = self.emailTaskId || baseRef.push().key;
+      let taskRef = baseRef.child(self.smsTaskId);
+      taskRef.set({ phone: phone, referralCode: referralCode || null }).then(() => {
+        log.debug(`sms auth code request queued to ${taskRef.toString()}`);
+        let stateRef = taskRef.child('_state');
+        stateRef.on('value', (snapshot) => {
+          let state = snapshot.val();
+          if (_.includes([undefined, null, 'in_progress'], state)) {
+            return;
+          }
+
+          stateRef.off('value');
+          resolve(state);
+        });
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  checkSmsAuthenticationCode(authenticationCode: string): Promise<boolean> {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      if (!self.smsTaskId) {
+        reject(`no value set for smsTaskId`);
+        return;
+      }
+
+      let taskRef = firebase.database().ref(`/smsAuthCodeMatchingQueue/tasks/${self.smsTaskId}`);
+      taskRef.set({ authenticationCode: authenticationCode }).then(() => {
+        log.debug(`set authenticationCode to ${authenticationCode} at ${taskRef.toString()}`);
+        let resultRef = taskRef.child('result');
+        resultRef.on('value', (snapshot) => {
+          let result = snapshot.val();
+          if (!result) {
+            return;
+          }
+          resultRef.off('value');
+
+          if (!result.codeMatch) {
+            log.debug('Submitted authentication code was not correct.');
+            resolve(false);
+            return;
+          }
+
+          log.debug('Submitted authentication code was correct.');
+          firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
+            log.debug('Authentication succeded!');
+            self.cleanUpAssociatedAuthTasks();
+            resolve(true);
+          }).catch((error) => {
+            taskRef.update({ authenticationError: error });
+            log.warn('Unable to authenticate!');
+            reject('Unable to authenticate');
+          });
+        });
+      });
+    });
   }
 
   respondToAuth(nav: any, pages: any) {
@@ -110,15 +175,29 @@ export class AuthService {
     });
   }
 
-  requestSmsAuthenticationCode(phone: string, countryCode: string) {
+  private cleanUpAssociatedAuthTasks() {
+    firebase.database().ref(`/smsAuthCodeGenerationQueue/tasks/${this.smsTaskId}`).remove();
+    firebase.database().ref(`/smsAuthCodeMatchingQueue/tasks/${this.smsTaskId}`).remove();
+    if (this.emailTaskId) {
+      firebase.database().ref(`/emailAuthCodeGenerationQueue/tasks/${this.emailTaskId}`).remove();
+      firebase.database().ref(`/emailAuthCodeMatchingQueue/tasks/${this.emailTaskId}`).remove();
+    }
+    this.authenticatedEmail = undefined;
+    this.unauthenticatedEmail = undefined;
+    this.smsTaskId = undefined;
+    this.emailTaskId = undefined;
+  }
+
+  requestEmailAuthenticationCode(email: string) {
     let self = this;
-    self.authenticationRequestCountryCode = countryCode;
     return new Promise((resolve, reject) => {
-      let baseRef = firebase.database().ref('/smsAuthCodeGenerationQueue/tasks');
-      self.taskId = self.priorTaskType === 'emailAuthCodeMatching' ? self.taskId : baseRef.push().key;
-      let taskRef = baseRef.child(self.taskId);
-      taskRef.set({ phone: phone }).then(() => {
-        log.debug(`sms auth code request queued to ${taskRef.toString()}`);
+      self.unauthenticatedEmail = email;
+      self.authenticatedEmail = undefined;
+      let baseRef = firebase.database().ref('/emailAuthCodeGenerationQueue/tasks');
+      self.emailTaskId = baseRef.push().key;
+      let taskRef = baseRef.child(self.emailTaskId);
+      taskRef.set({ email: email }).then(() => {
+        log.debug(`email auth code request made at ${taskRef.toString}`);
         let stateRef = taskRef.child('_state');
         stateRef.on('value', (snapshot) => {
           let state = snapshot.val();
@@ -127,7 +206,6 @@ export class AuthService {
           }
 
           stateRef.off('value');
-          self.priorTaskType = 'smsAuthCodeGeneration';
           resolve(state);
         });
       }, (error) => {
@@ -136,15 +214,15 @@ export class AuthService {
     });
   }
 
-  checkSmsAuthenticationCode(authenticationCode: string): Promise<boolean> {
+  checkEmailAuthenticationCode(authenticationCode: string): Promise<boolean> {
     let self = this;
     return new Promise((resolve, reject) => {
-      if (self.priorTaskType !== 'smsAuthCodeGeneration') {
-        reject(`unexpected value ${self.priorTaskType} for priorTaskType`);
+      if (!self.emailTaskId) {
+        reject(`no value set for emailTaskId`);
         return;
       }
 
-      let taskRef = firebase.database().ref(`/smsAuthCodeMatchingQueue/tasks/${self.taskId}`);
+      let taskRef = firebase.database().ref(`/emailAuthCodeMatchingQueue/tasks/${self.emailTaskId}`);
       taskRef.set({ authenticationCode: authenticationCode }).then(() => {
         log.debug(`set authenticationCode to ${authenticationCode} at ${taskRef.toString()}`);
         let resultRef = taskRef.child('result');
@@ -161,89 +239,14 @@ export class AuthService {
             return;
           }
 
+          // save info related to this email authentication for later
+          self.authenticatedEmail = self.unauthenticatedEmail;
+          self.unauthenticatedEmail = undefined;
           log.debug('Submitted authentication code was correct.');
-          firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
-            log.debug('Authentication succeded!');
-            self.cleanUpAssociatedAuthTasks();
-            self.priorTaskType = 'smsAuthCodeMatching';
-            resolve(true);
-          }).catch((error) => {
-            taskRef.update({ authenticationError: error });
-            log.warn('Unable to authenticate!');
-            reject('Unable to authenticate');
-          });
-        });
-      });
-    });
-  }
-
-  private cleanUpAssociatedAuthTasks() {
-    firebase.database().ref(`/smsAuthCodeGenerationQueue/tasks/${this.taskId}`).remove();
-    firebase.database().ref(`/smsAuthCodeMatchingQueue/tasks/${this.taskId}`).remove();
-    firebase.database().ref(`/emailAuthCodeGenerationQueue/tasks/${this.taskId}`).remove();
-    firebase.database().ref(`/emailAuthCodeMatchingQueue/tasks/${this.taskId}`).remove();
-    this.authenticatedEmail = undefined;
-    this.unauthenticatedEmail = undefined;
-    this.taskId = undefined;
-  }
-
-  requestEmailAuthenticationCode(email: string) {
-    let self = this;
-    return new Promise((resolve, reject) => {
-      self.unauthenticatedEmail = email;
-      self.authenticatedEmail = undefined;
-      let baseRef = firebase.database().ref('/emailAuthCodeGenerationQueue/tasks');
-      self.taskId = baseRef.push().key;
-      let taskRef = baseRef.child(self.taskId);
-      taskRef.set({ email: email }).then(() => {
-        log.debug(`email auth code request made at ${taskRef.toString}`);
-        let stateRef = taskRef.child('_state');
-        stateRef.on('value', (snapshot) => {
-          let state = snapshot.val();
-          if (_.includes([undefined, null, 'in_progress'], state)) {
-            return;
-          }
-
-          stateRef.off('value');
-          self.priorTaskType = 'emailAuthCodeGeneration';
-          resolve(state);
-        });
-      }, (error) => {
-        reject(error);
-      });
-    });
-  }
-
-  checkEmailAuthenticationCode(authenticationCode: string): Promise<boolean> {
-    let self = this;
-    return new Promise((resolve, reject) => {
-      if (self.priorTaskType !== 'emailAuthCodeGeneration') {
-        reject(`unexpected value ${self.priorTaskType} for priorTaskType`);
-        return;
-      }
-
-      let taskRef = firebase.database().ref(`/emailAuthCodeMatchingQueue/tasks/${self.taskId}`);
-      taskRef.set({ authenticationCode: authenticationCode }).then(() => {
-        log.debug(`set authenticationCode to ${authenticationCode} at ${taskRef.toString()}`);
-        let resultRef = taskRef.child('result');
-        resultRef.on('value', (snapshot) => {
-          let result = snapshot.val();
-          if (!result) {
-            return;
-          }
-          resultRef.off('value');
-
-          if (result.codeMatch) {
-            log.debug('Submitted authentication code was correct.');
-
-            // save info related to this email authentication for later
-            self.priorTaskType = 'emailAuthCodeMatching';
-            self.authenticatedEmail = self.unauthenticatedEmail;
-            self.unauthenticatedEmail = undefined;
-          } else {
-            log.debug('Submitted authentication code was not correct.');
-          }
-          resolve(result.codeMatch);
+          resolve(true);
+        }, (error) => {
+          log.debug('Error received during authentication: ${error}');
+          resolve(false);
         });
       });
     });

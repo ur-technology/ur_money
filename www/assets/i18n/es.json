@@ -21,6 +21,7 @@
         "numberConfirmation": "Confirmación de número",
         "phoneCorrect": "Es el número de teléfono indicado anteriormente correcto?",
         "errorUserDisabled": "Tu cuenta ha sido deshabilitada.",
+        "errorExcessiveLogins": "Tu cuenta se ha bloqueado debido a excesivos intentos fallidos de inicio de sesión.",
         "unexpectedProblem": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde",
         "noInviteFoundTitle": "Invitación no encontrada",
         "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
