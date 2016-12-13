@@ -77,8 +77,10 @@ export class IdentityVerificationPersonalInfoPage {
 
   setDobControlValue(date) {
     if (date.isValid()) {
-      let dateOfBirthControl: FormControl = <FormControl>this.mainForm.find('dateOfBirth');
-      dateOfBirthControl.updateValue(date.format(this.targetPlatformWeb ? 'YYYY-MM-DD' : 'MM/DD/YYYY'));
+      this.ngZone.run(() => {
+        let dateOfBirthControl: FormControl = <FormControl>this.mainForm.find('dateOfBirth');
+        dateOfBirthControl.updateValue(date.format(this.targetPlatformWeb ? 'YYYY-MM-DD' : 'MM/DD/YYYY'));
+      });
     }
   }
 
