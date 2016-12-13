@@ -122,7 +122,9 @@
         "lastName": "Apellido(s)",
         "name": "Nombre completo",
         "email": "Email",
-        "country": "País"
+        "country": "País",
+        "city": "Ciudad",
+        "state": "Estado o provincia"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",
