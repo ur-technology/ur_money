@@ -25,71 +25,6 @@ export class AuthService {
   ) {
   }
 
-  requestSmsAuthenticationCode(phone: string, countryCode: string, referralCode: string) {
-    let self = this;
-    self.authenticationRequestCountryCode = countryCode;
-    return new Promise((resolve, reject) => {
-      let baseRef = firebase.database().ref('/smsAuthCodeGenerationQueue/tasks');
-      self.smsTaskId = self.emailTaskId || baseRef.push().key;
-      let taskRef = baseRef.child(self.smsTaskId);
-      taskRef.set({ phone: phone, referralCode: referralCode || null }).then(() => {
-        log.debug(`sms auth code request queued to ${taskRef.toString()}`);
-        let stateRef = taskRef.child('_state');
-        stateRef.on('value', (snapshot) => {
-          let state = snapshot.val();
-          if (_.includes([undefined, null, 'in_progress'], state)) {
-            return;
-          }
-
-          stateRef.off('value');
-          resolve(state);
-        });
-      }, (error) => {
-        reject(error);
-      });
-    });
-  }
-
-  checkSmsAuthenticationCode(authenticationCode: string): Promise<boolean> {
-    let self = this;
-    return new Promise((resolve, reject) => {
-      if (!self.smsTaskId) {
-        reject(`no value set for smsTaskId`);
-        return;
-      }
-
-      let taskRef = firebase.database().ref(`/smsAuthCodeMatchingQueue/tasks/${self.smsTaskId}`);
-      taskRef.set({ authenticationCode: authenticationCode }).then(() => {
-        log.debug(`set authenticationCode to ${authenticationCode} at ${taskRef.toString()}`);
-        let resultRef = taskRef.child('result');
-        resultRef.on('value', (snapshot) => {
-          let result = snapshot.val();
-          if (!result) {
-            return;
-          }
-          resultRef.off('value');
-
-          if (!result.codeMatch) {
-            log.debug('Submitted authentication code was not correct.');
-            resolve(false);
-            return;
-          }
-
-          log.debug('Submitted authentication code was correct.');
-          firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
-            log.debug('Authentication succeded!');
-            self.cleanUpAssociatedAuthTasks();
-            resolve(true);
-          }).catch((error) => {
-            taskRef.update({ authenticationError: error });
-            log.warn('Unable to authenticate!');
-            reject('Unable to authenticate');
-          });
-        });
-      });
-    });
-  }
-
   respondToAuth(nav: any, pages: any) {
     let self = this;
     self.checkFirebaseConnection().then(() => {
@@ -172,6 +107,71 @@ export class AuthService {
           });
         }
       }, 7 * 1000);
+    });
+  }
+
+  requestSmsAuthenticationCode(phone: string, countryCode: string, referralCode: string) {
+    let self = this;
+    self.authenticationRequestCountryCode = countryCode;
+    return new Promise((resolve, reject) => {
+      let baseRef = firebase.database().ref('/smsAuthCodeGenerationQueue/tasks');
+      self.smsTaskId = self.emailTaskId || baseRef.push().key;
+      let taskRef = baseRef.child(self.smsTaskId);
+      taskRef.set({ phone: phone, referralCode: referralCode || null }).then(() => {
+        log.debug(`sms auth code request queued to ${taskRef.toString()}`);
+        let stateRef = taskRef.child('_state');
+        stateRef.on('value', (snapshot) => {
+          let state = snapshot.val();
+          if (_.includes([undefined, null, 'in_progress'], state)) {
+            return;
+          }
+
+          stateRef.off('value');
+          resolve(state);
+        });
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  checkSmsAuthenticationCode(authenticationCode: string): Promise<boolean> {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      if (!self.smsTaskId) {
+        reject(`no value set for smsTaskId`);
+        return;
+      }
+
+      let taskRef = firebase.database().ref(`/smsAuthCodeMatchingQueue/tasks/${self.smsTaskId}`);
+      taskRef.set({ authenticationCode: authenticationCode }).then(() => {
+        log.debug(`set authenticationCode to ${authenticationCode} at ${taskRef.toString()}`);
+        let resultRef = taskRef.child('result');
+        resultRef.on('value', (snapshot) => {
+          let result = snapshot.val();
+          if (!result) {
+            return;
+          }
+          resultRef.off('value');
+
+          if (!result.codeMatch) {
+            log.debug('Submitted authentication code was not correct.');
+            resolve(false);
+            return;
+          }
+
+          log.debug('Submitted authentication code was correct.');
+          firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
+            log.debug('Authentication succeded!');
+            self.cleanUpAssociatedAuthTasks();
+            resolve(true);
+          }).catch((error) => {
+            taskRef.update({ authenticationError: error });
+            log.warn('Unable to authenticate!');
+            reject('Unable to authenticate');
+          });
+        });
+      });
     });
   }
 
