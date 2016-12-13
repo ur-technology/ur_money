@@ -68,7 +68,7 @@
     },
     "identity-verification-personal-info": {
         "slideTitle": "Paso 1 de 3 - Información personal",
-        "gender": "Género"
+        "gender": "Género",
         "dateOfBirth": "Fecha de nacimiento"
     },
     "identity-verification-address": {
@@ -121,7 +121,8 @@
         "middleName": "Segundo nombre (opcional)",
         "lastName": "Apellido(s)",
         "name": "Nombre completo",
-        "email": "Email"
+        "email": "Email",
+        "country": "País"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",
@@ -272,12 +273,12 @@
         "sendTo": "Enviar a"
     },
     "invite-link": {
-      "title": "Invite Friends",
-      "explanation1": "The more people of your friends who join UR Money, the more UR you can earn.",
-      "explanation2": "To get credit for your referrals, make sure to have your friends sign up by using your personalized referral link below.",
-      "explanation3": "You can send this link using your favorite messaging app, or post it to your social network for all your friends to see.",
-      "personalizedReferralLink": "Personalized Referral Link",
-      "copyToClipboard": "Copy To Clipboard"
+      "title": "Invitar a amigos",
+      "explanation1": "Cuantos más de tus amigos se unan a UR money, más UR puedes ganar.",
+      "explanation2": "Para obtener crédito por tus referencias, asegúrate de que tus amigos se registren utilizando tu vínculo de referencia personalizado.",
+      "explanation3": "Puedes enviar este enlace utilizando tu aplicación de mensajería favorita o publicarlo en tu red social para que todos tus amigos puedan verla.",
+      "personalizedReferralLink": "Enlace de referencia personalizado",
+      "copyToClipboard": "Copiar al portapapeles"
     },
     "about": {
         "heading": "Acerca UR",

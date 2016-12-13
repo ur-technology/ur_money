@@ -88,7 +88,6 @@
     "identity-verification-document": {
         "slideTitle": "Step 3 of 3 - Verification Document",
         "idType": "ID Type",
-        "idType": "ID Type",
         "driverLicenceState": "Driver Licence State",
         "driverLicenceNumber": "Driver Licence Number",
         "MRI1": "Machine readable Line 1",
@@ -122,7 +121,8 @@
         "middleName": "Middle Name (optional)",
         "lastName": "Last Name",
         "name": "Full name",
-        "email": "Email"
+        "email": "Email",
+        "country": "country"
     },
     "identity-info-setup": {
         "title": "Identification Document",
