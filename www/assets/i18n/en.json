@@ -96,7 +96,8 @@
         "passportExpirationDate": "Expiration Date",
         "passportExpirationDay": "Expiration Day",
         "passportExpirationMonth": "Expiration Month",
-        "passportExpirationYear": "Expiration Year"
+        "passportExpirationYear": "Expiration Year",
+        "id": "Id"
     },
     "identity-verification-summary": {
         "slideTitle": "Review your information",

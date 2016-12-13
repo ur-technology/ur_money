@@ -106,9 +106,8 @@ export class IdentityVerificationPersonalInfoPage {
   showDatePicker() {
     let self = this;
     let maxDate = moment(new Date()).subtract(16, 'years');
-
+    let initialDate = moment(new Date()).date(1).month(0).subtract(26, 'years');
     if (!self.verificationArgs.PersonInfo.YearOfBirth) {
-      let initialDate = maxDate.subtract(10, 'years');
       self.setDobArgs(initialDate);
       self.setDobControlValue(initialDate);
     }
@@ -125,14 +124,14 @@ export class IdentityVerificationPersonalInfoPage {
         androidTheme: 3,
         maxDate: maxDate.valueOf(),
       }).then(date => {
-        self.setDobArgs(date);
-        self.setDobControlValue(date);
+        self.setDobArgs(moment(date));
+        self.setDobControlValue(moment(date));
       });
     }
   }
 
   submit() {
-    this.nav.push(IdentityVerificationAddressPage, {verificationArgs: this.verificationArgs});
+    this.nav.push(IdentityVerificationAddressPage, { verificationArgs: this.verificationArgs });
   }
 
   focusInput() {

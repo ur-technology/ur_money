@@ -65,6 +65,7 @@ export class ProfileSetupPage {
     let newValues = _.merge(this.profile, {
       name: UserModel.fullName(this.profile)
     });
+    newValues = _.omitBy(newValues, _.isUndefined);
     this.auth.currentUserRef.update(newValues).then(() => {
       _.merge(this.auth.currentUser, newValues);
       this.nav.setRoot(WalletSetupPage);

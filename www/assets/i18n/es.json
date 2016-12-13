@@ -96,7 +96,8 @@
         "passportExpirationDate": "Fecha de caducidad",
         "passportExpirationDay": "Día de caducidad",
         "passportExpirationMonth": "Mes de caducidad",
-        "passportExpirationYear": "Año de caducidad"
+        "passportExpirationYear": "Año de caducidad",
+        "id": "Id"
     },
     "identity-verification-summary": {
         "slideTitle": "Confirme su información",
