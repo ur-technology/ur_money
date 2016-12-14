@@ -278,9 +278,8 @@
     },
     "invite-link": {
       "title": "Invite Friends",
-      "explanation1": "The more people of your friends who join UR Money, the more UR you can earn.",
-      "explanation2": "To get credit for your referrals, make sure to have your friends sign up by using your personalized referral link below.",
-      "explanation3": "You can send this link using your favorite messaging app, or post it to your social network for all your friends to see.",
+      "explanation1": "The more of your friends who join UR Money, the more UR you can earn.",
+      "explanation2": "To get credit for referring your friends, send the personalized link below using your favorite social network or messaging app.",
       "personalizedReferralLink": "Personalized Referral Link",
       "copyToClipboard": "Copy To Clipboard"
     },

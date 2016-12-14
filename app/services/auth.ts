@@ -456,7 +456,19 @@ export class AuthService {
     }
   }
 
-  referralLink() {
-    return this.currentUser ? `https://ur.technology?r=${this.currentUser.referralCode}` : '';
+  referralLink(window): string {
+    if (!this.currentUser) {
+      return undefined;
+    }
+    let base:string;
+    if (Config.targetPlatform === 'web') {
+      base = window.location.origin;
+    } else if (this.envMode() === 'production') {
+      base = 'https://web.ur.technology';
+    } else {
+      base = 'https://ur-money-staging.firebaseapp.com';
+    }
+    return `${base}?r=${this.currentUser.referralCode}`;
   }
+
 }

@@ -279,8 +279,9 @@
     "invite-link": {
       "title": "Invitar a amigos",
       "explanation1": "Cuantos más de tus amigos se unan a UR money, más UR puedes ganar.",
-      "explanation2": "Para obtener crédito por tus referencias, asegúrate de que tus amigos se registren utilizando tu vínculo de referencia personalizado.",
-      "explanation3": "Puedes enviar este enlace utilizando tu aplicación de mensajería favorita o publicarlo en tu red social para que todos tus amigos puedan verla.",
+      "explanation2": "To get credit for referring your friends, send the personalized link below using your favorite social network or messaging app.",
+      /*"explanation2": "Para obtener crédito por tus referencias, asegúrate de que tus amigos se registren utilizando tu vínculo de referencia personalizado.",
+      "explanation3": "Puedes enviar este enlace utilizando tu aplicación de mensajería favorita o publicarlo en tu red social para que todos tus amigos puedan verla.",*/
       "personalizedReferralLink": "Enlace de referencia personalizado",
       "copyToClipboard": "Copiar al portapapeles"
     },

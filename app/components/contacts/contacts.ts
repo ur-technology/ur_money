@@ -109,6 +109,7 @@ export class ContactsComponent {
   }
 
   inviteContact(contact: any) {
+
     let self = this;
     if (self.auth.currentUser.invitesDisabled) {
       self.alertCtrl.create({
@@ -130,11 +131,10 @@ export class ContactsComponent {
     let message = this.translate.instant('contacts.inviteMessage');
     Clipboard.copy(message).then((data) => {
       Toast.show(this.translate.instant('contacts.toastMessage'), 'long', 'top').subscribe((toast) => {
-        let url = ( this.auth.currentUser.prefineryUser && this.auth.currentUser.prefineryUser.referralLink ) || 'https://ur.technology';
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
           file: 'https://ur.technology/wp-content/uploads/2016/11/icon-android-192x192.png',
-          url: url,
+          url: self.auth.referralLink(window),
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions; saving dowlineUser');
