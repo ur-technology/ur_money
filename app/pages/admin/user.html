@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit User Info</ion-title>
+    <ion-buttons end>
+      <button [disabled]="!mainForm.valid"
+        (click)="saveProfile()">
+            Save
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding
+  #content
+  class="settings">
+  <form [formGroup]="mainForm">
+    <ion-item-divider light>Profile Info</ion-item-divider>
+    <ion-item>
+      <ion-label floating>First Name</ion-label>
+      <ion-input
+        disabled="!inEditMode"
+        type="text"
+        [(ngModel)]="user.firstName"
+        formControlName="firstName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Middle Name</ion-label>
+      <ion-input type="text"
+        disabled="!inEditMode"
+        [(ngModel)]="user.middleName"
+        formControlName="middleName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Last Name(s)</ion-label>
+      <ion-input type="text"
+        disabled="!inEditMode"
+        [(ngModel)]="user.lastName"
+        formControlName="lastName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Country</ion-label>
+      <ion-select [(ngModel)]="user.country"
+        disabled="!inEditMode"
+        [ngModelOptions]="{standalone: true}"
+        (ionChange)="countrySelected()">
+        <ion-option [value]="c"
+          *ngFor="let c of countries">{{c.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="text"
+        disabled="!inEditMode"
+        [(ngModel)]="user.email"
+        formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Phone</ion-label>
+      <ion-input type="text"
+        disabled="!inEditMode"
+        [(ngModel)]="user.phone"
+        formControlName="phone"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Downline Level</ion-label>
+      <ion-input type="text"
+        disabled="false"
+        [(ngModel)]="user.downlineLevel"
+        formControlName="downlineLevel"></ion-input>
+    </ion-item>
+    <ion-item-divider light>Direct Referrals</ion-item-divider>
+    <ion-item>
+      <ion-list class="users-list" *ngIf="!showSpinner">
+        <ion-item detail-none *ngFor="let r of referrals" (click)="goToUserPage(r)" class="item item-avatar">
+          <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
+          <h2>{{r.name}}</h2>
+          <p>{{r.formattedPhone}} <span>{{r.phoneType}}</span></p>
+          <button type="button" primary item-right>Edit</button>
+        </ion-item>
+      </ion-list>
+    </ion-item>
+  </form>
+</ion-content>

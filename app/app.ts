@@ -29,6 +29,7 @@ import {SendPage} from './pages/send/send';
 import {AboutPage} from './pages/about/about';
 import {SettingsPage} from './pages/settings/settings';
 import {TransactionsPage} from './pages/transactions/transactions';
+import {UsersPage} from './pages/admin/users';
 
 @Component({
   templateUrl: 'build/app.html',
@@ -62,7 +63,6 @@ class UrMoney {
   constructor(private platform: Platform, private menu: MenuController, public auth: AuthService, private translate: TranslateService) {
     this.initializeApp();
     this.translateConfig();
-    this.translateMenu();
   }
 
   storeReferralCodeIfPresent() {
@@ -75,21 +75,6 @@ class UrMoney {
 
   initializeApp() {
     this.storeReferralCodeIfPresent();
-    this.menuItems = [];
-    this.menuItems.push({ title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home', value: 'home' });
-    if (Config.targetPlatform !== 'web') {
-      this.menuItems.push({ title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: 'chat' }, icon: 'icon menu-icon menu-icon-chat', value: 'chat' });
-    }
-    if (Config.targetPlatform === 'android') {
-      this.menuItems.push({ title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: 'send' }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' });
-    } else if (Config.targetPlatform === 'web') {
-      this.menuItems.push({ title: 'Send UR', page: SendPage, pageParams: { contact: {} }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' });
-    }
-    // this.menuItems.push({ title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: 'request' }, icon: 'icon menu-icon menu-icon-request-ur', value: 'request' });
-    this.menuItems.push({ title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'transactions' });
-    this.menuItems.push({ title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' });
-
-
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
@@ -103,7 +88,7 @@ class UrMoney {
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
       log.setDefaultLevel(logLevel);
 
-      this.auth.respondToAuth(this.nav, {
+      this.auth.respondToAuth(this, {
         noInternetConnectionPage: NoInternetConnectionPage,
         welcomePage: WelcomePage,
         introPage: IntroPage,
@@ -112,6 +97,26 @@ class UrMoney {
 
       log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
     });
+  }
+
+  initializeMenu() {
+    this.menuItems = [];
+    this.menuItems.push({ title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home', value: 'home' });
+    if (Config.targetPlatform !== 'web') {
+      this.menuItems.push({ title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: 'chat' }, icon: 'icon menu-icon menu-icon-chat', value: 'chat' });
+    }
+    if (Config.targetPlatform === 'android') {
+      this.menuItems.push({ title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: 'send' }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' });
+    } else if (Config.targetPlatform === 'web') {
+      this.menuItems.push({ title: 'Send UR', page: SendPage, pageParams: { contact: {} }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' });
+    }
+    // this.menuItems.push({ title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: 'request' }, icon: 'icon menu-icon menu-icon-request-ur', value: 'request' });
+    this.menuItems.push({ title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'transactions' });
+    this.menuItems.push({ title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' });
+    if (this.auth.currentUser && this.auth.currentUser.admin) {
+      this.menuItems.push({ title: 'Manage Users', page: UsersPage, icon: 'icon menu-icon menu-icon-people', value: 'users' });
+    }
+    this.translateMenu();
   }
 
   translateMenu() {

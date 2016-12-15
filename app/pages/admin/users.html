@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>Search Users {{auth.envMode()}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="users">
+  <form (ngSubmit)="searchUsers()">
+
+    <ion-select [(ngModel)]="searchType" [ngModelOptions]="{standalone: true}">
+      <ion-option [value]="t" *ngFor="let t of searchTypes">
+        {{t}}
+      </ion-option>
+    </ion-select>
+
+    <ion-input type="text" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"></ion-input>
+
+    <button item-right clear [disabled]="!searchText">
+      Search
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </form>
+
+  <div *ngIf="showSpinner">
+      <ion-row>
+          <ion-col text-center>
+              <ion-spinner></ion-spinner>
+          </ion-col>
+      </ion-row>
+  </div>
+  <ion-list class="users-list" *ngIf="!showSpinner">
+    <ion-item detail-none *ngFor="let user of displayableUsers" (click)="goToUserPage(user)" class="item item-avatar">
+      <ion-avatar item-left> <ion-img [src]="user.profilePhotoUrl"></ion-img></ion-avatar>
+      <h2>{{user.name}}</h2>
+      <p>{{user.formattedPhone}} <span>{{user.phoneType}}</span></p>
+      <button type="button" primary item-right>Edit</button>
+    </ion-item>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more contacts..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  </ion-list>
+
+</ion-content>
