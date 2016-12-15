@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Platform, ToastController, AlertController} from 'ionic-angular';
+import {Page, NavController, NavParams, ToastController, AlertController} from 'ionic-angular';
 import {FormGroup, FormControl} from '@angular/forms';
 import {AuthService} from '../../services/auth';
 import {CustomValidator} from '../../validators/custom';
@@ -41,7 +41,6 @@ export class UserPage {
       return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
     });
 
-    let authUser = this.auth.currentUser;
     this.mainForm = new FormGroup({
       firstName: new FormControl('', CustomValidator.nameValidator),
       middleName: new FormControl('', CustomValidator.optionalNameValidator),
@@ -51,7 +50,7 @@ export class UserPage {
       downlineLevel: new FormControl('')
     });
     this.user = this.navParams.get('user');
-    this.user.country = this.countries.find((x) => { return x.alpha2 === (this.user.countryCode || 'US'); })
+    this.user.country = this.countries.find((x) => { return x.alpha2 === (this.user.countryCode || 'US'); });
     this.user.countryCode = this.user.country.alpha2;
 
     this.showSpinner = true;
