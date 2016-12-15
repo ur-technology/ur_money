@@ -185,7 +185,7 @@
             ".read": "root.child('users').child(auth.uid).child('admin').val() == true",
             "$uid": {
                 ".read": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
-                ".read": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
+                ".write": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
                 "transactions": {
                     ".indexOn": ["sortKey"]
                 },
