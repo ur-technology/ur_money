@@ -10,7 +10,7 @@
     (ngSubmit)="mainForm.valid && submit()">
     <ion-card>
       <ion-card-header>
-        <ion-label text-center primary>{{"identity-verification-document.slideTitle" | translate}}</ion-label>
+        <ion-label text-center color="primary">{{"identity-verification-document.slideTitle" | translate}}</ion-label>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
@@ -32,14 +32,14 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'identity-verification-document.driverLicenceNumber' | translate}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verificationArgs.DriverLicence.Number" formControlName="driverLicenceNumber"  (focus)="focusInput()"></ion-input>
+                <ion-input type="text" [(ngModel)]="verificationArgs.DriverLicence.Number" formControlName="driverLicenceNumber"></ion-input>
             </ion-item>
           </ion-item-group>
 
           <ion-item-group *ngIf="verificationArgs.IdentificationType === 'NationalId'">
             <ion-item>
               <ion-label floating>{{nationalIdDisplayName()}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verificationArgs.NationalId.Number" formControlName="nationalIdNumber" (focus)="focusInput()"></ion-input>
+                <ion-input type="text" [(ngModel)]="verificationArgs.NationalId.Number" formControlName="nationalIdNumber"></ion-input>
             </ion-item>
           </ion-item-group>
 
@@ -58,22 +58,22 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'identity-verification-document.passportExpirationDay' | translate}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verificationArgs.Passport.DayOfExpiry" formControlName="passportExpirationDayOfExpiry" (focus)="focusInput()"></ion-input>
+                <ion-input type="text" [(ngModel)]="verificationArgs.Passport.DayOfExpiry" formControlName="passportExpirationDayOfExpiry"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'identity-verification-document.passportExpirationMonth' | translate}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verificationArgs.Passport.MonthOfExpiry" formControlName="passportExpirationMonthOfExpiry" (focus)="focusInput()"></ion-input>
+                <ion-input type="text" [(ngModel)]="verificationArgs.Passport.MonthOfExpiry" formControlName="passportExpirationMonthOfExpiry"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>{{'identity-verification-document.passportExpirationYear' | translate}}</ion-label>
-                <ion-input type="text" [(ngModel)]="verificationArgs.Passport.YearOfExpiry" formControlName="passportExpirationYearOfExpiry" (focus)="focusInput()"></ion-input>
+                <ion-input type="text" [(ngModel)]="verificationArgs.Passport.YearOfExpiry" formControlName="passportExpirationYearOfExpiry"></ion-input>
             </ion-item>
           </ion-item-group>
         </ion-list>
       </ion-card-content>
       <ion-item class="footer-card">
-        <button item-right
-          clear
+        <button ion-button item-right
+          clear icon-right
           [disabled]="!mainForm.valid">
               {{"continue" | translate}}
               <ion-icon name="arrow-forward"></ion-icon>

@@ -8,17 +8,17 @@
   #content>
   <ion-card>
     <ion-card-content text-justify>
-      <img src="img/ur-logo.png"
+      <img src="assets/img/ur-logo.png"
         class="slide-image" />
       <h2 class="slide-title"
         innerHTML='{{"identity-verification-sponsor-wait.slideTitle" | translate}}'></h2>
       <br />
-      <p innerHTML='{{"identity-verification-sponsor-wait.slideMessage" | translate:param}}'></p>
-      <button outline (click)="sendMessageSponsor()"> {{"identity-verification-sponsor-wait.sendMessage" | translate:param}}</button>
+      <p innerHTML='{{mensaje}}'></p>
+      <button ion-button outline (click)="sendMessageSponsor()"> {{buttonValue}}</button>
     </ion-card-content>
     <ion-item class="footer-card">
-      <button large
-        item-right
+      <button ion-button large
+        item-right icon-right
         clear
         (click)="goToHome()">
         {{"continue" | translate}}

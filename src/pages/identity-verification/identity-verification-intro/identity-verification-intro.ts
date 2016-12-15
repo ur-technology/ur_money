@@ -1,18 +1,18 @@
 import { NgZone, Component } from '@angular/core';
 import {NavController, Platform} from 'ionic-angular';
-import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {IdentityVerificationPersonalInfoPage} from '../identity-verification-personal-info/identity-verification-personal-info';
 import {InAppPurchase} from 'ionic-native';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification/identity-verification-intro/identity-verification-intro.html',
-  pipes: [TranslatePipe]
+  selector: 'identity-verification-intro-page',
+  templateUrl: 'identity-verification-intro.html',
 })
 export class IdentityVerificationIntroPage {
   verificationProductId: string = 'technology.ur.urmoneyapp.verify_identity';
   purchaseMessage: string;
 
-  constructor(private nav: NavController, private platform: Platform, private translateService: TranslateService, private ngZone: NgZone) {
+  constructor(public nav: NavController, public platform: Platform, public translateService: TranslateService, public ngZone: NgZone) {
   }
 
   ngOnInit() {

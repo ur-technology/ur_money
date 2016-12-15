@@ -2,22 +2,20 @@ import {Component} from '@angular/core';
 import {NavController } from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import {ChatPage} from '../../pages/chat/chat';
-import {Timestamp}  from '../../pipes/timestamp';
 import { App } from 'ionic-angular';
 import {AngularFire} from 'angularfire2';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'chat-list',
-  templateUrl: 'build/components/chat-list/chat-list.html',
-  pipes: [Timestamp, TranslatePipe]
+  templateUrl: 'chat-list.html',
 })
 export class ChatListComponent {
   chats: any[];
   x: any[];
 
-  constructor(private nav: NavController, private auth: AuthService, private angularFire: AngularFire, private app: App, private translate: TranslateService) {
+  constructor(public nav: NavController, public auth: AuthService, public angularFire: AngularFire, public app: App, public translate: TranslateService) {
   }
 
   ngOnInit() {

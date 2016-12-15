@@ -1,13 +1,11 @@
-import {Page, NavController, Platform} from 'ionic-angular';
-import {TransactionComponent} from '../../components/transaction/transaction';
+import { NavController, Platform} from 'ionic-angular';
 import {HomePage} from '../home/home';
 import {ContactsAndChatsPage} from '../../pages/contacts-and-chats/contacts-and-chats';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
+import { Component } from '@angular/core';
 
-@Page({
-  templateUrl: 'build/pages/transactions/transactions.html',
-  directives: [TransactionComponent],
-  pipes: [TranslatePipe]
+@Component({
+  selector: 'transactions-page',
+  templateUrl: 'transactions.html',
 })
 export class TransactionsPage {
   segmentSelected: any = 'all';

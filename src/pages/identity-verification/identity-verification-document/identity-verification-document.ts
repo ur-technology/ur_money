@@ -2,16 +2,13 @@ import {NgZone, Component, ViewChild } from '@angular/core';
 import {NavController, NavParams, Content} from 'ionic-angular';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
-import {KeyboardAttachDirective} from '../../../directives/keyboard-attach.directive';
 import {IdentityVerificationSummaryPage} from '../identity-verification-summary/identity-verification-summary';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification/identity-verification-document/identity-verification-document.html',
-  directives: [KeyboardAttachDirective],
-  pipes: [TranslatePipe]
+  selector: 'identity-verification-document-page',
+  templateUrl: 'identity-verification-document.html',
 })
 export class IdentityVerificationDocumentPage {
   mainForm: FormGroup;
@@ -27,7 +24,7 @@ export class IdentityVerificationDocumentPage {
     public nav: NavController,
     public navParams: NavParams,
     public auth: AuthService,
-    private ngZone: NgZone
+    public ngZone: NgZone
   ) {
     this.verificationArgs = this.navParams.get('verificationArgs');
 
@@ -44,7 +41,7 @@ export class IdentityVerificationDocumentPage {
       (this.formElements[fieldName] as any).name = name;
     });
     this.mainForm = new FormGroup(this.formElements);
-    this.fillIdentificationTypesList();
+
   }
 
   fillIdentificationTypesList() {
@@ -73,13 +70,9 @@ export class IdentityVerificationDocumentPage {
     });
   }
 
-  focusInput() {
-    this.scrollToBottom();
+  ionViewDidLoad(){
+    this.fillIdentificationTypesList();
   }
 
-  scrollToBottom() {
-    setTimeout(() => {
-      this.content.scrollToBottom();
-    }, 500);
-  }
+
 }

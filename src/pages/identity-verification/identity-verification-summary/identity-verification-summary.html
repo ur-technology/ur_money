@@ -9,12 +9,12 @@
   <ion-card>
     <ion-card-header>
       <ion-label text-center
-        primary>{{"identity-verification-summary.slideTitle" | translate}}</ion-label>
+        color="primary">{{"identity-verification-summary.slideTitle" | translate}}</ion-label>
     </ion-card-header>
     <ion-card-content>
       <br />
       <ion-list>
-        <ion-item-divider light>{{"identity-verification-summary.personalInfo" | translate}}</ion-item-divider>
+        <ion-item-divider color="light">{{"identity-verification-summary.personalInfo" | translate}}</ion-item-divider>
         <ion-item>
           <ion-label fixed>{{'identity-verification-summary.name' | translate}}</ion-label>
           <ion-input disabled="true"
@@ -30,7 +30,7 @@
           <ion-input disabled="true"
             value={{gender}}></ion-input>
         </ion-item>
-        <ion-item-divider light>{{"identity-verification-summary.location" | translate}}</ion-item-divider>
+        <ion-item-divider color="light">{{"identity-verification-summary.location" | translate}}</ion-item-divider>
         <ion-item>
           <ion-label fixed>{{'identity-verification-address.countryCode' | translate}}</ion-label>
           <ion-input disabled="true"
@@ -86,7 +86,7 @@
           <ion-input disabled="true"
             value="{{verificationArgs.Location.PostalCode}}"></ion-input>
         </ion-item>
-        <ion-item-divider light>{{"identity-verification-summary.additionaInfo" | translate}}</ion-item-divider>
+        <ion-item-divider color="light">{{"identity-verification-summary.additionaInfo" | translate}}</ion-item-divider>
         <ion-item-group *ngIf="verificationArgs.IdentificationType == 'DriverLicence'">
           <ion-item>
             <ion-label fixed>{{'identity-verification-document.driverLicenceNumber' | translate}}</ion-label>
@@ -111,8 +111,8 @@
       </ion-list>
     </ion-card-content>
     <ion-item class="footer-card">
-      <button item-right
-        clear
+      <button ion-button item-right
+        clear icon-right
         (click)=submit()>
             {{"identity-verification-summary.verifyMyInfo" | translate}}
             <ion-icon name="arrow-forward"></ion-icon>

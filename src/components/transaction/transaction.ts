@@ -1,33 +1,30 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, Inject, SimpleChanges} from '@angular/core';
 import { NavController} from 'ionic-angular';
 import {BigNumber} from 'bignumber.js';
 import {ChartDataService} from '../../services/chart-data';
 import {AuthService} from '../../services/auth';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
-import {Timestamp}  from '../../pipes/timestamp';
+import { FirebaseApp } from 'angularfire2';
 import * as moment from 'moment';
 import { App } from 'ionic-angular';
 import {ContactsAndChatsPage} from '../../pages/contacts-and-chats/contacts-and-chats';
-import {DateAndTime} from '../../pipes/dateAndTime.pipe';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 
 @Component({
   selector: 'transaction-component',
-  templateUrl: 'build/components/transaction/transaction.html',
-  pipes: [Timestamp, DateAndTime, TranslatePipe]
+  templateUrl: 'transaction.html',
 })
 export class TransactionComponent {
   showSpinner: boolean = false;
   transactions = [];
   filteredTransactions = [];
-  filteredTransactionsTotal: BigNumber = new BigNumber(0);
+  filteredTransactionsTotal: any = new BigNumber(0);
   lastUpdated: any;
   filterOption: string = 'all';
   availableBalance: number;
   @Input() transactionType: string;
 
-  constructor(private auth: AuthService, private nav: NavController, private app: App, private translate: TranslateService, private chartData: ChartDataService) {
+  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, @Inject(FirebaseApp) firebase: any) {
   }
 
   ngOnInit() {
@@ -79,7 +76,7 @@ export class TransactionComponent {
     });
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     this.loadTransactionsByType();
   }
 

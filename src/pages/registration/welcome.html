@@ -2,9 +2,9 @@
     class="registration main-splash"
     scroll="false">
     <div class="ur-logo">
-        <img src="img/ur-logo.png"
+        <img src="assets/img/ur-logo.png"
             alt="logo">
-        <img src="img/ur-slogan.png"
+        <img src="assets/img/ur-slogan.png"
             alt="logo">
     </div>
 </ion-content>
@@ -19,8 +19,8 @@
                 <br> {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
                 <br> {{ "welcome.terms4" | translate }}
             </p>
-            <button clear
-                (click)="goToPage(phoneNumberPage)"
+            <button ion-button clear
+                (click)="goToPage()"
                 class="button button-clear button-block agree-btn"><span>{{ "welcome.agreeAndContinue" | translate }}</span></button>
         </div>
     </ion-toolbar>

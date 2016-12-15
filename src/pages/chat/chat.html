@@ -2,7 +2,7 @@
     <ion-navbar>
         <ion-title class="chat-title">{{displayUser().name}} {{auth.envMode()}}</ion-title>
         <ion-buttons end>
-            <button (click)="presentPopover($event)"><ion-icon name="more"></ion-icon></button>
+            <button ion-button icon-only (click)="presentPopover($event)"><ion-icon name="more"></ion-icon></button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
@@ -35,7 +35,7 @@
             </label>
         </div>
         <ion-buttons end>
-            <button clear
+            <button ion-button clear icon-only
                 class="button-icon"
                 (click)="sendMessageClick()">
                 <ion-icon name="md-send"></ion-icon>

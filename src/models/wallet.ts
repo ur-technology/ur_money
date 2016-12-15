@@ -39,13 +39,13 @@ export class WalletModel {
     return this._web3;
   }
 
-  public static estimatedFeeWei(): BigNumber {
+  public static estimatedFeeWei(): any {
     let gas = new BigNumber(21000);
     let gasPrice = this.web3().eth.gasPrice;
     return gas.times(gasPrice);
   }
 
-  private static calculateBalanceInfo(balanceWei, rounding?: boolean, pendingAmountWei?: BigNumber): any {
+  private static calculateBalanceInfo(balanceWei, rounding?: boolean, pendingAmountWei?: any): any {
     let currentBalance = new BigNumber(balanceWei).dividedBy('1000000000000000000');
     let availableBalance = BigNumber.max(balanceWei.plus(pendingAmountWei || 0), 0).dividedBy('1000000000000000000');
     let estimatedFee = this.estimatedFeeWei().dividedBy('1000000000000000000');
@@ -63,12 +63,12 @@ export class WalletModel {
     };
   }
 
-  public static availableBalance(address, rounding?: boolean, pendingAmountWei?: BigNumber): any {
+  public static availableBalance(address, rounding?: boolean, pendingAmountWei?: any): any {
     let balanceWei = this.web3().eth.getBalance(address);
     return this.calculateBalanceInfo(balanceWei, rounding, pendingAmountWei);
   }
 
-  public static availableBalanceAsync(address: string, rounding?: boolean, pendingAmountWei?: BigNumber): Promise<any> {
+  public static availableBalanceAsync(address: string, rounding?: boolean, pendingAmountWei?: any): Promise<any> {
     let self = this;
     return new Promise((resolve, reject) => {
       self.web3().eth.getBalance(address, (error, balanceWei) => {

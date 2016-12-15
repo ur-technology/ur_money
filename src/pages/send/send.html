@@ -34,14 +34,12 @@
     <ion-item>
       <ion-label floating>{{'send.enterAmount' | translate}}</ion-label>
       <ion-input formControlName="amount"
-        (focus)="focusInput()"
         type="number"></ion-input>
       <ion-note item-right> UR </ion-note>
     </ion-item>
     <ion-item>
       <ion-label floating>{{'send.secretPhrase' | translate}}</ion-label>
       <ion-input formControlName="secretPhrase"
-        (focus)="focusInput()"
         type="password"></ion-input>
     </ion-item>
     <br />
@@ -60,7 +58,7 @@
                     placeholder="{{'send.enterMessage' | translate}}"></ion-textarea>
             </label>
         </div> -->
-    <button round
+    <button ion-button round
       block
       class="send-requestbtn"
       type="submit"

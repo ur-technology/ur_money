@@ -1,10 +1,10 @@
-import {Page, NavController} from 'ionic-angular';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
+import { NavController} from 'ionic-angular';
 import {HomePage} from '../home/home';
+import { Component } from '@angular/core';
 
-@Page({
-  templateUrl: 'build/pages/registration/announcement-initiated.html',
-  pipes: [TranslatePipe]
+@Component({
+  selector: 'announcement-initiated-page',
+  templateUrl: 'announcement-initiated.html'
 })
 export class AnnouncementInitiatedPage {
   constructor(public nav: NavController) {

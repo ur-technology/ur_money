@@ -1,11 +1,11 @@
-import {Page, NavController} from 'ionic-angular';
+import { NavController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {HomePage} from '../home/home';
+import { Component } from '@angular/core';
 
-@Page({
-  templateUrl: 'build/pages/registration/country-not-supported.html',
-  pipes: [TranslatePipe]
+@Component({
+  selector: 'country-not-supported-page',
+  templateUrl: 'country-not-supported.html',
 })
 export class CountryNotSupportedPage {
   constructor(

@@ -5,7 +5,7 @@
       <!-- <button clear light class="left" (click)="signOut()">
          <ion-icon name="power"></ion-icon>
       </button> -->
-      <button clear light class="right" (click)="openSettings()">
+      <button ion-button icon-only clear color="light" class="right" (click)="openSettings()">
          <ion-icon name="settings"></ion-icon>
       </button>
       <div class="right">{{auth.envMode()}}</div>
@@ -35,11 +35,10 @@
         </ion-col>
       </ion-row>
       <p class="invite-text">{{"app.inviteMessage" | translate}}</p>
-      <button  class="button button-block button-outline invite-btn">{{"app.invite" | translate}} </button>
+      <button ion-button outline class="invite-btn">{{"app.invite" | translate}} </button>
     </div>
   </ion-content>
 
 </ion-menu>
 
-<ion-nav id="nav" [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>
-<loading-modal #loading></loading-modal>
+<ion-nav id="nav" #content swipe-back-enabled="false"></ion-nav>

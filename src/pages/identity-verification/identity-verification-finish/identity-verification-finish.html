@@ -8,15 +8,15 @@
 <ion-content padding>
   <ion-card>
     <ion-card-content text-justify>
-      <img src="img/ur-logo.png"
+      <img src="assets/img/ur-logo.png"
         class="slide-image" />
       <h2 class="slide-title" innerHTML='{{"identity-verification-finish.slideTitle" | translate}}'></h2>
       <br />
       <p>{{"identity-verification-finish.slideMessage" | translate}}</p>
     </ion-card-content>
     <ion-item class="footer-card">
-      <button large
-        item-right
+      <button ion-button large
+        item-right icon-right
         clear
         (click)="goToHome()">
         {{"continue" | translate}}

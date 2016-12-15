@@ -1,13 +1,13 @@
-import {Page, NavController, NavParams, LoadingController} from 'ionic-angular';
+import { NavController, NavParams, LoadingController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import {ToastService} from '../../services/toast';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {PhoneNumberPage} from './phone-number';
 import {EmailAddressPage} from './email-address';
+import { Component } from '@angular/core';
 
-@Page({
-  templateUrl: 'build/pages/registration/authentication-code.html',
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'authentication-code.html',
 })
 export class AuthenticationCodePage {
   authenticationCode: string = '';
@@ -15,9 +15,9 @@ export class AuthenticationCodePage {
 
   constructor(public nav: NavController, public navParams: NavParams,
     public auth: AuthService,
-    private loadingController: LoadingController,
-    private translate: TranslateService,
-    private toastService: ToastService
+    public loadingController: LoadingController,
+    public translate: TranslateService,
+    public toastService: ToastService
   ) {
     this.nav = nav;
     this.authenticationType = this.navParams.get('authenticationType');

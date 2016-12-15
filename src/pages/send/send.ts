@@ -1,10 +1,10 @@
-import {Page, AlertController, Content, NavController, NavParams, Platform, LoadingController} from 'ionic-angular';
-import {NgZone, ViewChild} from '@angular/core';
+import { AlertController, Content, NavController, NavParams, Platform, LoadingController} from 'ionic-angular';
+import {NgZone, ViewChild, Inject, Component} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
+import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {BigNumber} from 'bignumber.js';
 import {NativeStorage} from 'ionic-native';
 import {HomePage} from '../home/home';
@@ -16,16 +16,15 @@ import {AuthService} from '../../services/auth';
 import {EncryptionService} from '../../services/encryption';
 declare var jQuery: any;
 
-@Page({
-  templateUrl: 'build/pages/send/send.html',
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'send.html',
 })
 export class SendPage {
   contact: any;
   mainForm: FormGroup;
-  availableBalance: BigNumber = new BigNumber(0);
-  estimatedFee: BigNumber = new BigNumber(0);
-  maxAmount: BigNumber = new BigNumber(0);
+  availableBalance: any = new BigNumber(0);
+  estimatedFee: any = new BigNumber(0);
+  maxAmount: any = new BigNumber(0);
   private wallet: WalletModel;
   private loadingModal: any;
   private phraseSaved;
@@ -35,15 +34,16 @@ export class SendPage {
   constructor(
     public nav: NavController,
     public navParams: NavParams,
-    private platform: Platform,
-    private alertCtrl: AlertController,
-    private toastService: ToastService,
-    private loadingController: LoadingController,
-    private auth: AuthService,
-    private translate: TranslateService,
+    public platform: Platform,
+    public alertCtrl: AlertController,
+    public toastService: ToastService,
+    public loadingController: LoadingController,
+    public auth: AuthService,
+    public translate: TranslateService,
     public chartData: ChartDataService,
-    private ngZone: NgZone,
-    private encryptionService: EncryptionService
+    public ngZone: NgZone,
+    public encryptionService: EncryptionService,
+    @Inject(FirebaseApp) firebase: any
   ) {
     this.contact = this.navParams.get('contact');
     this.mainForm = new FormGroup({
@@ -83,22 +83,22 @@ export class SendPage {
   }
 
   missingAmount(): boolean {
-    let control = this.mainForm.find('amount');
+    let control = this.mainForm.get('amount');
     return (control.touched || control.dirty) && control.hasError('required');
   }
 
   numberOutOfRange(): boolean {
-    let control = this.mainForm.find('amount');
+    let control = this.mainForm.get('amount');
     return !this.missingAmount() && (control.touched || control.dirty) && control.hasError('numberOutOfRange');
   }
 
   missingSecretPhrase(): boolean {
-    let control = this.mainForm.find('secretPhrase');
+    let control = this.mainForm.get('secretPhrase');
     return (control.touched || control.dirty) && control.hasError('required');
   }
 
   incorrectSecretPhrase(): boolean {
-    let control = this.mainForm.find('secretPhrase');
+    let control = this.mainForm.get('secretPhrase');
     return !this.missingSecretPhrase() && (control.touched || control.dirty) && control.hasError('incorrectSecretPhrase');
   }
 
@@ -110,7 +110,7 @@ export class SendPage {
     return this.loadingModal.present();
   }
 
-  saveTransaction(urTransaction: any): Promise<any> {
+  saveTransaction(urTransaction: any): any {
     let transactionRef = firebase.database().ref(`/users/${this.auth.currentUserId}/transactions/${urTransaction.hash}`);
     let transaction: any = {
       createdAt: firebase.database.ServerValue.TIMESTAMP,
@@ -296,15 +296,4 @@ export class SendPage {
       return '';
     }
   }
-
-  focusInput() {
-    this.scrollToBottom();
-  }
-
-  scrollToBottom() {
-    setTimeout(() => {
-      this.content.scrollToBottom();
-    }, 500);
-  }
-
 }

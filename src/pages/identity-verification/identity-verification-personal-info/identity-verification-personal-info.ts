@@ -1,18 +1,16 @@
-import {Component, ViewChild, NgZone} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {NavController, Platform, Content} from 'ionic-angular';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {IdentityVerificationAddressPage} from '../identity-verification-address/identity-verification-address';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
-import {DatePicker} from 'ionic-native';
 import * as moment from 'moment';
 import {Config} from '../../../config/config';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification/identity-verification-personal-info/identity-verification-personal-info.html',
-  pipes: [TranslatePipe]
+  selector: 'identity-verification-personal-info-page',
+  templateUrl: 'identity-verification-personal-info.html',
 })
 export class IdentityVerificationPersonalInfoPage {
   @ViewChild(Content) content: Content;
@@ -25,9 +23,8 @@ export class IdentityVerificationPersonalInfoPage {
 
   constructor(
     public nav: NavController,
-    private platform: Platform,
-    public auth: AuthService,
-    private ngZone: NgZone
+    public platform: Platform,
+    public auth: AuthService
   ) {
     let self = this;
     self.genders = [
@@ -77,10 +74,8 @@ export class IdentityVerificationPersonalInfoPage {
 
   setDobControlValue(date) {
     if (date.isValid()) {
-      this.ngZone.run(() => {
-        let dateOfBirthControl: FormControl = <FormControl>this.mainForm.find('dateOfBirth');
-        dateOfBirthControl.updateValue(date.format(this.targetPlatformWeb ? 'YYYY-MM-DD' : 'MM/DD/YYYY'));
-      });
+      let dateOfBirthControl: FormControl = <FormControl>this.mainForm.get('dateOfBirth');
+      dateOfBirthControl.setValue(date.toISOString());
     }
   }
 
@@ -93,7 +88,7 @@ export class IdentityVerificationPersonalInfoPage {
   }
 
   copyDobFromControlToArgs() {
-    let dateOfBirthControl: FormControl = <FormControl>this.mainForm.find('dateOfBirth');
+    let dateOfBirthControl: FormControl = <FormControl>this.mainForm.get('dateOfBirth');
     this.setDobArgs(moment(dateOfBirthControl.value));
   }
 
@@ -105,45 +100,8 @@ export class IdentityVerificationPersonalInfoPage {
     }));
   }
 
-  showDatePicker() {
-    let self = this;
-    let maxDate = moment(new Date()).subtract(16, 'years');
-    let initialDate = moment(new Date()).date(1).month(0).subtract(26, 'years');
-    if (!self.verificationArgs.PersonInfo.YearOfBirth) {
-      self.setDobArgs(initialDate);
-      self.setDobControlValue(initialDate);
-    }
-
-    if (self.platform.is('cordova')) {
-      let date = moment({
-        year: _.toNumber(this.verificationArgs.PersonInfo.YearOfBirth),
-        month: _.toNumber(this.verificationArgs.PersonInfo.MonthOfBirth) - 1,
-        day: _.toNumber(this.verificationArgs.PersonInfo.DayOfBirth)
-      });
-      DatePicker.show({
-        date: date.toDate(),
-        mode: 'date',
-        androidTheme: 3,
-        maxDate: maxDate.valueOf(),
-      }).then(date => {
-        self.setDobArgs(moment(date));
-        self.setDobControlValue(moment(date));
-      });
-    }
-  }
-
   submit() {
     this.nav.push(IdentityVerificationAddressPage, { verificationArgs: this.verificationArgs });
-  }
-
-  focusInput() {
-    this.scrollToBottom();
-  }
-
-  scrollToBottom() {
-    setTimeout(() => {
-      this.content.scrollToBottom();
-    }, 500);
   }
 
 }

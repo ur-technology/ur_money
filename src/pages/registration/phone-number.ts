@@ -1,5 +1,5 @@
-import {Page, NavController, Platform, AlertController, LoadingController} from 'ionic-angular';
-import {OnInit, ElementRef, Inject} from '@angular/core';
+import { NavController, Platform, AlertController, LoadingController} from 'ionic-angular';
+import {OnInit, ElementRef, Inject, Component} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
 import {AuthService} from '../../services/auth';
@@ -7,13 +7,12 @@ import {ToastService} from '../../services/toast';
 import {AuthenticationCodePage} from './authentication-code';
 import {EmailAddressPage} from './email-address';
 import {CountryListService} from '../../services/country-list';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
 
-@Page({
-  templateUrl: 'build/pages/registration/phone-number.html',
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'phone-number.html',
 })
 export class PhoneNumberPage implements OnInit {
   elementRef: ElementRef;
@@ -27,11 +26,11 @@ export class PhoneNumberPage implements OnInit {
     public platform: Platform,
     public nav: NavController,
     public auth: AuthService,
-    private alertCtrl: AlertController,
+    public alertCtrl: AlertController,
     public countryListService: CountryListService,
-    private loadingController: LoadingController,
-    private translate: TranslateService,
-    private toastService: ToastService
+    public loadingController: LoadingController,
+    public translate: TranslateService,
+    public toastService: ToastService
   ) {
     this.elementRef = elementRef;
     this.phoneForm = new FormGroup({

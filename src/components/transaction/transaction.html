@@ -2,10 +2,10 @@
     <div class="filter-box"
         padding>
         <div class="filter-btns">
-          <button class="button button-outline" (click)="filterTransactions('today')" [ngClass]="{'active':filterOption==='today'}">{{"transaction.today" | translate}}</button>
-          <button class="button button-outline" (click)="filterTransactions('30')" [ngClass]="{'active':filterOption==='30'}">{{"transaction.last30Days" | translate}}</button>
-          <button class="button button-outline" (click)="filterTransactions('60')" [ngClass]="{'active':filterOption==='60'}">{{"transaction.last60Days" | translate}}</button>
-          <button class="button button-outline" (click)="filterTransactions('all')" [ngClass]="{'active':filterOption==='all'}">{{"transaction.allTime" | translate}}</button>
+          <button ion-button clear class="button button-outline" (click)="filterTransactions('today')" [ngClass]="{'active':filterOption==='today'}">{{"transaction.today" | translate}}</button>
+          <button ion-button clear class="button button-outline" (click)="filterTransactions('30')" [ngClass]="{'active':filterOption==='30'}">{{"transaction.last30Days" | translate}}</button>
+          <button ion-button clear class="button button-outline" (click)="filterTransactions('60')" [ngClass]="{'active':filterOption==='60'}">{{"transaction.last60Days" | translate}}</button>
+          <button ion-button clear class="button button-outline" (click)="filterTransactions('all')" [ngClass]="{'active':filterOption==='all'}">{{"transaction.allTime" | translate}}</button>
         </div>
 
         <div class="total-ur">
@@ -16,7 +16,7 @@
         </p>
         <div class="invite-and-earn" *ngIf="transactionType==='earned'">
                 <p>{{"transaction.inviteFriends" | translate}}</p>
-                <button (click)="invite()" class="button button-outline">{{"transaction.invite" | translate}}</button>
+                <button ion-button (click)="invite()" class="button button-outline">{{"transaction.invite" | translate}}</button>
         </div>
     </div>
 </div>
@@ -41,7 +41,7 @@
         <ion-item class="item"
             text-wrap>
             <ion-avatar item-left>
-                <img src="img/icon.png">
+                <img src="assets/img/icon.png">
             </ion-avatar>
             <h2>{{transaction.title}} <span class="item-date-time">{{transaction.createdAt|dateAndTime}}</span></h2>
             <p>{{transaction.messageText}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">{{"transaction.seeMore" | translate}}</a></span>

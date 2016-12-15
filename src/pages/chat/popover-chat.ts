@@ -1,9 +1,7 @@
 import {Component } from '@angular/core';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import { ViewController } from 'ionic-angular';
 
 @Component({
-  pipes: [TranslatePipe],
   template: `
     <ion-list>
     <ion-row>

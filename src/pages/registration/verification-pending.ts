@@ -1,13 +1,11 @@
-import {Page, NavController} from 'ionic-angular';
-import {REACTIVE_FORM_DIRECTIVES} from '@angular/forms';
+import { NavController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {HomePage} from '../home/home';
+import { Component } from '@angular/core';
 
-@Page({
-  templateUrl: 'build/pages/registration/verification-pending.html',
-  directives: [REACTIVE_FORM_DIRECTIVES],
-  pipes: [TranslatePipe]
+@Component({
+  selector: 'verification-pending-page',
+  templateUrl: 'verification-pending.html',
 })
 export class VerificationPendingPage {
   constructor(

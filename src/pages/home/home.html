@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <button menuToggle>
+        <button ion-button menuToggle icon-only>
             <ion-icon name="menu"></ion-icon>{{auth.envMode()}}
         </button>
     </ion-navbar>
@@ -26,52 +26,47 @@
 
         </div>
         <div class="container"
-            id="container"></div>
+                    id="container"></div>
     </div>
-    <ion-segment class="button-bar chart-btns">
-        <ion-segment-button (click)="loadChartPoints(1, 'days')"
+    <ion-segment [(ngModel)]="selectedOption"  class="button-bar chart-btns">
+        <ion-segment-button value="1D" (click)="loadChartPoints(1, 'days')"
             [ngClass]="{'active':selectedOption=='1D'}"
             class="button">
             1D
         </ion-segment-button>
-        <ion-segment-button (click)="loadChartPoints(1, 'weeks')"
+        <ion-segment-button value="1W" (click)="loadChartPoints(1, 'weeks')"
             [ngClass]="{'active':selectedOption=='1W'}"
             class="button">
             1W
         </ion-segment-button>
-        <ion-segment-button (click)="loadChartPoints(1, 'months')"
+        <ion-segment-button value="1M" (click)="loadChartPoints(1, 'months')"
             [ngClass]="{'active':selectedOption=='1M'}"
             class="button">
             1M
         </ion-segment-button>
-        <ion-segment-button (click)="loadChartPoints(6, 'months')"
+        <ion-segment-button value="6M" (click)="loadChartPoints(6, 'months')"
             [ngClass]="{'active':selectedOption=='6M'}"
             class="button">
             6M
         </ion-segment-button>
-        <ion-segment-button (click)="loadChartPoints(1, 'year')"
+        <ion-segment-button value="1Y" (click)="loadChartPoints(1, 'year')"
             [ngClass]="{'active':selectedOption=='1Y'}"
             class="button">
             1Y
         </ion-segment-button>
     </ion-segment>
     <events-list></events-list>
+     <ion-fab right bottom>
+       <button ion-fab (click)="startNewChat()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
 </ion-content>
 <ion-footer>
-    <div class="float-button"
-        [style.bottom]="'8%'">
-        <span class="height-fix">
-       <a class="content"  (click)="startNewChat()">
-          <ion-icon name="md-add"> </ion-icon>
-       </a>
-    </span>
-    </div>
     <div class="bar bar-footer dash-footer">
         <div class="button-bar footer-btns">
-            <button class="button button-calm"><i class="home-icon"></i></button>
-            <button (click)="send()" [disabled]="sendButtonDisabled"
+            <button ion-button class="button button-calm"><i class="home-icon"></i></button>
+            <button ion-button (click)="send()" [disabled]="sendButtonDisabled"
                 class="button button-calm"><i class="plane-icon" [hidden]="sendButtonHidden"></i></button>
-            <button (click)="invite()"
+            <button ion-button (click)="invite()"
                 class="button button-calm"><i class="invite-icon"></i></button>
         </div>
     </div>

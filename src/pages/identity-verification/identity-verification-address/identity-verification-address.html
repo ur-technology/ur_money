@@ -8,7 +8,7 @@
   <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
     <ion-card>
       <ion-card-header>
-        <ion-label text-center primary>{{"identity-verification-address.slideTitle" | translate}}</ion-label>
+        <ion-label text-center color="primary">{{"identity-verification-address.slideTitle" | translate}}</ion-label>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
@@ -48,26 +48,28 @@
           </ion-item>
           <ion-item *ngIf="showLocationField('City')">
             <ion-label floating>{{'identity-verification-address.city' | translate}}</ion-label>
-            <ion-input type="text" (focus)="focusInput()" [(ngModel)]="l.City" formControlName="city"></ion-input>
+            <ion-input type="text" [(ngModel)]="l.City" formControlName="city"></ion-input>
           </ion-item>
           <ion-item *ngIf="showLocationField('Suburb')">
             <ion-label floating>{{'identity-verification-address.suburb' | translate}}</ion-label>
-            <ion-input type="text" (focus)="focusInput()" [(ngModel)]="l.Suburb" formControlName="suburb"></ion-input>
+            <ion-input type="text" [(ngModel)]="l.Suburb" formControlName="suburb"></ion-input>
           </ion-item>
           <ion-item *ngIf="showLocationField('StateProvinceCode')">
             <ion-label floating>{{'identity-verification-address.stateProvinceCode' | translate}}</ion-label>
-            <ion-select (ionChange)="onStateSelected($event)" formControlName="stateProvinceCode">
+            <ion-select *ngIf="states && states.length > 0" (ionChange)="onStateSelected($event)" formControlName="stateProvinceCode">
               <ion-option [value]="s" *ngFor="let s of states">{{s.name}}</ion-option>
             </ion-select>
+            <ion-input *ngIf="states && states.length == 0"
+              type="text" [(ngModel)]="l.StateProvinceCode" formControlName="stateProvinceCode"></ion-input>
           </ion-item>
           <ion-item *ngIf="showLocationField('PostalCode')">
             <ion-label floating>{{'identity-verification-address.postalCode' | translate}}</ion-label>
-            <ion-input type="text" (focus)="focusInput()" [(ngModel)]="l.PostalCode" formControlName="postalCode"></ion-input>
+            <ion-input type="text" [(ngModel)]="l.PostalCode" formControlName="postalCode"></ion-input>
           </ion-item>
         </ion-list>
       </ion-card-content>
       <ion-item class="footer-card">
-        <button item-right clear [disabled]="!mainForm.valid">
+        <button ion-button item-right clear [disabled]="!mainForm.valid" icon-right>
               {{"continue" | translate}}
               <ion-icon name="arrow-forward"></ion-icon>
             </button>

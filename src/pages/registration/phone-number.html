@@ -2,7 +2,7 @@
     <ion-navbar>
         <ion-title>{{"phone-number.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="!phoneForm.valid" (click)="submit()">
+          <button ion-button [disabled]="!phoneForm.valid" (click)="submit()">
               {{"done" | translate}}
           </button>
         </ion-buttons>
@@ -23,19 +23,16 @@
                 <ion-label>{{selectedCountry.name}}</ion-label>
                 <ion-select [(ngModel)]="selectedCountryCode"
                     [ngModelOptions]="{standalone: true}"
-                    (ionChange)="countrySelect()">
+                    (ionChange)="countrySelect($event)">
                     <ion-option value="{{country.countryCode}}"
                         *ngFor="let country of countries">
                         {{country.name}}
                         <span item-right>{{country.telephoneCountryCode}}</span>
                     </ion-option>
-                </ion-select>
-                <ion-icon name="arrow-forward"
-                    item-right></ion-icon>
+                </ion-select>              
             </ion-item>
             <ion-item class="item item-input input-item-data">
                 <ion-input class="phone-country-code"
-                    [ngModelOptions]="{standalone: true}"
                     [value]="selectedCountry.telephoneCountryCode"> </ion-input>
                 <ion-input
                     class="phone-input"
@@ -49,6 +46,6 @@
         </div>
     </form>
 </ion-content>
-<ion-footer [keyboardAttach]="content">
+<ion-footer>
 
 </ion-footer>

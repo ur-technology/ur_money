@@ -2,14 +2,14 @@
     <ion-navbar>
         <ion-title>{{"wallet-setup.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="!mainForm.valid" type="submit"
+          <button ion-button [disabled]="!mainForm.valid" type="submit"
               form="myForm">
               {{"done" | translate}}
           </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding class="registration profile-setup" #content>
+<ion-content padding class="registration profile-setup">
     <form id="myForm" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && confirmSecretPhraseWrittenDown()">
       <p text-justify>
           {{"wallet-setup.chooseSecret" | translate}}
@@ -21,8 +21,8 @@
       </ul>
       <p text-justify>{{"wallet-setup.message4" | translate}}</p>
       <ion-item>
-          <button type="text"
-              secondary
+          <button ion-button type="text"
+              color="secondary"
               (click)="suggestSecretPhrase()">
               {{"wallet-setup.suggestSecretPhrase" | translate}}
           </button>
@@ -33,7 +33,6 @@
               autocapitalize="none"
               [(ngModel)]="profile.secretPhrase"
               formControlName="secretPhrase"
-              [(ngModel)]="secretPhrase"
               placeholder="{{'wallet-setup.secretPhrasePlaceholder' | translate}}"></ion-input>
       </ion-item>
       <ion-list-header>
@@ -41,10 +40,10 @@
       <ion-item text-wrap>
          <ion-label>{{'wallet-setup.saveSecretPhrase' | translate}}</ion-label>
          <ion-checkbox formControlName="savePhrase"></ion-checkbox>
-         <button clear type="text" item-right (click)="alertSecretPhrase()" form="aa">{{'wallet-setup.learnMore' | translate}}</button>
+         <button ion-button clear type="text" item-right (click)="alertSecretPhrase()" form="aa">{{'wallet-setup.learnMore' | translate}}</button>
        </ion-item>
     </form>
 </ion-content>
-<ion-footer [keyboardAttach]="content">
+<ion-footer>
 
 </ion-footer>

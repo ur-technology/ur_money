@@ -1,13 +1,12 @@
-import {Injectable, Pipe} from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 import * as moment from 'moment';
 
 @Pipe({
   name: 'timestamp'
 })
-@Injectable()
-export class Timestamp {
+export class Timestamp implements PipeTransform {
 
-  transform(value: string, args: any[]) {
+  transform(value: string) {
     if (!value || value.length === 0) {
       return;
     }

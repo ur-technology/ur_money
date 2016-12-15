@@ -1,22 +1,20 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import {NavController, NavParams, Platform, AlertController} from 'ionic-angular';
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
 import {ContactsService} from '../../services/contacts';
 import {AuthService} from '../../services/auth';
 import {SendPage} from '../../pages/send/send';
-import {RequestPage} from '../../pages/request/request';
 import {ChatPage} from '../../pages/chat/chat';
 import { App } from 'ionic-angular';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
+import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 declare var window: any;
 
 @Component({
-  templateUrl: 'build/components/contacts/contacts.html',
+  templateUrl: 'contacts.html',
   selector: 'contacts',
-  pipes: [TranslatePipe]
 })
 export class ContactsComponent {
   pageIndex = 0;
@@ -32,13 +30,13 @@ export class ContactsComponent {
   public memberActionLabel: string;
 
   constructor(
-    private nav: NavController,
-    private navParams: NavParams,
-    private contactsService: ContactsService,
-    private auth: AuthService,
-    private platform: Platform,
-    private alertCtrl: AlertController,
-    private app: App, private translate: TranslateService
+    public nav: NavController,
+    public navParams: NavParams,
+    public contactsService: ContactsService,
+    public auth: AuthService,
+    public platform: Platform,
+    public alertCtrl: AlertController,
+    public app: App, public translate: TranslateService, @Inject(FirebaseApp) firebase: any
   ) {
     this.startTime = (new Date()).getTime();
   }
@@ -94,15 +92,11 @@ export class ContactsComponent {
 
   goToGoalPage(contact: any) {
     if (this.goal === 'send') {
-      this.nav.pop({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(data => {
+      this.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
         this.app.getRootNav().push(SendPage, { contact: contact });
       });
-    } else if (this.goal === 'request') {
-      this.nav.pop({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(data => {
-        this.app.getRootNav().push(RequestPage, { contact: contact });
-      });
     } else {
-      this.nav.pop({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(data => {
+      this.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
         this.app.getRootNav().push(ChatPage, { contact: contact });
       });
     }
@@ -133,7 +127,7 @@ export class ContactsComponent {
       Toast.show(this.translate.instant('contacts.toastMessage'), 'long', 'top').subscribe((toast) => {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
-          file: 'https://ur.technology/wp-content/uploads/2016/11/icon-android-192x192.png',
+          // file: 'https://ur.technology/wp-content/uploads/2016/11/icon-android-192x192.png',
           url: self.auth.referralLink(window),
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {

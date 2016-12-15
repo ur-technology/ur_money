@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {NavController, Platform, LoadingController, NavParams} from 'ionic-angular';
-import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {InAppPurchase} from 'ionic-native';
 import {AuthService} from '../../../services/auth';
 import {Config} from '../../../config/config';
@@ -8,12 +8,12 @@ import {IdentityVerificationFinishPage} from '../identity-verification-finish/id
 import {VerificationFailedPage} from '../../registration/verification-failed';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
+import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification/identity-verification-summary/identity-verification-summary.html',
-  pipes: [TranslatePipe]
+  selector: 'identity-verification-summary-page',
+  templateUrl: 'identity-verification-summary.html',
 })
 export class IdentityVerificationSummaryPage {
   verificationProductId: string = 'technology.ur.urmoneyapp.verify_identity';
@@ -26,7 +26,7 @@ export class IdentityVerificationSummaryPage {
   stripeCheckoutHandler: any;
   nationalIdDisplayName: string;
 
-  constructor(public nav: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, private platform: Platform, public auth: AuthService, public translate: TranslateService) {
+  constructor(public nav: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, public platform: Platform, public auth: AuthService, public translate: TranslateService, @Inject(FirebaseApp) firebase: any) {
     this.verificationArgs = this.navParams.get('verificationArgs');
     this.dateOfBirth = moment({
       year: _.toNumber(this.verificationArgs.PersonInfo.YearOfBirth),
@@ -48,7 +48,7 @@ export class IdentityVerificationSummaryPage {
     }
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     if (Config.targetPlatform === 'web') {
       // speed up subsequent payment by running this on page load
       this.silenceStripeError();
@@ -146,7 +146,7 @@ export class IdentityVerificationSummaryPage {
               firebase.database().ref('/identityAnnouncementQueue/tasks').push({
                 userId: this.auth.currentUserId
               });
-              self.nav.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(() => {
+              self.nav.popToRoot({ animate: false, duration: 0, progressAnimation: false }).then(() => {
                 self.nav.push(IdentityVerificationFinishPage);
               });
             });
@@ -156,7 +156,7 @@ export class IdentityVerificationSummaryPage {
             }
 
             loader.dismiss().then(() => {
-              self.nav.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(() => {
+              self.nav.popToRoot({ animate: false, duration: 0, progressAnimation: false }).then(() => {
                 self.nav.push(VerificationFailedPage);
               });
             });

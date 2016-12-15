@@ -115,7 +115,7 @@
     "identity-verification-sponsor-wait": {
         "slideTitle": "<b>Esperando que tu patrocinador verifique su identidad</b>",
         "slideMessage": "Actualmente estamos esperando que <b>{{sponsor}}</b> verifique su identidad antes de que tu puedas verificar tu identidad.",
-        "sendMessage": "Enviar mensaje a {{sponsor}}"
+        "sendMessage": "Envia un mensaje a {{sponsor}}"
     },
     "profile-setup": {
         "title": "Configurar perfil",
@@ -279,9 +279,7 @@
     "invite-link": {
       "title": "Invitar a amigos",
       "explanation1": "Cuantos más de tus amigos se unan a UR money, más UR puedes ganar.",
-      "explanation2": "To get credit for referring your friends, send the personalized link below using your favorite social network or messaging app.",
-      /*"explanation2": "Para obtener crédito por tus referencias, asegúrate de que tus amigos se registren utilizando tu vínculo de referencia personalizado.",
-      "explanation3": "Puedes enviar este enlace utilizando tu aplicación de mensajería favorita o publicarlo en tu red social para que todos tus amigos puedan verla.",*/
+      "explanation2": "Para obtener crédito por referir a tus amigos, envía el enlace personalizado a continuación usando tu red social o aplicación de mensajería favorita.",
       "personalizedReferralLink": "Enlace de referencia personalizado",
       "copyToClipboard": "Copiar al portapapeles"
     },

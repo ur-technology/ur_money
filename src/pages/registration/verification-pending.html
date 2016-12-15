@@ -6,14 +6,14 @@
 <ion-content padding>
   <ion-card>
     <ion-card-content text-justify>
-      <img src="img/ur-logo.png"
+      <img src="assets/img/ur-logo.png"
         class="slide-image" />
       <h2 class="slide-title">{{"verification-pending.message" | translate}}</h2><br />
     </ion-card-content>
     <ion-item class="footer-card">
-      <button large
+      <button ion-button large
         item-right
-        clear
+        clear icon-right
         (click)="goToHome()">
         {{"continue" | translate}}
         <ion-icon name="arrow-forward"></ion-icon>

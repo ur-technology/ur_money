@@ -2,7 +2,7 @@
     <ion-navbar>
         <ion-title>{{"profile-setup.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="!mainForm.valid" (click)="submit()">
+          <button ion-button [disabled]="!mainForm.valid" (click)="submit()">
               {{"done" | translate}}
           </button>
         </ion-buttons>
@@ -42,6 +42,6 @@
       </ion-item>
     </form>
 </ion-content>
-<ion-footer [keyboardAttach]="content">
+<ion-footer>
 
 </ion-footer>

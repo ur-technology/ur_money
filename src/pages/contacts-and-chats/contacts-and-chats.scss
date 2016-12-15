@@ -1,15 +1,9 @@
-.contacts-and-chats-page {
-  .toolbar {
-    padding: 0;
-  }
-}
-
 .ion-ios-block-person-icon {
-  content: url("../../img/block-person-md.png");
+  content: url("../assets/img/block-person-md.png");
 }
 
 .ion-md-block-person-icon {
-  content: url("../../img/block-person-md.png");
+  content: url("../assets/img/block-person-md.png");
   width: 24px;
   height: 24px;
 }
@@ -21,39 +15,39 @@
   }
 
   .ion-ios-add-person-icon {
-    content: url("../../img/add-person-icon.png");
+    content: url("../assets/img/add-person-icon.png");
   }
 
   .ion-md-add-person-icon {
-    content: url("../../img/add-person-icon.png");
+    content: url("../assets/img/add-person-icon.png");
   }
 
   .ion-ios-contacts-icon {
-    content: url("../../img/contacts-icon-active.png");
+    content: url("../assets/img/contacts-icon-active.png");
   }
 
   .ion-md-contacts-icon {
-    content: url("../../img/contacts-icon-active.png");
+    content: url("../assets/img/contacts-icon-active.png");
     width: 24px;
     height: 24px;
   }
 
   .ion-ios-contacts-icon-on-outline {
-    background: url("../../img/contacts-icon.png") no-repeat center;
+    background: url("../assets/img/contacts-icon.png") no-repeat center;
   }
 
   .ion-ios-chats-icon {
-    content: url("../../img/chats-icon-active.png");
+    content: url("../assets/img/chats-icon-active.png");
   }
 
   .ion-md-chats-icon {
-    content: url("../../img/chats-icon-active.png");
+    content: url("../assets/img/chats-icon-active.png");
     width: 24px;
     height: 24px;
   }
 
   .ion-ios-chats-icon-on-outline {
-    background: url("../../img/chats-icon.png") no-repeat center;
+    background: url("../assets/img/chats-icon.png") no-repeat center;
   }
 
   .segment-tab-nav ion-segment-button span {

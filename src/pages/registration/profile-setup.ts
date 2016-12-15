@@ -1,18 +1,15 @@
-import {Page, NavController} from 'ionic-angular';
-import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, Validators} from '@angular/forms';
+import { NavController} from 'ionic-angular';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {UserModel} from '../../models/user';
 import {AuthService} from '../../services/auth';
 import {CustomValidator} from '../../validators/custom';
 import {WalletSetupPage} from '../../pages/registration/wallet-setup';
-import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
+import { Component } from '@angular/core';
 
-@Page({
-  templateUrl: 'build/pages/registration/profile-setup.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, KeyboardAttachDirective],
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'profile-setup.html',
 })
 export class ProfileSetupPage {
   mainForm: FormGroup;
@@ -39,7 +36,7 @@ export class ProfileSetupPage {
     this.mainForm = new FormGroup(formElements);
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     this.fillCountriesArray();
   }
 
@@ -58,7 +55,7 @@ export class ProfileSetupPage {
     this.countries = _.filter(this.countries, { status: 'assigned' });
 
     let country = this.countries.find((x) => { return x.alpha2 === (this.auth.currentUser.countryCode || 'US'); });
-    (<FormControl>this.mainForm.controls['countryCode']).updateValue(country);
+    (<FormControl>this.mainForm.controls['countryCode']).setValue(country);
   }
 
   submit() {

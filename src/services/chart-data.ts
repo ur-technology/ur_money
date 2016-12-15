@@ -1,6 +1,6 @@
-import {Injectable, EventEmitter} from '@angular/core';
+import {Injectable, EventEmitter, Inject} from '@angular/core';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
+import { FirebaseApp } from 'angularfire2';
 import * as moment from 'moment';
 import * as log from 'loglevel';
 import {AuthService} from '../services/auth';
@@ -9,7 +9,7 @@ import {BigNumber} from 'bignumber.js';
 
 @Injectable()
 export class ChartDataService {
-  public duration: number = 1;
+  public duration: number = 2;
   public unitOfTime: moment.UnitOfTime = 'weeks';
   public startingTime: moment.Moment;
   public endingTime: moment.Moment;
@@ -19,14 +19,14 @@ export class ChartDataService {
   public pointsLoaded: boolean = false;
   public pointsLoadedEmitter = new EventEmitter();
   public balanceUpdatedEmitter = new EventEmitter();
-  public startingBalanceWei: BigNumber;
-  public endingBalanceWei: BigNumber;
+  public startingBalanceWei: any;
+  public endingBalanceWei: any;
   public balanceChange: number;
   public percentageChange: number;
   public balanceInfo: any;
   public balanceUpdated: boolean = false;
 
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService, @Inject(FirebaseApp) firebase: any) {
     this.pointsLoaded = false;
     this.loadPointsWhenTransactionsChange();
   }
@@ -78,7 +78,7 @@ export class ChartDataService {
     this.ensureStartingTimeIncludedInPoints();
     this.ensureEndingTimeIncludedInPoints();
 
-    let balanceChangeWei: BigNumber = this.endingBalanceWei.minus(this.startingBalanceWei).plus(this.pendingAmountWei());
+    let balanceChangeWei: any = this.endingBalanceWei.minus(this.startingBalanceWei).plus(this.pendingAmountWei());
     this.balanceChange = balanceChangeWei.dividedBy(1000000000000000000).round(0, BigNumber.ROUND_HALF_FLOOR).toNumber();
     this.percentageChange = this.startingBalanceWei.isZero() ? 0 : balanceChangeWei.times(100).dividedBy(this.startingBalanceWei).round(0, BigNumber.ROUND_HALF_FLOOR).toNumber();
 
@@ -114,10 +114,10 @@ export class ChartDataService {
     }
   }
 
-  private pendingAmountWei(): BigNumber {
-    let amount: BigNumber = new BigNumber(0);
+  private pendingAmountWei(): any {
+    let amount: any = new BigNumber(0);
     _.each(this.pendingTransactions, (pendingTransaction) => {
-      let transactionAmount: BigNumber = new BigNumber(pendingTransaction.urTransaction.value);
+      let transactionAmount: any = new BigNumber(pendingTransaction.urTransaction.value);
       if (_.includes(['received', 'earned'], pendingTransaction.type)) {
         amount = amount.plus(transactionAmount);
       } else {

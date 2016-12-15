@@ -1,10 +1,12 @@
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
+import { FirebaseApp } from 'angularfire2';
+import {Inject } from '@angular/core';
 
 export class FirebaseModel {
   private static _angularFire: AngularFire;
   public key: string;
+  @Inject(FirebaseApp) firebase: any
 
   static init(angularFire) {
     FirebaseModel._angularFire = angularFire;

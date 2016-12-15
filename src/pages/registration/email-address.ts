@@ -1,15 +1,15 @@
-import {Page, NavController, LoadingController} from 'ionic-angular';
+import { NavController, LoadingController} from 'ionic-angular';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 import {ToastService} from '../../services/toast';
 import {AuthenticationCodePage} from './authentication-code';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
+import { Component } from '@angular/core';
 
-@Page({
-  templateUrl: 'build/pages/registration/email-address.html',
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'email-address.html',
 })
 export class EmailAddressPage {
   mainForm: FormGroup;
@@ -18,9 +18,9 @@ export class EmailAddressPage {
   constructor(
     public nav: NavController,
     public auth: AuthService,
-    private loadingController: LoadingController,
-    private translate: TranslateService,
-    private toastService: ToastService
+    public loadingController: LoadingController,
+    public translate: TranslateService,
+    public toastService: ToastService
   ) {
     this.mainForm = new FormGroup({
       email: new FormControl('', [CustomValidator.emailValidator, Validators.required])

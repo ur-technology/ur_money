@@ -1,10 +1,36 @@
-.chat-page {
-  ion-footer{
-  .toolbar-background {
-        background: #fff;
-        border: none;
-    }
-}
+chat-page {
+  ion-toolbar {
+      &.mio {
+          min-height: 60px;
+      }
+      .button-icon {
+          background-color: #3aade2;
+          color: #ffffff !important;
+          border-radius: 50%;
+          width: 45px;
+          height: 45px;
+          line-height: 45px;
+          padding: 0 0 0 3px;
+          text-align: center;
+      }
+      .ur-message-send {
+          border: 1px solid #e3e3e3;
+          border-radius: 20px;
+          margin-left: 5px;
+          margin-right: 5px;
+          .item-input-wrapper {
+              background-color: transparent;
+              textarea {
+                  width: 94%;
+                  background: transparent;
+                  border: none;
+                  margin: 5px 5px 5px 10px;
+              }
+          }
+
+
+      }
+  }
 }
 /*-------------------------*/
 .chat-title .toolbar-title {
@@ -63,11 +89,11 @@
     top: 2px;
 }
 .messages-list .item .msg-text:after {
-    content: url("../../img/chat-right-arrow.png");
+    content: url("../assets/img/chat-right-arrow.png");
     right: -4px;
 }
 .messages-list .item.other .msg-text:after {
-    content: url("../../img/chat-left-arrow.png");
+    content: url("../assets/img/chat-left-arrow.png");
     right: auto;
     left: -4px;
 }
@@ -88,36 +114,5 @@
 }
 /*------------------------*/
 .chat-page {
-    ion-toolbar {
-        &.mio {
-            min-height: 60px;
-        }
-        .button-icon {
-            background-color: #3aade2;
-            color: #ffffff !important;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            line-height: 45px;
-            padding: 0 0 0 3px;
-            text-align: center;
-        }
-        .ur-message-send {
-            border: 1px solid #e3e3e3;
-            border-radius: 20px;
-            margin-left: 5px;
-            margin-right: 5px;
-            .item-input-wrapper {
-                background-color: transparent;
-                textarea {
-                    width: 94%;
-                    background: transparent;
-                    border: none;
-                    margin: 5px 5px 5px 10px;
-                }
-            }
 
-
-        }
-    }
 }

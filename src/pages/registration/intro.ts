@@ -1,19 +1,19 @@
-import {Page, NavController, AlertController} from 'ionic-angular';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import { NavController, AlertController} from 'ionic-angular';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../services/auth';
 import {ProfileSetupPage} from './profile-setup';
+import { Component } from '@angular/core';
 
-@Page({
-  templateUrl: 'build/pages/registration/intro.html',
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'intro.html',
 })
 export class IntroPage {
 
   constructor(
     public nav: NavController,
     public auth: AuthService,
-    private alertCtrl: AlertController,
-    private translate: TranslateService
+    public alertCtrl: AlertController,
+    public translate: TranslateService
   ) {
   }
 

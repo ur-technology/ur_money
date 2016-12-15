@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {HomePage} from '../../home/home';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../../services/auth';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification/identity-verification-finish/identity-verification-finish.html',
-  pipes: [TranslatePipe]
+  selector: 'identity-verification-finish-page',
+  templateUrl: 'identity-verification-finish.html',
 })
 export class IdentityVerificationFinishPage {
 
-  constructor(private navCtrl: NavController, public auth: AuthService) {
+  constructor(public navCtrl: NavController, public auth: AuthService) {
 
   }
 

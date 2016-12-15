@@ -1,19 +1,15 @@
-import {Page, NavController, NavParams, Platform} from 'ionic-angular';
+import { NavController, NavParams, Platform} from 'ionic-angular';
 import {ChartDataService} from '../../services/chart-data';
-import {ElementRef, Inject, NgZone} from '@angular/core';
-import {OrderBy}  from '../../pipes/orderBy';
-import {Timestamp}  from '../../pipes/timestamp';
+import {ElementRef, Inject, NgZone, Component} from '@angular/core';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
 import * as moment from 'moment';
-import {Round} from '../../pipes/round';
-import {EventListComponent} from '../../components/event-list/event-list';
 import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {Config} from '../../config/config';
 import {IdentityVerificationIntroPage} from '../identity-verification/identity-verification-intro/identity-verification-intro';
 import {CountryNotSupportedPage} from '../registration/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
-import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
+import { TranslateService} from 'ng2-translate/ng2-translate';
 import {AnnouncementInitiatedPage} from '../registration/announcement-initiated';
 import {TransactionsPage} from './../transactions/transactions';
 import {SendPage} from './../send/send';
@@ -21,10 +17,9 @@ import {IdentityVerificationSponsorWaitPage} from '../identity-verification/iden
 import {InviteLinkPage} from './../invite-link/invite-link';
 declare var jQuery: any;
 
-@Page({
-  templateUrl: 'build/pages/home/home.html',
-  pipes: [OrderBy, Timestamp, Round, TranslatePipe],
-  directives: [EventListComponent]
+@Component({
+  selector: 'home-page',
+  templateUrl: 'home.html',
 })
 export class HomePage {
   elementRef: ElementRef;
@@ -32,11 +27,12 @@ export class HomePage {
   sendButtonDisabled: boolean;
   needsToCompleteProfile: boolean;
   balanceTitle: string;
+  selectedOption: any;
 
-  constructor( @Inject(ElementRef) elementRef: ElementRef, private nav: NavController,
+  constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
-    private angularFire: AngularFire, private auth: AuthService, private ngZone: NgZone,
-    private translate: TranslateService
+    public angularFire: AngularFire, public auth: AuthService, public ngZone: NgZone,
+    public translate: TranslateService
 
   ) {
     this.elementRef = elementRef;
@@ -47,6 +43,7 @@ export class HomePage {
   reflectAvailableBalanceOnPage() {
     if (this.accountReady()) {
       if (this.chartData.balanceUpdated) {
+        this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
         this.ngZone.run(() => {
           this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
           this.sendButtonDisabled = false;
@@ -70,7 +67,7 @@ export class HomePage {
     }
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     let self = this;
 
     if (self.chartData.pointsLoaded) {

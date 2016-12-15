@@ -7,7 +7,7 @@
   <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
     <ion-card>
       <ion-card-header>
-        <ion-label text-center primary>{{"identity-verification-personal-info.slideTitle" | translate}}</ion-label>
+        <ion-label text-center color="primary">{{"identity-verification-personal-info.slideTitle" | translate}}</ion-label>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
@@ -31,13 +31,12 @@
           </ion-item>
           <ion-item>
             <ion-label floating>{{'identity-verification-personal-info.dateOfBirth' | translate}}</ion-label>
-            <ion-input *ngIf="!targetPlatformWeb" (click)="showDatePicker()" formControlName="dateOfBirth"></ion-input>
-            <ion-datetime *ngIf="targetPlatformWeb" (click)="showDatePicker()" formControlName="dateOfBirth" displayFormat="YYYY MMM D" min="1906" max="2000" (ionChange)="copyDobFromControlToArgs()"></ion-datetime>
+            <ion-datetime formControlName="dateOfBirth" displayFormat="YYYY MMM D" min="1906" max="2000" (ionChange)="copyDobFromControlToArgs()"></ion-datetime>
           </ion-item>
         </ion-list>
       </ion-card-content>
       <ion-item class="footer-card">
-        <button item-right clear [disabled]="!mainForm.valid">
+        <button ion-button item-right clear icon-right [disabled]="!mainForm.valid">
               {{"continue" | translate}}
               <ion-icon name="arrow-forward"></ion-icon>
             </button>

@@ -1,14 +1,13 @@
-import {Page} from 'ionic-angular';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
+import { Component } from '@angular/core';
 
-@Page({
-  templateUrl: 'build/pages/registration/no-internet-connection.html',
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'no-internet-connection.html',
 })
 export class NoInternetConnectionPage {
 
   constructor(
-    private translate: TranslateService
+    public translate: TranslateService
   ) {
   }
 

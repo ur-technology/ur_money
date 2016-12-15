@@ -2,7 +2,7 @@
     <ion-navbar>
         <ion-title>{{"authentication-code.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="authenticationCode.length<6"
+          <button ion-button [disabled]="authenticationCode.length<6"
               (click)="checkCode()">
               {{"done" | translate}}
           </button>
@@ -36,7 +36,7 @@
         </div>
 
         <div class="verify-btns">
-            <button clear
+            <button ion-button clear
                 (click)="resendCode()"
                 class="button button-light">{{"authentication-code.resendCode" | translate}}</button>
         </div>
@@ -47,56 +47,56 @@
     <div class="unlock-keypad">
         <ion-row class="row">
             <ion-col class="col col-33">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(1)">1</button>
             </ion-col>
             <ion-col class="col col-33 mid-col">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(2)">2</button>
             </ion-col>
             <ion-col class="col col-33">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(3)">3</button>
             </ion-col>
         </ion-row>
         <ion-row class="row">
             <ion-col class="col col-33">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(4)">4</button>
             </ion-col>
             <ion-col class="col col-33 mid-col">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(5)">5</button>
             </ion-col>
             <ion-col class="col col-33">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(6)">6</button>
             </ion-col>
         </ion-row>
         <ion-row class="row">
             <ion-col class="col col-33">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(7)">7</button>
             </ion-col>
             <ion-col class="col col-33 mid-col">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(8)">8</button>
             </ion-col>
             <ion-col class="col col-33">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(9)">9</button>
             </ion-col>
         </ion-row>
         <ion-row class="row">
             <ion-col class="col col-33">
-                <button class="button button-clear pin-btn"></button>
+                <button ion-button clear class="pin-btn"></button>
             </ion-col>
             <ion-col class="col col-33 mid-col">
-                <button class="button button-clear pin-btn"
+                <button ion-button clear class="pin-btn"
                     (click)="add(0)">0</button>
             </ion-col>
             <ion-col class="col col-33">
-                <button class="button button-clear pin-btn"
+                <button ion-button icon-only clear class="pin-btn"
                     (click)="delete()">
                     <ion-icon name="ios-backspace-outline"></ion-icon>
                 </button>

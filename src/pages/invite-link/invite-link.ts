@@ -1,20 +1,19 @@
-import {Page, NavController, Platform} from 'ionic-angular';
-import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
+import { NavController, Platform} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { Component } from '@angular/core';
 
 declare var jQuery: any;
 
-@Page({
-  templateUrl: 'build/pages/invite-link/invite-link.html',
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'invite-link.html',
 })
 export class InviteLinkPage {
   public versionNumber: string;
   mainForm: FormGroup;
   referralLink: string;
 
-  constructor(public nav: NavController, private platform: Platform, private auth: AuthService, private translateService: TranslateService) {
+  constructor(public nav: NavController, public platform: Platform, public auth: AuthService) {
     this.referralLink = this.auth.referralLink(window);
     let formElements: any = {
       referralLink: new FormControl('', [Validators.required])
@@ -22,7 +21,7 @@ export class InviteLinkPage {
     this.mainForm = new FormGroup(formElements);
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     let Clipboard = require('clipboard');
     new Clipboard('#copy-button');
   }

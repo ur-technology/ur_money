@@ -1,31 +1,32 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import {Subscription} from 'rxjs';
 import {ContactsService} from '../services/contacts';
 import {Config} from '../config/config';
+import { FirebaseApp } from 'angularfire2';
 
 @Injectable()
 export class AuthService {
   public currentUserId: string;
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
-  private authenticationRequestCountryCode: string;
-  private smsTaskId: string;
-  private emailTaskId: string;
+  public authenticationRequestCountryCode: string;
+  public smsTaskId: string;
+  public emailTaskId: string;
   public authenticatedEmail: string;
-  private unauthenticatedEmail: string;
-  private firebaseConnectionCheckInProgress: boolean = false;
+  public unauthenticatedEmail: string;
+  public firebaseConnectionCheckInProgress: boolean = false;
 
   constructor(
     public angularFire: AngularFire,
-    public contactsService: ContactsService
+    public contactsService: ContactsService,
+    @Inject(FirebaseApp) firebase: any
   ) {
   }
 
-  respondToAuth(app: any, pages: any) {
+  respondToAuth(nav: any, pages: any) {
     let self = this;
     self.checkFirebaseConnection().then(() => {
       firebase.auth().onAuthStateChanged((authData: any) => {
@@ -42,13 +43,12 @@ export class AuthService {
               self.currentUser.countryCode = self.authenticationRequestCountryCode;
               this.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
-            app.initializeMenu();
             let status = self.getUserStatus();
             if (status === 'initial' || !self.currentUser.wallet || !self.currentUser.wallet.address) {
-              app.nav.setRoot(pages.introPage);
+              nav.setRoot(pages.introPage);
             } else {
               self.contactsService.loadContacts(self.currentUserId, self.currentUser.phone, self.currentUser.countryCode);
-              app.nav.setRoot(pages.homePage);
+              nav.setRoot(pages.homePage);
             }
           });
         } else {
@@ -57,13 +57,12 @@ export class AuthService {
           self.currentUserRef = undefined;
           self.currentUser = undefined;
           self.authenticationRequestCountryCode = undefined;
-          app.initializeMenu();
-          app.nav.setRoot(pages.welcomePage);
+          nav.setRoot(pages.welcomePage);
         }
       });
     }, (error) => {
       if (error.messageKey === 'noInternetConnection') {
-        app.nav.setRoot(pages.noInternetConnectionPage);
+        nav.setRoot(pages.noInternetConnectionPage);
       } else {
         log.warn(`got error: ${error}`);
       }
@@ -472,5 +471,4 @@ export class AuthService {
     }
     return `${base}?r=${this.currentUser.referralCode}`;
   }
-
 }

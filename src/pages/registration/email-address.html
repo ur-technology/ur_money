@@ -2,7 +2,7 @@
     <ion-navbar>
         <ion-title>{{"email-address.title" | translate}}</ion-title>
         <ion-buttons end>
-          <button [disabled]="!mainForm.valid" (click)="submit()">
+          <button ion-button [disabled]="!mainForm.valid" (click)="submit()">
               {{"done" | translate}}
           </button>
         </ion-buttons>

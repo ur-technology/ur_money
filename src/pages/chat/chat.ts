@@ -1,24 +1,20 @@
-import {ViewChild } from '@angular/core';
-import {Page, NavController, NavParams, Platform, Content, AlertController, PopoverController } from 'ionic-angular';
+import {ViewChild, Inject , Component} from '@angular/core';
+import { NavController, NavParams, Platform, Content, AlertController, PopoverController } from 'ionic-angular';
 import {AngularFire} from 'angularfire2';
 import {Subscription} from 'rxjs';
-import {Timestamp}  from '../../pipes/timestamp';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
+import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 import {AuthService} from '../../services/auth';
-import {DateAndTime} from '../../pipes/dateAndTime.pipe';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {PopoverChatPage} from './popover-chat';
-import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
 import {Keyboard} from 'ionic-native';
 
 declare var jQuery: any;
 
-@Page({
-  templateUrl: 'build/pages/chat/chat.html',
-  pipes: [Timestamp, DateAndTime, TranslatePipe],
-  directives: [KeyboardAttachDirective]
+@Component({
+  selector: 'chat-page',
+  templateUrl: 'chat.html',
 })
 export class ChatPage {
   messages: any[];
@@ -31,12 +27,12 @@ export class ChatPage {
   messageTextAreaHeight: number;
   @ViewChild(Content) content: Content;
 
-  constructor(private nav: NavController, public navParams: NavParams, private platform: Platform, private angularFire: AngularFire, private auth: AuthService, private translate: TranslateService, private alertCtrl: AlertController, private popoverCtrl: PopoverController) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public translate: TranslateService, public alertCtrl: AlertController, public popoverCtrl: PopoverController, @Inject(FirebaseApp) firebase: any) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
     this.chatId = this.navParams.get('chatId'); // TODO: maybe include this field in chatSummary
-    if (this.platform.is('cordova')) {
+    if (this.platform.is('android')) {
       Keyboard.onKeyboardShow().subscribe(e => this.onKeyboardShow(e));
     }
   }
@@ -51,7 +47,7 @@ export class ChatPage {
     }, 50);
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     if (this.chatSummary) {
       this.loadMessages();
     } else if (this.chatId) {

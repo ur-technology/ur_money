@@ -1,6 +1,6 @@
-import {Injectable, EventEmitter} from '@angular/core';
+import {Injectable, EventEmitter, Inject} from '@angular/core';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
+import { FirebaseApp } from 'angularfire2';
 import {AuthService} from './auth';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class EventsService {
   events = [];
   eventChanged = new EventEmitter();
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, @Inject(FirebaseApp) firebase: any) {
     this.loadEvents();
   }
 

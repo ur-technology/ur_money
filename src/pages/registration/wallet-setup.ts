@@ -1,6 +1,7 @@
-import {Page, NavController, Platform, AlertController, ToastController, LoadingController} from 'ionic-angular';
-import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl} from '@angular/forms';
-import * as firebase from 'firebase';
+import { NavController, Platform, AlertController, ToastController, LoadingController} from 'ionic-angular';
+import { Inject, Component } from '@angular/core';
+import { FormGroup, FormControl} from '@angular/forms';
+import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 import {NativeStorage} from 'ionic-native';
 import {WalletModel} from '../../models/wallet';
@@ -8,16 +9,13 @@ import {AuthService} from '../../services/auth';
 import {ContactsService} from '../../services/contacts';
 import {CustomValidator} from '../../validators/custom';
 import {HomePage} from '../home/home';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
-import {KeyboardAttachDirective} from '../../directives/keyboard-attach.directive';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {EncryptionService} from '../../services/encryption';
 
 declare var jQuery: any;
 
-@Page({
-  templateUrl: 'build/pages/registration/wallet-setup.html',
-  directives: [REACTIVE_FORM_DIRECTIVES, KeyboardAttachDirective],
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'wallet-setup.html',
 })
 export class WalletSetupPage {
   mainForm: FormGroup;
@@ -29,12 +27,13 @@ export class WalletSetupPage {
     public nav: NavController,
     public auth: AuthService,
     public contactsService: ContactsService,
-    private platform: Platform,
-    private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
-    private loadingController: LoadingController,
-    private translate: TranslateService,
-    private encryptionService: EncryptionService
+    public platform: Platform,
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController,
+    public loadingController: LoadingController,
+    public translate: TranslateService,
+    public encryptionService: EncryptionService,
+    @Inject(FirebaseApp) firebase: any
   ) {
     this.mainForm = new FormGroup({
       secretPhrase: new FormControl('', CustomValidator.secretPhraseValidator),

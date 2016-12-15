@@ -1,19 +1,24 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {HomePage} from '../../home/home';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../../services/auth';
 import {ChatPage} from '../../chat/chat';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification/identity-verification-sponsor-wait/identity-verification-sponsor-wait.html',
-  pipes: [TranslatePipe]
+  selector: 'identity-verification-sponsor-wait-page',
+  templateUrl: 'identity-verification-sponsor-wait.html',
 })
 export class IdentityVerificationSponsorWaitPage {
-  param: any = {};
+  public param:any = {};
+  public mensaje = "";
+  public buttonValue = "";
 
-  constructor(private navCtrl: NavController, public auth: AuthService) {
+
+  constructor(public navCtrl: NavController, public auth: AuthService, public translate: TranslateService) {
     this.param.sponsor = this.auth.currentUser.sponsor.name;
+    this.mensaje = this.translate.instant('identity-verification-sponsor-wait.slideMessage', this.param);
+    this.buttonValue = this.translate.instant('identity-verification-sponsor-wait.sendMessage', this.param);
   }
 
   goToHome() {
@@ -21,7 +26,7 @@ export class IdentityVerificationSponsorWaitPage {
   }
 
   sendMessageSponsor() {
-    this.navCtrl.popToRoot({ animate: false, duration: 0, transitionDelay: 0, progressAnimation: false }).then(data => {
+    this.navCtrl.popToRoot({ animate: false, duration: 0, progressAnimation: false }).then(data => {
       this.navCtrl.push(ChatPage, { contact: this.auth.currentUser.sponsor });
     });
   }

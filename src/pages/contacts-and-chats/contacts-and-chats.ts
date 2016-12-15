@@ -1,16 +1,13 @@
-import {Page, NavController, NavParams, Platform} from 'ionic-angular';
-import {ContactsComponent} from '../../components/contacts/contacts';
-import {ChatListComponent} from '../../components/chat-list/chat-list';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import { NavController, NavParams, Platform} from 'ionic-angular';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../services/auth';
 import {Config} from '../../config/config';
+import { Component } from '@angular/core';
 
 declare var jQuery: any;
 
-@Page({
-  templateUrl: 'build/pages/contacts-and-chats/contacts-and-chats.html',
-  directives: [ContactsComponent, ChatListComponent],
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'contacts-and-chats.html',
 })
 export class ContactsAndChatsPage {
   contactsPage: any;
@@ -18,7 +15,7 @@ export class ContactsAndChatsPage {
   chatsPage: any;
   segmentSelected: string = 'contacts';
 
-  constructor(private nav: NavController, private navParams: NavParams, public platform: Platform, private translate: TranslateService, public auth: AuthService) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService) {
     this.goal = navParams.get('goal');
   }
 

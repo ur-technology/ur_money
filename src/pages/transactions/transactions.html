@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar clear>
         <ion-title>{{"transactions.title" | translate}}</ion-title>
-        <button menuToggle>
+        <button ion-button menuToggle icon-only>
             <ion-icon name="sent-icon-on"></ion-icon>
         </button>
     </ion-navbar>
 </ion-header>
-<ion-content class="transactions"
+<ion-content class="transactions-page  transactions"
     [fullscreen]="false">
     <ion-segment [(ngModel)]="segmentSelected"
         class="transactions-tab-nav">
@@ -41,11 +41,11 @@
 <ion-footer>
     <div class="bar bar-footer dash-footer">
         <div class="button-bar footer-btns">
-            <button (click)="goToPage('home')"
+            <button ion-button (click)="goToPage('home')"
                 class="button button-calm"><i class="home-icon"></i></button>
-            <button (click)="goToPage('send')"
+            <button ion-button (click)="goToPage('send')"
                 class="button button-calm"><i class="plane-icon"></i></button>
-            <button (click)="goToPage('invite')"
+            <button ion-button (click)="goToPage('invite')"
                 class="button button-calm"><i class="invite-icon"></i></button>
         </div>
     </div>

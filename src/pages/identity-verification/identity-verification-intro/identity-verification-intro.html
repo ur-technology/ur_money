@@ -7,7 +7,7 @@
 <ion-content padding>
   <ion-card>
     <ion-card-content text-justify>
-      <img src="img/ur-logo.png"
+      <img src="assets/img/ur-logo.png"
         class="slide-image" />
       <h2 class="slide-title"
         innerHTML='{{"identity-verification-intro.slideTitle" | translate}}'></h2><br />
@@ -18,8 +18,8 @@
       </p>
     </ion-card-content>
     <ion-item class="footer-card">
-      <button item-right
-        clear
+      <button ion-button item-right
+        clear icon-right
         (click)="goToProfile()">
         {{"continue" | translate}}
         <ion-icon name="arrow-forward"></ion-icon>

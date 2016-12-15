@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import {NavController, NavParams, Content} from 'ionic-angular';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {IdentityVerificationDocumentPage} from '../identity-verification-document/identity-verification-document';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
@@ -8,8 +7,8 @@ import {AuthService} from '../../../services/auth';
 import {CountryListService} from '../../../services/country-list';
 
 @Component({
-  templateUrl: 'build/pages/identity-verification/identity-verification-address/identity-verification-address.html',
-  pipes: [TranslatePipe]
+  selector: 'identity-verification-address-page',
+  templateUrl: 'identity-verification-address.html',
 })
 export class IdentityVerificationAddressPage {
   @ViewChild(Content) content: Content;
@@ -70,7 +69,7 @@ export class IdentityVerificationAddressPage {
     };
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     this.fillCountriesArray();
     this.fillStatesArray();
   }
@@ -78,7 +77,7 @@ export class IdentityVerificationAddressPage {
   fillCountriesArray() {
     this.countries = _.values(this.auth.supportedCountries());
     let country = _.find(this.countries, { CountryCode: this.verificationArgs.CountryCode });
-    this.formElements.countryCode.updateValue(country);
+    this.formElements.countryCode.setValue(country);
   }
 
   fillStatesArray() {
@@ -87,16 +86,21 @@ export class IdentityVerificationAddressPage {
     }
     let allStates = require('provinces');
     this.states = _.filter(allStates, { country: this.verificationArgs.CountryCode });
-    this.states = _.filter(this.states, 'short');
-    let state = _.find(this.states, { 'short': this.verificationArgs.Location.StateProvinceCode }) ||
-      this.states[0];
-    this.verificationArgs.Location.StateProvinceCode = state ? state.short : '';
-    this.formElements.stateProvinceCode.updateValue(state);
+    if(this.states.length > 0){
+      let state = _.find(this.states, o => {
+        return o.short === this.verificationArgs.Location.StateProvinceCode  || o.name === this.verificationArgs.Location.StateProvinceCode;
+      }) ||
+        this.states[0];
+      this.verificationArgs.Location.StateProvinceCode = state.short ? state.short : state.name;
+      this.formElements.stateProvinceCode.setValue(state);
+    } else {
+      this.formElements.stateProvinceCode.setValue('');
+    }
   }
 
   onCountrySelected(countrySelected) {
     this.verificationArgs.CountryCode = countrySelected.CountryCode;
-    this.formElements.stateProvinceCode.updateValue(''); // this clears fields AND forces re-validation
+    this.formElements.stateProvinceCode.setValue(''); // this clears fields AND forces re-validation
     this.fillStatesArray();
     this.clearFormErrors();
   }
@@ -108,21 +112,13 @@ export class IdentityVerificationAddressPage {
   }
 
   onStateSelected(state) {
-    this.verificationArgs.Location.StateProvinceCode = state ? state.short : '';
+    this.formElements.stateProvinceCode.setValue(state);
+    this.verificationArgs.Location.StateProvinceCode = state.short ? state.short : state.name;
   }
 
   submit() {
+    this.verificationArgs.Location = _.omitBy(this.verificationArgs.Location, _.isNil);
     this.nav.push(IdentityVerificationDocumentPage, {verificationArgs: this.verificationArgs});
-  }
-
-  focusInput() {
-    this.scrollToBottom();
-  }
-
-  scrollToBottom() {
-    setTimeout(() => {
-      this.content.scrollToBottom();
-    }, 500);
   }
 
 }
