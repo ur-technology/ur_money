@@ -182,9 +182,10 @@
         "users": {
             ".indexOn": ["phone", "wallet/address", "email", "referralCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id"],
             // allow read or write only if the authenticated user is accessing his own user record
+            ".read": "root.child('users').child(auth.uid).child('admin').val() == true",
             "$uid": {
-                ".read": "$uid===auth.uid",
-                ".write": "$uid===auth.uid",
+                ".read": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
+                ".read": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
                 "transactions": {
                     ".indexOn": ["sortKey"]
                 },
@@ -192,7 +193,6 @@
                     ".indexOn": "notificationProcessed"
                 }
             }
-
         }
     }
 }
