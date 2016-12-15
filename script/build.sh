@@ -14,6 +14,13 @@ if [[ "$UR_ENV" != "production" && "$UR_ENV" != "john" && "$UR_ENV" != "xavier" 
 fi
 echo "UR_ENV=$UR_ENV"
 
+if [[ "$3" == "deploy" ]]; then
+  DEPLOY="true"
+else
+  DEPLOY="false"
+fi
+echo "DEPLOY=$DEPLOY"
+
 cp app/config/env.$UR_ENV.json app/config/env.json
 
 sed -i '' -e "s/UNKNOWN_TARGET_PLATFORM/${PLATFORM}/g" app/config/env.json
@@ -35,6 +42,7 @@ npm install
 typings install
 
 if [[ "$PLATFORM" == "android" ]]; then
+
   if [[ "$UR_ENV" == "production" ]]; then
     ionic build --release android
     read -s -p "Type passphrase for keystore: " PASSPHRASE
@@ -54,9 +62,17 @@ if [[ "$PLATFORM" == "android" ]]; then
   open platforms/android/build/outputs/apk/  # file is named 'UR Money.apk'
 
 elif [[ "$PLATFORM" == "ios" ]]; then
+
   ionic build ios
   echo "Please complete the build in XCode..."
-else # web
-  gulp build
-  firebase deploy -P ur-money-${UR_ENV}
+
+elif [[ "$PLATFORM" == "web" ]]; then
+
+  if [[ "$DEPLOY" == "true" ]]; then
+    echo "building and deploying to firebase"
+    gulp build
+    sed -e $'s/<\/head>/  <bash href="\/">\\\n<\/head>/' www/index.html > www/index.web.html
+    firebase deploy -P ur-money-${UR_ENV}
+  fi
+
 fi

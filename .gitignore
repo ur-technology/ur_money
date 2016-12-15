@@ -14,3 +14,4 @@ firebase-debug.log
 www/go/
 app/config/env.json
 password.txt
+www/index.web.html
