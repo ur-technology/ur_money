@@ -460,7 +460,7 @@ export class AuthService {
     if (!this.currentUser) {
       return undefined;
     }
-    let base:string;
+    let base: string;
     if (Config.targetPlatform === 'web') {
       base = window.location.origin;
     } else if (this.envMode() === 'production') {
