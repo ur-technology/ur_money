@@ -4,12 +4,7 @@
 			"admin": true,
 			"createdAt": 1465446952757,
 			"downlineLevel": 1,
-			"downlineUsers": {
-				"-KJn47TvHAlfQocDX_ES": {
-					"name": "Eiland Glover",
-					"profilePhotoUrl": "https://dummyimage.com/100x100/DD4747/FFFFFF&text=XX"
-				}
-			},
+			"downlineSize": 4,
 			"firstName": "John",
 			"lastName": "Reitano",
 			"name": "John Reitano",
@@ -20,20 +15,7 @@
 			"admin": true,
 			"createdAt": 1465440831526,
 			"downlineLevel": 2,
-			"downlineUsers": {
-				"-KV87tx6gE9kVemBCGyy": {
-					"name": "Justin Williams",
-					"profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=JW"
-				},
-				"-KLqYxC3-j6MhstbXiED": {
-					"name": "Karina Simpson",
-					"profilePhotoUrl": "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=TT"
-				},
-				"-KLwWedxw2DHDhTdTK9-": {
-					"name": "Karina Simpson",
-					"profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=KS"
-				}
-			},
+			"downlineSize": 3,
 			"firstName": "Howard",
 			"lastName": "Glover",
 			"middleName": "Eiland",
@@ -49,6 +31,7 @@
 		"-KV87tx6gE9kVemBCGyy": {
 			"createdAt": 1477638856600,
 			"downlineLevel": 3,
+			"downlineSize": 0,
 			"firstName": "Justin",
 			"lastName": "Williams",
 			"middleName": "",
@@ -67,6 +50,7 @@
 			"countryCode": "US",
 			"createdAt": 1467646727200,
 			"downlineLevel": 3,
+			"downlineSize": 0,
 			"firstName": "Karina",
 			"lastName": "Simpson",
 			"memberId": 301,
@@ -87,6 +71,8 @@
 			"city": "Beavercreek",
 			"countryCode": "US",
 			"createdAt": 1467746790141,
+			"downlineLevel": 3,
+			"downlineSize": 0,
 			"firstName": "Karina",
 			"lastName": "Simpson",
 			"memberId": 303,
