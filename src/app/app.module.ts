@@ -59,9 +59,9 @@ import {Config} from '../config/config';
 
 export const firebaseConfig = {
   apiKey: Config.firebaseApiKey,
-  authDomain: `${Config.firebaseProjectId}.firebaseapp.com`,
-  databaseURL: `https://${Config.firebaseProjectId}.firebaseio.com`,
-  storageBucket: `${Config.firebaseProjectId}.appspot.com`
+  authDomain: Config.firebaseProjectId + '.firebaseapp.com',
+  databaseURL: 'https://' + Config.firebaseProjectId + '.firebaseio.com',
+  storageBucket: Config.firebaseProjectId + '.appspot.com'
 };
 
 const myFirebaseAuthConfig = {

@@ -40,8 +40,7 @@
       <ion-label floating>Country</ion-label>
       <ion-select [(ngModel)]="user.country"
         disabled="!inEditMode"
-        [ngModelOptions]="{standalone: true}"
-        (ionChange)="countrySelected()">
+        [ngModelOptions]="{standalone: true}">
         <ion-option [value]="c"
           *ngFor="let c of countries">{{c.name}}</ion-option>
       </ion-select>
