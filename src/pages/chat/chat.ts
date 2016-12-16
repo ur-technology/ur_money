@@ -240,7 +240,7 @@ export class ChatPage {
   }
 
   ionViewWillLeave() {
-    if (this.messagesRef && !this.messagesRef.isUnsubscribed) {
+    if (this.messagesRef && !this.messagesRef.closed) {
       this.messagesRef.unsubscribe();
     }
   }

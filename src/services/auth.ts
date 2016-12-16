@@ -34,7 +34,7 @@ export class AuthService {
           self.currentUserId = authData.uid;
           self.currentUserRef = self.angularFire.database.object(`/users/${self.currentUserId}`);
           let userSubscription: Subscription = self.currentUserRef.subscribe((currentUser) => {
-            if (userSubscription && !userSubscription.isUnsubscribed) {
+            if (userSubscription && !userSubscription.closed) {
               userSubscription.unsubscribe();
             }
             self.currentUser = currentUser;
