@@ -1,18 +1,18 @@
-import {Page, NavController, NavParams, Platform, AlertController} from 'ionic-angular';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import { NavController, NavParams, Platform, AlertController} from 'ionic-angular';
+import { Inject, Component} from '@angular/core';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../services/auth';
 import {Config} from '../../config/config';
 import {UserPage} from './user';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import * as firebase from 'firebase';
+import { FirebaseApp } from 'angularfire2';
 
 declare var window: any;
 declare var jQuery: any;
 
-@Page({
-  templateUrl: 'build/pages/admin/users.html',
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'users.html',
 })
 export class UsersPage {
   pageIndex = 0;
@@ -32,7 +32,8 @@ export class UsersPage {
     public platform: Platform,
     private translate: TranslateService,
     public auth: AuthService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    @Inject(FirebaseApp) firebase: any
   ) {
       this.searchTypes = ['Email', 'Phone', 'Full Name', 'Last Name', 'User Id', 'Sponsor Full Name', 'Sponsor User Id'];
       this.searchType = this.navParams.get('searchType') || this.searchTypes[0];

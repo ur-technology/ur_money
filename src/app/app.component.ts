@@ -9,6 +9,9 @@ import {AuthService} from '../services/auth';
 import {NoInternetConnectionPage} from '../pages/registration/no-internet-connection';
 import {WelcomePage} from '../pages/registration/welcome';
 import {IntroPage} from '../pages/registration/intro';
+import {SendPage} from '../pages/send/send';
+import {InviteLinkPage} from '../pages/invite-link/invite-link';
+import {UsersPage} from '../pages/admin/users';
 import {SettingsPage} from '../pages/settings/settings';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {Config} from '../config/config'
@@ -23,15 +26,9 @@ export class UrMoney {
   menuItems: any[];
 
 
-  constructor(public platform: Platform,  public menu: MenuController, public auth: AuthService, public translate: TranslateService) {
-    platform.ready().then(() => {
-      StatusBar.styleDefault();
-      Splashscreen.hide();
-    });
-
+  constructor(public platform: Platform, public menu: MenuController, public auth: AuthService, public translate: TranslateService) {
     this.initializeApp();
     this.translateConfig();
-    this.translateMenu();
   }
 
   storeReferralCodeIfPresent() {
@@ -44,30 +41,20 @@ export class UrMoney {
 
   initializeApp() {
     this.storeReferralCodeIfPresent();
-    this.menuItems = [
-      { title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home', value: 'home' },
-      { title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: 'chat' }, icon: 'icon menu-icon menu-icon-chat', value: 'chat' },
-      { title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: 'send' }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' },
-      // { title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: 'request' }, icon: 'icon menu-icon menu-icon-request-ur', value: 'request' },
-      { title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'transactions' },
-      { title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' }
-    ];
-
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
-      }
-      if (this.platform.is('ios')) {
-        let removed: any[] = _.remove(this.menuItems, (menu) => {
-          return menu.value === 'send';
-        });
-        this.menuItems = _.pull(this.menuItems, removed);
+        if (Splashscreen) {
+          setTimeout(() => {
+            Splashscreen.hide();
+          }, 100);
+        }
       }
 
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
       log.setDefaultLevel(logLevel);
 
-      this.auth.respondToAuth(this.nav, {
+      this.auth.respondToAuth(this, {
         noInternetConnectionPage: NoInternetConnectionPage,
         welcomePage: WelcomePage,
         introPage: IntroPage,
@@ -77,25 +64,31 @@ export class UrMoney {
       log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
     });
   }
+  initializeMenu() {
+    this.menuItems = [];
+    this.menuItems.push({ title: 'Home', page: HomePage, icon: 'icon menu-icon menu-icon-home', value: 'home' });
+    if (Config.targetPlatform !== 'web') {
+      this.menuItems.push({ title: 'Chat', page: ContactsAndChatsPage, pageParams: { goal: 'chat' }, icon: 'icon menu-icon menu-icon-chat', value: 'chat' });
+    }
+    if (Config.targetPlatform === 'android') {
+      this.menuItems.push({ title: 'Send UR', page: ContactsAndChatsPage, pageParams: { goal: 'send' }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' });
+    } else if (Config.targetPlatform === 'web') {
+      this.menuItems.push({ title: 'Send UR', page: SendPage, pageParams: { contact: {} }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' });
+    }
+    // this.menuItems.push({ title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: 'request' }, icon: 'icon menu-icon menu-icon-request-ur', value: 'request' });
+    this.menuItems.push({ title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'transactions' });
+    this.menuItems.push({ title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' });
+    if (this.auth.currentUser && this.auth.currentUser.admin) {
+      this.menuItems.push({ title: 'Manage Users', page: UsersPage, icon: 'icon menu-icon menu-icon-people', value: 'users' });
+    }
+    this.translateMenu();
+  }
 
   translateMenu() {
-    this.translate.get('app.home').subscribe((res: string) => {
-      this.menuItems[_.findIndex(this.menuItems, ['value', 'home'])].title = res;
-    });
-    this.translate.get('app.chat').subscribe((res: string) => {
-      this.menuItems[_.findIndex(this.menuItems, ['value', 'chat'])].title = res;
-    });
-    this.translate.get('app.sendUr').subscribe((res: string) => {
-      let index = _.findIndex(this.menuItems, ['value', 'send']);
-      if (index !== -1) {
-        this.menuItems[index].title = res;
-      }
-    });
-    this.translate.get('app.transactions').subscribe((res: string) => {
-      this.menuItems[_.findIndex(this.menuItems, ['value', 'transactions'])].title = res;
-    });
-    this.translate.get('app.about').subscribe((res: string) => {
-      this.menuItems[_.findIndex(this.menuItems, ['value', 'about'])].title = res;
+    _.each(this.menuItems, (menuItem) => {
+      this.translate.get(`app.${menuItem.value}`).subscribe((res: string) => {
+        menuItem.title = res;
+      });
     });
   }
 
@@ -124,14 +117,10 @@ export class UrMoney {
 
   invite() {
     this.menu.close();
-    this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
-  }
-
-  hideSplashScreen() {
-    if (Splashscreen) {
-      setTimeout(() => {
-        Splashscreen.hide();
-      }, 100);
+    if (Config.targetPlatform === 'web') {
+      this.nav.push(InviteLinkPage, { animate: true, direction: 'forward' });
+    } else {
+      this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
     }
   }
 }

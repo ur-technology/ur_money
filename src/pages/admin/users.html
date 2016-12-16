@@ -15,7 +15,7 @@
 
     <ion-input type="text" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"></ion-input>
 
-    <button item-right clear [disabled]="!searchText">
+    <button ion-button icon-right item-right clear [disabled]="!searchText">
       Search
       <ion-icon name="arrow-forward"></ion-icon>
     </button>
@@ -33,7 +33,7 @@
       <ion-avatar item-left> <ion-img [src]="user.profilePhotoUrl"></ion-img></ion-avatar>
       <h2>{{user.name}}</h2>
       <p>{{user.formattedPhone}} <span>{{user.phoneType}}</span></p>
-      <button type="button" primary item-right>Edit</button>
+      <button ion-button type="button" color="primary" item-right>Edit</button>
     </ion-item>
 
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

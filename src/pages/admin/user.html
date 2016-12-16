@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>Edit User Info</ion-title>
     <ion-buttons end>
-      <button [disabled]="!mainForm.valid"
+      <button ion-button [disabled]="!mainForm.valid"
         (click)="saveProfile()">
             Save
         </button>
@@ -13,7 +13,7 @@
   #content
   class="settings">
   <form [formGroup]="mainForm">
-    <ion-item-divider light>Profile Info</ion-item-divider>
+    <ion-item-divider color="light">Profile Info</ion-item-divider>
     <ion-item>
       <ion-label floating>First Name</ion-label>
       <ion-input
@@ -74,7 +74,7 @@
           <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
           <h2>{{r.name}}</h2>
           <p>{{r.formattedPhone}} <span>{{r.phoneType}}</span></p>
-          <button type="button" primary item-right>Edit</button>
+          <button type="button" color="primary" item-right>Edit</button>
         </ion-item>
       </ion-list>
     </ion-item>

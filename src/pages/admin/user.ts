@@ -1,18 +1,18 @@
-import {Page, NavController, NavParams, ToastController, AlertController} from 'ionic-angular';
+import {NavController, NavParams, ToastController, AlertController} from 'ionic-angular';
+import {Inject, Component} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import {AuthService} from '../../services/auth';
 import {CustomValidator} from '../../validators/custom';
 import {UserModel} from '../../models/user';
-// import {Config} from '../../config/config';
 import * as _ from 'lodash';
-import * as firebase from 'firebase';
+import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 
 declare var window: any;
 declare var jQuery: any;
 
-@Page({
-  templateUrl: 'build/pages/admin/user.html'
+@Component({
+  templateUrl: 'user.html'
 })
 export class UserPage {
   mainForm: FormGroup;
@@ -28,7 +28,8 @@ export class UserPage {
     public navParams: NavParams,
     public auth: AuthService,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    @Inject(FirebaseApp) firebase: any
   ) {
   }
 
@@ -85,7 +86,7 @@ export class UserPage {
   }
 
   goToUserPage(u: any) {
-    this.nav.push(UserPage, { user: u }, { animate: true, direction: 'forward' });
+    this.nav.push(UserPage, { user: u });
   }
 
 }

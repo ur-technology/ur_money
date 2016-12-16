@@ -26,7 +26,7 @@ export class AuthService {
   ) {
   }
 
-  respondToAuth(nav: any, pages: any) {
+  respondToAuth(app: any, pages: any) {
     let self = this;
     self.checkFirebaseConnection().then(() => {
       firebase.auth().onAuthStateChanged((authData: any) => {
@@ -43,12 +43,13 @@ export class AuthService {
               self.currentUser.countryCode = self.authenticationRequestCountryCode;
               this.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
+            app.initializeMenu();
             let status = self.getUserStatus();
             if (status === 'initial' || !self.currentUser.wallet || !self.currentUser.wallet.address) {
-              nav.setRoot(pages.introPage);
+              app.nav.setRoot(pages.introPage);
             } else {
               self.contactsService.loadContacts(self.currentUserId, self.currentUser.phone, self.currentUser.countryCode);
-              nav.setRoot(pages.homePage);
+              app.nav.setRoot(pages.homePage);
             }
           });
         } else {
@@ -57,12 +58,13 @@ export class AuthService {
           self.currentUserRef = undefined;
           self.currentUser = undefined;
           self.authenticationRequestCountryCode = undefined;
-          nav.setRoot(pages.welcomePage);
+          app.initializeMenu();
+          app.nav.setRoot(pages.welcomePage);
         }
       });
     }, (error) => {
       if (error.messageKey === 'noInternetConnection') {
-        nav.setRoot(pages.noInternetConnectionPage);
+        app.nav.setRoot(pages.noInternetConnectionPage);
       } else {
         log.warn(`got error: ${error}`);
       }
