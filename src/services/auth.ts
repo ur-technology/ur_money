@@ -26,7 +26,7 @@ export class AuthService {
   ) {
   }
 
-  respondToAuth(app: any, pages: any) {
+  respondToAuth(callback: any) {
     let self = this;
     self.checkFirebaseConnection().then(() => {
       firebase.auth().onAuthStateChanged((authData: any) => {
@@ -43,14 +43,7 @@ export class AuthService {
               self.currentUser.countryCode = self.authenticationRequestCountryCode;
               this.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
-            app.initializeMenu();
-            let status = self.getUserStatus();
-            if (status === 'initial' || !self.currentUser.wallet || !self.currentUser.wallet.address) {
-              app.nav.setRoot(pages.introPage);
-            } else {
-              self.contactsService.loadContacts(self.currentUserId, self.currentUser.phone, self.currentUser.countryCode);
-              app.nav.setRoot(pages.homePage);
-            }
+            callback(undefined);
           });
         } else {
           // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
@@ -58,16 +51,11 @@ export class AuthService {
           self.currentUserRef = undefined;
           self.currentUser = undefined;
           self.authenticationRequestCountryCode = undefined;
-          app.initializeMenu();
-          app.nav.setRoot(pages.welcomePage);
+          callback(undefined);
         }
       });
     }, (error) => {
-      if (error.messageKey === 'noInternetConnection') {
-        app.nav.setRoot(pages.noInternetConnectionPage);
-      } else {
-        log.warn(`got error: ${error}`);
-      }
+      callback(error);
     });
   }
 
@@ -439,12 +427,16 @@ export class AuthService {
   }
 
   getUserStatus() {
+    if (!this.currentUser) {
+      return 'unauthenticated';
+    }
+
     let status = _.trim((this.currentUser.registration && this.currentUser.registration.status) || '') || 'initial';
     if ((this.currentUser.wallet && this.currentUser.wallet.address) && (status === 'initial')) {
       status = 'wallet-generated';
     }
     if ((status !== 'initial') && (this.currentUser.sponsor) && (!this.currentUser.sponsor.announcementTransactionConfirmed)) {
-      status = 'waiting-sponsor';
+      status = 'waiting-for-sponsor';
     }
 
     return status;

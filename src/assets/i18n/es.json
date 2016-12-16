@@ -194,7 +194,8 @@
         "send": "Enviar UR",
         "request": "Solicitar UR",
         "transactions": "Transacciones",
-        "about": "Acerca UR"
+        "about": "Acerca UR",
+        "users": "Manage Users"
     },
     "home": {
         "unlockMessage": "<span class='small'>Desbloquea Tus</span><br />2000<span>&nbsp;UR</span>",

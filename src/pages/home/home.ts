@@ -61,7 +61,7 @@ export class HomePage {
           'announcement-requested': 'home.bonusGenerating',
           'announcement-initiated': 'home.bonusGenerating',
           'verification-succeeded': 'home.bonusGenerating',
-          'waiting-sponsor': 'home.waitingSponsor'
+          'waiting-for-sponsor': 'home.waitingSponsor'
         }[this.auth.getUserStatus()] || 'home.unlockMessage'
       );
     }
@@ -193,7 +193,7 @@ export class HomePage {
         'announcement-initiated': AnnouncementInitiatedPage,
         'announcement-requested': AnnouncementInitiatedPage,
         'verification-succeeded': AnnouncementInitiatedPage,
-        'waiting-sponsor': IdentityVerificationSponsorWaitPage
+        'waiting-for-sponsor': IdentityVerificationSponsorWaitPage
       }[this.auth.getUserStatus()] || IdentityVerificationIntroPage);
     }
   }

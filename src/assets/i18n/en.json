@@ -194,7 +194,8 @@
         "send": "Send UR",
         "request": "Request UR",
         "transactions": "Transactions",
-        "about": "About UR"
+        "about": "About UR",
+        "users": "Manage Users"
     },
     "home": {
         "unlockMessage": "<span class='small'>Unlock Your</span><br />2000<span>&nbsp;UR</span>",

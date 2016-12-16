@@ -21,12 +21,12 @@ else
 fi
 echo "DEPLOY=$DEPLOY"
 
-cp app/config/env.$UR_ENV.json app/config/env.json
+cp src/config/config.$UR_ENV.ts src/config/config.ts
 
-sed -i '' -e "s/UNKNOWN_TARGET_PLATFORM/${PLATFORM}/g" app/config/env.json
+sed -i '' -e "s/UNKNOWN_TARGET_PLATFORM/${PLATFORM}/g" src/config/config.ts
 
-VERSION_NUMBER=`sed -n 's/.*version="\([^"]*\).*/\1/p' config.xml`
-sed -i '' -e "s/UNKNOWN_VERSION_NUMBER/${VERSION_NUMBER}/g" app/config/env.json
+VERSION_NUMBER=`grep widget config.xml | sed -n 's/.*version="\([^"]*\).*/\1/p'`
+sed -i '' -e "s/UNKNOWN_VERSION_NUMBER/${VERSION_NUMBER}/g" src/config/config.ts
 
 if [[ "$PLATFORM" == "android" ]]; then
   if [[ "$UR_ENV" == "production" ]]; then
@@ -71,7 +71,7 @@ elif [[ "$PLATFORM" == "web" ]]; then
   if [[ "$DEPLOY" == "true" ]]; then
     echo "building and deploying to firebase"
     gulp build
-    sed -e $'s/<\/head>/  <bash href="\/">\\\n<\/head>/' www/index.html > www/index.web.html
+    sed -e $'s/<\/head>/  <base href="\/">\\\n<\/head>/' www/index.html > www/index.web.html
     firebase deploy -P ur-money-${UR_ENV}
   fi
 
