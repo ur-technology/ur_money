@@ -54,13 +54,14 @@ import {Http, HttpModule} from '@angular/http';
 import {BrowserModule} from "@angular/platform-browser";
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FormsModule } from '@angular/forms';
+import {Config} from '../config/config';
 
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBUGCRu1n2vFgyFgTVhyoRbKz39MsDMvvw",
-  authDomain: "ur-money-staging.firebaseapp.com",
-  databaseURL: "https://ur-money-staging.firebaseio.com",
-  storageBucket: "ur-money-staging.appspot.com"
+  apiKey: Config.firebaseApiKey,
+  authDomain: `${Config.firebaseProjectId}.firebaseapp.com`,
+  databaseURL: `https://${Config.firebaseProjectId}.firebaseio.com`,
+  storageBucket: `${Config.firebaseProjectId}.appspot.com`
 };
 
 const myFirebaseAuthConfig = {
