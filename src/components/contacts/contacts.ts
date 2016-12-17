@@ -114,12 +114,13 @@ export class ContactsComponent {
       return;
     }
 
-    let invitationCode = self.generateInvitationCode();
     if (!self.platform.is('cordova')) {
       // HACK: this code is here to test invitations in ionic serve
-      let alert = self.alertCtrl.create({ title: 'Simulating social sharing action sheet', message: 'Invitation added to queue!', buttons: ['Ok'] });
-      alert.present();
-      self.addNewInvitationToQueue(contact, invitationCode);
+      self.alertCtrl.create({
+        title: 'Simulating social sharing action sheet',
+        message: 'This is where the social sharing action sheet is normally displayed!',
+        buttons: ['Ok']
+      }).present();
       return;
     }
     let message = this.translate.instant('contacts.inviteMessage');
@@ -131,36 +132,12 @@ export class ContactsComponent {
           url: self.auth.referralLink(window),
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {
-          log.debug('returned from SocialSharing.shareWithOptions; saving dowlineUser');
-          self.addNewInvitationToQueue(contact, invitationCode);
+          log.debug('returned from SocialSharing.shareWithOptions');
         }, (error) => {
           log.warn('Sharing failed with message: ' + error);
         });
       });
     });
-  }
-
-  private addNewInvitationToQueue(contact, invitationCode) {
-    firebase.database().ref('/invitationQueue/tasks').push({
-      sponsorUserId: this.auth.currentUserId,
-      invitee: {
-        firstName: contact.original.firstName,
-        middleName: contact.original.middleName || '',
-        lastName: contact.original.lastName,
-        phone: contact.phone,
-        invitationCode: invitationCode
-      }
-    });
-  }
-
-  private generateInvitationCode(): string {
-    let code: string = '';
-    let letters = 'ABCDEFGHKMNPRSTWXYZ2345689';
-    for (var i = 0; i < 6; i++) {
-      let position = Math.floor(Math.random() * letters.length);
-      code = code + letters.charAt(position);
-    }
-    return code;
   }
 
   inviteFriend() {
