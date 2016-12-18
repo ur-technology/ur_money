@@ -70,7 +70,7 @@ elif [[ "$PLATFORM" == "web" ]]; then
 
   if [[ "$DEPLOY" == "true" ]]; then
     echo "building and deploying to firebase"
-    ionic build
+    # ionic build
     sed -e $'s/<\/head>/  <base href="\/">\\\n<\/head>/' www/index.html > www/index.web.html
     firebase deploy -P ur-money-${UR_ENV}
   fi
