@@ -7,27 +7,19 @@
 <ion-content class="users">
   <form (ngSubmit)="searchUsers()">
     <ion-list>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-select [(ngModel)]="searchType" [ngModelOptions]="{standalone: true}">
-              <ion-option [value]="t" *ngFor="let t of searchTypes">
-                {{t}}
-              </ion-option>
-            </ion-select>
-          </ion-col>
-          <ion-col>
-            <ion-input type="text" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"></ion-input>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <button ion-button icon-right item-right clear [disabled]="!searchText">
-            Search
-            <ion-icon name="arrow-forward"></ion-icon>
-          </button>
-        </ion-row>
-      </ion-grid>
-
+      <ion-item>
+        <ion-label>Search by:</ion-label>
+        <ion-select [(ngModel)]="searchType" [ngModelOptions]="{standalone: true}" class="search-field">
+          <ion-option [value]="t" *ngFor="let t of searchTypes">
+            {{t}}
+          </ion-option>
+        </ion-select>
+        <ion-input type="text" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" class="search-field"></ion-input>
+        <button ion-button icon-right item-right clear [disabled]="!searchText">
+          Search
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-item>
       <div *ngIf="showSpinner">
           <ion-row>
               <ion-col text-center>
