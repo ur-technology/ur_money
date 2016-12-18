@@ -2,10 +2,6 @@
   <ion-navbar>
     <ion-title>Edit User Info</ion-title>
     <ion-buttons end>
-      <button ion-button [disabled]="!mainForm.valid"
-        (click)="saveProfile()">
-            Save
-        </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -13,69 +9,124 @@
   #content
   class="settings">
   <form [formGroup]="mainForm">
-    <ion-item-divider color="light">Profile Info</ion-item-divider>
-    <ion-item>
-      <ion-label floating>First Name</ion-label>
+
+    <ion-item-divider color="light">Actions</ion-item-divider>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Disabled</ion-label>
+            <ion-checkbox color="danger" checked="{{user.disabled}}" (ionChange)="toggle('disabled')"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Fraud Suspected</ion-label>
+            <ion-checkbox color="danger" checked="{{user.fraudSuspected}}" (ionChange)="toggle('fraudSuspected')"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Duplicate</ion-label>
+            <ion-checkbox color="danger" checked="{{user.duplicate}}" (ionChange)="toggle('duplicate')"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item-divider color="light" *ngIf="user.sponsor">Sponsor Info</ion-item-divider>
+    <ion-item (click)="goToSponsorPage()" *ngIf="user.sponsor">
+      <ion-label floating>Sponsor Name</ion-label>
       <ion-input
-        disabled="!inEditMode"
         type="text"
-        [(ngModel)]="user.firstName"
-        formControlName="firstName"></ion-input>
+        [(ngModel)]="user.sponsor.name"
+        formControlName="sponsorName">
+      </ion-input>
+      <button ion-button type="button" color="secondary" item-right>View</button>
+      <button ion-button type="button" color="secondary" item-right (click)="changeSponsor($event)">Change</button>
     </ion-item>
-    <ion-item>
-      <ion-label floating>Middle Name</ion-label>
-      <ion-input type="text"
-        disabled="!inEditMode"
-        [(ngModel)]="user.middleName"
-        formControlName="middleName"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Last Name(s)</ion-label>
-      <ion-input type="text"
-        disabled="!inEditMode"
-        [(ngModel)]="user.lastName"
-        formControlName="lastName"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Country</ion-label>
-      <ion-select [(ngModel)]="user.country"
-        disabled="!inEditMode"
-        [ngModelOptions]="{standalone: true}">
-        <ion-option [value]="c"
-          *ngFor="let c of countries">{{c.name}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Email</ion-label>
-      <ion-input type="text"
-        disabled="!inEditMode"
-        [(ngModel)]="user.email"
-        formControlName="email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Phone</ion-label>
-      <ion-input type="text"
-        disabled="!inEditMode"
-        [(ngModel)]="user.phone"
-        formControlName="phone"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Downline Level</ion-label>
-      <ion-input type="text"
-        disabled="false"
-        [(ngModel)]="user.downlineLevel"
-        formControlName="downlineLevel"></ion-input>
-    </ion-item>
-    <ion-item-divider light>Direct Referrals</ion-item-divider>
+
+    <ion-item-divider color="light">Profile Info</ion-item-divider>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input
+              type="text"
+              [(ngModel)]="user.name"
+              formControlName="name">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Email</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="user.email"
+              formControlName="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Country</ion-label>
+            <ion-input
+              type="text"
+              [(ngModel)]="user.country"
+              formControlName="country">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Phone</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="user.phone"
+              formControlName="phone"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Prefinery IP Address</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="user.ipAddress"
+              formControlName="ipAddress">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Downline Size</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="user.downlineSize"
+              formControlName="downlineSize"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item-divider color="light">Direct Referrals</ion-item-divider>
     <ion-item>
       <ion-list class="users-list" *ngIf="!showSpinner">
         <ion-item detail-none *ngFor="let r of referrals" (click)="goToUserPage(r)" class="item item-avatar">
           <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
-          <h2>{{r.name}}</h2>
-          <p>{{r.formattedPhone}} <span>{{r.phoneType}}</span></p>
-          <button type="button" color="primary" item-right>Edit</button>
+          <ion-label>
+            <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
+            <p>{{r.phone}} {{r.email}} {{country(r)}}</p>
+            </ion-label>
+          <button ion-button type="button" color="secondary" item-right>View</button>
         </ion-item>
+
+        <ion-item detail-none *ngIf="referrals.length === 0" class="item item-avatar">
+          No Direct Referrals
+        </ion-item>
+
       </ion-list>
     </ion-item>
+
   </form>
 </ion-content>

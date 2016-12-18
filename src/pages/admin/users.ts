@@ -25,6 +25,7 @@ export class UsersPage {
   searchTypes: string[];
   searchType: string;
   searchText: string;
+  countries: any[];
 
   constructor(
     private nav: NavController,
@@ -35,12 +36,11 @@ export class UsersPage {
     private alertCtrl: AlertController,
     @Inject(FirebaseApp) firebase: any
   ) {
-      this.searchTypes = ['Email', 'Phone', 'Full Name', 'Last Name', 'User Id', 'Sponsor Full Name', 'Sponsor User Id'];
-      this.searchType = this.navParams.get('searchType') || this.searchTypes[0];
-      this.searchText = !!this.navParams.get('searchType') && this.navParams.get('searchText') ? this.navParams.get('searchText') : '';
-      if (this.searchText) {
-        this.searchUsers();
-      }
+    this.countries = require('country-data').countries.all;
+    this.searchTypes = ['Email', 'Phone', 'Full Name', 'Last Name', 'User Id', 'Sponsor Full Name', 'Sponsor User Id'];
+    this.searchType = this.navParams.get('searchType') || this.searchTypes[0];
+    this.searchText = this.navParams.get('searchType') && this.navParams.get('searchText') ? this.navParams.get('searchText') : 'eiland@ur.technology';
+    this.searchUsers();
   }
 
   ngOnInit() {
@@ -103,6 +103,11 @@ export class UsersPage {
 
   goToUserPage(user: any) {
     this.nav.push(UserPage, { user: user }, { animate: true, direction: 'forward' });
+  }
+
+  country(u) {
+    let countryObject = this.countries.find((x) => { return x.alpha2 === (u.countryCode); });
+    return ( countryObject && countryObject.name ) || ( u.prefineryUser && u.prefineryUser.country ) || 'None';
   }
 
 }

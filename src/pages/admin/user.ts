@@ -2,7 +2,6 @@ import {NavController, NavParams, ToastController, AlertController} from 'ionic-
 import {Inject, Component} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import {AuthService} from '../../services/auth';
-import {CustomValidator} from '../../validators/custom';
 import {UserModel} from '../../models/user';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
@@ -31,28 +30,27 @@ export class UserPage {
     private toastCtrl: ToastController,
     @Inject(FirebaseApp) firebase: any
   ) {
-  }
-
-  ionViewLoaded() {
-    this.countries = require('country-data').countries.all.sort((a, b) => {
-      return (a.name < b.name) ? -1 : ((a.name === b.name) ? 0 : 1);
-    });
-    // remove Cuba, Iran, North Korea, Sudan, Syria
-    this.countries = _.filter(this.countries, (country) => {
-      return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
-    });
 
     this.mainForm = new FormGroup({
-      firstName: new FormControl('', CustomValidator.nameValidator),
-      middleName: new FormControl('', CustomValidator.optionalNameValidator),
-      lastName: new FormControl('', CustomValidator.nameValidator),
-      email: new FormControl('', CustomValidator.nameValidator),
-      phone: new FormControl('', CustomValidator.nameValidator),
-      downlineLevel: new FormControl('')
+      sponsorName: new FormControl({value: '', disabled: true}),
+      name: new FormControl({value: '', disabled: true}),
+      country: new FormControl({value: '', disabled: true}),
+      email: new FormControl({value: '', disabled: true}),
+      phone: new FormControl({value: '', disabled: true}),
+      downlineSize: new FormControl({value: '', disabled: true}),
+      ipAddress: new FormControl({value: '', disabled: true})
     });
+
     this.user = this.navParams.get('user');
-    this.user.country = this.countries.find((x) => { return x.alpha2 === (this.user.countryCode || 'US'); });
-    this.user.countryCode = this.user.country.alpha2;
+    this.user.phone = this.user.phone || 'None';
+    this.user.email = this.user.email || 'None';
+    this.user.disabled = !!this.user.disabled;
+    this.user.fraudSuspected = !!this.user.fraudSuspected;
+    this.user.duplicate = !!this.user.duplicate;
+
+    this.countries = require('country-data').countries.all;
+    this.user.country = this.country(this.user);
+    this.user.ipAddress = (this.user.prefineryUser && this.user.prefineryUser.ipAddress) || 'None';
 
     this.showSpinner = true;
     let referralsRef: any = firebase.database().ref('/users').orderByChild('sponsor/userId').equalTo(this.user.userId);
@@ -86,7 +84,50 @@ export class UserPage {
   }
 
   goToUserPage(u: any) {
-    this.nav.push(UserPage, { user: u });
+    this.nav.push(UserPage, { user: u }, { animate: true, direction: 'forward' });
   }
 
+  goToSponsorPage() {
+    firebase.database().ref(`/users/${this.user.sponsor.userId}`).once('value').then((snapshot) => {
+      this.showSpinner = false;
+      let sponsor = snapshot.val();
+      if (!sponsor) {
+        log.warn('could not find sponsor');
+        return;
+      }
+      sponsor.userId = this.user.sponsor.userId;
+      this.nav.push(UserPage, { user: sponsor }, { animate: true, direction: 'forward' });
+    }, (error) => {
+      this.showSpinner = false;
+      log.warn(error);
+    });
+
+
+  }
+
+  country(u) {
+    let countryObject = this.countries.find((x) => { return x.alpha2 === (u.countryCode); });
+    return ( countryObject && countryObject.name ) || ( u.prefineryUser && u.prefineryUser.country ) || 'None';
+  }
+
+  foo() {
+    log.debug(`updated`);
+  }
+
+  toggle(fieldName) {
+    let attrs: any = {};
+    attrs[fieldName] = !this.user[fieldName];
+    firebase.database().ref(`/users/${this.user.userId}`).update(attrs).then(() => {
+      this.user[fieldName] = !this.user[fieldName];
+      log.debug(`updated: `, attrs);
+    }, (error) => {
+      this.showSpinner = false;
+      log.warn(error);
+    });
+  }
+
+  changeSponsor(event) {
+    alert('Not implemented yet');
+    event.stopPropagation();
+  }
 }
