@@ -215,7 +215,7 @@ export class CountryListService {
                 'countryCode': 'BQ'
             },
             {
-                'telephoneCountryCode': '+ 345',
+                'telephoneCountryCode': '+345',
                 'name': 'Cayman Islands',
                 'countryCode': 'KY'
             },
