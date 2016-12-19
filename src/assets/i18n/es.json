@@ -278,7 +278,8 @@
         "numberOutOfRange": "La cantidad tiene que ser entre 0 y el saldo disponible",
         "secretPhraseRequired": "La frase de contraseña es requerida",
         "pleaseWait": "Por favor espere...",
-        "sendTo": "Enviar a"
+        "sendTo": "Enviar a",
+        "incorrectAddress": "La dirección de la billetera es incorrecta"
     },
     "invite-link": {
       "title": "Invitar a amigos",

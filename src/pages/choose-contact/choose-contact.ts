@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { NavController, ViewController } from 'ionic-angular';
+import { NavController, ViewController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-choose-contact',
@@ -9,7 +9,12 @@ export class ChooseContactPage {
   option: string = 'contact';
   addressText: string;
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController) { }
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, params: NavParams) {
+    let addr = params.get('walletAddress');
+    if(addr){
+      this.addressText = addr;
+    }
+  }
 
   ionViewDidLoad() {
 

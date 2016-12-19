@@ -278,7 +278,8 @@
         "numberOutOfRange": "Amount must be between 0 and max amount.",
         "secretPhraseRequired": "Secret phrase is required",
         "pleaseWait": "Please Wait...",
-        "sendTo": "Send to"
+        "sendTo": "Send to",
+        "incorrectAddress": "Wallet address is incorrect"
     },
     "invite-link": {
       "title": "Invite Friends",

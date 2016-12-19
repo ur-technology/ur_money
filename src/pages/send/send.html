@@ -4,11 +4,11 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="dash-send-viewx">
-  <form class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="sendUR()">
+  <form class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && sendUR()">
     <ion-item>
       <ion-label floating>{{"send.sendTo" | translate}}</ion-label>
-      <ion-input type="text" *ngIf="contact" (focus)="chooseContact()" value="{{contact.name}}"></ion-input>
-      <ion-input type="text" *ngIf="!contact" (focus)="chooseContact()" value="{{walletAddress}}"></ion-input>
+      <ion-input *ngIf="!contact" (focus)="chooseContact()" formControlName="addressWallet"></ion-input>
+      <ion-input *ngIf="contact" (focus)="chooseContact()" formControlName="contact"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>{{"send.availableBalance" | translate}}</ion-label>
@@ -35,11 +35,12 @@
       <ion-input formControlName="secretPhrase" type="password"></ion-input>
     </ion-item>
     <br />
+    <div class="validatorError" *ngIf="incorrectToField()">{{"send.incorrectAddress" | translate}}</div>
     <div class="validatorError" *ngIf="missingAmount()">{{"send.amountRequired" | translate}}</div>
     <div class="validatorError" *ngIf="numberOutOfRange()">{{"send.numberOutOfRange" | translate}}</div>
     <div class="validatorError" *ngIf="missingSecretPhrase()">{{"send.secretPhraseRequired" | translate}}</div>
     <div class="validatorError" *ngIf="incorrectSecretPhrase()">{{"send.incorrectSecretPhrase" | translate}}</div>
 
-    <button ion-button round block class="send-requestbtn" type="submit">{{"send.send" | translate}}</button>
+    <button ion-button round block class="send-requestbtn" type="submit" [disabled]="!mainForm.valid">{{"send.send" | translate}}</button>
   </form>
 </ion-content>

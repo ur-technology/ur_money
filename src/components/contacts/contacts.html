@@ -17,7 +17,7 @@
       <button ion-button [hidden]="!contact.userId" color="primary" item-right>{{memberActionLabel}}</button>
     </ion-item>
 
-    <ion-item text-wrap detail-none (click)="inviteFriend()" class="item item-avatar" *ngIf="goal !== 'invite'">
+    <ion-item text-wrap detail-none (click)="inviteFriend()" class="item item-avatar" *ngIf="goal == 'chat'">
       <ion-avatar item-right><ion-icon name="add-person-icon"></ion-icon></ion-avatar>
       <p>{{getInviteItemMessage()}}</p>
     </ion-item>

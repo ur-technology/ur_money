@@ -111,6 +111,20 @@ export class WalletModel {
     return ((ethUtil.isValidPublic(address) && address !== self.getPublic()) || (ethUtil.isValidAddress(address) && address !== self.getAddress()));
   }
 
+  public static validateAddressFormat(address: string): boolean {
+
+    if (typeof address === 'undefined' || address === '') {
+      return false;
+    }
+
+    let ethUtil = require('ethereumjs-util');
+
+    if (!ethUtil.isHexPrefixed(address)) {
+      address = ('0x' + address);
+    }
+    return ethUtil.isValidAddress(address);
+  }
+
   public sendRawTransaction(to: string, amount: number): Promise<any> {
     let self = this;
     return new Promise<boolean>((resolve, reject) => {

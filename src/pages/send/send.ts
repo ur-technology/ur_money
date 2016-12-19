@@ -51,7 +51,9 @@ export class SendPage {
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       message: new FormControl(''),
       secretPhrase: new FormControl('', [Validators.required]),
-      maxAmount: new FormControl('')
+      maxAmount: new FormControl(''),
+      addressWallet: new FormControl('', [Validators.required, this.validateAddressField]),
+      contact: new FormControl('', [Validators.required])
     });
   }
 
@@ -65,15 +67,29 @@ export class SendPage {
 
   chooseContact() {
     let self = this;
-    let chooseModal = this.modalController.create(ChooseContactPage);
+    let chooseModal = this.modalController.create(ChooseContactPage, {walletAddress: self.walletAddress});
     chooseModal.onDidDismiss(data => {
+      self.contact = null;
+      self.walletAddress = null;
       if (data.contact) {
         self.contact = data.contact;
+        (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
+        (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
       } else {
         self.walletAddress = data.walletAddress;
+        (<FormControl>this.mainForm.controls['addressWallet']).setValue(self.walletAddress);
+        (<FormControl>this.mainForm.controls['contact']).setErrors(null);
       }
     });
     chooseModal.present();
+  }
+
+  validateAddressField(control) {
+    if (control && control.value) {
+      if (!WalletModel.validateAddressFormat(control.value)) {
+        return { 'invalidAddress': true };
+      }
+    }
   }
 
   ngOnInit() {
@@ -92,6 +108,11 @@ export class SendPage {
     self.chartData.balanceUpdatedEmitter.subscribe(() => {
       self.reflectMaxAmountOnPage();
     });
+  }
+
+  incorrectToField(): boolean {
+    let control = this.mainForm.get('addressWallet');
+    return (control.touched || control.dirty) && control.hasError('invalidAddress');
   }
 
   missingAmount(): boolean {
@@ -160,7 +181,7 @@ export class SendPage {
       self.nav.setRoot(HomePage);
       return self.toastService.showMessage({ messageKey: 'send.urSent' });
     }, (error: any) => {
-      self.loadingModal.dismiss().then(() => {
+      self.loadingModal && self.loadingModal.dismiss().then(() => {
         if (error.messageKey === 'canceled') {
           // do nothing
         } else if (error.messageKey === 'send.incorrectSecretPhrase') {
@@ -287,6 +308,7 @@ export class SendPage {
             role: 'cancel',
             handler: data => {
               log.debug('send canceled');
+              prompt.dismiss();
               reject({ messageKey: 'canceled' });
             }
           },
