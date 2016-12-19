@@ -137,7 +137,7 @@ export class UserPage {
     event.stopPropagation();
   }
 
-  getUserStatus(user) {
+  getUserStatus(user?) {
     user = user || this.user;
     let status = _.trim((user.registration && user.registration.status) || '') || 'initial';
     if (status === 'initial' && user.wallet && user.wallet.address) {
