@@ -72,15 +72,23 @@
       "id": "com.verso.cordova.clipboard"
     },
     {
+      "id": "cordova-plugin-facebook4",
+      "locator": "cordova-plugin-facebook4",
       "variables": {
         "APP_ID": "146177489140384",
         "APP_NAME": "UR Money"
-      },
-      "locator": "cordova-plugin-facebook4",
-      "id": "cordova-plugin-facebook4"
+      }
+    },
+    "cordova-plugin-compat",
+    "cordova-plugin-app-event"
+  ],
+  "cordovaPlatforms": [
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
     }
   ],
-  "cordovaPlatforms": [],
   "config": {
     "ionic_bundler": "webpack",
     "ionic_webpack": "./config/webpack.config.js"
