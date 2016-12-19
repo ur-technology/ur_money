@@ -79,10 +79,12 @@ export class UsersPage {
       let userIds = _.keys(userMapping);
       _.each(users, (user: any, index: number) => {
         user.userId = userIds[index];
+        user.moveRequestedTag = user.moveRequested ? 'Move-Requested' : '';
         user.disabledTag = user.disabled ? 'Disabled' : '';
         user.fraudSuspectedTag = user.fraudSuspected ? 'Fraud-Suspected' : '';
         user.duplicateTag = user.duplicate ? 'Duplicate' : '';
       });
+      users = _.sortBy(users, (u) => { return 1000000 - (u.downlineSize || 0);});
       this.paginatedUsers = _.chunk(users, this.PAGE_SIZE);
       this.numberOfPages = this.paginatedUsers.length;
       this.displayableUsers = this.paginatedUsers[0];

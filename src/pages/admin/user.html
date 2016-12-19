@@ -15,6 +15,12 @@
       <ion-row>
         <ion-col>
           <ion-item>
+            <ion-label>Move Requested</ion-label>
+            <ion-checkbox color="danger" checked="{{user.moveRequested}}" (ionChange)="toggle('moveRequested')"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
             <ion-label>Disabled</ion-label>
             <ion-checkbox color="danger" checked="{{user.disabled}}" (ionChange)="toggle('disabled')"></ion-checkbox>
           </ion-item>
@@ -116,7 +122,7 @@
       </ion-row>
     </ion-grid>
 
-    <ion-item-divider color="light">Direct Referrals</ion-item-divider>
+    <ion-item-divider color="light">Direct Referrals ({{showSpinner ? 'Please wait...' : referrals.length}})</ion-item-divider>
     <ion-item>
       <ion-list class="users-list" *ngIf="!showSpinner">
         <ion-item detail-none *ngFor="let r of referrals" (click)="goToUserPage(r)" class="item item-avatar">
@@ -124,7 +130,7 @@
           <ion-label>
             <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
             <p>{{r.phone}} {{r.email}} {{country(r)}}</p>
-            <p>{{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}}</p>
+            <p>{{r.moveRequestedTag}} {{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}}</p>
           </ion-label>
           <button ion-button type="button" color="secondary" item-right>View</button>
         </ion-item>

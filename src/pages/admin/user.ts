@@ -44,6 +44,7 @@ export class UserPage {
     this.user = this.navParams.get('user');
     this.user.phone = this.user.phone || 'None';
     this.user.email = this.user.email || 'None';
+    this.user.moveRequested = !!this.user.moveRequested;
     this.user.disabled = !!this.user.disabled;
     this.user.fraudSuspected = !!this.user.fraudSuspected;
     this.user.duplicate = !!this.user.duplicate;
@@ -60,10 +61,12 @@ export class UserPage {
       let referralUserIds = _.keys(referralsMapping);
       _.each(this.referrals, (r: any, index: number) => {
         r.userId = referralUserIds[index];
+        r.moveRequestedTag = r.moveRequested ? 'Move-Requested' : '';
         r.disabledTag = r.disabled ? 'Disabled' : '';
         r.fraudSuspectedTag = r.fraudSuspected ? 'Fraud-Suspected' : '';
         r.duplicateTag = r.duplicate ? 'Duplicate' : '';
       });
+      this.referrals = _.sortBy(this.referrals, (r) => { return 1000000 - (r.downlineSize || 0);});
       this.showSpinner = false;
     }, (error) => {
       log.warn(error);
