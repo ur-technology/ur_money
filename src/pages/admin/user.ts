@@ -150,4 +150,13 @@ export class UserPage {
     return status;
   }
 
+  sponsorChangeable() {
+    return _.includes(
+      [
+        'initial', 'wallet-generated', 'waiting-for-sponsor', 'verification-initiated',
+        'verification-failed', 'verification-succeeded', 'announcement-failed'
+      ],
+      this.getUserStatus(this.user)
+    );
+  }
 }

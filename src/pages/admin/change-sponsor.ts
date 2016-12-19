@@ -31,6 +31,7 @@ export class ChangeSponsorModal {
 
   saveChange(event) {
     event.stopPropagation();
+
     this.errorMessage = '';
     this.newSponsorEmail = _.trim(this.newSponsorEmail);
     if (!this.newSponsorEmail) {
@@ -80,5 +81,4 @@ export class ChangeSponsorModal {
       }
     });
   }
-
 }

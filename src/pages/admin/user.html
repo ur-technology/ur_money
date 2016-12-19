@@ -152,7 +152,7 @@
           <ion-item>
             <ion-label></ion-label>
             <button ion-button type="button" color="secondary" item-right (click)="goToUserPage(sponsor)">View</button>
-            <button ion-button type="button" color="danger" item-right (click)="changeSponsor($event)">Change</button>
+            <button ion-button type="button" color="danger" item-right *ngIf="sponsorChangeable()" (click)="changeSponsor($event)">Change</button>
           </ion-item>
         </ion-col>
       </ion-row>
