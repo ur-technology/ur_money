@@ -27,6 +27,9 @@
         "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
         "betaProgramButton": "Estoy en el programa UR Money Beta"
     },
+    "choose-contact":{
+      "title": "Enviar UR a"
+    },
     "email-address": {
         "title": "Dirección de correo electrónico",
         "heading": "Introduzca la dirección de correo electrónico que ha registrado en el programa UR Money Beta",

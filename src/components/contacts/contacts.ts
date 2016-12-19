@@ -27,6 +27,7 @@ export class ContactsComponent {
   showSpinner: boolean = true;
   @Input() goal: string;
   @Output() goalChange: EventEmitter<any> = new EventEmitter();
+  @Output() onContactSelected: EventEmitter<any> = new EventEmitter();
   public memberActionLabel: string;
 
   constructor(
@@ -91,6 +92,10 @@ export class ContactsComponent {
   }
 
   goToGoalPage(contact: any) {
+    this.onContactSelected.emit({ contact: contact });
+  }
+
+  goToGoalPage2(contact: any) {
     if (this.goal === 'send') {
       this.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
         this.app.getRootNav().push(SendPage, { contact: contact });

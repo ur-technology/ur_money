@@ -1,5 +1,5 @@
-import { AlertController, Content, NavController, NavParams, Platform, LoadingController} from 'ionic-angular';
-import {NgZone, ViewChild, Inject, Component} from '@angular/core';
+import { AlertController, Content, NavController, NavParams, Platform, LoadingController, ModalController} from 'ionic-angular';
+import { ViewChild, Inject, Component} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
@@ -14,6 +14,7 @@ import {ToastService} from '../../services/toast';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 import {EncryptionService} from '../../services/encryption';
+import {ChooseContactPage} from '../choose-contact/choose-contact';
 declare var jQuery: any;
 
 @Component({
@@ -21,6 +22,7 @@ declare var jQuery: any;
 })
 export class SendPage {
   contact: any;
+  walletAddress: string;
   mainForm: FormGroup;
   availableBalance: any = new BigNumber(0);
   estimatedFee: any = new BigNumber(0);
@@ -41,11 +43,10 @@ export class SendPage {
     public auth: AuthService,
     public translate: TranslateService,
     public chartData: ChartDataService,
-    public ngZone: NgZone,
     public encryptionService: EncryptionService,
+    public modalController: ModalController,
     @Inject(FirebaseApp) firebase: any
   ) {
-    this.contact = this.navParams.get('contact');
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       message: new FormControl(''),
@@ -62,6 +63,19 @@ export class SendPage {
     CustomValidator.minValidAmount = 0;
   }
 
+  chooseContact() {
+    let self = this;
+    let chooseModal = this.modalController.create(ChooseContactPage);
+    chooseModal.onDidDismiss(data => {
+      if (data.contact) {
+        self.contact = data.contact;
+      } else {
+        self.walletAddress = data.walletAddress;
+      }
+    });
+    chooseModal.present();
+  }
+
   ngOnInit() {
     let self = this;
     if (self.platform.is('cordova')) {
@@ -76,9 +90,7 @@ export class SendPage {
       self.reflectMaxAmountOnPage();
     }
     self.chartData.balanceUpdatedEmitter.subscribe(() => {
-      self.ngZone.run(() => {
-        self.reflectMaxAmountOnPage();
-      });
+      self.reflectMaxAmountOnPage();
     });
   }
 
@@ -138,7 +150,8 @@ export class SendPage {
     }).then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.wallet.sendRawTransaction(self.contact.wallet.address, Number(self.mainForm.value.amount));
+      let address = self.contact ? self.contact.wallet.address : self.walletAddress;
+      return self.wallet.sendRawTransaction(address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
       return self.saveTransaction(urTransaction);
     }).then(() => {

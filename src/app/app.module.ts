@@ -27,6 +27,7 @@ import {PopoverChatPage} from '../pages/chat/popover-chat';
 import {WalletSetupPage} from '../pages/registration/wallet-setup';
 import {WelcomePage} from '../pages/registration/welcome';
 import {SendPage} from '../pages/send/send';
+import {ChooseContactPage} from '../pages/choose-contact/choose-contact';
 import {UsersPage} from '../pages/admin/users';
 import {UserPage} from '../pages/admin/user';
 import {SettingsPage} from '../pages/settings/settings';
@@ -102,6 +103,7 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     WalletSetupPage,
     WelcomePage,
     SendPage,
+    ChooseContactPage,
     UsersPage,
     UserPage,
     SettingsPage,
@@ -165,6 +167,7 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     WalletSetupPage,
     WelcomePage,
     SendPage,
+    ChooseContactPage,
     UserPage,
     UsersPage,
     SettingsPage,
