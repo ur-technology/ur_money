@@ -5,6 +5,7 @@ import {Config} from '../../config/config';
 import { Component } from '@angular/core';
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
 import * as log from 'loglevel';
+import {ChatPage} from '../../pages/chat/chat';
 
 declare var jQuery: any;
 
@@ -12,9 +13,7 @@ declare var jQuery: any;
   templateUrl: 'contacts-and-chats.html',
 })
 export class ContactsAndChatsPage {
-  contactsPage: any;
   goal: any;
-  chatsPage: any;
   segmentSelected: string = 'contacts';
 
   constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService, public alertCtrl: AlertController) {
@@ -28,6 +27,15 @@ export class ContactsAndChatsPage {
   goalChanged(data) {
     this.goal = data.goal;
   }
+
+  onContactSelected(data) {
+    let self = this;
+    let contact = data.contact;
+    self.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
+      self.nav.push(ChatPage, { contact: contact });
+    });
+  }
+
 
   getPageTitle() {
     switch (this.goal) {

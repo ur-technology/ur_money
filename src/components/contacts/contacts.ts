@@ -3,8 +3,6 @@ import {NavController, NavParams, Platform, AlertController} from 'ionic-angular
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
 import {ContactsService} from '../../services/contacts';
 import {AuthService} from '../../services/auth';
-import {SendPage} from '../../pages/send/send';
-import {ChatPage} from '../../pages/chat/chat';
 import { App } from 'ionic-angular';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
@@ -87,28 +85,15 @@ export class ContactsComponent {
     if (!contact.userId) {
       this.inviteContact(contact);
     } else {
-      this.goToGoalPage(contact);
+      this.informContactSelected(contact);
     }
   }
 
-  goToGoalPage(contact: any) {
+  informContactSelected(contact: any) {
     this.onContactSelected.emit({ contact: contact });
   }
 
-  goToGoalPage2(contact: any) {
-    if (this.goal === 'send') {
-      this.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
-        this.app.getRootNav().push(SendPage, { contact: contact });
-      });
-    } else {
-      this.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
-        this.app.getRootNav().push(ChatPage, { contact: contact });
-      });
-    }
-  }
-
   inviteContact(contact: any) {
-
     let self = this;
     if (self.auth.currentUser.invitesDisabled) {
       self.alertCtrl.create({

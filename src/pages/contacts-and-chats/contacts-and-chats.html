@@ -22,6 +22,6 @@
           </a>
       </ion-segment-button>
   </ion-segment>
-  <contacts goal={{goal}} *ngIf="segmentSelected==='contacts'" (goalChange)=goalChanged($event)></contacts>
+  <contacts goal={{goal}} *ngIf="segmentSelected==='contacts'" (onContactSelected)="onContactSelected($event)" (goalChange)=goalChanged($event)></contacts>
   <chat-list *ngIf="segmentSelected==='chats'"></chat-list>
 </ion-content>
