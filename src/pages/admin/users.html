@@ -14,7 +14,7 @@
             {{t}}
           </ion-option>
         </ion-select>
-        <ion-input type="text" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" class="search-field"></ion-input>
+        <ion-input type="text" [(ngModel)]="searchText" (keyup)="searchTextChanged()" [ngModelOptions]="{standalone: true}" class="search-field"></ion-input>
         <button ion-button icon-right item-right clear [disabled]="!searchText">
           Search
           <ion-icon name="arrow-forward"></ion-icon>
@@ -31,7 +31,7 @@
   </form>
 
   <ion-list class="users-list" *ngIf="!showSpinner">
-    <ion-item detail-none *ngFor="let r of displayableUsers" (click)="goToUserPage(r)" class="item item-avatar">
+    <ion-item detail-none *ngFor="let r of (displayableUsers || [])" (click)="goToUserPage(r)" class="item item-avatar">
       <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
       <ion-label>
         <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
@@ -41,7 +41,7 @@
       <button ion-button type="button" color="secondary" item-right>View</button>
     </ion-item>
 
-    <ion-item detail-none *ngIf="displayableUsers.length === 0" class="item item-avatar">
+    <ion-item detail-none *ngIf="displayableUsers && displayableUsers.length === 0" class="item item-avatar">
       No Users Found
     </ion-item>
 

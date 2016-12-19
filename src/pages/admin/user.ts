@@ -1,10 +1,10 @@
-import {NavController, NavParams, ToastController, AlertController} from 'ionic-angular';
-import {Inject, Component} from '@angular/core';
+import {NavController, NavParams, ToastController, AlertController, ModalController} from 'ionic-angular';
+import {Component} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import {AuthService} from '../../services/auth';
 import {UserModel} from '../../models/user';
+import {ChangeSponsorModal} from './change-sponsor';
 import * as _ from 'lodash';
-import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 
 declare var window: any;
@@ -18,9 +18,11 @@ export class UserPage {
   errorMessage: string;
   countries: any[];
   user: any;
+  sponsor: any;
   inEditMode: boolean = true;
   showSpinner: boolean = false;
   referrals: any[];
+
 
   constructor(
     public nav: NavController,
@@ -28,17 +30,18 @@ export class UserPage {
     public auth: AuthService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    @Inject(FirebaseApp) firebase: any
+    private modalCtrl: ModalController
   ) {
 
     this.mainForm = new FormGroup({
-      sponsorName: new FormControl({value: '', disabled: true}),
       name: new FormControl({value: '', disabled: true}),
       country: new FormControl({value: '', disabled: true}),
       email: new FormControl({value: '', disabled: true}),
       phone: new FormControl({value: '', disabled: true}),
       downlineSize: new FormControl({value: '', disabled: true}),
-      ipAddress: new FormControl({value: '', disabled: true})
+      ipAddress: new FormControl({value: '', disabled: true}),
+      sponsorName: new FormControl({value: '', disabled: true}),
+      sponsorContact: new FormControl({value: '', disabled: true})
     });
 
     this.user = this.navParams.get('user');
@@ -48,6 +51,7 @@ export class UserPage {
     this.user.disabled = !!this.user.disabled;
     this.user.fraudSuspected = !!this.user.fraudSuspected;
     this.user.duplicate = !!this.user.duplicate;
+    this.user.status = this.getUserStatus(this.user);
 
     this.countries = require('country-data').countries.all;
     this.user.country = this.country(this.user);
@@ -72,6 +76,21 @@ export class UserPage {
       log.warn(error);
       this.showSpinner = false;
     });
+
+    if (this.user.sponsor && this.user.sponsor.userId) {
+      this.showSpinner = true;
+      firebase.database().ref(`/users/${this.user.sponsor.userId}`).once('value').then((snapshot) => {
+        this.sponsor = snapshot.val();
+        if (this.sponsor) {
+          this.sponsor.userId = this.user.sponsor.userId;
+          this.sponsor.contact = _.compact([this.sponsor.email, this.sponsor.phone]).join(', ');
+        }
+        this.showSpinner = false;
+      }, (error) => {
+        this.showSpinner = false;
+        log.warn(error);
+      });
+    }
   }
 
   saveProfile() {
@@ -93,31 +112,9 @@ export class UserPage {
     this.nav.push(UserPage, { user: u }, { animate: true, direction: 'forward' });
   }
 
-  goToSponsorPage() {
-    firebase.database().ref(`/users/${this.user.sponsor.userId}`).once('value').then((snapshot) => {
-      this.showSpinner = false;
-      let sponsor = snapshot.val();
-      if (!sponsor) {
-        log.warn('could not find sponsor');
-        return;
-      }
-      sponsor.userId = this.user.sponsor.userId;
-      this.nav.push(UserPage, { user: sponsor }, { animate: true, direction: 'forward' });
-    }, (error) => {
-      this.showSpinner = false;
-      log.warn(error);
-    });
-
-
-  }
-
   country(u) {
     let countryObject = this.countries.find((x) => { return x.alpha2 === (u.countryCode); });
     return ( countryObject && countryObject.name ) || ( u.prefineryUser && u.prefineryUser.country ) || 'None';
-  }
-
-  foo() {
-    log.debug(`updated`);
   }
 
   toggle(fieldName) {
@@ -133,12 +130,17 @@ export class UserPage {
   }
 
   changeSponsor(event) {
-    alert('Not implemented yet');
+    let changeSponsorModal = this.modalCtrl.create(ChangeSponsorModal, {user: this.user, oldSponsor: this.sponsor});
+    changeSponsorModal.present();
     event.stopPropagation();
+    changeSponsorModal.onDidDismiss((newSponsor: any) => {
+      if (newSponsor) {
+        this.sponsor = newSponsor;
+      }
+    });
   }
 
-  getUserStatus(user?) {
-    user = user || this.user;
+  getUserStatus(user) {
     let status = _.trim((user.registration && user.registration.status) || '') || 'initial';
     if (status === 'initial' && user.wallet && user.wallet.address) {
       status = 'wallet-generated';

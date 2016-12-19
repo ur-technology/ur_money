@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Change Sponsor</ion-title>
+        <ion-buttons end>
+          <button ion-button color="secondary" class="right" (click)="cancel($event)">
+              Cancel
+          </button>
+          <button ion-button color="danger" class="right" (click)="saveChange($event)">
+              Save Change
+          </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding class="sample-modal-page">
+  <p>Please enter the new sponsor's email address.</p>
+  <p *ngIf="errorMessage" class="sponsor-not-found">{{errorMessage}}</p>
+  <ion-input
+    type="text"
+    [(ngModel)]="newSponsorEmail"
+    [ngModelOptions]="{standalone: true}"
+    class="search-field">
+  </ion-input>
+</ion-content>

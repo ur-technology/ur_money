@@ -30,6 +30,7 @@ import {SendPage} from '../pages/send/send';
 import {ChooseContactPage} from '../pages/choose-contact/choose-contact';
 import {UsersPage} from '../pages/admin/users';
 import {UserPage} from '../pages/admin/user';
+import {ChangeSponsorModal} from '../pages/admin/change-sponsor';
 import {SettingsPage} from '../pages/settings/settings';
 import {TermsAndConditionsPage} from '../pages/terms-and-conditions/terms-and-conditions';
 import {TransactionsPage} from '../pages/transactions/transactions';
@@ -106,6 +107,7 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     ChooseContactPage,
     UsersPage,
     UserPage,
+    ChangeSponsorModal,
     SettingsPage,
     TermsAndConditionsPage,
     TransactionsPage,
@@ -169,6 +171,7 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     SendPage,
     ChooseContactPage,
     UserPage,
+    ChangeSponsorModal,
     UsersPage,
     SettingsPage,
     TermsAndConditionsPage,

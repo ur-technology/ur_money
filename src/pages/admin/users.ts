@@ -50,14 +50,21 @@ export class UsersPage {
   ngAfterViewInit() {
   }
 
+  searchTextChanged() {
+    if (this.paginatedUsers && this.paginatedUsers.length > 0) {
+      this.paginatedUsers = this.numberOfPages = this.displayableUsers = undefined;
+    }
+  }
+
   searchUsers() {
-    if (!_.trim(this.searchText || '')) {
+    this.searchText = _.trim(this.searchText || '');
+    if (!this.searchText) {
       return;
     }
     this.showSpinner = true;
     let usersRef: any = firebase.database().ref('/users');
     if (this.searchType === 'Email') {
-      usersRef = usersRef.orderByChild('email').equalTo(this.searchText);
+      usersRef = usersRef.orderByChild('email').equalTo(this.searchText.toLowerCase());
     } else if (this.searchType === 'Phone') {
       usersRef = usersRef.orderByChild('phone').equalTo(this.searchText);
     } else if (this.searchType === 'Full Name') {
@@ -87,7 +94,7 @@ export class UsersPage {
       users = _.sortBy(users, (u) => { return 1000000 - (u.downlineSize || 0);});
       this.paginatedUsers = _.chunk(users, this.PAGE_SIZE);
       this.numberOfPages = this.paginatedUsers.length;
-      this.displayableUsers = this.paginatedUsers[0];
+      this.displayableUsers = this.paginatedUsers[0] || [];
       this.showSpinner = false;
     }, (error) => {
       log.warn(error);
@@ -96,9 +103,12 @@ export class UsersPage {
   }
 
   doInfinite(infiniteScroll) {
+    if (!this.paginatedUsers) {
+      return;
+    }
     this.pageIndex++;
     if (this.pageIndex <= this.numberOfPages - 1) {
-      this.displayableUsers = this.displayableUsers.concat(this.paginatedUsers[this.pageIndex]);
+      this.displayableUsers = this.displayableUsers.concat(this.paginatedUsers[this.pageIndex] || []);
     }
     infiniteScroll.complete();
     if (this.pageIndex >= this.numberOfPages - 1) {

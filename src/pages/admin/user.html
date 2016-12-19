@@ -10,6 +10,69 @@
   class="settings">
   <form [formGroup]="mainForm">
 
+    <ion-item-divider color="light">Profile Info</ion-item-divider>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Name</ion-label>
+            <ion-input
+              type="text"
+              [(ngModel)]="user.name"
+              formControlName="name">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="user.email"
+              formControlName="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Country</ion-label>
+            <ion-input
+              type="text"
+              [(ngModel)]="user.country"
+              formControlName="country">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Phone</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="user.phone"
+              formControlName="phone"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Prefinery IP Address</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="user.ipAddress"
+              formControlName="ipAddress">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Downline Size</ion-label>
+            <ion-input type="text"
+              [(ngModel)]="user.downlineSize"
+              formControlName="downlineSize"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
     <ion-item-divider color="light">Account Info</ion-item-divider>
     <ion-grid>
       <ion-row>
@@ -38,85 +101,58 @@
           </ion-item>
         </ion-col>
       </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label>Status: {{getUserStatus()}}</ion-label>
-        </ion-item>
-      </ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <ion-item-divider color="light" *ngIf="user.sponsor">Sponsor Info</ion-item-divider>
-    <ion-item (click)="goToSponsorPage()" *ngIf="user.sponsor">
-      <ion-label floating>Sponsor Name</ion-label>
-      <ion-input
-        type="text"
-        [(ngModel)]="user.sponsor.name"
-        formControlName="sponsorName">
-      </ion-input>
-      <button ion-button type="button" color="secondary" item-right>View</button>
-      <button ion-button type="button" color="secondary" item-right (click)="changeSponsor($event)">Change</button>
-    </ion-item>
-
-    <ion-item-divider color="light">Profile Info</ion-item-divider>
-    <ion-grid>
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-label floating>Name</ion-label>
+            <ion-label>Status</ion-label>
             <ion-input
               type="text"
-              [(ngModel)]="user.name"
-              formControlName="name">
+              [(ngModel)]="user.status"
+              [ngModelOptions]="{standalone: true}">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
-            <ion-label floating>Email</ion-label>
-            <ion-input type="text"
-              [(ngModel)]="user.email"
-              formControlName="email"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label floating>Country</ion-label>
+            <ion-label>User Id</ion-label>
             <ion-input
               type="text"
-              [(ngModel)]="user.country"
-              formControlName="country">
+              [(ngModel)]="user.userId"
+              [ngModelOptions]="{standalone: true}">
             </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label floating>Phone</ion-label>
-            <ion-input type="text"
-              [(ngModel)]="user.phone"
-              formControlName="phone"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="sponsor">
         <ion-col>
           <ion-item>
-            <ion-label floating>Prefinery IP Address</ion-label>
-            <ion-input type="text"
-              [(ngModel)]="user.ipAddress"
-              formControlName="ipAddress">
+            <ion-label>
+              Sponsor Name
+            </ion-label>
+            <ion-input
+              type="text"
+              [(ngModel)]="sponsor.name"
+              formControlName="sponsorName">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
-            <ion-label floating>Downline Size</ion-label>
-            <ion-input type="text"
-              [(ngModel)]="user.downlineSize"
-              formControlName="downlineSize"></ion-input>
+            <ion-label>
+              Sponsor Contact
+            </ion-label>
+            <ion-input
+              type="text"
+              [(ngModel)]="sponsor.contact"
+              formControlName="sponsorContact">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col width-20>
+          <ion-item>
+            <ion-label></ion-label>
+            <button ion-button type="button" color="secondary" item-right (click)="goToUserPage(sponsor)">View</button>
+            <button ion-button type="button" color="danger" item-right (click)="changeSponsor($event)">Change</button>
           </ion-item>
         </ion-col>
       </ion-row>
