@@ -79,6 +79,9 @@ export class UsersPage {
       let userIds = _.keys(userMapping);
       _.each(users, (user: any, index: number) => {
         user.userId = userIds[index];
+        user.disabledTag = user.disabled ? 'Disabled' : '';
+        user.fraudSuspectedTag = user.fraudSuspected ? 'Fraud-Suspected' : '';
+        user.duplicateTag = user.duplicate ? 'Duplicate' : '';
       });
       this.paginatedUsers = _.chunk(users, this.PAGE_SIZE);
       this.numberOfPages = this.paginatedUsers.length;

@@ -60,6 +60,9 @@ export class UserPage {
       let referralUserIds = _.keys(referralsMapping);
       _.each(this.referrals, (r: any, index: number) => {
         r.userId = referralUserIds[index];
+        r.disabledTag = r.disabled ? 'Disabled' : '';
+        r.fraudSuspectedTag = r.fraudSuspected ? 'Fraud-Suspected' : '';
+        r.duplicateTag = r.duplicate ? 'Duplicate' : '';
       });
       this.showSpinner = false;
     }, (error) => {
@@ -116,9 +119,9 @@ export class UserPage {
 
   toggle(fieldName) {
     let attrs: any = {};
-    attrs[fieldName] = !this.user[fieldName];
+    this.user[fieldName] = !this.user[fieldName];
+    attrs[fieldName] = this.user[fieldName];
     firebase.database().ref(`/users/${this.user.userId}`).update(attrs).then(() => {
-      this.user[fieldName] = !this.user[fieldName];
       log.debug(`updated: `, attrs);
     }, (error) => {
       this.showSpinner = false;
@@ -130,4 +133,16 @@ export class UserPage {
     alert('Not implemented yet');
     event.stopPropagation();
   }
+
+  getUserStatus(user) {
+    user = user || this.user;
+    let status = _.trim((user.registration && user.registration.status) || '') || 'initial';
+    if (status === 'initial' && user.wallet && user.wallet.address) {
+      status = 'wallet-generated';
+    } else if (status !== 'initial' && user.sponsor && !user.sponsor.announcementTransactionConfirmed) {
+      status = 'waiting-for-sponsor';
+    }
+    return status;
+  }
+
 }

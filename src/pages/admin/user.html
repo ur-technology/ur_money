@@ -10,7 +10,7 @@
   class="settings">
   <form [formGroup]="mainForm">
 
-    <ion-item-divider color="light">Actions</ion-item-divider>
+    <ion-item-divider color="light">Account Info</ion-item-divider>
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -31,6 +31,13 @@
             <ion-checkbox color="danger" checked="{{user.duplicate}}" (ionChange)="toggle('duplicate')"></ion-checkbox>
           </ion-item>
         </ion-col>
+      </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Status: {{getUserStatus()}}</ion-label>
+        </ion-item>
+      </ion-col>
       </ion-row>
     </ion-grid>
 
@@ -117,7 +124,8 @@
           <ion-label>
             <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
             <p>{{r.phone}} {{r.email}} {{country(r)}}</p>
-            </ion-label>
+            <p>{{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}}</p>
+          </ion-label>
           <button ion-button type="button" color="secondary" item-right>View</button>
         </ion-item>
 
