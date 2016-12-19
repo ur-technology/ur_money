@@ -3,27 +3,30 @@
     <ion-title>{{"send.title" | translate}} {{auth.envMode()}}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding class="dash-send-viewx">
+<ion-content padding>
+  <ion-grid class="gridSend">
+    <ion-row>
+      <ion-col width-30 class="colLabel">{{"send.availableBalance" | translate}}</ion-col>
+      <ion-col class="colValue">{{availableBalance.toFormat(5)}}</ion-col>
+      <ion-col width-10 class="colUr">UR</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-30 class="colLabel">{{"send.estimatedFee" | translate}}</ion-col>
+      <ion-col class="colValue">{{estimatedFee.toFormat(5)}}</ion-col>
+      <ion-col width-10 class="colUr">UR</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-30 class="colLabel">{{"send.maxAmount" | translate}}</ion-col>
+      <ion-col class="colValue">{{maxAmount.toFormat(5)}}</ion-col>
+      <ion-col width-10 class="colUr">UR</ion-col>
+    </ion-row>
+  </ion-grid>
+
   <form class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && sendUR()">
     <ion-item>
       <ion-label floating>{{"send.sendTo" | translate}}</ion-label>
       <ion-input *ngIf="!contact" (focus)="chooseContact()" formControlName="addressWallet"></ion-input>
       <ion-input *ngIf="contact" (focus)="chooseContact()" formControlName="contact"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>{{"send.availableBalance" | translate}}</ion-label>
-      <ion-input disabled="true" value="{{availableBalance.toFormat(5)}}"></ion-input>
-      <ion-note item-right> UR </ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>{{"send.estimatedFee" | translate}}</ion-label>
-      <ion-input disabled="true" value="{{estimatedFee.toFormat(5)}}"></ion-input>
-      <ion-note item-right> UR </ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>{{"send.maxAmount" | translate}}</ion-label>
-      <ion-input disabled="true" value="{{maxAmount.toFormat(5)}}"></ion-input>
-      <ion-note item-right> UR </ion-note>
     </ion-item>
     <ion-item>
       <ion-label floating>{{'send.enterAmount' | translate}}</ion-label>

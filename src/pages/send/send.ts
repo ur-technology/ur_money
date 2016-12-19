@@ -49,9 +49,7 @@ export class SendPage {
   ) {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
-      message: new FormControl(''),
       secretPhrase: new FormControl('', [Validators.required]),
-      maxAmount: new FormControl(''),
       addressWallet: new FormControl('', [Validators.required, this.validateAddressField]),
       contact: new FormControl('', [Validators.required])
     });

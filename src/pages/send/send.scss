@@ -1,17 +1,35 @@
 .send-page {
-
-  .send-requestbtn{
+  .send-requestbtn {
     margin-top: 15px;
     text-transform: uppercase;
     font-size: 2rem;
     font-weight: 300;
   }
 }
+
+.gridSend {
+  background-color: color($colors, primary);
+}
+
+.colLabel{
+  color: #fff;
+}
+
+.colValue{
+  color: color($colors, light);
+  font-weight: 500;
+}
+
+.colUr{
+    color: color($colors, light);
+}
+
 .inputDisabled {
   border: none;
   width: 50%;
   background-color: #eee;
 }
+
 .validatorError {
   padding-left: 15px;
   color: red;
@@ -21,36 +39,43 @@
 .dash-send-view {
   background: rgba(58, 173, 226, 1) url("../assets/img/img-bg.png") no-repeat 0 0;
 }
+
 .dash-send-view .item-avatar {
   min-height: 52px;
   max-height: 52px;
 }
 
 .dash-send-view .item-avatar ion-img {
-    max-width: 42px;
-    max-height: 42px;
-    border-radius: 50%;
+  max-width: 42px;
+  max-height: 42px;
+  border-radius: 50%;
 }
+
 .send-requestcont {
   margin-top: 5px;
   padding: 0 20px;
 }
+
 .send-requestcont .card {
   box-shadow: none;
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 .send-requestcont .send-requestinput {
   position: relative;
   height: 52px;
 }
+
 .send-requestcont .send-requestinput .item {
   height: 52px;
   padding-left: 16px;
 }
+
 .send-requestcont .send-requestinput input.contact-input {
   padding-left: 30px;
 }
+
 .send-requestcont .send-requestur input {
   height: 75px;
   font-size: 2rem;
@@ -60,12 +85,15 @@
   width: 92%;
   border: none;
 }
+
 .disabled {
   background-color: #eee;
 }
+
 .amount::-webkit-input-placeholder {
   font-size: 1.7rem;
 }
+
 .send-requestcont .send-requestur .item-note {
   font-size: 20px;
   font-weight: 500;
@@ -74,6 +102,7 @@
   bottom: 15px;
   right: 10px;
 }
+
 .send-requestcont .send-requestur .receiver-profile {
   font-size: 20px;
   font-weight: 500;
@@ -82,9 +111,11 @@
   bottom: 15px;
   right: 10px;
 }
+
 .send-requestcont .send-requesttextarea .item.item-input {
   padding: 10px;
 }
+
 .send-requestcont .send-requesttextarea textarea {
   height: 80px;
   resize: none;
@@ -92,6 +123,7 @@
   width: 100%;
   border: none;
 }
+
 .send-requestcont .button.send-requestbtn {
   border-color: #fff;
   font-size: 26px;
@@ -103,6 +135,7 @@
   margin-top: 18px;
   background-color: transparent;
 }
+
 .send-requestcont .send-requestinput .selected-contact-container {
   height: 100%;
   padding-left: 40px;
@@ -114,6 +147,7 @@
   left: 0;
   z-index: 3;
 }
+
 .send-requestcont .selected-contact-container .contact-item {
   font-size: 11px;
   font-weight: 600;
@@ -123,6 +157,7 @@
   vertical-align: middle;
   position: relative;
 }
+
 .send-requestcont .selected-contact-container .contact-item img {
   width: 17px;
   height: 17px;
@@ -130,6 +165,7 @@
   vertical-align: middle;
   margin-right: 3px;
 }
+
 .send-requestcont .selected-contact-container .contact-item .contact-close {
   display: block;
   width: 10px;
@@ -147,23 +183,28 @@
   border: 1px solid #c4c4c4;
   overflow: auto;
 }
+
 .contacts-popup .list {
   margin-left: 10px;
   margin-right: 10px;
 }
+
 .contacts-popup .list .item {
   border-left-color: transparent;
   border-right-color: transparent;
   padding: 0;
   font-size: 12px;
   min-height: 28px;
+
   ion-label {
     margin: 0;
   }
 }
+
 .contacts-popup .list .item.padding-left {
   padding-left: 8px;
 }
+
 .contacts-popup .list .item-divider {
   text-align: center;
   background-color: transparent;
@@ -171,13 +212,16 @@
   padding-right: 0;
   overflow: visible;
   min-height: 34px;
+
   .item-inner {
     padding: 0;
   }
+
   ion-label {
     margin: 0;
   }
 }
+
 .contacts-popup .item-divider span {
   background-color: #efefef;
   border-radius: 5px;
@@ -188,14 +232,17 @@
   display: block;
   padding: 3px 0;
 }
+
 .contacts-popup .contacts-list .item.item-avatar {
   min-height: 30px;
   height: 30px;
   border-bottom: 1px solid #c4c4c4;
+
   ion-avatar {
     margin: 12px 16px 0 8px;
   }
 }
+
 .contacts-popup .item.item-avatar img {
   width: 25px;
   height: 25px;
