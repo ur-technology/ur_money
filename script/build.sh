@@ -39,7 +39,6 @@ if [[ "$PLATFORM" == "android" ]]; then
 fi
 
 npm install
-typings install
 
 if [[ "$PLATFORM" == "android" ]]; then
 
