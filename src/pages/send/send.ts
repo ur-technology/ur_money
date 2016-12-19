@@ -67,18 +67,20 @@ export class SendPage {
 
   chooseContact() {
     let self = this;
-    let chooseModal = this.modalController.create(ChooseContactPage, {walletAddress: self.walletAddress});
+    let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: self.walletAddress });
     chooseModal.onDidDismiss(data => {
-      self.contact = null;
-      self.walletAddress = null;
-      if (data.contact) {
-        self.contact = data.contact;
-        (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
-        (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
-      } else {
-        self.walletAddress = data.walletAddress;
-        (<FormControl>this.mainForm.controls['addressWallet']).setValue(self.walletAddress);
-        (<FormControl>this.mainForm.controls['contact']).setErrors(null);
+      if (data) {
+        self.contact = null;
+        self.walletAddress = null;
+        if (data.contact) {
+          self.contact = data.contact;
+          (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
+          (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
+        } else {
+          self.walletAddress = data.walletAddress;
+          (<FormControl>this.mainForm.controls['addressWallet']).setValue(self.walletAddress);
+          (<FormControl>this.mainForm.controls['contact']).setErrors(null);
+        }
       }
     });
     chooseModal.present();
