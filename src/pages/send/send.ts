@@ -23,7 +23,6 @@ declare var jQuery: any;
 })
 export class SendPage {
   contact: any;
-  walletAddress: string;
   mainForm: FormGroup;
   availableBalance: any = new BigNumber(0);
   estimatedFee: any = new BigNumber(0);
@@ -67,18 +66,16 @@ export class SendPage {
   chooseContact() {
     let self = this;
     if (Config.targetPlatform !== 'web') {
-      let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: self.walletAddress });
+      let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: this.mainForm.controls['addressWallet'].value });
       chooseModal.onDidDismiss(data => {
         if (data) {
           self.contact = null;
-          self.walletAddress = null;
           if (data.contact) {
             self.contact = data.contact;
             (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
             (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
           } else {
-            self.walletAddress = data.walletAddress;
-            (<FormControl>this.mainForm.controls['addressWallet']).setValue(self.walletAddress);
+            (<FormControl>this.mainForm.controls['addressWallet']).setValue(data.walletAddress);
             (<FormControl>this.mainForm.controls['contact']).setErrors(null);
           }
         }
@@ -147,7 +144,7 @@ export class SendPage {
       createdAt: firebase.database.ServerValue.TIMESTAMP,
       updatedAt: firebase.database.ServerValue.TIMESTAMP,
       sender: _.merge(_.pick(this.auth.currentUser, ['name', 'profilePhotoUrl']), { userId: this.auth.currentUserId }),
-      receiver: _.pick(this.contact, ['name', 'profilePhotoUrl', 'userId']),
+      receiver: this.contact ? _.pick(this.contact, ['name', 'profilePhotoUrl', 'userId']) : { name: 'Unknown Recipient"' },
       createdBy: 'UR Money',
       type: 'sent',
       amount: urTransaction.value,
@@ -169,7 +166,7 @@ export class SendPage {
     }).then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      let address = self.contact ? self.contact.wallet.address : self.walletAddress;
+      let address = self.contact ? self.contact.wallet.address : this.mainForm.controls['addressWallet'].value;
       return self.wallet.sendRawTransaction(address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
       return self.saveTransaction(urTransaction);
