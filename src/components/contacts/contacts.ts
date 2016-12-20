@@ -42,7 +42,7 @@ export class ContactsComponent {
 
   private determineMemberActionLabel() {
     if (this.goal === 'send') {
-      return this.translate.instant('contacts.sendUr');
+      return this.translate.instant('contacts.select');
     } else if (this.goal === 'request') {
       return this.translate.instant('contacts.requestUr');
     } else {

@@ -16,10 +16,14 @@
 <ion-content class="contentFix">
   <contacts goal="send" *ngIf="option=='contact'" (onContactSelected)="onContactSelected($event)"></contacts>
   <div *ngIf="option=='address'">
-    <ion-item>
-      <ion-label stacked>Wallet address</ion-label>
-      <ion-input placeholder="{{'choose-contact.placeholderAddress' | translate}}" [(ngModel)]="addressText"></ion-input>
-      <button ion-button (click)="dismissWalletAddress()" color="primary" item-right>{{"contacts.sendUr" | translate}}</button>
-    </ion-item>
+    <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && dismissWalletAddress()">
+      <ion-item>
+        <ion-label stacked>Wallet address</ion-label>
+        <ion-input formControlName="addressWallet" placeholder="{{'choose-contact.placeholderAddress' | translate}}"></ion-input>
+        <button ion-button icon-right type="submit" color="primary" [disabled]="!mainForm.valid" item-right>{{"continue" | translate}}<ion-icon name="arrow-round-forward"></ion-icon></button>
+      </ion-item>
+      <br />
+      <div class="validatorError" *ngIf="incorrectToField()">{{"send.incorrectAddress" | translate}}</div>
+    </form>
   </div>
 </ion-content>

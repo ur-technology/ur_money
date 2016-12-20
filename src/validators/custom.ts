@@ -1,6 +1,7 @@
 import {FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import {WalletModel} from '../models/wallet';
 
 export class CustomValidator {
   static minValidAmount: number;
@@ -21,6 +22,14 @@ export class CustomValidator {
     var pattern = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.([-a-z0-9_]+)|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
     if (control.value && !control.value.match(pattern)) {
       return { 'invalidEmailAddress': true };
+    }
+  }
+
+  static validateAddressField(control) {
+    if (control && control.value) {
+      if (!WalletModel.validateAddressFormat(control.value)) {
+        return { 'invalidAddress': true };
+      }
     }
   }
 

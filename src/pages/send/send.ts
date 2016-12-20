@@ -14,6 +14,7 @@ import {ToastService} from '../../services/toast';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 import {EncryptionService} from '../../services/encryption';
+import {Config} from '../../config/config';
 import {ChooseContactPage} from '../choose-contact/choose-contact';
 declare var jQuery: any;
 
@@ -50,7 +51,7 @@ export class SendPage {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       secretPhrase: new FormControl('', [Validators.required]),
-      addressWallet: new FormControl('', [Validators.required, this.validateAddressField]),
+      addressWallet: new FormControl('', [Validators.required, CustomValidator.validateAddressField]),
       contact: new FormControl('', [Validators.required])
     });
   }
@@ -65,30 +66,27 @@ export class SendPage {
 
   chooseContact() {
     let self = this;
-    let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: self.walletAddress });
-    chooseModal.onDidDismiss(data => {
-      if (data) {
-        self.contact = null;
-        self.walletAddress = null;
-        if (data.contact) {
-          self.contact = data.contact;
-          (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
-          (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
-        } else {
-          self.walletAddress = data.walletAddress;
-          (<FormControl>this.mainForm.controls['addressWallet']).setValue(self.walletAddress);
-          (<FormControl>this.mainForm.controls['contact']).setErrors(null);
+    if (Config.targetPlatform !== 'web') {
+      let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: self.walletAddress });
+      chooseModal.onDidDismiss(data => {
+        if (data) {
+          self.contact = null;
+          self.walletAddress = null;
+          if (data.contact) {
+            self.contact = data.contact;
+            (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
+            (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
+          } else {
+            self.walletAddress = data.walletAddress;
+            (<FormControl>this.mainForm.controls['addressWallet']).setValue(self.walletAddress);
+            (<FormControl>this.mainForm.controls['contact']).setErrors(null);
+          }
         }
-      }
-    });
-    chooseModal.present();
-  }
-
-  validateAddressField(control) {
-    if (control && control.value) {
-      if (!WalletModel.validateAddressFormat(control.value)) {
-        return { 'invalidAddress': true };
-      }
+      });
+      chooseModal.present();
+    }
+    if (Config.targetPlatform === 'web') {
+      (<FormControl>this.mainForm.controls['contact']).setErrors(null);
     }
   }
 

@@ -28,7 +28,7 @@
         "betaProgramButton": "I'm in the UR Money Beta Program"
     },
     "choose-contact":{
-      "title": "Send UR to",
+      "title": "Choose contact or enter wallet address",
       "placeholderAddress":"Enter the receiver's wallet address"
     },
     "email-address": {
@@ -219,7 +219,8 @@
         "messageNoContacts": "It looks like you don't have contacts yet. Invite a friend",
         "messageContactNotPresent": "Contact not in list? Invite a friend",
         "invitesDisabled": "Invites Disabled",
-        "sorryInvitesDisabled": "Sorry, invites are disabled for this account."
+        "sorryInvitesDisabled": "Sorry, invites are disabled for this account.",
+        "select": "Select"
     },
     "contacts-and-chats": {
         "contacts": "Contacts",

@@ -28,7 +28,7 @@
         "betaProgramButton": "Estoy en el programa UR Money Beta"
     },
     "choose-contact":{
-      "title": "Enviar UR a",
+      "title": "Escoja contacto o ingrese dirección de la billetera",
       "placeholderAddress":"Introduzca la dirección de la billetera del receptor"
     },
     "email-address": {
@@ -219,7 +219,8 @@
         "messageNoContacts": "Parece que no tienes contactos todavía. Invita a un amigo.",
         "messageContactNotPresent": "El contacto no está en la lista? Invita a un amigo.",
         "invitesDisabled": "Invitaciones deshabilitadas",
-        "sorryInvitesDisabled": "Las invitaciones están deshabilitadas para esta cuenta."
+        "sorryInvitesDisabled": "Las invitaciones están deshabilitadas para esta cuenta.",
+        "select": "Seleccionar"
     },
     "contacts-and-chats": {
         "contacts": "Contactos",
