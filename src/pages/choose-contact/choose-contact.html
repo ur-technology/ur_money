@@ -20,8 +20,8 @@
   <contacts goal="send" *ngIf="option=='contact'" (onContactSelected)="onContactSelected($event)"></contacts>
   <div *ngIf="option=='address'">
     <ion-item>
-      <ion-label floating>Wallet address</ion-label>
-      <ion-input [(ngModel)]="addressText"></ion-input>
+      <ion-label stacked>Wallet address</ion-label>
+      <ion-input placeholder="{{'choose-contact.placeholderAddress' | translate}}" [(ngModel)]="addressText"></ion-input>
     </ion-item>
   </div>
 </ion-content>

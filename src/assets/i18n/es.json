@@ -28,7 +28,8 @@
         "betaProgramButton": "Estoy en el programa UR Money Beta"
     },
     "choose-contact":{
-      "title": "Enviar UR a"
+      "title": "Enviar UR a",
+      "placeholderAddress":"Introduzca la dirección de la billetera del receptor"
     },
     "email-address": {
         "title": "Dirección de correo electrónico",
@@ -279,7 +280,10 @@
         "secretPhraseRequired": "La frase de contraseña es requerida",
         "pleaseWait": "Por favor espere...",
         "sendTo": "Enviar a",
-        "incorrectAddress": "La dirección de la billetera es incorrecta"
+        "incorrectAddress": "La dirección de la billetera es incorrecta",
+        "placeholderAmount": "Ingresa la cantidad",
+        "placeholderSentTo": "Elige contacto o introduce la dirección de la billetera",
+        "placeholderPhrase": "Introduce tu frase secreta"
     },
     "invite-link": {
       "title": "Invitar a amigos",

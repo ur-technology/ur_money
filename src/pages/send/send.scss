@@ -9,19 +9,30 @@
 
 .gridSend {
   background-color: color($colors, primary);
+  font-size: 1.4rem;
 }
 
-.colLabel{
+.colLabel {
+  color: color($colors, light)!important;
+}
+
+.rowBalance {
+  padding-bottom: 2px;
+  // border-bottom: 1px solid #dedede;
+}
+
+.colValue {
+  padding-left: 16px;
   color: #fff;
+  font-weight: bolder;
+
+  .text-input[disabled] {
+    opacity: 1;
+  }
 }
 
-.colValue{
-  color: color($colors, light);
-  font-weight: 500;
-}
-
-.colUr{
-    color: color($colors, light);
+.colUr {
+  color: color($colors, light) !important;
 }
 
 .inputDisabled {

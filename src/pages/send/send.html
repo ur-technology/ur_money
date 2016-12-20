@@ -4,38 +4,44 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
+
+
   <ion-grid class="gridSend">
-    <ion-row>
-      <ion-col width-30 class="colLabel">{{"send.availableBalance" | translate}}</ion-col>
-      <ion-col class="colValue">{{availableBalance.toFormat(5)}}</ion-col>
+    <ion-row class="rowBalance">
+      <ion-col class="colLabel">{{"send.availableBalance" | translate}}
+        <span class="colValue">{{availableBalance.toFormat(5)}}</span>
+      </ion-col>
+      <ion-col width-10 class="colUr">UR</ion-col>
+    </ion-row>
+    <ion-row class="rowBalance">
+      <ion-col class="colLabel">{{"send.estimatedFee" | translate}}
+        <span class="colValue"> {{estimatedFee.toFormat(5)}}</span>
+      </ion-col>
       <ion-col width-10 class="colUr">UR</ion-col>
     </ion-row>
     <ion-row>
-      <ion-col width-30 class="colLabel">{{"send.estimatedFee" | translate}}</ion-col>
-      <ion-col class="colValue">{{estimatedFee.toFormat(5)}}</ion-col>
-      <ion-col width-10 class="colUr">UR</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col width-30 class="colLabel">{{"send.maxAmount" | translate}}</ion-col>
-      <ion-col class="colValue">{{maxAmount.toFormat(5)}}</ion-col>
+      <ion-col class="colLabel">{{"send.maxAmount" | translate}}
+        <span class="colValue">{{maxAmount.toFormat(5)}}</span>
+      </ion-col>
       <ion-col width-10 class="colUr">UR</ion-col>
     </ion-row>
   </ion-grid>
 
+
   <form class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && sendUR()">
     <ion-item>
-      <ion-label floating>{{"send.sendTo" | translate}}</ion-label>
-      <ion-input *ngIf="!contact" (focus)="chooseContact()" formControlName="addressWallet"></ion-input>
+      <ion-label stacked>{{"send.sendTo" | translate}}</ion-label>
+      <ion-input placeholder="{{'send.placeholderSentTo' | translate}}" *ngIf="!contact" (focus)="chooseContact()" formControlName="addressWallet"></ion-input>
       <ion-input *ngIf="contact" (focus)="chooseContact()" formControlName="contact"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>{{'send.enterAmount' | translate}}</ion-label>
-      <ion-input formControlName="amount" type="number"></ion-input>
+      <ion-label stacked>{{'send.enterAmount' | translate}}</ion-label>
+      <ion-input placeholder="{{'send.placeholderAmount' | translate}}" formControlName="amount" type="number"></ion-input>
       <ion-note item-right> UR </ion-note>
     </ion-item>
     <ion-item>
-      <ion-label floating>{{'send.secretPhrase' | translate}}</ion-label>
-      <ion-input formControlName="secretPhrase" type="password"></ion-input>
+      <ion-label stacked>{{'send.secretPhrase' | translate}}</ion-label>
+      <ion-input placeholder="{{'send.placeholderPhrase' | translate}}" formControlName="secretPhrase" type="password"></ion-input>
     </ion-item>
     <br />
     <div class="validatorError" *ngIf="incorrectToField()">{{"send.incorrectAddress" | translate}}</div>
