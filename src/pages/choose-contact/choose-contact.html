@@ -1,9 +1,6 @@
 <ion-header>
   <ion-navbar>
     <ion-title class="chat-title">{{"choose-contact.title" | translate}}</ion-title>
-    <ion-buttons end>
-      <button *ngIf="option=='address'" ion-button icon-only (click)="dismissWalletAddress()"><ion-icon name="checkmark"></ion-icon></button>
-    </ion-buttons>
   </ion-navbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]="option">
@@ -22,6 +19,7 @@
     <ion-item>
       <ion-label stacked>Wallet address</ion-label>
       <ion-input placeholder="{{'choose-contact.placeholderAddress' | translate}}" [(ngModel)]="addressText"></ion-input>
+      <button ion-button (click)="dismissWalletAddress()" color="primary" item-right>{{"contacts.sendUr" | translate}}</button>
     </ion-item>
   </div>
 </ion-content>

@@ -9,7 +9,7 @@
 
 .gridSend {
   background-color: color($colors, primary);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 }
 
 .colLabel {
@@ -33,6 +33,7 @@
 
 .colUr {
   color: color($colors, light) !important;
+  text-align: right;
 }
 
 .inputDisabled {

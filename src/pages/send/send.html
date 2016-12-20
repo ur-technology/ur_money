@@ -26,7 +26,8 @@
       <ion-col width-10 class="colUr">UR</ion-col>
     </ion-row>
   </ion-grid>
-
+<br />
+<br />
 
   <form class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && sendUR()">
     <ion-item>
@@ -49,7 +50,7 @@
     <div class="validatorError" *ngIf="numberOutOfRange()">{{"send.numberOutOfRange" | translate}}</div>
     <div class="validatorError" *ngIf="missingSecretPhrase()">{{"send.secretPhraseRequired" | translate}}</div>
     <div class="validatorError" *ngIf="incorrectSecretPhrase()">{{"send.incorrectSecretPhrase" | translate}}</div>
-
+<br />
     <button ion-button round block class="send-requestbtn" type="submit" [disabled]="!mainForm.valid">{{"send.send" | translate}}</button>
   </form>
 </ion-content>

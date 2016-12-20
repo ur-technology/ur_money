@@ -283,7 +283,7 @@
         "incorrectAddress": "Wallet address is incorrect",
         "placeholderAmount": "Enter amount",
         "placeholderSentTo": "Choose contact or enter wallet address",
-        "placeholderPhrase": "Enter secret phrase"
+        "placeholderPhrase": "Enter your secret phrase"
     },
     "invite-link": {
       "title": "Invite Friends",
