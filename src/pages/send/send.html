@@ -29,7 +29,7 @@
 <br />
 <br />
 
-  <form class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && sendUR()">
+  <form novalidate class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && sendUR()">
     <ion-item>
       <ion-label stacked>{{"send.sendTo" | translate}}</ion-label>
       <ion-input placeholder="{{'send.placeholderSentTo' | translate}}" *ngIf="!contact" (focus)="chooseContact()" formControlName="addressWallet"></ion-input>

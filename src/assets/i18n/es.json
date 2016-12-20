@@ -277,7 +277,7 @@
         "enterSecret": "Ingresa la frase secreta de tu cuenta",
         "confirmation": "Confirmación",
         "amountRequired": "Se requiere la cantidad",
-        "numberOutOfRange": "La cantidad tiene que ser entre 0 y el saldo disponible",
+        "numberOutOfRange": "La cantidad tiene que ser entre 0.000000000000000001 y el saldo disponible",
         "secretPhraseRequired": "La frase de contraseña es requerida",
         "pleaseWait": "Por favor espere...",
         "sendTo": "Enviar a",

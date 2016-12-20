@@ -277,7 +277,7 @@
         "enterSecret": "Enter your account's secret phrase",
         "confirmation": "Confirmation",
         "amountRequired": "Amount is required",
-        "numberOutOfRange": "Amount must be between 0 and max amount.",
+        "numberOutOfRange": "Amount must be between 0.000000000000000001 and max amount.",
         "secretPhraseRequired": "Secret phrase is required",
         "pleaseWait": "Please Wait...",
         "sendTo": "Send to",

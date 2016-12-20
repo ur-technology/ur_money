@@ -60,7 +60,7 @@ export class SendPage {
     this.estimatedFee = this.chartData.balanceInfo.estimatedFee;
     this.maxAmount = BigNumber.max(this.chartData.balanceInfo.availableBalance.minus(this.chartData.balanceInfo.estimatedFee), 0);
     CustomValidator.maxValidAmount = this.maxAmount.toNumber();
-    CustomValidator.minValidAmount = 0;
+    CustomValidator.minValidAmount = new BigNumber(0.000000000000000001).toNumber();
   }
 
   chooseContact() {
@@ -167,6 +167,7 @@ export class SendPage {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
       let address = self.contact ? self.contact.wallet.address : this.mainForm.controls['addressWallet'].value;
+      address = WalletModel.prefixAddress(address);
       return self.wallet.sendRawTransaction(address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
       return self.saveTransaction(urTransaction);
@@ -293,10 +294,9 @@ export class SendPage {
 
   confirm() {
     return new Promise((resolve, reject) => {
-      let amount: number = Number(this.mainForm.value.amount); // add number:'1.2-2'
       let prompt = this.alertCtrl.create({
         title: this.translate.instant('send.confirmation'),
-        message: `<p>${this.translate.instant('send.send')} ${amount} UR?</p>`,
+        message: `<p>${this.translate.instant('send.send')} ${this.mainForm.value.amount} UR?</p>`,
         buttons: [
           {
             text: this.translate.instant('cancel'),

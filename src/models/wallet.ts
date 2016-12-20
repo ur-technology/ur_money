@@ -125,6 +125,16 @@ export class WalletModel {
     return ethUtil.isValidAddress(address);
   }
 
+  public static prefixAddress(address) {
+    let ethUtil = require('ethereumjs-util');
+
+    if (!ethUtil.isHexPrefixed(address)) {
+      address = ('0x' + address);
+    }
+
+    return address;
+  }
+
   public sendRawTransaction(to: string, amount: number): Promise<any> {
     let self = this;
     return new Promise<boolean>((resolve, reject) => {
