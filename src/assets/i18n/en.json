@@ -28,8 +28,8 @@
         "betaProgramButton": "I'm in the UR Money Beta Program"
     },
     "choose-contact":{
-      "title": "Choose contact or enter wallet address",
-      "placeholderAddress":"Enter the receiver's wallet address"
+      "title": "Choose contact or enter UR address",
+      "placeholderAddress":"Enter the receiver's UR address"
     },
     "email-address": {
         "title": "Enter email address",
@@ -281,9 +281,9 @@
         "secretPhraseRequired": "Secret phrase is required",
         "pleaseWait": "Please Wait...",
         "sendTo": "Send to",
-        "incorrectAddress": "Wallet address is incorrect",
+        "incorrectAddress": "UR address is invalid",
         "placeholderAmount": "Enter amount",
-        "placeholderSentTo": "Choose contact or enter wallet address",
+        "placeholderSentTo": "Choose contact or enter UR address",
         "placeholderPhrase": "Enter your secret phrase"
     },
     "invite-link": {
@@ -312,7 +312,9 @@
         "lastName": "Last name",
         "state": "State or province",
         "city": "City",
-        "profileUpdated": "Your profile has been updated"
+        "profileUpdated": "Your profile has been updated",
+        "URWallet": "UR",
+        "URWalletAddress": "UR address"
     },
     "request": {
         "balance": "Balance:",
