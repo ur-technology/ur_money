@@ -1,3 +1,5 @@
+import {Config} from '../config/config';
+
 export class FakeContactsSource {
 
   constructor() {
@@ -5,7 +7,7 @@ export class FakeContactsSource {
 
   static find(params: any[]): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      resolve(FakeContactsSource.rawContacts());
+      resolve(Config.targetPlatform === 'web' ? [] : FakeContactsSource.rawContacts());
     });
   };
 
