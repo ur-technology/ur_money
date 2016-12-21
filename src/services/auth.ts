@@ -73,7 +73,7 @@ export class AuthService {
     let self = this;
 
     if (Config.targetPlatform === 'web') {
-      return;
+      return Promise.resolve();
     }
 
     self.firebaseConnectionCheckInProgress = true;
