@@ -71,6 +71,11 @@ export class AuthService {
 
   checkFirebaseConnection(): Promise<any> {
     let self = this;
+
+    if (Config.targetPlatform === 'web') {
+      return;
+    }
+
     self.firebaseConnectionCheckInProgress = true;
     return new Promise((resolve, reject) => {
 
