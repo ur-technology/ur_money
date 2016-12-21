@@ -3,19 +3,19 @@
         <ion-title>{{"intro.title" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content padding
-    class="registration intro">
+<ion-content padding>
     <h2>{{"intro.welcome" | translate}}</h2>
+    <img src="assets/img/ur-logo.png"/>
     <p>
         {{"intro.message1" | translate}}
     </p>
     <p>
         {{"intro.message2" | translate}}
     </p>
-    <p>
+    <p *ngIf="configPlatform!='web'">
         {{"intro.message3" | translate}}
     </p>
-    <p>
+    <p *ngIf="configPlatform!='web'">
         {{"intro.message4" | translate}}
     </p>
     <form>

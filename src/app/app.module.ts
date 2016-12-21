@@ -16,7 +16,7 @@ import {AnnouncementInitiatedPage} from '../pages/registration/announcement-init
 import {AuthenticationCodePage} from '../pages/registration/authentication-code';
 import {CountryNotSupportedPage} from '../pages/registration/country-not-supported';
 import {EmailAddressPage} from '../pages/registration/email-address';
-import {IntroPage} from '../pages/registration/intro';
+import {IntroPage} from '../pages/registration/intro/intro';
 import {NoInternetConnectionPage} from '../pages/registration/no-internet-connection';
 import {PhoneNumberPage} from '../pages/registration/phone-number';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';

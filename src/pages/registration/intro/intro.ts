@@ -1,13 +1,16 @@
 import { NavController, AlertController} from 'ionic-angular';
 import {TranslateService} from 'ng2-translate/ng2-translate';
-import {AuthService} from '../../services/auth';
-import {ProfileSetupPage} from './profile-setup';
+import {AuthService} from '../../../services/auth';
+import {ProfileSetupPage} from '../profile-setup';
 import { Component } from '@angular/core';
+import {Config} from '../../../config/config';
 
 @Component({
+  selector: 'intro-page',
   templateUrl: 'intro.html',
 })
 export class IntroPage {
+  configPlatform: string;
 
   constructor(
     public nav: NavController,
@@ -15,6 +18,7 @@ export class IntroPage {
     public alertCtrl: AlertController,
     public translate: TranslateService
   ) {
+    this.configPlatform = Config.targetPlatform;
   }
 
   notNow() {
