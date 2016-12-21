@@ -284,6 +284,7 @@
         "incorrectAddress": "La dirección UR es inválida",
         "placeholderAmount": "Ingresa la cantidad",
         "placeholderSentTo": "Elige contacto o introduce la dirección UR",
+        "placeholderSentToWeb": "Introduce la dirección UR",
         "placeholderPhrase": "Introduce tu frase secreta"
     },
     "invite-link": {

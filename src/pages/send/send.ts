@@ -32,6 +32,7 @@ export class SendPage {
   private phraseSaved;
   refreshIntervalId: any;
   @ViewChild(Content) content: Content;
+  public placeholderSentTo: string;
 
   constructor(
     public nav: NavController,
@@ -53,6 +54,7 @@ export class SendPage {
       addressWallet: new FormControl('', [Validators.required, CustomValidator.validateAddressField]),
       contact: new FormControl('', [Validators.required])
     });
+    this.placeholderSentTo = Config.targetPlatform === 'web' ? this.translate.instant('send.placeholderSentToWeb') : this.translate.instant('send.placeholderSentTo');
   }
 
   reflectMaxAmountOnPage() {

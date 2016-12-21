@@ -284,6 +284,7 @@
         "incorrectAddress": "UR address is invalid",
         "placeholderAmount": "Enter amount",
         "placeholderSentTo": "Choose contact or enter UR address",
+        "placeholderSentToWeb": "Enter UR address",
         "placeholderPhrase": "Enter your secret phrase"
     },
     "invite-link": {
