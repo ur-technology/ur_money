@@ -97,7 +97,7 @@ export class AuthService {
             }
           });
         }
-      }, 7 * 1000);
+      }, 20 * 1000);
     });
   }
 
