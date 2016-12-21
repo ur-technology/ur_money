@@ -1,4 +1,4 @@
-import { Component, NgZone, Inject} from '@angular/core';
+import { Component, Inject} from '@angular/core';
 import { NavController, Platform, ToastController} from 'ionic-angular';
 import { FirebaseApp } from 'angularfire2';
 import { App } from 'ionic-angular';
@@ -14,17 +14,16 @@ import {AuthService} from '../../services/auth';
 })
 export class EventListComponent {
   events = [];
-  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App, public ngZone: NgZone, @Inject(FirebaseApp) firebase: any) {
+  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App, @Inject(FirebaseApp) firebase: any) {
     if (platform.is('cordova')) {
       this.listenForNewEvents();
       this.listenForNotificationSelection();
     }
 
     this.eventsService.eventChanged.subscribe(() => {
-      this.ngZone.run(() => {
         this.events = this.eventsService.events;
-      });
     });
+    this.events = this.eventsService.events;
   }
 
   ngOnInit() {
