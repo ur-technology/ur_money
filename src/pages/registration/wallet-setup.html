@@ -37,7 +37,7 @@
       </ion-item>
       <ion-list-header>
       </ion-list-header>
-      <ion-item text-wrap>
+      <ion-item text-wrap *ngIf="configPlatform!='web'">
          <ion-label>{{'wallet-setup.saveSecretPhrase' | translate}}</ion-label>
          <ion-checkbox formControlName="savePhrase"></ion-checkbox>
          <button ion-button clear type="text" item-right (click)="alertSecretPhrase()" form="aa">{{'wallet-setup.learnMore' | translate}}</button>

@@ -11,6 +11,7 @@ import {CustomValidator} from '../../validators/custom';
 import {HomePage} from '../home/home';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {EncryptionService} from '../../services/encryption';
+import {Config} from '../../config/config';
 
 declare var jQuery: any;
 
@@ -22,6 +23,7 @@ export class WalletSetupPage {
   errorMessage: string;
   profile: any;
   loadingModal: any;
+  configPlatform : string;
 
   constructor(
     public nav: NavController,
@@ -46,6 +48,7 @@ export class WalletSetupPage {
       content: this.translate.instant('pleaseWait'),
       dismissOnPageChange: true
     });
+    this.configPlatform = Config.targetPlatform;
   }
 
   suggestSecretPhrase() {
