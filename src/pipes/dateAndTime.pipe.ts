@@ -11,6 +11,6 @@ export class DateAndTime implements PipeTransform {
     if (!value || value.length === 0) {
       return;
     }
-    return moment(value).format('D/MM/YY, h:mm a');
+    return moment(value).format('D/MMM/YYYY, h:mm a');
   }
 }

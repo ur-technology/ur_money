@@ -46,7 +46,8 @@ export class TransactionComponent {
     _.each(self.filteredTransactions, transaction => {
       self.filteredTransactionsTotal = self.filteredTransactionsTotal.plus(transaction.amount);
     });
-    self.lastUpdated = self.filteredTransactions.length > 0 ? _.last(_.sortBy(self.filteredTransactions, 'updatedAt')).updatedAt : '';
+    self.filteredTransactions = _.orderBy(self.filteredTransactions, 'updatedAt', ['desc']);
+    self.lastUpdated = self.filteredTransactions.length > 0 ? _.last(self.filteredTransactions).updatedAt : '';
   }
 
   weiToURString(amount: any): string {
