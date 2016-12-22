@@ -99,16 +99,17 @@ export class IdentityVerificationSummaryPage {
         }).then(() => {
           self.verifyWithTrulio();
         });
-      } else if (Config.targetPlatform === 'web') {
-        self.stripeCheckoutHandler.open({
-          name: 'UR Money',
-          description: 'Payment for Id Verification',
-          amount: 299,
-          zipCode: true,
-          allowRememberMe: false
-        });
       }
     });
+    if (Config.targetPlatform === 'web') {
+      self.stripeCheckoutHandler.open({
+        name: 'UR Money',
+        description: 'Payment for Id Verification',
+        amount: 299,
+        zipCode: true,
+        allowRememberMe: false
+      });
+    }
   }
 
   verifyWithTrulio(stripeTokenId?: string) {
