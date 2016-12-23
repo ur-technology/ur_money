@@ -5,7 +5,7 @@ import * as log from 'loglevel';
 import {UserModel} from '../../../models/user';
 import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
-import {WalletSetupPage} from '../../../pages/registration/wallet-setup';
+import {WalletSetupPage} from '../../../pages/registration/wallet-setup/wallet-setup';
 import { Component } from '@angular/core';
 
 @Component({

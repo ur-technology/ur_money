@@ -118,16 +118,6 @@ country-not-supported-page{
 /*--------------------------------------------------
     Registration Screen / Verification Screen
 ----------------------------------------------------*/
-
-.wallet-setup-page {
-
-  .right {
-    float: right;
-  }
-
-}
-
-
 .country-code-cont.list .item {
   height: 47px;
   border: 1px solid #c8c7cc;
@@ -407,8 +397,4 @@ country-not-supported-page{
     overflow-x: hidden;
     overflow-y: hidden;
   }
-}
-
-.incorrect-secret-phrase {
-  color: red;
 }

@@ -4,18 +4,19 @@ import { FormGroup, FormControl} from '@angular/forms';
 import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 import {NativeStorage} from 'ionic-native';
-import {WalletModel} from '../../models/wallet';
-import {AuthService} from '../../services/auth';
-import {ContactsService} from '../../services/contacts';
-import {CustomValidator} from '../../validators/custom';
-import {HomePage} from '../home/home';
+import {WalletModel} from '../../../models/wallet';
+import {AuthService} from '../../../services/auth';
+import {ContactsService} from '../../../services/contacts';
+import {CustomValidator} from '../../../validators/custom';
+import {HomePage} from '../../home/home';
 import {TranslateService} from 'ng2-translate/ng2-translate';
-import {EncryptionService} from '../../services/encryption';
-import {Config} from '../../config/config';
+import {EncryptionService} from '../../../services/encryption';
+import {Config} from '../../../config/config';
 
 declare var jQuery: any;
 
 @Component({
+  selector: 'wallet-setup-page',
   templateUrl: 'wallet-setup.html',
 })
 export class WalletSetupPage {
