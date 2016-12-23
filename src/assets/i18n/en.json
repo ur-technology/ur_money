@@ -130,7 +130,12 @@
         "email": "Email",
         "country": "Country",
         "city": "City",
-        "state": "State or province"
+        "state": "State or province",
+        "placeholderFirstName": "Enter first name",
+        "placeholderMiddleName": "Enter middle name",
+        "placeholderLastName": "Enter last name",
+        "placeholderFullName": "Enter how you want to be called",
+        "placeholderEmail": "Enter email"
     },
     "identity-info-setup": {
         "title": "Identification Document",

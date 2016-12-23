@@ -2,13 +2,14 @@ import { NavController} from 'ionic-angular';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {UserModel} from '../../models/user';
-import {AuthService} from '../../services/auth';
-import {CustomValidator} from '../../validators/custom';
-import {WalletSetupPage} from '../../pages/registration/wallet-setup';
+import {UserModel} from '../../../models/user';
+import {AuthService} from '../../../services/auth';
+import {CustomValidator} from '../../../validators/custom';
+import {WalletSetupPage} from '../../../pages/registration/wallet-setup';
 import { Component } from '@angular/core';
 
 @Component({
+  selector: 'profile-setup-page',
   templateUrl: 'profile-setup.html',
 })
 export class ProfileSetupPage {

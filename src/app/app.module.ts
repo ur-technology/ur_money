@@ -20,7 +20,7 @@ import {IntroPage} from '../pages/registration/intro/intro';
 import {NoInternetConnectionPage} from '../pages/registration/no-internet-connection';
 import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
-import {ProfileSetupPage} from '../pages/registration/profile-setup';
+import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';
 import {VerificationFailedPage} from '../pages/registration/verification-failed';
 import {VerificationPendingPage} from '../pages/registration/verification-pending';
 import {PopoverChatPage} from '../pages/chat/popover-chat';

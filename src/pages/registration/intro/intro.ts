@@ -1,7 +1,7 @@
 import { NavController, AlertController} from 'ionic-angular';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {AuthService} from '../../../services/auth';
-import {ProfileSetupPage} from '../profile-setup';
+import {ProfileSetupPage} from '../profile-setup/profile-setup';
 import { Component } from '@angular/core';
 import {Config} from '../../../config/config';
 
