@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 import {ToastService} from '../../services/toast';
-import {AuthenticationCodePage} from './authentication-code';
+import {AuthenticationCodePage} from './authentication-code/authentication-code';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import { Component } from '@angular/core';
 

@@ -13,7 +13,7 @@ import {IdentityVerificationSummaryPage} from '../pages/identity-verification/id
 import {IdentityVerificationAddressPage} from '../pages/identity-verification/identity-verification-address/identity-verification-address';
 import {IdentityVerificationDocumentPage} from '../pages/identity-verification/identity-verification-document/identity-verification-document';
 import {AnnouncementInitiatedPage} from '../pages/registration/announcement-initiated';
-import {AuthenticationCodePage} from '../pages/registration/authentication-code';
+import {AuthenticationCodePage} from '../pages/registration/authentication-code/authentication-code';
 import {CountryNotSupportedPage} from '../pages/registration/country-not-supported';
 import {EmailAddressPage} from '../pages/registration/email-address';
 import {IntroPage} from '../pages/registration/intro/intro';
