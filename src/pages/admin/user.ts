@@ -22,7 +22,7 @@ export class UserPage {
   inEditMode: boolean = true;
   showSpinner: boolean = false;
   referrals: any[];
-
+  db: any;
 
   constructor(
     public nav: NavController,
@@ -58,7 +58,8 @@ export class UserPage {
     this.user.ipAddress = (this.user.prefineryUser && this.user.prefineryUser.ipAddress) || 'None';
 
     this.showSpinner = true;
-    let referralsRef: any = firebase.database().ref('/users').orderByChild('sponsor/userId').equalTo(this.user.userId);
+    this.db = firebase.database();
+    let referralsRef: any = this.db.ref('/users').orderByChild('sponsor/userId').equalTo(this.user.userId);
     referralsRef.once('value').then((snapshot) => {
       let referralsMapping: any = snapshot.val() || {};
       this.referrals = _.values(referralsMapping);
@@ -79,7 +80,7 @@ export class UserPage {
 
     if (this.user.sponsor && this.user.sponsor.userId) {
       this.showSpinner = true;
-      firebase.database().ref(`/users/${this.user.sponsor.userId}`).once('value').then((snapshot) => {
+      this.db.ref(`/users/${this.user.sponsor.userId}`).once('value').then((snapshot) => {
         this.sponsor = snapshot.val();
         if (this.sponsor) {
           this.sponsor.userId = this.user.sponsor.userId;
@@ -101,8 +102,9 @@ export class UserPage {
     }
     this.auth.currentUserRef.update(attrs).then(() => {
       this.auth.reloadCurrentUser();
-      let toast = this.toastCtrl.create({ message: 'User info has been updated.', duration: 3000, position: 'bottom' });
-      toast.present();
+      this.toastCtrl.create({
+        message: 'User info has been updated.', duration: 3000, position: 'bottom'
+      }).present();
     }).catch((error) => {
       log.warn('unable to save profile');
     });
@@ -121,7 +123,7 @@ export class UserPage {
     let attrs: any = {};
     this.user[fieldName] = !this.user[fieldName];
     attrs[fieldName] = this.user[fieldName];
-    firebase.database().ref(`/users/${this.user.userId}`).update(attrs).then(() => {
+    this.db.ref(`/users/${this.user.userId}`).update(attrs).then(() => {
       log.debug(`updated: `, attrs);
     }, (error) => {
       this.showSpinner = false;
@@ -158,5 +160,37 @@ export class UserPage {
       ],
       this.getUserStatus(this.user)
     );
+  }
+
+  identityManuallyVerifiable() {
+    return _.includes(['wallet-generated', 'verification-failed'], this.getUserStatus(this.user)) &&
+      !!this.user.wallet &&
+      !!this.user.wallet.address &&
+      !!this.sponsor &&
+      !!this.sponsor.wallet &&
+      !!this.sponsor.wallet.announcementTransaction &&
+      !!this.sponsor.wallet.announcementTransaction.blockNumber &&
+      !!this.sponsor.wallet.announcementTransaction.hash;
+  }
+
+  manuallyVerifyIdentity() {
+    if (!this.identityManuallyVerifiable()) {
+      log.warn('not verifiable');
+      return;
+    }
+
+    this.db.ref(`/users/${this.user.userId}/registration`).update({ status: 'verification-succeeded' }).then(() => {
+      this.user.status = 'verification-succeeded';
+      return this.db.ref('/identityAnnouncementQueue/tasks').push({ userId: this.user.userId });
+    }).then(() => {
+      this.toastCtrl.create({
+        message: 'User has been verified and identity announcement is in progress.'
+      }).present();
+    }, (error) => {
+      log.warn('There was an error verifying this user.', error);
+      this.toastCtrl.create({
+        message: 'There was an error verifying this user.'
+      }).present();
+    });
   }
 }

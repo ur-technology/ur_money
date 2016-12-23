@@ -110,6 +110,7 @@
               [(ngModel)]="user.status"
               [ngModelOptions]="{standalone: true}">
             </ion-input>
+            <button ion-button type="button" color="danger" item-right [disabled]="!identityManuallyVerifiable()" (click)="manuallyVerifyIdentity()">Manually Verify Identity</button>
           </ion-item>
         </ion-col>
         <ion-col>
@@ -123,6 +124,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
+      <ion-item-divider *ngIf="sponsor" color="light">Sponsor Info</ion-item-divider>
       <ion-row *ngIf="sponsor">
         <ion-col>
           <ion-item>
@@ -152,7 +154,7 @@
           <ion-item>
             <ion-label></ion-label>
             <button ion-button type="button" color="secondary" item-right (click)="goToUserPage(sponsor)">View</button>
-            <button ion-button type="button" color="danger" item-right *ngIf="sponsorChangeable()" (click)="changeSponsor($event)">Change</button>
+            <button ion-button type="button" color="danger" item-right [disabled]="!sponsorChangeable()" (click)="changeSponsor($event)">Change</button>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -164,7 +166,7 @@
         <ion-item detail-none *ngFor="let r of referrals" (click)="goToUserPage(r)" class="item item-avatar">
           <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
           <ion-label>
-            <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
+            <h3>{{r.name}} (Downline: {{r.downlineSize}}, Status: {{getUserStatus(r)}})</h3>
             <p>{{r.phone}} {{r.email}} {{country(r)}}</p>
             <p>{{r.moveRequestedTag}} {{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}}</p>
           </ion-label>

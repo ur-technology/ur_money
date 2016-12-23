@@ -1,4 +1,4 @@
-import {NavParams, ViewController} from 'ionic-angular';
+import {NavParams, ViewController, ToastController} from 'ionic-angular';
 import {Component} from '@angular/core';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
@@ -15,8 +15,8 @@ export class ChangeSponsorModal {
 
   constructor(
     private navParams: NavParams,
-    private viewCtrl: ViewController
-    // @Inject(FirebaseApp) firebase: any
+    private viewCtrl: ViewController,
+    private toastCtrl: ToastController
   ) {
     this.user = this.navParams.get('user');
     this.oldSponsor = this.navParams.get('oldSponsor');
@@ -26,7 +26,7 @@ export class ChangeSponsorModal {
 
   cancel(event) {
     event.stopPropagation();
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(undefined);
   }
 
   saveChange(event) {
@@ -70,7 +70,9 @@ export class ChangeSponsorModal {
       let newDownlineSize = Math.max(0, (newSponsor.downlineSize || 0) + downlineSizeChange);
       return firebase.database().ref(`/users/${newSponsor.userId}/downlineSize`).set(newDownlineSize);
     }).then(() => {
-      this.viewCtrl.dismiss(newSponsor);
+      this.toastCtrl.create({ message: 'Sponsor has been changed.' }).present().then(() => {
+        this.viewCtrl.dismiss(newSponsor);
+      });
     }, (error) => {
       this.showSpinner = false;
       if (this.errorMessage) {
