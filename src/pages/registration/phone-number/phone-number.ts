@@ -2,16 +2,17 @@ import { NavController, Platform, AlertController, LoadingController} from 'ioni
 import {OnInit, ElementRef, Inject, Component} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import * as _ from 'lodash';
-import {AuthService} from '../../services/auth';
-import {ToastService} from '../../services/toast';
-import {AuthenticationCodePage} from './authentication-code';
-import {EmailAddressPage} from './email-address';
-import {CountryListService} from '../../services/country-list';
+import {AuthService} from '../../../services/auth';
+import {ToastService} from '../../../services/toast';
+import {AuthenticationCodePage} from '../authentication-code';
+import {EmailAddressPage} from '../email-address';
+import {CountryListService} from '../../../services/country-list';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 
 declare var jQuery: any, intlTelInputUtils: any, require: any;
 
 @Component({
+  selector: 'phone-number-page',
   templateUrl: 'phone-number.html',
 })
 export class PhoneNumberPage implements OnInit {

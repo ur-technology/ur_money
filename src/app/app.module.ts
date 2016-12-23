@@ -18,14 +18,14 @@ import {CountryNotSupportedPage} from '../pages/registration/country-not-support
 import {EmailAddressPage} from '../pages/registration/email-address';
 import {IntroPage} from '../pages/registration/intro/intro';
 import {NoInternetConnectionPage} from '../pages/registration/no-internet-connection';
-import {PhoneNumberPage} from '../pages/registration/phone-number';
+import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
 import {ProfileSetupPage} from '../pages/registration/profile-setup';
 import {VerificationFailedPage} from '../pages/registration/verification-failed';
 import {VerificationPendingPage} from '../pages/registration/verification-pending';
 import {PopoverChatPage} from '../pages/chat/popover-chat';
 import {WalletSetupPage} from '../pages/registration/wallet-setup';
-import {WelcomePage} from '../pages/registration/welcome';
+import {WelcomePage} from '../pages/registration/welcome/welcome';
 import {SendPage} from '../pages/send/send';
 import {ChooseContactPage} from '../pages/choose-contact/choose-contact';
 import {UsersPage} from '../pages/admin/users';

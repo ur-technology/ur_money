@@ -2,7 +2,7 @@ import { NavController, NavParams, LoadingController} from 'ionic-angular';
 import {AuthService} from '../../services/auth';
 import {ToastService} from '../../services/toast';
 import {TranslateService} from 'ng2-translate/ng2-translate';
-import {PhoneNumberPage} from './phone-number';
+import {PhoneNumberPage} from './phone-number/phone-number'
 import {EmailAddressPage} from './email-address';
 import { Component } from '@angular/core';
 

@@ -1,10 +1,11 @@
 import { NavController, Platform, ModalController } from 'ionic-angular';
-import {PhoneNumberPage} from './phone-number';
-import {TermsAndConditionsPage} from '../terms-and-conditions/terms-and-conditions';
-import {AuthService} from '../../services/auth';
+import {PhoneNumberPage} from '../phone-number/phone-number';
+import {TermsAndConditionsPage} from '../../terms-and-conditions/terms-and-conditions';
+import {AuthService} from '../../../services/auth';
 import { Component } from '@angular/core';
 
 @Component({
+  selector: 'welcome-page',
   templateUrl: 'welcome.html',
 })
 export class WelcomePage {
@@ -14,7 +15,7 @@ export class WelcomePage {
   }
 
   goToPage() {
-    this.nav.setRoot(PhoneNumberPage, {}, { animate: true, direction: 'forword' });
+    this.nav.setRoot(PhoneNumberPage);
   }
 
   openTermsAndConditions() {

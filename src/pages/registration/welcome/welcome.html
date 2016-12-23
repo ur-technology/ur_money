@@ -1,4 +1,4 @@
-<ion-content padding
+<ion-content
     class="registration main-splash"
     scroll="false">
     <div class="ur-logo">
@@ -19,9 +19,9 @@
                 <br> {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
                 <br> {{ "welcome.terms4" | translate }}
             </p>
-            <button ion-button clear
+            <button ion-button clear block
                 (click)="goToPage()"
-                class="button button-clear button-block agree-btn"><span>{{ "welcome.agreeAndContinue" | translate }}</span></button>
+                class="agree-btn"><span>{{ "welcome.agreeAndContinue" | translate }}</span></button>
         </div>
     </ion-toolbar>
 </ion-footer>

@@ -8,28 +8,27 @@
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding #content
-    class="phone-number registration">
+<ion-content #content
+    >
     <p class="sub-heading">
         {{"phone-number.heading" | translate}}
     </p>
     <form [formGroup]="phoneForm" (ngSubmit)="phoneForm.valid && submit()">
-
-        <div class="list country-code-cont">
+        <ion-list class="list-border">
             <ion-item *ngIf="auth.authenticatedEmail">
                 <ion-label>Verified Beta Program Email Address {{auth.authenticatedEmail}}</ion-label>
             </ion-item>
             <ion-item>
                 <ion-label>{{selectedCountry.name}}</ion-label>
-                <ion-select [(ngModel)]="selectedCountryCode"
+                <ion-select [(ngModel)]="selectedCountryCode" selectedText=" "
                     [ngModelOptions]="{standalone: true}"
                     (ionChange)="countrySelect($event)">
                     <ion-option value="{{country.countryCode}}"
                         *ngFor="let country of countries">
                         {{country.name}}
-                        <span item-right>{{country.telephoneCountryCode}}</span>
+                        <span>{{country.telephoneCountryCode}}</span>
                     </ion-option>
-                </ion-select>              
+                </ion-select>
             </ion-item>
             <ion-item class="item item-input input-item-data">
                 <ion-input class="phone-country-code"
@@ -40,10 +39,7 @@
                     placeholder="{{'phone-number.phoneNumber' | translate}}"
                     type="tel"></ion-input>
             </ion-item>
-            <ion-item class="item item-input input-item-data" style="position: absolute; left: -9999px; width: 1px; height: 1px;">
-              <ion-input type="submit">.</ion-input>
-            </ion-item>
-        </div>
+        </ion-list>
     </form>
 </ion-content>
 <ion-footer>

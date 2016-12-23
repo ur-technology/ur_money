@@ -1,0 +1,27 @@
+phone-number-page {
+  .sub-heading {
+    font-size: 1.6rem;
+    text-align: center;
+    margin: 65px 6%;
+  }
+
+  .list-border .item {
+    border: 1px solid #c8c7cc;
+    border-right-color: transparent;
+    border-left-color: transparent;
+
+    .item-inner {
+      border: none;
+    }
+  }
+
+  .list-border .item.input-item-data {
+    border-top: transparent;
+  }
+
+  .list-border .phone-country-code {
+    max-width: 75px;
+    padding-right: 10px;
+    border: none;
+  }
+}
