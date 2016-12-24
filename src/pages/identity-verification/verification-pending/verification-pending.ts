@@ -1,6 +1,6 @@
 import { NavController} from 'ionic-angular';
-import {AuthService} from '../../services/auth';
-import {HomePage} from '../home/home';
+import {AuthService} from '../../../services/auth';
+import {HomePage} from '../../home/home';
 import { Component } from '@angular/core';
 
 @Component({

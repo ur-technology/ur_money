@@ -22,7 +22,7 @@ import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
 import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';
 import {VerificationFailedPage} from '../pages/identity-verification/verification-failed/verification-failed';
-import {VerificationPendingPage} from '../pages/registration/verification-pending';
+import {VerificationPendingPage} from '../pages/identity-verification/verification-pending/verification-pending';
 import {PopoverChatPage} from '../pages/chat/popover-chat';
 import {WalletSetupPage} from '../pages/registration/wallet-setup/wallet-setup';
 import {WelcomePage} from '../pages/registration/welcome/welcome';

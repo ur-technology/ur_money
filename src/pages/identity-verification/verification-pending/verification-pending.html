@@ -3,15 +3,16 @@
         <ion-title>{{"verification-pending.title" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
   <ion-card>
     <ion-card-content text-justify>
       <img src="assets/img/ur-logo.png"
         class="slide-image" />
-      <h2 class="slide-title">{{"verification-pending.message" | translate}}</h2><br />
+      <h2 class="slide-title"></h2><br />
+      <p innerHTML='{{"verification-pending.message" | translate}}'></p>
     </ion-card-content>
     <ion-item class="footer-card">
-      <button ion-button large
+      <button ion-button default
         item-right
         clear icon-right
         (click)="goToHome()">
