@@ -7,7 +7,7 @@ import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {Config} from '../../config/config';
 import {IdentityVerificationIntroPage} from '../identity-verification/identity-verification-intro/identity-verification-intro';
-import {CountryNotSupportedPage} from '../country-not-supported/country-not-supported';
+import {CountryNotSupportedPage} from '../identity-verification/country-not-supported/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
 import { TranslateService} from 'ng2-translate/ng2-translate';
 import {AnnouncementInitiatedPage} from '../registration/announcement-initiated';
