@@ -1,8 +1,4 @@
-.identity-verification-sponsor-wait {
-
-}
-
-identity-verification-sponsor-wait-page {
+verification-failed-page{
   ion-card-header {
     background-color: #f8f8f8;
     padding: 0;
@@ -22,7 +18,7 @@ identity-verification-sponsor-wait-page {
   }
 
   .slide-image {
-    width: 70%;
+    width: inherit;
     margin: auto;
     display: block;
   }

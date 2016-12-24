@@ -5,7 +5,7 @@ import {InAppPurchase} from 'ionic-native';
 import {AuthService} from '../../../services/auth';
 import {Config} from '../../../config/config';
 import {IdentityVerificationFinishPage} from '../identity-verification-finish/identity-verification-finish';
-import {VerificationFailedPage} from '../../registration/verification-failed';
+import {VerificationFailedPage} from '../verification-failed/verification-failed';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
@@ -109,6 +109,8 @@ export class IdentityVerificationSummaryPage {
         zipCode: true,
         allowRememberMe: false
       });
+    } else {
+      self.verifyWithTrulio();
     }
   }
 

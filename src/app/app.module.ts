@@ -21,7 +21,7 @@ import {NoInternetConnectionPage} from '../pages/registration/no-internet-connec
 import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
 import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';
-import {VerificationFailedPage} from '../pages/registration/verification-failed';
+import {VerificationFailedPage} from '../pages/identity-verification/verification-failed/verification-failed';
 import {VerificationPendingPage} from '../pages/registration/verification-pending';
 import {PopoverChatPage} from '../pages/chat/popover-chat';
 import {WalletSetupPage} from '../pages/registration/wallet-setup/wallet-setup';

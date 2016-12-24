@@ -3,7 +3,7 @@
         <ion-title>{{"verification-failed.title" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
   <ion-card>
     <ion-card-content text-justify>
       <img src="assets/img/ur-logo.png"
@@ -12,7 +12,7 @@
       <p innerHTML='{{"verification-failed.message" | translate}}'></p>
     </ion-card-content>
     <ion-item class="footer-card">
-      <button ion-button large
+      <button ion-button default
         item-right icon-right
         clear
         (click)="goToHome()">
