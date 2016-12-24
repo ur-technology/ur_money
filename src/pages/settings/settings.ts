@@ -1,6 +1,6 @@
-import { ViewChild, Component } from '@angular/core';
+import {Component } from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
-import { NavController, AlertController, ToastController, Content} from 'ionic-angular';
+import { NavController, AlertController, ToastController} from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import {UserModel} from '../../models/user';
@@ -19,7 +19,6 @@ export class SettingsPage {
   allStates: any[];
   states: any[];
   profile: any;
-  @ViewChild(Content) content: Content;
 
   constructor(
     public nav: NavController,

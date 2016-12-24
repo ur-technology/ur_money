@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {NavController, Platform, Content} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, Platform} from 'ionic-angular';
 import {IdentityVerificationAddressPage} from '../identity-verification-address/identity-verification-address';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
@@ -13,7 +13,6 @@ import {Config} from '../../../config/config';
   templateUrl: 'identity-verification-personal-info.html',
 })
 export class IdentityVerificationPersonalInfoPage {
-  @ViewChild(Content) content: Content;
   mainForm: FormGroup;
   genders: any[];
   profile: any;

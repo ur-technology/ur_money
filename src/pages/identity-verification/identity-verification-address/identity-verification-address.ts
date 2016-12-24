@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {NavController, NavParams, Content} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, NavParams} from 'ionic-angular';
 import {IdentityVerificationDocumentPage} from '../identity-verification-document/identity-verification-document';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
@@ -11,7 +11,6 @@ import {CountryListService} from '../../../services/country-list';
   templateUrl: 'identity-verification-address.html',
 })
 export class IdentityVerificationAddressPage {
-  @ViewChild(Content) content: Content;
   mainForm: FormGroup;
   errorMessage: string;
   countries: any[];

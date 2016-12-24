@@ -109,8 +109,6 @@ export class IdentityVerificationSummaryPage {
         zipCode: true,
         allowRememberMe: false
       });
-    } else {
-      self.verifyWithTrulio();
     }
   }
 

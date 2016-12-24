@@ -1,5 +1,5 @@
-import {NgZone, Component, ViewChild } from '@angular/core';
-import {NavController, NavParams, Content} from 'ionic-angular';
+import {NgZone, Component } from '@angular/core';
+import {NavController, NavParams} from 'ionic-angular';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import {AuthService} from '../../../services/auth';
@@ -18,7 +18,6 @@ export class IdentityVerificationDocumentPage {
   identificationTypeControl: any;
   identificationTypes: any[] = [];
   formElements: any;
-  @ViewChild(Content) content: Content;
 
   constructor(
     public nav: NavController,

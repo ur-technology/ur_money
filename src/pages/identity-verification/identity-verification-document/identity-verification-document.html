@@ -4,8 +4,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding
-  #content>
+<ion-content>
   <form [formGroup]="mainForm"
     (ngSubmit)="mainForm.valid && submit()">
     <ion-card>
@@ -72,7 +71,7 @@
         </ion-list>
       </ion-card-content>
       <ion-item class="footer-card">
-        <button ion-button item-right
+        <button ion-button item-right default
           clear icon-right
           [disabled]="!mainForm.valid">
               {{"continue" | translate}}
@@ -83,6 +82,6 @@
 
   </form>
 </ion-content>
-<ion-footer [keyboardAttach]="content">
+<ion-footer>
 
 </ion-footer>

@@ -50,7 +50,6 @@ import {CountryListService} from '../services/country-list';
 import {EncryptionService} from '../services/encryption';
 import {EventsService} from '../services/events';
 import {ToastService} from '../services/toast';
-import {KeyboardAttachDirective} from '../directives/keyboard-attach.directive';
 import {TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import {Http, HttpModule} from '@angular/http';
 import {BrowserModule} from "@angular/platform-browser";
@@ -119,8 +118,7 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     FilterPipe,
     OrderBy,
     Round,
-    Timestamp,
-    KeyboardAttachDirective
+    Timestamp
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,7 @@
     <ion-title>{{"profile-setup.title" | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding #content>
+<ion-content>
   <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
     <ion-card>
       <ion-card-header>
@@ -36,7 +36,7 @@
         </ion-list>
       </ion-card-content>
       <ion-item class="footer-card">
-        <button ion-button item-right clear icon-right [disabled]="!mainForm.valid">
+        <button ion-button item-right clear icon-right default [disabled]="!mainForm.valid">
               {{"continue" | translate}}
               <ion-icon name="arrow-forward"></ion-icon>
             </button>

@@ -1,5 +1,5 @@
-import { AlertController, Content, NavController, NavParams, Platform, LoadingController, ModalController} from 'ionic-angular';
-import { ViewChild, Inject, Component} from '@angular/core';
+import { AlertController, NavController, NavParams, Platform, LoadingController, ModalController} from 'ionic-angular';
+import { Inject, Component} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
@@ -31,7 +31,6 @@ export class SendPage {
   private loadingModal: any;
   private phraseSaved;
   refreshIntervalId: any;
-  @ViewChild(Content) content: Content;
   public placeholderSentTo: string;
 
   constructor(
