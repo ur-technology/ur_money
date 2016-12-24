@@ -10,7 +10,7 @@ import {IdentityVerificationIntroPage} from '../identity-verification/identity-v
 import {CountryNotSupportedPage} from '../identity-verification/country-not-supported/country-not-supported';
 import {VerificationPendingPage} from '../registration/verification-pending';
 import { TranslateService} from 'ng2-translate/ng2-translate';
-import {AnnouncementInitiatedPage} from '../registration/announcement-initiated';
+import {AnnouncementInitiatedPage} from '../identity-verification/announcement-initiated/announcement-initiated';
 import {TransactionsPage} from './../transactions/transactions';
 import {SendPage} from './../send/send';
 import {IdentityVerificationSponsorWaitPage} from '../identity-verification/identity-verification-sponsor-wait/identity-verification-sponsor-wait';

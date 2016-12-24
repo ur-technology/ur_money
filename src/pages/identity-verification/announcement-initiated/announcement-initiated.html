@@ -3,7 +3,7 @@
         <ion-title>{{"announcement-initiated.title" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
   <ion-card>
     <ion-card-content text-justify>
       <img src="assets/img/ur-logo.png"
@@ -11,7 +11,7 @@
       <h2 class="slide-title">{{"announcement-initiated.message" | translate}}</h2><br />
     </ion-card-content>
     <ion-item class="footer-card">
-      <button ion-button large
+      <button ion-button default
         item-right
         clear icon-right
         (click)="goToHome()">
