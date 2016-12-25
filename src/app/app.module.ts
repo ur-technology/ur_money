@@ -17,7 +17,7 @@ import {AuthenticationCodePage} from '../pages/registration/authentication-code/
 import {CountryNotSupportedPage} from '../pages/identity-verification/country-not-supported/country-not-supported';
 import {EmailAddressPage} from '../pages/registration/email-address';
 import {IntroPage} from '../pages/registration/intro/intro';
-import {NoInternetConnectionPage} from '../pages/registration/no-internet-connection';
+import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
 import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
 import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';

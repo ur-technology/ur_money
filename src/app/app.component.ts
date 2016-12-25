@@ -8,7 +8,7 @@ import { AboutPage } from '../pages/about/about';
 import {AuthService} from '../services/auth';
 import {ContactsService} from '../services/contacts';
 import {Config} from '../config/config'
-import {NoInternetConnectionPage} from '../pages/registration/no-internet-connection';
+import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
 import {WelcomePage} from '../pages/registration/welcome/welcome';
 import {IntroPage} from '../pages/registration/intro/intro';
 import {SendPage} from '../pages/send/send';
