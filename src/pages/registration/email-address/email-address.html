@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"email-address.title" | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button [disabled]="!mainForm.valid" (click)="submit()">
+              {{"done" | translate}}
+          </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <p class="sub-heading">
+    {{"email-address.heading" | translate}}
+  </p>
+  <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
+    <ion-item>
+      <ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
+      <ion-input class="email-input" formControlName="email" placeholder="{{'email-address.placeholder' | translate}}" type="email"></ion-input>
+    </ion-item>
+    <ion-item class="item item-input input-item-data" style="position: absolute; left: -9999px; width: 1px; height: 1px;">
+      <ion-input type="submit">.</ion-input>
+    </ion-item>
+  </form>
+</ion-content>
+
+<ion-footer>
+</ion-footer>

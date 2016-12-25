@@ -1,11 +1,52 @@
 authentication-code-page {
+
   .sub-heading {
     font-size: 1.6rem;
     text-align: center;
     margin: 65px 6%;
   }
 
-  .unlock .unlock-keypad {
+  .phone-number-authentication .unlock-keypad,
+  .unlock-keypad {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .phone-number-authentication .unlock-keypad .row,
+  .unlock-keypad .row {
+    border-bottom: 1px solid rgba(196, 196, 196, 0.8);
+  }
+
+  .phone-number-authentication .unlock-keypad .row .col.col-33.mid-col,
+  .unlock-keypad .row .col.col-33.mid-col {
+    border-left: 1px solid rgba(196, 196, 196, 0.8);
+    border-right: 1px solid rgba(196, 196, 196, 0.8);
+  }
+
+  .phone-number-authentication .unlock-keypad .pin-btn,
+  .unlock-keypad .pin-btn {
+    color: #323232;
+  }
+
+  .pin-input-container {
+    text-align: center;
+  }
+
+  .pin-input-container .pin-input {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    margin: 0 2px;
+    color: #ffffff;
+    font-size: 17px;
+    line-height: 40px;
+    vertical-align: middle;
+  }
+
+  .unlock-keypad {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -36,6 +77,7 @@ authentication-code-page {
       color: #444;
     }
   }
+  /*------------------------------------------*/
 
   .authentication-code-container .pin-input-container {
     margin-bottom: 30px;
@@ -50,8 +92,12 @@ authentication-code-page {
     text-align: center;
   }
 
-  .verify-btns button {
+  .verify-btns .button {
     font-size: 1.2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    min-height: 34px;
+    line-height: 34px;
   }
 
 }

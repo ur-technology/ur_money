@@ -15,7 +15,7 @@ import {IdentityVerificationDocumentPage} from '../pages/identity-verification/i
 import {AnnouncementInitiatedPage} from '../pages/identity-verification/announcement-initiated/announcement-initiated';
 import {AuthenticationCodePage} from '../pages/registration/authentication-code/authentication-code';
 import {CountryNotSupportedPage} from '../pages/identity-verification/country-not-supported/country-not-supported';
-import {EmailAddressPage} from '../pages/registration/email-address';
+import {EmailAddressPage} from '../pages/registration/email-address/email-address';
 import {IntroPage} from '../pages/registration/intro/intro';
 import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
 import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
