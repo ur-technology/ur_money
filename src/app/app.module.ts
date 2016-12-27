@@ -12,7 +12,7 @@ import {IdentityVerificationSponsorWaitPage} from '../pages/identity-verificatio
 import {IdentityVerificationSummaryPage} from '../pages/identity-verification/identity-verification-summary/identity-verification-summary';
 import {IdentityVerificationAddressPage} from '../pages/identity-verification/identity-verification-address/identity-verification-address';
 import {IdentityVerificationDocumentPage} from '../pages/identity-verification/identity-verification-document/identity-verification-document';
-import {AnnouncementInitiatedPage} from '../pages/identity-verification/announcement-initiated/announcement-initiated';
+import {AnnouncementInitiatedPage} from '../pages/announcement-initiated/announcement-initiated';
 import {AuthenticationCodePage} from '../pages/registration/authentication-code/authentication-code';
 import {CountryNotSupportedPage} from '../pages/identity-verification/country-not-supported/country-not-supported';
 import {EmailAddressPage} from '../pages/registration/email-address/email-address';

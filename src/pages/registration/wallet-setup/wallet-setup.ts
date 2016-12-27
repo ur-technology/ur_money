@@ -150,6 +150,9 @@ export class WalletSetupPage {
       }
     }).then(() => {
       self.loadingModal.dismiss().then(() => {
+        firebase.database().ref('/identityAnnouncementQueue/tasks').push({
+          userId: this.auth.currentUserId
+        });
         self.contactsService.loadContacts(self.auth.currentUserId, self.auth.currentUser.phone, self.auth.currentUser.countryCode);
         self.nav.setRoot(HomePage);
       });
