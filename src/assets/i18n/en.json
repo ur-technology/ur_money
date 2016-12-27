@@ -74,7 +74,8 @@
     "identity-verification-personal-info": {
         "slideTitle": "Step 1 of 3 - Personal Info",
         "gender": "Gender",
-        "dateOfBirth": "Date of Birth"
+        "dateOfBirth": "Date of Birth",
+        "placeholderGender": "Choose gender"
     },
     "identity-verification-address": {
         "slideTitle": "Step 2 of 3 - Address ",
@@ -88,7 +89,18 @@
         "city": "City",
         "suburb": "Suburb",
         "stateProvinceCode": "State or Province",
-        "postalCode": "Zip/Postal Code"
+        "postalCode": "Zip/Postal Code",
+        "placeholderBuildingNumber": "Enter your building or house number",
+        "placeholderStreetName": "Enter the name of the street",
+        "placeholderStreeType": "Enter the type of the street",
+        "placeholderUnitNumber": "Enter the unit number",
+        "placeholderBuildingName": "Enter the building name",
+        "placeholderAddress1": "Enter your address",
+        "placeholderCity": "Enter city name",
+        "placeholderSuburb": "Enter suburb name",
+        "placeholderProvince": "Choose your state or province",
+        "placeholderProvinceInput": "Enter your state or province",
+        "placeholderPostal": "Enter your zip or postal code"
     },
     "identity-verification-document": {
         "slideTitle": "Step 3 of 3 - Verification Document",
@@ -102,7 +114,16 @@
         "passportExpirationDay": "Expiration Day",
         "passportExpirationMonth": "Expiration Month",
         "passportExpirationYear": "Expiration Year",
-        "id": "Id"
+        "id": "Id",
+        "placeholderDriverlicenceState": "Choose driver licence state",
+        "placeholderDriverlicenceNumber": "Enter your driver licence number",
+        "placeholderId": "Enter your Id",
+        "placeholderMRZ1": "Enter the passport Machine Readable Zone line 1",
+        "placeholderMRZ2": "Enter the passport Machine Readable Zone line 2",
+        "placeholderPassportNumber": "Enter passport number",
+        "placeholderPassportExpirationDay": "Enter passport expiration day",
+        "placeholderPassportExpirationMonth": "Enter passport expiration month",
+        "placeholderPassportExpirationYear": "Enter passport expiration year"
     },
     "identity-verification-summary": {
         "slideTitle": "Review your information",
@@ -132,7 +153,7 @@
         "city": "City",
         "state": "State or province",
         "placeholderFirstName": "Enter first name",
-        "placeholderMiddleName": "Enter middle name",
+        "placeholderMiddleName": "Enter middle name (optional)",
         "placeholderLastName": "Enter last name",
         "placeholderFullName": "Enter how you want to be called",
         "placeholderEmail": "Enter email"

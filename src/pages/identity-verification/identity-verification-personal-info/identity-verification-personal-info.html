@@ -12,26 +12,27 @@
       <ion-card-content>
         <ion-list>
           <ion-item>
-            <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]="verificationArgs.PersonInfo.FirstGivenName" formControlName="firstName"></ion-input>
+            <ion-label stacked>{{'profile-setup.firstName' | translate}}</ion-label>
+            <ion-input type="text" placeholder="{{'profile-setup.placeholderFirstName' | translate}}" [(ngModel)]="verificationArgs.PersonInfo.FirstGivenName" formControlName="firstName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>{{'profile-setup.middleName' | translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]="verificationArgs.PersonInfo.MiddleName" formControlName="middleName"></ion-input>
+            <ion-label stacked>{{'profile-setup.middleName' | translate}}</ion-label>
+            <ion-input type="text" placeholder="{{'profile-setup.placeholderMiddleName' | translate}}" [(ngModel)]="verificationArgs.PersonInfo.MiddleName" formControlName="middleName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>{{'profile-setup.lastName' | translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]="verificationArgs.PersonInfo.FirstSurName" formControlName="lastName"></ion-input>
+            <ion-label stacked>{{'profile-setup.lastName' | translate}}</ion-label>
+            <ion-input type="text" placeholder="{{'profile-setup.placeholderLastName' | translate}}" [(ngModel)]="verificationArgs.PersonInfo.FirstSurName" formControlName="lastName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>{{'identity-verification-personal-info.gender' | translate}}</ion-label>
-            <ion-select [(ngModel)]="verificationArgs.PersonInfo.Gender" formControlName="gender">
+            <ion-label stacked>{{'identity-verification-personal-info.gender' | translate}}</ion-label>
+            <ion-select [(ngModel)]="verificationArgs.PersonInfo.Gender" formControlName="gender"
+            placeholder="{{'identity-verification-personal-info.placeholderGender' | translate}}">
               <ion-option [value]="s.value" *ngFor="let s of genders">{{s.name}}</ion-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label floating>{{'identity-verification-personal-info.dateOfBirth' | translate}}</ion-label>
-            <ion-datetime formControlName="dateOfBirth" displayFormat="YYYY MMM D" min="1906" max="2000" (ionChange)="copyDobFromControlToArgs()"></ion-datetime>
+            <ion-label stacked>{{'identity-verification-personal-info.dateOfBirth' | translate}}</ion-label>
+            <ion-datetime formControlName="dateOfBirth"  displayFormat="YYYY MMM D" min="1906" max="2000" (ionChange)="copyDobFromControlToArgs()"></ion-datetime>
           </ion-item>
         </ion-list>
       </ion-card-content>

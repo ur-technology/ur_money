@@ -74,7 +74,8 @@
     "identity-verification-personal-info": {
         "slideTitle": "Paso 1 de 3 - Información personal",
         "gender": "Género",
-        "dateOfBirth": "Fecha de nacimiento"
+        "dateOfBirth": "Fecha de nacimiento",
+        "placeholderGender": "Ingresa tu género"
     },
     "identity-verification-address": {
         "slideTitle": "Paso 2 de 3 - Dirección",
@@ -88,7 +89,18 @@
         "city": "Ciudad",
         "stateProvinceCode": "Estado o provincia",
         "suburb": "Suburbio",
-        "postalCode": "Código postal"
+        "postalCode": "Código postal",
+        "placeholderBuildingNumber": "Ingresa el número de edificio o casa",
+        "placeholderStreetName": "Ingresa el nombre de la calle",
+        "placeholderStreeType": "Ingresa el tipo de calle",
+        "placeholderUnitNumber": "Ingresa el número de unidad",
+        "placeholderBuildingName": "Ingresa el nombre del edificio",
+        "placeholderAddress1": "Ingresa tu dirección",
+        "placeholderCity": "Ingresa tu ciudad",
+        "placeholderSuburb": "Ingresa nombre del suburbio",
+        "placeholderProvince": "Escoje tu estado o provincia",
+        "placeholderProvinceInput": "Ingresa tu estado o provincia",
+        "placeholderPostal": "Ingresa tu código postal"
     },
     "identity-verification-document": {
         "slideTitle": "Paso 3 de 3 - Documento de verificación",
@@ -102,7 +114,16 @@
         "passportExpirationDay": "Día de caducidad",
         "passportExpirationMonth": "Mes de caducidad",
         "passportExpirationYear": "Año de caducidad",
-        "id": "Id"
+        "id": "Id",
+        "placeholderDriverlicenceState": "Escoje el Estado de tu licencia de conducir",
+        "placeholderDriverlicenceNumber": "Ingresa el número de tu licencia de conducir",
+        "placeholderId": "Ingresa tu identificación",
+        "placeholderMRZ1": "Ingresa la primera línea del MRZ del pasaporte",
+        "placeholderMRZ2": "Ingresa la segunda línea del MRZ del pasaporte",
+        "placeholderPassportNumber": "Ingresa el número del pasaporte",
+        "placeholderPassportExpirationDay": "Ingresa el día de caducidad",
+        "placeholderPassportExpirationMonth": "Ingresa el mes de caducidad",
+        "placeholderPassportExpirationYear": "Ingresa el año de caducidad"
     },
     "identity-verification-summary": {
         "slideTitle": "Confirme su información",
@@ -132,7 +153,7 @@
         "city": "Ciudad",
         "state": "Estado o provincia",
         "placeholderFirstName": "Ingresa el nombre",
-        "placeholderMiddleName": "Ingresa el segundo nombre",
+        "placeholderMiddleName": "Ingresa el segundo nombre (opcional)",
         "placeholderLastName": "Ingresa el apellido",
         "placeholderFullName": "Ingresa cómo quieres que te llamen",
         "placeholderEmail": "Ingresa el correo electrónico"
