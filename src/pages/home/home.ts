@@ -6,14 +6,10 @@ import * as moment from 'moment';
 import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {Config} from '../../config/config';
-import {IdentityVerificationIntroPage} from '../identity-verification/identity-verification-intro/identity-verification-intro';
-import {CountryNotSupportedPage} from '../identity-verification/country-not-supported/country-not-supported';
-import {VerificationPendingPage} from '../identity-verification/verification-pending/verification-pending';
 import { TranslateService} from 'ng2-translate/ng2-translate';
 import {AnnouncementInitiatedPage} from '../announcement-initiated/announcement-initiated';
 import {TransactionsPage} from './../transactions/transactions';
 import {SendPage} from './../send/send';
-import {IdentityVerificationSponsorWaitPage} from '../identity-verification/identity-verification-sponsor-wait/identity-verification-sponsor-wait';
 import {InviteLinkPage} from './../invite-link/invite-link';
 declare var jQuery: any;
 
@@ -179,19 +175,12 @@ export class HomePage {
   goToNextStep() {
     if (this.accountReady()) {
       this.nav.push(TransactionsPage);
-    } else if (this.auth.userCountryNotSupported()) {
-      this.nav.push(CountryNotSupportedPage);
     } else {
       this.nav.push({
-        'verification-initiated': VerificationPendingPage,
-        'verification-requested': VerificationPendingPage, // deprecated
-        'verification-pending': IdentityVerificationIntroPage,
-        'verification-failed': IdentityVerificationIntroPage,
         'announcement-initiated': AnnouncementInitiatedPage,
         'announcement-requested': AnnouncementInitiatedPage,
         'verification-succeeded': AnnouncementInitiatedPage,
-        'waiting-for-sponsor': IdentityVerificationSponsorWaitPage
-      }[this.auth.getUserStatus()] || IdentityVerificationIntroPage);
+      }[this.auth.getUserStatus()] || AnnouncementInitiatedPage);
     }
   }
 }

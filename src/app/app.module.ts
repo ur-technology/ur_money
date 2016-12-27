@@ -5,24 +5,14 @@ import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
 import {ChatPage} from '../pages/chat/chat';
 import {ContactsAndChatsPage} from '../pages/contacts-and-chats/contacts-and-chats';
-import {IdentityVerificationFinishPage} from '../pages/identity-verification/identity-verification-finish/identity-verification-finish';
-import {IdentityVerificationIntroPage} from '../pages/identity-verification/identity-verification-intro/identity-verification-intro';
-import {IdentityVerificationPersonalInfoPage} from '../pages/identity-verification/identity-verification-personal-info/identity-verification-personal-info';
-import {IdentityVerificationSponsorWaitPage} from '../pages/identity-verification/identity-verification-sponsor-wait/identity-verification-sponsor-wait';
-import {IdentityVerificationSummaryPage} from '../pages/identity-verification/identity-verification-summary/identity-verification-summary';
-import {IdentityVerificationAddressPage} from '../pages/identity-verification/identity-verification-address/identity-verification-address';
-import {IdentityVerificationDocumentPage} from '../pages/identity-verification/identity-verification-document/identity-verification-document';
 import {AnnouncementInitiatedPage} from '../pages/announcement-initiated/announcement-initiated';
 import {AuthenticationCodePage} from '../pages/registration/authentication-code/authentication-code';
-import {CountryNotSupportedPage} from '../pages/identity-verification/country-not-supported/country-not-supported';
 import {EmailAddressPage} from '../pages/registration/email-address/email-address';
 import {IntroPage} from '../pages/registration/intro/intro';
 import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
 import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
 import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';
-import {VerificationFailedPage} from '../pages/identity-verification/verification-failed/verification-failed';
-import {VerificationPendingPage} from '../pages/identity-verification/verification-pending/verification-pending';
 import {PopoverChatPage} from '../pages/chat/popover-chat';
 import {WalletSetupPage} from '../pages/registration/wallet-setup/wallet-setup';
 import {WelcomePage} from '../pages/registration/welcome/welcome';
@@ -82,24 +72,14 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     ChatPage,
     PopoverChatPage,
     ContactsAndChatsPage,
-    IdentityVerificationFinishPage,
-    IdentityVerificationIntroPage,
-    IdentityVerificationPersonalInfoPage,
-    IdentityVerificationSponsorWaitPage,
-    IdentityVerificationDocumentPage,
-    IdentityVerificationSummaryPage,
-    IdentityVerificationAddressPage,
     InviteLinkPage,
     AnnouncementInitiatedPage,
-    CountryNotSupportedPage,
     AuthenticationCodePage,
     EmailAddressPage,
     IntroPage,
     NoInternetConnectionPage,
     PhoneNumberPage,
     ProfileSetupPage,
-    VerificationFailedPage,
-    VerificationPendingPage,
     WalletSetupPage,
     WelcomePage,
     SendPage,
@@ -146,24 +126,14 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     ChatPage,
     PopoverChatPage,
     ContactsAndChatsPage,
-    IdentityVerificationFinishPage,
-    IdentityVerificationIntroPage,
-    IdentityVerificationPersonalInfoPage,
-    IdentityVerificationSponsorWaitPage,
-    IdentityVerificationDocumentPage,
-    IdentityVerificationSummaryPage,
-    IdentityVerificationAddressPage,
     InviteLinkPage,
     AnnouncementInitiatedPage,
-    CountryNotSupportedPage,
     AuthenticationCodePage,
     EmailAddressPage,
     IntroPage,
     NoInternetConnectionPage,
     PhoneNumberPage,
     ProfileSetupPage,
-    VerificationFailedPage,
-    VerificationPendingPage,
     WalletSetupPage,
     WelcomePage,
     SendPage,
