@@ -2,18 +2,16 @@
   <ion-navbar>
     <ion-title class="chat-title">{{"choose-contact.title" | translate}}</ion-title>
   </ion-navbar>
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="option">
-      <ion-segment-button value="contact">
-        Contact
-      </ion-segment-button>
-      <ion-segment-button value="address">
-        Wallet address
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
 </ion-header>
 <ion-content class="contentFix">
+  <ion-segment [(ngModel)]="option">
+    <ion-segment-button value="contact">
+      Contact
+    </ion-segment-button>
+    <ion-segment-button value="address">
+      Wallet address
+    </ion-segment-button>
+  </ion-segment>
   <contacts goal="send" *ngIf="option=='contact'" (onContactSelected)="onContactSelected($event)"></contacts>
   <div *ngIf="option=='address'">
     <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && dismissWalletAddress()">

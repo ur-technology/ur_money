@@ -1,17 +1,24 @@
-.ion-ios-block-person-icon {
-  content: url("../assets/img/block-person-md.png");
-}
+contacts-and-chats-page {
+  .contentFix {
+    margin-top: 53px;
+  }
 
-.ion-md-block-person-icon {
-  content: url("../assets/img/block-person-md.png");
-  width: 24px;
-  height: 24px;
-}
+  .segment-tab-nav ion-segment-button span {
+    margin-top: -7px;
+  }
 
-.contacts-and-chats-page {
-  scroll-content {
-    overflow-y: visible;
-    padding: 0;
+  .segment-tab-nav ion-segment-button {
+    height: 61px !important;
+    padding-top: 8px !important;
+  }
+
+  .segment-tab-nav ion-segment-button .tab-buttons {
+    display: flex;
+    overflow: hidden;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
   }
 
   .ion-ios-contacts-icon {
@@ -42,68 +49,7 @@
     background: url("../assets/img/chats-icon.png") no-repeat center;
   }
 
-  .segment-tab-nav ion-segment-button span {
-    margin-top: -7px;
+  .chats-list {
+    margin-top: 2px;
   }
-
-  .segment-tab-nav ion-segment-button {
-    background-color: #e4e7e8;
-    border: none;
-    border-bottom: 1px solid #ddd !important;
-    height: 66px;
-    padding-top: 17px;
-  }
-
-  .segment-tab-nav ion-segment-button .tab-buttons {
-    display: flex;
-    overflow: hidden;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-align-items: center;
-  }
-}
-
-.chats-list,
-.contacts-list {
-  margin: -1px 0 8px;
-}
-
-.chats-list .item.item-avatar,
-.contacts-list .item.item-avatar {
-  min-height: 85px;
-  border-bottom: 1px solid #ddd;
-
-  .item-inner {
-    border-bottom: none;
-  }
-}
-
-.chats-list .item.item-avatar img,
-.contacts-list .item.item-avatar img {
-  max-width: 55px;
-  max-height: 55px;
-  border-radius: 50%;
-}
-
-.chats-list .item h2,
-.contacts-list .item h2 {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  font-size: 1.8rem;
-  color: #546a79;
-}
-
-.chats-list .item p,
-.contacts-list .item p {
-  font-size: 1.4rem;
-  color: #98a6af;
-}
-
-.chats-list .item-note,
-.contacts-list .item-note {
-  position: absolute;
-  top: 25px;
-  right: 20px;
-  font-size: 1.2rem;
 }

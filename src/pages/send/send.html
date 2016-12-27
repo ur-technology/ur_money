@@ -3,32 +3,24 @@
     <ion-title>{{"send.title" | translate}} {{auth.envMode()}}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-
-
+<ion-content>
   <ion-grid class="gridSend">
     <ion-row class="rowBalance">
       <ion-col class="colLabel">{{"send.availableBalance" | translate}}
-        <span class="colValue">{{availableBalance.toFormat(5)}}</span>
+        <span class="colValue">{{availableBalance.toFormat(5)}} UR</span>
       </ion-col>
-      <ion-col width-10 class="colUr">UR</ion-col>
     </ion-row>
     <ion-row class="rowBalance">
       <ion-col class="colLabel">{{"send.estimatedFee" | translate}}
-        <span class="colValue"> {{estimatedFee.toFormat(5)}}</span>
+        <span class="colValue"> {{estimatedFee.toFormat(5)}} UR</span>
       </ion-col>
-      <ion-col width-10 class="colUr">UR</ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="colLabel">{{"send.maxAmount" | translate}}
-        <span class="colValue">{{maxAmount.toFormat(5)}}</span>
+        <span class="colValue">{{maxAmount.toFormat(5)}} UR</span>
       </ion-col>
-      <ion-col width-10 class="colUr">UR</ion-col>
     </ion-row>
   </ion-grid>
-<br />
-<br />
-
   <form novalidate class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && sendUR()">
     <ion-item>
       <ion-label stacked>{{"send.sendTo" | translate}}</ion-label>

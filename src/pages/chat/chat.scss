@@ -1,63 +1,73 @@
 chat-page {
-  ion-toolbar {
-      &.mio {
-          min-height: 60px;
-      }
-      .button-icon {
-          background-color: #3aade2;
-          color: #ffffff !important;
-          border-radius: 50%;
-          width: 45px;
-          height: 45px;
-          line-height: 45px;
-          padding: 0 0 0 3px;
-          text-align: center;
-      }
-      .ur-message-send {
-          border: 1px solid #e3e3e3;
-          border-radius: 20px;
-          margin-left: 5px;
-          margin-right: 5px;
-          .item-input-wrapper {
-              background-color: transparent;
-              textarea {
-                  width: 94%;
-                  background: transparent;
-                  border: none;
-                  margin: 5px 5px 5px 10px;
-              }
-          }
-
-
-      }
+  .chat-page-content {
+    background-color: #fff;
   }
-}
-/*-------------------------*/
-.chat-title .toolbar-title {
-    color: #546a79;
-}
-.messages-list {}
-.messages-list .item {
+
+  ion-toolbar {
+    &.mio {
+      min-height: 60px;
+    }
+
+    .button-icon {
+      background-color: #3aade2;
+      color: #ffffff !important;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      padding: 0 0 0 3px;
+      text-align: center;
+      border-color: #fff;
+      border-style: solid;
+      border-width: 1px;
+    }
+
+    .ur-message-send {
+      background: #fff;
+      border: 1px solid #fff;
+      border-radius: 20px;
+      margin-left: 5px;
+      margin-right: 5px;
+
+      .item-input-wrapper {
+        background-color: transparent;
+
+        textarea {
+          width: 94%;
+          background: transparent;
+          border: none;
+          margin: 5px 5px 5px 10px;
+        }
+      }
+    }
+  }
+  /*-------------------------*/
+  .messages-list .item {
     border: none;
     padding: 0 50px 0 12px;
     min-height: 52px;
     margin-bottom: 5px;
+
     .item-inner {
-        border-bottom: none;
-        padding: 0;
-        ion-label {
-            margin: 0;
-            padding-top: 16px;
-        }
+      border-bottom: none;
+      padding: 0;
+
+      ion-label {
+        margin: 0;
+        padding-top: 16px;
+      }
     }
+
     &:last-child {
-        border-bottom: none;
+      border-bottom: none;
     }
-}
-.messages-list .item.other {
+  }
+
+  .messages-list .item.other {
     padding: 0 12px 0 50px;
-}
-.messages-list .item ion-img:first-child {
+  }
+
+  .messages-list .item ion-img:first-child {
     position: absolute;
     top: 24px;
     right: 12px;
@@ -66,53 +76,58 @@ chat-page {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-}
-.messages-list .item.other ion-img:first-child {
+  }
+
+  .messages-list .item.other ion-img:first-child {
     right: auto;
     left: 12px;
-}
-.messages-list .item .msg-text {
+  }
+
+  .messages-list .item .msg-text {
     position: relative;
     padding: 7px;
     border: 1px solid #e3e3e3;
     background-color: #fff3f3;
     border-radius: 5px;
     margin-right: 6px;
-}
-.messages-list .item.other .msg-text {
+  }
+
+  .messages-list .item.other .msg-text {
     background-color: #ffffff;
     margin-left: 6px;
-}
-.messages-list .item .msg-text:after,
-.messages-list .item.other .msg-text:after {
+  }
+
+  .messages-list .item .msg-text:after,
+  .messages-list .item.other .msg-text:after {
     position: absolute;
     top: 2px;
-}
-.messages-list .item .msg-text:after {
+  }
+
+  .messages-list .item .msg-text:after {
     content: url("../assets/img/chat-right-arrow.png");
     right: -4px;
-}
-.messages-list .item.other .msg-text:after {
+  }
+
+  .messages-list .item.other .msg-text:after {
     content: url("../assets/img/chat-left-arrow.png");
     right: auto;
     left: -4px;
-}
-.messages-list .item .msg-text p {
-    font-size: 12px;
-    color: #444444;
+  }
+
+  .messages-list .item .msg-text p {
+    font-size: 1.4rem;
     white-space: pre-wrap;
-}
-.messages-list .item .item-note {
+  }
+
+  .messages-list .item .item-note {
     position: absolute;
-    font-size: 9px;
-    top: -13px;
+    font-size: 1.1rem;
+    top: -17px;
     left: 0;
-}
-.messages-list .item.other .item-note {
+  }
+
+  .messages-list .item.other .item-note {
     left: auto;
     right: 0;
-}
-/*------------------------*/
-.chat-page {
-
+  }
 }

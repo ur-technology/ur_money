@@ -10,6 +10,7 @@ import {ChatPage} from '../../pages/chat/chat';
 declare var jQuery: any;
 
 @Component({
+  selector: 'contacts-and-chats-page',
   templateUrl: 'contacts-and-chats.html',
 })
 export class ContactsAndChatsPage {

@@ -57,7 +57,7 @@ export class TransactionComponent {
 
   selectedTransactionTypeTotal(): string {
     if (this.transactionType === 'all') {
-      return (new BigNumber(this.availableBalance)).toFormat(2);
+      return (new BigNumber(this.availableBalance || 0)).toFormat(2);
     } else {
       return this.weiToURString(this.filteredTransactionsTotal);
     }

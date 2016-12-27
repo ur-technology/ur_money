@@ -2,16 +2,15 @@
 
 identity-verification-personal-info-page {
   ion-card-header {
-    background-color: #f8f8f8;
-    padding: 0px;
+    background-color: color($colors, light);
   }
 
   ion-item {
-    padding-left: 0;
+    padding-left: 0px !important;
   }
 
   .footer-card {
-    background-color: #f8f8f8;
+    background-color: color($colors, light);
   }
 
   .card-md .item-md.item-block .item-inner {

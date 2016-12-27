@@ -24,7 +24,6 @@ declare var jQuery: any;
 export class HomePage {
   elementRef: ElementRef;
   sendButtonHidden: boolean;
-  sendButtonDisabled: boolean;
   needsToCompleteProfile: boolean;
   balanceTitle: string;
   selectedOption: any;
@@ -37,7 +36,6 @@ export class HomePage {
   ) {
     this.elementRef = elementRef;
     this.sendButtonHidden = Config.targetPlatform === 'ios';
-    this.sendButtonDisabled = true;
   }
 
   reflectAvailableBalanceOnPage() {
@@ -46,7 +44,6 @@ export class HomePage {
         this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
         this.ngZone.run(() => {
           this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
-          this.sendButtonDisabled = false;
         });
       } else {
         this.balanceTitle = '...';

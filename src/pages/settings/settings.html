@@ -9,9 +9,9 @@
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding #content
-    class="settings">
+<ion-content class="settings">
     <form [formGroup]="mainForm">
+      <ion-list>
       <ion-item-divider color="light">{{"settings.profileInfo" | translate}}</ion-item-divider>
       <ion-item>
         <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
@@ -61,12 +61,13 @@
           [(ngModel)]="profile.city"
           formControlName="city"></ion-input>
       </ion-item>
-      <ion-item-divider light>{{'settings.URWallet' | translate}}</ion-item-divider>
+      <ion-item-divider color="light">{{'settings.URWallet' | translate}}</ion-item-divider>
       <ion-item>
         <ion-label floating>{{'settings.URWalletAddress' | translate}}</ion-label>
         <ion-input type="text"
           formControlName="wallet"></ion-input>
       </ion-item>
+      </ion-list>
     </form>
 </ion-content>
 <ion-footer>

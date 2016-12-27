@@ -1,15 +1,14 @@
 verification-pending-page{
   ion-card-header {
-    background-color: #f8f8f8;
-    padding: 0;
+    background-color: color($colors, light);
   }
 
   ion-item {
-    padding-left: 0;
+    padding-left: 0px !important;
   }
 
   .footer-card {
-    background-color: #f8f8f8;
+    background-color: color($colors, light);
   }
 
   .slide-title {
