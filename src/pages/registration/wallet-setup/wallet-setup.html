@@ -24,7 +24,7 @@
           </ion-item>
           <ion-item>
             <ion-label stacked>{{'wallet-setup.secretPhrase' | translate}}</ion-label>
-            <ion-input type="text" autocorrect="off" autocapitalize="none" [(ngModel)]="profile.secretPhrase" formControlName="secretPhrase" placeholder="{{'wallet-setup.secretPhrasePlaceholder' | translate}}"></ion-input>
+            <ion-input type="text"  clearInput="true" autocorrect="off" autocapitalize="none" [(ngModel)]="profile.secretPhrase" formControlName="secretPhrase" placeholder="{{'wallet-setup.secretPhrasePlaceholder' | translate}}"></ion-input>
             <button item-right ion-button icon-only type="text" class="button-generate" color="secondary" (click)="suggestSecretPhrase()"><ion-icon name="color-wand"></ion-icon>
         </button>
           </ion-item>

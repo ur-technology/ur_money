@@ -59,7 +59,7 @@
         "notReadyMessage": "Debido que se requiere la verificación de tu identidad para el uso de la aplicación UR Money, tendrás que cerrar sesión por ahora. ¿Seguro que quieres salir?",
         "yesSignOut": "Sí, cerrar sesión.",
         "welcome": "Bienvenido a UR Money",
-        "message1": "<b>Felicitaciones!</b> Estamos procesando su bono de 2.000 UR!",
+        "message1": "<b>Felicitaciones!</b> Estamos procesando tu bono de 2.000 UR!",
         "message2": "Pronto podrás recibir y enviar UR a tus amigos y familiares.",
         "message3": "También necesitaremos acceso a tus contactos para que puedas invitarlos, chatear con ellos y realizar transacciones con ellos.",
         "message4": "Ya está todo listo. <b>Disfruta UR Money!<b/>"
@@ -235,7 +235,7 @@
         "bonusGenerating": "<span class='small'>Generación De Bonificación En Curso</span><br />2000<span>&nbsp;UR</span>",
         "verificationPending": "<span class='small'>Verificación En Curso</span><br />2000<span>&nbsp;UR</span>",
         "verificationFailed": "<span class='small'>Verificación fallida</span><br />2000<span>&nbsp;UR</span>",
-        "waitingSponsor": "<span class='small'>Esperando a patrocinador validar identidad...</span><br />2000<span>&nbsp;UR</span>"
+        "waitingSponsor": "<span class='small'>Esperando a patrocinador completar perfil...</span><br />2000<span>&nbsp;UR</span>"
     },
     "contacts": {
         "invite": "Invitar",

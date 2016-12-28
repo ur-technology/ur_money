@@ -235,7 +235,7 @@
         "bonusGenerating": "<span class='small'>Bonus Generation In Progress</span><br />2000<span>&nbsp;UR</span>",
         "verificationPending": "<span class='small'>Verification In Progress</span><br />2000<span>&nbsp;UR</span>",
         "verificationFailed": "<span class='small'>Verification failed</span><br />2000<span>&nbsp;UR</span>",
-        "waitingSponsor": "<span class='small'>Waiting for sponsor to verify...</span><br />2000<span>&nbsp;UR</span>"
+        "waitingSponsor": "<span class='small'>Waiting for sponsor to complete account</span><br />2000<span>&nbsp;UR</span>"
     },
     "contacts": {
         "invite": "Invite",
