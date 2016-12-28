@@ -135,7 +135,7 @@ export class UrMoney {
     if (menuItem.page === HomePage) {
       this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
     } else {
-      this.nav.push(menuItem.page, menuItem.pageParams || {}, { animate: true, direction: 'forward' });
+      this.nav.push(menuItem.page, menuItem.pageParams || {});
     }
   }
 
@@ -147,9 +147,9 @@ export class UrMoney {
   invite() {
     this.menu.close();
     if (Config.targetPlatform === 'web') {
-      this.nav.push(InviteLinkPage, { animate: true, direction: 'forward' });
+      this.nav.push(InviteLinkPage);
     } else {
-      this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
+      this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
     }
   }
 }

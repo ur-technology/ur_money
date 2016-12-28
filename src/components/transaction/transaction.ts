@@ -100,7 +100,7 @@ export class TransactionComponent {
   }
 
   invite() {
-    this.app.getRootNav().push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
+    this.app.getRootNav().push(ContactsAndChatsPage, { goal: 'invite' });
   }
 
   selectedTransactionType(): string {

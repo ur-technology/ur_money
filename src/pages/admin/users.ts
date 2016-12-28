@@ -117,7 +117,7 @@ export class UsersPage {
   }
 
   goToUserPage(user: any) {
-    this.nav.push(UserPage, { user: user }, { animate: true, direction: 'forward' });
+    this.nav.push(UserPage, { user: user });
   }
 
   country(u) {

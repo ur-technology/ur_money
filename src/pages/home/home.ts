@@ -74,11 +74,11 @@ export class HomePage {
   }
 
   startNewChat() {
-    this.nav.push(ContactsAndChatsPage, { goal: 'chat' }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: 'chat' });
   }
 
   setRoot(page) {
-    this.nav.setRoot(page, {}, { animate: true, direction: 'forward' });
+    this.nav.setRoot(page, {});
   }
 
   loadChartPoints(duration: number, unitOfTime: moment.UnitOfTime) {
@@ -145,22 +145,18 @@ export class HomePage {
   }
 
   send() {
-    if (Config.targetPlatform === 'web') {
-      this.nav.push(SendPage, { contact: {} }, { animate: true, direction: 'forward' });
-    } else {
-      this.nav.push(ContactsAndChatsPage, { goal: 'send' }, { animate: true, direction: 'forward' });
-    }
+    this.nav.push(SendPage, { contact: {} });
   }
 
   request() {
-    this.nav.push(ContactsAndChatsPage, { goal: 'request' }, { animate: true, direction: 'forward' });
+    this.nav.push(ContactsAndChatsPage, { goal: 'request' });
   }
 
   invite() {
     if (Config.targetPlatform === 'web') {
-      this.nav.push(InviteLinkPage, { animate: true, direction: 'forward' });
+      this.nav.push(InviteLinkPage);
     } else {
-      this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
+      this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
     }
   }
 

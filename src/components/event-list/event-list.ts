@@ -71,9 +71,9 @@ export class EventListComponent {
 
   openPageByEventType(sourceType: string, sourceId: string) {
     if (sourceType === 'message') {
-      this.app.getRootNav().push(ChatPage, { chatId: sourceId }, { animate: true, direction: 'forward' });
+      this.app.getRootNav().push(ChatPage, { chatId: sourceId });
     } else if (sourceType === 'transaction') {
-      this.app.getRootNav().push(TransactionsPage, {}, { animate: true, direction: 'forward' });
+      this.app.getRootNav().push(TransactionsPage, {});
     }
   }
 

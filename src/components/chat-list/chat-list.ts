@@ -43,7 +43,7 @@ export class ChatListComponent {
   }
 
   gotoChat(chatSummary: any) {
-    this.app.getRootNav().push(ChatPage, { chatSummary: chatSummary, chatId: chatSummary.$key }, { animate: true, direction: 'forward' });
+    this.app.getRootNav().push(ChatPage, { chatSummary: chatSummary, chatId: chatSummary.$key });
   }
 
 }

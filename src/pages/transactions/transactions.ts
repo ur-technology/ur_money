@@ -16,16 +16,16 @@ export class TransactionsPage {
   goToPage(page: string) {
     switch (page) {
       case 'home':
-        this.nav.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
+        this.nav.setRoot(HomePage, {});
         break;
       case 'request':
-        this.nav.push(ContactsAndChatsPage, { goal: 'request' }, { animate: true, direction: 'forward' });
+        this.nav.push(ContactsAndChatsPage, { goal: 'request' });
         break;
       case 'send':
-        this.nav.push(ContactsAndChatsPage, { goal: 'send' }, { animate: true, direction: 'forward' });
+        this.nav.push(ContactsAndChatsPage, { goal: 'send' });
         break;
       case 'invite':
-        this.nav.push(ContactsAndChatsPage, { goal: 'invite' }, { animate: true, direction: 'forward' });
+        this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
         break;
     }
 
