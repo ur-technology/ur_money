@@ -45,8 +45,7 @@
     },
     "authentication-code": {
         "title": "Código de verificación",
-        "heading1-sms": "Te hemos enviado un SMS con un código de verificación.",
-        "heading1-email": "Te hemos enviado un correo electrónico con un código de verificación.",
+        "heading1": "Te hemos enviado un SMS con un código de verificación.",
         "heading2": "Para completar la verificación del número de teléfono, ingresa el código de verificación de 6 dígitos.",
         "resendCode": "¿No recibiste el código de verificación? Enviar de nuevo",
         "unableToProcessCode": "No hemos podido procesar tu código de verificación. Por favor, inténtalo de nuevo más tarde",

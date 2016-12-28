@@ -9,6 +9,23 @@
           ".read": true
         },
 
+        "phoneAuthQueue": {
+            "tasks": {
+                ".indexOn": "_state",
+                "$task": {
+                    ".write": true,
+                    "_state": {
+                        // allow reading state of a particular record
+                        ".read": true
+                    },
+                    "result": {
+                        // allow reading smsAuthenticationResult result of a particular record
+                        ".read": true
+                    }
+                }
+            }
+        },
+
         "smsAuthCodeGenerationQueue": {
             "tasks": {
                 ".indexOn": "_state",
@@ -109,27 +126,6 @@
                     ".write": "(newData.exists() && newData.child('userId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
                     // allow read only if the authenticated user is reading his own data
                     ".read": "data.child('userId').val()===auth.uid"
-                }
-            }
-        },
-
-        "identityVerificationQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    // allow write only if the authenticated user is writing his own data
-                    /*".write": "(newData.exists() || data.exists() ) && $task===auth.uid",*/
-                    ".write": true,
-                    // allow read only if the authenticated user is reading his own data
-                    /*".read": "data.child('userId').val()===auth.uid",*/
-                    ".read": true,
-
-                    "result": {
-                        // allow reading verification result of a particular record
-                        /*".read": "$task===auth.uid"*/
-                        ".read": true
-                    }
-
                 }
             }
         },

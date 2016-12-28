@@ -1,4 +1,4 @@
-import { NavController, LoadingController} from 'ionic-angular';
+import { NavController, NavParams, LoadingController} from 'ionic-angular';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import {CustomValidator} from '../../../validators/custom';
@@ -18,6 +18,7 @@ export class EmailAddressPage {
 
   constructor(
     public nav: NavController,
+    public navParams: NavParams,
     public auth: AuthService,
     public loadingController: LoadingController,
     public translate: TranslateService,
@@ -41,21 +42,23 @@ export class EmailAddressPage {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.requestEmailAuthenticationCode(email);
+      let authParams = self.navParams.get('authParams') || {};
+      _.extend(authParams, { email: email });
+      return self.auth.requestAuthenticationCode(authParams);
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();
     }).then(() => {
       switch (taskState) {
-        case 'completed':
+        case 'code_generation_finished':
           self.nav.setRoot(AuthenticationCodePage, { authenticationType: 'email' });
           break;
 
-        case 'canceled_because_user_not_invited':
+        case 'code_generation_canceled_because_user_not_invited':
           self.toastService.showMessage({messageKey: 'email-address.errorUserNotInBetaProgram'});
           break;
 
-        case 'canceled_because_user_disabled':
+        case 'code_generation_canceled_because_user_disabled':
           self.toastService.showMessage({messageKey: 'email-address.errorUserDisabled'});
           break;
 

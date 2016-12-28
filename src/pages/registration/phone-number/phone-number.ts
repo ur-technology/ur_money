@@ -74,24 +74,25 @@ export class PhoneNumberPage implements OnInit {
 
     let taskState: string;
 
+    let authParams: any = {
+      phone: phone,
+      countryCode: self.selectedCountry.countryCode,
+      referralCode: window.localStorage.getItem('urMoneyReferralCode')
+    };
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.requestSmsAuthenticationCode(
-        phone,
-        self.selectedCountry.countryCode,
-        window.localStorage.getItem('urMoneyReferralCode')
-      );
+      return self.auth.requestAuthenticationCode(authParams);
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();
     }).then(() => {
       switch (taskState) {
-        case 'completed':
+        case 'code_generation_finished':
           self.nav.setRoot(AuthenticationCodePage, { authenticationType: 'sms' });
           break;
 
-        case 'canceled_because_user_not_invited':
+        case 'code_generation_canceled_because_user_not_invited':
           let alert = this.alertCtrl.create({
             title: this.translate.instant('phone-number.noInviteFoundTitle'),
             message: this.translate.instant('phone-number.noInviteFoundMessage'),
@@ -100,7 +101,7 @@ export class PhoneNumberPage implements OnInit {
               {
                 text: this.translate.instant('phone-number.betaProgramButton'), handler: () => {
                   alert.dismiss().then(() => {
-                    this.nav.setRoot(EmailAddressPage);
+                    this.nav.setRoot(EmailAddressPage, { authParams: authParams });
                   });
                 }
               }
@@ -109,11 +110,11 @@ export class PhoneNumberPage implements OnInit {
           alert.present();
           break;
 
-        case 'canceled_because_user_disabled':
+        case 'code_generation_canceled_because_user_disabled':
           self.toastService.showMessage({messageKey: 'phone-number.errorUserDisabled'});
           break;
 
-        case 'canceled_because_of_excessive_failed_logins':
+        case 'code_generation_canceled_because_of_excessive_failed_logins':
           self.toastService.showMessage({messageKey: 'phone-number.errorExcessiveLogins'});
           break;
 

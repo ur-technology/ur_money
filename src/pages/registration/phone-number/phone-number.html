@@ -14,9 +14,6 @@
     </p>
     <form [formGroup]="phoneForm" (ngSubmit)="phoneForm.valid && submit()">
         <ion-list class="list-border">
-            <ion-item *ngIf="auth.authenticatedEmail" text-wrap>
-                <ion-label>Verified Beta Program Email Address {{auth.authenticatedEmail}}</ion-label>
-            </ion-item>
             <ion-item>
                 <ion-label>{{selectedCountry.name}}</ion-label>
                 <ion-select [(ngModel)]="selectedCountryCode" selectedText=" "

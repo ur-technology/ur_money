@@ -33,24 +33,14 @@ export class AuthenticationCodePage {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      if (self.authenticationType === 'email') {
-        return self.auth.checkEmailAuthenticationCode(self.authenticationCode);
-      } else {
-        return self.auth.checkSmsAuthenticationCode(self.authenticationCode);
-      }
+      return self.auth.checkAuthenticationCode(self.authenticationCode);
     }).then((codeMatch: boolean) => {
       authenticationCodeMatch = codeMatch;
       return loadingModal.dismiss();
     }).then(() => {
       this.authenticationCode = '';
       if (authenticationCodeMatch) {
-        if (this.authenticationType === 'email') {
-          // email is now authenticated, but we still need to authenticate phone number
-          this.nav.setRoot(PhoneNumberPage);
-
-        } else {
-          // do nothing AuthService will handle a redirect
-        }
+        // do nothing AuthService will handle a redirect
       } else {
         self.toastService.showMessage({messageKey: 'authentication-code.invalidCode'});
       }

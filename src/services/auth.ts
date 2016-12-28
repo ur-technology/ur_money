@@ -13,10 +13,7 @@ export class AuthService {
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
   public authenticationRequestCountryCode: string;
-  public smsTaskId: string;
-  public emailTaskId: string;
-  public authenticatedEmail: string;
-  public unauthenticatedEmail: string;
+  public taskId: string;
   public firebaseConnectionCheckInProgress: boolean = false;
 
   constructor(
@@ -106,24 +103,23 @@ export class AuthService {
     });
   }
 
-  requestSmsAuthenticationCode(phone: string, countryCode: string, referralCode: string) {
+  requestAuthenticationCode(authParams: any) {
     let self = this;
-    self.authenticationRequestCountryCode = countryCode;
+    self.authenticationRequestCountryCode = authParams.countryCode;
     return new Promise((resolve, reject) => {
-      let baseRef = firebase.database().ref('/smsAuthCodeGenerationQueue/tasks');
-      self.smsTaskId = self.emailTaskId || baseRef.push().key;
-      let taskRef = baseRef.child(self.smsTaskId);
-      taskRef.set({ phone: phone, referralCode: referralCode || null }).then(() => {
-        log.debug(`sms auth code request queued to ${taskRef.toString()}`);
+      let taskRef = firebase.database().ref('/phoneAuthQueue/tasks').push(
+        _.omitBy(authParams, _.isNil)
+      );
+      taskRef.then(() => {
+        self.taskId = taskRef.key;
+        log.debug(`request queued to ${taskRef.toString()}`);
         let stateRef = taskRef.child('_state');
         stateRef.on('value', (snapshot) => {
           let state = snapshot.val();
-          if (_.includes([undefined, null, 'in_progress'], state)) {
-            return;
+          if (!_.includes([undefined, null, 'code_generation_in_progress'], state)) {
+            stateRef.off('value');
+            resolve(state);
           }
-
-          stateRef.off('value');
-          resolve(state);
         });
       }, (error) => {
         reject(error);
@@ -131,17 +127,20 @@ export class AuthService {
     });
   }
 
-  checkSmsAuthenticationCode(authenticationCode: string): Promise<boolean> {
+  checkAuthenticationCode(submittedAuthenticationCode: string): Promise<boolean> {
     let self = this;
     return new Promise((resolve, reject) => {
-      if (!self.smsTaskId) {
-        reject(`no value set for smsTaskId`);
+      if (!self.taskId) {
+        reject(`no value set for taskId`);
         return;
       }
 
-      let taskRef = firebase.database().ref(`/smsAuthCodeMatchingQueue/tasks/${self.smsTaskId}`);
-      taskRef.set({ authenticationCode: authenticationCode }).then(() => {
-        log.debug(`set authenticationCode to ${authenticationCode} at ${taskRef.toString()}`);
+      let taskRef = firebase.database().ref(`/phoneAuthQueue/tasks/${self.taskId}`);
+      taskRef.update({
+        submittedAuthenticationCode: submittedAuthenticationCode,
+        _state: 'code_matching_requested'
+      }).then(() => {
+        log.debug(`set submittedAuthenticationCode to ${submittedAuthenticationCode} at ${taskRef.toString()}`);
         let resultRef = taskRef.child('result');
         resultRef.on('value', (snapshot) => {
           let result = snapshot.val();
@@ -159,7 +158,8 @@ export class AuthService {
           log.debug('Submitted authentication code was correct.');
           firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
             log.debug('Authentication succeded!');
-            self.cleanUpAssociatedAuthTasks();
+            taskRef.remove();
+            this.taskId = undefined;
             resolve(true);
           }).catch((error) => {
             taskRef.update({ authenticationError: error });
@@ -171,264 +171,8 @@ export class AuthService {
     });
   }
 
-  private cleanUpAssociatedAuthTasks() {
-    firebase.database().ref(`/smsAuthCodeGenerationQueue/tasks/${this.smsTaskId}`).remove();
-    firebase.database().ref(`/smsAuthCodeMatchingQueue/tasks/${this.smsTaskId}`).remove();
-    if (this.emailTaskId) {
-      firebase.database().ref(`/emailAuthCodeGenerationQueue/tasks/${this.emailTaskId}`).remove();
-      firebase.database().ref(`/emailAuthCodeMatchingQueue/tasks/${this.emailTaskId}`).remove();
-    }
-    this.authenticatedEmail = undefined;
-    this.unauthenticatedEmail = undefined;
-    this.smsTaskId = undefined;
-    this.emailTaskId = undefined;
-  }
-
-  requestEmailAuthenticationCode(email: string) {
-    let self = this;
-    return new Promise((resolve, reject) => {
-      self.unauthenticatedEmail = email;
-      self.authenticatedEmail = undefined;
-      let baseRef = firebase.database().ref('/emailAuthCodeGenerationQueue/tasks');
-      self.emailTaskId = baseRef.push().key;
-      let taskRef = baseRef.child(self.emailTaskId);
-      taskRef.set({ email: email }).then(() => {
-        log.debug(`email auth code request made at ${taskRef.toString}`);
-        let stateRef = taskRef.child('_state');
-        stateRef.on('value', (snapshot) => {
-          let state = snapshot.val();
-          if (_.includes([undefined, null, 'in_progress'], state)) {
-            return;
-          }
-
-          stateRef.off('value');
-          resolve(state);
-        });
-      }, (error) => {
-        reject(error);
-      });
-    });
-  }
-
-  checkEmailAuthenticationCode(authenticationCode: string): Promise<boolean> {
-    let self = this;
-    return new Promise((resolve, reject) => {
-      if (!self.emailTaskId) {
-        reject(`no value set for emailTaskId`);
-        return;
-      }
-
-      let taskRef = firebase.database().ref(`/emailAuthCodeMatchingQueue/tasks/${self.emailTaskId}`);
-      taskRef.set({ authenticationCode: authenticationCode }).then(() => {
-        log.debug(`set authenticationCode to ${authenticationCode} at ${taskRef.toString()}`);
-        let resultRef = taskRef.child('result');
-        resultRef.on('value', (snapshot) => {
-          let result = snapshot.val();
-          if (!result) {
-            return;
-          }
-          resultRef.off('value');
-
-          if (!result.codeMatch) {
-            log.debug('Submitted authentication code was not correct.');
-            resolve(false);
-            return;
-          }
-
-          // save info related to this email authentication for later
-          self.authenticatedEmail = self.unauthenticatedEmail;
-          self.unauthenticatedEmail = undefined;
-          log.debug('Submitted authentication code was correct.');
-          resolve(true);
-        }, (error) => {
-          log.debug('Error received during authentication: ${error}');
-          resolve(false);
-        });
-      });
-    });
-  }
-
   isSignedIn() {
     return !!this.currentUser;
-  }
-
-  supportedCountries() {
-    return {
-      'AT': {
-        name: 'Austria',
-        CountryCode: 'AT',
-        identificationTypes: {
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
-      },
-      'AU': {
-        name: 'Australia',
-        CountryCode: 'AU',
-        identificationTypes: {
-          'DriverLicence': 'Driver Licence',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'Suburb', 'StateProvinceCode', 'PostalCode']
-      },
-      'BE': {
-        name: 'Belgium',
-        CountryCode: 'BE',
-        identificationTypes: {
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
-      },
-      'DE': {
-        name: 'Germany',
-        CountryCode: 'DE',
-        identificationTypes: {
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
-      },
-      'DK': {
-        name: 'Denmark',
-        CountryCode: 'DK',
-        identificationTypes: {
-          'NationalId': 'National Id Number',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
-      },
-      'FR': {
-        name: 'France',
-        CountryCode: 'FR',
-        identificationTypes: {
-          'NationalId': 'Insee Number',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
-      },
-      'MX': {
-        name: 'Mexico',
-        CountryCode: 'MX',
-        identificationTypes: {
-          'NationalId': 'CURPID Number',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['Address1', 'PostalCode']
-      },
-      'MY': {
-        name: 'Malaysia',
-        CountryCode: 'MY',
-        identificationTypes: {
-          'NationalId': 'NRIC Number',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['Address1', 'City', 'PostalCode']
-      },
-      'NO': {
-        name: 'Norway',
-        CountryCode: 'NO',
-        identificationTypes: {
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
-      },
-      'NZ': {
-        name: 'New Zealand',
-        CountryCode: 'NZ',
-        identificationTypes: {
-          'DriverLicence': 'Driver Licence',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'City', 'Suburb', 'PostalCode']
-      },
-      'ZA': {
-        name: 'South Africa',
-        CountryCode: 'ZA',
-        identificationTypes: {
-          'NationalId': 'National Id Number',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['Address1', 'City', 'Suburb', 'StateProvinceCode', 'PostalCode']
-      },
-      'SE': {
-        name: 'Sweden',
-        CountryCode: 'SE',
-        identificationTypes: {
-          'NationalId': 'PIN Number',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'City', 'PostalCode']
-      },
-      'TR': {
-        name: 'Turkey',
-        CountryCode: 'TR',
-        identificationTypes: {
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['Address1', 'City', 'StateProvinceCode', 'PostalCode']
-      },
-      'GB': {
-        name: 'United Kingdom',
-        CountryCode: 'GB',
-        identificationTypes: {
-          'NationalId': 'NHS Number',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'UnitNumber', 'BuildingName', 'City', 'PostalCode']
-      },
-      'US': {
-        name: 'United States',
-        CountryCode: 'US',
-        identificationTypes: {
-          'DriverLicence': 'Driver License',
-          'NationalId': 'Social Security Number',
-          'Passport': 'Passport'
-        },
-        locationFieldNames: ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'City', 'StateProvinceCode', 'PostalCode']
-      }
-    };
-  }
-
-  userCountryNotSupported() {
-    let sanitizedCountryCode = _.trim(this.currentUser.countryCode || '');
-    return sanitizedCountryCode && !this.supportedCountries()[sanitizedCountryCode];
-  }
-
-  locationFieldNames() {
-    return ['BuildingNumber', 'StreetName', 'StreetType', 'UnitNumber', 'BuildingName', 'Address1', 'City', 'Suburb', 'StateProvinceCode', 'PostalCode'];
-  }
-
-  showLocationField(countryCode: string, fieldName: string) {
-    if (fieldName === 'CountryCode') {
-      return true;
-    } else {
-      let countryInfo = this.supportedCountries()[countryCode];
-      return !!countryInfo && _.includes(countryInfo.locationFieldNames, fieldName);
-    }
-  }
-
-  verificationArgsRef() {
-    return firebase.database().ref(`/users/${this.currentUserId}/registration/verificationArgs`);
-  }
-
-  updateVerificationArgs(verificationArgs: any): Promise<any> {
-    let self = this;
-    return new Promise((resolve, reject) => {
-
-      // mark args with version
-      verificationArgs.Version = 2;
-
-      // first update args in memory
-      self.currentUser.registration = self.currentUser.registration || {};
-      self.currentUser.registration.verificationArgs = self.currentUser.registration.verificationArgs || {};
-      _.extend(self.currentUser.registration.verificationArgs, verificationArgs);
-
-      // then save args in db
-      self.verificationArgsRef().update(verificationArgs).then(() => {
-        resolve();
-      }, (error) => {
-        reject(error);
-      });
-    });
   }
 
   getUserStatus() {
@@ -468,6 +212,6 @@ export class AuthService {
     } else {
       base = 'https://ur-money-staging.firebaseapp.com';
     }
-    return `${base}?r=${this.currentUser.referralCode}`;
+    return `${base}/r/${this.currentUser.referralCode}`;
   }
 }

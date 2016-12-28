@@ -39,8 +39,12 @@ export class UrMoney {
   }
 
   private storeReferralCodeIfPresent() {
-    let params: string = window.location.search || '';
-    let matches: string[] = params.match(/[\?\&]r\=([a-zA-Z0-9]+)/);
+    let pathname: string = window.location.pathname || '';
+    let matches: string[] = pathname.match(/\/r\/([a-zA-Z0-9]+)/);
+    if (!matches || !matches[1]) {
+      let params: string = window.location.search || '';
+      matches = params.match(/[\?\&]r\=([a-zA-Z0-9]+)/);
+    }
     if (matches && matches[1]) {
       window.localStorage.setItem('urMoneyReferralCode', matches[1]);
     }
