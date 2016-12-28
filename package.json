@@ -64,7 +64,6 @@
     "cordova-plugin-x-socialsharing",
     "cordova-plugin-app-version",
     "cordova-plugin-nativestorage",
-    "cordova-plugin-inapppurchase",
     {
       "locator": "https://github.com/VersoSolutions/CordovaClipboard.git",
       "id": "com.verso.cordova.clipboard"

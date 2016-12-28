@@ -47,15 +47,11 @@ export class HomePage {
     } else {
       this.balanceTitle = this.translate.instant(
         {
-          'verification-initiated': 'home.verificationPending',
-          'verification-requested': 'home.verificationPending', // deprecated
-          'verification-pending': 'home.verificationFailed',
-          'verification-failed': 'home.verificationFailed',
           'announcement-requested': 'home.bonusGenerating',
           'announcement-initiated': 'home.bonusGenerating',
-          'verification-succeeded': 'home.bonusGenerating',
-          'waiting-for-sponsor': 'home.waitingSponsor'
-        }[this.auth.getUserStatus()] || 'home.unlockMessage'
+          'announcement-confirmed': 'home.bonusGenerating',
+          'wallet-generated': 'home.bonusGenerating',
+        }[this.auth.getUserStatus()] || 'home.bonusGenerating'
       );
     }
   }
@@ -179,7 +175,7 @@ export class HomePage {
       this.nav.push({
         'announcement-initiated': AnnouncementInitiatedPage,
         'announcement-requested': AnnouncementInitiatedPage,
-        'verification-succeeded': AnnouncementInitiatedPage,
+        'announcement-confirmed': AnnouncementInitiatedPage,
       }[this.auth.getUserStatus()] || AnnouncementInitiatedPage);
     }
   }
