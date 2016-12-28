@@ -6,12 +6,11 @@ import * as log from 'loglevel';
 import {NativeStorage} from 'ionic-native';
 import {WalletModel} from '../../../models/wallet';
 import {AuthService} from '../../../services/auth';
-import {ContactsService} from '../../../services/contacts';
 import {CustomValidator} from '../../../validators/custom';
-import {HomePage} from '../../home/home';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {EncryptionService} from '../../../services/encryption';
 import {Config} from '../../../config/config';
+import {IntroPage} from '../intro/intro'
 
 declare var jQuery: any;
 
@@ -29,7 +28,6 @@ export class WalletSetupPage {
   constructor(
     public nav: NavController,
     public auth: AuthService,
-    public contactsService: ContactsService,
     public platform: Platform,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
@@ -152,9 +150,8 @@ export class WalletSetupPage {
       self.loadingModal.dismiss().then(() => {
         firebase.database().ref('/identityAnnouncementQueue/tasks').push({
           userId: this.auth.currentUserId
-        });
-        self.contactsService.loadContacts(self.auth.currentUserId, self.auth.currentUser.phone, self.auth.currentUser.countryCode);
-        self.nav.setRoot(HomePage);
+        }).then();
+        self.nav.setRoot(IntroPage);
       });
     }).catch((error) => {
       self.loadingModal.dismiss();

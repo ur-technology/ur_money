@@ -1,43 +1,53 @@
 <ion-header>
   <ion-navbar>
     <ion-title>{{"profile-setup.title" | translate}}</ion-title>
-    <ion-buttons end>
-      <button ion-button [disabled]="!mainForm.valid" (click)="submit()">
-              {{"done" | translate}}
-          </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content>
   <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
-    <ion-item>
-      <ion-label stacked>{{'profile-setup.country' | translate}}</ion-label>
-      <ion-select formControlName="countryCode" (ionChange)="onCountrySelected($event)">
-        <ion-option [value]="c" *ngFor="let c of countries">
-          {{c.name}}
-        </ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>{{'profile-setup.firstName' | translate}}</ion-label>
-      <ion-input type="text" placeholder="{{'profile-setup.placeholderFirstName' | translate}}" [(ngModel)]="profile.firstName" formControlName="firstName"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>{{'profile-setup.middleName' | translate}}</ion-label>
-      <ion-input type="text" placeholder="{{'profile-setup.placeholderMiddleName' | translate}}" [(ngModel)]="profile.middleName" formControlName="middleName"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>{{'profile-setup.lastName' | translate}}</ion-label>
-      <ion-input type="text" placeholder="{{'profile-setup.placeholderLastName' | translate}}" [(ngModel)]="profile.lastName" formControlName="lastName"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>{{'profile-setup.name' | translate}}</ion-label>
-      <ion-input type="text" placeholder="{{'profile-setup.placeholderFullName' | translate}}" [(ngModel)]="profile.name" formControlName="name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
-      <ion-input type="email" placeholder="{{'profile-setup.placeholderEmail' | translate}}" [(ngModel)]="profile.email" formControlName="email"></ion-input>
-    </ion-item>
+    <ion-card>
+      <ion-card-header>
+        <ion-label text-center color="primary">{{"profile-setup.slideTitle" | translate}}</ion-label>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label stacked>{{'profile-setup.country' | translate}}</ion-label>
+            <ion-select formControlName="countryCode" (ionChange)="onCountrySelected($event)">
+              <ion-option [value]="c" *ngFor="let c of countries">
+                {{c.name}}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>{{'profile-setup.firstName' | translate}}</ion-label>
+            <ion-input type="text" [(ngModel)]="profile.firstName" formControlName="firstName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>{{'profile-setup.middleName' | translate}}</ion-label>
+            <ion-input type="text" [(ngModel)]="profile.middleName" formControlName="middleName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>{{'profile-setup.lastName' | translate}}</ion-label>
+            <ion-input type="text" [(ngModel)]="profile.lastName" formControlName="lastName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>{{'profile-setup.name' | translate}}</ion-label>
+            <ion-input type="text" [(ngModel)]="profile.name" formControlName="name"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
+            <ion-input type="email" [(ngModel)]="profile.email" formControlName="email"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+      <ion-item class="footer-card">
+        <button ion-button item-right clear default [disabled]="!mainForm.valid" icon-right>
+              {{"continue" | translate}}
+              <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+      </ion-item>
+    </ion-card>
   </form>
 </ion-content>
 <ion-footer>

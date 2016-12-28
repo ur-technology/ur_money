@@ -1,7 +1,6 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/v2/theming/
-@import "ionic.globals";
-// Shared Variables
+@import "ionic.globals"; // Shared Variables
 // --------------------------------------------------
 // To customize the look and feel of this app, you can override
 // the Sass variables found in Ionic's source scss files.
@@ -14,16 +13,14 @@
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-$colors: ( primary: #3aade2, secondary: #32db64, danger: #f53d3d, light: #f1f1f1 , dark: #222 );
+$colors: ( primary: #3aade2, secondary: #32db64, danger: #f53d3d, light: #f1f1f1 , dark: #222, pageBackgroud: #f1f3f4 );
 $text-color: #4d4d4d; // $background-color:  #f1f3f4;
 $background-color: #fff;
 $list-background-color: #fff;
-$toolbar-background: color($colors, primary);
-// App iOS Variables
+$toolbar-background: color($colors, primary); // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-$select-ios-padding-left: 0;
-// App Material Design Variables
+$select-ios-padding-left: 0; // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
@@ -45,10 +42,8 @@ $text-input-md-show-focus-highlight: true;
 $label-md-text-color: color($colors, primary);
 $card-md-header-font-size: 1.7rem;
 $card-md-header-padding: 5px;
-$card-md-padding-right: 7px;
-$card-md-padding-left: 7px;
-
-
+$card-md-padding-right: 8px;
+$card-md-padding-left: 8px;
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
@@ -58,8 +53,7 @@ $card-md-padding-left: 7px;
 // then be future customized. This import comes last
 // so that the above variables are used and Ionic's
 // default are overridden.
-@import "ionic.theme.default";
-// Ionicons
+@import "ionic.theme.default"; // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/v2/ionicons/

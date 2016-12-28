@@ -10,12 +10,12 @@ import {ContactsService} from '../services/contacts';
 import {Config} from '../config/config'
 import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
 import {WelcomePage} from '../pages/registration/welcome/welcome';
-import {IntroPage} from '../pages/registration/intro/intro';
 import {SendPage} from '../pages/send/send';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
 import {UsersPage} from '../pages/admin/users';
 import {SettingsPage} from '../pages/settings/settings';
 import {TranslateService} from 'ng2-translate/ng2-translate';
+import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -78,7 +78,7 @@ export class UrMoney {
         if (status === 'unauthenticated') {
           this.nav.setRoot(WelcomePage);
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
-          this.nav.setRoot(IntroPage);
+          this.nav.setRoot(ProfileSetupPage);
         } else {
           this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
           this.nav.setRoot(HomePage);

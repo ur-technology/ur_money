@@ -60,10 +60,10 @@
         "notReadyMessage": "Debido que se requiere la verificación de tu identidad para el uso de la aplicación UR Money, tendrás que cerrar sesión por ahora. ¿Seguro que quieres salir?",
         "yesSignOut": "Sí, cerrar sesión.",
         "welcome": "Bienvenido a UR Money",
-        "message1": "Estás a unos pasos de reclamar tus 2000 UR!",
-        "message2": "A fin de proporcionar un ambiente seguro, pedimos a todos los miembros de la comunidad que verifiquen su identidad. Para ello, tendremos que pedirte información de identificación, incluyendo el número de teléfono móvil, el nombre, la dirección, la fecha de nacimiento, etc., y luego compartir esta información con Trulioo, Inc., un servicio de verificación de identidad basado en Canadá.",
-        "message3": "También necesitaremos importar tus contactos para que puedas invitarlos, chatear con ellos y enviarles UR.",
-        "message4": "¿Le das permiso a UR Technology (el creador de UR Money) para compartir tu información de identidad con Trulioo, Inc. e importar tus contactos?"
+        "message1": "<b>Felicitaciones!</b> Estamos procesando su bono de 2.000 UR!",
+        "message2": "Pronto podrás recibir y enviar UR a tus amigos y familiares.",
+        "message3": "También necesitaremos acceso a tus contactos para que puedas invitarlos, chatear con ellos y realizar transacciones con ellos.",
+        "message4": "Ya está todo listo. <b>Disfruta UR Money!<b/>"
     },
     "identity-verification-intro": {
         "slideTitle": "Estás a unos pasos de reclamar tus <b>2000 2000 UR!</b>",
@@ -156,7 +156,8 @@
         "placeholderMiddleName": "Ingresa el segundo nombre (opcional)",
         "placeholderLastName": "Ingresa el apellido",
         "placeholderFullName": "Ingresa cómo quieres que te llamen",
-        "placeholderEmail": "Ingresa el correo electrónico"
+        "placeholderEmail": "Ingresa el correo electrónico",
+        "slideTitle": "Paso 1 de 2 - Información básica"
     },
     "identity-info-setup": {
         "title": "Documento de identificación",
@@ -178,7 +179,7 @@
     },
     "wallet-setup": {
         "title": "Configuración de frase secreta",
-        "suggestSecretPhrase": "Sugerir frase secreta",
+        "suggestSecretPhrase": "Generar",
         "secretPhrasePlaceholder": "Introduce al menos 5 palabras",
         "confirmWrittenDownTitle": "Escríbelo!",
         "confirmWrittenDownMessage1": "Esta es tu frase secreta:",
@@ -190,14 +191,16 @@
         "renterSecretPhraseRetryMessage": "INCORECTO - INTENTA DE NUEVO",
         "renterSecretPhrasePlaceholder": "Vuelve a ingresar tu frase secreta",
         "youWillReceiveBonus": "Recibirás tu bono de 2.000 UR pronto!",
-        "chooseSecret": "Ingresa de 5 a 10 palabras para tu contraseña",
-        "message1": "Te permite controlar tu dinero.",
+        "chooseSecret": "Ingresa de 5 a 10 palabras para tu frase secreta",
+        "message1": "Asegúrate que la recuerdes porque la necesitarás para realizar transacciones más tarde",
         "message2": "Solo tú lo sabes. Nunca podrá ser recuperado si se pierde.",
         "message3": "Ingresa palabras para tu contraseña",
-        "message4": "Presiona el botón de abajo para generar automáticamente una frase de contraseña (recomendado).",
+        "message4": "Alternativamente, use el botón de abajo para generar automáticamente una frase de secreta.",
         "learnSavePhrase": "Si te olvidas tu frase secreta puedes recuperarla mas tarde",
         "saveSecretPhrase": "Almacenar una copia local de la frase secreta en el dispositivo para emergencias?",
-        "learnMore": "Conocer más"
+        "learnMore": "Conocer más",
+        "slideTitle": "Paso 2 de 2 - Configura frase secreta",
+        "secretPhrase": "Frase secreta"
     },
     "verification-pending": {
         "title": "Verificación pendiente",

@@ -1,9 +1,10 @@
 import { NavController, AlertController} from 'ionic-angular';
 import {TranslateService} from 'ng2-translate/ng2-translate';
-import {AuthService} from '../../../services/auth';
-import {ProfileSetupPage} from '../profile-setup/profile-setup';
+import {HomePage} from '../../home/home';
 import { Component } from '@angular/core';
 import {Config} from '../../../config/config';
+import {ContactsService} from '../../../services/contacts';
+import {AuthService} from '../../../services/auth';
 
 @Component({
   selector: 'intro-page',
@@ -14,36 +15,16 @@ export class IntroPage {
 
   constructor(
     public nav: NavController,
-    public auth: AuthService,
     public alertCtrl: AlertController,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public contactsService: ContactsService,
+    public auth: AuthService
   ) {
     this.configPlatform = Config.targetPlatform;
   }
 
-  notNow() {
-    let alert = this.alertCtrl.create({
-      title: this.translate.instant('intro.notReadyTitle'),
-      message: this.translate.instant('intro.notReadyMessage'),
-      buttons: [
-        {
-          text: this.translate.instant('cancel'), handler: () => {
-            alert.dismiss();
-          }
-        },
-        {
-          text: this.translate.instant('intro.yesSignOut'), handler: () => {
-            alert.dismiss().then(() => {
-              this.auth.angularFire.auth.logout();
-            });
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-
   pleaseContinue() {
-    this.nav.setRoot(ProfileSetupPage);
+    this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
+    this.nav.setRoot(HomePage);
   }
 }

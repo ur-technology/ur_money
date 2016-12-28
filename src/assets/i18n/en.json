@@ -60,10 +60,10 @@
         "notReadyMessage": "Since identity verification is required for the use of the UR Money app, you will need to sign out for now. Are you sure you want to sign out?",
         "yesSignOut": "Yes, sign me out.",
         "welcome": "Welcome to UR Money",
-        "message1": "You’re just a few steps away from claiming your 2,000 UR!",
-        "message2": "In order to provide a safe environment, we ask all community members to verify their identity. To do this, we will need to ask you for several pieces of identifying information including mobile phone number, name, address, date of birth, etc., and then share this info with Trulioo, Inc., a Canada-based identity verification service.",
-        "message3": "We will also need to import your contacts so you can invite them, chat with them and send them UR.",
-        "message4": "Do you give UR Technology (the maker of UR Money) permission to share your identity info with Trulioo, Inc. and to import your contacts?"
+        "message1": "<b>Congratulations!</b> We are processing your 2,000 UR bonus!",
+        "message2": "You will be able to receive and send UR to your friends and family soon.",
+        "message3": "We will also need access to your contacts so you can invite them, chat with them and make transactions with them.",
+        "message4": "You are all done. <b>Enjoy UR Money!<b/>"
     },
     "identity-verification-intro": {
         "slideTitle": "You’re just a few steps away from claiming your <b>2,000 UR!</b>",
@@ -156,7 +156,8 @@
         "placeholderMiddleName": "Enter middle name (optional)",
         "placeholderLastName": "Enter last name",
         "placeholderFullName": "Enter how you want to be called",
-        "placeholderEmail": "Enter email"
+        "placeholderEmail": "Enter email",
+        "slideTitle": "Step 1 of 2 - Basic Info"
     },
     "identity-info-setup": {
         "title": "Identification Document",
@@ -178,7 +179,7 @@
     },
     "wallet-setup": {
         "title": "Secret Phrase Setup",
-        "suggestSecretPhrase": "Suggest secret phrase",
+        "suggestSecretPhrase": "Generate",
         "secretPhrasePlaceholder": "Enter at least 5 words",
         "confirmWrittenDownTitle": "Write It Down!",
         "confirmWrittenDownMessage1": "This is your secret phrase:",
@@ -190,14 +191,16 @@
         "renterSecretPhraseRetryMessage": "INCORRECT - PLEASE TRY AGAIN",
         "renterSecretPhrasePlaceholder": "Re-enter your secret phrase",
         "youWillReceiveBonus": "You will receive your 2,000 UR bonus soon!",
-        "chooseSecret": "Choose a 5-10 word secret phrase:",
-        "message1": "It lets you control your money.",
+        "chooseSecret": "Enter a 5-10 word secret phrase.",
+        "message1": "Make sure you remember it because you will need to make transactions later.",
         "message2": "Only you know it. It can never be recovered if lost.",
         "message3": "It’s a string of words that’s never appeared in print or online—ever!",
-        "message4": "Click the button below to automatically generate a secret phrase (recommended).",
+        "message4": "Alternatively, you can use the button below to automatically generate a secret phrase.",
         "learnSavePhrase": "By checking this box, you are choosing to store your your secret phrase on your device. This approach to safeguarding your secret phrase has advantages and disadvantages. The main advantage is that, if your forget your secret phrase and also lose your written copy of it, you will usually be able to recover it using this approach. The main disadvantage is that you could increase the chances of having your secret phrase stolen if someone gets physical or remote access to your device. Furthermore, saving your secret phrase to your device is NOT 100% reliable, so please continue to write down your secret phrase and store it in a safe place.",
         "saveSecretPhrase": "Store a copy of your secret phrase on device for emergencies?",
-        "learnMore": "Learn more"
+        "learnMore": "Learn more",
+        "slideTitle": "Step 2 of 2 - Secret Phrase Setup",
+        "secretPhrase": "Secret phrase"
     },
     "verification-pending": {
         "title": "Verification pending",
