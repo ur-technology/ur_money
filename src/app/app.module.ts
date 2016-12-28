@@ -46,6 +46,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FormsModule } from '@angular/forms';
 import {Config} from '../config/config';
+import {SponsorWaitPage} from '../pages/sponsor-wait/sponsor-wait';
 
 
 export const firebaseConfig = {
@@ -90,6 +91,7 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     SettingsPage,
     TermsAndConditionsPage,
     TransactionsPage,
+    SponsorWaitPage,
     ChatListComponent,
     ContactsComponent,
     EventListComponent,
@@ -143,7 +145,8 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     UsersPage,
     SettingsPage,
     TermsAndConditionsPage,
-    TransactionsPage
+    TransactionsPage,
+    SponsorWaitPage
   ],
   providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

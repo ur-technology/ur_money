@@ -137,9 +137,10 @@
         "slideMessage": "You will see your 2,000 UR bonus in your homepage soon!"
     },
     "identity-verification-sponsor-wait": {
-        "slideTitle": "<b>Waiting for sponsor to verify identity</b>",
-        "slideMessage": "We are currently waiting for <b>{{sponsor}}</b> to verify their account before you can verify your identity.",
-        "sendMessage": "Send a message to {{sponsor}}"
+        "slideTitle": "<b>Waiting for sponsor to complete profile setup</b>",
+        "slideMessage": "We are currently waiting for <b>{{value}}</b> to complete their account before you can get your 2000 UR.",
+        "sendMessage": "Send a message to {{sponsor}}",
+        "title": "Waiting sponsor to complete account"
     },
     "profile-setup": {
         "title": "Set Up Profile",

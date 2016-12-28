@@ -137,9 +137,10 @@
         "slideMessage": "Verás pronto tu bono de 2.000 UR en tu página de inicio!"
     },
     "identity-verification-sponsor-wait": {
-        "slideTitle": "<b>Esperando que tu patrocinador verifique su identidad</b>",
-        "slideMessage": "Actualmente estamos esperando que <b>{{sponsor}}</b> verifique su identidad antes de que tu puedas verificar tu identidad.",
-        "sendMessage": "Envia un mensaje a {{sponsor}}"
+        "slideTitle": "<b>Esperando que tu patrocinador complete la configuración de su cuenta</b>",
+        "slideMessage": "Actualmente estamos esperando que <b>{{value}}</b> complete su cuenta antes de que tu puedas obtener tus 2000 UR",
+        "sendMessage": "Envía un mensaje a {{sponsor}}",
+        "title": "Esperando a patrocinador que complete su cuenta"
     },
     "profile-setup": {
         "title": "Configurar perfil",

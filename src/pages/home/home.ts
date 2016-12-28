@@ -11,6 +11,7 @@ import {AnnouncementInitiatedPage} from '../announcement-initiated/announcement-
 import {TransactionsPage} from './../transactions/transactions';
 import {SendPage} from './../send/send';
 import {InviteLinkPage} from './../invite-link/invite-link';
+import {SponsorWaitPage} from '../sponsor-wait/sponsor-wait';
 declare var jQuery: any;
 
 @Component({
@@ -51,6 +52,7 @@ export class HomePage {
           'announcement-initiated': 'home.bonusGenerating',
           'announcement-confirmed': 'home.bonusGenerating',
           'wallet-generated': 'home.bonusGenerating',
+          'waiting-for-sponsor':'home.waitingSponsor'
         }[this.auth.getUserStatus()] || 'home.bonusGenerating'
       );
     }
@@ -172,6 +174,7 @@ export class HomePage {
         'announcement-initiated': AnnouncementInitiatedPage,
         'announcement-requested': AnnouncementInitiatedPage,
         'announcement-confirmed': AnnouncementInitiatedPage,
+        'waiting-for-sponsor': SponsorWaitPage
       }[this.auth.getUserStatus()] || AnnouncementInitiatedPage);
     }
   }
