@@ -138,7 +138,7 @@
     },
     "identity-verification-sponsor-wait": {
         "slideTitle": "<b>Esperando que tu patrocinador complete la configuración de su cuenta</b>",
-        "slideMessage": "Actualmente estamos esperando que <b>{{value}}</b> complete su cuenta antes de que tu puedas obtener tus 2000 UR. </br>Tu <b>bono</b> se generará el <b>Lunes 2 de Enero del 2017</b> a las 18:00:00 UTC ",
+        "slideMessage": "Actualmente estamos esperando que <b>{{value}}</b> complete su cuenta antes de que tu puedas obtener tus 2000 UR. </br>Tu <b>bono</b> se generará el <b>Lunes 2 de Enero del 2017</b> a las 23:00:00 UTC ",
         "sendMessage": "Envía un mensaje a {{sponsor}}",
         "title": "Esperando a patrocinador que complete su cuenta"
     },
@@ -235,7 +235,7 @@
         "bonusGenerating": "<span class='small'>Generación De Bonificación En Curso</span><br />2000<span>&nbsp;UR</span>",
         "verificationPending": "<span class='small'>Verificación En Curso</span><br />2000<span>&nbsp;UR</span>",
         "verificationFailed": "<span class='small'>Verificación fallida</span><br />2000<span>&nbsp;UR</span>",
-        "waitingSponsor": "<span class='small'>El bono se generará el Lunes 2 de Enero del 2017 a las 18:00:00 UTC</span><br />2000<span>&nbsp;UR</span>"
+        "waitingSponsor": "<span class='small'>El bono se generará el Lunes 2 de Enero del 2017 a las 23:00:00 UTC</span><br />2000<span>&nbsp;UR</span>"
     },
     "contacts": {
         "invite": "Invitar",
