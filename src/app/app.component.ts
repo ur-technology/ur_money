@@ -38,20 +38,8 @@ export class UrMoney {
     this.translateConfig();
   }
 
-  private storeReferralCodeIfPresent() {
-    let pathname: string = window.location.pathname || '';
-    let matches: string[] = pathname.match(/\/r\/([a-zA-Z0-9]+)/);
-    if (!matches || !matches[1]) {
-      let params: string = window.location.search || '';
-      matches = params.match(/[\?\&]r\=([a-zA-Z0-9]+)/);
-    }
-    if (matches && matches[1]) {
-      window.localStorage.setItem('urMoneyReferralCode', matches[1]);
-    }
-  }
-
   private initializeApp() {
-    this.storeReferralCodeIfPresent();
+    this.saveSponsorReferralCodeIfPresent();
 
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
@@ -91,6 +79,18 @@ export class UrMoney {
 
       log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
     });
+  }
+
+  private saveSponsorReferralCodeIfPresent() {
+    let pathname: string = window.location.pathname || '';
+    let matches: string[] = pathname.match(/\/r\/([a-zA-Z0-9]+)/);
+    if (!matches || !matches[1]) {
+      let params: string = window.location.search || '';
+      matches = params.match(/[\?\&]r\=([a-zA-Z0-9]+)/);
+    }
+    if (matches && matches[1]) {
+      this.auth.sponsorReferralCode = matches[1];
+    }
   }
 
   private initializeMenu() {

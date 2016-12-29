@@ -9,10 +9,14 @@ import { FirebaseApp } from 'angularfire2';
 
 @Injectable()
 export class AuthService {
+  public sponsorReferralCode: string;
+  public phone: string;
+  public countryCode: string;
+  public email: string;
+
   public currentUserId: string;
   public currentUserRef: FirebaseObjectObservable<any>;
   public currentUser: any;
-  public authenticationRequestCountryCode: string;
   public taskId: string;
   public firebaseConnectionCheckInProgress: boolean = false;
 
@@ -35,19 +39,21 @@ export class AuthService {
               userSubscription.unsubscribe();
             }
             self.currentUser = currentUser;
-            if (self.authenticationRequestCountryCode &&
+            if (self.countryCode &&
               (!self.currentUser.countryCode || !self.currentUser.countryCode.match(/^[A-Z]{2}$/))) {
-              self.currentUser.countryCode = self.authenticationRequestCountryCode;
+              self.currentUser.countryCode = self.countryCode;
               this.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
             callback(undefined);
           });
         } else {
           // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
+          self.phone = undefined;
+          self.countryCode = undefined;
+          self.email = undefined;
           self.currentUserId = undefined;
           self.currentUserRef = undefined;
           self.currentUser = undefined;
-          self.authenticationRequestCountryCode = undefined;
           callback(undefined);
         }
       });
@@ -103,12 +109,15 @@ export class AuthService {
     });
   }
 
-  requestAuthenticationCode(authParams: any) {
+  requestAuthenticationCode() {
     let self = this;
-    self.authenticationRequestCountryCode = authParams.countryCode;
     return new Promise((resolve, reject) => {
       let taskRef = firebase.database().ref('/phoneAuthQueue/tasks').push(
-        _.omitBy(authParams, _.isNil)
+        {
+          phone: this.phone,
+          sponsorReferralCode: this.sponsorReferralCode || null,
+          email: this.email || null
+        }
       );
       taskRef.then(() => {
         self.taskId = taskRef.key;

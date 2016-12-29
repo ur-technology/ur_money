@@ -31,7 +31,6 @@ export class EmailAddressPage {
 
   submit() {
     let self = this;
-    let email = _.trim(self.mainForm.value.email || '');
 
     let loadingModal = self.loadingController.create({
       content: self.translate.instant('pleaseWait'),
@@ -42,9 +41,8 @@ export class EmailAddressPage {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      let authParams = self.navParams.get('authParams') || {};
-      _.extend(authParams, { email: email });
-      return self.auth.requestAuthenticationCode(authParams);
+      self.auth.email = _.trim(self.mainForm.value.email || '');
+      return self.auth.requestAuthenticationCode();
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();

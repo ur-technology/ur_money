@@ -73,16 +73,13 @@ export class PhoneNumberPage implements OnInit {
     });
 
     let taskState: string;
-
-    let authParams: any = {
-      phone: phone,
-      countryCode: self.selectedCountry.countryCode,
-      referralCode: window.localStorage.getItem('urMoneyReferralCode')
-    };
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.requestAuthenticationCode(authParams);
+      self.auth.phone = phone;
+      self.auth.countryCode = self.selectedCountry.countryCode;
+      self.auth.email = null;
+      return self.auth.requestAuthenticationCode();
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();
@@ -101,7 +98,7 @@ export class PhoneNumberPage implements OnInit {
               {
                 text: this.translate.instant('phone-number.betaProgramButton'), handler: () => {
                   alert.dismiss().then(() => {
-                    this.nav.setRoot(EmailAddressPage, { authParams: authParams });
+                    this.nav.setRoot(EmailAddressPage);
                   });
                 }
               }
