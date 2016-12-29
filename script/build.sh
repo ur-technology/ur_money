@@ -70,7 +70,7 @@ elif [[ "$PLATFORM" == "web" ]]; then
   if [[ "$DEPLOY" == "true" ]]; then
     echo "building and deploying to firebase"
     ionic build android # HACK: this is silly way to populate the www/ directory with the app, but I don't know an easier way -- ignore the resulting android app, it is not properly configured
-    sed -e $'s/<\/head>/  <base href="\/">\\\n<\/head>/' www/index.html > www/index.web.html
+    sed -e $'s/<\/title>/<\/title>\\\n  <base href="\/">/' www/index.html > www/index.web.html
     firebase deploy -P ur-money-${UR_ENV}
   fi
 
