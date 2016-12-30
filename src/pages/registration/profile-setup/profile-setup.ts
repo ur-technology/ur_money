@@ -2,7 +2,6 @@ import { NavController} from 'ionic-angular';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {UserModel} from '../../../models/user';
 import {AuthService} from '../../../services/auth';
 import {CustomValidator} from '../../../validators/custom';
 import {WalletSetupPage} from '../../../pages/registration/wallet-setup/wallet-setup';
@@ -60,12 +59,9 @@ export class ProfileSetupPage {
   }
 
   submit() {
-    let newValues = _.merge(this.profile, {
-      name: UserModel.fullName(this.profile)
-    });
-    newValues = _.omitBy(newValues, _.isUndefined);
-    this.auth.currentUserRef.update(newValues).then(() => {
-      _.merge(this.auth.currentUser, newValues);
+    this.profile = _.omitBy(this.profile, _.isUndefined);
+    this.auth.currentUserRef.update(this.profile).then(() => {
+      _.merge(this.auth.currentUser, this.profile);
       this.nav.setRoot(WalletSetupPage);
     }).catch((error) => {
       log.warn('unable to save profile info');

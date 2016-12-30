@@ -196,6 +196,9 @@ export class AuthService {
     if ((status !== 'initial') && (this.currentUser.sponsor) && (!this.currentUser.sponsor.announcementTransactionConfirmed)) {
       status = 'waiting-for-sponsor';
     }
+    if(this.currentUser.disabled && this.currentUser.disabled === true){
+      status = 'disabled';
+    }
 
     return status;
   }

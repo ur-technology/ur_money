@@ -13,14 +13,23 @@
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-$colors: ( primary: #3aade2, secondary: #32db64, danger: #f53d3d, light: #f1f1f1 , dark: #222, pageBackgroud: #f1f3f4 );
+$colors: ( primary: #3aade2, secondary: #32db64, danger: #f53d3d, light: #f1f1f1 , dark: #222, light95: #f1f3f4, light85: #d9d9d9 );
 $text-color: #4d4d4d; // $background-color:  #f1f3f4;
 $background-color: #fff;
 $list-background-color: #fff;
 $toolbar-background: color($colors, primary); // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-$select-ios-padding-left: 0; // App Material Design Variables
+$select-ios-padding-left: 0;
+$text-input-ios-show-valid-highlight: false;
+$text-input-ios-show-error-highlight: true;
+$text-input-ios-show-focus-highlight: true;
+$label-ios-text-color: color($colors, primary);
+$segment-button-ios-background-color-activated: color($colors, light85);
+$card-ios-header-font-size: 1.7rem;
+$card-ios-header-padding: 5px;
+$card-ios-padding-right: 8px;
+$card-ios-padding-left: 8px;
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 

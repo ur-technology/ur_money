@@ -52,7 +52,8 @@ export class HomePage {
           'announcement-initiated': 'home.bonusGenerating',
           'announcement-confirmed': 'home.bonusGenerating',
           'wallet-generated': 'home.bonusGenerating',
-          'waiting-for-sponsor':'home.waitingSponsor'
+          'waiting-for-sponsor':'home.waitingSponsor',
+          'disabled': 'home.userDisabled'
         }[this.auth.getUserStatus()] || 'home.bonusGenerating'
       );
     }

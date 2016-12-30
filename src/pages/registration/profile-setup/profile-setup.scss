@@ -1,5 +1,4 @@
 profile-setup-page {
-
   ion-card-header {
     background-color: color($colors, light);
   }
@@ -10,6 +9,14 @@ profile-setup-page {
 
   .footer-card {
     background-color: color($colors, light);
+  }
+
+  .item-ios.item-input.input-has-focus .item-inner {
+    border-bottom-color: color($colors, primary) !important;
+  }
+
+  .card-ios .item-ios.item-block .item-inner {
+    border-bottom: 1px solid #dedede;
   }
 
   .card-md .item-md.item-block .item-inner {
