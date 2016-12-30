@@ -42,7 +42,9 @@ export class WalletModel {
   public static estimatedFeeWei(): any {
     let gas = new BigNumber(21000);
     let gasPrice = this.web3().eth.gasPrice;
-    return gas.times(gasPrice);
+    let calculatedFee = gas.times(gasPrice);
+    let minimumFee = this.web3().toWei(0.095);
+    return BigNumber.max(calculatedFee, minimumFee);
   }
 
   private static calculateBalanceInfo(balanceWei, rounding?: boolean, pendingAmountWei?: any): any {
