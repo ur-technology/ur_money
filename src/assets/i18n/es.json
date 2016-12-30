@@ -195,7 +195,7 @@
         "message1": "Asegúrate que la recuerdes porque la necesitarás para realizar transacciones más tarde",
         "message2": "Solo tú lo sabes. Nunca podrá ser recuperado si se pierde.",
         "message3": "Ingresa palabras para tu contraseña",
-        "message4": "Alternativamente, use el botón de abajo para generar automáticamente una frase de secreta.",
+        "message4": "Alternativamente, use el botón Generar de abajo para generar automáticamente una frase de secreta.",
         "learnSavePhrase": "Si te olvidas tu frase secreta puedes recuperarla mas tarde",
         "saveSecretPhrase": "Almacenar una copia local de la frase secreta en el dispositivo para emergencias?",
         "learnMore": "Conocer más",
