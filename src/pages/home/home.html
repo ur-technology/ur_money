@@ -13,14 +13,14 @@
             </div>
 
             <h2 class="chart-subtitle clearfix">
-              <span class="green">
-                <ion-icon [name]="chartData.percentageChange>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>
-                {{chartData.percentageChange}}%
+              <span class="green" *ngIf="balanceChangePercent">
+                <ion-icon [name]="balanceChangePercent>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>
+                {{balanceChangePercent.toFormat(0)}}%
               </span>
 
-              <span class="right">
-                <ion-icon [name]="chartData.balanceChange>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>
-                {{chartData.balanceChange}}
+              <span class="right" *ngIf="balanceChangeUR">
+                <ion-icon [name]="balanceChangeUR>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>
+                {{balanceChangeUR.toFormat(0)}}
               </span>
             </h2>
 

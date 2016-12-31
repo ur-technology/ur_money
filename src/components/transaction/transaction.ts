@@ -21,17 +21,9 @@ export class TransactionComponent {
   filteredTransactionsTotal: any = new BigNumber(0);
   lastUpdated: any;
   filterOption: string = 'all';
-  availableBalance: number;
   @Input() transactionType: string;
 
   constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, @Inject(FirebaseApp) firebase: any) {
-  }
-
-  ngOnInit() {
-    let self = this;
-    if (self.chartData.balanceUpdated) {
-      this.availableBalance = this.chartData.balanceInfo.availableBalance;
-    }
   }
 
   filterTransactions(newFilterOption?) {
@@ -57,7 +49,7 @@ export class TransactionComponent {
 
   selectedTransactionTypeTotal(): string {
     if (this.transactionType === 'all') {
-      return (new BigNumber(this.availableBalance || 0)).toFormat(2);
+      return this.auth.currentBalanceUR().toFormat(2);
     } else {
       return this.weiToURString(this.filteredTransactionsTotal);
     }

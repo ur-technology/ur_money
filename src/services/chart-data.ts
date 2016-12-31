@@ -2,9 +2,7 @@ import {Injectable, EventEmitter, Inject} from '@angular/core';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import * as moment from 'moment';
-import * as log from 'loglevel';
 import {AuthService} from '../services/auth';
-import {WalletModel} from '../models/wallet';
 import {BigNumber} from 'bignumber.js';
 
 @Injectable()
@@ -18,16 +16,17 @@ export class ChartDataService {
   public points: any[]; // array of points, with points represented as 2-element arrays
   public pointsLoaded: boolean = false;
   public pointsLoadedEmitter = new EventEmitter();
-  public balanceUpdatedEmitter = new EventEmitter();
-  public startingBalanceWei: any;
-  public endingBalanceWei: any;
-  public balanceChange: number;
-  public percentageChange: number;
-  public balanceInfo: any;
-  public balanceUpdated: boolean = false;
+  public estimatedFeeWei: any;
+  public estimatedFeeUR: any;
+  public priorBalanceWei: any;
 
   constructor(public auth: AuthService, @Inject(FirebaseApp) firebase: any) {
     this.pointsLoaded = false;
+
+    // use fixed estimated fee for performance reasons
+    this.estimatedFeeUR = new BigNumber(0.1);
+    this.estimatedFeeWei = this.estimatedFeeUR.times(1000000000000000000);
+
     this.loadPointsWhenTransactionsChange();
   }
 
@@ -37,7 +36,7 @@ export class ChartDataService {
     });
   }
 
-  private ensureStartingTimeIncludedInPoints() {
+  private ensurePointsIncludeTimeRangeStart() {
     let firstPointTime;
     if (this.points.length > 0) {
       firstPointTime = moment(_.first(this.points)[0], 'x');
@@ -46,19 +45,17 @@ export class ChartDataService {
       let priorTransaction = _.findLast(this.transactions, (transaction: any) => {
         return moment(transaction.minedAt, 'x').isBefore(this.startingTime);
       });
-      var priorBalance;
-      if (priorTransaction) {
-        priorBalance = this.convertWeiStringToApproximateUR(priorTransaction.balance);
-        this.startingBalanceWei = new BigNumber(priorTransaction.balance);
-      } else {
-        priorBalance = 0;
-        this.startingBalanceWei = new BigNumber(0);
-      }
-      this.points.unshift([this.startingTime.valueOf(), priorBalance]);
+
+      this.priorBalanceWei = new BigNumber(priorTransaction ? priorTransaction.balance : 0);
+
+      let priorBalanceUR = priorTransaction ? this.convertWeiStringToApproximateUR(priorTransaction.balance) : 0;
+      this.points.unshift([this.startingTime.valueOf(), priorBalanceUR]);
+    } else {
+      this.priorBalanceWei = null;
     }
   }
 
-  private ensureEndingTimeIncludedInPoints() {
+  private ensurePointsIncludeTimeRangeEnd() {
     let lastPointTime = moment(_.last(this.points)[0], 'x');
     if (this.endingTime.isAfter(lastPointTime)) {
       let lastPointBalance = _.last(this.points)[1];
@@ -68,60 +65,34 @@ export class ChartDataService {
 
   loadPointsAndCalculateMetaData(newDuration: number, newUnitOfTime: moment.UnitOfTime) {
     this.pointsLoaded = false;
-    this.balanceUpdated = false;
-
     this.duration = newDuration;
     this.unitOfTime = newUnitOfTime;
-
     this.calculateStartingAndEndingTimes();
     this.loadPointsCorrespondingToTransactionsWithinTimeRage();
-    this.ensureStartingTimeIncludedInPoints();
-    this.ensureEndingTimeIncludedInPoints();
-
-    let balanceChangeWei: any = this.endingBalanceWei.minus(this.startingBalanceWei).plus(this.pendingAmountWei());
-    this.balanceChange = balanceChangeWei.dividedBy(1000000000000000000).round(0, BigNumber.ROUND_HALF_FLOOR).toNumber();
-    this.percentageChange = this.startingBalanceWei.isZero() ? 0 : balanceChangeWei.times(100).dividedBy(this.startingBalanceWei).round(0, BigNumber.ROUND_HALF_FLOOR).toNumber();
-
+    this.ensurePointsIncludeTimeRangeStart();
+    this.ensurePointsIncludeTimeRangeEnd();
     this.pointsLoaded = true;
     this.pointsLoadedEmitter.emit({});
+  }
 
-    if (this.auth.currentUser.wallet && this.auth.currentUser.wallet.address) {
-      WalletModel.availableBalanceAsync(this.auth.currentUser.wallet.address, true, this.pendingAmountWei()).then(balanceInfo => {
-        this.balanceInfo = balanceInfo;
-        this.balanceUpdated = true;
-        this.balanceUpdatedEmitter.emit(balanceInfo);
-      }, (error) => {
-        log.warn(`error getting balance: ${error}`);
-      });
-    } else {
-      log.warn(`error getting balance: no wallet address available`);
-    }
+  transactionsWithinTimeRange() {
+    return _.filter(this.transactions, (transaction: any) => {
+      return moment(transaction.minedAt, 'x').isSameOrAfter(this.startingTime);
+    });
   }
 
   private loadPointsCorrespondingToTransactionsWithinTimeRage() {
-    let transactionsWithinTimeRange = _.filter(this.transactions, (transaction: any) => {
-      return moment(transaction.minedAt, 'x').isSameOrAfter(this.startingTime);
-    });
-    this.points = _.map(transactionsWithinTimeRange, (transaction) => {
+    this.points = _.map(this.transactionsWithinTimeRange(), (transaction) => {
       return [transaction.minedAt, this.convertWeiStringToApproximateUR(transaction.balance)];
     });
-    if (transactionsWithinTimeRange.length > 0) {
-      this.startingBalanceWei = new BigNumber(_.first(transactionsWithinTimeRange).balance);
-      this.endingBalanceWei = new BigNumber(_.last(transactionsWithinTimeRange).balance);
-    } else {
-      this.startingBalanceWei = new BigNumber(0);
-      this.endingBalanceWei = new BigNumber(0);
-    }
   }
 
-  private pendingAmountWei(): any {
+  pendingSentAmountWei(): any {
     let amount: any = new BigNumber(0);
     _.each(this.pendingTransactions, (pendingTransaction) => {
       let transactionAmount: any = new BigNumber(pendingTransaction.urTransaction.value);
-      if (_.includes(['received', 'earned'], pendingTransaction.type)) {
-        amount = amount.plus(transactionAmount);
-      } else {
-        amount = amount.minus(transactionAmount).minus(WalletModel.estimatedFeeWei());
+      if (pendingTransaction.type === 'sent') {
+        amount = amount.minus(transactionAmount).minus(this.estimatedFeeWei);
       }
     });
     return amount;

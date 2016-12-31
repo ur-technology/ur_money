@@ -40,14 +40,10 @@ export class UsersPage {
     this.searchTypes = ['Email', 'Phone', 'Full Name', 'Last Name', 'User Id', 'Sponsor Full Name', 'Sponsor User Id'];
     this.searchType = this.navParams.get('searchType') || this.searchTypes[0];
     this.searchText = this.navParams.get('searchType') && this.navParams.get('searchText') ? this.navParams.get('searchText') : 'eiland@ur.technology';
-    this.searchUsers();
   }
 
   ngOnInit() {
     jQuery('.contentPage').css('top', Config.targetPlatform === 'ios' ? '63px' : '43px');
-  }
-
-  ngAfterViewInit() {
   }
 
   searchTextChanged() {
@@ -57,6 +53,10 @@ export class UsersPage {
   }
 
   searchUsers() {
+    if (!this.auth.currentUser.admin) {
+      return;
+    }
+    
     this.searchText = _.trim(this.searchText || '');
     if (!this.searchText) {
       return;

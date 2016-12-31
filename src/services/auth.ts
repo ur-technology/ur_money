@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs';
 import {ContactsService} from '../services/contacts';
 import {Config} from '../config/config';
 import { FirebaseApp } from 'angularfire2';
+import {BigNumber} from 'bignumber.js';
 
 @Injectable()
 export class AuthService {
@@ -42,7 +43,7 @@ export class AuthService {
             if (self.countryCode &&
               (!self.currentUser.countryCode || !self.currentUser.countryCode.match(/^[A-Z]{2}$/))) {
               self.currentUser.countryCode = self.countryCode;
-              this.currentUserRef.update({ countryCode: self.currentUser.countryCode });
+              self.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
             callback(undefined);
           });
@@ -70,6 +71,14 @@ export class AuthService {
         resolve();
       });
     });
+  }
+
+  currentBalanceWei() {
+    return new BigNumber((this.currentUser && this.currentUser.currentBalance) || 0);
+  }
+
+  currentBalanceUR() {
+    return this.currentBalanceWei().dividedBy(1000000000000000000).round(2, BigNumber.ROUND_HALF_FLOOR);
   }
 
   checkFirebaseConnection(): Promise<any> {

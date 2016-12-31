@@ -3,6 +3,7 @@ import {ChartDataService} from '../../services/chart-data';
 import {ElementRef, Inject, NgZone, Component} from '@angular/core';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import {AngularFire} from 'angularfire2';
 import {AuthService} from '../../services/auth';
 import {Config} from '../../config/config';
@@ -12,6 +13,7 @@ import {TransactionsPage} from './../transactions/transactions';
 import {SendPage} from './../send/send';
 import {InviteLinkPage} from './../invite-link/invite-link';
 import {SponsorWaitPage} from '../sponsor-wait/sponsor-wait';
+import {BigNumber} from 'bignumber.js';
 declare var jQuery: any;
 
 @Component({
@@ -24,6 +26,9 @@ export class HomePage {
   needsToCompleteProfile: boolean;
   balanceTitle: string;
   selectedOption: any;
+  alreadyRanNgZone: boolean = false;
+  balanceChangeUR: any;
+  balanceChangePercent: any;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
@@ -35,45 +40,55 @@ export class HomePage {
     this.sendButtonHidden = Config.targetPlatform === 'ios';
   }
 
-  reflectAvailableBalanceOnPage() {
+  ionViewDidEnter() {
+    let self = this;
+    self.prepareAndRenderData();
+    self.chartData.pointsLoadedEmitter.subscribe((data) => {
+      self.auth.reloadCurrentUser().then(() => {
+        self.prepareAndRenderData();
+      });
+    });
+  }
+
+  private prepareAndRenderData() {
     if (this.accountReady()) {
-      if (this.chartData.balanceUpdated) {
-        this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
+      this.calculateBalanceFieldsAndShowBalanceInTitle();
+      if (!this.alreadyRanNgZone) {
         this.ngZone.run(() => {
-          this.balanceTitle = `${this.chartData.balanceInfo.availableBalance.toFormat(2)}<span>&nbsp;UR</span>`;
+          this.calculateBalanceFieldsAndShowBalanceInTitle();
         });
-      } else {
-        this.balanceTitle = '...';
+        this.alreadyRanNgZone = true;
       }
     } else {
       this.balanceTitle = this.translate.instant(
         {
-          'announcement-requested': 'home.bonusGenerating',
-          'announcement-initiated': 'home.bonusGenerating',
-          'announcement-confirmed': 'home.bonusGenerating',
-          'wallet-generated': 'home.bonusGenerating',
           'waiting-for-sponsor':'home.waitingSponsor',
           'disabled': 'home.userDisabled'
         }[this.auth.getUserStatus()] || 'home.bonusGenerating'
       );
     }
+    if (this.chartData.pointsLoaded) {
+      this.renderChart();
+    }
   }
 
-  ionViewDidEnter() {
-    let self = this;
-
-    if (self.chartData.pointsLoaded) {
-      self.renderChart();
+  private calculateBalanceFieldsAndShowBalanceInTitle() {
+    if (this.chartData.pointsLoaded) {
+      let startingBalanceWei;
+      if (this.chartData.priorBalanceWei) {
+        startingBalanceWei = this.chartData.priorBalanceWei;
+      } else {
+        let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
+        startingBalanceWei = new BigNumber(firstTransaction ? firstTransaction.balance : 0);
+      }
+      let balanceChangeWei = this.auth.currentBalanceWei().minus(startingBalanceWei);
+      this.balanceChangeUR = balanceChangeWei.dividedBy(1000000000000000000).round(0, BigNumber.ROUND_HALF_FLOOR);
+      this.balanceChangePercent = startingBalanceWei.isZero() ? null : balanceChangeWei.times(100).dividedBy(startingBalanceWei).round(0, BigNumber.ROUND_HALF_FLOOR);
+    } else {
+      this.balanceChangeUR = null;
+      this.balanceChangePercent = null;
     }
-    self.chartData.pointsLoadedEmitter.subscribe((data) => {
-      self.renderChart();
-    });
-    self.reflectAvailableBalanceOnPage();
-    self.chartData.balanceUpdatedEmitter.subscribe((balanceInfo) => {
-      this.auth.reloadCurrentUser().then(() => {
-        self.reflectAvailableBalanceOnPage();
-      });
-    });
+    this.balanceTitle = `${this.auth.currentBalanceUR().toFormat(2)}<span>&nbsp;UR</span>`;
   }
 
   startNewChat() {

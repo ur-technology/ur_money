@@ -24,9 +24,8 @@ declare var jQuery: any;
 export class SendPage {
   contact: any;
   mainForm: FormGroup;
-  availableBalance: any = new BigNumber(0);
-  estimatedFee: any = new BigNumber(0);
-  maxAmount: any = new BigNumber(0);
+  availableBalanceUR: any = new BigNumber(0);
+  maxAmountUR: any = new BigNumber(0);
   private wallet: WalletModel;
   private loadingModal: any;
   private phraseSaved;
@@ -57,10 +56,10 @@ export class SendPage {
   }
 
   reflectMaxAmountOnPage() {
-    this.availableBalance = this.chartData.balanceInfo.availableBalance;
-    this.estimatedFee = this.chartData.balanceInfo.estimatedFee;
-    this.maxAmount = BigNumber.max(this.chartData.balanceInfo.availableBalance.minus(this.chartData.balanceInfo.estimatedFee), 0);
-    CustomValidator.maxValidAmount = this.maxAmount.toNumber();
+    let availableBalanceWei = this.auth.currentBalanceWei().plus(this.chartData.pendingSentAmountWei());
+    this.availableBalanceUR = availableBalanceWei.dividedBy(1000000000000000000).round(2, BigNumber.ROUND_HALF_FLOOR);
+    this.maxAmountUR = BigNumber.max(this.availableBalanceUR.minus(this.chartData.estimatedFeeUR), 0).round(2, BigNumber.ROUND_HALF_FLOOR);
+    CustomValidator.maxValidAmount = this.maxAmountUR.toNumber();
     CustomValidator.minValidAmount = new BigNumber(0.000000000000000001).toNumber();
   }
 
@@ -98,10 +97,10 @@ export class SendPage {
         self.phraseSaved = null;
       });
     }
-    if (self.chartData.balanceUpdated) {
+    if (self.chartData.pointsLoaded) {
       self.reflectMaxAmountOnPage();
     }
-    self.chartData.balanceUpdatedEmitter.subscribe(() => {
+    self.chartData.pointsLoadedEmitter.subscribe(() => {
       self.reflectMaxAmountOnPage();
     });
   }

@@ -7,17 +7,17 @@
   <ion-grid class="gridSend">
     <ion-row class="rowBalance">
       <ion-col class="colLabel">{{"send.availableBalance" | translate}}
-        <span class="colValue">{{availableBalance.toFormat(5)}} UR</span>
+        <span class="colValue">{{availableBalanceUR.toFormat(2)}} UR</span>
       </ion-col>
     </ion-row>
     <ion-row class="rowBalance">
       <ion-col class="colLabel">{{"send.estimatedFee" | translate}}
-        <span class="colValue"> {{estimatedFee.toFormat(5)}} UR</span>
+        <span class="colValue"> {{chartData.estimatedFeeUR.toFormat(2)}} UR</span>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="colLabel">{{"send.maxAmount" | translate}}
-        <span class="colValue">{{maxAmount.toFormat(5)}} UR</span>
+        <span class="colValue">{{maxAmountUR.toFormat(2)}} UR</span>
       </ion-col>
     </ion-row>
   </ion-grid>

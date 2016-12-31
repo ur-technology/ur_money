@@ -1,6 +1,6 @@
 import * as log from 'loglevel';
 import {Config} from '../config/config';
-import {BigNumber} from 'bignumber.js';
+// import {BigNumber} from 'bignumber.js';
 
 export class WalletModel {
 
@@ -39,55 +39,55 @@ export class WalletModel {
     return this._web3;
   }
 
-  public static estimatedFeeWei(): any {
-    let gas = new BigNumber(21000);
-    let gasPrice = this.web3().eth.gasPrice;
-    let calculatedFee = gas.times(gasPrice);
-    let minimumFee = this.web3().toWei(0.095);
-    return BigNumber.max(calculatedFee, minimumFee);
-  }
-
-  private static calculateBalanceInfo(balanceWei, rounding?: boolean, pendingAmountWei?: any): any {
-    let currentBalance = new BigNumber(balanceWei).dividedBy('1000000000000000000');
-    let availableBalance = BigNumber.max(balanceWei.plus(pendingAmountWei || 0), 0).dividedBy('1000000000000000000');
-    let estimatedFee = this.estimatedFeeWei().dividedBy('1000000000000000000');
-
-    if (rounding) {
-      currentBalance = currentBalance.round(0, BigNumber.ROUND_HALF_FLOOR);
-      availableBalance = availableBalance.round(0, BigNumber.ROUND_HALF_FLOOR);
-      estimatedFee = estimatedFee.round(5, BigNumber.ROUND_UP);
-    }
-
-    return {
-      currentBalance: currentBalance,
-      availableBalance: availableBalance,
-      estimatedFee: estimatedFee
-    };
-  }
-
-  public static availableBalance(address, rounding?: boolean, pendingAmountWei?: any): any {
-    let balanceWei = this.web3().eth.getBalance(address);
-    return this.calculateBalanceInfo(balanceWei, rounding, pendingAmountWei);
-  }
-
-  public static availableBalanceAsync(address: string, rounding?: boolean, pendingAmountWei?: any): Promise<any> {
-    let self = this;
-    return new Promise((resolve, reject) => {
-      self.web3().eth.getBalance(address, (error, balanceWei) => {
-        if (error) {
-          log.error(error);
-          reject(error);
-        } else {
-          resolve(self.calculateBalanceInfo(balanceWei, rounding, pendingAmountWei));
-        }
-      });
-    });
-  }
-
-  public static validateAmount(address: string, amount: number) {
-    return amount > 0 && amount <= this.availableBalance(address);
-  }
-
+  // public static estimatedFeeWei(): any {
+  //   let gas = new BigNumber(21000);
+  //   let gasPrice = this.web3().eth.gasPrice;
+  //   let calculatedFee = gas.times(gasPrice);
+  //   let minimumFee = this.web3().toWei(0.095);
+  //   return BigNumber.max(calculatedFee, minimumFee);
+  // }
+  //
+  // private static calculateBalanceInfo(balanceWei, rounding?: boolean, pendingAmountWei?: any): any {
+  //   let currentBalance = new BigNumber(balanceWei).dividedBy('1000000000000000000');
+  //   let availableBalance = BigNumber.max(balanceWei.plus(pendingAmountWei || 0), 0).dividedBy('1000000000000000000');
+  //   let estimatedFee = this.estimatedFeeWei().dividedBy('1000000000000000000');
+  //
+  //   if (rounding) {
+  //     currentBalance = currentBalance.round(0, BigNumber.ROUND_HALF_FLOOR);
+  //     availableBalance = availableBalance.round(0, BigNumber.ROUND_HALF_FLOOR);
+  //     estimatedFee = estimatedFee.round(5, BigNumber.ROUND_UP);
+  //   }
+  //
+  //   return {
+  //     currentBalance: currentBalance,
+  //     availableBalance: availableBalance,
+  //     estimatedFee: estimatedFee
+  //   };
+  // }
+  //
+  // public static availableBalance(address, rounding?: boolean, pendingAmountWei?: any): any {
+  //   let balanceWei = this.web3().eth.getBalance(address);
+  //   return this.calculateBalanceInfo(balanceWei, rounding, pendingAmountWei);
+  // }
+  //
+  // public static availableBalanceAsync(address: string, rounding?: boolean, pendingAmountWei?: any): Promise<any> {
+  //   let self = this;
+  //   return new Promise((resolve, reject) => {
+  //     self.web3().eth.getBalance(address, (error, balanceWei) => {
+  //       if (error) {
+  //         log.error(error);
+  //         reject(error);
+  //       } else {
+  //         resolve(self.calculateBalanceInfo(balanceWei, rounding, pendingAmountWei));
+  //       }
+  //     });
+  //   });
+  // }
+  //
+  // public static validateAmount(address: string, amount: number) {
+  //   return amount > 0 && amount <= this.availableBalance(address);
+  // }
+  //
   public static miningIsActive() {
     let mining = this.web3().eth.mining;
     return mining;
