@@ -9,7 +9,11 @@
     <div class="dash-chart-cont">
         <div>
             <div tappable (click)="goToNextStep()">
-              <h1 class="chart-title" [innerHTML]="balanceTitle"></h1>
+              <h1 class="chart-title">
+                <span class='small' *ngIf="balanceTitle">{{balanceTitle}}</span>
+                <br *ngIf="balanceTitle"/>
+                {{displayableBalance}}<span>&nbsp;UR</span>
+              </h1>
             </div>
 
             <h2 class="chart-subtitle clearfix">

@@ -1,6 +1,6 @@
 import { NavController, NavParams, Platform} from 'ionic-angular';
 import {ChartDataService} from '../../services/chart-data';
-import {ElementRef, Inject, NgZone, Component} from '@angular/core';
+import {ElementRef, Inject, Component} from '@angular/core';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -25,14 +25,14 @@ export class HomePage {
   sendButtonHidden: boolean;
   needsToCompleteProfile: boolean;
   balanceTitle: string;
+  displayableBalance: string;
   selectedOption: any;
-  alreadyRanNgZone: boolean = false;
   balanceChangeUR: any;
   balanceChangePercent: any;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
-    public angularFire: AngularFire, public auth: AuthService, public ngZone: NgZone,
+    public angularFire: AngularFire, public auth: AuthService,
     public translate: TranslateService
 
   ) {
@@ -52,43 +52,33 @@ export class HomePage {
 
   private prepareAndRenderData() {
     if (this.accountReady()) {
-      this.calculateBalanceFieldsAndShowBalanceInTitle();
-      if (!this.alreadyRanNgZone) {
-        this.ngZone.run(() => {
-          this.calculateBalanceFieldsAndShowBalanceInTitle();
-        });
-        this.alreadyRanNgZone = true;
+      if (this.chartData.pointsLoaded) {
+        let startingBalanceWei;
+        if (this.chartData.priorBalanceWei) {
+          startingBalanceWei = this.chartData.priorBalanceWei;
+        } else {
+          let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
+          startingBalanceWei = new BigNumber(firstTransaction ? firstTransaction.balance : 0);
+        }
+        let balanceChangeWei = this.auth.currentBalanceWei().minus(startingBalanceWei);
+        this.balanceChangeUR = balanceChangeWei.dividedBy(1000000000000000000).round(0, BigNumber.ROUND_HALF_FLOOR);
+        this.balanceChangePercent = startingBalanceWei.isZero() ? null : balanceChangeWei.times(100).dividedBy(startingBalanceWei).round(0, BigNumber.ROUND_HALF_FLOOR);
+        this.renderChart();
+      } else {
+        this.balanceChangeUR = null;
+        this.balanceChangePercent = null;
       }
+      this.balanceTitle = null;
+      this.displayableBalance = this.auth.currentBalanceUR().toFormat(2);
     } else {
       this.balanceTitle = this.translate.instant(
         {
-          'waiting-for-sponsor':'home.waitingSponsor',
+          'waiting-for-sponsor':'home.waitingForSponsor',
           'disabled': 'home.userDisabled'
         }[this.auth.getUserStatus()] || 'home.bonusGenerating'
       );
+      this.displayableBalance = new BigNumber(2000).toFormat(2);
     }
-    if (this.chartData.pointsLoaded) {
-      this.renderChart();
-    }
-  }
-
-  private calculateBalanceFieldsAndShowBalanceInTitle() {
-    if (this.chartData.pointsLoaded) {
-      let startingBalanceWei;
-      if (this.chartData.priorBalanceWei) {
-        startingBalanceWei = this.chartData.priorBalanceWei;
-      } else {
-        let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
-        startingBalanceWei = new BigNumber(firstTransaction ? firstTransaction.balance : 0);
-      }
-      let balanceChangeWei = this.auth.currentBalanceWei().minus(startingBalanceWei);
-      this.balanceChangeUR = balanceChangeWei.dividedBy(1000000000000000000).round(0, BigNumber.ROUND_HALF_FLOOR);
-      this.balanceChangePercent = startingBalanceWei.isZero() ? null : balanceChangeWei.times(100).dividedBy(startingBalanceWei).round(0, BigNumber.ROUND_HALF_FLOOR);
-    } else {
-      this.balanceChangeUR = null;
-      this.balanceChangePercent = null;
-    }
-    this.balanceTitle = `${this.auth.currentBalanceUR().toFormat(2)}<span>&nbsp;UR</span>`;
   }
 
   startNewChat() {

@@ -14,7 +14,7 @@ export class ChartDataService {
   public transactions: any[];
   public pendingTransactions: any[];
   public points: any[]; // array of points, with points represented as 2-element arrays
-  public pointsLoaded: boolean = false;
+  public pointsLoaded: boolean;
   public pointsLoadedEmitter = new EventEmitter();
   public estimatedFeeWei: any;
   public estimatedFeeUR: any;
