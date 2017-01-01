@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="technology.ur.urmoneyapp" version="1.0.110" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="technology.ur.urmoneyapp" version="1.0.112" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>UR Money</name>
   <description>Participate in the UR-conomy</description>
   <author email="support@ur.technology" href="https://www.ur.technology/">UR Technology Inc.</author>
