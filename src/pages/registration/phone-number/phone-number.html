@@ -15,11 +15,11 @@
     <form [formGroup]="phoneForm" (ngSubmit)="phoneForm.valid && submit()">
         <ion-list class="list-border">
             <ion-item>
-                <ion-label>{{selectedCountry.name}}</ion-label>
-                <ion-select [(ngModel)]="selectedCountryCode" selectedText=" "
-                    [ngModelOptions]="{standalone: true}"
+                <ion-label>{{phoneForm.value.country.name}}</ion-label>
+                <ion-select selectedText=" "
+                    formControlName="country"
                     (ionChange)="countrySelect($event)">
-                    <ion-option value="{{country.countryCode}}"
+                    <ion-option [value]="country"
                         *ngFor="let country of countries">
                         {{country.name}}
                         <span>{{country.telephoneCountryCode}}</span>
@@ -28,7 +28,7 @@
             </ion-item>
             <ion-item class="item item-input input-item-data">
                 <ion-input class="phone-country-code"
-                    [value]="selectedCountry.telephoneCountryCode"> </ion-input>
+                  [value]="phoneForm.value.country.telephoneCountryCode"> </ion-input>
                 <ion-input
                     class="phone-input"
                     formControlName="phone"

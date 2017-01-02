@@ -1,6 +1,6 @@
 import { NavController, NavParams, Platform} from 'ionic-angular';
 import {ChartDataService} from '../../services/chart-data';
-import {ElementRef, Inject, NgZone, Component} from '@angular/core';
+import {ElementRef, Inject, Component} from '@angular/core';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -25,19 +25,24 @@ export class HomePage {
   sendButtonHidden: boolean;
   needsToCompleteProfile: boolean;
   balanceTitle: string;
+  balanceValue : any = new BigNumber(0);
   selectedOption: any;
-  alreadyRanNgZone: boolean = false;
   balanceChangeUR: any;
   balanceChangePercent: any;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
-    public angularFire: AngularFire, public auth: AuthService, public ngZone: NgZone,
+    public angularFire: AngularFire, public auth: AuthService,
     public translate: TranslateService
 
   ) {
     this.elementRef = elementRef;
     this.sendButtonHidden = Config.targetPlatform === 'ios';
+    this.balanceValue = this.auth.currentBalanceUR();
+    this.auth.balanceChanged.subscribe(data =>{
+      this.balanceValue = data.balance;
+      this.prepareAndRenderData();
+    });
   }
 
   ionViewDidEnter() {
@@ -53,12 +58,6 @@ export class HomePage {
   private prepareAndRenderData() {
     if (this.accountReady()) {
       this.calculateBalanceFieldsAndShowBalanceInTitle();
-      if (!this.alreadyRanNgZone) {
-        this.ngZone.run(() => {
-          this.calculateBalanceFieldsAndShowBalanceInTitle();
-        });
-        this.alreadyRanNgZone = true;
-      }
     } else {
       this.balanceTitle = this.translate.instant(
         {
@@ -88,7 +87,7 @@ export class HomePage {
       this.balanceChangeUR = null;
       this.balanceChangePercent = null;
     }
-    this.balanceTitle = `${this.auth.currentBalanceUR().toFormat(2)}<span>&nbsp;UR</span>`;
+    this.balanceTitle = `${this.balanceValue.toFormat(2)}<span>&nbsp;UR</span>`;
   }
 
   startNewChat() {

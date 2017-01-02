@@ -1,4 +1,4 @@
-import {Injectable, Inject} from '@angular/core';
+import {Injectable, Inject, EventEmitter} from '@angular/core';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
@@ -20,6 +20,7 @@ export class AuthService {
   public currentUser: any;
   public taskId: string;
   public firebaseConnectionCheckInProgress: boolean = false;
+  balanceChanged = new EventEmitter();
 
   constructor(
     public angularFire: AngularFire,
@@ -45,6 +46,7 @@ export class AuthService {
               self.currentUser.countryCode = self.countryCode;
               self.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
+            self.listenForBalanceChange();
             callback(undefined);
           });
         } else {
@@ -79,6 +81,17 @@ export class AuthService {
 
   currentBalanceUR() {
     return this.currentBalanceWei().dividedBy(1000000000000000000).round(2, BigNumber.ROUND_HALF_FLOOR);
+  }
+
+  listenForBalanceChange(){
+    let self = this;
+
+    firebase.database().ref(`/users/${self.currentUserId}/currentBalance`)
+      .on('value', snapshot => {
+        if(snapshot.exists()){
+          self.balanceChanged.emit({balance: new BigNumber(snapshot.val()).dividedBy(1000000000000000000).round(2, BigNumber.ROUND_HALF_FLOOR)});
+        }
+      });
   }
 
   checkFirebaseConnection(): Promise<any> {

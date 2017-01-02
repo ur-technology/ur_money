@@ -24,7 +24,10 @@ export class IntroPage {
   }
 
   pleaseContinue() {
-    this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
-    this.nav.setRoot(HomePage);
+    this.auth.reloadCurrentUser().then(()=>{
+      this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
+      this.nav.setRoot(HomePage);
+    });
+
   }
 }

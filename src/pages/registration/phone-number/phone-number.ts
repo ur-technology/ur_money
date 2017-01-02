@@ -1,7 +1,6 @@
 import { NavController, Platform, AlertController, LoadingController} from 'ionic-angular';
-import {OnInit, ElementRef, Inject, Component} from '@angular/core';
+import {ElementRef, Inject, Component} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
-import * as _ from 'lodash';
 import {AuthService} from '../../../services/auth';
 import {ToastService} from '../../../services/toast';
 import {AuthenticationCodePage} from '../authentication-code/authentication-code';
@@ -9,18 +8,16 @@ import {EmailAddressPage} from '../email-address/email-address';
 import {CountryListService} from '../../../services/country-list';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 
-declare var jQuery: any, intlTelInputUtils: any, require: any;
+declare var jQuery: any;
 
 @Component({
   selector: 'phone-number-page',
   templateUrl: 'phone-number.html',
 })
-export class PhoneNumberPage implements OnInit {
+export class PhoneNumberPage {
   elementRef: ElementRef;
   phoneForm: FormGroup;
   countries: any;
-  selectedCountryCode: string;
-  selectedCountry: any;
 
   constructor(
     @Inject(ElementRef) elementRef: ElementRef,
@@ -35,10 +32,11 @@ export class PhoneNumberPage implements OnInit {
   ) {
     this.elementRef = elementRef;
     this.phoneForm = new FormGroup({
+      country: new FormControl({ name: 'United States', telephoneCountryCode: '+1', countryCode: 'US' }),
       phone: new FormControl('', (control) => {
         try {
           let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-          let phoneNumberObject = phoneNumberUtil.parse(control.value, this.selectedCountry.countryCode);
+          let phoneNumberObject = phoneNumberUtil.parse(control.value, this.phoneForm.value.country.countryCode);
           if (!phoneNumberUtil.isValidNumber(phoneNumberObject)) {
             return { 'invalidPhone': true };
           }
@@ -47,11 +45,7 @@ export class PhoneNumberPage implements OnInit {
         }
       })
     });
-    this.selectedCountry = { name: 'United States', telephoneCountryCode: '+1', countryCode: 'US' };
     this.countries = this.countryListService.getCountryData();
-  }
-
-  ngOnInit() {
   }
 
   normalizedPhone(phone) {
@@ -62,11 +56,11 @@ export class PhoneNumberPage implements OnInit {
     let self = this;
     let corePhone = self.normalizedPhone(self.phoneForm.value.phone);
     let mobileAreaCodePrefix = '';
-    if (self.selectedCountry.mobileAreaCodePrefix && !corePhone.startsWith(self.selectedCountry.mobileAreaCodePrefix)) {
-      mobileAreaCodePrefix = self.selectedCountry.mobileAreaCodePrefix;
+    if (self.phoneForm.value.country.mobileAreaCodePrefix && !corePhone.startsWith(self.phoneForm.value.country.mobileAreaCodePrefix)) {
+      mobileAreaCodePrefix = self.phoneForm.value.country.mobileAreaCodePrefix;
     }
 
-    let phone = self.selectedCountry.telephoneCountryCode + mobileAreaCodePrefix + corePhone;
+    let phone = self.phoneForm.value.country.telephoneCountryCode + mobileAreaCodePrefix + corePhone;
     let loadingModal = self.loadingController.create({
       content: self.translate.instant('pleaseWait'),
       dismissOnPageChange: true
@@ -77,7 +71,7 @@ export class PhoneNumberPage implements OnInit {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
       self.auth.phone = phone;
-      self.auth.countryCode = self.selectedCountry.countryCode;
+      self.auth.countryCode = self.phoneForm.value.country.countryCode;
       self.auth.email = null;
       return self.auth.requestAuthenticationCode();
     }).then((newTaskState: string) => {
@@ -108,25 +102,24 @@ export class PhoneNumberPage implements OnInit {
           break;
 
         case 'code_generation_canceled_because_user_disabled':
-          self.toastService.showMessage({messageKey: 'phone-number.errorUserDisabled'});
+          self.toastService.showMessage({ messageKey: 'phone-number.errorUserDisabled' });
           break;
 
         case 'code_generation_canceled_because_of_excessive_failed_logins':
-          self.toastService.showMessage({messageKey: 'phone-number.errorExcessiveLogins'});
+          self.toastService.showMessage({ messageKey: 'phone-number.errorExcessiveLogins' });
           break;
 
         default:
-          self.toastService.showMessage({messageKey: 'phone-number.unexpectedProblem'});
+          self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
+        self.toastService.showMessage({ messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
       });
     });
   }
 
   countrySelect(country) {
-    this.selectedCountry = _.find(this.countries, { countryCode: this.selectedCountryCode }) || { name: 'United States', telephoneCountryCode: '+1', countryCode: 'US' };
     jQuery(this.elementRef.nativeElement).find('.phone-input .text-input').focus();
   }
 }
