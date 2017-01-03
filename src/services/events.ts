@@ -9,10 +9,10 @@ export class EventsService {
   eventChanged = new EventEmitter();
 
   constructor(private auth: AuthService, @Inject(FirebaseApp) firebase: any) {
-    this.loadEvents();
   }
 
   loadEvents() {
+    this.events = [];
     firebase.database().ref(`/users/${this.auth.currentUserId}/events/`)
       .on('child_added', snapshot => {
         this.events.push(snapshot.val());

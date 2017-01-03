@@ -20,6 +20,8 @@ export class EventListComponent {
       this.listenForNotificationSelection();
     }
 
+    this.eventsService.loadEvents();
+
     this.eventsService.eventChanged.subscribe(() => {
         this.events = this.eventsService.events;
     });
