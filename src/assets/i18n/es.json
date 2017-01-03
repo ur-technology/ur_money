@@ -231,12 +231,9 @@
         "users": "Manage Users"
     },
     "home": {
-        "unlockMessage": "<span class='small'>Desbloquea Tus</span><br />2000<span>&nbsp;UR</span>",
-        "bonusGenerating": "<span class='small'>Generación De Bonificación En Curso</span><br />2000<span>&nbsp;UR</span>",
-        "verificationPending": "<span class='small'>Verificación En Curso</span><br />2000<span>&nbsp;UR</span>",
-        "verificationFailed": "<span class='small'>Verificación fallida</span><br />2000<span>&nbsp;UR</span>",
-        "waitingSponsor": "<span class='small'>El bono se generará el Lunes 2 de Enero del 2017 a las 23:00:00 UTC</span><br />2000<span>&nbsp;UR</span>",
-        "userDisabled": "<span class='small'>User disabled</span>"
+        "bonusGenerating": "Generación De Bonificación En Curso",
+        "waitingForSponsor": "El bono se generará el Lunes 6 de Enero del 2017 a las 23:00:00 UTC",
+        "userDisabled": "Usuario deshabilitado"
     },
     "contacts": {
         "invite": "Invitar",

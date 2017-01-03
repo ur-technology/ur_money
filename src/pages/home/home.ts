@@ -41,19 +41,29 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    this.setBalanceValues();
-    this.renderChart();
     this.auth.walletChanged.subscribe(() => {
       this.setBalanceValues();
     });
-    this.chartData.pointsLoadedEmitter.subscribe((data) => {
+    this.auth.walletChanged.emit({});
+    this.chartData.pointsLoadedEmitter.subscribe(() => {
       this.setBalanceValues();
       this.renderChart();
     });
   }
 
   private setBalanceValues() {
-    this.balanceValue = this.auth.announcementConfirmed() ? this.auth.currentBalanceUR() : new BigNumber(2005);
+    if (this.auth.announcementConfirmed()) {
+      this.balanceValue = this.auth.currentBalanceUR();
+      this.balanceTitle = null;
+    } else {
+      this.balanceValue = new BigNumber(2000);
+      this.balanceTitle = this.translate.instant(
+        {
+          'waiting-for-sponsor':'home.waitingForSponsor',
+          'disabled': 'home.userDisabled'
+         }[this.auth.getUserStatus()] || 'home.bonusGenerating'
+       );
+     }
     if (this.auth.announcementConfirmed() && this.chartData.pointsLoaded) {
       let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
       let startingBalanceWei = this.chartData.priorBalanceWei || new BigNumber(firstTransaction ? firstTransaction.balance : 0);
