@@ -1,70 +1,180 @@
 {
-	"users": {
-		"-KJnRTuL8A1ZdfVvwAbv": {
-			"admin": true,
-			"createdAt": 1465446952757,
-			"downlineLevel": 1,
-			"downlineSize": 4,
-			"referralCode": "abc001",
-			"firstName": "John",
-			"lastName": "Reitano",
-			"name": "John Reitano",
-			"phone": "+16196746211",
-			"profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR"
-		},
-		"-KJn47TvHAlfQocDX_ES": {
-			"admin": true,
-			"createdAt": 1465440831526,
-			"downlineLevel": 2,
-			"downlineSize": 3,
-			"referralCode": "abc002",
-			"firstName": "Howard",
-			"lastName": "Glover",
-			"middleName": "Eiland",
-			"name": "Eiland Glover",
-			"phone": "+16158566616",
-			"profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
-			"sponsor": {
-				"name": "John Reitano",
-				"profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR",
-				"userId": "-KJnRTuL8A1ZdfVvwAbv"
-			}
-		},
-		"-KV87tx6gE9kVemBCGyy": {
-			"createdAt": 1477638856600,
-			"downlineLevel": 3,
-			"downlineSize": 0,
-			"referralCode": "abc003",
-			"firstName": "Justin",
-			"lastName": "Williams",
-			"middleName": "",
-			"name": "Justin Williams",
-			"phone": "+16199344518",
-			"profilePhotoUrl": "https://dummyimage.com/100x100/FFE559/FFFFFF&text=JW",
-			"sponsor": {
-				"name": "Eiland Glover",
-				"profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
-				"userId": "-KJn47TvHAlfQocDX_ES"
-			}
-		},
-		"-KLqYxC3-j6MhstbXiED": {
-			"address": "La Armenia",
-			"city": "Quito",
-			"countryCode": "EC",
-			"createdAt": 1467646727200,
-			"downlineLevel": 3,
-			"downlineSize": 0,
-			"referralCode": "abc004",
-			"firstName": "Xavier",
-			"lastName": "Perez",
-			"memberId": 301,
-			"phone": "+593998016833",
-			"profilePhotoUrl": "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=TT",
-			"sponsor": {
-				"name": "Eiland Glover",
-				"profilePhotoUrl": "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
-				"userId": "-KJn47TvHAlfQocDX_ES"
-			}
-		}
-	}
+  "emailAuthCodeGenerationQueue" : {
+    "specs" : {
+      "code_generation" : {
+        "error_state" : "error",
+        "finished_state" : "completed",
+        "in_progress_state" : "in_progress",
+        "timeout" : 300000
+      }
+    }
+  },
+  "emailAuthCodeMatchingQueue" : {
+    "specs" : {
+      "code_matching" : {
+        "error_state" : "error",
+        "finished_state" : "completed",
+        "in_progress_state" : "in_progress",
+        "timeout" : 300000
+      }
+    }
+  },
+  "identityAnnouncementQueue" : {
+    "specs" : {
+      "announce_identity" : {
+        "error_state" : "error",
+        "in_progress_state" : "processing",
+        "retries" : 10,
+        "timeout" : 120000
+      }
+    }
+  },
+  "invitationQueue" : {
+    "specs" : {
+      "process_invitation" : {
+        "error_state" : "error",
+        "in_progress_state" : "processing",
+        "retries" : 5,
+        "timeout" : 120000
+      }
+    }
+  },
+  "phoneAuthQueue" : {
+    "specs" : {
+      "code_generation" : {
+        "error_state" : "code_generation_error",
+        "finished_state" : "code_generation_finished",
+        "in_progress_state" : "code_generation_in_progress",
+        "timeout" : 300000
+      },
+      "code_matching" : {
+        "error_state" : "code_matching_error",
+        "finished_state" : "code_matching_finished",
+        "in_progress_state" : "code_matching_in_progress",
+        "start_state" : "code_matching_requested",
+        "timeout" : 300000
+      }
+    }
+  },
+  "phoneLookupQueue" : {
+    "specs" : {
+      "phone_lookup" : {
+        "error_state" : "error",
+        "finished_state" : "finished",
+        "in_progress_state" : "in_progress",
+        "timeout" : 180000
+      }
+    }
+  },
+  "smsAuthCodeGenerationQueue" : {
+    "specs" : {
+      "code_generation" : {
+        "error_state" : "error",
+        "finished_state" : "completed",
+        "in_progress_state" : "in_progress",
+        "timeout" : 300000
+      }
+    }
+  },
+  "smsAuthCodeMatchingQueue" : {
+    "specs" : {
+      "code_matching" : {
+        "error_state" : "error",
+        "finished_state" : "completed",
+        "in_progress_state" : "in_progress",
+        "timeout" : 300000
+      }
+    }
+  },
+  "urTransactionImportQueue" : {
+    "specs" : {
+      "import" : {
+        "error_state" : "error",
+        "in_progress_state" : "processing",
+        "retries" : 5,
+        "start_state" : "ready_to_import",
+        "timeout" : 120000
+      },
+      "wait" : {
+        "error_state" : "error",
+        "in_progress_state" : "waiting",
+        "retries" : 5,
+        "start_state" : "ready_to_wait",
+        "timeout" : 120000
+      }
+    },
+    "tasks" : {
+      "40280" : {
+        "_state" : "ready_to_import"
+      }
+    }
+  },
+  "users" : {
+    "-KJn47TvHAlfQocDX_ES" : {
+      "admin" : true,
+      "createdAt" : 1465440831526,
+      "downlineLevel" : 2,
+      "downlineSize" : 3,
+      "firstName" : "Howard",
+      "lastName" : "Glover",
+      "middleName" : "Eiland",
+      "name" : "Eiland Glover",
+      "phone" : "+16158566616",
+      "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+      "referralCode" : "abc002",
+      "sponsor" : {
+        "name" : "John Reitano",
+        "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR",
+        "userId" : "-KJnRTuL8A1ZdfVvwAbv"
+      }
+    },
+    "-KJnRTuL8A1ZdfVvwAbv" : {
+      "admin" : true,
+      "createdAt" : 1465446952757,
+      "downlineLevel" : 1,
+      "downlineSize" : 4,
+      "firstName" : "John",
+      "lastName" : "Reitano",
+      "name" : "John Reitano",
+      "phone" : "+16196746211",
+      "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR",
+      "referralCode" : "abc001"
+    },
+    "-KLqYxC3-j6MhstbXiED" : {
+      "address" : "La Armenia",
+      "city" : "Quito",
+      "countryCode" : "EC",
+      "createdAt" : 1467646727200,
+      "downlineLevel" : 3,
+      "downlineSize" : 0,
+      "firstName" : "Xavier",
+      "lastName" : "Perez",
+      "memberId" : 301,
+      "phone" : "+593998016833",
+      "profilePhotoUrl" : "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=TT",
+      "referralCode" : "abc004",
+      "sponsor" : {
+        "name" : "Eiland Glover",
+        "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+        "userId" : "-KJn47TvHAlfQocDX_ES"
+      }
+    },
+    "-KV87tx6gE9kVemBCGyy" : {
+      "createdAt" : 1477638856600,
+      "downlineLevel" : 3,
+      "downlineSize" : 0,
+      "firstName" : "Justin",
+      "lastName" : "Williams",
+      "middleName" : "",
+      "name" : "Justin Williams",
+      "phone" : "+16199344518",
+      "profilePhotoUrl" : "https://dummyimage.com/100x100/FFE559/FFFFFF&text=JW",
+      "referralCode" : "abc003",
+      "sponsor" : {
+        "name" : "Eiland Glover",
+        "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
+        "userId" : "-KJn47TvHAlfQocDX_ES"
+      }
+    }
+  }
 }
