@@ -20,7 +20,7 @@ export class AuthService {
   public currentUser: any;
   public taskId: string;
   public firebaseConnectionCheckInProgress: boolean = false;
-  balanceChanged = new EventEmitter();
+  public walletChanged = new EventEmitter();
 
   constructor(
     public angularFire: AngularFire,
@@ -46,11 +46,11 @@ export class AuthService {
               self.currentUser.countryCode = self.countryCode;
               self.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
-            self.listenForBalanceChange();
+            self.listenForWalletChange();
             callback(undefined);
           });
         } else {
-          // TODO: turn off all firebase listeners (on, once, subscribe, etc), such as in chat-list.ts and home.ts
+          this.walletRef().off('value');
           self.phone = undefined;
           self.countryCode = undefined;
           self.email = undefined;
@@ -76,22 +76,32 @@ export class AuthService {
   }
 
   currentBalanceWei() {
-    return new BigNumber((this.currentUser && this.currentUser.currentBalance) || 0);
+    let currentBalance = this.currentUser &&
+    this.currentUser.wallet &&
+    this.currentUser.wallet.currentBalance;
+    return new BigNumber(currentBalance || 0);
   }
 
   currentBalanceUR() {
     return this.currentBalanceWei().dividedBy(1000000000000000000).round(2, BigNumber.ROUND_HALF_FLOOR);
   }
 
-  listenForBalanceChange(){
-    let self = this;
+  announcementConfirmed() {
+    return !!this.currentUser &&
+      !!this.currentUser.wallet &&
+      !!this.currentUser.wallet.announcementTransaction &&
+      !!this.currentUser.wallet.announcementTransaction.blockNumber;
+  }
 
-    firebase.database().ref(`/users/${self.currentUserId}/currentBalance`)
-      .on('value', snapshot => {
-        if(snapshot.exists()){
-          self.balanceChanged.emit({balance: new BigNumber(snapshot.val()).dividedBy(1000000000000000000).round(2, BigNumber.ROUND_HALF_FLOOR)});
-        }
-      });
+  walletRef() {
+    return firebase.database().ref(`/users/${this.currentUserId}/wallet`);
+  }
+
+  listenForWalletChange(){
+    this.walletRef().on('value', snapshot => {
+      this.currentUser.wallet = snapshot.val();
+      this.walletChanged.emit({});
+    });
   }
 
   checkFirebaseConnection(): Promise<any> {

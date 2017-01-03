@@ -18,7 +18,7 @@ declare var jQuery: any;
 
 @Component({
   selector: 'home-page',
-  templateUrl: 'home.html',
+  templateUrl: 'home.html'
 })
 export class HomePage {
   elementRef: ElementRef;
@@ -38,48 +38,25 @@ export class HomePage {
   ) {
     this.elementRef = elementRef;
     this.sendButtonHidden = Config.targetPlatform === 'ios';
-    this.balanceValue = this.auth.currentBalanceUR();
-    this.auth.balanceChanged.subscribe(data =>{
-      this.balanceValue = data.balance;
-      this.prepareAndRenderData();
-    });
   }
 
   ionViewDidEnter() {
-    let self = this;
-    self.prepareAndRenderData();
-    self.chartData.pointsLoadedEmitter.subscribe((data) => {
-      self.auth.reloadCurrentUser().then(() => {
-        self.prepareAndRenderData();
-      });
+    this.setBalanceValues();
+    this.renderChart();
+    this.auth.walletChanged.subscribe(() => {
+      this.setBalanceValues();
+    });
+    this.chartData.pointsLoadedEmitter.subscribe((data) => {
+      this.setBalanceValues();
+      this.renderChart();
     });
   }
 
-  private prepareAndRenderData() {
-    if (this.accountReady()) {
-      this.calculateBalanceFieldsAndShowBalanceInTitle();
-    } else {
-      this.balanceTitle = this.translate.instant(
-        {
-          'waiting-for-sponsor':'home.waitingSponsor',
-          'disabled': 'home.userDisabled'
-        }[this.auth.getUserStatus()] || 'home.bonusGenerating'
-      );
-    }
-    if (this.chartData.pointsLoaded) {
-      this.renderChart();
-    }
-  }
-
-  private calculateBalanceFieldsAndShowBalanceInTitle() {
-    if (this.chartData.pointsLoaded) {
-      let startingBalanceWei;
-      if (this.chartData.priorBalanceWei) {
-        startingBalanceWei = this.chartData.priorBalanceWei;
-      } else {
-        let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
-        startingBalanceWei = new BigNumber(firstTransaction ? firstTransaction.balance : 0);
-      }
+  private setBalanceValues() {
+    this.balanceValue = this.auth.announcementConfirmed() ? this.auth.currentBalanceUR() : new BigNumber(2005);
+    if (this.auth.announcementConfirmed() && this.chartData.pointsLoaded) {
+      let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
+      let startingBalanceWei = this.chartData.priorBalanceWei || new BigNumber(firstTransaction ? firstTransaction.balance : 0);
       let balanceChangeWei = this.auth.currentBalanceWei().minus(startingBalanceWei);
       this.balanceChangeUR = balanceChangeWei.dividedBy(1000000000000000000).round(0, BigNumber.ROUND_HALF_FLOOR);
       this.balanceChangePercent = startingBalanceWei.isZero() ? null : balanceChangeWei.times(100).dividedBy(startingBalanceWei).round(0, BigNumber.ROUND_HALF_FLOOR);
@@ -87,7 +64,6 @@ export class HomePage {
       this.balanceChangeUR = null;
       this.balanceChangePercent = null;
     }
-    this.balanceTitle = `${this.balanceValue.toFormat(2)}<span>&nbsp;UR</span>`;
   }
 
   startNewChat() {
@@ -103,6 +79,9 @@ export class HomePage {
   }
 
   renderChart() {
+    if (!this.chartData.pointsLoaded) {
+      return;
+    }
     jQuery(this.elementRef.nativeElement).find('.container').highcharts({
       chart: {
         type: 'area',
