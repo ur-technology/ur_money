@@ -158,6 +158,26 @@ export class SendPage {
   }
 
   sendUR() {
+
+    // TODO: START - remove this once blockchain is fixed
+    let prompt = this.alertCtrl.create({
+      title: "Sending Disabled",
+      message: `Sending UR is currently disabled while we do some maintenace on the UR Network. Please try again in 1 day.`,
+      buttons: [
+        {
+          text: this.translate.instant('ok'),
+          handler: data => {
+            prompt.dismiss();
+          }
+        }
+      ]
+    });
+    prompt.present();
+    if (1 + 2 === 3) {
+      return;
+    }
+    // TODO: END - remove this once blockchain is fixed
+
     let self = this;
     self.confirm().then(() => {
       return self.showLoadingModal();
