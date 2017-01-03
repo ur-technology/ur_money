@@ -41,6 +41,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    this.renderChart();
     this.auth.walletChanged.subscribe(() => {
       this.setBalanceValues();
     });
