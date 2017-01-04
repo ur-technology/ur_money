@@ -237,12 +237,12 @@ export class AuthService {
 
   envMode() {
     let matches = Config.firebaseProjectId.match(/ur-money-(\w+)/);
-    return _.startCase(`${(matches && matches[1]) || 'unknown'} mode`);
+    return (matches && matches[1]) || 'unknown';
   }
 
   envModeDisplay() {
     let mode = this.envMode();
-    return mode === 'production' ? '' : mode;
+    return mode === 'production' ? '' : `${_.startCase(mode)} mode`;
   }
 
   referralLink(window): string {
