@@ -27,7 +27,12 @@
         "retries" : 10,
         "timeout" : 120000
       }
-    }
+    },
+    "tasks" : {
+      "1" : {
+        "userId" : "KJnRTuL8A1ZdfVvwAbv"
+      }
+    },
   },
   "invitationQueue" : {
     "specs" : {
@@ -104,7 +109,7 @@
       }
     },
     "tasks" : {
-      "40280" : {
+      "40458" : {
         "_state" : "ready_to_import"
       }
     }
@@ -112,9 +117,12 @@
   "users" : {
     "-KJn47TvHAlfQocDX_ES" : {
       "admin" : true,
+      "countryCode" : "US",
       "createdAt" : 1465440831526,
       "downlineLevel" : 2,
       "downlineSize" : 3,
+      "email" : "eiland@ur.technology",
+      "failedLoginCount" : 0,
       "firstName" : "Howard",
       "lastName" : "Glover",
       "middleName" : "Eiland",
@@ -126,19 +134,34 @@
         "name" : "John Reitano",
         "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR",
         "userId" : "-KJnRTuL8A1ZdfVvwAbv"
+      },
+      "updatedAt" : 1483487120942,
+      "wallet" : {
+        "address" : "0x4f904265e1ee4660ec24d26e646e9db3376d6e9f",
+        "createdAt" : 1483487140387,
+        "passphrase" : "pact quick orbit squeeze flat"
       }
     },
     "-KJnRTuL8A1ZdfVvwAbv" : {
       "admin" : true,
+      "countryCode" : "US",
       "createdAt" : 1465446952757,
       "downlineLevel" : 1,
       "downlineSize" : 4,
+      "email" : "jreitano@ur.technology",
+      "failedLoginCount" : 0,
       "firstName" : "John",
       "lastName" : "Reitano",
       "name" : "John Reitano",
       "phone" : "+16196746211",
       "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=JR",
-      "referralCode" : "abc001"
+      "referralCode" : "abc001",
+      "updatedAt" : 1483487047729,
+      "wallet" : {
+        "address" : "0xd4f6af892aa766626b1bd8a7068883e723955a80",
+        "createdAt" : 1483486818923,
+        "passphrase" : "hen syrup weather place rebuild"
+      }
     },
     "-KLqYxC3-j6MhstbXiED" : {
       "address" : "La Armenia",
@@ -147,9 +170,12 @@
       "createdAt" : 1467646727200,
       "downlineLevel" : 3,
       "downlineSize" : 0,
+      "email" : "f@g.com",
+      "failedLoginCount" : 0,
       "firstName" : "Xavier",
       "lastName" : "Perez",
       "memberId" : 301,
+      "name" : "Xavier Perez",
       "phone" : "+593998016833",
       "profilePhotoUrl" : "https://dummyimage.com/100x100/FFBE5B/FFFFFF&text=TT",
       "referralCode" : "abc004",
@@ -157,6 +183,12 @@
         "name" : "Eiland Glover",
         "profilePhotoUrl" : "https://dummyimage.com/100x100/ED6D54/FFFFFF&text=EG",
         "userId" : "-KJn47TvHAlfQocDX_ES"
+      },
+      "updatedAt" : 1483485357621,
+      "wallet" : {
+        "address" : "0x18e716ed5d122b0bc6c3faa1f010c180108d10f2",
+        "createdAt" : 1483485429329,
+        "passphrase" : "a b c d e"
       }
     },
     "-KV87tx6gE9kVemBCGyy" : {
