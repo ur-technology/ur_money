@@ -241,7 +241,7 @@ export class AuthService {
   }
 
   envModeDisplay() {
-    let mode = envMode();
+    let mode = this.envMode();
     return mode === 'production' ? '' : mode;
   }
 
