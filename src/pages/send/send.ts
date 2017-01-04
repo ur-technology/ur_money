@@ -31,6 +31,7 @@ export class SendPage {
   private phraseSaved;
   refreshIntervalId: any;
   public placeholderSentTo: string;
+  private sendInProgress: boolean = false;
 
   constructor(
     public nav: NavController,
@@ -159,6 +160,7 @@ export class SendPage {
 
   sendUR() {
     let self = this;
+    self.sendInProgress = true;
     self.confirm().then(() => {
       return self.showLoadingModal();
     }).then(() => {
@@ -172,11 +174,12 @@ export class SendPage {
     }).then((urTransaction) => {
       return self.saveTransaction(urTransaction);
     }).then(() => {
-      return self.loadingModal.dismiss();
-    }).then(() => {
       self.nav.setRoot(HomePage);
       return self.toastService.showMessage({ messageKey: 'send.urSent' });
+    }).then(() => {
+      return self.loadingModal.dismiss();
     }, (error: any) => {
+      this.sendInProgress = false;
       self.loadingModal && self.loadingModal.dismiss().then(() => {
         if (error.messageKey === 'canceled') {
           // do nothing

@@ -43,6 +43,6 @@
     <div class="validatorError" *ngIf="missingSecretPhrase()">{{"send.secretPhraseRequired" | translate}}</div>
     <div class="validatorError" *ngIf="incorrectSecretPhrase()">{{"send.incorrectSecretPhrase" | translate}}</div>
 <br />
-    <button ion-button round block class="send-requestbtn" type="submit" [disabled]="!mainForm.valid">{{"send.send" | translate}}</button>
+    <button ion-button round block class="send-requestbtn" type="submit" [disabled]="!mainForm.valid || sendInProgress">{{"send.send" | translate}}</button>
   </form>
 </ion-content>
