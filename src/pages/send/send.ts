@@ -31,7 +31,7 @@ export class SendPage {
   private phraseSaved;
   refreshIntervalId: any;
   public placeholderSentTo: string;
-  private sendInProgress: boolean = false;
+  public sendInProgress: boolean = false;
 
   constructor(
     public nav: NavController,
