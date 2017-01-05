@@ -68,7 +68,7 @@ export class EventListComponent {
     let self = this;
 
     if (!present) {
-      obj.at = new Date(new Date().getTime() + 30 * 1000);
+      obj.at = new Date(new Date().getTime() + 900 * 1000);
     } else {
       obj.text = sourceType === 'message' ? self.translate.instant('home.newChats') : self.translate.instant('home.newTransactions');
       obj.data.sourceId = undefined;
