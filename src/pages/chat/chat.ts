@@ -1,4 +1,4 @@
-import {ViewChild, Inject , Component} from '@angular/core';
+import {ViewChild, Inject, Component} from '@angular/core';
 import { NavController, NavParams, Platform, Content, AlertController, PopoverController } from 'ionic-angular';
 import {AngularFire} from 'angularfire2';
 import {Subscription} from 'rxjs';
@@ -42,8 +42,11 @@ export class ChatPage {
   }
 
   scrollToBottom() {
+    let self = this;
     setTimeout(() => {
-      this.content.scrollToBottom();
+      if (self) {
+        self.content.scrollToBottom();
+      }
     }, 50);
   }
 

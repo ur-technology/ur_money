@@ -233,7 +233,9 @@
     "home": {
         "bonusGenerating": "Bonus Generation In Progress",
         "waitingForSponsor": "Waiting for Sponsor To Set Up Account",
-        "userDisabled": "User disabled"
+        "userDisabled": "User disabled",
+        "newChats": "You have new chats",
+        "newTransactions": "You have new transactions"
     },
     "contacts": {
         "invite": "Invite",
@@ -340,9 +342,12 @@
         "lastName": "Last name",
         "state": "State or province",
         "city": "City",
-        "profileUpdated": "Your profile has been updated",
+        "profileUpdated": "Settings updated",
         "URWallet": "UR",
-        "URWalletAddress": "UR address"
+        "URWalletAddress": "UR address",
+        "notifications": "Notifications",
+        "chatNotifications": "Chat notifications",
+        "transactionNotifications": "Transaction notifications"
     },
     "request": {
         "balance": "Balance:",

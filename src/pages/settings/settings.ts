@@ -3,7 +3,6 @@ import {FormGroup, FormControl} from '@angular/forms';
 import { NavController, AlertController, ToastController} from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {UserModel} from '../../models/user';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 import {HomePage} from '../home/home';
@@ -16,8 +15,6 @@ export class SettingsPage {
   public mainForm: FormGroup;
   errorMessage: string;
   countries: any[];
-  allStates: any[];
-  states: any[];
   profile: any;
 
   constructor(
@@ -34,49 +31,30 @@ export class SettingsPage {
     this.countries = _.filter(this.countries, (country) => {
       return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
     });
-    this.allStates = require('provinces');
 
     let authUser = this.auth.currentUser;
+    let chatNotificationsVal: boolean = authUser.settings && authUser.settings.chatNotifications;
+    chatNotificationsVal = _.isUndefined(chatNotificationsVal) ? true : chatNotificationsVal;
+    let transactionNotificationsVal: boolean = authUser.settings && authUser.settings.transactionNotifications;
+    transactionNotificationsVal = _.isUndefined(transactionNotificationsVal) ? true : transactionNotificationsVal;
+
     this.mainForm = new FormGroup({
-      firstName: new FormControl({value: '', disabled: true}, CustomValidator.nameValidator),
-      middleName: new FormControl({value: '', disabled: true}, CustomValidator.optionalNameValidator),
-      lastName: new FormControl({value: '', disabled: true}, CustomValidator.nameValidator),
-      stateName: new FormControl('', CustomValidator.nameValidator),
-      city: new FormControl('', CustomValidator.nameValidator),
+      firstName: new FormControl({ value: '', disabled: true }, CustomValidator.nameValidator),
+      middleName: new FormControl({ value: '', disabled: true }, CustomValidator.optionalNameValidator),
+      lastName: new FormControl({ value: '', disabled: true }, CustomValidator.nameValidator),
       wallet: new FormControl(authUser.wallet.address || ''),
+      chatNotifications: new FormControl(chatNotificationsVal),
+      transactionNotifications: new FormControl(transactionNotificationsVal)
     });
+
     this.profile = {
       firstName: authUser.firstName || '',
       middleName: authUser.middleName || '',
       lastName: authUser.lastName || '',
-      city: authUser.city,
       country: this.countries.find((x) => { return x.alpha2 === (authUser.countryCode || 'US'); })
     };
-
-    let defaultStateName = (authUser.countryCode === this.profile.country.alpha2 && authUser.stateName) ? authUser.stateName : undefined;
-    this.countrySelected(defaultStateName);
   }
 
-  ionViewDidLoad() {
-
-  }
-
-  countrySelected(defaultStateName) {
-    this.profile.countryCode = this.profile.country.alpha2;
-    this.states = _.filter(this.allStates, (state) => { return state.country === this.profile.country.alpha2; });
-    if (this.states.length > 0) {
-      this.profile.state = (defaultStateName && this.states.find((x) => { return x.name === defaultStateName; })) || this.states[0];
-      this.stateSelected();
-    } else {
-      this.profile.state = undefined;
-      this.profile.stateName = defaultStateName;
-      this.mainForm.value.stateName = this.profile.stateName;
-    }
-  }
-
-  stateSelected() {
-    this.profile.stateName = this.profile.state ? this.profile.state.name : '';
-  }
 
   submit() {
     this.saveProfile();
@@ -103,10 +81,11 @@ export class SettingsPage {
       firstName: self.profile.firstName,
       middleName: self.profile.middleName,
       lastName: self.profile.lastName,
-      name: UserModel.fullName(self.profile),
-      city: self.profile.city,
-      stateName: self.profile.stateName,
-      countryCode: self.profile.countryCode
+      countryCode: self.profile.countryCode,
+      settings: {
+        chatNotifications: this.mainForm.value.chatNotifications,
+        transactionNotifications: this.mainForm.value.transactionNotifications
+      }
     };
     self.auth.currentUserRef.update(_.omitBy(profile, _.isNil)).then(() => {
       self.auth.reloadCurrentUser();

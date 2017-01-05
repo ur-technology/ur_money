@@ -14,58 +14,46 @@
       <ion-list>
       <ion-item-divider color="light">{{"settings.profileInfo" | translate}}</ion-item-divider>
       <ion-item>
-        <ion-label floating>{{'profile-setup.firstName' | translate}}</ion-label>
+        <ion-label stacked>{{'profile-setup.firstName' | translate}}</ion-label>
         <ion-input
           type="text"
           [(ngModel)]="profile.firstName"
           formControlName="firstName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>{{'profile-setup.middleName' | translate}}</ion-label>
+        <ion-label stacked>{{'profile-setup.middleName' | translate}}</ion-label>
         <ion-input type="text"
           [(ngModel)]="profile.middleName"
           formControlName="middleName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>{{'profile-setup.lastName' | translate}}</ion-label>
+        <ion-label stacked>{{'profile-setup.lastName' | translate}}</ion-label>
         <ion-input type="text"
           [(ngModel)]="profile.lastName"
           formControlName="lastName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>{{'profile-setup.country' | translate}}</ion-label>
+        <ion-label stacked>{{'profile-setup.country' | translate}}</ion-label>
         <ion-select [(ngModel)]="profile.country"
-          [ngModelOptions]="{standalone: true}"
-          (ionChange)="countrySelected($event)">
+          [ngModelOptions]="{standalone: true}">
           <ion-option [value]="c"
             *ngFor="let c of countries">{{c.name}}</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label floating>{{'profile-setup.state' | translate}}</ion-label>
-        <ion-select [hidden]="!states || !states.length"
-          [(ngModel)]="profile.state"
-          [ngModelOptions]="{standalone: true}"
-          (ionChange)="stateSelected()">
-          <ion-option [value]="s"
-            *ngFor="let s of states">{{s.name}}</ion-option>
-        </ion-select>
-        <ion-input [hidden]="states && states.length"
-          type="text"
-          [(ngModel)]="profile.stateName"
-          formControlName="stateName"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>{{'profile-setup.city' | translate}}</ion-label>
-        <ion-input type="text"
-          [(ngModel)]="profile.city"
-          formControlName="city"></ion-input>
-      </ion-item>
       <ion-item-divider color="light">{{'settings.URWallet' | translate}}</ion-item-divider>
       <ion-item>
-        <ion-label floating>{{'settings.URWalletAddress' | translate}}</ion-label>
+        <ion-label stacked>{{'settings.URWalletAddress' | translate}}</ion-label>
         <ion-input type="text"
           formControlName="wallet"></ion-input>
+      </ion-item>
+      <ion-item-divider color="light">{{'settings.notifications' | translate}}</ion-item-divider>
+      <ion-item>
+        <ion-label>{{'settings.chatNotifications' | translate}}</ion-label>
+        <ion-toggle formControlName="chatNotifications"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'settings.transactionNotifications' | translate}}</ion-label>
+        <ion-toggle formControlName="transactionNotifications"></ion-toggle>
       </ion-item>
       </ion-list>
     </form>

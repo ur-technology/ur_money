@@ -233,7 +233,9 @@
     "home": {
         "bonusGenerating": "Generación De Bonificación En Curso",
         "waitingForSponsor": "Esperando A Patrocinador Que Complete Su Cuenta",
-        "userDisabled": "Usuario deshabilitado"
+        "userDisabled": "Usuario deshabilitado",
+        "newChats": "Tienes nuevos chats",
+        "newTransactions": "Tienes nuevas transacciones"
     },
     "contacts": {
         "invite": "Invitar",
@@ -340,9 +342,12 @@
         "lastName": "Apellido",
         "state": "Estado o provincia",
         "city": "Ciudad",
-        "profileUpdated": "Tu perfil ha sido actualizado",
+        "profileUpdated": "Configuraciones actualizadas",
         "URWallet": "UR",
-        "URWalletAddress": "Dirección UR"
+        "URWalletAddress": "Dirección UR",
+        "notifications": "Notificaciones",
+        "chatNotifications": "Chats",
+        "transactionNotifications": "Transacciones"
     },
     "request": {
         "balance": "Saldo disponible:",

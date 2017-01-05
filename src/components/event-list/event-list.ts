@@ -7,6 +7,8 @@ import {ChatPage} from '../../pages/chat/chat';
 import {TransactionsPage} from '../../pages/transactions/transactions';
 import {LocalNotifications} from 'ionic-native';
 import {AuthService} from '../../services/auth';
+import {TranslateService} from 'ng2-translate/ng2-translate';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'events-list',
@@ -14,7 +16,7 @@ import {AuthService} from '../../services/auth';
 })
 export class EventListComponent {
   events = [];
-  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App, @Inject(FirebaseApp) firebase: any) {
+  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App, @Inject(FirebaseApp) firebase: any, public translate: TranslateService) {
     if (platform.is('cordova')) {
       this.listenForNewEvents();
       this.listenForNotificationSelection();
@@ -23,7 +25,7 @@ export class EventListComponent {
     this.eventsService.loadEvents();
 
     this.eventsService.eventChanged.subscribe(() => {
-        this.events = this.eventsService.events;
+      this.events = this.eventsService.events;
     });
     this.events = this.eventsService.events;
   }
@@ -39,31 +41,53 @@ export class EventListComponent {
   }
 
   listenForNewEvents() {
-    firebase.database().ref(`/users/${this.auth.currentUserId}/events`)
+    let self = this;
+    firebase.database().ref(`/users/${self.auth.currentUserId}/events`)
       .orderByChild('notificationProcessed')
       .equalTo(false)
       .on('child_added', eventSnapshot => {
-        let event = eventSnapshot.val();
-        let obj = {
-          id: this.getUniqueInteger(event.sourceId),
-          text: `${event.title}: ${event.messageText}`,
-          icon: 'res://icon',
-          smallIcon: 'stat_notify_chat',
-          sound: this._soundFile(event.sourceType),
-          data: { sourceId: event.sourceId, sourceType: event.sourceType }
-        };
-        LocalNotifications.isPresent(obj.id).then(present => {
-          if (!present) {
-            LocalNotifications.schedule(obj);
+        if (eventSnapshot.val()) {
+          let event = eventSnapshot.val();
+          let obj: any = {
+            id: event.sourceType === 'message' ? 1 : 2,
+            text: `${event.title}: ${event.messageText}`,
+            icon: 'res://icon',
+            smallIcon: 'stat_notify_chat',
+            sound: self._soundFile(event.sourceType),
+            data: { sourceId: event.sourceId, sourceType: event.sourceType }
+          };
+          LocalNotifications.isPresent(obj.id).then(present => {
+            self.processNotificationEvent(present, obj, event.sourceType);
             eventSnapshot.ref.update({ notificationProcessed: true });
-          } else {
-            LocalNotifications.clear(obj.id).then(() => {
-              LocalNotifications.schedule(obj);
-              eventSnapshot.ref.update({ notificationProcessed: true });
-            });
-          }
-        });
+          });
+        }
       });
+  }
+
+  private processNotificationEvent(present, obj, sourceType) {
+    let self = this;
+
+    if (!present) {
+      obj.at = new Date(new Date().getTime() + 30 * 1000);
+    } else {
+      obj.text = sourceType === 'message' ? self.translate.instant('home.newChats') : self.translate.instant('home.newTransactions');
+      obj.data.sourceId = undefined;
+    }
+
+    self.scheduleNotification(obj, sourceType, present);
+  }
+
+  private scheduleNotification(obj, sourceType, present) {
+    let self = this;
+    let chatNotificationsEnabled: boolean = self.auth.currentUser.settings && self.auth.currentUser.settings.chatNotifications;
+    chatNotificationsEnabled = _.isUndefined(chatNotificationsEnabled) ? true : chatNotificationsEnabled;
+    let transactionNotificationsEnabled: boolean = self.auth.currentUser.settings && self.auth.currentUser.settings.transactionNotifications;
+    transactionNotificationsEnabled = _.isUndefined(transactionNotificationsEnabled) ? true : transactionNotificationsEnabled;
+    let sendNotification = sourceType === 'message' ? chatNotificationsEnabled : transactionNotificationsEnabled;
+
+    if (sendNotification) {
+      present ? LocalNotifications.update(obj) : LocalNotifications.schedule(obj);
+    }
   }
 
   private _soundFile(type: string) {
@@ -73,22 +97,12 @@ export class EventListComponent {
 
   openPageByEventType(sourceType: string, sourceId: string) {
     if (sourceType === 'message') {
-      this.app.getRootNav().push(ChatPage, { chatId: sourceId });
+      if (sourceId) {
+        this.app.getRootNav().push(ChatPage, { chatId: sourceId });
+      }
     } else if (sourceType === 'transaction') {
       this.app.getRootNav().push(TransactionsPage, {});
     }
   }
-
-  getUniqueInteger(varString: string) {
-    let hash = 0, i, chr, len;
-    if (varString.length === 0) return hash;
-    for (i = 0, len = varString.length; i < len; i++) {
-      chr = varString.charCodeAt(i);
-      hash = ((hash << 5) - hash) + chr;
-      hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
-  }
-
 
 }
