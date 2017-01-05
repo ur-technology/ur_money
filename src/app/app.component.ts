@@ -39,7 +39,7 @@ export class UrMoney {
   }
 
   private initializeApp() {
-    this.saveSponsorReferralCodeIfPresent();
+    this.handleSponsorReferralCodeIfPresent();
 
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
@@ -81,15 +81,25 @@ export class UrMoney {
     });
   }
 
-  private saveSponsorReferralCodeIfPresent() {
+
+  private extractSponsorReferralCodeFromUrl(): string {
     let pathname: string = window.location.pathname || '';
     let matches: string[] = pathname.match(/\/r\/([a-zA-Z0-9]+)/);
     if (!matches || !matches[1]) {
       let params: string = window.location.search || '';
       matches = params.match(/[\?\&]r\=([a-zA-Z0-9]+)/);
     }
-    if (matches && matches[1]) {
-      this.auth.sponsorReferralCode = matches[1];
+    return matches && matches[1];
+  }
+
+  private handleSponsorReferralCodeIfPresent() {
+    let sponsorReferralCode: string = this.extractSponsorReferralCodeFromUrl();
+    if (sponsorReferralCode) {
+      if (window.location.hostname === 'ur-money-staging.firebaseapp.com') {
+        // temporarily re-route incorrect staging referral link to intended destination
+        window.location.href = `https://web.ur.technology/r/${sponsorReferralCode}`;
+      }
+      this.auth.sponsorReferralCode = sponsorReferralCode;
     }
   }
 
