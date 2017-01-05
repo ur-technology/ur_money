@@ -1,50 +1,44 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>{{"settings.title" | translate}}</ion-title>
-        <ion-buttons end>
-            <button ion-button [disabled]="!mainForm.valid"
-                (click)="submit()">
+  <ion-navbar>
+    <ion-title>{{"settings.title" | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button [disabled]="!mainForm.valid" (click)="submit()">
             {{"save" | translate}}
         </button>
-        </ion-buttons>
-    </ion-navbar>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 <ion-content class="settings">
-    <form [formGroup]="mainForm">
-      <ion-list>
+  <form [formGroup]="mainForm">
+    <ion-list>
       <ion-item-divider color="light">{{"settings.profileInfo" | translate}}</ion-item-divider>
       <ion-item>
         <ion-label stacked>{{'profile-setup.firstName' | translate}}</ion-label>
-        <ion-input
-          type="text"
-          [(ngModel)]="profile.firstName"
-          formControlName="firstName"></ion-input>
+        <ion-input type="text" formControlName="firstName"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>{{'profile-setup.middleName' | translate}}</ion-label>
-        <ion-input type="text"
-          [(ngModel)]="profile.middleName"
-          formControlName="middleName"></ion-input>
+        <ion-input type="text" formControlName="middleName"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>{{'profile-setup.lastName' | translate}}</ion-label>
-        <ion-input type="text"
-          [(ngModel)]="profile.lastName"
-          formControlName="lastName"></ion-input>
+        <ion-input type="text" formControlName="lastName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>{{'profile-setup.name' | translate}}</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>{{'profile-setup.country' | translate}}</ion-label>
-        <ion-select [(ngModel)]="profile.country"
-          [ngModelOptions]="{standalone: true}">
-          <ion-option [value]="c"
-            *ngFor="let c of countries">{{c.name}}</ion-option>
+        <ion-select formControlName="countryCode">
+          <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item-divider color="light">{{'settings.URWallet' | translate}}</ion-item-divider>
       <ion-item>
         <ion-label stacked>{{'settings.URWalletAddress' | translate}}</ion-label>
-        <ion-input type="text"
-          formControlName="wallet"></ion-input>
+        <ion-input id="wallet-address-input" type="text" value="{{auth.currentUser.wallet.address}}"></ion-input>
+        <button id="copy-button" item-right ion-button icon-only color="light" data-clipboard-target="#wallet-address-input input"> <ion-icon name="clipboard"></ion-icon></button>
       </ion-item>
       <ion-item-divider color="light">{{'settings.notifications' | translate}}</ion-item-divider>
       <ion-item>
@@ -55,16 +49,11 @@
         <ion-label>{{'settings.transactionNotifications' | translate}}</ion-label>
         <ion-toggle formControlName="transactionNotifications"></ion-toggle>
       </ion-item>
-      </ion-list>
-    </form>
+    </ion-list>
+  </form>
 </ion-content>
 <ion-footer>
-    <button ion-button icon-left class="sign-out-button"
-        full
-        type="text"
-        color="danger"
-        small
-        (click)="signOut()">
+  <button ion-button icon-left class="sign-out-button" full type="text" color="danger" small (click)="signOut()">
         <ion-icon name="power"></ion-icon>{{"signOut" | translate}}
     </button>
 </ion-footer>
