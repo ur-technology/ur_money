@@ -175,8 +175,7 @@ export class UserPage {
   saveProfile() {
     let attrs: any = _.pick(this.user, ['firstName', 'middleName', 'lastName', 'countryCode', 'phone', 'email']);
     _.each(attrs, (value, attr) => { attrs[attr] = _.trim(value || ''); });
-    this.auth.currentUserRef.update(attrs).then(() => {
-      this.auth.reloadCurrentUser();
+    this.db.ref(`/users/${this.user.userId}`).update(attrs).then(() => {
       this.toastCtrl.create({
         message: 'User info has been updated.', duration: 4000, position: 'bottom'
       }).present();
