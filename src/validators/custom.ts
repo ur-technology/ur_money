@@ -6,6 +6,7 @@ import {WalletModel} from '../models/wallet';
 export class CustomValidator {
   static minValidAmount: number;
   static maxValidAmount: number;
+  static emailPattern: any = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.([-a-z0-9_]+)|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
 
   static normalizedPhone(phone) {
     let p = phone;
@@ -19,8 +20,7 @@ export class CustomValidator {
   }
 
   static emailValidator(control) {
-    var pattern = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.([-a-z0-9_]+)|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-    if (control.value && !control.value.match(pattern)) {
+    if (control.value && !control.value.match(CustomValidator.emailPattern)) {
       return { 'invalidEmailAddress': true };
     }
   }

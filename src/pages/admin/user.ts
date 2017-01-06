@@ -1,7 +1,8 @@
 import {NavController, NavParams, ToastController, AlertController, ModalController} from 'ionic-angular';
 import {Component} from '@angular/core';
-import {FormGroup, FormControl} from '@angular/forms';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth';
+import {CustomValidator} from '../../validators/custom';
 import {UserModel} from '../../models/user';
 import {ChangeSponsorModal} from './change-sponsor';
 import * as _ from 'lodash';
@@ -34,10 +35,13 @@ export class UserPage {
   ) {
 
     this.mainForm = new FormGroup({
-      name: new FormControl({value: '', disabled: true}),
-      country: new FormControl({value: '', disabled: true}),
-      email: new FormControl({value: '', disabled: true}),
-      phone: new FormControl({value: '', disabled: true}),
+      firstName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
+      middleName: new FormControl('', [CustomValidator.nameValidator]),
+      lastName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
+      name: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
+      countryCode: new FormControl('', Validators.required),
+      phone: new FormControl('', [Validators.required, CustomValidator.phoneValidator]),
+      email: new FormControl('', [CustomValidator.emailValidator]),
       downlineSize: new FormControl({value: '', disabled: true}),
       ipAddress: new FormControl({value: '', disabled: true}),
       sponsorName: new FormControl({value: '', disabled: true}),
@@ -45,16 +49,21 @@ export class UserPage {
     });
 
     this.user = this.navParams.get('user');
-    this.user.phone = this.user.phone || 'None';
-    this.user.email = this.user.email || 'None';
+    this.user.firstName = this.user.firstName || '';
+    this.user.middleName = this.user.middleName || '';
+    this.user.lastName = this.user.lastName || '';
+    this.user.name = this.user.name || UserModel.fullName(this.user);
+    this.user.phone = this.user.phone || '';
+    this.user.email = this.user.email || '';
+    this.user.countryCode = this.user.countryCode || 'US';
+    this.fillCountriesArray();
+
     this.user.moveRequested = !!this.user.moveRequested;
     this.user.disabled = !!this.user.disabled;
     this.user.fraudSuspected = !!this.user.fraudSuspected;
     this.user.duplicate = !!this.user.duplicate;
     this.user.status = this.getUserStatus(this.user);
 
-    this.countries = require('country-data').countries.all;
-    this.user.country = this.country(this.user);
     this.user.ipAddress = (this.user.prefineryUser && this.user.prefineryUser.ipAddress) || 'None';
 
     this.showSpinner = true;
@@ -94,20 +103,21 @@ export class UserPage {
     }
   }
 
-  saveProfile() {
-    let attrs: any = _.pick(this.user, ['firstName', 'middleName', 'lastName', 'countryCode']);
-    let name = UserModel.fullName(this.user);
-    if (name) {
-      attrs.name = name;
-    }
-    this.auth.currentUserRef.update(attrs).then(() => {
-      this.auth.reloadCurrentUser();
-      this.toastCtrl.create({
-        message: 'User info has been updated.', duration: 3000, position: 'bottom'
-      }).present();
-    }).catch((error) => {
-      log.warn('unable to save profile');
+  onCountrySelected(countrySelected) {
+    this.user.countryCode = countrySelected.alpha2;
+  }
+
+  private fillCountriesArray() {
+    this.countries = require('country-data').countries.all.sort((a, b) => {
+      return (a.name < b.name) ? -1 : ((a.name === b.name) ? 0 : 1);
     });
+    // remove Cuba, Iran, North Korea, Sudan, Syria
+    this.countries = _.filter(this.countries, (country) => {
+      return ['CU', 'IR', 'KP', 'SD', 'SY'].indexOf(country.alpha2) === -1;
+    });
+    this.countries = _.filter(this.countries, { status: 'assigned' });
+    let country = this.countries.find((x) => { return x.alpha2 === (this.user.countryCode || 'US'); });
+    (<FormControl>this.mainForm.controls['countryCode']).setValue(country);
   }
 
   goToUserPage(u: any) {
@@ -162,35 +172,18 @@ export class UserPage {
     );
   }
 
-  identityManuallyVerifiable() {
-    return _.includes(['wallet-generated', 'verification-failed'], this.getUserStatus(this.user)) &&
-      !!this.user.wallet &&
-      !!this.user.wallet.address &&
-      !!this.sponsor &&
-      !!this.sponsor.wallet &&
-      !!this.sponsor.wallet.announcementTransaction &&
-      !!this.sponsor.wallet.announcementTransaction.blockNumber &&
-      !!this.sponsor.wallet.announcementTransaction.hash;
-  }
-
-  manuallyVerifyIdentity() {
-    if (!this.identityManuallyVerifiable()) {
-      log.warn('not verifiable');
-      return;
-    }
-
-    this.db.ref(`/users/${this.user.userId}/registration`).update({ status: 'verification-succeeded' }).then(() => {
-      this.user.status = 'verification-succeeded';
-      return this.db.ref('/identityAnnouncementQueue/tasks').push({ userId: this.user.userId });
-    }).then(() => {
+  saveProfile() {
+    let attrs: any = _.pick(this.user, ['firstName', 'middleName', 'lastName', 'countryCode', 'phone', 'email']);
+    _.each(attrs, (value, attr) => { attrs[attr] = _.trim(value || ''); });
+    this.auth.currentUserRef.update(attrs).then(() => {
+      this.auth.reloadCurrentUser();
       this.toastCtrl.create({
-        message: 'User has been verified and identity announcement is in progress.'
+        message: 'User info has been updated.', duration: 4000, position: 'bottom'
       }).present();
-    }, (error) => {
-      log.warn('There was an error verifying this user.', error);
-      this.toastCtrl.create({
-        message: 'There was an error verifying this user.'
-      }).present();
+    }).catch((error) => {
+      log.warn('unable to save profile');
     });
   }
+
+
 }
