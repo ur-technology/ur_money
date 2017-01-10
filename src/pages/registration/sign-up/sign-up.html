@@ -12,13 +12,11 @@
   <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
     <ion-list>
       <ion-item>
-        <ion-label stacked>{{'profile-setup.country' | translate}}</ion-label>
         <ion-select formControlName="country">
           <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'phone-number.phoneNumber' | translate}}</ion-label>
         <div item-content class="phone-content">
           <span class="countryCode">{{mainForm.value.country.telephoneCountryCode}}</span>
           <ion-input formControlName="phone" placeholder="{{'phone-number.phoneNumber' | translate}}" type="tel"></ion-input>
