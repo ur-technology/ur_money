@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"sign-up.title" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <p class="sub-heading">
+      {{subheadingTitle}}
+      <br />
+      <button ion-button clear class="headingType" (click)="changeSignUpType()">{{subheadingButton}}</button>
+  </p>
+  <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>{{'profile-setup.country' | translate}}</ion-label>
+        <ion-select formControlName="country">
+          <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>{{'phone-number.phoneNumber' | translate}}</ion-label>
+        <div item-content class="phone-content">
+          <span class="countryCode">{{mainForm.value.country.telephoneCountryCode}}</span>
+          <ion-input formControlName="phone" placeholder="{{'phone-number.phoneNumber' | translate}}" type="tel"></ion-input>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="signUpType=='referralCode'">
+        <ion-label stacked>{{'sign-up.referralCode' | translate}}</ion-label>
+        <ion-input type="text" formControlName="referralCode" placeholder='{{ "sign-up.placeholderReferralCode" | translate }}'></ion-input>
+      </ion-item>
+      <ion-item *ngIf="signUpType!='referralCode'">
+        <ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
+        <ion-input type="text" formControlName="email" placeholder='{{ "sign-up.placeholderEmail" | translate }}'></ion-input>
+      </ion-item>
+
+      <p class="terms" padding text-center>
+        {{ "welcome.terms" | translate }} {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a> {{ "welcome.terms4" | translate }}
+      </p>
+      <div text-center>
+        <button ion-button round [disabled]="!mainForm.valid" >{{'welcome.agreeAndContinue' | translate}}</button>
+      </div>
+    </ion-list>
+  </form>
+</ion-content>

@@ -1,8 +1,8 @@
 import { NavController, Platform, ModalController } from 'ionic-angular';
 import {PhoneNumberPage} from '../phone-number/phone-number';
-import {TermsAndConditionsPage} from '../../terms-and-conditions/terms-and-conditions';
 import {AuthService} from '../../../services/auth';
 import { Component } from '@angular/core';
+import {SignUpPage} from '../sign-up/sign-up';
 
 @Component({
   selector: 'welcome-page',
@@ -14,13 +14,12 @@ export class WelcomePage {
     public auth: AuthService) {
   }
 
-  goToPage() {
-    this.nav.setRoot(PhoneNumberPage);
+  signUp() {
+    this.nav.push(SignUpPage);
   }
 
-  openTermsAndConditions() {
-    let modal = this.modalCtrl.create(TermsAndConditionsPage);
-    modal.present();
+  signIn() {
+    this.nav.push(PhoneNumberPage);
   }
 
 }

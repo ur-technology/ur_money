@@ -11,6 +11,7 @@ import {BigNumber} from 'bignumber.js';
 @Injectable()
 export class AuthService {
   public sponsorReferralCode: string;
+  public version: number;
   public phone: string;
   public countryCode: string;
   public email: string;
@@ -141,6 +142,34 @@ export class AuthService {
     });
   }
 
+  requestPhoneRegistration(){
+    let self = this;
+    return new Promise((resolve, reject) => {
+      let taskRef = firebase.database().ref('/phoneRegistrationQueue/tasks').push(
+        {
+          phone: this.phone,
+          sponsorReferralCode: this.sponsorReferralCode || null,
+          email: this.email || null,
+          authVersion: this.version || null
+        }
+      );
+      taskRef.then(() => {
+        self.taskId = taskRef.key;
+        log.debug(`request queued to ${taskRef.toString()}`);
+        let stateRef = taskRef.child('_state');
+        stateRef.on('value', (snapshot) => {
+          let state = snapshot.val();
+          if (!_.includes([undefined, null, 'sign_up_successful’'], state)) {
+            stateRef.off('value');
+            resolve(state);
+          }
+        });
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
   requestAuthenticationCode() {
     let self = this;
     return new Promise((resolve, reject) => {
@@ -148,7 +177,8 @@ export class AuthService {
         {
           phone: this.phone,
           sponsorReferralCode: this.sponsorReferralCode || null,
-          email: this.email || null
+          email: this.email || null,
+          authVersion: this.version || null
         }
       );
       taskRef.then(() => {

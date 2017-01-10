@@ -12,10 +12,12 @@
         "terms3": "Términos y Acuerdos de Servicio",
         "terms4": "y reclamar tu UR.",
         "agreeAndContinue": "Aceptar y continuar",
-        "learnMore": "Conocer más"
+        "learnMore": "Conocer más",
+        "signUp": "Regístrate",
+        "signIn": "Inicia sesión"
     },
     "phone-number": {
-        "title": "Ingresa tu número de teléfono",
+        "title": "Inicio de sesión",
         "heading": "Por favor, confirma tu código de país e ingresa tu número de teléfono",
         "phoneNumber": "Número de teléfono",
         "numberConfirmation": "Confirmación de número",
@@ -26,6 +28,19 @@
         "noInviteFoundTitle": "Invitación no encontrada",
         "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
         "betaProgramButton": "Estoy en el programa UR Money Beta"
+    },
+    "sign-up":{
+      "title": "Registro",
+      "referralCode": "Código de referencia",
+      "placeholderReferralCode": "Ingresa el código de referencia de tu patrocinador",
+      "headingReferral": "Confirma tu país, ingresa tu número de teléfono y el código de referencia",
+      "headingEmail": "Confirma tu país, ingresa tu número de teléfono y el correo electrónico",
+      "placeholderEmail": "Ingrese el correo electrónico del programa beta",
+      "subheadingButtonEmail": "Regístrarse con correo electrónico mejor",
+      "subheadingButtonReferal": "Regístrarse con código de referencia mejor",
+      "userAlreadyExists": "Este número de teléfono ya existe en nuestros registros, por favor ve a la página Inicio de sesión",
+      "gotoSignIn": "Iniciar sesión",
+      "sponsorNotFoundMessage": "El código de referencia es incorrecto"
     },
     "choose-contact":{
       "title": "Escoja contacto o ingrese dirección UR",

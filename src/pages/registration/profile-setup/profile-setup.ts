@@ -20,7 +20,7 @@ export class ProfileSetupPage {
     public nav: NavController,
     public auth: AuthService
   ) {
-    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'middleName', 'email', 'countryCode', 'name']);
+    this.profile = _.pick(this.auth.currentUser, ['firstName', 'lastName', 'email', 'countryCode']);
     if (_.isEmpty(_.trim(this.profile.name || ''))) {
       this.profile.name = `${this.auth.currentUser.firstName} ${this.auth.currentUser.lastName}`;
     }
@@ -28,8 +28,6 @@ export class ProfileSetupPage {
     let formElements: any = {
       firstName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       lastName: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
-      middleName: new FormControl(''),
-      name: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       countryCode: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, CustomValidator.emailValidator])
     };
@@ -62,7 +60,7 @@ export class ProfileSetupPage {
     this.profile = _.omitBy(this.profile, _.isUndefined);
     this.auth.currentUserRef.update(this.profile).then(() => {
       _.merge(this.auth.currentUser, this.profile);
-      this.nav.setRoot(WalletSetupPage);
+      this.nav.push(WalletSetupPage);
     }).catch((error) => {
       log.warn('unable to save profile info');
     });
