@@ -1,6 +1,6 @@
 {
   "name": "URMoney",
-  "description": "ur_money4: An Ionic project",
+  "description": "A secure criptocurrency",
   "private": true,
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
@@ -53,6 +53,7 @@
     "typescript": "2.0.6"
   },
   "cordovaPlugins": [
+    "cordova-plugin-console",
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
@@ -78,8 +79,15 @@
         "APP_NAME": "UR Money"
       }
     },
-    "cordova-plugin-file",
-    "cordova-plugin-console"
+    {
+      "id": "ionic-plugin-deeplinks",
+      "locator": "ionic-plugin-deeplinks",
+      "variables": {
+        "URL_SCHEME": "ur_money",
+        "DEEPLINK_SCHEME": "https",
+        "DEEPLINK_HOST": "ur-money-staging.firebaseapp.com"
+      }
+    }
   ],
   "cordovaPlatforms": [
     {

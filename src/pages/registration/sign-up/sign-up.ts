@@ -51,7 +51,7 @@ export class SignUpPage {
 
   private addControlByType() {
     if (this.signUpType === 'referralCode') {
-      this.mainForm.addControl('referralCode', new FormControl('', Validators.required))
+      this.mainForm.addControl('referralCode', new FormControl(this.auth.sponsorReferralCode || '', Validators.required))
       this.mainForm.removeControl('email');
     } else {
       this.mainForm.addControl('email', new FormControl('', [Validators.required, CustomValidator.emailValidator]))
@@ -148,7 +148,7 @@ export class SignUpPage {
           alert.present();
           break;
 
-          default:
+        default:
           self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
       }
     }, (error) => {
