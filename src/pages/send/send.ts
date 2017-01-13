@@ -145,7 +145,7 @@ export class SendPage {
       createdAt: firebase.database.ServerValue.TIMESTAMP,
       updatedAt: firebase.database.ServerValue.TIMESTAMP,
       sender: _.merge(_.pick(this.auth.currentUser, ['name', 'profilePhotoUrl']), { userId: this.auth.currentUserId }),
-      receiver: this.contact ? _.pick(this.contact, ['name', 'profilePhotoUrl', 'userId']) : { name: 'Unknown Recipient"' },
+      receiver: this.contact ? _.pick(this.contact, ['name', 'profilePhotoUrl', 'userId']) : { name: 'Unknown Recipient' },
       createdBy: 'UR Money',
       type: 'sent',
       amount: urTransaction.value,
