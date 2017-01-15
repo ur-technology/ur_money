@@ -102,14 +102,14 @@
   <plugin name="ionic-plugin-deeplinks" spec="~1.0.14">
       <variable name="URL_SCHEME" value="ur_money" />
       <variable name="DEEPLINK_SCHEME" value="https" />
-      <variable name="DEEPLINK_HOST" value="ur-money-staging.firebaseapp.com" />
+      <variable name="DEEPLINK_HOST" value="web.ur.technology" />
       <variable name="ANDROID_PATH_PREFIX" value="/" />
       <variable name="ANDROID_2_PATH_PREFIX" value="/" />
       <variable name="ANDROID_3_PATH_PREFIX" value="/" />
       <variable name="ANDROID_4_PATH_PREFIX" value="/" />
       <variable name="ANDROID_5_PATH_PREFIX" value="/" />
-      <variable name="DEEPLINK_2_SCHEME" value=" " />
-      <variable name="DEEPLINK_2_HOST" value=" " />
+      <variable name="DEEPLINK_2_SCHEME" value="https" />
+      <variable name="DEEPLINK_2_HOST" value="ur-money-staging.firebaseapp.com" />
       <variable name="DEEPLINK_3_SCHEME" value=" " />
       <variable name="DEEPLINK_3_HOST" value=" " />
       <variable name="DEEPLINK_4_SCHEME" value=" " />

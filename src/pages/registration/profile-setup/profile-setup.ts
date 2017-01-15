@@ -58,6 +58,7 @@ export class ProfileSetupPage {
 
   submit() {
     this.profile = _.omitBy(this.profile, _.isUndefined);
+    this.profile.name = `${this.profile.firstName} ${this.profile.lastName}`;
     this.auth.currentUserRef.update(this.profile).then(() => {
       _.merge(this.auth.currentUser, this.profile);
       this.nav.push(WalletSetupPage);

@@ -6,6 +6,7 @@ import { App } from 'ionic-angular';
 import {AngularFire} from 'angularfire2';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import * as _ from 'lodash';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'chat-list',
@@ -14,6 +15,7 @@ import * as _ from 'lodash';
 export class ChatListComponent {
   chats: any[];
   x: any[];
+  chatSummarySubscription: Subscription;
 
   constructor(public nav: NavController, public auth: AuthService, public angularFire: AngularFire, public app: App, public translate: TranslateService) {
   }
@@ -22,12 +24,18 @@ export class ChatListComponent {
     this.load();
   }
 
+  ngOnDestroy() {
+    if (this.chatSummarySubscription && !this.chatSummarySubscription.closed) {
+      this.chatSummarySubscription.unsubscribe();
+    }
+  }
+
   showNoChatsYetMessage() {
     return !this.chats || this.chats.length === 0;
   }
 
   load() {
-    this.angularFire.database.list(`/users/${this.auth.currentUserId}/chatSummaries`).subscribe(data => {
+    this.chatSummarySubscription = this.angularFire.database.list(`/users/${this.auth.currentUserId}/chatSummaries`).subscribe(data => {
       this.chats = _.filter(data, (chatSummary: any) => {
         return chatSummary.lastMessage;
       });

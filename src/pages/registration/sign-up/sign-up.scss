@@ -1,5 +1,26 @@
 page-sign-up {
+  .welcome-ur {
+    padding: 2.3rem 5rem 1.5rem;
+    background-size: cover;
+    text-align: center;
+    width: 100%;
+  }
+
   .sub-heading {
+    font-size: 1.6rem;
+    text-align: justify;
+    margin-top: 10px;
+    // margin: 45px 6%;
+    b {
+      color: color($colors, dark);
+    }
+  }
+
+  .signup-type {
+    font-size: 1rem;
+  }
+
+  .sub-heading-center {
     font-size: 1.6rem;
     text-align: center;
     margin: 45px 6%;
@@ -16,17 +37,128 @@ page-sign-up {
   }
 
   .terms {
-    padding-top: 40px;
-    font-size: 1.1rem;
+    // padding-top: 40px;
+    font-size: 0.9rem;
     color: #323232;
   }
 
   .headingType {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .select-md {
     color: color($colors, primary);
-    padding-left: 0px;
+    // color: #4eb5e4;
+    padding-left: 0;
+  }
+
+  .label-md {
+    // color: #4eb5e4 !important;
+  }
+
+  ion-card-header {
+    background-color: color($colors, light);
+    // background-color: #c4cace;
+  }
+
+  .footer-card {
+    background-color: color($colors, light);
+  }
+
+  ion-item {
+    background-color: transparent !important;
+  }
+
+  .item-inner {
+    border-bottom-color: #8c8c8c !important;
+  }
+
+  .ur-logo img {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto 15px;
+  }
+
+  .main-splash {
+    background: rgba(241, 241, 241, 1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(241, 241, 241, 1)), color-stop(100%, rgba(196, 202, 206, 1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+    background: radial-gradient(ellipse at center, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+  }
+
+  .main-splash .ur-logo {
+    position: absolute;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+  }
+
+  .main-splash .ur-logo img {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto 15px;
+  }
+
+  .bottom-toolbar.toolbar {
+    min-height: 316px;
+    padding: 0;
+    height: 316px;
+  }
+
+  .bottom-toolbar .toolbar-background {
+    border: none;
+    background: rgba(241, 241, 241, 1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(241, 241, 241, 1)), color-stop(100%, rgba(196, 202, 206, 1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+    background: radial-gradient(ellipse at center, rgba(241, 241, 241, 1) 0%, rgba(196, 202, 206, 1) 100%);
+  }
+
+  ::-webkit-input-placeholder {
+    color: #595959!important;
+    opacity: 0.6 !important;
+  }
+
+  :-moz-placeholder {
+    /* Firefox 18- */
+    color: #595959!important;
+    opacity: 0.6 !important;
+  }
+
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #595959!important;
+    opacity: 0.6 !important;
+  }
+
+  :-ms-input-placeholder {
+    /* IE 10+ */
+    color: #595959!important;
+    opacity: 0.6 !important;
+  }
+
+  ::-ms-input-placeholder {
+    /* Edge */
+    color: #595959!important;
+    opacity: 0.6 !important;
+  }
+
+  :placeholder-shown {
+    /* Standard one last! */
+    color: #595959!important;
+    opacity: 0.6 !important;
+  }
+
+  .toolbar-background-md {
+    background-color: transparent;
+  }
+
+  .buttonInfo {
+    margin-top: 25px !important;
   }
 }

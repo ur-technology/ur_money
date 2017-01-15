@@ -37,6 +37,7 @@ import {AuthService} from '../services/auth';
 import {ChartDataService} from '../services/chart-data';
 import {ContactsService} from '../services/contacts';
 import {CountryListService} from '../services/country-list';
+import {DynamicLinkService} from '../services/dynamic-link';
 import {EncryptionService} from '../services/encryption';
 import {EventsService} from '../services/events';
 import {ToastService} from '../services/toast';
@@ -148,6 +149,6 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     TransactionsPage,
     SponsorWaitPage
   ],
-  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, DynamicLinkService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule { }

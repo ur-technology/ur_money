@@ -33,14 +33,19 @@
       "title": "Sign up",
       "referralCode": "Referral code",
       "placeholderReferralCode": "Enter your sponsor's referral code",
-      "headingReferral": "Please confirm your country, enter your phone number and the referral code",
+      "headingReferral": "Welcome! you have been invited by <b>{{sponsor}}</b> to be part of UR Money.",
+      "headingNoReferral": "Welcome. To be part of UR network, you have to enter your sponsor's referral code",
       "headingEmail": "Please confirm your country, enter your phone number and your email",
       "placeholderEmail": "Enter your beta program email",
       "subheadingButtonEmail": "Sign up with email instead",
       "subheadingButtonReferal": "Sign up with referral code instead",
       "userAlreadyExists": "This phone number already exists on our records, please go to sign in page",
       "gotoSignIn": "Sign In",
-      "sponsorNotFoundMessage": "The referral code is incorrect"
+      "sponsorNotFoundMessage": "There is no sponsor with that referral code, please try another referral code",
+      "sponsorDisabledMessage": "The sponsor is disabled, please try another referral code",
+      "enterFields": "Please enter all the fields",
+      "alertInfoReferral": "You need your sponsor's referral code in order to sign up. Please, ask the referral code to your sponsor or click on the invitation link that was sent to you.",
+      "alertInfoEmail": "If you joined our beta program, enter that email."
     },
     "choose-contact":{
       "title": "Choose contact or enter UR address",
@@ -243,7 +248,8 @@
         "request": "Request UR",
         "transactions": "Transactions",
         "about": "About UR",
-        "users": "Manage Users"
+        "users": "Manage Users",
+        "referralCode": "Referral code: "
     },
     "home": {
         "bonusGenerating": "Bonus Generation In Progress",
@@ -336,7 +342,8 @@
       "explanation1": "The more of your friends who join UR Money, the more UR you can earn.",
       "explanation2": "To get credit for referring your friends, send the personalized link below using your favorite social network or messaging app.",
       "personalizedReferralLink": "Personalized Referral Link",
-      "copyToClipboard": "Copy To Clipboard"
+      "copyToClipboard": "Copy To Clipboard",
+      "referralCode": "This is your referral code: "
     },
     "about": {
         "heading": "About UR",

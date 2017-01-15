@@ -7,6 +7,7 @@ import {ContactsService} from '../services/contacts';
 import {Config} from '../config/config';
 import { FirebaseApp } from 'angularfire2';
 import {BigNumber} from 'bignumber.js';
+import {DynamicLinkService} from './dynamic-link';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,7 @@ export class AuthService {
   constructor(
     public angularFire: AngularFire,
     public contactsService: ContactsService,
+    private dynamicLinkService: DynamicLinkService,
     @Inject(FirebaseApp) firebase: any
   ) {
   }
@@ -47,11 +49,14 @@ export class AuthService {
               self.currentUser.countryCode = self.countryCode;
               self.currentUserRef.update({ countryCode: self.currentUser.countryCode });
             }
+            if (self.currentUser && self.currentUser.referralCode) {
+              this.dynamicLinkService.generateDynamicLink(self.currentUser.referralCode);
+            }
             self.listenForWalletChange();
             callback(undefined);
           });
         } else {
-          this.walletRef().off('value');
+          self.walletRef().off('value');
           self.phone = undefined;
           self.countryCode = undefined;
           self.email = undefined;
@@ -65,7 +70,6 @@ export class AuthService {
       callback(error);
     });
   }
-
   reloadCurrentUser(): Promise<any> {
     let self = this;
     return new Promise((resolve, reject) => {
@@ -78,8 +82,8 @@ export class AuthService {
 
   currentBalanceWei() {
     let currentBalance = this.currentUser &&
-    this.currentUser.wallet &&
-    this.currentUser.wallet.currentBalance;
+      this.currentUser.wallet &&
+      this.currentUser.wallet.currentBalance;
     return new BigNumber(currentBalance || 0);
   }
 
@@ -98,7 +102,7 @@ export class AuthService {
     return firebase.database().ref(`/users/${this.currentUserId}/wallet`);
   }
 
-  listenForWalletChange(){
+  listenForWalletChange() {
     this.walletRef().on('value', snapshot => {
       this.currentUser.wallet = snapshot.val();
       this.walletChanged.emit({});
@@ -142,7 +146,7 @@ export class AuthService {
     });
   }
 
-  requestPhoneRegistration(){
+  requestPhoneRegistration() {
     let self = this;
     return new Promise((resolve, reject) => {
       let taskRef = firebase.database().ref('/phoneRegistrationQueue/tasks').push(
@@ -183,7 +187,6 @@ export class AuthService {
       );
       taskRef.then(() => {
         self.taskId = taskRef.key;
-        log.debug(`request queued to ${taskRef.toString()}`);
         let stateRef = taskRef.child('_state');
         stateRef.on('value', (snapshot) => {
           let state = snapshot.val();
@@ -211,7 +214,6 @@ export class AuthService {
         submittedAuthenticationCode: submittedAuthenticationCode,
         _state: 'code_matching_requested'
       }).then(() => {
-        log.debug(`set submittedAuthenticationCode to ${submittedAuthenticationCode} at ${taskRef.toString()}`);
         let resultRef = taskRef.child('result');
         resultRef.on('value', (snapshot) => {
           let result = snapshot.val();
@@ -258,7 +260,7 @@ export class AuthService {
     if ((status !== 'initial') && (this.currentUser.sponsor) && (!this.currentUser.sponsor.announcementTransactionConfirmed)) {
       status = 'waiting-for-sponsor';
     }
-    if(this.currentUser.disabled && this.currentUser.disabled === true){
+    if (this.currentUser.disabled && this.currentUser.disabled === true) {
       status = 'disabled';
     }
 
@@ -275,18 +277,10 @@ export class AuthService {
     return mode === 'production' ? '' : `${_.startCase(mode)} mode`;
   }
 
-  referralLink(window): string {
+  referralLink(): string {
     if (!this.currentUser) {
       return undefined;
     }
-    let base: string;
-    if (Config.targetPlatform === 'web') {
-      base = window.location.origin;
-    } else if (this.envMode() === 'production') {
-      base = 'https://web.ur.technology';
-    } else {
-      base = 'https://ur-money-staging.firebaseapp.com';
-    }
-    return `${base}/r/${this.currentUser.referralCode}`;
+    return this.dynamicLinkService.getGeneratedDynamicLink();
   }
 }
