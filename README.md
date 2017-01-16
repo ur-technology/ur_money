@@ -2,26 +2,25 @@
 
 ## Install global dependencies (skip if already installed)
 ```script
-npm install -g ionic@2.0.0-beta.37
+npm install -g ionic@2.1.17
 npm install -g cordova@6.3.1
 npm install -g gulp, typings
 ```
 
-## Install local dependencies
+## Install code and npm packages
 ```script
 git clone git@github.com:ur-technology/ur_money.git
 cd ur_money
 npm install
-typings install
 ```
+
+## Create environment configuaration file
+* Run `cp src/config/config.staging.ts src/config/config.ts`
+* Edit `src/config/config.ts` to change or add configuration values
 
 ## Install ionic platforms and cordova plugins
 * First, install required dev tools (Xcode for iOS, Android SDK for Android)
 * Next, run: `ionic state restore`
-
-## Create environment configuaration file
-* Run `cp app/config/env.staging.json app/config/env.json`
-* Edit app/config/env.json to change or add configuration values
 
 ## Run on device
 * Run `ionic run android -c -l` or `ionic run ios -c -l`
