@@ -1,10 +1,16 @@
 # ur_money
 
 ## Install global dependencies (skip if already installed)
+* Check if you have the supported version of ionic framework
+* Run `ionic info`
+* It should show `Ionic Framework Version: 2.0.0-rc.5`
+* If you see a number below `2.0.0-rc.5` then first uninstall that old version using `npm uninstall -g ionic`
+
+* Continue with the installation
+
 ```script
-npm install -g ionic@2.1.17
+npm install -g ionic
 npm install -g cordova@6.3.1
-npm install -g gulp, typings
 ```
 
 ## Install code and npm packages
@@ -28,10 +34,6 @@ npm install
 * [installation-android.md](doc/installation-android.md)
 * [installation-ios.md](doc/installation-ios.md)
 
-## To reload all plugins
-``` script
-gulp plugins
-```
 
 ## To run as a web server
 ```script
