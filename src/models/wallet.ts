@@ -149,11 +149,9 @@ export class WalletModel {
         nonce: eth.getTransactionCount(from),
         to: to,
         from: from,
-        value: web3.toWei(amount),
-        gasPrice: eth.gasPrice,
-        gasLimit: eth.getBlock(eth.blockNumber).gasLimit
+        value: web3.toWei(amount)
       };
-      rawTx.gas = eth.estimateGas(rawTx);
+      rawTx.gasLimit = eth.estimateGas(rawTx);
       let tx = new ethTx(rawTx);
       let privateKey = self.getPrivate(false);
       tx.sign(privateKey);
