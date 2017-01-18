@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth';
 import {CustomValidator} from '../../validators/custom';
-import {UserModel} from '../../models/user';
+import {UserModel} from '../../models/user.model';
 import {ChangeSponsorModal} from './change-sponsor';
 import * as _ from 'lodash';
 import * as log from 'loglevel';

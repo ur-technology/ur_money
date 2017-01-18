@@ -9,7 +9,7 @@ import {BigNumber} from 'bignumber.js';
 import {NativeStorage} from 'ionic-native';
 import {HomePage} from '../home/home';
 import {WalletModel} from '../../models/wallet';
-import {ChartDataService} from '../../services/chart-data';
+import {ChartDataService} from '../../services/chart-data.service';
 import {ToastService} from '../../services/toast';
 import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';

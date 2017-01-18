@@ -1,5 +1,5 @@
 import { NavController, NavParams, Platform} from 'ionic-angular';
-import {ChartDataService} from '../../services/chart-data';
+import {ChartDataService} from '../../services/chart-data.service';
 import {ElementRef, Inject, Component} from '@angular/core';
 import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
 import * as moment from 'moment';

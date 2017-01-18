@@ -13,7 +13,7 @@ export class EventsService {
 
   loadEvents() {
     this.events = [];
-    firebase.database().ref(`/users/${this.auth.currentUserId}/events/`)
+    firebase.database().ref(`/users/${this.auth.currentUserId}/events/`).orderByChild('updatedAt').limitToLast(50)
       .on('child_added', snapshot => {
         if (snapshot.exists()) {
           let index = _.findIndex(this.events, _.pick(snapshot.val(), 'sourceId'));
@@ -26,7 +26,7 @@ export class EventsService {
       });
 
     firebase.database().ref(`/users/${this.auth.currentUserId}/events/`)
-      .on('child_changed', snapshot => {
+    .on('child_changed', snapshot => {
         if (snapshot.exists()) {
           let index = _.findIndex(this.events, _.pick(snapshot.val(), 'sourceId'));
           this.events.splice(index, 1, snapshot.val());

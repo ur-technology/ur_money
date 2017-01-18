@@ -283,7 +283,8 @@
         "received": "received",
         "earned": "earned",
         "earnedSignUpBonus": "Earned-Sign Up Bonus",
-        "earnedReferralBonus": "Earned-Referral Bonus"
+        "earnedReferralBonus": "Earned-Referral Bonus",
+        "loadMore": "Load more..."
     },
     "transactions": {
         "title": "Transactions",

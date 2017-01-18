@@ -203,10 +203,10 @@
                 ".read": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
                 ".write": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
                 "transactions": {
-                    ".indexOn": ["sortKey"]
+                    ".indexOn": ["sortKey", "type", "updatedAt"]
                 },
                 "events": {
-                    ".indexOn": "notificationProcessed"
+                    ".indexOn": ["notificationProcessed", "updatedAt"]
                 }
             }
         }

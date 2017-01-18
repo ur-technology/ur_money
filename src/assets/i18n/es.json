@@ -283,7 +283,8 @@
         "received": "recibido",
         "earned": "ganado",
         "earnedSignUpBonus": "Bono de inscripción",
-        "earnedReferralBonus": "Bono de referencia"
+        "earnedReferralBonus": "Bono de referencia",
+        "loadMore": "Cargar más..."
     },
     "transactions": {
         "title": "Transacciones",

@@ -2,8 +2,8 @@ import {Injectable, EventEmitter, Inject} from '@angular/core';
 import {Platform} from 'ionic-angular';
 import {Contacts} from 'ionic-native';
 import {FakeContactsSource} from '../models/fake-contacts-source';
-import {ContactModel} from '../models/contact';
-import {UserModel} from '../models/user';
+import {ContactModel} from '../models/contact.model';
+import {UserModel} from '../models/user.model';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
@@ -90,10 +90,10 @@ export class ContactsService {
             email: self.getBestEmail(rawContact.emails),
             profilePhotoUrl: null // TODO: assign this
           };
-          let contact: ContactModel = new ContactModel('', {
-            name: UserModel.fullName(originalContact),
-            original: _.omitBy(originalContact, _.isNil) // remove null or undefined fields
-          });
+          let contact: ContactModel = new ContactModel();
+          contact.name = UserModel.fullName(originalContact);
+          contact.original = _.omitBy(originalContact, _.isNil);
+
           contacts.push(contact);
         });
         log.trace(`retrieved ${contacts.length} contacts in ${new Date().getTime() - startTime} milliseconds`);

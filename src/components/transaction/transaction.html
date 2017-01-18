@@ -43,12 +43,14 @@
             <ion-avatar item-left>
                 <img src="assets/img/icon.png">
             </ion-avatar>
-            <h2>{{transaction.title}} <span class="item-date-time">{{transaction.createdAt|dateAndTime}}</span></h2>
+            <h2>{{transaction.title}} <span class="item-date-time">{{transaction.updatedAt|dateAndTime}}</span></h2>
             <p>{{transaction.messageText}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">{{"transaction.seeMore" | translate}}</a></span>
               <span class="transaction-filter-{{transaction.type}}">{{displayableTransactionType(transaction.type)}}</span></p>
             <span class="icon trans-ur"
                 item-right>{{weiToURString(transaction.amount || "0")}}<br/>  UR</span>
         </ion-item>
     </div>
-
+    <ion-item text-center *ngIf="transactionType==='all' && filteredTransactions.length >= numberOfItemsToShow">
+      <button ion-button clear (click)="loadTransactionsByType()">{{"transaction.loadMore" | translate}} </button>
+    </ion-item>
 </div>

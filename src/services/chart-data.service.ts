@@ -7,7 +7,7 @@ import {BigNumber} from 'bignumber.js';
 
 @Injectable()
 export class ChartDataService {
-  public duration: number = 2;
+  public duration: number = 1;
   public unitOfTime: moment.UnitOfTime = 'weeks';
   public startingTime: moment.Moment;
   public endingTime: moment.Moment;
@@ -26,7 +26,6 @@ export class ChartDataService {
     // use fixed estimated fee for performance reasons
     this.estimatedFeeUR = new BigNumber(0.1);
     this.estimatedFeeWei = this.estimatedFeeUR.times(1000000000000000000);
-
     this.loadPointsWhenTransactionsChange();
   }
 
@@ -47,7 +46,6 @@ export class ChartDataService {
       });
 
       this.priorBalanceWei = new BigNumber(priorTransaction ? priorTransaction.balance : 0);
-
       let priorBalanceUR = priorTransaction ? this.convertWeiStringToApproximateUR(priorTransaction.balance) : 0;
       this.points.unshift([this.startingTime.valueOf(), priorBalanceUR]);
     } else {
@@ -114,7 +112,7 @@ export class ChartDataService {
 
   private loadPointsWhenTransactionsChange() {
     let self = this;
-    firebase.database().ref(`/users/${self.auth.currentUserId}/transactions`).orderByChild('sortKey').on('value', (snapshot) => {
+    firebase.database().ref(`/users/${self.auth.currentUserId}/transactions`).orderByChild('sortKey').limitToFirst(50).on('value', (snapshot) => {
       let transactions: any[] = _.values(snapshot.val());
       self.transactions = _.sortBy(_.filter(transactions, 'sortKey'), 'sortKey');
       self.pendingTransactions = _.reject(transactions, 'sortKey');

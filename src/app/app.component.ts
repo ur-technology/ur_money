@@ -6,7 +6,7 @@ import {ContactsAndChatsPage} from '../pages/contacts-and-chats/contacts-and-cha
 import {TransactionsPage} from '../pages/transactions/transactions';
 import { AboutPage } from '../pages/about/about';
 import {AuthService} from '../services/auth';
-import {ContactsService} from '../services/contacts';
+import {ContactsService} from '../services/contacts.service';
 import {Config} from '../config/config'
 import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
 import {WelcomePage} from '../pages/registration/welcome/welcome';

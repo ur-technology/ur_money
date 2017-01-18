@@ -141,7 +141,7 @@ export class WalletSetupPage {
     self.auth.currentUser.wallet = {
       address: self.profile.address
     };
-    self.auth.currentUserRef.update({
+    self.auth.currentUser.update({
       wallet: {
         address: self.profile.address,
         createdAt: firebase.database.ServerValue.TIMESTAMP

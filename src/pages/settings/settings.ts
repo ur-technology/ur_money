@@ -95,11 +95,10 @@ export class SettingsPage {
         transactionNotifications: self.mainForm.value.transactionNotifications
       }
     };
-    self.auth.currentUserRef.update(_.omitBy(profile, _.isNil)).then(() => {
-      self.auth.reloadCurrentUser();
+    self.auth.currentUser.update(_.omitBy(profile, _.isNil)).then(() => {
       let toast = this.toastCtrl.create({ message: this.translate.instant('settings.profileUpdated'), duration: 3000, position: 'bottom' });
       toast.present();
-      this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });
+      this.nav.setRoot(HomePage);
     }).catch((error) => {
       log.warn('unable to save profile');
     });

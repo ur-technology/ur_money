@@ -34,11 +34,11 @@ import {OrderBy} from '../pipes/orderBy';
 import {Round} from '../pipes/round';
 import {Timestamp} from '../pipes/timestamp';
 import {AuthService} from '../services/auth';
-import {ChartDataService} from '../services/chart-data';
-import {ContactsService} from '../services/contacts';
+import {ChartDataService} from '../services/chart-data.service';
+import {ContactsService} from '../services/contacts.service';
 import {CountryListService} from '../services/country-list';
 import {EncryptionService} from '../services/encryption';
-import {EventsService} from '../services/events';
+import {EventsService} from '../services/events.service';
 import {ToastService} from '../services/toast';
 import {TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import {Http, HttpModule} from '@angular/http';
@@ -47,6 +47,7 @@ import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FormsModule } from '@angular/forms';
 import {Config} from '../config/config';
 import {SponsorWaitPage} from '../pages/sponsor-wait/sponsor-wait';
+import {UserService} from '../services/user.service';
 
 
 export const firebaseConfig = {
@@ -148,6 +149,6 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     TransactionsPage,
     SponsorWaitPage
   ],
-  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule { }

@@ -2,7 +2,7 @@ import { Component, Inject} from '@angular/core';
 import { NavController, Platform, ToastController} from 'ionic-angular';
 import { FirebaseApp } from 'angularfire2';
 import { App } from 'ionic-angular';
-import {EventsService} from '../../services/events';
+import {EventsService} from '../../services/events.service';
 import {ChatPage} from '../../pages/chat/chat';
 import {TransactionsPage} from '../../pages/transactions/transactions';
 import {LocalNotifications} from 'ionic-native';

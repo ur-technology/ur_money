@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import {NavController, NavParams, Platform, AlertController} from 'ionic-angular';
 import {SocialSharing, Clipboard, Toast} from 'ionic-native';
-import {ContactsService} from '../../services/contacts';
+import {ContactsService} from '../../services/contacts.service';
 import {AuthService} from '../../services/auth';
 import { App } from 'ionic-angular';
 import * as _ from 'lodash';

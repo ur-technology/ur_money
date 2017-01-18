@@ -3,7 +3,7 @@ import {TranslateService} from 'ng2-translate/ng2-translate';
 import {HomePage} from '../../home/home';
 import { Component } from '@angular/core';
 import {Config} from '../../../config/config';
-import {ContactsService} from '../../../services/contacts';
+import {ContactsService} from '../../../services/contacts.service';
 import {AuthService} from '../../../services/auth';
 
 @Component({

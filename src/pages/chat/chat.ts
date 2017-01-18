@@ -38,15 +38,13 @@ export class ChatPage {
   }
 
   onKeyboardShow(e) {
-    this.scrollToBottom();
+    this.scrollToBottomPage();
   }
 
-  scrollToBottom() {
+  scrollToBottomPage() {
     let self = this;
     setTimeout(() => {
-      if (self) {
-        self.content.scrollToBottom();
-      }
+      self.content.scrollToBottom();
     }, 50);
   }
 
@@ -97,7 +95,7 @@ export class ChatPage {
 
   lookupChatSummaryViaContactAndLoadMessages() {
     let self = this;
-    firebase.database().ref(`/users/${self.auth.currentUser.$key}/chatSummaries`).once('value', (chatSummariesSnapshot) => {
+    firebase.database().ref(`/users/${self.auth.currentUser.key}/chatSummaries`).once('value', (chatSummariesSnapshot) => {
       if (chatSummariesSnapshot.exists()) {
         let chatSummaries = chatSummariesSnapshot.val();
         self.chatId = _.findKey(chatSummaries, (chatSummary: any, chatId: string) => {
@@ -117,10 +115,13 @@ export class ChatPage {
   }
 
   loadMessages() {
-    this.messagesRef = this.angularFire.database.list(`/users/${this.auth.currentUserId}/chats/${this.chatId}/messages`).subscribe(data => {
-      this.messages = data;
-      this.scrollToBottom();
-    });
+    if (!this.messagesRef || this.messagesRef.closed) {
+      this.messagesRef = this.angularFire.database.list(`/users/${this.auth.currentUserId}/chats/${this.chatId}/messages`).subscribe(data => {
+        this.messages = data;
+        this.scrollToBottomPage();
+      });
+    }
+
   }
 
   isMessageFromReceiver(message: any) {

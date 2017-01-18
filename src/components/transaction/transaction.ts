@@ -1,7 +1,7 @@
 import { Component, Input, Inject, SimpleChanges} from '@angular/core';
 import { NavController} from 'ionic-angular';
 import {BigNumber} from 'bignumber.js';
-import {ChartDataService} from '../../services/chart-data';
+import {ChartDataService} from '../../services/chart-data.service';
 import {AuthService} from '../../services/auth';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
@@ -21,6 +21,8 @@ export class TransactionComponent {
   filteredTransactionsTotal: any = new BigNumber(0);
   lastUpdated: any;
   filterOption: string = 'all';
+  lastValue: any;
+  numberOfItemsToShow: number = 20;
   @Input() transactionType: string;
 
   constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, @Inject(FirebaseApp) firebase: any) {
@@ -57,20 +59,56 @@ export class TransactionComponent {
 
   private loadTransactionsByType() {
     let self = this;
-    self.showSpinner = true;
-    let query = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/`).orderByChild('type');
-    if (self.transactionType !== 'all') {
+    let query;
+
+    if (self.transactionType === 'all') {
+      self.showSpinner = self.transactions.length === 0 ? true : false;
+      query = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/`).orderByChild('updatedAt');
+      if (self.lastValue) {
+        query = query.endAt(self.lastValue);
+      }
+      query = query.limitToLast(self.numberOfItemsToShow);
+      query.once('value', snapshot => {
+        let tempArray = [];
+        let obj;
+        for (let key in snapshot.val()) {
+          obj = snapshot.val()[key];
+          obj.key = key;
+          tempArray.push(obj);
+        }
+
+        self.transactions = _.unionBy(self.transactions, tempArray, 'key');
+
+        self.transactions = _.orderBy(self.transactions, 'updatedAt', ['desc']);
+        if (self.transactions.length > 0) {
+          self.lastValue = self.transactions[self.transactions.length - 1].updatedAt;
+        }
+
+        self.filterTransactions();
+        self.showSpinner = false;
+      });
+
+    } else {
+      self.showSpinner = true;
+      query = firebase.database().ref(`/users/${self.auth.currentUserId}/transactions/`).orderByChild('type');
       query = query.equalTo(self.transactionType);
+      query.once('value', snapshot => {
+        self.showSpinner = false;
+        self.transactions = _.values(snapshot.val());
+        self.filterTransactions();
+      });
     }
-    query.once('value', snapshot => {
-      self.showSpinner = false;
-      self.transactions = _.values(snapshot.val());
-      self.filterTransactions();
-    });
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.resetVariables();
     this.loadTransactionsByType();
+  }
+
+  private resetVariables() {
+    this.lastValue = null;
+    this.transactions = [];
   }
 
   private startTime() {
@@ -111,5 +149,7 @@ export class TransactionComponent {
         return 'UR';
     }
   }
+
+
 
 }

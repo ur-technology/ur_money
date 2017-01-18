@@ -11,9 +11,5 @@ export class ContactModel extends FirebaseModel {
   email: string;
   original: any;
 
-  constructor(public _containerPath: string, fieldValues: Object) {
-    super(_containerPath, fieldValues);
-    // do stuff here
-  }
 
 }

@@ -1,12 +1,13 @@
 import {Injectable, Inject, EventEmitter} from '@angular/core';
-import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+import {AngularFire} from 'angularfire2';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {Subscription} from 'rxjs';
-import {ContactsService} from '../services/contacts';
+import {ContactsService} from '../services/contacts.service';
 import {Config} from '../config/config';
 import { FirebaseApp } from 'angularfire2';
 import {BigNumber} from 'bignumber.js';
+import {UserService} from './user.service';
+import {UserModel} from '../models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -16,8 +17,7 @@ export class AuthService {
   public email: string;
 
   public currentUserId: string;
-  public currentUserRef: FirebaseObjectObservable<any>;
-  public currentUser: any;
+  public currentUser: UserModel;
   public taskId: string;
   public firebaseConnectionCheckInProgress: boolean = false;
   public walletChanged = new EventEmitter();
@@ -25,6 +25,7 @@ export class AuthService {
   constructor(
     public angularFire: AngularFire,
     public contactsService: ContactsService,
+    private userService: UserService,
     @Inject(FirebaseApp) firebase: any
   ) {
   }
@@ -35,27 +36,25 @@ export class AuthService {
       firebase.auth().onAuthStateChanged((authData: any) => {
         if (authData) {
           self.currentUserId = authData.uid;
-          self.currentUserRef = self.angularFire.database.object(`/users/${self.currentUserId}`);
-          let userSubscription: Subscription = self.currentUserRef.subscribe((currentUser) => {
-            if (userSubscription && !userSubscription.closed) {
-              userSubscription.unsubscribe();
-            }
+
+          this.userService.getCurrentUser(self.currentUserId).then(currentUser => {
             self.currentUser = currentUser;
             if (self.countryCode &&
               (!self.currentUser.countryCode || !self.currentUser.countryCode.match(/^[A-Z]{2}$/))) {
               self.currentUser.countryCode = self.countryCode;
-              self.currentUserRef.update({ countryCode: self.currentUser.countryCode });
+              self.currentUser.update({ countryCode: self.currentUser.countryCode });
             }
             self.listenForWalletChange();
             callback(undefined);
           });
+
+
         } else {
           this.walletRef().off('value');
           self.phone = undefined;
           self.countryCode = undefined;
           self.email = undefined;
           self.currentUserId = undefined;
-          self.currentUserRef = undefined;
           self.currentUser = undefined;
           callback(undefined);
         }
@@ -68,8 +67,8 @@ export class AuthService {
   reloadCurrentUser(): Promise<any> {
     let self = this;
     return new Promise((resolve, reject) => {
-      firebase.database().ref(`/users/${self.currentUserId}`).once('value', data => {
-        self.currentUser = data.val();
+      self.userService.getCurrentUser(self.currentUserId).then(currentUser => {
+        self.currentUser = currentUser;
         resolve();
       });
     });
@@ -77,8 +76,8 @@ export class AuthService {
 
   currentBalanceWei() {
     let currentBalance = this.currentUser &&
-    this.currentUser.wallet &&
-    this.currentUser.wallet.currentBalance;
+      this.currentUser.wallet &&
+      this.currentUser.wallet.currentBalance;
     return new BigNumber(currentBalance || 0);
   }
 
@@ -97,7 +96,7 @@ export class AuthService {
     return firebase.database().ref(`/users/${this.currentUserId}/wallet`);
   }
 
-  listenForWalletChange(){
+  listenForWalletChange() {
     this.walletRef().on('value', snapshot => {
       this.currentUser.wallet = snapshot.val();
       this.walletChanged.emit({});
@@ -228,7 +227,7 @@ export class AuthService {
     if ((status !== 'initial') && (this.currentUser.sponsor) && (!this.currentUser.sponsor.announcementTransactionConfirmed)) {
       status = 'waiting-for-sponsor';
     }
-    if(this.currentUser.disabled && this.currentUser.disabled === true){
+    if (this.currentUser.disabled && this.currentUser.disabled === true) {
       status = 'disabled';
     }
 

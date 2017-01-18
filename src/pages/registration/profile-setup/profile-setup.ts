@@ -60,8 +60,7 @@ export class ProfileSetupPage {
 
   submit() {
     this.profile = _.omitBy(this.profile, _.isUndefined);
-    this.auth.currentUserRef.update(this.profile).then(() => {
-      _.merge(this.auth.currentUser, this.profile);
+    this.auth.currentUser.update(this.profile).then(() => {
       this.nav.setRoot(WalletSetupPage);
     }).catch((error) => {
       log.warn('unable to save profile info');
