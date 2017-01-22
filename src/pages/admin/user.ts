@@ -79,6 +79,7 @@ export class UserPage {
         r.disabledTag = r.disabled ? 'Disabled' : '';
         r.fraudSuspectedTag = r.fraudSuspected ? 'Fraud-Suspected' : '';
         r.duplicateTag = r.duplicate ? 'Duplicate' : '';
+        r.signUpBonusApprovedTag = r.signUpBonusApproved ? 'Bonus-Approved' : '';
       });
       this.referrals = _.sortBy(this.referrals, (r) => { return 1000000 - (r.downlineSize || 0);});
       this.showSpinner = false;
@@ -122,6 +123,13 @@ export class UserPage {
 
   goToUserPage(u: any) {
     this.nav.push(UserPage, { user: u });
+  }
+
+  approveSignUpBonus(user: any) {
+    user.signUpBonusApproved = true;
+    user.signUpBonusApprovedTag = 'Bonus-Approved';
+    firebase.database().ref(`/users/${user.userId}`).update({signUpBonusApproved: true});
+    return false;
   }
 
   country(u) {

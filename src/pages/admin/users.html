@@ -31,14 +31,15 @@
   </form>
 
   <ion-list class="users-list" *ngIf="!showSpinner">
-    <ion-item detail-none *ngFor="let r of (displayableUsers || [])" (click)="goToUserPage(r)" class="item item-avatar">
+    <ion-item detail-none *ngFor="let r of (displayableUsers || [])" class="item item-avatar">
       <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
       <ion-label>
         <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
         <p>{{r.phone}} {{r.email}} {{country(r)}}</p>
-        <p>{{r.moveRequestedTag}} {{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}}</p>
+        <p>{{r.moveRequestedTag}} {{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}} {{r.signUpBonusApprovedTag}}</p>
       </ion-label>
-      <button ion-button type="button" color="secondary" item-right>View</button>
+      <button ion-button type="button" color="secondary" item-right [disabled]="r.signUpBonusApproved" (click)="approveSignUpBonus(r)">Approve</button>
+      <button ion-button type="button" color="secondary" item-right (click)="goToUserPage(r)">View</button>
     </ion-item>
 
     <ion-item detail-none *ngIf="displayableUsers && displayableUsers.length === 0" class="item item-avatar">

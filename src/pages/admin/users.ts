@@ -56,7 +56,7 @@ export class UsersPage {
     if (!this.auth.currentUser.admin) {
       return;
     }
-    
+
     this.searchText = _.trim(this.searchText || '');
     if (!this.searchText) {
       return;
@@ -90,6 +90,7 @@ export class UsersPage {
         user.disabledTag = user.disabled ? 'Disabled' : '';
         user.fraudSuspectedTag = user.fraudSuspected ? 'Fraud-Suspected' : '';
         user.duplicateTag = user.duplicate ? 'Duplicate' : '';
+        user.signUpBonusApprovedTag = user.signUpBonusApproved ? 'Bonus-Approved' : '';
       });
       users = _.sortBy(users, (u) => { return 1000000 - (u.downlineSize || 0);});
       this.paginatedUsers = _.chunk(users, this.PAGE_SIZE);
@@ -118,6 +119,13 @@ export class UsersPage {
 
   goToUserPage(user: any) {
     this.nav.push(UserPage, { user: user });
+  }
+
+  approveSignUpBonus(user: any) {
+    user.signUpBonusApproved = true;
+    user.signUpBonusApprovedTag = 'Bonus-Approved';
+    firebase.database().ref(`/users/${user.userId}`).update({signUpBonusApproved: true});
+    return false;
   }
 
   country(u) {
