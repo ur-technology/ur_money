@@ -9,6 +9,18 @@
           ".read": true
         },
 
+        "sponsorLookupQueue": {
+            "tasks": {
+                "$task": {
+                    ".write": true,
+                    "result": {
+                        // allow reading sponsorlookupResult result of a particular record
+                        ".read": true
+                    }
+                }
+            }
+        },
+
         "phoneAuthQueue": {
             "tasks": {
                 ".indexOn": "_state",
