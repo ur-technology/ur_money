@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+  </ion-navbar>
+</ion-header>
+<ion-content class="main-splash" scroll="false">
+  <div class="ur-logo">
+    <img src="assets/img/ur-logo.png" alt="logo">
+    <img src="assets/img/ur-slogan.png" alt="logo">
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar class="bottom-toolbar">
+    <div class="welcome-ur">
+      <p *ngIf="sponsor && sponsor.found" text-center innerHTML="{{subheadingTitle}}">
+      </p>
+      <form [formGroup]="mainForm" >
+        <ion-list>
+          <ion-item>
+            <ion-select formControlName="country">
+              <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <div item-content class="phone-content">
+              <span class="countryCode">{{mainForm.value.country.telephoneCountryCode}}</span>
+              <ion-input formControlName="phone" placeholder="{{'phone-number.phoneNumber' | translate}}" type="tel"></ion-input>
+            </div>
+          </ion-item>
+          <ion-item *ngIf="signUpType=='referralCode' && referralCode.length==0">
+            <ion-label stacked>{{'sign-up.referralCode' | translate}}</ion-label>
+            <ion-input type="text" formControlName="referralCode" placeholder='{{ "sign-up.placeholderReferralCode" | translate }}'></ion-input>
+            <button ion-button outline round type="text" item-right class="buttonInfo" (click)="showInforeRerral()"><ion-icon name="help"></ion-icon></button>
+          </ion-item>
+          <ion-item *ngIf="signUpType!='referralCode'">
+            <ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
+            <ion-input type="text" formControlName="email" placeholder='{{ "sign-up.placeholderEmail" | translate }}'></ion-input>
+            <button ion-button outline round type="text" class="buttonInfo" item-right (click)="showInfoEmail()"><ion-icon name="help"></ion-icon></button>
+          </ion-item>
+          <button ion-button clear class="headingType" *ngIf="!sponsor" (click)="changeSignUpType()">{{subheadingButton}}</button>
+
+          <p class="terms" text-center>
+            {{ "welcome.terms" | translate }} {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
+          </p>
+          <div text-center>
+            <button ion-button round (click)="submit()">{{'welcome.agreeAndContinue' | translate}}</button>
+          </div>
+        </ion-list>
+      </form>
+    </div>
+  </ion-toolbar>
+</ion-footer>

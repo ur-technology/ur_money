@@ -4,7 +4,7 @@ import {FormGroup, FormControl} from '@angular/forms';
 import {AuthService} from '../../../services/auth';
 import {ToastService} from '../../../services/toast';
 import {AuthenticationCodePage} from '../authentication-code/authentication-code';
-import {EmailAddressPage} from '../email-address/email-address';
+import {SignUpPage} from '../sign-up/sign-up'
 import {CountryListService} from '../../../services/country-list';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 
@@ -92,7 +92,9 @@ export class PhoneNumberPage {
               {
                 text: this.translate.instant('phone-number.betaProgramButton'), handler: () => {
                   alert.dismiss().then(() => {
-                    this.nav.setRoot(EmailAddressPage);
+                    self.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
+                      self.nav.push(SignUpPage, {signUpType: 'email'});
+                    });
                   });
                 }
               }

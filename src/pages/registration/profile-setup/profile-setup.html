@@ -24,17 +24,9 @@
             <ion-input type="text" [(ngModel)]="profile.firstName" formControlName="firstName" clearInput="true"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>{{'profile-setup.middleName' | translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]="profile.middleName" formControlName="middleName" clearInput="true"></ion-input>
-          </ion-item>
-          <ion-item>
             <ion-label stacked>{{'profile-setup.lastName' | translate}}</ion-label>
             <ion-input [(ngModel)]="profile.lastName" formControlName="lastName" clearInput="true"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>{{'profile-setup.name' | translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]="profile.name" formControlName="name" clearInput="true"></ion-input>
-          </ion-item>
+          </ion-item>          
           <ion-item>
             <ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
             <ion-input type="email" [(ngModel)]="profile.email" formControlName="email" clearInput="true"></ion-input>

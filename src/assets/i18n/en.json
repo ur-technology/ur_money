@@ -7,17 +7,19 @@
     "welcome": {
         "welcomeText": "Welcome to UR",
         "description": "A secure cryptocurrency made for your world",
-        "terms": "Tap \"Agree & Continue\" to accept the",
+        "terms": "Click \"Agree & Continue\" to accept the",
         "terms2": "UR Technology",
         "terms3": "Terms and Service Agreement",
         "terms4": "and claim your UR.",
         "agreeAndContinue": "Agree & Continue",
-        "learnMore": "Learn more"
+        "learnMore": "Learn more",
+        "signUp": "Sign Up",
+        "signIn": "Sign In"
     },
     "phone-number": {
         "title": "Enter phone number",
         "heading": "Please confirm your country code and enter your phone number",
-        "phoneNumber": "Phone number",
+        "phoneNumber": "Sign In",
         "numberConfirmation": "Number confirmation",
         "phoneCorrect": "Is your phone number above correct?",
         "errorUserDisabled": "Your user account has been disabled.",
@@ -26,6 +28,19 @@
         "noInviteFoundTitle": "Invitation not found",
         "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
         "betaProgramButton": "I'm in the UR Money Beta Program"
+    },
+    "sign-up":{
+      "title": "Sign up",
+      "referralCode": "Referral code",
+      "placeholderReferralCode": "Enter your sponsor's referral code",
+      "headingReferral": "Please confirm your country, enter your phone number and the referral code",
+      "headingEmail": "Please confirm your country, enter your phone number and your email",
+      "placeholderEmail": "Enter your beta program email",
+      "subheadingButtonEmail": "Sign up with email instead",
+      "subheadingButtonReferal": "Sign up with referral code instead",
+      "userAlreadyExists": "This phone number already exists on our records, please go to sign in page",
+      "gotoSignIn": "Sign In",
+      "sponsorNotFoundMessage": "The referral code is incorrect"
     },
     "choose-contact":{
       "title": "Choose contact or enter UR address",

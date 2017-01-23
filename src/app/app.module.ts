@@ -7,10 +7,10 @@ import {ChatPage} from '../pages/chat/chat';
 import {ContactsAndChatsPage} from '../pages/contacts-and-chats/contacts-and-chats';
 import {AnnouncementInitiatedPage} from '../pages/announcement-initiated/announcement-initiated';
 import {AuthenticationCodePage} from '../pages/registration/authentication-code/authentication-code';
-import {EmailAddressPage} from '../pages/registration/email-address/email-address';
 import {IntroPage} from '../pages/registration/intro/intro';
 import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
 import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
+import {SignUpPage} from '../pages/registration/sign-up/sign-up'
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
 import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';
 import {PopoverChatPage} from '../pages/chat/popover-chat';
@@ -77,10 +77,10 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     InviteLinkPage,
     AnnouncementInitiatedPage,
     AuthenticationCodePage,
-    EmailAddressPage,
     IntroPage,
     NoInternetConnectionPage,
     PhoneNumberPage,
+    SignUpPage,
     ProfileSetupPage,
     WalletSetupPage,
     WelcomePage,
@@ -132,10 +132,10 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     InviteLinkPage,
     AnnouncementInitiatedPage,
     AuthenticationCodePage,
-    EmailAddressPage,
     IntroPage,
     NoInternetConnectionPage,
     PhoneNumberPage,
+    SignUpPage,
     ProfileSetupPage,
     WalletSetupPage,
     WelcomePage,

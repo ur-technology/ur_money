@@ -17,6 +17,10 @@ export class CountryListService {
         return this.countries;
     }
 
+    getDefaultContry(): any {
+      return this.countries.find((x) => { return x.countryCode === 'US'; });
+    }
+
     populateCountries() {
         this.countries = [
             {
