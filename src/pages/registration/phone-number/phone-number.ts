@@ -1,6 +1,6 @@
 import { NavController, Platform, AlertController, LoadingController} from 'ionic-angular';
 import {ElementRef, Inject, Component} from '@angular/core';
-import {FormGroup, FormControl} from '@angular/forms';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth';
 import {ToastService} from '../../../services/toast';
 import {AuthenticationCodePage} from '../authentication-code/authentication-code';
@@ -30,9 +30,10 @@ export class PhoneNumberPage {
     public translate: TranslateService,
     public toastService: ToastService
   ) {
+    this.countries = this.countryListService.getCountryData();
     this.elementRef = elementRef;
     this.phoneForm = new FormGroup({
-      country: new FormControl({ name: 'United States', telephoneCountryCode: '+1', countryCode: 'US' }),
+      country: new FormControl(this.countryListService.getDefaultContry(), Validators.required),
       phone: new FormControl('', (control) => {
         try {
           let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
