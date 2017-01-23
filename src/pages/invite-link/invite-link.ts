@@ -6,17 +6,16 @@ import { Component } from '@angular/core';
 declare var jQuery: any;
 
 @Component({
+  selector: 'invite-link',
   templateUrl: 'invite-link.html',
 })
 export class InviteLinkPage {
   public versionNumber: string;
   mainForm: FormGroup;
-  referralLink: string;
 
   constructor(public nav: NavController, public platform: Platform, public auth: AuthService) {
-    this.referralLink = this.auth.referralLink(window);
     let formElements: any = {
-      referralLink: new FormControl('', [Validators.required])
+      referralLink: new FormControl(this.auth.referralLink(), [Validators.required])
     };
     this.mainForm = new FormGroup(formElements);
   }

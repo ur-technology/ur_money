@@ -119,7 +119,7 @@ export class ContactsComponent {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
           // file: 'https://ur.technology/wp-content/uploads/2016/11/icon-android-192x192.png',
-          url: self.auth.referralLink(window),
+          url: self.auth.referralLink(),
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions');

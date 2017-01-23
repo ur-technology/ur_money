@@ -5,5 +5,7 @@ export let Config: any = {
   'firebaseApiKey': 'AIzaSyD6k2eb820GcuTOZk4usrADSu8gaJmsNkw',
   'stripePublishableKey': 'pk_test_SruvvOMun2cNIrOfiSvBDM8a',
   'targetPlatform': 'UNKNOWN_TARGET_PLATFORM',
-  'versionNumber': 'UNKNOWN_VERSION_NUMBER'
+  'versionNumber': 'UNKNOWN_VERSION_NUMBER',
+  'deeplinkHost': 'ur-money-xavier.firebaseapp.com',
+  'dynamicLinkDomain': 'jmcf2.app.goo.gl'
 };

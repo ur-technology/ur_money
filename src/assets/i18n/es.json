@@ -29,18 +29,23 @@
         "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
         "betaProgramButton": "Estoy en el programa UR Money Beta"
     },
-    "sign-up":{
+    "sign-up": {
       "title": "Registro",
       "referralCode": "Código de referencia",
-      "placeholderReferralCode": "Ingresa el código de referencia de tu patrocinador",
-      "headingReferral": "Confirma tu país, ingresa tu número de teléfono y el código de referencia",
+      "placeholderReferralCode": "Código de referencia de tu patrocinador",
+      "headingReferral": "Bienvenido! has sido invitado por <b>{{sponsor}}</b> para ser parte de UR.",
+      "headingNoReferral": "Bienvenido. Para formar parte de UR, debes ingresar el código de referencia de su patrocinador",
       "headingEmail": "Confirma tu país, ingresa tu número de teléfono y el correo electrónico",
-      "placeholderEmail": "Ingrese el correo electrónico del programa beta",
+      "placeholderEmail": "Correo electrónico del programa beta",
       "subheadingButtonEmail": "Regístrarse con correo electrónico mejor",
       "subheadingButtonReferal": "Regístrarse con código de referencia mejor",
       "userAlreadyExists": "Este número de teléfono ya existe en nuestros registros, por favor ve a la página Inicio de sesión",
       "gotoSignIn": "Iniciar sesión",
-      "sponsorNotFoundMessage": "El código de referencia es incorrecto"
+      "sponsorNotFoundMessage": "No hay patrocinador con ese código de referencia, por favor, intenta con otro código de referencia",
+      "sponsorDisabledMessage": "El patrocinador está deshabilitado, por favor, intenta con otro código de referencia",
+      "enterFields": "Por favor ingrese todos los campos",
+      "alertInfoReferral": "Necesitas el código de referencia de tu patrocinador para inscribirte. Por favor, solicita el código de referencia a tu patrocinador o haz clic en el enlace de invitación que se te envió.",
+      "alertInfoEmail": "Si te enrolaste a nuestro programa beta, por favor, ingresa ese correo electrónico"
     },
     "choose-contact":{
       "title": "Escoja contacto o ingrese dirección UR",
@@ -235,15 +240,16 @@
         "message": "Gracias por tu interés en UR Money. Cuando lancemos nuestro servicio en tu país, te lo notificaremos."
     },
     "app": {
-        "inviteMessage": "Invita a tus amigos y obtén mas UR",
-        "invite": "Invita",
-        "home": "Inicio",
-        "chat": "Chat",
-        "send": "Enviar UR",
-        "request": "Solicitar UR",
-        "transactions": "Transacciones",
-        "about": "Acerca UR",
-        "users": "Manage Users"
+      "inviteMessage": "Invita a tus amigos y obtén mas UR",
+      "invite": "Invita",
+      "home": "Inicio",
+      "chat": "Chat",
+      "send": "Enviar UR",
+      "request": "Solicitar UR",
+      "transactions": "Transacciones",
+      "about": "Acerca UR",
+      "users": "Administrar usuarios",
+      "referralCode": "Código de referencia: "
     },
     "home": {
         "bonusGenerating": "Generación De Bonificación En Curso",
@@ -337,7 +343,8 @@
       "explanation1": "Cuantos más de tus amigos se unan a UR money, más UR puedes ganar.",
       "explanation2": "Para obtener crédito por referir a tus amigos, envía el enlace personalizado a continuación usando tu red social o aplicación de mensajería favorita.",
       "personalizedReferralLink": "Enlace de referencia personalizado",
-      "copyToClipboard": "Copiar al portapapeles"
+      "copyToClipboard": "Copiar al portapapeles",
+      "referralCode": "Este es tu código de referencia: "
     },
     "about": {
         "heading": "Acerca UR",

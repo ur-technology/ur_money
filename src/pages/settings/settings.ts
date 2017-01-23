@@ -7,6 +7,7 @@ import {CustomValidator} from '../../validators/custom';
 import {AuthService} from '../../services/auth';
 import {HomePage} from '../home/home';
 import {TranslateService} from 'ng2-translate/ng2-translate';
+import {Config} from '../../config/config';
 
 @Component({
   templateUrl: 'settings.html',
@@ -15,6 +16,7 @@ export class SettingsPage {
   public mainForm: FormGroup;
   countries: any[];
   profile: any;
+  targetPlatform = Config.targetPlatform;
 
   constructor(
     public nav: NavController,

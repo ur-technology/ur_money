@@ -8,6 +8,7 @@ import { FirebaseApp } from 'angularfire2';
 import {BigNumber} from 'bignumber.js';
 import {UserService} from './user.service';
 import {UserModel} from '../models/user.model';
+import {DynamicLinkService} from './dynamic-link';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,7 @@ export class AuthService {
     public angularFire: AngularFire,
     public contactsService: ContactsService,
     private userService: UserService,
+    private dynamicLinkService: DynamicLinkService,
     @Inject(FirebaseApp) firebase: any
   ) {
   }
@@ -44,13 +46,16 @@ export class AuthService {
               self.currentUser.countryCode = self.countryCode;
               self.currentUser.update({ countryCode: self.currentUser.countryCode });
             }
+            if (self.currentUser && self.currentUser.referralCode) {
+              this.dynamicLinkService.generateDynamicLink(self.currentUser.referralCode);
+            }
             self.listenForWalletChange();
             callback(undefined);
           });
 
 
         } else {
-          this.walletRef().off('value');
+          self.walletRef.walletRef().off('value');
           self.phone = undefined;
           self.countryCode = undefined;
           self.email = undefined;
@@ -180,7 +185,6 @@ export class AuthService {
       );
       taskRef.then(() => {
         self.taskId = taskRef.key;
-        log.debug(`request queued to ${taskRef.toString()}`);
         let stateRef = taskRef.child('_state');
         stateRef.on('value', (snapshot) => {
           let state = snapshot.val();
@@ -208,7 +212,6 @@ export class AuthService {
         submittedAuthenticationCode: submittedAuthenticationCode,
         _state: 'code_matching_requested'
       }).then(() => {
-        log.debug(`set submittedAuthenticationCode to ${submittedAuthenticationCode} at ${taskRef.toString()}`);
         let resultRef = taskRef.child('result');
         resultRef.on('value', (snapshot) => {
           let result = snapshot.val();
@@ -272,18 +275,10 @@ export class AuthService {
     return mode === 'production' ? '' : `${_.startCase(mode)} mode`;
   }
 
-  referralLink(window): string {
+  referralLink(): string {
     if (!this.currentUser) {
       return undefined;
     }
-    let base: string;
-    if (Config.targetPlatform === 'web') {
-      base = window.location.origin;
-    } else if (this.envMode() === 'production') {
-      base = 'https://web.ur.technology';
-    } else {
-      base = 'https://ur-money-staging.firebaseapp.com';
-    }
-    return `${base}/r/${this.currentUser.referralCode}`;
+    return this.dynamicLinkService.getGeneratedDynamicLink();
   }
 }

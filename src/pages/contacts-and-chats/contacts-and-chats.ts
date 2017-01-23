@@ -16,13 +16,14 @@ declare var jQuery: any;
 export class ContactsAndChatsPage {
   goal: any;
   segmentSelected: string = 'contacts';
+  targetPlatform = Config.targetPlatform;
 
   constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService, public alertCtrl: AlertController) {
     this.goal = navParams.get('goal');
   }
 
   ngOnInit() {
-    jQuery('.contentPage').css('top', Config.targetPlatform === 'ios' ? '63px' : '43px');
+    jQuery('.contentPage').css('top', this.targetPlatform === 'ios' ? '63px' : '43px');
   }
 
   goalChanged(data) {
@@ -70,7 +71,7 @@ export class ContactsAndChatsPage {
       Toast.show(this.translate.instant('contacts.toastMessage'), 'long', 'top').subscribe((toast) => {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
-          url: self.auth.referralLink(window),
+          url: self.auth.referralLink(),
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions');
