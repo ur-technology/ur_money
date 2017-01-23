@@ -80,7 +80,7 @@ export class PhoneNumberPage {
     }).then(() => {
       switch (taskState) {
         case 'code_generation_finished':
-          self.nav.setRoot(AuthenticationCodePage, { authenticationType: 'sms' });
+          self.nav.setRoot(AuthenticationCodePage, { authenticationType: 'signIn' });
           break;
 
         case 'code_generation_canceled_because_user_not_invited':

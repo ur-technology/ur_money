@@ -1,6 +1,6 @@
 import { ViewChild, Component } from '@angular/core';
 import { Platform, Nav, MenuController } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { StatusBar, Splashscreen, Deeplinks } from 'ionic-native';
 import { HomePage } from '../pages/home/home';
 import {ContactsAndChatsPage} from '../pages/contacts-and-chats/contacts-and-chats';
 import {TransactionsPage} from '../pages/transactions/transactions';
@@ -100,6 +100,18 @@ export class UrMoney {
         window.location.href = `https://web.ur.technology/r/${sponsorReferralCode}`;
       }
       this.auth.sponsorReferralCode = sponsorReferralCode;
+    }
+    if (this.platform.is('cordova')) {
+      Deeplinks.route({
+        '/r/:referralId': HomePage
+      }).subscribe((match) => {
+        if (match.$args && match.$args.referralId) {
+          this.auth.sponsorReferralCode = match.$args.referralId;
+        }
+      }, (nomatch) => {
+        log.warn('Unmatched Route', nomatch);
+      });
+
     }
   }
 
