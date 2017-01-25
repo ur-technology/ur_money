@@ -55,12 +55,13 @@ export class AuthService {
 
 
         } else {
-          self.walletRef.walletRef().off('value');
+          self.walletRef().off('value');
           self.phone = undefined;
           self.countryCode = undefined;
           self.email = undefined;
           self.currentUserId = undefined;
           self.currentUser = undefined;
+          self.sponsorReferralCode = undefined;
           callback(undefined);
         }
       });
@@ -173,16 +174,11 @@ export class AuthService {
   }
 
 
-  requestAuthenticationCode() {
+  requestAuthenticationCode(authenticationType: string) {
     let self = this;
     return new Promise((resolve, reject) => {
-      let taskRef = firebase.database().ref('/phoneAuthQueue/tasks').push(
-        {
-          phone: this.phone,
-          sponsorReferralCode: this.sponsorReferralCode || null,
-          email: this.email || null
-        }
-      );
+      let taskParams = authenticationType === 'signUp' ? { phone: this.phone, sponsorReferralCode: this.sponsorReferralCode || null, email: this.email || null } : { phone: this.phone }
+      let taskRef = firebase.database().ref('/phoneAuthQueue/tasks').push(taskParams);
       taskRef.then(() => {
         self.taskId = taskRef.key;
         let stateRef = taskRef.child('_state');

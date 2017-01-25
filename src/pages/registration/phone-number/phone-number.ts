@@ -73,8 +73,7 @@ export class PhoneNumberPage {
     }).then(() => {
       self.auth.phone = phone;
       self.auth.countryCode = self.phoneForm.value.country.countryCode;
-      self.auth.email = null;
-      return self.auth.requestAuthenticationCode();
+      return self.auth.requestAuthenticationCode('signIn');
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();

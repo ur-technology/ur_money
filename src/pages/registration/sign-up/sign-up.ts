@@ -101,18 +101,24 @@ export class SignUpPage {
     return true;
   }
 
-  submit() {
+  private getPhoneFormated(): string {
     let self = this;
-    if (!self.validateForm()) {
-      return;
-    }
     let corePhone = self.normalizedPhone(self.mainForm.value.phone);
     let mobileAreaCodePrefix = '';
     if (self.mainForm.value.country.mobileAreaCodePrefix && !corePhone.startsWith(self.mainForm.value.country.mobileAreaCodePrefix)) {
       mobileAreaCodePrefix = self.mainForm.value.country.mobileAreaCodePrefix;
     }
 
-    let phone = self.mainForm.value.country.telephoneCountryCode + mobileAreaCodePrefix + corePhone;
+    return self.mainForm.value.country.telephoneCountryCode + mobileAreaCodePrefix + corePhone;
+  }
+
+  submit() {
+    let self = this;
+    if (!self.validateForm()) {
+      return;
+    }
+
+    let phone = self.getPhoneFormated();
     let loadingModal = self.loadingController.create({
       content: self.translate.instant('pleaseWait'),
     });
@@ -121,6 +127,8 @@ export class SignUpPage {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
+      return self.checkIfPhoneAlreadyExists(phone);
+    }).then((value) => {
       self.auth.phone = phone;
       self.auth.countryCode = self.mainForm.value.country.countryCode;
       if (self.signUpType === 'referralCode') {
@@ -129,16 +137,7 @@ export class SignUpPage {
       } else {
         self.auth.email = self.mainForm.value.email;
       }
-      self.auth.version = 2;
-      // return self.auth.requestPhoneRegistration();
-      return self.auth.requestAuthenticationCode();
-      // }).then((newTaskState: string) => {
-      //   switch (newTaskState) {
-      //     case 'phone_registration_successful’':
-      //       return self.auth.requestAuthenticationCode();
-      //     default:
-      //       return newTaskState;
-      //   }
+      return self.auth.requestAuthenticationCode('signUp');
     }).then((newTaskState: string) => {
       taskState = newTaskState;
       return loadingModal.dismiss();
@@ -162,7 +161,12 @@ export class SignUpPage {
         case 'code_generation_canceled_because_sponsor_disabled':
           self.toastService.showMessage({ messageKey: 'sign-up.sponsorDisabledMessage' });
           break;
-        case 'phone_registration_failed_because_user_already_signed_up':
+        default:
+          self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
+      }
+    }, (error) => {
+      loadingModal.dismiss().then(() => {
+        if (error.messageKey === 'sign-up.userAlreadyExists') {
           let alert = this.alertCtrl.create({
             message: this.translate.instant('sign-up.userAlreadyExists'),
             buttons: [
@@ -179,13 +183,7 @@ export class SignUpPage {
             ]
           });
           alert.present();
-          break;
-
-        default:
-          self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
-      }
-    }, (error) => {
-      loadingModal.dismiss().then(() => {
+        }
         self.toastService.showMessage({ messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
       });
     });
@@ -222,6 +220,28 @@ export class SignUpPage {
       ]
     });
     alerta.present();
+  }
+
+  private checkIfPhoneAlreadyExists(phone) {
+
+    return new Promise((resolve, reject) => {
+      let taskRef = firebase.database().ref('/sponsorLookupQueue/tasks').push({
+        phone: phone
+      });
+      taskRef.then(() => {
+        let stateRef = taskRef.child('result');
+        stateRef.on('value', (snapshot) => {
+          let result: any = snapshot.val();
+          if (!result) {
+            return;
+          }
+          stateRef.off('value');
+          taskRef.remove();
+          result.found ? reject({ messageKey: 'sign-up.userAlreadyExists' }) : resolve(result);
+        });
+      });
+
+    });
   }
 
   private findSponsor() {

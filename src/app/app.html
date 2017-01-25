@@ -13,7 +13,7 @@
     <div class="menu-profile" *ngIf="auth.currentUser">
       <img class="menu-avatar" [src]="auth.currentUser.profilePhotoUrl" alt="">
       <h1 class="profile-name">{{auth.currentUser.name}}</h1>
-      <p color="light">{{"app.referralCode" | translate}} {{auth.currentUser.referralCode}}</p>
+      <p ion-text color="light">{{"app.referralCode" | translate}} {{auth.currentUser.referralCode}}</p>
     </div>
     <ion-list class="menu-list" no-lines>
       <ion-item *ngFor="let menuItem of menuItems" tappable (click)="openPage(menuItem)">
