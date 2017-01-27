@@ -12,6 +12,7 @@ import {IntroPage} from '../pages/registration/intro/intro';
 import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
 import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
+import {ScanIdPage} from '../pages/registration/scan-id/scan-id';
 import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';
 import {PopoverChatPage} from '../pages/chat/popover-chat';
 import {WalletSetupPage} from '../pages/registration/wallet-setup/wallet-setup';
@@ -81,6 +82,7 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     IntroPage,
     NoInternetConnectionPage,
     PhoneNumberPage,
+    ScanIdPage,
     ProfileSetupPage,
     WalletSetupPage,
     WelcomePage,
@@ -136,6 +138,7 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     IntroPage,
     NoInternetConnectionPage,
     PhoneNumberPage,
+    ScanIdPage,
     ProfileSetupPage,
     WalletSetupPage,
     WelcomePage,

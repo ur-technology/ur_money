@@ -10,8 +10,19 @@
 </ion-header>
 <ion-content class="settings">
   <form [formGroup]="mainForm">
+
     <ion-list>
       <ion-item-divider color="light">{{"settings.profileInfo" | translate}}</ion-item-divider>
+
+      <ion-item>
+        <ion-label>
+          <span id="driver-license-front-side" class="driver-license-image" (click)="doFileUpload()">
+            boop
+          </span>
+          <ion-input type="file" (change)="fileChange(input)" #fileInput ng-hide="true"></ion-input>
+        </ion-label>
+      </ion-item>
+
       <ion-item>
         <ion-label stacked>{{'profile-setup.firstName' | translate}}</ion-label>
         <ion-input type="text" formControlName="firstName"></ion-input>
