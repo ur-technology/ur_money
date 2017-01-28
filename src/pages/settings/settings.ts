@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import { NavController, AlertController, ToastController} from 'ionic-angular';
 import * as _ from 'lodash';
@@ -103,5 +103,4 @@ export class SettingsPage {
       log.warn('unable to save profile');
     });
   };
-
 }

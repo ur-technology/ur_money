@@ -10,10 +10,8 @@
 </ion-header>
 <ion-content class="settings">
   <form [formGroup]="mainForm">
-
     <ion-list>
       <ion-item-divider color="light">{{"settings.profileInfo" | translate}}</ion-item-divider>
-
       <ion-item>
         <ion-label stacked>{{'profile-setup.firstName' | translate}}</ion-label>
         <ion-input type="text" formControlName="firstName"></ion-input>
