@@ -1,4 +1,15 @@
-profile-setup-page {
+scan-id-page {
+  input#id-card-front, input#id-card-back {
+    display: none;
+  }
+
+  .id-card-preview-image img {
+    min-width: 100% !important;
+    max-height: 50% !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
   ion-card-header {
     background-color: color($colors, light);
   }
