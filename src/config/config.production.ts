@@ -6,6 +6,5 @@ export let Config: any = {
   'stripePublishableKey': 'pk_live_0AFFhzUArOgWBSlKm3IOXFwo',
   'targetPlatform': 'UNKNOWN_TARGET_PLATFORM',
   'versionNumber': 'UNKNOWN_VERSION_NUMBER',
-  'deeplinkHost': 'web.ur.technology',
-  'dynamicLinkDomain': 'ppu3q.app.goo.gl'
+  'deeplinkHost': 'web.ur.technology'
 };

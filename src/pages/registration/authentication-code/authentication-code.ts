@@ -2,7 +2,6 @@ import { NavController, NavParams, LoadingController} from 'ionic-angular';
 import {AuthService} from '../../../services/auth';
 import {ToastService} from '../../../services/toast';
 import {TranslateService} from 'ng2-translate/ng2-translate';
-import {PhoneNumberPage} from '../phone-number/phone-number'
 import {SignUpPage} from '../sign-up/sign-up';
 import { Component } from '@angular/core';
 
@@ -33,7 +32,7 @@ export class AuthenticationCodePage {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.checkAuthenticationCode(self.authenticationCode);
+      return self.auth.checkSignUpCodeMatching(self.authenticationCode);
     }).then((codeMatch: boolean) => {
       authenticationCodeMatch = codeMatch;
       return loadingModal.dismiss();
@@ -52,7 +51,7 @@ export class AuthenticationCodePage {
   }
 
   resendCode() {
-    this.nav.setRoot(this.authenticationType === 'signUp' ? SignUpPage : PhoneNumberPage);
+    this.nav.setRoot(SignUpPage);
   }
 
   add(numberVar) {

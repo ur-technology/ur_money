@@ -39,6 +39,7 @@ export class CustomValidator {
       return { 'invalidPhone': true };
     }
   }
+
   static phoneListValidator(control) {
     var pattern = /(\D*\d\D*){10,}(\n+(\D*\d\D*){10,})*/;
     if (!control.value.match(pattern)) {

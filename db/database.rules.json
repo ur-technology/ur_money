@@ -9,19 +9,7 @@
           ".read": true
         },
 
-        "sponsorLookupQueue": {
-            "tasks": {
-                "$task": {
-                    ".write": true,
-                    "result": {
-                        // allow reading sponsorlookupResult result of a particular record
-                        ".read": true
-                    }
-                }
-            }
-        },
-
-        "phoneAuthQueue": {
+        "signUpQueue": {
             "tasks": {
                 ".indexOn": "_state",
                 "$task": {
@@ -38,58 +26,7 @@
             }
         },
 
-        "smsAuthCodeGenerationQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    "_state": {
-                        // allow reading state of a particular record
-                        ".read": true
-                    },
-                    "result": {
-                        // allow reading result of a particular record
-                        ".read": true
-                    }
-                }
-            }
-        },
-
-        "smsAuthCodeMatchingQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    "_state": {
-                        // allow reading state of a particular record
-                        ".read": true
-                    },
-                    "result": {
-                        // allow reading result of a particular record
-                        ".read": true
-                    }
-                }
-            }
-        },
-
-        "emailAuthCodeGenerationQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    "_state": {
-                        // allow reading state of a particular record
-                        ".read": true
-                    },
-                    "result": {
-                        // allow reading result of a particular record
-                        ".read": true
-                    }
-                }
-            }
-        },
-
-        "emailAuthCodeMatchingQueue": {
+        "signInQueue": {
             "tasks": {
                 ".indexOn": "_state",
                 "$task": {
@@ -192,18 +129,6 @@
               "5": {
                 ".indexOn": "_state"
               }
-            }
-        },
-
-        "prefineryImportQueue": {
-            "tasks": {
-                ".indexOn": "_state"
-            }
-        },
-
-        "prefineryCleanupQueue": {
-            "tasks": {
-                ".indexOn": "_state"
             }
         },
 

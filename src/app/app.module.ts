@@ -9,9 +9,11 @@ import {AnnouncementInitiatedPage} from '../pages/announcement-initiated/announc
 import {AuthenticationCodePage} from '../pages/registration/authentication-code/authentication-code';
 import {IntroPage} from '../pages/registration/intro/intro';
 import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
-import {PhoneNumberPage} from '../pages/registration/phone-number/phone-number';
-import {SignUpPage} from '../pages/registration/sign-up/sign-up'
+import {SignUpPage} from '../pages/registration/sign-up/sign-up';
+import {SignInPage} from '../pages/registration/sign-in/sign-in';
 import {InviteLinkPage} from '../pages/invite-link/invite-link';
+import {IdScanPage} from '../pages/registration/id-scan/id-scan';
+import {SelfieMatchPage} from '../pages/registration/selfie-match/selfie-match';
 import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';
 import {PopoverChatPage} from '../pages/chat/popover-chat';
 import {WalletSetupPage} from '../pages/registration/wallet-setup/wallet-setup';
@@ -37,7 +39,6 @@ import {AuthService} from '../services/auth';
 import {ChartDataService} from '../services/chart-data.service';
 import {ContactsService} from '../services/contacts.service';
 import {CountryListService} from '../services/country-list';
-import {DynamicLinkService} from '../services/dynamic-link';
 import {EncryptionService} from '../services/encryption';
 import {EventsService} from '../services/events.service';
 import {ToastService} from '../services/toast';
@@ -80,8 +81,10 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     AuthenticationCodePage,
     IntroPage,
     NoInternetConnectionPage,
-    PhoneNumberPage,
     SignUpPage,
+    SignInPage,
+    IdScanPage,
+    SelfieMatchPage,
     ProfileSetupPage,
     WalletSetupPage,
     WelcomePage,
@@ -135,8 +138,10 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     AuthenticationCodePage,
     IntroPage,
     NoInternetConnectionPage,
-    PhoneNumberPage,
     SignUpPage,
+    SignInPage,
+    IdScanPage,
+    SelfieMatchPage,
     ProfileSetupPage,
     WalletSetupPage,
     WelcomePage,
@@ -150,6 +155,6 @@ return new TranslateStaticLoader(http, 'assets/i18n', '.json');
     TransactionsPage,
     SponsorWaitPage
   ],
-  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, DynamicLinkService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule { }

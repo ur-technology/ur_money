@@ -26,23 +26,31 @@
               <ion-input formControlName="phone" placeholder="{{'phone-number.phoneNumber' | translate}}" type="tel"></ion-input>
             </div>
           </ion-item>
-          <ion-item *ngIf="signUpType=='referralCode' && referralCode.length==0">
-            <ion-label stacked>{{'sign-up.referralCode' | translate}}</ion-label>
-            <ion-input type="text" formControlName="referralCode" placeholder='{{ "sign-up.placeholderReferralCode" | translate }}'></ion-input>
-            <button ion-button outline round type="text" item-right class="buttonInfo" (click)="showInforeRerral()"><ion-icon name="help"></ion-icon></button>
+          <ion-item>
+            <ion-label stacked>{{'sign-up.password' | translate}}</ion-label>
+            <ion-input type="password" formControlName="password" placeholder='{{ "sign-up.placeholderPassword" | translate }}'></ion-input>
           </ion-item>
-          <ion-item *ngIf="signUpType!='referralCode'">
+          <ion-item>
+            <ion-label stacked>{{'sign-up.passwordConfirmation' | translate}}</ion-label>
+            <ion-input type="password" formControlName="passwordConfirmation" placeholder='{{ "sign-up.placeholderPasswordConfirmation" | translate }}' [(ngModel)]="password"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="signUpType=='sponsorReferralCode'">
+            <ion-label stacked>{{'sign-up.sponsorReferralCode' | translate}}</ion-label>
+            <ion-input type="text" formControlName="sponsorReferralCode" placeholder='{{ "sign-up.placeholderSponsorReferralCode" | translate }}' [(ngModel)]="sponsorReferralCode"></ion-input>
+            <button ion-button outline round type="text" item-right class="buttonInfo" (click)="showSponsorReferralCodeExplanation()"><ion-icon name="help"></ion-icon></button>
+          </ion-item>
+          <ion-item *ngIf="signUpType!='sponsorReferralCode'">
             <ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
-            <ion-input type="text" formControlName="email" placeholder='{{ "sign-up.placeholderEmail" | translate }}'></ion-input>
-            <button ion-button outline round type="text" class="buttonInfo" item-right (click)="showInfoEmail()"><ion-icon name="help"></ion-icon></button>
+            <ion-input type="text" formControlName="email" placeholder='{{ "sign-up.placeholderEmail" | translate }}' [(ngModel)]="email"></ion-input>
+            <button ion-button outline round type="text" class="buttonInfo" item-right (click)="showEmailExplanation()"><ion-icon name="help"></ion-icon></button>
           </ion-item>
-          <button ion-button clear class="headingType" *ngIf="!sponsor" (click)="changeSignUpType()">{{subheadingButton}}</button>
+          <button ion-button clear class="headingType" (click)="changeSignUpType()">{{subheadingButton}}</button>
 
           <p class="terms" text-center>
             {{ "welcome.terms" | translate }} {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
           </p>
           <div text-center>
-            <button ion-button round (click)="submit()">{{'welcome.agreeAndContinue' | translate}}</button>
+            <button ion-button round (click)="submit()" [disabled]="!mainForm.valid">{{'welcome.agreeAndContinue' | translate}}</button>
           </div>
         </ion-list>
       </form>

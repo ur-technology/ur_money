@@ -6,6 +6,5 @@ export let Config: any = {
   'stripePublishableKey': 'pk_test_SruvvOMun2cNIrOfiSvBDM8a',
   'targetPlatform': 'UNKNOWN_TARGET_PLATFORM',
   'versionNumber': 'UNKNOWN_VERSION_NUMBER',
-  'deeplinkHost': 'ur-money-xavier.firebaseapp.com',
-  'dynamicLinkDomain': 'jmcf2.app.goo.gl'
+  'deeplinkHost': 'ur-money-xavier.firebaseapp.com'
 };

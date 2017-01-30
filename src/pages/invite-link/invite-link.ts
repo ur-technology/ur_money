@@ -15,7 +15,7 @@ export class InviteLinkPage {
 
   constructor(public nav: NavController, public platform: Platform, public auth: AuthService) {
     let formElements: any = {
-      referralLink: new FormControl(this.auth.referralLink(), [Validators.required])
+      referralLink: new FormControl(this.auth.referralLink(window), [Validators.required])
     };
     this.mainForm = new FormGroup(formElements);
   }

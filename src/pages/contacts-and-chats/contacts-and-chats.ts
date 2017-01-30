@@ -71,7 +71,7 @@ export class ContactsAndChatsPage {
       Toast.show(this.translate.instant('contacts.toastMessage'), 'long', 'top').subscribe((toast) => {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
-          url: self.auth.referralLink(),
+          url: self.auth.referralLink(window),
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions');
