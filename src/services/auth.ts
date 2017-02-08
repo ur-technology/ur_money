@@ -8,6 +8,7 @@ import { FirebaseApp } from 'angularfire2';
 import {BigNumber} from 'bignumber.js';
 import {UserService} from './user.service';
 import {UserModel} from '../models/user.model';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthService {

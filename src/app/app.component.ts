@@ -16,7 +16,7 @@ import {UsersPage} from '../pages/admin/users';
 import {SettingsPage} from '../pages/settings/settings';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {IdScanPage} from '../pages/registration/id-scan/id-scan';
-import {SelfieMatchPage} from '../pages/registration/selfie-match/selfie-match';
+//import {SelfieMatchPage} from '../pages/registration/selfie-match/selfie-match';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
