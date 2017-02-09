@@ -6,7 +6,7 @@ Mobile and web interface for UR.
 ```script
 npm install -g ionic@2.2.1
 npm install -g cordova@6.5.0
-npm install -g gulp typings
+npm install -g typings
 ```
 
 ## Install local dependencies
