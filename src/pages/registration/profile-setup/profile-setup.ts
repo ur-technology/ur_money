@@ -1,10 +1,10 @@
-import { NavController} from 'ionic-angular';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { NavController } from 'ionic-angular';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {AuthService} from '../../../services/auth';
-import {CustomValidator} from '../../../validators/custom';
-import {WalletSetupPage} from '../../../pages/registration/wallet-setup/wallet-setup';
+import { AuthService } from '../../../services/auth';
+import { CustomValidator } from '../../../validators/custom';
+import { WalletSetupPage } from '../../../pages/registration/wallet-setup/wallet-setup';
 import { Component } from '@angular/core';
 
 @Component({
@@ -41,11 +41,11 @@ export class ProfileSetupPage {
   }
 
   fillCountriesArray() {
-    this.countries = _.sortBy( require('country-data').countries.all, 'name');
+    this.countries = _.sortBy(require('country-data').countries.all, 'name');
     this.countries = _.reject(this.countries, { alpha2: ['CU', 'IR', 'KP', 'SD', 'SY'] });  // remove forbidden countries
     this.countries = _.filter(this.countries, { status: 'assigned' });
 
-    let country = _.find( this.countries, { alpha2: this.auth.currentUser.countryCode || 'US' });
+    let country = _.find(this.countries, { alpha2: this.auth.currentUser.countryCode || 'US' });
     (<FormControl>this.mainForm.controls['countryCode']).setValue(country);
   }
 

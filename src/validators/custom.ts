@@ -1,7 +1,7 @@
-import {FormGroup} from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import {WalletModel} from '../models/wallet';
+import { WalletModel } from '../models/wallet';
 
 export class CustomValidator {
   static minValidAmount: number;

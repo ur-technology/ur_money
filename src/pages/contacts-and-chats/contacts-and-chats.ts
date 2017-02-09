@@ -1,11 +1,11 @@
-import { NavController, NavParams, Platform, AlertController} from 'ionic-angular';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {AuthService} from '../../services/auth';
-import {Config} from '../../config/config';
+import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AuthService } from '../../services/auth';
+import { Config } from '../../config/config';
 import { Component } from '@angular/core';
-import {SocialSharing, Clipboard, Toast} from 'ionic-native';
+import { SocialSharing, Clipboard, Toast } from 'ionic-native';
 import * as log from 'loglevel';
-import {ChatPage} from '../../pages/chat/chat';
+import { ChatPage } from '../../pages/chat/chat';
 
 declare var jQuery: any;
 

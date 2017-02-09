@@ -1,10 +1,10 @@
-import {NavController, LoadingController, ToastController} from 'ionic-angular';
-import {Component} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {AuthService} from '../../../services/auth';
-import {CustomValidator} from '../../../validators/custom';
-import {SelfieMatchPage} from '../selfie-match/selfie-match';
+import { NavController, LoadingController, ToastController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AuthService } from '../../../services/auth';
+import { CustomValidator } from '../../../validators/custom';
+import { SelfieMatchPage } from '../selfie-match/selfie-match';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -51,11 +51,11 @@ export class IdScanPage {
   }
 
   private fillCountriesArray() {
-    this.countries = _.sortBy( require('country-data').countries.all, 'name');
+    this.countries = _.sortBy(require('country-data').countries.all, 'name');
     this.countries = _.reject(this.countries, { alpha2: ['CU', 'IR', 'KP', 'SD', 'SY'] });  // remove forbidden countries
     this.countries = _.filter(this.countries, { status: 'assigned' });
     this.countryCode = this.countryCodeAssociatedWithPhone();
-    let country = _.find( this.countries, { alpha2: this.countryCode });
+    let country = _.find(this.countries, { alpha2: this.countryCode });
     (<FormControl>this.mainForm.controls['countryCode']).setValue(country);
   }
 
@@ -153,7 +153,7 @@ export class IdScanPage {
 
   extractDataFromIdCard(): Promise<any> {
     return new Promise((resolve, reject) => {
-      let loadingModal = this.loadingController.create({content: this.translate.instant('pleaseWait') });
+      let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
       loadingModal.present();
       let imageToProcess = new FormData();
       imageToProcess.append("frontImage", this.dataURLtoBlob(this.idCardFrontSource));
@@ -187,7 +187,7 @@ export class IdScanPage {
         success: (idCardData: any) => {
           this.idCardData = idCardData;
           loadingModal.dismiss().then(() => {
-            let error: string  = (idCardData.ResponseCodeAuthorization < 0 && idCardData.ResponseCodeAuthorization) ||
+            let error: string = (idCardData.ResponseCodeAuthorization < 0 && idCardData.ResponseCodeAuthorization) ||
               (idCardData.ResponseCodeAutoDetectState < 0 && idCardData.ResponseCodeAutoDetectState) ||
               (idCardData.ResponseCodeProcState < 0 && idCardData.ResponseCodeProcState) ||
               (idCardData.WebResponseCode < 1 && idCardData.WebResponseCode);

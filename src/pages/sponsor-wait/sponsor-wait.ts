@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {AuthService} from '../../services/auth';
-import {HomePage} from '../home/home';
-import {TranslateService} from 'ng2-translate';
+import { AuthService } from '../../services/auth';
+import { HomePage } from '../home/home';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'page-sponsor-wait',

@@ -1,14 +1,14 @@
-import {Component} from '@angular/core';
-import {Platform, NavController, NavParams, ModalController, LoadingController, AlertController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { Platform, NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
 // import {Deeplinks} from 'ionic-native';
-import {CountryListService} from '../../../services/country-list';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {TermsAndConditionsPage} from '../../terms-and-conditions/terms-and-conditions';
-import {AuthService} from '../../../services/auth';
-import {ToastService} from '../../../services/toast';
-import {SignUpPage} from '../sign-up/sign-up';
-import {HomePage} from '../..//home/home';
+import { CountryListService } from '../../../services/country-list';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TermsAndConditionsPage } from '../../terms-and-conditions/terms-and-conditions';
+import { AuthService } from '../../../services/auth';
+import { ToastService } from '../../../services/toast';
+import { SignUpPage } from '../sign-up/sign-up';
+import { HomePage } from '../..//home/home';
 // import * as log from 'loglevel';
 
 @Component({
@@ -54,7 +54,7 @@ export class SignInPage {
     let strippedPhone: string = (this.mainForm.value.phone || '').replace(/\D/g, '');
     let extraPrefix: string = this.mainForm.value.country.mobileAreaCodePrefix || '';
     if (extraPrefix && strippedPhone.startsWith(extraPrefix)) {
-       extraPrefix = '';
+      extraPrefix = '';
     }
     return this.mainForm.value.country.telephoneCountryCode + extraPrefix + strippedPhone;
   }
@@ -74,7 +74,7 @@ export class SignInPage {
       taskState = newTaskState;
       return loadingModal.dismiss();
     }).then(() => {
-      switch(taskState) {
+      switch (taskState) {
         case 'sign_in_finished':
           self.nav.setRoot(HomePage);
           break;
@@ -108,7 +108,7 @@ export class SignInPage {
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
       });
     });
   }

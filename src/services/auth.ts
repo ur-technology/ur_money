@@ -1,13 +1,13 @@
-import {Injectable, Inject, EventEmitter} from '@angular/core';
-import {AngularFire} from 'angularfire2';
+import { Injectable, Inject, EventEmitter } from '@angular/core';
+import { AngularFire } from 'angularfire2';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {ContactsService} from '../services/contacts.service';
-import {Config} from '../config/config';
+import { ContactsService } from '../services/contacts.service';
+import { Config } from '../config/config';
 import { FirebaseApp } from 'angularfire2';
-import {BigNumber} from 'bignumber.js';
-import {UserService} from './user.service';
-import {UserModel} from '../models/user.model';
+import { BigNumber } from 'bignumber.js';
+import { UserService } from './user.service';
+import { UserModel } from '../models/user.model';
 import * as firebase from 'firebase';
 
 @Injectable()

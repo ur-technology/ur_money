@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {NavController } from 'ionic-angular';
-import {AuthService} from '../../services/auth';
-import {ChatPage} from '../../pages/chat/chat';
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { AuthService } from '../../services/auth';
+import { ChatPage } from '../../pages/chat/chat';
 import { App } from 'ionic-angular';
-import {AngularFire} from 'angularfire2';
-import {TranslateService} from 'ng2-translate/ng2-translate';
+import { AngularFire } from 'angularfire2';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import * as _ from 'lodash';
-import {Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'chat-list',
@@ -25,10 +25,10 @@ export class ChatListComponent {
   }
 
   ngOnDestroy() {
-      if (this.chatSummarySubscription && !this.chatSummarySubscription.closed) {
-        this.chatSummarySubscription.unsubscribe();
-      }
+    if (this.chatSummarySubscription && !this.chatSummarySubscription.closed) {
+      this.chatSummarySubscription.unsubscribe();
     }
+  }
 
   showNoChatsYetMessage() {
     return !this.chats || this.chats.length === 0;

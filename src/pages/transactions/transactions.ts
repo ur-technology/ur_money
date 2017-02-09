@@ -1,6 +1,6 @@
-import { NavController, Platform} from 'ionic-angular';
-import {HomePage} from '../home/home';
-import {ContactsAndChatsPage} from '../../pages/contacts-and-chats/contacts-and-chats';
+import { NavController, Platform } from 'ionic-angular';
+import { HomePage } from '../home/home';
+import { ContactsAndChatsPage } from '../../pages/contacts-and-chats/contacts-and-chats';
 import { Component } from '@angular/core';
 
 @Component({

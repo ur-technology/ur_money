@@ -1,6 +1,6 @@
-import { NavController, Platform} from 'ionic-angular';
-import {AuthService} from '../../services/auth';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { NavController, Platform } from 'ionic-angular';
+import { AuthService } from '../../services/auth';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 
 declare var jQuery: any;

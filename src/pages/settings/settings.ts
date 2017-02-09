@@ -1,13 +1,13 @@
-import {Component } from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import { NavController, AlertController, ToastController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NavController, AlertController, ToastController } from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {CustomValidator} from '../../validators/custom';
-import {AuthService} from '../../services/auth';
-import {HomePage} from '../home/home';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {Config} from '../../config/config';
+import { CustomValidator } from '../../validators/custom';
+import { AuthService } from '../../services/auth';
+import { HomePage } from '../home/home';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Config } from '../../config/config';
 
 @Component({
   templateUrl: 'settings.html',
@@ -38,8 +38,8 @@ export class SettingsPage {
 
     this.mainForm = new FormGroup({
       firstName: new FormControl(authUser.firstName, [CustomValidator.nameValidator, Validators.required]),
-      middleName: new FormControl(authUser.middleName , [CustomValidator.optionalNameValidator]),
-      lastName: new FormControl(authUser.lastName , [CustomValidator.nameValidator, Validators.required]),
+      middleName: new FormControl(authUser.middleName, [CustomValidator.optionalNameValidator]),
+      lastName: new FormControl(authUser.lastName, [CustomValidator.nameValidator, Validators.required]),
       name: new FormControl(authUser.name, [CustomValidator.nameValidator, Validators.required]),
       chatNotifications: new FormControl(chatNotificationsEnabled),
       transactionNotifications: new FormControl(transactionNotificationsEnabled),

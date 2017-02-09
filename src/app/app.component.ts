@@ -1,21 +1,21 @@
 import { ViewChild, Component } from '@angular/core';
 import { Platform, Nav, MenuController } from 'ionic-angular';
-import { StatusBar, Splashscreen} from 'ionic-native';
+import { StatusBar, Splashscreen } from 'ionic-native';
 import { HomePage } from '../pages/home/home';
-import {ContactsAndChatsPage} from '../pages/contacts-and-chats/contacts-and-chats';
-import {TransactionsPage} from '../pages/transactions/transactions';
+import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
+import { TransactionsPage } from '../pages/transactions/transactions';
 import { AboutPage } from '../pages/about/about';
-import {AuthService} from '../services/auth';
-import {ContactsService} from '../services/contacts.service';
-import {Config} from '../config/config'
-import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
-import {WelcomePage} from '../pages/registration/welcome/welcome';
-import {SendPage} from '../pages/send/send';
-import {InviteLinkPage} from '../pages/invite-link/invite-link';
-import {UsersPage} from '../pages/admin/users';
-import {SettingsPage} from '../pages/settings/settings';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {IdScanPage} from '../pages/registration/id-scan/id-scan';
+import { AuthService } from '../services/auth';
+import { ContactsService } from '../services/contacts.service';
+import { Config } from '../config/config'
+import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
+import { WelcomePage } from '../pages/registration/welcome/welcome';
+import { SendPage } from '../pages/send/send';
+import { InviteLinkPage } from '../pages/invite-link/invite-link';
+import { UsersPage } from '../pages/admin/users';
+import { SettingsPage } from '../pages/settings/settings';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { IdScanPage } from '../pages/registration/id-scan/id-scan';
 //import {SelfieMatchPage} from '../pages/registration/selfie-match/selfie-match';
 import * as _ from 'lodash';
 import * as log from 'loglevel';

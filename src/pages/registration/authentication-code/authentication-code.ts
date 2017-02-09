@@ -1,8 +1,8 @@
-import { NavController, NavParams, LoadingController} from 'ionic-angular';
-import {AuthService} from '../../../services/auth';
-import {ToastService} from '../../../services/toast';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {SignUpPage} from '../sign-up/sign-up';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { AuthService } from '../../../services/auth';
+import { ToastService } from '../../../services/toast';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { SignUpPage } from '../sign-up/sign-up';
 import { Component } from '@angular/core';
 
 @Component({

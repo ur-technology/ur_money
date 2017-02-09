@@ -1,15 +1,15 @@
-import {Component} from '@angular/core';
-import {Platform, NavController, NavParams, ModalController, LoadingController, AlertController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { Platform, NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
 // import {Deeplinks} from 'ionic-native';
-import {CountryListService} from '../../../services/country-list';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {CustomValidator} from '../../../validators/custom';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {TermsAndConditionsPage} from '../../terms-and-conditions/terms-and-conditions';
-import {AuthService} from '../../../services/auth';
-import {ToastService} from '../../../services/toast';
-import {AuthenticationCodePage} from '../authentication-code/authentication-code';
-import {SignInPage} from '../sign-in/sign-in';
+import { CountryListService } from '../../../services/country-list';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CustomValidator } from '../../../validators/custom';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TermsAndConditionsPage } from '../../terms-and-conditions/terms-and-conditions';
+import { AuthService } from '../../../services/auth';
+import { ToastService } from '../../../services/toast';
+import { AuthenticationCodePage } from '../authentication-code/authentication-code';
+import { SignInPage } from '../sign-in/sign-in';
 // import * as log from 'loglevel';
 
 @Component({
@@ -108,7 +108,7 @@ export class SignUpPage {
     let strippedPhone: string = (this.mainForm.value.phone || '').replace(/\D/g, '');
     let extraPrefix: string = this.mainForm.value.country.mobileAreaCodePrefix || '';
     if (extraPrefix && strippedPhone.startsWith(extraPrefix)) {
-       extraPrefix = '';
+      extraPrefix = '';
     }
     return this.mainForm.value.country.telephoneCountryCode + extraPrefix + strippedPhone;
   }
@@ -130,7 +130,7 @@ export class SignUpPage {
       taskState = newTaskState;
       return loadingModal.dismiss();
     }).then(() => {
-      switch(taskState) {
+      switch (taskState) {
         case 'code_generation_finished':
           self.nav.setRoot(AuthenticationCodePage);
           break;
@@ -155,7 +155,7 @@ export class SignUpPage {
           break;
 
         case 'code_generation_canceled_because_voip_phone_not_allowed':
-        self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
           break;
 
         case 'code_generation_canceled_because_sponsor_not_found':
@@ -169,7 +169,7 @@ export class SignUpPage {
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-          self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
       });
     });
   }

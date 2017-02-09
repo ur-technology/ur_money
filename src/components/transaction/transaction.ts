@@ -1,14 +1,14 @@
-import { Component, Input, Inject, SimpleChanges} from '@angular/core';
-import { NavController} from 'ionic-angular';
-import {BigNumber} from 'bignumber.js';
-import {ChartDataService} from '../../services/chart-data.service';
-import {AuthService} from '../../services/auth';
+import { Component, Input, Inject, SimpleChanges } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { BigNumber } from 'bignumber.js';
+import { ChartDataService } from '../../services/chart-data.service';
+import { AuthService } from '../../services/auth';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import * as moment from 'moment';
 import { App } from 'ionic-angular';
-import {ContactsAndChatsPage} from '../../pages/contacts-and-chats/contacts-and-chats';
-import {TranslateService} from 'ng2-translate/ng2-translate';
+import { ContactsAndChatsPage } from '../../pages/contacts-and-chats/contacts-and-chats';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
   selector: 'transaction-component',

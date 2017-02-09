@@ -1,16 +1,16 @@
-import { NavController, Platform, AlertController, ToastController, LoadingController} from 'ionic-angular';
+import { NavController, Platform, AlertController, ToastController, LoadingController } from 'ionic-angular';
 import { Inject, Component } from '@angular/core';
-import { FormGroup, FormControl} from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
-import {NativeStorage} from 'ionic-native';
-import {WalletModel} from '../../../models/wallet';
-import {AuthService} from '../../../services/auth';
-import {CustomValidator} from '../../../validators/custom';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {EncryptionService} from '../../../services/encryption';
-import {Config} from '../../../config/config';
-import {IntroPage} from '../intro/intro'
+import { NativeStorage } from 'ionic-native';
+import { WalletModel } from '../../../models/wallet';
+import { AuthService } from '../../../services/auth';
+import { CustomValidator } from '../../../validators/custom';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { EncryptionService } from '../../../services/encryption';
+import { Config } from '../../../config/config';
+import { IntroPage } from '../intro/intro'
 
 declare var jQuery: any;
 
@@ -23,7 +23,7 @@ export class WalletSetupPage {
   errorMessage: string;
   profile: any;
   loadingModal: any;
-  configPlatform : string;
+  configPlatform: string;
 
   constructor(
     public nav: NavController,

@@ -1,9 +1,9 @@
-import {NavController, NavParams, LoadingController, ToastController} from 'ionic-angular';
-import {Component} from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {AuthService} from '../../../services/auth';
-import {ProfileSetupPage} from '../profile-setup/profile-setup';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AuthService } from '../../../services/auth';
+import { ProfileSetupPage } from '../profile-setup/profile-setup';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -81,7 +81,7 @@ export class SelfieMatchPage {
         return;
       }
 
-      let loadingModal = this.loadingController.create({content: this.translate.instant('pleaseWait') });
+      let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
       loadingModal.present();
 
       let imageToProcess = new FormData();
@@ -104,7 +104,7 @@ export class SelfieMatchPage {
         success: (facialMatchData) => {
           loadingModal.dismiss().then(() => {
             this.facialMatchData = facialMatchData;
-            let error: string  = (facialMatchData.ResponseCodeAuthorization < 0 && facialMatchData.ResponseCodeAuthorization) ||
+            let error: string = (facialMatchData.ResponseCodeAuthorization < 0 && facialMatchData.ResponseCodeAuthorization) ||
               (facialMatchData.WebResponseCode < 1 && facialMatchData.WebResponseCode);
             if (error) {
               reject(`error matching selfie: ${error}`);

@@ -1,8 +1,8 @@
 import { NavController, Platform, ModalController } from 'ionic-angular';
-import {Component} from '@angular/core';
-import {SignUpPage} from '../sign-up/sign-up';
-import {SignInPage} from '../sign-in/sign-in';
-import {AuthService} from '../../../services/auth';
+import { Component } from '@angular/core';
+import { SignUpPage } from '../sign-up/sign-up';
+import { SignInPage } from '../sign-in/sign-in';
+import { AuthService } from '../../../services/auth';
 
 @Component({
   selector: 'welcome-page',

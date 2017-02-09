@@ -1,9 +1,9 @@
-import {Injectable, EventEmitter, Inject} from '@angular/core';
+import { Injectable, EventEmitter, Inject } from '@angular/core';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import * as moment from 'moment';
-import {AuthService} from '../services/auth';
-import {BigNumber} from 'bignumber.js';
+import { AuthService } from '../services/auth';
+import { BigNumber } from 'bignumber.js';
 
 @Injectable()
 export class ChartDataService {

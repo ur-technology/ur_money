@@ -1,5 +1,5 @@
 import { FirebaseApp } from 'angularfire2';
-import {Inject } from '@angular/core';
+import { Inject } from '@angular/core';
 
 export class FirebaseModel {
   public key: string;
