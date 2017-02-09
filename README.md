@@ -15,6 +15,11 @@ git clone git@github.com:ur-technology/ur_money.git .
 npm install
 ```
 
+## Install typings
+```script
+typings install
+```
+
 ## Install ionic platforms and cordova plugins
 * First, install required dev tools (Xcode for iOS, Android SDK for Android)
 * Next, run: `ionic state restore`
