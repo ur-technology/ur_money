@@ -2,44 +2,41 @@
 
 Mobile and web interface for UR.
 
-## Install global dependencies (skip if already installed)
-```script
-npm install -g ionic@2.2.1
-npm install -g cordova@6.5.0
-npm install -g typings
-```
+## This requires node v6.9.4!
 
-## Install local dependencies
-```script
-git clone git@github.com:ur-technology/ur_money.git .
-npm install
-```
+If you are running a different version, install
+[nvm](https://github.com/creationix/nvm/blob/master/README.markdown) and switch
+to 6.9.4.
 
-## Install typings
-```script
-typings install
-```
+## To install
 
-## Install ionic platforms and cordova plugins
-* First, install required dev tools (Xcode for iOS, Android SDK for Android)
-* Next, run: `ionic state restore`
+Run `make install`. This includes global dependencies like ionic, cordova and
+typings, as well as local npm. Note that this required superuser access.
 
-## Create environment configuaration file
-* Run `cp app/config/env.staging.json app/config/env.json`
-* Edit app/config/env.json to change or add configuration values
+## Set an appropriate config file, if required
+
+Ur money uses a Typescript-driven config system. The config file lives at
+`src/config/config.ts`, and it defaultly connects to the staging environment.
+There are seveal other files in that directory which connect to other
+environments.
 
 ## Run on device
+
 * Run `ionic run android -c -l` or `ionic run ios -c -l`
 * If you have a problem running the app, check out these platform-specific instructions:
 * [installation-android.md](doc/installation-android.md)
 * [installation-ios.md](doc/installation-ios.md)
 
 ## To run as a web server
+
 ```script
-ionic serve -c
+make run
 ```
 
 ## Deploy to Firebase Hosting
+
+Make sure you have firebase-tools installed, and have logged in.
+
 ```script
-firebase deploy -f ur-money-staging
+firebase deploy
 ```

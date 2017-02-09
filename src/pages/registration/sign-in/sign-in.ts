@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Platform, NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
-// import {Deeplinks} from 'ionic-native';
 import { CountryListService } from '../../../services/country-list';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -9,7 +8,6 @@ import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { SignUpPage } from '../sign-up/sign-up';
 import { HomePage } from '../..//home/home';
-// import * as log from 'loglevel';
 
 @Component({
   selector: 'page-sign-in',
