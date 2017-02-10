@@ -10,7 +10,6 @@ declare var jQuery: any;
   templateUrl: 'invite-link.html',
 })
 export class InviteLinkPage {
-  public versionNumber: string;
   mainForm: FormGroup;
 
   constructor(public nav: NavController, public platform: Platform, public auth: AuthService) {
