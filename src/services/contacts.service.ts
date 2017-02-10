@@ -7,6 +7,7 @@ import { UserModel } from '../models/user.model';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
+import * as firebase from 'firebase';
 
 export interface ContactGroups {
   members: ContactModel[];

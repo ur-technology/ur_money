@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AuthService } from '../../../services/auth';
 import { ProfileSetupPage } from '../profile-setup/profile-setup';
+import * as firebase from 'firebase';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 

@@ -11,6 +11,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { EncryptionService } from '../../../services/encryption';
 import { Config } from '../../../config/config';
 import { IntroPage } from '../intro/intro'
+import * as firebase from 'firebase';
 
 declare var jQuery: any;
 

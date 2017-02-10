@@ -5,6 +5,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AuthService } from '../../../services/auth';
 import { CustomValidator } from '../../../validators/custom';
 import { SelfieMatchPage } from '../selfie-match/selfie-match';
+import * as firebase from 'firebase';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Platform, NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
-// import {Deeplinks} from 'ionic-native';
 import { CountryListService } from '../../../services/country-list';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom';
@@ -10,7 +9,6 @@ import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { AuthenticationCodePage } from '../authentication-code/authentication-code';
 import { SignInPage } from '../sign-in/sign-in';
-// import * as log from 'loglevel';
 
 @Component({
   selector: 'page-sign-up',
@@ -38,6 +36,7 @@ export class SignUpPage {
     public alertCtrl: AlertController,
     public platform: Platform
   ) {
+
     this.countries = this.countryListService.getCountryData();
     this.signUpType = this.navParams.get('signUpType') || 'sponsorReferralCode';
     this.extractSponsorReferralCodeFromUrl();

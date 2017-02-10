@@ -2,6 +2,7 @@ import { Injectable, EventEmitter, Inject } from '@angular/core';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import { AuthService } from './auth';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class EventsService {
