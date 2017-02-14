@@ -1,27 +1,19 @@
-<ion-content
-    class="main-splash"
-    scroll="false">
-    <div class="ur-logo">
-        <img src="assets/img/ur-logo.png"
-            alt="logo">
-        <img src="assets/img/ur-slogan.png"
-            alt="logo">
-    </div>
+<ion-content class="main-splash" scroll="false">
+  <div class="ur-logo">
+    <img src="assets/img/ur-logo.png" alt="logo">
+    <img src="assets/img/ur-slogan.png" alt="logo">
+  </div>
 </ion-content>
 <ion-footer>
-    <ion-toolbar
-        class="bottom-toolbar">
-        <div class="welcome-ur">
-            <h3>{{ "welcome.welcomeText" | translate }} {{auth.envModeDisplay()}}</h3>
-            <p class="ur-slogan">{{ "welcome.description" | translate }}</p>
-            <p>
-                {{ "welcome.terms" | translate }}
-                <br> {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
-                <br> {{ "welcome.terms4" | translate }}
-            </p>
-            <button ion-button clear block
-                (click)="goToPage()"
-                class="agree-btn"><span>{{ "welcome.agreeAndContinue" | translate }}</span></button>
-        </div>
-    </ion-toolbar>
+  <ion-toolbar class="bottom-toolbar">
+    <div class="welcome-ur">
+      <h3>{{ "welcome.welcomeText" | translate }} {{auth.envModeDisplay()}}</h3>
+      <p class="ur-slogan">{{ "welcome.description" | translate }}</p>
+      <p>
+        <br />
+      </p>
+      <button ion-button round (click)="signUp()"><span>{{ "welcome.signUp" | translate }}</span></button>
+      <button ion-button round color="light" (click)="signIn()"><span>{{ "welcome.signIn" | translate }}</span></button>
+    </div>
+  </ion-toolbar>
 </ion-footer>

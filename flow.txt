@@ -1,0 +1,105 @@
+//  /signUpQueue
+//  step 1: submit phone + (sponsorReferralCode | email)
+//    happy: auth code sent to user
+//    sad: (both) phone already registered
+//    sad (sponsorReferralCode): no such sponsor
+//    sad (sponsorReferralCode): sponsor disabled
+//    sad (email): email not found
+
+//  step 2: User enters auth code
+//    happy: auth code matches:
+//      A. user account created (if sponsorReferralCode) or updated (if email)
+//      B. state changed to waiting-for-secret-phrase
+//      C. response set to success
+//    sad: auth code doesn't match
+
+//  step 3: create secret phrase
+//     A. User sees explanation
+//     B. Enters phrase 3 times
+//     C. hashed and un-hashed secret phrase sent to server and saved
+//     E. auth token created and sent to user
+//     F. user logged in and redirected to home page
+
+
+//  /signInQueue
+//  step 1: submit phone + hashed secret phrase
+//    happy: phone exists and hashed secret phrase matches
+//     E. auth token created and sent to user
+//     F. user logged in and redirected to home page
+
+//  /recoverSecretPhraseQueue
+//  later....
+
+
+
+
+
+
+
+/users/1
+  /summary
+    /name
+    /firstName
+    /middleName
+    /lastName
+    /profilePhotoUrl
+    /phone
+    /email
+    /wallet
+      /address
+      /transactionSalt
+      /currentBalance
+    /chatSummaries
+    /identification
+      /type
+      /countryCode
+      
+  /detail
+    /transactions
+    /chats
+  /secret
+    /hashedPassword
+    /passwordHint
+    /downlineSize
+    /directReferralsSize
+
+
+Sign-Up
+
+1.  A. User enters:
+      country
+      phone
+      password
+      retype password
+      sponsorReferralCode (allow lookup via email)
+    B. Behind the scenes:
+      clientHashedPassword generated
+      country + phone + clientHashedPassword + sponsorReferralCode transmitted
+      verification code sent via sms
+
+2. User enters verification code
+  (behind the scenes: account created, password hashed again and stored custom token transmitted, account sign-in completed on client)
+
+3. User scans front & back of id
+
+4. Take selfie
+
+5. Choose secret phrase + type it 2 more times + see warning (tailored to platform, plus downloadable if possible)
+
+6. Final message about status
+
+states:
+  initial
+  phone-verified
+  id scanned
+  selfie checked
+  approved
+  denied
+
+Sign-In
+
+1. Enter:
+     phone
+     password
+
+2. see home page

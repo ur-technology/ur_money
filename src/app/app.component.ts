@@ -2,20 +2,21 @@ import { ViewChild, Component } from '@angular/core';
 import { Platform, Nav, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { HomePage } from '../pages/home/home';
-import {ContactsAndChatsPage} from '../pages/contacts-and-chats/contacts-and-chats';
-import {TransactionsPage} from '../pages/transactions/transactions';
+import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
+import { TransactionsPage } from '../pages/transactions/transactions';
 import { AboutPage } from '../pages/about/about';
-import {AuthService} from '../services/auth';
-import {ContactsService} from '../services/contacts.service';
-import {Config} from '../config/config'
-import {NoInternetConnectionPage} from '../pages/no-internet-connection/no-internet-connection';
-import {WelcomePage} from '../pages/registration/welcome/welcome';
-import {SendPage} from '../pages/send/send';
-import {InviteLinkPage} from '../pages/invite-link/invite-link';
-import {UsersPage} from '../pages/admin/users';
-import {SettingsPage} from '../pages/settings/settings';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {ProfileSetupPage} from '../pages/registration/profile-setup/profile-setup';
+import { AuthService } from '../services/auth';
+import { ContactsService } from '../services/contacts.service';
+import { Config } from '../config/config'
+import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
+import { WelcomePage } from '../pages/registration/welcome/welcome';
+import { SendPage } from '../pages/send/send';
+import { InviteLinkPage } from '../pages/invite-link/invite-link';
+import { UsersPage } from '../pages/admin/users';
+import { SettingsPage } from '../pages/settings/settings';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { IdScanPage } from '../pages/registration/id-scan/id-scan';
+//import {SelfieMatchPage} from '../pages/registration/selfie-match/selfie-match';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -39,8 +40,6 @@ export class UrMoney {
   }
 
   private initializeApp() {
-    this.handleSponsorReferralCodeIfPresent();
-
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
         StatusBar.styleDefault();
@@ -70,7 +69,7 @@ export class UrMoney {
         if (status === 'unauthenticated') {
           this.nav.setRoot(WelcomePage);
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
-          this.nav.setRoot(ProfileSetupPage);
+          this.nav.setRoot(IdScanPage);
         } else {
           this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
           this.nav.setRoot(HomePage);
@@ -79,28 +78,6 @@ export class UrMoney {
 
       log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
     });
-  }
-
-
-  private extractSponsorReferralCodeFromUrl(): string {
-    let pathname: string = window.location.pathname || '';
-    let matches: string[] = pathname.match(/\/r\/([a-zA-Z0-9]+)/);
-    if (!matches || !matches[1]) {
-      let params: string = window.location.search || '';
-      matches = params.match(/[\?\&]r\=([a-zA-Z0-9]+)/);
-    }
-    return matches && matches[1];
-  }
-
-  private handleSponsorReferralCodeIfPresent() {
-    let sponsorReferralCode: string = this.extractSponsorReferralCodeFromUrl();
-    if (sponsorReferralCode) {
-      if (window.location.hostname === 'ur-money-staging.firebaseapp.com') {
-        // temporarily re-route incorrect staging referral link to intended destination
-        window.location.href = `https://web.ur.technology/r/${sponsorReferralCode}`;
-      }
-      this.auth.sponsorReferralCode = sponsorReferralCode;
-    }
   }
 
   private initializeMenu() {

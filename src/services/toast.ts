@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {ToastController} from 'ionic-angular';
-import {TranslateService} from 'ng2-translate/ng2-translate';
+import { Injectable } from '@angular/core';
+import { ToastController } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import * as _ from 'lodash';
 
 @Injectable()

@@ -5,5 +5,6 @@ export let Config: any = {
   'firebaseApiKey': 'AIzaSyCAfUyRbUHkuRQhKOSgmMTrMtR2vVgeJqo',
   'stripePublishableKey': 'pk_live_0AFFhzUArOgWBSlKm3IOXFwo',
   'targetPlatform': 'UNKNOWN_TARGET_PLATFORM',
-  'versionNumber': 'UNKNOWN_VERSION_NUMBER'
+  'versionNumber': 'UNKNOWN_VERSION_NUMBER',
+  'deeplinkHost': 'web.ur.technology'
 };

@@ -1,10 +1,10 @@
-import {NavController, NavParams, ToastController, AlertController, ModalController} from 'ionic-angular';
-import {Component} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {AuthService} from '../../services/auth';
-import {CustomValidator} from '../../validators/custom';
-import {UserModel} from '../../models/user.model';
-import {ChangeSponsorModal} from './change-sponsor';
+import { NavController, NavParams, ToastController, AlertController, ModalController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth';
+import { CustomValidator } from '../../validators/custom';
+import { UserModel } from '../../models/user.model';
+import { ChangeSponsorModal } from './change-sponsor';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -42,10 +42,10 @@ export class UserPage {
       countryCode: new FormControl('', Validators.required),
       phone: new FormControl('', [Validators.required, CustomValidator.phoneValidator]),
       email: new FormControl('', [CustomValidator.emailValidator]),
-      downlineSize: new FormControl({value: '', disabled: true}),
-      ipAddress: new FormControl({value: '', disabled: true}),
-      sponsorName: new FormControl({value: '', disabled: true}),
-      sponsorContact: new FormControl({value: '', disabled: true})
+      downlineSize: new FormControl({ value: '', disabled: true }),
+      ipAddress: new FormControl({ value: '', disabled: true }),
+      sponsorName: new FormControl({ value: '', disabled: true }),
+      sponsorContact: new FormControl({ value: '', disabled: true })
     });
 
     this.user = this.navParams.get('user');
@@ -81,7 +81,7 @@ export class UserPage {
         r.duplicateTag = r.duplicate ? 'Duplicate' : '';
         r.signUpBonusApprovedTag = r.signUpBonusApproved ? 'Bonus-Approved' : '';
       });
-      this.referrals = _.sortBy(this.referrals, (r) => { return 1000000 - (r.downlineSize || 0);});
+      this.referrals = _.sortBy(this.referrals, (r) => { return 1000000 - (r.downlineSize || 0); });
       this.showSpinner = false;
     }, (error) => {
       log.warn(error);
@@ -128,13 +128,13 @@ export class UserPage {
   approveSignUpBonus(user: any) {
     user.signUpBonusApproved = true;
     user.signUpBonusApprovedTag = 'Bonus-Approved';
-    firebase.database().ref(`/users/${user.userId}`).update({signUpBonusApproved: true});
+    firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true });
     return false;
   }
 
   country(u) {
     let countryObject = this.countries.find((x) => { return x.alpha2 === (u.countryCode); });
-    return ( countryObject && countryObject.name ) || ( u.prefineryUser && u.prefineryUser.country ) || 'None';
+    return (countryObject && countryObject.name) || (u.prefineryUser && u.prefineryUser.country) || 'None';
   }
 
   toggle(fieldName) {
@@ -150,7 +150,7 @@ export class UserPage {
   }
 
   changeSponsor(event) {
-    let changeSponsorModal = this.modalCtrl.create(ChangeSponsorModal, {user: this.user, oldSponsor: this.sponsor});
+    let changeSponsorModal = this.modalCtrl.create(ChangeSponsorModal, { user: this.user, oldSponsor: this.sponsor });
     changeSponsorModal.present();
     event.stopPropagation();
     changeSponsorModal.onDidDismiss((newSponsor: any) => {

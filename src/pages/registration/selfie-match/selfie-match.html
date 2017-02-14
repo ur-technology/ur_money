@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"selfie-match.title" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="mainForm">
+    <ion-card>
+      <ion-card-header>
+        <ion-label text-center color="primary">{{"selfie-match.slideTitle" | translate}}</ion-label>
+      </ion-card-header>
+      <ion-card-content>
+
+        <div>
+          <ion-img class="preview-image" [src]="selfieSource" [alt]="" (click)="selectFile($event)"></ion-img>
+          <input id="selfie" type="file" capture="camera" accept="image/*" (change)="fileChanged($event, null)" />
+        </div>
+
+      </ion-card-content>
+      <ion-item class="footer-card">
+        <button ion-button item-right clear default [disabled]="!selfieUploaded()" icon-right (click)="submit()">
+          {{"continue" | translate}}
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-card>
+  </form>
+</ion-content>
+<ion-footer>
+
+</ion-footer>

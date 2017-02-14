@@ -1,5 +1,5 @@
-import {NavParams, ViewController, ToastController} from 'ionic-angular';
-import {Component} from '@angular/core';
+import { NavParams, ViewController, ToastController } from 'ionic-angular';
+import { Component } from '@angular/core';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -53,9 +53,9 @@ export class ChangeSponsorModal {
       this.user.sponsor = _.pick(newSponsor, ['name', 'profilePhotoUrl', 'userId']);
       this.user.sponsor = _.merge(this.user.sponsor, {
         announcementTransactionConfirmed: !!newSponsor.wallet &&
-          !!newSponsor.wallet.announcementTransaction &&
-          !!newSponsor.wallet.announcementTransaction.blockNumber &&
-          !!newSponsor.wallet.announcementTransaction.hash
+        !!newSponsor.wallet.announcementTransaction &&
+        !!newSponsor.wallet.announcementTransaction.blockNumber &&
+        !!newSponsor.wallet.announcementTransaction.hash
       });
       this.user.sponsor = _.omit(this.user.sponsor, _.isNil);
       this.user.downlineLevel = (newSponsor.downlineLevel || 0) + 1;

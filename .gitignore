@@ -34,3 +34,6 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 .editorconfig
 src/config/config.ts
+/.vagrant
+/bower_components
+/typings

@@ -1,7 +1,7 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, ViewController, NavParams } from 'ionic-angular';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {CustomValidator} from '../../validators/custom';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CustomValidator } from '../../validators/custom';
 
 @Component({
   selector: 'page-choose-contact',
@@ -14,7 +14,7 @@ export class ChooseContactPage {
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, params: NavParams) {
     let addr = params.get('walletAddress');
-    if(addr){
+    if (addr) {
       this.addressText = addr;
     }
 

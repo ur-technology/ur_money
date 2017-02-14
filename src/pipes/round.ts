@@ -1,5 +1,5 @@
-import {Injectable, Pipe} from '@angular/core';
-import {round} from 'lodash';
+import { Injectable, Pipe } from '@angular/core';
+import { round } from 'lodash';
 
 /*
   Generated class for the Round pipe.

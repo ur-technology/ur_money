@@ -1,10 +1,10 @@
-import { NavController, AlertController} from 'ionic-angular';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {HomePage} from '../../home/home';
+import { NavController, AlertController } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { HomePage } from '../../home/home';
 import { Component } from '@angular/core';
-import {Config} from '../../../config/config';
-import {ContactsService} from '../../../services/contacts.service';
-import {AuthService} from '../../../services/auth';
+import { Config } from '../../../config/config';
+import { ContactsService } from '../../../services/contacts.service';
+import { AuthService } from '../../../services/auth';
 
 @Component({
   selector: 'intro-page',
@@ -24,7 +24,7 @@ export class IntroPage {
   }
 
   pleaseContinue() {
-    this.auth.reloadCurrentUser().then(()=>{
+    this.auth.reloadCurrentUser().then(() => {
       this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
       this.nav.setRoot(HomePage);
     });

@@ -1,11 +1,11 @@
-import { NavController, NavParams, Platform, AlertController} from 'ionic-angular';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {AuthService} from '../../services/auth';
-import {Config} from '../../config/config';
+import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AuthService } from '../../services/auth';
+import { Config } from '../../config/config';
 import { Component } from '@angular/core';
-import {SocialSharing, Clipboard, Toast} from 'ionic-native';
+import { SocialSharing, Clipboard, Toast } from 'ionic-native';
 import * as log from 'loglevel';
-import {ChatPage} from '../../pages/chat/chat';
+import { ChatPage } from '../../pages/chat/chat';
 
 declare var jQuery: any;
 
@@ -16,13 +16,14 @@ declare var jQuery: any;
 export class ContactsAndChatsPage {
   goal: any;
   segmentSelected: string = 'contacts';
+  targetPlatform = Config.targetPlatform;
 
   constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService, public alertCtrl: AlertController) {
     this.goal = navParams.get('goal');
   }
 
   ngOnInit() {
-    jQuery('.contentPage').css('top', Config.targetPlatform === 'ios' ? '63px' : '43px');
+    jQuery('.contentPage').css('top', this.targetPlatform === 'ios' ? '63px' : '43px');
   }
 
   goalChanged(data) {

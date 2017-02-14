@@ -1,9 +1,8 @@
-import { NavController, NavParams, LoadingController} from 'ionic-angular';
-import {AuthService} from '../../../services/auth';
-import {ToastService} from '../../../services/toast';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {PhoneNumberPage} from '../phone-number/phone-number'
-import {EmailAddressPage} from '../email-address/email-address';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { AuthService } from '../../../services/auth';
+import { ToastService } from '../../../services/toast';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { SignUpPage } from '../sign-up/sign-up';
 import { Component } from '@angular/core';
 
 @Component({
@@ -21,19 +20,19 @@ export class AuthenticationCodePage {
     public toastService: ToastService
   ) {
     this.nav = nav;
-    this.authenticationType = this.navParams.get('authenticationType');
+    this.authenticationType = this.navParams.get('authenticationType') || 'signIn';
   }
 
   checkCode() {
     let self = this;
-    let loadingModal = self.loadingController.create({content: self.translate.instant('pleaseWait') });
+    let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
 
     let authenticationCodeMatch;
 
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.checkAuthenticationCode(self.authenticationCode);
+      return self.auth.checkSignUpCodeMatching(self.authenticationCode);
     }).then((codeMatch: boolean) => {
       authenticationCodeMatch = codeMatch;
       return loadingModal.dismiss();
@@ -42,17 +41,17 @@ export class AuthenticationCodePage {
       if (authenticationCodeMatch) {
         // do nothing AuthService will handle a redirect
       } else {
-        self.toastService.showMessage({messageKey: 'authentication-code.invalidCode'});
+        self.toastService.showMessage({ messageKey: 'authentication-code.invalidCode' });
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
+        self.toastService.showMessage({ messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
       });
     });
   }
 
   resendCode() {
-    this.nav.setRoot(this.authenticationType === 'email' ? EmailAddressPage : PhoneNumberPage );
+    this.nav.setRoot(SignUpPage);
   }
 
   add(numberVar) {

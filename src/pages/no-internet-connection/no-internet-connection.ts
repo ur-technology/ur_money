@@ -1,4 +1,4 @@
-import {TranslateService} from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Component } from '@angular/core';
 
 @Component({

@@ -1,7 +1,8 @@
-import {Injectable, EventEmitter, Inject} from '@angular/core';
+import { Injectable, EventEmitter, Inject } from '@angular/core';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
-import {AuthService} from './auth';
+import { AuthService } from './auth';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class EventsService {
@@ -26,7 +27,7 @@ export class EventsService {
       });
 
     firebase.database().ref(`/users/${this.auth.currentUserId}/events/`)
-    .on('child_changed', snapshot => {
+      .on('child_changed', snapshot => {
         if (snapshot.exists()) {
           let index = _.findIndex(this.events, _.pick(snapshot.val(), 'sourceId'));
           this.events.splice(index, 1, snapshot.val());

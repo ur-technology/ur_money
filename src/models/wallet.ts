@@ -1,5 +1,5 @@
 import * as log from 'loglevel';
-import {Config} from '../config/config';
+import { Config } from '../config/config';
 // import {BigNumber} from 'bignumber.js';
 
 export class WalletModel {
