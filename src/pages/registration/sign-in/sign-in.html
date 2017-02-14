@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+  </ion-navbar>
+</ion-header>
+<ion-content class="main-splash" scroll="false">
+  <div class="ur-logo">
+    <img src="assets/img/ur-logo.png" alt="logo">
+    <img src="assets/img/ur-slogan.png" alt="logo">
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar class="bottom-toolbar">
+    <div class="welcome-ur">
+      <p *ngIf="sponsor && sponsor.found" text-center innerHTML="{{subheadingTitle}}">
+      </p>
+      <form [formGroup]="mainForm" >
+        <ion-list>
+          <ion-item>
+            <ion-select formControlName="country">
+              <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <div item-content class="phone-content">
+              <span class="countryCode">{{mainForm.value.country.telephoneCountryCode}}</span>
+              <ion-input formControlName="phone" placeholder="{{'phone-number.phoneNumber' | translate}}" type="tel"></ion-input>
+            </div>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>{{'sign-in.password' | translate}}</ion-label>
+            <ion-input type="password" formControlName="password" placeholder='{{ "sign-in.placeholderPassword" | translate }}'></ion-input>
+          </ion-item>
+          <p class="terms" text-center>
+            {{ "welcome.terms" | translate }} {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
+          </p>
+          <div text-center>
+            <button ion-button round (click)="submit()" [disabled]="!mainForm.valid">{{'welcome.agreeAndContinue' | translate}}</button>
+          </div>
+        </ion-list>
+      </form>
+    </div>
+  </ion-toolbar>
+</ion-footer>

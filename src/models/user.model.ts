@@ -1,4 +1,4 @@
-import {FirebaseModel} from './firebase-model';
+import { FirebaseModel } from './firebase-model';
 import * as _ from 'lodash';
 
 export class UserModel extends FirebaseModel {

@@ -1,0 +1,5 @@
+{
+  "globalDependencies": {
+    "ionic": "registry:dt/ionic#0.0.0+20170112164458"
+  }
+}

@@ -1,25 +1,26 @@
 {
   "name": "URMoney",
-  "description": "ur_money4: An Ionic project",
+  "description": "A secure criptocurrency",
   "private": true,
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
+
   "dependencies": {
-    "@angular/common": "2.1.1",
-    "@angular/compiler": "2.1.1",
-    "@angular/compiler-cli": "2.1.1",
-    "@angular/core": "2.1.1",
-    "@angular/forms": "2.1.1",
-    "@angular/http": "2.1.1",
-    "@angular/platform-browser": "2.1.1",
-    "@angular/platform-browser-dynamic": "2.1.1",
-    "@angular/platform-server": "2.1.1",
-    "@ionic/storage": "1.1.6",
+    "@angular/common": "2.2.1",
+    "@angular/compiler": "2.2.1",
+    "@angular/compiler-cli": "2.2.1",
+    "@angular/core": "2.2.1",
+    "@angular/forms": "2.2.1",
+    "@angular/http": "2.2.1",
+    "@angular/platform-browser": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/platform-server": "2.2.1",
+    "@ionic/storage": "1.1.7",
     "@types/jasmine": "^2.5.38",
     "@types/node": "0.0.3",
-    "angularfire2": "^2.0.0-beta.6",
+    "angularfire2": "2.0.0-beta.6",
     "bignumber.js": "^2.4.0",
     "buffer": "^4.7.0",
     "clipboard": "^1.5.15",
@@ -30,8 +31,8 @@
     "ethereumjs-wallet": "^0.6.0",
     "firebase": "^3.6.3",
     "google-libphonenumber": "^1.0.25",
-    "ionic-angular": "2.0.0-rc.3",
-    "ionic-native": "2.2.3",
+    "ionic-angular": "2.0.0-rc.5",
+    "ionic-native": "2.2.11",
     "ionicons": "3.0.0",
     "jsencrypt": "^2.3.1",
     "lodash": "^4.13.1",
@@ -45,12 +46,13 @@
     "rxjs": "5.0.0-beta.12",
     "scrypt-async": "^1.2.0",
     "secure-randword": "^0.1.4",
+    "sw-toolbox": "3.4.0",
     "web3": "^0.17.0-beta",
     "zone.js": "0.6.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "0.0.45",
-    "typescript": "2.0.6"
+    "@ionic/app-scripts": "1.0.0",
+    "typescript": "2.0.9"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
@@ -78,8 +80,16 @@
         "APP_NAME": "UR Money"
       }
     },
-    "cordova-plugin-file",
-    "cordova-plugin-console"
+    "cordova-plugin-console",
+    {
+      "id": "ionic-plugin-deeplinks",
+      "locator": "ionic-plugin-deeplinks",
+      "variables": {
+        "URL_SCHEME": "ur_money",
+        "DEEPLINK_SCHEME": "https",
+        "DEEPLINK_HOST": "ur-money-staging.firebaseapp.com"
+      }
+    }
   ],
   "cordovaPlatforms": [
     {

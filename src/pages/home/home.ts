@@ -1,19 +1,19 @@
-import { NavController, NavParams, Platform} from 'ionic-angular';
-import {ChartDataService} from '../../services/chart-data.service';
-import {ElementRef, Inject, Component} from '@angular/core';
-import {ContactsAndChatsPage} from '../contacts-and-chats/contacts-and-chats';
+import { NavController, NavParams, Platform } from 'ionic-angular';
+import { ChartDataService } from '../../services/chart-data.service';
+import { ElementRef, Inject, Component } from '@angular/core';
+import { ContactsAndChatsPage } from '../contacts-and-chats/contacts-and-chats';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import {AngularFire} from 'angularfire2';
-import {AuthService} from '../../services/auth';
-import {Config} from '../../config/config';
-import { TranslateService} from 'ng2-translate/ng2-translate';
-import {AnnouncementInitiatedPage} from '../announcement-initiated/announcement-initiated';
-import {TransactionsPage} from './../transactions/transactions';
-import {SendPage} from './../send/send';
-import {InviteLinkPage} from './../invite-link/invite-link';
-import {SponsorWaitPage} from '../sponsor-wait/sponsor-wait';
-import {BigNumber} from 'bignumber.js';
+import { AngularFire } from 'angularfire2';
+import { AuthService } from '../../services/auth';
+import { Config } from '../../config/config';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AnnouncementInitiatedPage } from '../announcement-initiated/announcement-initiated';
+import { TransactionsPage } from './../transactions/transactions';
+import { SendPage } from './../send/send';
+import { InviteLinkPage } from './../invite-link/invite-link';
+import { SponsorWaitPage } from '../sponsor-wait/sponsor-wait';
+import { BigNumber } from 'bignumber.js';
 declare var jQuery: any;
 
 @Component({
@@ -25,7 +25,7 @@ export class HomePage {
   sendButtonHidden: boolean;
   needsToCompleteProfile: boolean;
   balanceTitle: string;
-  balanceValue : any = new BigNumber(0);
+  balanceValue: any = new BigNumber(0);
   selectedOption: any;
   balanceChangeUR: any;
   balanceChangePercent: any;
@@ -60,11 +60,11 @@ export class HomePage {
       this.balanceValue = new BigNumber(2000);
       this.balanceTitle = this.translate.instant(
         {
-          'waiting-for-sponsor':'home.waitingForSponsor',
+          'waiting-for-sponsor': 'home.waitingForSponsor',
           'disabled': 'home.userDisabled'
-         }[this.auth.getUserStatus()] || 'home.bonusGenerating'
-       );
-     }
+        }[this.auth.getUserStatus()] || 'home.bonusGenerating'
+      );
+    }
     if (this.auth.announcementConfirmed() && this.chartData.pointsLoaded) {
       let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
       let startingBalanceWei = this.chartData.priorBalanceWei || new BigNumber(firstTransaction ? firstTransaction.balance : 0);

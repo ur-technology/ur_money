@@ -5,5 +5,6 @@ export let Config: any = {
   'firebaseApiKey': 'AIzaSyAmnXqJs5-fOzCQdhA38aEY5ZFxVmeNf0g',
   'stripePublishableKey': 'pk_test_SruvvOMun2cNIrOfiSvBDM8a',
   'targetPlatform': 'UNKNOWN_TARGET_PLATFORM',
-  'versionNumber': 'UNKNOWN_VERSION_NUMBER'
+  'versionNumber': 'UNKNOWN_VERSION_NUMBER',
+  'deeplinkHost': 'ur-money-staging.firebaseapp.com'
 };

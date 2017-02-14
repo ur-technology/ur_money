@@ -2,14 +2,14 @@
     <ion-navbar>
       <ion-title>{{getPageTitle()}} {{auth.envModeDisplay()}}</ion-title>
       <ion-buttons end>
-          <button ion-button icon-only (click)="shareLink()"><ion-icon name="share"></ion-icon></button>
+          <button ion-button icon-only *ngIf="targetPlatform!='web'" (click)="shareLink()"><ion-icon name="share"></ion-icon></button>
       </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content class="contentFix">
   <ion-segment [(ngModel)]="segmentSelected"
       class="segment-tab-nav">
-      <ion-segment-button value="contacts" >
+      <ion-segment-button value="contacts" [hidden]="targetPlatform =='web'">
           <a class="tab-buttons">
               <ion-icon name="contacts-icon"></ion-icon>
               <span>{{"contacts-and-chats.contacts" | translate}}</span>

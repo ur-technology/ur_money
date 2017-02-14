@@ -1,9 +1,9 @@
-import { NavController, NavParams, Platform, AlertController} from 'ionic-angular';
-import { Inject, Component} from '@angular/core';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {AuthService} from '../../services/auth';
-import {Config} from '../../config/config';
-import {UserPage} from './user';
+import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { Inject, Component } from '@angular/core';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AuthService } from '../../services/auth';
+import { Config } from '../../config/config';
+import { UserPage } from './user';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import { FirebaseApp } from 'angularfire2';
@@ -92,7 +92,7 @@ export class UsersPage {
         user.duplicateTag = user.duplicate ? 'Duplicate' : '';
         user.signUpBonusApprovedTag = user.signUpBonusApproved ? 'Bonus-Approved' : '';
       });
-      users = _.sortBy(users, (u) => { return 1000000 - (u.downlineSize || 0);});
+      users = _.sortBy(users, (u) => { return 1000000 - (u.downlineSize || 0); });
       this.paginatedUsers = _.chunk(users, this.PAGE_SIZE);
       this.numberOfPages = this.paginatedUsers.length;
       this.displayableUsers = this.paginatedUsers[0] || [];
@@ -124,13 +124,13 @@ export class UsersPage {
   approveSignUpBonus(user: any) {
     user.signUpBonusApproved = true;
     user.signUpBonusApprovedTag = 'Bonus-Approved';
-    firebase.database().ref(`/users/${user.userId}`).update({signUpBonusApproved: true});
+    firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true });
     return false;
   }
 
   country(u) {
     let countryObject = this.countries.find((x) => { return x.alpha2 === (u.countryCode); });
-    return ( countryObject && countryObject.name ) || ( u.prefineryUser && u.prefineryUser.country ) || 'None';
+    return (countryObject && countryObject.name) || (u.prefineryUser && u.prefineryUser.country) || 'None';
   }
 
 }

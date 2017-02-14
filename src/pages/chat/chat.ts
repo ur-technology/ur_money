@@ -1,14 +1,14 @@
-import {ViewChild, Inject, Component} from '@angular/core';
+import { ViewChild, Inject, Component } from '@angular/core';
 import { NavController, NavParams, Platform, Content, AlertController, PopoverController } from 'ionic-angular';
-import {AngularFire} from 'angularfire2';
-import {Subscription} from 'rxjs';
+import { AngularFire } from 'angularfire2';
+import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
-import {AuthService} from '../../services/auth';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {PopoverChatPage} from './popover-chat';
-import {Keyboard} from 'ionic-native';
+import { AuthService } from '../../services/auth';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { PopoverChatPage } from './popover-chat';
+import { Keyboard } from 'ionic-native';
 
 declare var jQuery: any;
 

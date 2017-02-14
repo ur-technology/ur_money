@@ -5,7 +5,6 @@ welcome-page {
   }
 
   .welcome-ur {
-    background: url('../assets/img/curly-bg.png') no-repeat center;
     background-size: cover;
     letter-spacing: 0.01em;
     text-align: center;
@@ -14,7 +13,7 @@ welcome-page {
 
   .welcome-ur h3 {
     font-size: 22px;
-    font-weight: 300;
+    font-weight: 500;
     color: #323232;
     margin: 25px 0;
   }
@@ -119,9 +118,9 @@ welcome-page {
   }
 
   .bottom-toolbar.toolbar {
-    min-height: 286px;
+    min-height: 316px;
     padding: 0;
-    height: 286px;
+    height: 316px;
   }
 
   .bottom-toolbar .toolbar-background {

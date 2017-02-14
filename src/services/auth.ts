@@ -1,13 +1,14 @@
-import {Injectable, Inject, EventEmitter} from '@angular/core';
-import {AngularFire} from 'angularfire2';
+import { Injectable, Inject, EventEmitter } from '@angular/core';
+import { AngularFire } from 'angularfire2';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import {ContactsService} from '../services/contacts.service';
-import {Config} from '../config/config';
+import { ContactsService } from '../services/contacts.service';
+import { Config } from '../config/config';
 import { FirebaseApp } from 'angularfire2';
-import {BigNumber} from 'bignumber.js';
-import {UserService} from './user.service';
-import {UserModel} from '../models/user.model';
+import { BigNumber } from 'bignumber.js';
+import { UserService } from './user.service';
+import { UserModel } from '../models/user.model';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthService {
@@ -50,12 +51,13 @@ export class AuthService {
 
 
         } else {
-          this.walletRef().off('value');
+          self.walletRef().off('value');
           self.phone = undefined;
           self.countryCode = undefined;
           self.email = undefined;
           self.currentUserId = undefined;
           self.currentUser = undefined;
+          self.sponsorReferralCode = self.sponsorReferralCode ? _.clone(self.sponsorReferralCode) : undefined;
           callback(undefined);
         }
       });
@@ -140,47 +142,59 @@ export class AuthService {
     });
   }
 
-  requestAuthenticationCode() {
-    let self = this;
+  private generateHashedPassword(password: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      let taskRef = firebase.database().ref('/phoneAuthQueue/tasks').push(
-        {
-          phone: this.phone,
-          sponsorReferralCode: this.sponsorReferralCode || null,
-          email: this.email || null
-        }
-      );
-      taskRef.then(() => {
-        self.taskId = taskRef.key;
-        log.debug(`request queued to ${taskRef.toString()}`);
-        let stateRef = taskRef.child('_state');
-        stateRef.on('value', (snapshot) => {
-          let state = snapshot.val();
-          if (!_.includes([undefined, null, 'code_generation_in_progress'], state)) {
-            stateRef.off('value');
-            resolve(state);
-          }
-        });
-      }, (error) => {
-        reject(error);
+      let scryptAsync = require('scrypt-async');
+      scryptAsync(password, 'saltnotneeded', { N: 16384, r: 16, p: 1, dkLen: 64, encoding: 'hex' }, (clientHashedPassword) => {
+        resolve(clientHashedPassword);
       });
     });
   }
 
-  checkAuthenticationCode(submittedAuthenticationCode: string): Promise<boolean> {
+  requestSignUpCodeGeneration(phone: string, password: string, sponsorReferralCode: string, email: string): Promise<string> {
     let self = this;
     return new Promise((resolve, reject) => {
-      if (!self.taskId) {
-        reject(`no value set for taskId`);
+      if ((sponsorReferralCode && email) || (!sponsorReferralCode && !email)) {
+        reject('expecting exactly one of sponsorReferralCode, email');
         return;
       }
 
-      let taskRef = firebase.database().ref(`/phoneAuthQueue/tasks/${self.taskId}`);
-      taskRef.update({
-        submittedAuthenticationCode: submittedAuthenticationCode,
-        _state: 'code_matching_requested'
+      self.generateHashedPassword(password).then((clientHashedPassword: string) => {
+        let taskRef = firebase.database().ref('/signUpQueue/tasks').push({
+          phone: phone,
+          clientHashedPassword: clientHashedPassword,
+          sponsorReferralCode: sponsorReferralCode || null,
+          email: email || null
+        });
+        taskRef.then(() => {
+          self.taskId = taskRef.key;
+          log.debug(`request queued to ${taskRef.toString()}`);
+          let stateRef = taskRef.child('_state');
+          stateRef.on('value', (snapshot) => {
+            let state = snapshot.val();
+            if (state && state !== 'code_generation_in_progress') {
+              stateRef.off('value');
+              resolve(state);
+            }
+          });
+        }, (error) => {
+          reject(error);
+        });
+      });
+    });
+  }
+
+  signIn(phone: string, password: string) {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      let taskRef;
+      self.generateHashedPassword(password).then((clientHashedPassword: string) => {
+        taskRef = firebase.database().ref('/signInQueue/tasks').push({
+          phone: phone,
+          clientHashedPassword: clientHashedPassword
+        });
+        return taskRef;
       }).then(() => {
-        log.debug(`set submittedAuthenticationCode to ${submittedAuthenticationCode} at ${taskRef.toString()}`);
         let resultRef = taskRef.child('result');
         resultRef.on('value', (snapshot) => {
           let result = snapshot.val();
@@ -188,8 +202,57 @@ export class AuthService {
             return;
           }
           resultRef.off('value');
+          if (result.error) {
+            reject(result.error);
+            return;
+          } else if (result.passwordMatch) {
+            log.debug('Submitted authentication code was correct.');
+            firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
+              log.debug('Authentication succeded!');
+              taskRef.remove();
+              resolve(result.state);
+            }).catch((error) => {
+              taskRef.update({ authenticationError: error });
+              log.warn('Unable to authenticate!');
+              reject('Unable to authenticate');
+            });
+          } else {
+            log.debug('Submitted authentication code was not correct.');
+            taskRef.remove();
+            resolve(result.state);
+            return;
+          }
+        }, (error) => {
+          reject(error);
+        });
+      });
+    });
+  }
 
-          if (!result.codeMatch) {
+  checkSignUpCodeMatching(submittedAuthenticationCode: string): Promise<boolean> {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      if (!self.taskId) {
+        reject(`no value set for taskId`);
+        return;
+      }
+
+      let taskRef = firebase.database().ref(`/signUpQueue/tasks/${self.taskId}`);
+      taskRef.update({
+        submittedAuthenticationCode: submittedAuthenticationCode,
+        _state: 'code_matching_requested'
+      }).then(() => {
+        let resultRef = taskRef.child('result');
+        resultRef.on('value', (snapshot) => {
+          let result = snapshot.val();
+          if (!result) {
+            return;
+          }
+          resultRef.off('value');
+          if (result.error) {
+            reject(result.error);
+            return;
+          } else if (!result.codeMatch) {
             log.debug('Submitted authentication code was not correct.');
             resolve(false);
             return;
@@ -245,9 +308,6 @@ export class AuthService {
   }
 
   referralLink(window): string {
-    if (!this.currentUser) {
-      return undefined;
-    }
     let base: string;
     if (Config.targetPlatform === 'web') {
       base = window.location.origin;

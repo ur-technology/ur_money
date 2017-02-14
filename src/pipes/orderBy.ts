@@ -1,4 +1,4 @@
-import {Injectable, Pipe} from '@angular/core';
+import { Injectable, Pipe } from '@angular/core';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 

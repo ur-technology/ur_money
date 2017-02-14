@@ -1,12 +1,13 @@
-import {Injectable, EventEmitter, Inject} from '@angular/core';
-import {Platform} from 'ionic-angular';
-import {Contacts} from 'ionic-native';
-import {FakeContactsSource} from '../models/fake-contacts-source';
-import {ContactModel} from '../models/contact.model';
-import {UserModel} from '../models/user.model';
+import { Injectable, EventEmitter, Inject } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { Contacts } from 'ionic-native';
+import { FakeContactsSource } from '../models/fake-contacts-source';
+import { ContactModel } from '../models/contact.model';
+import { UserModel } from '../models/user.model';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
+import * as firebase from 'firebase';
 
 export interface ContactGroups {
   members: ContactModel[];
@@ -73,7 +74,7 @@ export class ContactsService {
     let self = this;
     let startTime = new Date().getTime();
     return new Promise((resolve, reject) => {
-      let contactsSource : any = self.platform.is('cordova') ? Contacts : FakeContactsSource;
+      let contactsSource: any = self.platform.is('cordova') ? Contacts : FakeContactsSource;
       contactsSource.find(['*']).then((rawContacts) => {
         let contacts: ContactModel[] = [];
         _.each(rawContacts, (rawContact) => {

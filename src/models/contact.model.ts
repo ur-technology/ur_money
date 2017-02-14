@@ -1,4 +1,4 @@
-import {FirebaseModel} from './firebase-model';
+import { FirebaseModel } from './firebase-model';
 
 export class ContactModel extends FirebaseModel {
   userId: string;

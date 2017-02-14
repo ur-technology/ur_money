@@ -1,0 +1,36 @@
+selfie-match-page {
+  input[type='file'] {
+    display: none;
+  }
+
+  .preview-image img {
+    min-width: 100% !important;
+    max-height: 50% !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  ion-card-header {
+    background-color: color($colors, light);
+  }
+
+  ion-item {
+    padding-left: 0 !important;
+  }
+
+  .footer-card {
+    background-color: color($colors, light);
+  }
+
+  .item-ios.item-input.input-has-focus .item-inner {
+    border-bottom-color: color($colors, primary) !important;
+  }
+
+  .card-ios .item-ios.item-block .item-inner {
+    border-bottom: 1px solid #dedede;
+  }
+
+  .card-md .item-md.item-block .item-inner {
+    border-bottom: 1px solid #dedede;
+  }
+}

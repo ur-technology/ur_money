@@ -7,7 +7,7 @@ import * as moment from 'moment';
 })
 export class DateAndTime implements PipeTransform {
 
-  transform(value: string) : string {
+  transform(value: string): string {
     if (!value || value.length === 0) {
       return;
     }

@@ -1,21 +1,21 @@
-import { AlertController, NavController, NavParams, Platform, LoadingController, ModalController} from 'ionic-angular';
-import { Inject, Component} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { AlertController, NavController, NavParams, Platform, LoadingController, ModalController } from 'ionic-angular';
+import { Inject, Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
-import {TranslateService} from 'ng2-translate/ng2-translate';
-import {BigNumber} from 'bignumber.js';
-import {NativeStorage} from 'ionic-native';
-import {HomePage} from '../home/home';
-import {WalletModel} from '../../models/wallet';
-import {ChartDataService} from '../../services/chart-data.service';
-import {ToastService} from '../../services/toast';
-import {CustomValidator} from '../../validators/custom';
-import {AuthService} from '../../services/auth';
-import {EncryptionService} from '../../services/encryption';
-import {Config} from '../../config/config';
-import {ChooseContactPage} from '../choose-contact/choose-contact';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { BigNumber } from 'bignumber.js';
+import { NativeStorage } from 'ionic-native';
+import { HomePage } from '../home/home';
+import { WalletModel } from '../../models/wallet';
+import { ChartDataService } from '../../services/chart-data.service';
+import { ToastService } from '../../services/toast';
+import { CustomValidator } from '../../validators/custom';
+import { AuthService } from '../../services/auth';
+import { EncryptionService } from '../../services/encryption';
+import { Config } from '../../config/config';
+import { ChooseContactPage } from '../choose-contact/choose-contact';
 declare var jQuery: any;
 
 @Component({
@@ -192,15 +192,15 @@ export class SendPage {
                 text: 'Cancel',
                 role: 'cancel'
               },
-                {
-                  text: 'Recover',
-                  handler: () => {
+              {
+                text: 'Recover',
+                handler: () => {
 
-                    alert.dismiss().then(() => {
-                      this.countDown();
-                    });
-                  }
-                }]
+                  alert.dismiss().then(() => {
+                    this.countDown();
+                  });
+                }
+              }]
             });
             alert.present();
           } else {

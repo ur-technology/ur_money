@@ -1,4 +1,4 @@
-import {Config} from '../config/config';
+import { Config } from '../config/config';
 
 export class FakeContactsSource {
 
@@ -39,7 +39,7 @@ export class FakeContactsSource {
           'type': 'mobile'
         }],
         'id': '2'
-      },  {
+      }, {
         'name': {
           'givenName': 'TestFirstname',
           'familyName': 'TestLastname'
@@ -58,10 +58,10 @@ export class FakeContactsSource {
           'familyName': 'Pérez'
         },
         'phoneNumbers': [{
-            'id': '186',
-            'pref': false,
-            'value': '+593998016833',
-            'type': 'mobile'
+          'id': '186',
+          'pref': false,
+          'value': '+593998016833',
+          'type': 'mobile'
         }],
         'id': '20'
 
@@ -102,16 +102,16 @@ export class FakeContactsSource {
           'value': '+16197778002',
           'type': 'home'
         }, {
-            'id': '72',
-            'pref': false,
-            'value': '+16197778004',
-            'type': 'mobile'
-          }, {
-            'id': '73',
-            'pref': false,
-            'value': '+16197778005',
-            'type': 'work'
-          }],
+          'id': '72',
+          'pref': false,
+          'value': '+16197778004',
+          'type': 'mobile'
+        }, {
+          'id': '73',
+          'pref': false,
+          'value': '+16197778005',
+          'type': 'work'
+        }],
         'id': '8'
       }, {
         'name': {
@@ -138,11 +138,11 @@ export class FakeContactsSource {
           'value': '+16197778007',
           'type': 'home'
         }, {
-            'id': '199',
-            'pref': false,
-            'value': '+16197778008',
-            'type': 'mobile'
-          }],
+          'id': '199',
+          'pref': false,
+          'value': '+16197778008',
+          'type': 'mobile'
+        }],
         'id': '10'
       }, {
         'name': {
@@ -208,11 +208,11 @@ export class FakeContactsSource {
           'value': '+16197778013',
           'type': 'home'
         }, {
-            'id': '142',
-            'pref': false,
-            'value': '+16197778014',
-            'type': 'mobile'
-          }],
+          'id': '142',
+          'pref': false,
+          'value': '+16197778014',
+          'type': 'mobile'
+        }],
         'id': '19'
       }, {
         'name': {
@@ -226,11 +226,11 @@ export class FakeContactsSource {
           'value': '+16197778015',
           'type': 'home'
         }, {
-            'id': '86',
-            'pref': false,
-            'value': '+16197778016',
-            'type': 'mobile'
-          }],
+          'id': '86',
+          'pref': false,
+          'value': '+16197778016',
+          'type': 'mobile'
+        }],
         'id': '20'
       }, {
         'name': {
@@ -243,11 +243,11 @@ export class FakeContactsSource {
           'value': '+5216643332222',
           'type': 'mobile'
         }, {
-            'id': '186',
-            'pref': false,
-            'value': '+5216643332223',
-            'type': 'mobile'
-          }],
+          'id': '186',
+          'pref': false,
+          'value': '+5216643332223',
+          'type': 'mobile'
+        }],
         'id': '21'
       }, {
         'name': {
@@ -260,7 +260,7 @@ export class FakeContactsSource {
           'pref': false,
           'value': '+16159746651',
           'type': 'mobile'
-          }],
+        }],
         'id': '22'
       }, {
         'name': {

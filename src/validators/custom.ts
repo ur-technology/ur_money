@@ -1,7 +1,7 @@
-import {FormGroup} from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import {WalletModel} from '../models/wallet';
+import { WalletModel } from '../models/wallet';
 
 export class CustomValidator {
   static minValidAmount: number;
@@ -39,6 +39,7 @@ export class CustomValidator {
       return { 'invalidPhone': true };
     }
   }
+
   static phoneListValidator(control) {
     var pattern = /(\D*\d\D*){10,}(\n+(\D*\d\D*){10,})*/;
     if (!control.value.match(pattern)) {
