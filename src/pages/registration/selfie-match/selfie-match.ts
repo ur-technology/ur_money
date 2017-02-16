@@ -20,6 +20,7 @@ export class SelfieMatchPage {
   selfieSource: string;
   facialMatchData: string;
   idCardFaceImage: any;
+  idCardFinalImage: any;
 
   constructor(
     public nav: NavController,
@@ -31,7 +32,9 @@ export class SelfieMatchPage {
   ) {
     this.mainForm = new FormGroup({});
     this.idCardFaceImage = this.navParams.get('idCardFaceImage');
-    this.selfieSource = "../../assets/img/selfie.placeholder.png";
+
+    let byteArray: string = (<any>window).goog.crypt.base64.encodeByteArray(this.idCardFaceImage);
+    this.idCardFinalImage = `data:image/jpg;base64,${byteArray}`;
   }
 
   selectFile(event) {
@@ -53,8 +56,7 @@ export class SelfieMatchPage {
   }
 
   selfieUploaded() {
-    return true;
-    // return $("#selfie").val() !== '';
+    return $("#selfie").val() !== '';
   }
 
   submit() {
@@ -75,6 +77,7 @@ export class SelfieMatchPage {
     });
   }
 
+  // FIXME! Move to acuant package
   matchSelfie(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (!this.idCardFaceImage) {
@@ -86,10 +89,10 @@ export class SelfieMatchPage {
       loadingModal.present();
 
       let imageToProcess = new FormData();
-      let byteArray: string = (<any>window).goog.crypt.base64.encodeByteArray(this.idCardFaceImage);
-      let idCardFaceSource = `data:image/jpg;base64,${byteArray}`;
-      imageToProcess.append("photo1", this.dataURLtoBlob(idCardFaceSource));
+      imageToProcess.append("photo1", this.dataURLtoBlob(this.idCardFinalImage));
       imageToProcess.append("photo2", this.dataURLtoBlob(this.selfieSource));
+
+      // Fixme! get from config
       let authinfo = $.base64.encode("EE92924A123D");
       $.ajax({
         type: "POST",
@@ -103,6 +106,9 @@ export class SelfieMatchPage {
           xhr.setRequestHeader("Authorization", "LicenseKey " + authinfo);
         },
         success: (facialMatchData) => {
+
+          console.log(JSON.stringify(facialMatchData, null, 4));
+
           loadingModal.dismiss().then(() => {
             this.facialMatchData = facialMatchData;
             let error: string = (facialMatchData.ResponseCodeAuthorization < 0 && facialMatchData.ResponseCodeAuthorization) ||

@@ -193,6 +193,7 @@
   },
   "profile-setup": {
     "title": "Setting Up Account",
+    "name": "Your first name",
     "name": "Name as it will appear to others",
     "email": "Email",
     "slideTitle": "Step 3 of 4 - Profile Info"
