@@ -1,6 +1,6 @@
 page-sign-in {
   .welcome-ur {
-    padding: 2.3rem 5rem 1.5rem;
+    padding: 2.3rem 16px 1.5rem 0px;
     background-size: cover;
     text-align: center;
     width: 100%;
@@ -46,7 +46,7 @@ page-sign-in {
     font-size: 0.9rem;
   }
 
-  .select-md {
+  .select-md, .select-ios {
     color: color($colors, primary);
     // color: #4eb5e4;
     padding-left: 0;
@@ -90,9 +90,7 @@ page-sign-in {
   }
 
   .main-splash .ur-logo {
-    position: absolute;
-    bottom: 0;
-    margin: auto;
+    margin-top: 15px;
     width: 100%;
   }
 
@@ -155,6 +153,10 @@ page-sign-in {
   }
 
   .toolbar-background-md {
+    background-color: transparent;
+  }
+  
+  .toolbar-background-ios {
     background-color: transparent;
   }
 
