@@ -20,6 +20,9 @@ export class ContactsAndChatsPage {
 
   constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService, public alertCtrl: AlertController) {
     this.goal = navParams.get('goal');
+    if (this.targetPlatform === 'web') {
+      this.segmentSelected = 'chats';
+    }
   }
 
   ngOnInit() {
