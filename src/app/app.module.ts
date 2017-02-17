@@ -23,7 +23,9 @@ import { ChooseContactPage } from '../pages/choose-contact/choose-contact';
 import { UsersPage } from '../pages/admin/users';
 import { UserPage } from '../pages/admin/user';
 import { ChangeSponsorModal } from '../pages/admin/change-sponsor';
-import { SettingsPage } from '../pages/settings/settings';
+import { SettingsPage } from '../pages/settings/settings/settings';
+import { SettingsAccountPage } from '../pages/settings/settings-account/settings-account';
+import { SettingsNotificationsPage } from '../pages/settings/settings-notifications/settings-notifications';
 import { TermsAndConditionsPage } from '../pages/terms-and-conditions/terms-and-conditions';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { ChatListComponent } from '../components/chat-list/chat-list';
@@ -94,6 +96,8 @@ export function translateLoaderFactory(http: any) {
     UserPage,
     ChangeSponsorModal,
     SettingsPage,
+    SettingsAccountPage,
+    SettingsNotificationsPage,
     TermsAndConditionsPage,
     TransactionsPage,
     SponsorWaitPage,
@@ -151,6 +155,8 @@ export function translateLoaderFactory(http: any) {
     ChangeSponsorModal,
     UsersPage,
     SettingsPage,
+    SettingsAccountPage,
+    SettingsNotificationsPage,
     TermsAndConditionsPage,
     TransactionsPage,
     SponsorWaitPage

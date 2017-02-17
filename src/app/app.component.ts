@@ -13,7 +13,7 @@ import { WelcomePage } from '../pages/registration/welcome/welcome';
 import { SendPage } from '../pages/send/send';
 import { InviteLinkPage } from '../pages/invite-link/invite-link';
 import { UsersPage } from '../pages/admin/users';
-import { SettingsPage } from '../pages/settings/settings';
+import { SettingsPage } from '../pages/settings/settings/settings';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
 //import {SelfieMatchPage} from '../pages/registration/selfie-match/selfie-match';

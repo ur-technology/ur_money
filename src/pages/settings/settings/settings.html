@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"settings.title" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="settings">
+  <ion-list>
+    <ion-item-divider color="light">{{auth.currentUser.firstName}} {{auth.currentUser.lastName}} - Referral code: {{auth.currentUser.referralCode}}</ion-item-divider>
+    <button ion-item (click)="gotoSettingAccount()">
+      <ion-label>{{'settings.account' | translate}}</ion-label>
+    </button>
+    <button ion-item *ngIf="targetPlatform!='web'" (click)="gotoSettingsNotifications()">
+      <ion-label>{{'settings.notifications' | translate}}</ion-label>
+    </button>
+    <button ion-item (click)="signOut()">
+      <ion-label>{{"signOut" | translate}}</ion-label>
+    </button>
+    <ion-item-divider color="light">{{"settings.general" | translate}}</ion-item-divider>
+    <ion-item>
+      <ion-label stacked>{{'settings.URWalletAddress' | translate}}</ion-label>
+      <ion-input id="wallet-address-input" type="text" value="{{auth.currentUser && auth.currentUser.wallet.address}}"></ion-input>
+      <button id="copy-button" item-right ion-button icon-only color="light" data-clipboard-target="#wallet-address-input input"> <ion-icon name="clipboard"></ion-icon></button>
+    </ion-item>
+
+    <button ion-item (click)="gotoAbout()">
+      <ion-label>{{'app.about' | translate}}</ion-label>
+    </button>
+  </ion-list>
+</ion-content>

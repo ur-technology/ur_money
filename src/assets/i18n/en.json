@@ -286,7 +286,9 @@
     "chatNotifications": "Chat notifications",
     "transactionNotifications": "Transaction notifications",
     "country": "Country",
-    "name": "Name as it will appear to others"
+    "name": "Name as it will appear to others",
+    "account": "Account",
+    "general": "General"
   },
   "terms-and-conditions": {
     "title": "Terms and Conditions",
