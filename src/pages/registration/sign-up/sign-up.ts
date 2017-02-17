@@ -54,7 +54,7 @@ export class SignUpPage {
       }),
       sponsorReferralCode: new FormControl(this.sponsorReferralCode || '', (control) => {
         if (this.signUpType === 'sponsorReferralCode') {
-          if (!/^[a-z0-9]{6,}$/.test(control.value || '')) {
+          if (!/^[A-Za-z0-9]{6,}$/.test(control.value || '')) {
             return { 'invalidSponsorReferralCode': true };
           }
         }
@@ -154,21 +154,21 @@ export class SignUpPage {
           break;
 
         case 'code_generation_canceled_because_voip_phone_not_allowed':
-          self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
           break;
 
         case 'code_generation_canceled_because_sponsor_not_found':
         case 'code_generation_canceled_because_sponsor_disabled':
-          self.toastService.showMessage({ messageKey: 'phone-number.sponsorNotFoundMessage' });
+          self.toastService.showMessage({ messageKey: 'sign-up.sponsorNotFoundMessage' });
           break;
 
         default:
-          self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
 
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
       });
     });
   }

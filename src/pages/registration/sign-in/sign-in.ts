@@ -79,7 +79,7 @@ export class SignInPage {
 
         case 'sign_in_canceled_because_user_not_found':
           let alert = this.alertCtrl.create({
-            message: this.translate.instant('sign-up.userNotFound'),
+            message: this.translate.instant('sign-in.userNotFound'),
             buttons: [
               { text: this.translate.instant('cancel'), handler: () => { alert.dismiss(); } },
               {

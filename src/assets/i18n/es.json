@@ -16,7 +16,7 @@
         "signUp": "Regístrate",
         "signIn": "Inicia sesión"
     },
-    "phone-number": {
+    "sign-in": {
         "title": "Ingresa tu número de teléfono",
         "heading": "Por favor, confirma tu código de país e ingresa tu número de teléfono",
         "phoneNumber": "Número de teléfono",
@@ -27,41 +27,37 @@
         "unexpectedProblem": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde",
         "noInviteFoundTitle": "Invitación no encontrada",
         "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
-        "betaProgramButton": "Estoy en el programa UR Money Beta"
+        "betaProgramButton": "Estoy en el programa UR Money Beta",
+        "userNotFound": "El número y la contraseña que ingresó no coinciden con nuestros registros. Compruebe e intente nuevamente.",
+        "gotoSignUp": "Registrarse?",
+        "userDisabled": "Se ha deshabilitado tu cuenta de usuario.",
+        "unexpectedProblem": "Hubo un problema inesperado. Por favor, inténtelo de nuevo más tarde"
     },
     "sign-up": {
       "title": "Registro",
-      "referralCode": "Código de referencia",
-      "placeholderReferralCode": "Código de referencia de tu patrocinador",
+      "password": "Contraseña",
+      "placeholderPassword": "Ingresa tu contraseña",
+      "passwordConfirmation": "Confirmación de contraseña",
+      "placeholderPasswordConfirmation": "Reingresa tu contraseña",
+      "sponsorReferralCode": "Código de referencia del patrocinador",
+      "placeholderSponsorReferralCode": "Ingrese el código de referencia de su patrocinador",
+      "placeholderEmail": "Correo electrónico del programa beta",
       "headingReferral": "Bienvenido! has sido invitado por <b>{{sponsor}}</b> para ser parte de UR.",
       "headingNoReferral": "Bienvenido. Para formar parte de UR, debes ingresar el código de referencia de su patrocinador",
       "headingEmail": "Confirma tu país, ingresa tu número de teléfono y el correo electrónico",
-      "placeholderEmail": "Correo electrónico del programa beta",
-      "signUpWithEmailInstead": "Regístrarse con correo electrónico mejor",
+      "signUpWithEmailCodeInstead": "Regístrarse con correo electrónico mejor",
       "signUpWithSponsorReferralCodeInstead": "Regístrarse con código de referencia mejor",
       "userAlreadyExists": "Este número de teléfono ya existe en nuestros registros, por favor ve a la página Inicio de sesión",
       "gotoSignIn": "Iniciar sesión",
       "sponsorNotFoundMessage": "No hay patrocinador con ese código de referencia, por favor, intenta con otro código de referencia",
       "sponsorDisabledMessage": "El patrocinador está deshabilitado, por favor, intenta con otro código de referencia",
       "enterFields": "Por favor ingrese todos los campos",
-      "alertInfoReferral": "Necesitas el código de referencia de tu patrocinador para inscribirte. Por favor, solicita el código de referencia a tu patrocinador o haz clic en el enlace de invitación que se te envió.",
-      "alertInfoEmail": "Si te enrolaste a nuestro programa beta, por favor, ingresa ese correo electrónico"
+      "sponsorReferralCodeExplanation": "Necesitas el código de referencia de tu patrocinador para inscribirte. Por favor, solicita el código de referencia a tu patrocinador o haz clic en el enlace de invitación que se te envió.",
+      "emailExplanation": "Si te enrolaste a nuestro programa beta, por favor, ingresa ese correo electrónico"
     },
     "choose-contact":{
       "title": "Escoja contacto o ingrese dirección UR",
       "placeholderAddress":"Introduzca la dirección UR del receptor"
-    },
-    "email-address": {
-        "title": "Dirección de correo electrónico",
-        "heading": "Introduzca la dirección de correo electrónico que ha registrado en el programa UR Money Beta",
-        "placeholder": "Ingresa tu dirección de correo electrónico",
-        "errorUserDisabled": "Se ha deshabilitado tu cuenta de usuario.",
-        "unexpectedProblem": "Se produjo un problema inesperado al enviarte un correo electrónico. Por favor, inténtalo de nuevo más tarde",
-        "noInviteFoundTitle": "Invitación no encontrada",
-        "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
-        "betaProgramButton": "Estoy en el programa UR Money Beta",
-        "errorUserNotInBetaProgram": "No tenemos un registro de ese correo electrónico registrado en nuestro programa beta.",
-        "unexpectedProblem": "Hubo un problema inesperado al enviar el correo. Por favor, inténtalo más tarde"
     },
     "authentication-code": {
         "title": "Código de verificación",
@@ -84,78 +80,6 @@
         "message3": "También necesitaremos acceso a tus contactos para que puedas invitarlos, chatear con ellos y realizar transacciones con ellos.",
         "message4": "Ya está todo listo. <b>Disfruta UR Money!<b/>"
     },
-    "identity-verification-intro": {
-        "slideTitle": "Estás a unos pasos de reclamar tus <b>2000 2000 UR!</b>",
-        "slideMessage": "A fin de proporcionar un ambiente seguro, pedimos a todos los miembros de la comunidad que verifiquen su identidad. Para ello, tendremos que pedirte información de identificación, incluyendo el número de teléfono móvil, el nombre, la dirección, la fecha de nacimiento, etc., y luego compartir esta información con Trulioo, Inc., un servicio de verificación de identidad basado en Canadá.",
-        "costToBuy": "El costo de verificar la identidad es de {{value}}",
-        "verificationPurchased": "Ya has comprado la verificación. Por favor, continúa verificando tu identidad."
-    },
-    "identity-verification-personal-info": {
-        "slideTitle": "Paso 1 de 3 - Información personal",
-        "gender": "Género",
-        "dateOfBirth": "Fecha de nacimiento",
-        "placeholderGender": "Ingresa tu género"
-    },
-    "identity-verification-address": {
-        "slideTitle": "Paso 2 de 3 - Dirección",
-        "countryCode": "País",
-        "buildingNumber": "Número de edificio/casa",
-        "streetName": "Nombre de la calle",
-        "streetType": "Tipo de calle",
-        "unitNumber": "Número de unidad",
-        "buildingName": "Nombre de edificio",
-        "address1": "Dirección",
-        "city": "Ciudad",
-        "stateProvinceCode": "Estado o provincia",
-        "suburb": "Suburbio",
-        "postalCode": "Código postal",
-        "placeholderBuildingNumber": "Ingresa el número de edificio o casa",
-        "placeholderStreetName": "Ingresa el nombre de la calle",
-        "placeholderStreeType": "Ingresa el tipo de calle",
-        "placeholderUnitNumber": "Ingresa el número de unidad",
-        "placeholderBuildingName": "Ingresa el nombre del edificio",
-        "placeholderAddress1": "Ingresa tu dirección",
-        "placeholderCity": "Ingresa tu ciudad",
-        "placeholderSuburb": "Ingresa nombre del suburbio",
-        "placeholderProvince": "Escoje tu estado o provincia",
-        "placeholderProvinceInput": "Ingresa tu estado o provincia",
-        "placeholderPostal": "Ingresa tu código postal"
-    },
-    "identity-verification-document": {
-        "slideTitle": "Paso 3 de 3 - Documento de verificación",
-        "idType": "Tipo de identificación",
-        "driverLicenceState": "Estado de licencia de conducir",
-        "driverLicenceNumber": "Número de licencia de conducir",
-        "MRI1": "Lectura mecánica Línea 1",
-        "MRI2": "Lectura mecánica Línea 2",
-        "passportNumber": "Número de pasaporte",
-        "passportExpirationDate": "Fecha de caducidad",
-        "passportExpirationDay": "Día de caducidad",
-        "passportExpirationMonth": "Mes de caducidad",
-        "passportExpirationYear": "Año de caducidad",
-        "id": "Id",
-        "placeholderDriverlicenceState": "Escoje el Estado de tu licencia de conducir",
-        "placeholderDriverlicenceNumber": "Ingresa el número de tu licencia de conducir",
-        "placeholderId": "Ingresa tu identificación",
-        "placeholderMRZ1": "Ingresa la primera línea del MRZ del pasaporte",
-        "placeholderMRZ2": "Ingresa la segunda línea del MRZ del pasaporte",
-        "placeholderPassportNumber": "Ingresa el número del pasaporte",
-        "placeholderPassportExpirationDay": "Ingresa el día de caducidad",
-        "placeholderPassportExpirationMonth": "Ingresa el mes de caducidad",
-        "placeholderPassportExpirationYear": "Ingresa el año de caducidad"
-    },
-    "identity-verification-summary": {
-        "slideTitle": "Confirme su información",
-        "personalInfo": "Información personal",
-        "name": "Nombre completo",
-        "location": "Lugar",
-        "additionaInfo": "Información adicional",
-        "verifyMyInfo": "Verificar mi información"
-    },
-    "identity-verification-finish": {
-        "slideTitle": "<b>¡Felicitaciones!</b> Acabas de ganar tus <b>2000 UR</b>",
-        "slideMessage": "Verás pronto tu bono de 2.000 UR en tu página de inicio!"
-    },
     "identity-verification-sponsor-wait": {
         "slideTitle": "<b>Esperando que tu patrocinador complete la configuración de su cuenta</b>",
         "slideMessage": "Actualmente estamos esperando que <b>{{value}}</b> complete su cuenta antes de que tu puedas obtener tus 2000 UR. </br>Tu <b>bono</b> se generará pronto.",
@@ -163,7 +87,7 @@
         "title": "Esperando a patrocinador que complete su cuenta"
     },
     "profile-setup": {
-        "title": "Configurar perfil",
+        "title": "Configuración de la cuenta",
         "firstName": "Nombre",
         "middleName": "Segundo nombre (opcional)",
         "lastName": "Apellido(s)",
@@ -177,25 +101,28 @@
         "placeholderLastName": "Ingresa el apellido",
         "placeholderFullName": "Ingresa cómo quieres que te llamen",
         "placeholderEmail": "Ingresa el correo electrónico",
-        "slideTitle": "Paso 1 de 2 - Información básica"
+        "slideTitle": "Paso 3 de 4 - Información de perfil"
     },
-    "identity-info-setup": {
-        "title": "Documento de identificación",
-        "dateOfBirth": "Fecha de nacimiento",
-        "idType": "Tipo de identificación",
-        "driverLicenceState": "Estado de licencia de conducir",
-        "driverLicenceNumber": "Número de licencia de conducir",
-        "MRI1": "Lectura mecánica Línea 1",
-        "MRI2": "Lectura mecánica Línea 2",
-        "passportNumber": "Número de pasaporte",
-        "passportExpirationDate": "Fecha de caducidad",
-        "passportExpirationDay": "Día de caducidad",
-        "passportExpirationMonth": "Mes de caducidad",
-        "passportExpirationYear": "Año de caducidad",
-        "gender": "Género"
+    "id-scan": {
+      "title": "Configuración de la cuenta",
+      "firstName": "Nombre",
+      "middleName": "Segundo nombre (opcional)",
+      "lastName": "Apellido",
+      "name": "Nombre que se mostrará a otros",
+      "email": "Correo electrónico",
+      "country": "País",
+      "city": "Ciudad",
+      "state": "Estado o provincia",
+      "placeholderFirstName": "Ingresa el nombre",
+      "placeholderMiddleName": "Ingresa el segundo nombre (opcional)",
+      "placeholderLastName": "Ingresa el apellido",
+      "placeholderFullName": "Ingresa cómo quieres que te llamen",
+      "placeholderEmail": "Ingresa el correo electrónico",
+      "slideTitle": "Paso 1 de 4 - Escanea tu ID"
     },
-    "identity-verification": {
-        "title": "Verificación de identidad"
+    "selfie-match": {
+      "title": "Configuración de la cuenta",
+      "slideTitle": "Paso 2 de 4 - Toma una selfie"
     },
     "wallet-setup": {
         "title": "Configuración de frase secreta",
@@ -222,22 +149,9 @@
         "slideTitle": "Paso 2 de 2 - Configura frase secreta",
         "secretPhrase": "Frase secreta"
     },
-    "verification-pending": {
-        "title": "Verificación pendiente",
-        "message": "Gracias por enviar su solicitud de verificación. La mayoría de las solicitudes se procesan dentro de 72 horas. Le notificaremos mediante un mensaje de texto cuando hayamos terminado de procesar su solicitud."
-    },
-    "verification-failed": {
-        "title": "Verificación fallida",
-        "slideTitle": "Verificación de identidad fallida",
-        "message": "Lo sentimos. No hemos podido verificar tu identidad. <br />Si tiene alguna pregunta sobre su verificación de identidad fallida, comuníquese con nosotros por correo electrónico a <b>support@ur.technology</b> <br />Cuando se comunique con nosotros, por favor proporcione su nombre, dirección y cualquier otra información que necesitemos para identificarle."
-    },
     "announcement-initiated": {
         "title": "Generación de bonificación en curso",
         "message": "La transacción de bonificación puede tardar unas horas en aparecer en tu cuenta, por favor espere."
-    },
-    "country-not-supported": {
-        "title": "UR Money",
-        "message": "Gracias por tu interés en UR Money. Cuando lancemos nuestro servicio en tu país, te lo notificaremos."
     },
     "app": {
       "inviteMessage": "Invita a tus amigos y obtén mas UR",
@@ -370,12 +284,9 @@
         "URWalletAddress": "Dirección UR",
         "notifications": "Notificaciones",
         "chatNotifications": "Chats",
-        "transactionNotifications": "Transacciones"
-    },
-    "request": {
-        "balance": "Saldo disponible:",
-        "enterMessage": "Mensaje (opcional)",
-        "send": "Enviar"
+        "transactionNotifications": "Transacciones",
+        "country": "País",
+        "name": "Nombre como aparecerá a otros"
     },
     "terms-and-conditions": {
         "title": "Términos y Condiciones",
