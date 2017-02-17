@@ -60,8 +60,6 @@ install-global-binaries:
 install-local-deps:
 	@echo "Installing local npm dependencies"
 	@npm install
-	# There's a duplicate typing, which can be removed
-	@rm node_modules/angularfire2/node_modules/firebase/firebase.d.ts 
 
 # Make sure typings are up to date
 install-typings:
