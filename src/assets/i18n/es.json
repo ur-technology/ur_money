@@ -16,7 +16,7 @@
         "signUp": "Regístrate",
         "signIn": "Inicia sesión"
     },
-    "phone-number": {
+    "sign-in": {
         "title": "Ingresa tu número de teléfono",
         "heading": "Por favor, confirma tu código de país e ingresa tu número de teléfono",
         "phoneNumber": "Número de teléfono",
@@ -27,7 +27,11 @@
         "unexpectedProblem": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde",
         "noInviteFoundTitle": "Invitación no encontrada",
         "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
-        "betaProgramButton": "Estoy en el programa UR Money Beta"
+        "betaProgramButton": "Estoy en el programa UR Money Beta",
+        "userNotFound": "El número y la contraseña que ingresó no coinciden con nuestros registros. Compruebe e intente nuevamente.",
+        "gotoSignUp": "Registrarse?",
+        "userDisabled": "Se ha deshabilitado tu cuenta de usuario.",
+        "unexpectedProblem": "Hubo un problema inesperado. Por favor, inténtelo de nuevo más tarde"
     },
     "sign-up": {
       "title": "Registro",
@@ -83,7 +87,7 @@
         "title": "Esperando a patrocinador que complete su cuenta"
     },
     "profile-setup": {
-        "title": "Configurar perfil",
+        "title": "Configuración de la cuenta",
         "firstName": "Nombre",
         "middleName": "Segundo nombre (opcional)",
         "lastName": "Apellido(s)",
@@ -97,7 +101,7 @@
         "placeholderLastName": "Ingresa el apellido",
         "placeholderFullName": "Ingresa cómo quieres que te llamen",
         "placeholderEmail": "Ingresa el correo electrónico",
-        "slideTitle": "Paso 1 de 2 - Información básica"
+        "slideTitle": "Paso 3 de 4 - Información de perfil"
     },
     "id-scan": {
       "title": "Configuración de la cuenta",
@@ -119,12 +123,6 @@
     "selfie-match": {
       "title": "Configuración de la cuenta",
       "slideTitle": "Paso 2 de 4 - Toma una selfie"
-    },
-    "profile-setup": {
-      "title": "Configuración de la cuenta",
-      "name": "Nombre que se mostrará a otros",
-      "email": "Correo electrónico",
-      "slideTitle": "Paso 3 de 4 - Información de perfil`"
     },
     "wallet-setup": {
         "title": "Configuración de frase secreta",
@@ -286,8 +284,10 @@
         "URWalletAddress": "Dirección UR",
         "notifications": "Notificaciones",
         "chatNotifications": "Chats",
-        "transactionNotifications": "Transacciones"
-    },    
+        "transactionNotifications": "Transacciones",
+        "country": "País",
+        "name": "Nombre como aparecerá a otros"
+    },
     "terms-and-conditions": {
         "title": "Términos y Condiciones",
         "text": "Texto de términos y condiciones"

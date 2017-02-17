@@ -13,23 +13,23 @@
     <ion-list>
       <ion-item-divider color="light">{{"settings.profileInfo" | translate}}</ion-item-divider>
       <ion-item>
-        <ion-label stacked>{{'profile-setup.firstName' | translate}}</ion-label>
+        <ion-label stacked>{{'settings.firstName' | translate}}</ion-label>
         <ion-input type="text" formControlName="firstName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'profile-setup.middleName' | translate}}</ion-label>
+        <ion-label stacked>{{'settings.middleName' | translate}}</ion-label>
         <ion-input type="text" formControlName="middleName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'profile-setup.lastName' | translate}}</ion-label>
+        <ion-label stacked>{{'settings.lastName' | translate}}</ion-label>
         <ion-input type="text" formControlName="lastName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'profile-setup.name' | translate}}</ion-label>
+        <ion-label stacked>{{'settings.name' | translate}}</ion-label>
         <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'profile-setup.country' | translate}}</ion-label>
+        <ion-label stacked>{{'settings.country' | translate}}</ion-label>
         <ion-select formControlName="countryCode">
           <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
         </ion-select>

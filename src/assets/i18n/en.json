@@ -16,7 +16,7 @@
     "signUp": "Sign Up",
     "signIn": "Sign In"
   },
-  "phone-number": {
+  "sign-in": {
     "title": "Enter phone number",
     "heading": "Please confirm your country code and enter your phone number",
     "phoneNumber": "Enter your phone number",
@@ -27,7 +27,11 @@
     "unexpectedProblem": "There was an unexpected problem sending the SMS. Please try again later",
     "noInviteFoundTitle": "Invitation not found",
     "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
-    "betaProgramButton": "I'm in the UR Money Beta Program"
+    "betaProgramButton": "I'm in the UR Money Beta Program",
+    "userNotFound": "The number and password that you entered did not match our records. Please double-check and try again.",
+    "gotoSignUp": "Sign up instead?",
+    "userDisabled": "Your user account has been disabled.",
+    "unexpectedProblem": "There was an unexpected problem. Please try again later"
   },
   "sign-up": {
     "title": "Sign up",
@@ -83,7 +87,7 @@
     "title": "Waiting sponsor to complete account"
   },
   "profile-setup": {
-    "title": "Set Up Profile",
+    "title": "Setting Up Account",
     "firstName": "First Name",
     "middleName": "Middle Name (optional)",
     "lastName": "Last Name",
@@ -97,7 +101,7 @@
     "placeholderLastName": "Enter last name",
     "placeholderFullName": "Enter how you want to be called",
     "placeholderEmail": "Enter email",
-    "slideTitle": "Step 1 of 2 - Basic Info"
+    "slideTitle": "Step 3 of 4 - Profile Info"
   },
   "id-scan": {
     "title": "Setting Up Account",
@@ -119,12 +123,6 @@
   "selfie-match": {
     "title": "Setting Up Account",
     "slideTitle": "Step 2 of 4 - Take a Selfie"
-  },
-  "profile-setup": {
-    "title": "Setting Up Account",
-    "name": "Name as it will appear to others",
-    "email": "Email",
-    "slideTitle": "Step 3 of 4 - Profile Info"
   },
   "wallet-setup": {
     "title": "Setting Up Account",
@@ -286,7 +284,9 @@
     "URWalletAddress": "UR address",
     "notifications": "Notifications",
     "chatNotifications": "Chat notifications",
-    "transactionNotifications": "Transaction notifications"
+    "transactionNotifications": "Transaction notifications",
+    "country": "Country",
+    "name": "Name as it will appear to others"
   },
   "terms-and-conditions": {
     "title": "Terms and Conditions",
