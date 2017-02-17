@@ -54,7 +54,7 @@ export class SignUpPage {
       }),
       sponsorReferralCode: new FormControl(this.sponsorReferralCode || '', (control) => {
         if (this.signUpType === 'sponsorReferralCode') {
-          if (!/^[a-z0-9]{6,}$/.test(control.value || '')) {
+          if (!/^[A-Za-z0-9]{6,}$/.test(control.value || '')) {
             return { 'invalidSponsorReferralCode': true };
           }
         }
