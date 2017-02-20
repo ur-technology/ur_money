@@ -64,15 +64,9 @@ export class SignUpPage {
           return Validators.required(control) || CustomValidator.emailValidator(control);
         }
       }),
-      password: new FormControl('', [Validators.required]),
-      passwordConfirmation: new FormControl('', (control) => {
-        let error = Validators.required(control);
-        if (!error && control.value !== this.mainForm.value.password) {
-          error = { 'mismatchedPassword': true };
-        }
-        return error;
-      })
-    });
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]),
+      passwordConfirmation: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)])
+    }, CustomValidator.isMatchingPassword);
 
   }
 

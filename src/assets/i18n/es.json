@@ -293,7 +293,9 @@
         "currentPassword": "Contraseña actual",
         "newPassword": "Nueva contraseña",
         "verifyPassword": "Verificar contraseña",
-        "change": "Cambiar"
+        "change": "Cambiar",
+        "passwordChanged": "Contraseña actualizada",
+        "atLeastCharacters": "Al menos 6 caracteres"
     },
     "terms-and-conditions": {
         "title": "Términos y Condiciones",

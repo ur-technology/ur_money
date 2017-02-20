@@ -103,8 +103,8 @@ export class CustomValidator {
   }
 
   static isMatchingPassword(group: FormGroup) {
-    let firstPassword = group.controls['newPassword'].value;
-    let secondPassword : FormControl= <FormControl>group.controls['verifyPassword'];
+    let firstPassword = group.controls['password'].value;
+    let secondPassword : FormControl= <FormControl>group.controls['passwordConfirmation'];
 
     if ((firstPassword && secondPassword.value) && (firstPassword != secondPassword.value)) {
       secondPassword.setErrors({ mismatch: true });

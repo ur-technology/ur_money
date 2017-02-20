@@ -293,7 +293,9 @@
     "currentPassword": "Current password",
     "newPassword": "New password",
     "verifyPassword": "Verify password",
-    "change": "Change"
+    "change": "Change",
+    "passwordChanged": "Password changed",
+    "atLeastCharacters": "At least 6 characters"
   },
   "terms-and-conditions": {
     "title": "Terms and Conditions",

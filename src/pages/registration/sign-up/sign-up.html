@@ -25,11 +25,11 @@
         </ion-item>
         <ion-item>
           <ion-label stacked color="primary">{{'sign-up.password' | translate}}</ion-label>
-          <ion-input type="password" formControlName="password" placeholder='{{ "sign-up.placeholderPassword" | translate }}'></ion-input>
+          <ion-input type="password" formControlName="password" placeholder='{{ "settings.atLeastCharacters" | translate }}'></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked color="primary">{{'sign-up.passwordConfirmation' | translate}}</ion-label>
-          <ion-input type="password" formControlName="passwordConfirmation" placeholder='{{ "sign-up.placeholderPasswordConfirmation" | translate }}' [(ngModel)]="password"></ion-input>
+          <ion-input type="password" formControlName="passwordConfirmation" placeholder='{{ "settings.atLeastCharacters" | translate }}' [(ngModel)]="password"></ion-input>
         </ion-item>
         <ion-item *ngIf="signUpType=='sponsorReferralCode'">
           <ion-label stacked color="primary">{{'sign-up.sponsorReferralCode' | translate}}</ion-label>
