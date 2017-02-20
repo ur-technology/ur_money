@@ -9,6 +9,7 @@ import {HomePage} from '../../home/home';
 import * as log from 'loglevel';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import {ChangePasswordPage} from '../change-password/change-password';
+import {ChangeEmailPage} from '../change-email/change-email';
 
 @Component({
   selector: 'page-settings-account',
@@ -58,6 +59,10 @@ export class SettingsAccountPage {
     }).catch((error) => {
       log.warn('unable to save profile');
     });
+  }
+
+  updateEmail() {
+    this.nav.push(ChangeEmailPage);
   }
 
   changePassword() {

@@ -295,7 +295,12 @@
     "verifyPassword": "Verify password",
     "change": "Change",
     "passwordChanged": "Password changed",
-    "atLeastCharacters": "At least 6 characters"
+    "atLeastCharacters": "At least 6 characters",
+    "email": "Email",
+    "updateEmail": "Update email",
+    "currentEmail": "Current email",
+    "emailUpdated":"Email updated. Please validate your email",
+    "verifyEmailText":"We will send a verification link to the email address you provide."
   },
   "terms-and-conditions": {
     "title": "Terms and Conditions",

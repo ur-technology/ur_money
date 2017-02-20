@@ -295,7 +295,12 @@
         "verifyPassword": "Verificar contraseña",
         "change": "Cambiar",
         "passwordChanged": "Contraseña actualizada",
-        "atLeastCharacters": "Al menos 6 caracteres"
+        "atLeastCharacters": "Al menos 6 caracteres",
+        "email": "Correo electrónico",
+        "updateEmail": "Actualizar correo electrónico",
+        "currentEmail": "Correo electrónico actual",
+        "emailUpdated":"Correo electrónico actualizado. Por favor, valide su correo",
+        "verifyEmailText":"Enviaremos un enlace de verificación a la dirección de correo electrónico que proporciones."
     },
     "terms-and-conditions": {
         "title": "Términos y Condiciones",
