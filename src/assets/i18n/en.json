@@ -288,7 +288,12 @@
     "country": "Country",
     "name": "Name as it will appear to others",
     "account": "Account",
-    "general": "General"
+    "general": "General",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "verifyPassword": "Verify password",
+    "change": "Change"
   },
   "terms-and-conditions": {
     "title": "Terms and Conditions",

@@ -288,7 +288,12 @@
         "country": "País",
         "name": "Nombre como aparecerá a otros",
         "account": "Cuenta",
-        "general": "General"
+        "general": "General",
+        "changePassword": "Cambia la contraseña",
+        "currentPassword": "Contraseña actual",
+        "newPassword": "Nueva contraseña",
+        "verifyPassword": "Verificar contraseña",
+        "change": "Cambiar"
     },
     "terms-and-conditions": {
         "title": "Términos y Condiciones",

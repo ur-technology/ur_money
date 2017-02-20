@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { WalletModel } from '../models/wallet';
@@ -100,6 +100,17 @@ export class CustomValidator {
     if (control.value !== undefined && CustomValidator.minValidAmount !== undefined && CustomValidator.maxValidAmount !== undefined && (control.value < CustomValidator.minValidAmount || control.value > CustomValidator.maxValidAmount)) {
       return { 'numberOutOfRange': true };
     }
+  }
+
+  static isMatchingPassword(group: FormGroup) {
+    let firstPassword = group.controls['newPassword'].value;
+    let secondPassword : FormControl= <FormControl>group.controls['verifyPassword'];
+
+    if ((firstPassword && secondPassword.value) && (firstPassword != secondPassword.value)) {
+      secondPassword.setErrors({ mismatch: true });
+      return { 'mismatch': true };
+    }
+    return null;
   }
 
 }

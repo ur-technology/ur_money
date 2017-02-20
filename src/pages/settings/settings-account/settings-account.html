@@ -33,6 +33,9 @@
           <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
         </ion-select>
       </ion-item>
+      <button ion-item (click)="changePassword()">
+        <ion-label>{{'settings.changePassword'|translate}}</ion-label>
+      </button>
     </ion-list>
   </form>
 </ion-content>

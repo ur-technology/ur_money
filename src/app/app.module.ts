@@ -24,6 +24,7 @@ import { UsersPage } from '../pages/admin/users';
 import { UserPage } from '../pages/admin/user';
 import { ChangeSponsorModal } from '../pages/admin/change-sponsor';
 import { SettingsPage } from '../pages/settings/settings/settings';
+import {ChangePasswordPage} from '../pages/settings/change-password/change-password';
 import { SettingsAccountPage } from '../pages/settings/settings-account/settings-account';
 import { SettingsNotificationsPage } from '../pages/settings/settings-notifications/settings-notifications';
 import { TermsAndConditionsPage } from '../pages/terms-and-conditions/terms-and-conditions';
@@ -109,7 +110,8 @@ export function translateLoaderFactory(http: any) {
     FilterPipe,
     OrderBy,
     Round,
-    Timestamp
+    Timestamp,
+    ChangePasswordPage
   ],
   imports: [
     BrowserModule,
@@ -159,7 +161,8 @@ export function translateLoaderFactory(http: any) {
     SettingsNotificationsPage,
     TermsAndConditionsPage,
     TransactionsPage,
-    SponsorWaitPage
+    SponsorWaitPage,
+    ChangePasswordPage
   ],
   providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

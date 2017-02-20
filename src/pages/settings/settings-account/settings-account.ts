@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import {HomePage} from '../../home/home';
 import * as log from 'loglevel';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import {ChangePasswordPage} from '../change-password/change-password';
 
 @Component({
   selector: 'page-settings-account',
@@ -57,5 +58,9 @@ export class SettingsAccountPage {
     }).catch((error) => {
       log.warn('unable to save profile');
     });
-  };
+  }
+
+  changePassword() {
+    this.nav.push(ChangePasswordPage);
+  }
 }
