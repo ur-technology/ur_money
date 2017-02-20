@@ -21,7 +21,7 @@ export class UserModel extends FirebaseModel {
   registration: any;
   sponsor: any
   disabled: boolean;
-  settings: any;
+  notifications: any;
   invitesDisabled: boolean;
 
   static fullName(user: any) {
@@ -30,7 +30,7 @@ export class UserModel extends FirebaseModel {
 
   static getUserModelOnlyWithSimpleFields(key: string): Promise<UserModel> {
     return new Promise((successCallback, rejectCallback) => {
-      super.getObjectWithSpecificFields(`${UserModel._containerPath}/${key}`, ['admin', 'address', 'city', 'countryCode', 'downlineLevel', 'email', 'firstName', 'lastName', 'middleName', 'name', 'phone', 'profilePhotoUrl', 'referralCode', 'wallet', 'registration', 'disabled', 'settings']).then(resultObject => {
+      super.getObjectWithSpecificFields(`${UserModel._containerPath}/${key}`, ['admin', 'address', 'city', 'countryCode', 'downlineLevel', 'email', 'firstName', 'lastName', 'middleName', 'name', 'phone', 'profilePhotoUrl', 'referralCode', 'wallet', 'registration', 'disabled', 'notifications']).then(resultObject => {
         let result = new UserModel();
         result.key = key;
         result.fillFields(resultObject);
@@ -41,12 +41,20 @@ export class UserModel extends FirebaseModel {
 
   update(newValues: Object): Promise<any> {
     return new Promise((successCallback, rejectCallback) => {
-      super.update(UserModel._containerPath, newValues).then(value => {
+      super.update(`${UserModel._containerPath}/${this.key}`, newValues).then(value => {
         this.fillFields(newValues);
         successCallback();
       });
     });
+  }
 
+  updateNotifications(newValues: Object): Promise<any> {
+    return new Promise((successCallback, rejectCallback) => {
+      super.update(`${UserModel._containerPath}/${this.key}/notifications`, newValues).then(value => {
+        this.fillFields(newValues, { branch: 'notifications' });
+        successCallback();
+      });
+    });
   }
 
 

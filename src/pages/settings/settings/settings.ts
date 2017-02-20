@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { NavController, AlertController, ToastController } from 'ionic-angular';
-import * as _ from 'lodash';
-import * as log from 'loglevel';
-import { CustomValidator } from '../../../validators/custom';
+import { NavController, AlertController } from 'ionic-angular';
 import { AuthService } from '../../../services/auth';
-import { HomePage } from '../home/home';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Config } from '../../../config/config';
 import {AboutPage} from '../../about/about';
@@ -16,7 +11,6 @@ import {SettingsNotificationsPage} from '../settings-notifications/settings-noti
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-  public mainForm: FormGroup;
   targetPlatform = Config.targetPlatform;
 
   constructor(

@@ -79,9 +79,9 @@ export class EventListComponent {
 
   private scheduleNotification(obj, sourceType, present) {
     let self = this;
-    let chatNotificationsEnabled: boolean = self.auth.currentUser.settings && self.auth.currentUser.settings.chatNotifications;
+    let chatNotificationsEnabled = self.auth.currentUser.notifications && self.auth.currentUser.notifications.chatNotificationsEnabled;
     chatNotificationsEnabled = _.isUndefined(chatNotificationsEnabled) ? true : chatNotificationsEnabled;
-    let transactionNotificationsEnabled: boolean = self.auth.currentUser.settings && self.auth.currentUser.settings.transactionNotifications;
+    let transactionNotificationsEnabled = self.auth.currentUser.notifications && self.auth.currentUser.notifications.transactionNotificationsEnabled;
     transactionNotificationsEnabled = _.isUndefined(transactionNotificationsEnabled) ? true : transactionNotificationsEnabled;
     let sendNotification = sourceType === 'message' ? chatNotificationsEnabled : transactionNotificationsEnabled;
 

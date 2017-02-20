@@ -1,22 +1,32 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AuthService } from '../../../services/auth';
+import * as _ from 'lodash';
 
-/*
-  Generated class for the SettingsNotifications page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-settings-notifications',
   templateUrl: 'settings-notifications.html'
 })
 export class SettingsNotificationsPage {
+  chatNotificationsEnabled: boolean = false;
+  transactionNotificationsEnabled: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService) {
+    this.chatNotificationsEnabled = this.auth.currentUser.notifications && this.auth.currentUser.notifications.chatNotificationsEnabled;
+    this.chatNotificationsEnabled = _.isUndefined(this.chatNotificationsEnabled) ? true : this.chatNotificationsEnabled;
+    this.transactionNotificationsEnabled = this.auth.currentUser.notifications && this.auth.currentUser.notifications.transactionNotificationsEnabled;
+    this.transactionNotificationsEnabled = _.isUndefined(this.transactionNotificationsEnabled) ? true : this.transactionNotificationsEnabled;
+  }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingsNotificationsPage');
+  }
+
+  changeChatNotification(value) {
+    this.auth.currentUser.updateNotifications({ chatNotificationsEnabled: value.checked });
+  }
+
+  changeTransactionNotification(value) {
+    this.auth.currentUser.updateNotifications({ transactionNotificationsEnabled: value.checked });
   }
 
 }

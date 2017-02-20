@@ -10,9 +10,13 @@ export class FirebaseModel {
     return firebase.database().ref(containerPath);
   }
 
-  fillFields(fieldValues: Object) {
+  fillFields(fieldValues: Object, options?: any) {
     for (let fieldName of Object.getOwnPropertyNames(fieldValues)) {
-      this[fieldName] = fieldValues[fieldName];
+      if (options && options.branch) {
+        this[options.branch][fieldName] = fieldValues[fieldName];
+      } else {
+        this[fieldName] = fieldValues[fieldName];
+      }
     }
 
   }
@@ -44,6 +48,6 @@ export class FirebaseModel {
   }
 
   update(containerPath: string, newValues: Object): firebase.Promise<any> {
-    return this.referenceByKey(containerPath, this.key).update(newValues);
+    return firebase.database().ref(containerPath).update(newValues);
   }
 }
