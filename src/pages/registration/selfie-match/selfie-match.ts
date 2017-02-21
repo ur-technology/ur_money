@@ -58,6 +58,13 @@ export class SelfieMatchPage {
   }
 
   submit() {
+
+    // This is an ugly temporary hack!
+    if (!this.idCardFaceImage) {
+      this.nav.push(ProfileSetupPage);
+      return;
+    }
+
     let currentUserRef = firebase.database().ref(`/users/${this.auth.currentUserId}`);
     currentUserRef.update({ selfieSource: this.selfieSource }).then(() => {
       return this.matchSelfie();
@@ -77,10 +84,6 @@ export class SelfieMatchPage {
 
   matchSelfie(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (!this.idCardFaceImage) {
-        resolve();
-        return;
-      }
 
       let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
       loadingModal.present();

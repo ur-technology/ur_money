@@ -99,7 +99,9 @@ export class IdScanPage {
   }
 
   idCardUploaded() {
-    return $("#id-card-front").val() !== '' && $("#id-card-back").val() !== '';
+    // FIXME! Remove this temporary hack
+    return true;
+    //return $("#id-card-front").val() !== '' && $("#id-card-back").val() !== '';
   }
 
   private regionSet(): string {
@@ -153,7 +155,16 @@ export class IdScanPage {
   }
 
   extractDataFromIdCard(): Promise<any> {
+
     return new Promise((resolve, reject) => {
+
+      // Temporarily skip this step
+      if (this.idCardUploaded()) {
+        this.idCardData = "no image";
+        resolve();
+        return;
+      }
+
       let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
       loadingModal.present();
       let imageToProcess = new FormData();
