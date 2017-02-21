@@ -129,7 +129,7 @@ export class IdScanPage {
         });
       })
       .then((idCardData: any) => {
-        this.nav.push(SelfieMatchPage, { idCardFaceImage: this.idCardData.FaceImage });
+        this.nav.push(SelfieMatchPage);
       },
       (error) => {
         log.warn(error);

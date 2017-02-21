@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IDData } from '../interfaces/id-verifier';
+import { AuthService } from './auth';
 
+import * as firebase from 'firebase';
 import * as _ from 'lodash';
+import * as log from 'loglevel';
 
 // jQuery workaround
 declare var $: any;
@@ -9,38 +12,118 @@ declare var $: any;
 @Injectable()
 export class AcuantService {
 
+  currentUserRef: firebase.database.Reference;
+  storageRef: firebase.storage.Reference;
+
+  constructor(
+    public auth: AuthService,
+  ) {
+    this.currentUserRef = firebase.database().ref(`/users/${auth.currentUserId}`);
+    this.storageRef = firebase.storage().ref();
+  }
+
   ///////////////////////////////////////////////////////////////
   // Interface methods
   ///////////////////////////////////////////////////////////////
 
   public extractDataFromNationalID(countryCode: string, front: Blob, back: Blob): Promise<IDData> {
 
+    var frontImageRef = this.userIDPhotoRef('national-id-front.jpg');
+    var backImageRef = this.userIDPhotoRef('national-id-back.jpg');
+
+    return new Promise((resolve, reject) => {
+
+      frontImageRef.put(front).then(
+        (snapshot: any) => {
+          return backImageRef.put(back);
+        },
+        (error) => {
+          log.Warn(error);
+          reject('Failed to upload image');
+        }
+      ).then(
+        (snapshot: any) => {
+          this.currentUserRef.update({
+            idType: "national",
+            idCountry: this.regionSet(countryCode),
+          }).then(() => {
+
+            // FIXME! Delegate to queue, store card data?
+            //return currentUserRef.update({ idCardData: _.omitBy(this.idCardData, _.isArray) });
+            resolve();
+          });
+        },
+        (error) => {
+          log.Warn(error);
+          reject('Failed to upload image');
+        })
+    })
+    /*
+          let imageToProcess = new FormData();
+          imageToProcess.append("frontImage", front)
+          imageToProcess.append("backImage", back)
+    
+          // FIXME! Move to config
+          let authinfo = $.base64.encode("EE92924A123D");
+    
+          let params: any[] = [
+            this.regionSet(countryCode), // REGIONSET
+            true, // AUTODETECTSTATE
+            -1, // PROCSTATE
+            true, // GETFACEIMAGE
+            true, // GETSIGNIMAGE
+            true, // REFORMATIMAGE
+            0, // REFORMATIMAGECOLOR
+            150, // REFORMATIMAGEDPI
+            105, // IMAGESOURCE
+            true // USEPREPROCESSING
+          ];
+    
+          let paramString = _.join(_.map(params, _.toString), '/');
+          $.ajax({
+            type: "POST",
+            url: `https://cssnwebservices.com/CSSNService/CardProcessor/ProcessDLDuplex/${paramString}`,
+            data: imageToProcess,
+            cache: false,
+            contentType: 'application/octet-stream; charset=utf-8;',
+            dataType: "json",
+            processData: false,
+            beforeSend: (xhr) => {
+              xhr.setRequestHeader("Authorization", "LicenseKey " + authinfo);
+            },
+            success: (idCardData: any) => {
+              let error: string = (idCardData.ResponseCodeAuthorization < 0 && idCardData.ResponseCodeAuthorization) ||
+                (idCardData.ResponseCodeAutoDetectState < 0 && idCardData.ResponseCodeAutoDetectState) ||
+                (idCardData.ResponseCodeProcState < 0 && idCardData.ResponseCodeProcState) ||
+                (idCardData.WebResponseCode < 1 && idCardData.WebResponseCode);
+              if (error) {
+                reject(`error processing id: ${error}`);
+              } else {
+                resolve(idCardData);
+              }
+            },
+            error: (xhr: any, error: any) => {
+              reject(`error submitting id: ${_.toString(error)}`);
+            },
+          });
+        });
+    
+        */
+  }
+
+  matchSelfie(idCardFinalImage: Blob, selfieSource: Blob): Promise<any> {
     return new Promise((resolve, reject) => {
 
       let imageToProcess = new FormData();
-      imageToProcess.append("frontImage", front)
-      imageToProcess.append("backImage", back)
+      imageToProcess.append("photo1", idCardFinalImage);
+      imageToProcess.append("photo2", selfieSource);
 
-      // FIXME! Move to config
+      // Fixme! get from config
       let authinfo = $.base64.encode("EE92924A123D");
 
-      let params: any[] = [
-        this.regionSet(countryCode), // REGIONSET
-        true, // AUTODETECTSTATE
-        -1, // PROCSTATE
-        true, // GETFACEIMAGE
-        true, // GETSIGNIMAGE
-        true, // REFORMATIMAGE
-        0, // REFORMATIMAGECOLOR
-        150, // REFORMATIMAGEDPI
-        105, // IMAGESOURCE
-        true // USEPREPROCESSING
-      ];
-
-      let paramString = _.join(_.map(params, _.toString), '/');
       $.ajax({
         type: "POST",
-        url: `https://cssnwebservices.com/CSSNService/CardProcessor/ProcessDLDuplex/${paramString}`,
+        url: "https://cssnwebservices.com/CSSNService/CardProcessor/FacialMatch",
         data: imageToProcess,
         cache: false,
         contentType: 'application/octet-stream; charset=utf-8;',
@@ -49,20 +132,19 @@ export class AcuantService {
         beforeSend: (xhr) => {
           xhr.setRequestHeader("Authorization", "LicenseKey " + authinfo);
         },
-        success: (idCardData: any) => {
-          let error: string = (idCardData.ResponseCodeAuthorization < 0 && idCardData.ResponseCodeAuthorization) ||
-            (idCardData.ResponseCodeAutoDetectState < 0 && idCardData.ResponseCodeAutoDetectState) ||
-            (idCardData.ResponseCodeProcState < 0 && idCardData.ResponseCodeProcState) ||
-            (idCardData.WebResponseCode < 1 && idCardData.WebResponseCode);
+        success: (facialMatchData) => {
+
+          let error: string = (facialMatchData.ResponseCodeAuthorization < 0 && facialMatchData.ResponseCodeAuthorization) ||
+            (facialMatchData.WebResponseCode < 1 && facialMatchData.WebResponseCode);
           if (error) {
-            reject(`error processing id: ${error}`);
+            reject(`error matching selfie: ${error}`);
           } else {
-            resolve(idCardData);
+            resolve(facialMatchData);
           }
         },
-        error: (xhr: any, error: any) => {
+        error: (xhr, error) => {
           reject(`error submitting id: ${_.toString(error)}`);
-        },
+        }
       });
     });
   }
@@ -70,6 +152,14 @@ export class AcuantService {
   ///////////////////////////////////////////////////////////////
   // Utility methods
   ///////////////////////////////////////////////////////////////
+
+  private userIDPhotoURL(fileName: string): string {
+    return 'user/' + this.auth.currentUserId + '/id-images/' + fileName;
+  }
+
+  private userIDPhotoRef(fileName: string): firebase.storage.Reference {
+    return this.storageRef.child(this.userIDPhotoURL(fileName));
+  }
 
   private regionSet(countryCode: string): string {
 

@@ -4,6 +4,8 @@ import { FormGroup } from '@angular/forms';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AuthService } from '../../../services/auth';
 import { ProfileSetupPage } from '../profile-setup/profile-setup';
+import { AcuantService } from '../../../services/acuant';
+import { IDVerifier } from '../../../interfaces/id-verifier';
 import * as firebase from 'firebase';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
@@ -21,6 +23,7 @@ export class SelfieMatchPage {
   facialMatchData: string;
   idCardFaceImage: any;
   idCardFinalImage: any;
+  idVerifier: IDVerifier;
 
   constructor(
     public nav: NavController,
@@ -28,8 +31,11 @@ export class SelfieMatchPage {
     public loadingController: LoadingController,
     public translate: TranslateService,
     public auth: AuthService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private acuantService: AcuantService,
   ) {
+
+    this.idVerifier = acuantService;
     this.mainForm = new FormGroup({});
     this.idCardFaceImage = this.navParams.get('idCardFaceImage');
 
@@ -60,73 +66,39 @@ export class SelfieMatchPage {
   }
 
   submit() {
+
+    let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+    loadingModal.present();
+
     let currentUserRef = firebase.database().ref(`/users/${this.auth.currentUserId}`);
+
     currentUserRef.update({ selfieSource: this.selfieSource }).then(() => {
-      return this.matchSelfie();
-    }).then(() => {
-      return currentUserRef.update({ facialMatchData: this.facialMatchData });
-    }).then(() => {
-      this.nav.push(ProfileSetupPage);
-    }, (error) => {
-      log.warn(error);
-      this.toastCtrl.create({
-        message: 'There was an error matching your selfie.',
-        duration: 6000,
-        position: 'bottom'
-      }).present();
-    });
-  }
+      return this.idVerifier.matchSelfie(
+        this.dataURLtoBlob(this.idCardFinalImage),
+        this.dataURLtoBlob(this.selfieSource),
+      )
+    })
+      .then((facialMatchData) => {
 
-  // FIXME! Move to acuant package
-  matchSelfie(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (!this.idCardFaceImage) {
-        resolve();
-        return;
-      }
+        this.facialMatchData = facialMatchData
 
-      let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
-      loadingModal.present();
-
-      let imageToProcess = new FormData();
-      imageToProcess.append("photo1", this.dataURLtoBlob(this.idCardFinalImage));
-      imageToProcess.append("photo2", this.dataURLtoBlob(this.selfieSource));
-
-      // Fixme! get from config
-      let authinfo = $.base64.encode("EE92924A123D");
-      $.ajax({
-        type: "POST",
-        url: "https://cssnwebservices.com/CSSNService/CardProcessor/FacialMatch",
-        data: imageToProcess,
-        cache: false,
-        contentType: 'application/octet-stream; charset=utf-8;',
-        dataType: "json",
-        processData: false,
-        beforeSend: (xhr) => {
-          xhr.setRequestHeader("Authorization", "LicenseKey " + authinfo);
-        },
-        success: (facialMatchData) => {
-
-          console.log(JSON.stringify(facialMatchData, null, 4));
-
-          loadingModal.dismiss().then(() => {
-            this.facialMatchData = facialMatchData;
-            let error: string = (facialMatchData.ResponseCodeAuthorization < 0 && facialMatchData.ResponseCodeAuthorization) ||
-              (facialMatchData.WebResponseCode < 1 && facialMatchData.WebResponseCode);
-            if (error) {
-              reject(`error matching selfie: ${error}`);
-            } else {
-              resolve();
-            }
-          });
-        },
-        error: (xhr, error) => {
-          loadingModal.dismiss().then(() => {
-            reject(`error submitting id: ${_.toString(error)}`);
-          });
-        }
+        loadingModal.dismiss().then(() => {
+          return currentUserRef.update({ facialMatchData: this.facialMatchData });
+        });
+      })
+      .then(() => {
+        this.nav.push(ProfileSetupPage);
+      },
+      (error) => {
+        log.warn(error);
+        loadingModal.dismiss().then(() => {
+          this.toastCtrl.create({
+            message: 'There was an error matching your selfie.',
+            duration: 6000,
+            position: 'bottom'
+          }).present();
+        });
       });
-    });
   }
 
   private dataURLtoBlob(dataURL: string): any {
