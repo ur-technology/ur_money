@@ -66,7 +66,6 @@ export class WalletSetupPage {
       title: this.translate.instant('wallet-setup.confirmWrittenDownTitle'),
       message: `<p>${message1}</p><p><b>${this.profile.secretPhrase}</b></p><p>${message2}</p><p>${message3}</p>`,
       buttons: [
-        { text: this.translate.instant('cancel'), handler: () => { alert.dismiss(); } },
         {
           text: this.translate.instant('wallet-setup.confirmWrittenDownButton'), handler: () => {
             alert.dismiss().then(() => {
