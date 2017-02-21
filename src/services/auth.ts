@@ -297,25 +297,6 @@ export class AuthService {
     return status;
   }
 
-  envMode() {
-    let matches = Config.firebaseProjectId.match(/ur-money-(\w+)/);
-    return (matches && matches[1]) || 'unknown';
-  }
 
-  envModeDisplay() {
-    let mode = this.envMode();
-    return mode === 'production' ? '' : `${_.startCase(mode)} mode`;
-  }
 
-  referralLink(window): string {
-    let base: string;
-    if (Config.targetPlatform === 'web') {
-      base = window.location.origin;
-    } else if (this.envMode() === 'production') {
-      base = 'https://web.ur.technology';
-    } else {
-      base = 'https://ur-money-staging.firebaseapp.com';
-    }
-    return `${base}/r/${this.currentUser.referralCode}`;
-  }
 }

@@ -1,8 +1,8 @@
-import { NavController, Platform, ModalController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { SignUpPage } from '../sign-up/sign-up';
 import { SignInPage } from '../sign-in/sign-in';
-import { AuthService } from '../../../services/auth';
+import { UtilService } from '../../../services/util.service';
 
 @Component({
   selector: 'welcome-page',
@@ -10,8 +10,7 @@ import { AuthService } from '../../../services/auth';
 })
 export class WelcomePage {
 
-  constructor(public nav: NavController, public platform: Platform, public modalCtrl: ModalController,
-    public auth: AuthService) {
+  constructor(public nav: NavController, private utilService: UtilService) {
   }
 
   signUp() {

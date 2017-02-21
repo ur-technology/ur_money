@@ -54,6 +54,7 @@ import { FormsModule } from '@angular/forms';
 import { Config } from '../config/config';
 import { SponsorWaitPage } from '../pages/sponsor-wait/sponsor-wait';
 import { UserService } from '../services/user.service';
+import { UtilService } from '../services/util.service';
 
 
 export const firebaseConfig = {
@@ -167,6 +168,6 @@ export function translateLoaderFactory(http: any) {
     ChangePasswordPage,
     ChangeEmailPage
   ],
-  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, UtilService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule { }

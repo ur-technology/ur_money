@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 import { SocialSharing, Clipboard, Toast } from 'ionic-native';
 import * as log from 'loglevel';
 import { ChatPage } from '../../pages/chat/chat';
+import {UtilService} from '../../services/util.service';
 
 declare var jQuery: any;
 
@@ -18,7 +19,7 @@ export class ContactsAndChatsPage {
   segmentSelected: string = 'contacts';
   targetPlatform = Config.targetPlatform;
 
-  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService, public alertCtrl: AlertController) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService, public alertCtrl: AlertController, private utilsService: UtilService) {
     this.goal = navParams.get('goal');
     if (this.targetPlatform === 'web') {
       this.segmentSelected = 'chats';
@@ -74,7 +75,7 @@ export class ContactsAndChatsPage {
       Toast.show(this.translate.instant('contacts.toastMessage'), 'long', 'top').subscribe((toast) => {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
-          url: self.auth.referralLink(window),
+          url: self.utilsService.referralLink(self.auth.currentUser.referralCode),
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions');
