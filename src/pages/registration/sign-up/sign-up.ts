@@ -90,11 +90,14 @@ export class SignUpPage {
   }
 
   private changeTitlesBySignUpType() {
-    this.subheadingButton = this.translate.instant(
-      this.signUpType === 'sponsorReferralCode' ?
-        'sign-up.signUpWithEmailCodeInstead' :
-        'sign-up.signUpWithSponsorReferralCodeInstead'
-    );
+    if(this.signUpType === 'sponsorReferralCode'){
+      this.mainForm.controls['email'].setErrors(null);
+      this.subheadingButton = this.translate.instant('sign-up.signUpWithEmailCodeInstead');
+    } else {
+      this.mainForm.controls['sponsorReferralCode'].setErrors(null);
+      this.subheadingButton = this.translate.instant('sign-up.signUpWithSponsorReferralCodeInstead');
+    }
+
   }
 
   private normalizedPhone(): string {

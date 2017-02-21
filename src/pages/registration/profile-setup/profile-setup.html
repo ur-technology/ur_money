@@ -13,11 +13,11 @@
         <ion-list>
           <ion-item>
             <ion-label stacked>{{'profile-setup.name' | translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]="profile.name" formControlName="name" clearInput="true"></ion-input>
+            <ion-input type="text" formControlName="name" clearInput="true"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
-            <ion-input type="email" [(ngModel)]="profile.email" formControlName="email" clearInput="true"></ion-input>
+            <ion-input type="email" formControlName="email" clearInput="true"></ion-input>
           </ion-item>
         </ion-list>
       </ion-card-content>
