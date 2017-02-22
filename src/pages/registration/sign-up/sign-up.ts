@@ -72,6 +72,7 @@ export class SignUpPage {
   changeSignUpType() {
     this.signUpType = this.signUpType === 'sponsorReferralCode' ? 'email' : 'sponsorReferralCode';
     this.changeTitlesBySignUpType();
+
   }
 
   private changeTitlesBySignUpType() {
@@ -103,7 +104,7 @@ export class SignUpPage {
     }).then(() => {
       switch (taskState) {
         case 'code_generation_finished':
-          self.nav.setRoot(AuthenticationCodePage);
+          self.nav.push(AuthenticationCodePage);
           break;
 
         case 'code_generation_canceled_because_user_already_signed_up':

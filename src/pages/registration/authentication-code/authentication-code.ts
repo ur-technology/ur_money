@@ -1,8 +1,7 @@
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { SignUpPage } from '../sign-up/sign-up';
 import { Component } from '@angular/core';
 
 @Component({
@@ -11,16 +10,13 @@ import { Component } from '@angular/core';
 })
 export class AuthenticationCodePage {
   authenticationCode: string = '';
-  authenticationType: string;
 
-  constructor(public nav: NavController, public navParams: NavParams,
+  constructor(public nav: NavController,
     public auth: AuthService,
     public loadingController: LoadingController,
     public translate: TranslateService,
     public toastService: ToastService
   ) {
-    this.nav = nav;
-    this.authenticationType = this.navParams.get('authenticationType') || 'signIn';
   }
 
   checkCode() {
@@ -51,7 +47,7 @@ export class AuthenticationCodePage {
   }
 
   resendCode() {
-    this.nav.setRoot(SignUpPage);
+    this.nav.pop();
   }
 
   add(numberVar) {

@@ -10,7 +10,6 @@ page-sign-in {
     font-size: 1.6rem;
     text-align: justify;
     margin-top: 10px;
-    // margin: 45px 6%;
     b {
       color: color($colors, dark);
     }
@@ -37,7 +36,6 @@ page-sign-in {
   }
 
   .terms {
-    // padding-top: 40px;
     font-size: 0.9rem;
     color: #323232;
   }
@@ -48,17 +46,11 @@ page-sign-in {
 
   .select-md, .select-ios {
     color: color($colors, primary);
-    // color: #4eb5e4;
     padding-left: 0;
-  }
-
-  .label-md {
-    // color: #4eb5e4 !important;
   }
 
   ion-card-header {
     background-color: color($colors, light);
-    // background-color: #c4cace;
   }
 
   .footer-card {
@@ -69,8 +61,8 @@ page-sign-in {
     background-color: transparent !important;
   }
 
-  .item-inner {
-    border-bottom-color: #8c8c8c !important;
+  .list-md .item-block .item-inner {
+    border-bottom-color: #c8c7cc !important;
   }
 
   .ur-logo img {
@@ -155,7 +147,7 @@ page-sign-in {
   .toolbar-background-md {
     background-color: transparent;
   }
-  
+
   .toolbar-background-ios {
     background-color: transparent;
   }

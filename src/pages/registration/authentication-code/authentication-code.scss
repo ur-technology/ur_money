@@ -3,12 +3,12 @@ authentication-code-page {
   .sub-heading {
     font-size: 1.6rem;
     text-align: center;
-    margin: 65px 6%;
+    margin: 35px 6%;
   }
 
   .phone-number-authentication .unlock-keypad,
   .unlock-keypad {
-    position: absolute;
+    // position: absolute;
     bottom: 0;
     width: 100%;
   }
@@ -16,6 +16,10 @@ authentication-code-page {
   .phone-number-authentication .unlock-keypad .row,
   .unlock-keypad .row {
     border-bottom: 1px solid rgba(196, 196, 196, 0.8);
+  }
+
+  .phone-number-authentication .top {
+    border-top: 1px solid rgba(196, 196, 196, 0.8);
   }
 
   .phone-number-authentication .unlock-keypad .row .col.col-33.mid-col,
@@ -47,7 +51,8 @@ authentication-code-page {
   }
 
   .unlock-keypad {
-    position: absolute;
+    // position: absolute;
+    margin-top: 40px;
     bottom: 0;
     width: 100%;
   }
@@ -93,7 +98,7 @@ authentication-code-page {
   }
 
   .verify-btns .button {
-    font-size: 1.2rem;
+    font-size: 1rem;
     background-color: #fff;
     border-radius: 10px;
     min-height: 34px;
