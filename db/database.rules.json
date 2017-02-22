@@ -6,7 +6,7 @@
         ".read": false,
 
         "connectionCheckDummyData": {
-          ".read": true
+            ".read": true
         },
 
         "signUpQueue": {
@@ -27,6 +27,23 @@
         },
 
         "signInQueue": {
+            "tasks": {
+                ".indexOn": "_state",
+                "$task": {
+                    ".write": true,
+                    "_state": {
+                        // allow reading state of a particular record
+                        ".read": true
+                    },
+                    "result": {
+                        // allow reading result of a particular record
+                        ".read": true
+                    }
+                }
+            }
+        },
+
+        "verifyIDQueue": {
             "tasks": {
                 ".indexOn": "_state",
                 "$task": {

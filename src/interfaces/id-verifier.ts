@@ -1,5 +1,3 @@
-import { AuthService } from '../services/auth';
-
 export interface IDData {
   FaceImage: any;
 }

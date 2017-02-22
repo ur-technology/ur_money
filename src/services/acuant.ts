@@ -33,29 +33,52 @@ export class AcuantService {
 
     return new Promise((resolve, reject) => {
 
-      frontImageRef.put(front).then(
-        (snapshot: any) => {
+      let taskRef;
+
+      frontImageRef.put(front)
+        .then(
+        (frontSnapshot: any) => {
           return backImageRef.put(back);
         },
         (error) => {
           log.Warn(error);
           reject('Failed to upload image');
-        }
-      ).then(
-        (snapshot: any) => {
-          this.currentUserRef.update({
-            idType: "national",
-            idCountry: this.regionSet(countryCode),
-          }).then(() => {
+        })
+        .then(
 
-            // FIXME! Delegate to queue, store card data?
-            //return currentUserRef.update({ idCardData: _.omitBy(this.idCardData, _.isArray) });
-            resolve();
+        (backSnapshot: any) => {
+          taskRef = firebase.database().ref('/verifyIDQueue/tasks').push({
+            id: this.auth.currentUserId,
+            type: "national",
+            regionSet: this.regionSet(countryCode),
+          });
+
+          return taskRef;
+        })
+        .then(
+        (result) => {
+
+          let resultRef = taskRef.child('result');
+
+          resultRef.on("value", (snapshot) => {
+
+            let val = snapshot.val();
+
+            if (!val) {
+              return;
+            }
+
+            taskRef.remove();
+
+            if (val.state == 'id_verification_success') {
+              resolve();
+            } else {
+              reject(val.error)
+            }
           });
         },
         (error) => {
-          log.Warn(error);
-          reject('Failed to upload image');
+          reject(error);
         })
     })
     /*
