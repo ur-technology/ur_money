@@ -3,17 +3,13 @@
     <img src="assets/img/ur-logo.png" alt="logo">
     <img src="assets/img/ur-slogan.png" alt="logo">
   </div>
+  <div class="welcome-ur">
+    <h3>{{ "welcome.welcomeText" | translate }} {{envModeDisplay()}}</h3>
+    <p class="ur-slogan">{{ "welcome.description" | translate }}</p>
+    <p>
+      <br />
+    </p>
+    <button ion-button round (click)="signUp()"><span>{{ "welcome.signUp" | translate }}</span></button>
+    <button ion-button round color="light" (click)="signIn()"><span>{{ "welcome.signIn" | translate }}</span></button>
+  </div>
 </ion-content>
-<ion-footer>
-  <ion-toolbar class="bottom-toolbar">
-    <div class="welcome-ur">
-      <h3>{{ "welcome.welcomeText" | translate }} {{envModeDisplay()}}</h3>
-      <p class="ur-slogan">{{ "welcome.description" | translate }}</p>
-      <p>
-        <br />
-      </p>
-      <button ion-button round (click)="signUp()"><span>{{ "welcome.signUp" | translate }}</span></button>
-      <button ion-button round color="light" (click)="signIn()"><span>{{ "welcome.signIn" | translate }}</span></button>
-    </div>
-  </ion-toolbar>
-</ion-footer>
