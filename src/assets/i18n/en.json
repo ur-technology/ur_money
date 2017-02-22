@@ -49,6 +49,7 @@
     "signUpWithSponsorReferralCodeInstead": "Sign up with referral code instead",
     "userAlreadyExists": "This phone number already exists on our records, please go to sign in page",
     "gotoSignIn": "Sign In",
+    "betaEmailNotFound": "The email that you entered was not found in our records. Please double-check and try again.",
     "sponsorNotFoundMessage": "There is no sponsor with that referral code, please try another referral code",
     "sponsorDisabledMessage": "The sponsor is disabled, please try another referral code",
     "enterFields": "Please enter all the fields",

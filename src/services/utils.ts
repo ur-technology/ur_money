@@ -1,21 +1,15 @@
-import {Injectable} from '@angular/core';
 import {Config} from '../config/config';
 import * as _ from 'lodash';
 
-@Injectable()
-export class UtilService {
+export class Utils {
 
-  private envMode() {
+  static envModeDisplay() {
     let matches = Config.firebaseProjectId.match(/ur-money-(\w+)/);
-    return (matches && matches[1]) || 'unknown';
-  }
-
-  envModeDisplay() {
-    let mode = this.envMode();
+    let mode =  (matches && matches[1]) || 'unknown';
     return mode === 'production' ? '' : `${_.startCase(mode)} mode`;
   }
 
-  referralLink(referralCode): string {
+  static referralLink(referralCode): string {
     return `https://${Config.deeplinkHost}/r/${referralCode}`;
   }
 }

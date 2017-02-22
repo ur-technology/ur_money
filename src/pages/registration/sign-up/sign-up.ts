@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { CountryListService } from '../../../services/country-list';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom';
@@ -18,11 +18,7 @@ export class SignUpPage {
   countries: any[];
   mainForm: FormGroup;
   signUpType: string;
-  subheadingTitle = '';
   subheadingButton = '';
-  sponsorReferralCode: string;
-  email: string;
-  password: string;
 
   constructor(
     public nav: NavController,
@@ -33,33 +29,22 @@ export class SignUpPage {
     public loadingController: LoadingController,
     public auth: AuthService,
     public toastService: ToastService,
-    public alertCtrl: AlertController,
-    public platform: Platform
+    public alertCtrl: AlertController
   ) {
 
     this.countries = this.countryListService.getCountryData();
     this.signUpType = this.navParams.get('signUpType') || 'sponsorReferralCode';
-    this.extractSponsorReferralCodeFromUrl();
     this.mainForm = new FormGroup({
       country: new FormControl(this.countryListService.getDefaultContry(), Validators.required),
       phone: new FormControl('', (control) => {
-        let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-        let phoneNumberObject;
-        try {
-          phoneNumberObject = phoneNumberUtil.parse(control.value, this.mainForm.value.country.countryCode);
-        } catch (e) { }
-        if (!phoneNumberObject || !phoneNumberUtil.isValidNumber(phoneNumberObject)) {
-          return { 'invalidPhone': true };
-        }
+        return Validators.required(control) || CustomValidator.validatePhoneNumber(this.mainForm.value.country.countryCode, control);
       }),
-      sponsorReferralCode: new FormControl(this.sponsorReferralCode || '', (control) => {
+      sponsorReferralCode: new FormControl(this.extractSponsorReferralCodeFromUrl() || '', (control) => {
         if (this.signUpType === 'sponsorReferralCode') {
-          if (!/^[A-Za-z0-9]{6,}$/.test(control.value || '')) {
-            return { 'invalidSponsorReferralCode': true };
-          }
+          return Validators.required(control) || CustomValidator.validateSponsorReferralCode(control);
         }
       }),
-      email: new FormControl(this.email, (control) => {
+      email: new FormControl('', (control) => {
         if (this.signUpType === 'email') {
           return Validators.required(control) || CustomValidator.emailValidator(control);
         }
@@ -77,7 +62,7 @@ export class SignUpPage {
       let params: string = window.location.search || '';
       matches = params.match(/[\?\&]r\=([a-zA-Z0-9]+)/);
     }
-    this.sponsorReferralCode = matches && matches[1];
+    return matches && matches[1];
   }
 
   ionViewDidLoad() {
@@ -90,7 +75,7 @@ export class SignUpPage {
   }
 
   private changeTitlesBySignUpType() {
-    if(this.signUpType === 'sponsorReferralCode'){
+    if (this.signUpType === 'sponsorReferralCode') {
       this.mainForm.controls['email'].setErrors(null);
       this.subheadingButton = this.translate.instant('sign-up.signUpWithEmailCodeInstead');
     } else {
@@ -119,8 +104,8 @@ export class SignUpPage {
       return self.auth.requestSignUpCodeGeneration(
         self.normalizedPhone(),
         self.mainForm.value.password,
-        self.signUpType === 'sponsorReferralCode' ? self.sponsorReferralCode : null,
-        self.signUpType === 'email' ? self.email : null
+        self.signUpType === 'sponsorReferralCode' ? self.mainForm.value.sponsorReferralCode : null,
+        self.signUpType === 'email' ? self.mainForm.value.email : null
       );
     }).then((newTaskState: string) => {
       taskState = newTaskState;
@@ -152,6 +137,10 @@ export class SignUpPage {
 
         case 'code_generation_canceled_because_voip_phone_not_allowed':
           self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+          break;
+
+        case 'code_generation_canceled_because_email_not_found':
+          self.toastService.showMessage({ messageKey: 'sign-up.betaEmailNotFound' });
           break;
 
         case 'code_generation_canceled_because_sponsor_not_found':

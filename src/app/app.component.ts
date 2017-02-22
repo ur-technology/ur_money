@@ -16,7 +16,7 @@ import { UsersPage } from '../pages/admin/users';
 import { SettingsPage } from '../pages/settings/settings/settings';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
-import {UtilService} from '../services/util.service';
+import { Utils } from '../services/utils';
 //import {SelfieMatchPage} from '../pages/registration/selfie-match/selfie-match';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
@@ -34,8 +34,7 @@ export class UrMoney {
     public menu: MenuController,
     public auth: AuthService,
     public translate: TranslateService,
-    public contactsService: ContactsService,
-    private utilService: UtilService
+    public contactsService: ContactsService
   ) {
     this.initializeApp();
     this.translateConfig();
@@ -140,5 +139,9 @@ export class UrMoney {
     } else {
       this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
     }
+  }
+
+  envModeDisplay() {
+    return Utils.envModeDisplay();
   }
 }

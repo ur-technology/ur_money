@@ -7,7 +7,7 @@ import { UserPage } from './user';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import { FirebaseApp } from 'angularfire2';
-import { UtilService} from '../../services/util.service';
+import { Utils} from '../../services/utils';
 
 declare var window: any;
 declare var jQuery: any;
@@ -35,7 +35,6 @@ export class UsersPage {
     private translate: TranslateService,
     public auth: AuthService,
     private alertCtrl: AlertController,
-    private utilService: UtilService,
     @Inject(FirebaseApp) firebase: any
   ) {
     this.countries = require('country-data').countries.all;
@@ -135,4 +134,7 @@ export class UsersPage {
     return (countryObject && countryObject.name) || (u.prefineryUser && u.prefineryUser.country) || 'None';
   }
 
+  envModeDisplay() {
+    return Utils.envModeDisplay();
+  }
 }

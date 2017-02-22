@@ -49,6 +49,7 @@
       "signUpWithSponsorReferralCodeInstead": "Regístrarse con código de referencia mejor",
       "userAlreadyExists": "Este número de teléfono ya existe en nuestros registros, por favor ve a la página Inicio de sesión",
       "gotoSignIn": "Iniciar sesión",
+      "betaEmailNotFound": "El correo electrónico que ingresaste no se encontró en nuestros registros. Por favor revisa e inténtalo de nuevo.",
       "sponsorNotFoundMessage": "No hay patrocinador con ese código de referencia, por favor, intenta con otro código de referencia",
       "sponsorDisabledMessage": "El patrocinador está deshabilitado, por favor, intenta con otro código de referencia",
       "enterFields": "Por favor ingrese todos los campos",

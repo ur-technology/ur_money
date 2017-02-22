@@ -14,7 +14,7 @@ import { SendPage } from './../send/send';
 import { InviteLinkPage } from './../invite-link/invite-link';
 import { SponsorWaitPage } from '../sponsor-wait/sponsor-wait';
 import { BigNumber } from 'bignumber.js';
-import { UtilService } from '../../services/util.service';
+import { Utils } from '../../services/utils';
 declare var jQuery: any;
 
 @Component({
@@ -34,7 +34,7 @@ export class HomePage {
   constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
     public angularFire: AngularFire, public auth: AuthService,
-    public translate: TranslateService, private utilService: UtilService
+    public translate: TranslateService
 
   ) {
     this.elementRef = elementRef;
@@ -184,4 +184,9 @@ export class HomePage {
       }[this.auth.getUserStatus()] || AnnouncementInitiatedPage);
     }
   }
+
+  envModeDisplay() {
+    return Utils.envModeDisplay();
+  }
+
 }

@@ -113,4 +113,22 @@ export class CustomValidator {
     return null;
   }
 
+  static validatePhoneNumber(countryCode: string, control){
+   let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+   let phoneNumberObject;
+   try {
+     phoneNumberObject = phoneNumberUtil.parse(control.value, countryCode);
+   } catch (e) { }
+   if (!phoneNumberObject || !phoneNumberUtil.isValidNumber(phoneNumberObject)) {
+     return { 'invalidPhone': true };
+   }
+ }
+
+ static validateSponsorReferralCode(control){
+   var pattern = /^[A-Za-z0-9]{6,}$/;
+   if (control.value && !control.value.match(pattern)) {
+     return { 'invalidSponsorReferralCode': true };
+   }
+ }
+
 }

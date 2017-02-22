@@ -1,6 +1,6 @@
 import { BuildVersion, BuildDate } from '../../version/version';
 import { Component } from '@angular/core';
-import { UtilService } from '../../services/util.service';
+import { Utils } from '../../services/utils';
 
 @Component({
   selector: 'about-page',
@@ -10,9 +10,13 @@ export class AboutPage {
   public versionNumber: string
   public buildDate: string;
 
-  constructor(public utilService: UtilService) {
+  constructor() {
 
     this.versionNumber = BuildVersion;
     this.buildDate = BuildDate;
+  }
+
+  envModeDisplay() {
+    return Utils.envModeDisplay();
   }
 }

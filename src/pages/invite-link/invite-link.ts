@@ -2,7 +2,7 @@ import { NavController, Platform } from 'ionic-angular';
 import { AuthService } from '../../services/auth';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import {UtilService} from '../../services/util.service';
+import { Utils } from '../../services/utils';
 
 declare var jQuery: any;
 
@@ -13,9 +13,9 @@ declare var jQuery: any;
 export class InviteLinkPage {
   mainForm: FormGroup;
 
-  constructor(public nav: NavController, public platform: Platform, public auth: AuthService, private utilsService: UtilService) {
+  constructor(public nav: NavController, public platform: Platform, public auth: AuthService) {
     let formElements: any = {
-      referralLink: new FormControl(this.utilsService.referralLink(this.auth.currentUser.referralCode), [Validators.required])
+      referralLink: new FormControl(Utils.referralLink(this.auth.currentUser.referralCode), [Validators.required])
     };
     this.mainForm = new FormGroup(formElements);
   }

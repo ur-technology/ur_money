@@ -2,7 +2,7 @@ import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { SignUpPage } from '../sign-up/sign-up';
 import { SignInPage } from '../sign-in/sign-in';
-import { UtilService } from '../../../services/util.service';
+import { Utils } from '../../../services/utils';
 
 @Component({
   selector: 'welcome-page',
@@ -10,7 +10,7 @@ import { UtilService } from '../../../services/util.service';
 })
 export class WelcomePage {
 
-  constructor(public nav: NavController, private utilService: UtilService) {
+  constructor(public nav: NavController) {
   }
 
   signUp() {
@@ -19,6 +19,10 @@ export class WelcomePage {
 
   signIn() {
     this.nav.push(SignInPage);
+  }
+
+  envModeDisplay() {
+    return Utils.envModeDisplay();
   }
 
 }
