@@ -1,5 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
+import { TrackJsErrorHandler } from '../services/trackjs.handler';
 import { UrMoney } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
@@ -167,6 +168,6 @@ export function translateLoaderFactory(http: any) {
     ChangePasswordPage,
     ChangeEmailPage
   ],
-  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: TrackJsErrorHandler }]
 })
 export class AppModule { }
