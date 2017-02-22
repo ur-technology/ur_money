@@ -12,4 +12,13 @@ export class Utils {
   static referralLink(referralCode): string {
     return `https://${Config.deeplinkHost}/r/${referralCode}`;
   }
+
+  static normalizedPhone(telephoneCountryCode, phone, mobileAreaCodePrefix): string {
+    let strippedPhone: string = (phone || '').replace(/\D/g, '');
+    let extraPrefix: string = mobileAreaCodePrefix || '';
+    if (extraPrefix && strippedPhone.startsWith(extraPrefix)) {
+      extraPrefix = '';
+    }
+    return telephoneCountryCode + extraPrefix + strippedPhone;
+  }
 }

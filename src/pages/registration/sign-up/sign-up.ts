@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { CountryListService } from '../../../services/country-list';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom';
@@ -9,6 +9,7 @@ import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { AuthenticationCodePage } from '../authentication-code/authentication-code';
 import { SignInPage } from '../sign-in/sign-in';
+import { Utils } from '../../../services/utils';
 
 @Component({
   selector: 'page-sign-up',
@@ -22,7 +23,6 @@ export class SignUpPage {
 
   constructor(
     public nav: NavController,
-    private navParams: NavParams,
     private countryListService: CountryListService,
     private translate: TranslateService,
     public modalCtrl: ModalController,
@@ -33,7 +33,7 @@ export class SignUpPage {
   ) {
 
     this.countries = this.countryListService.getCountryData();
-    this.signUpType = this.navParams.get('signUpType') || 'sponsorReferralCode';
+    this.signUpType = 'sponsorReferralCode';
     this.mainForm = new FormGroup({
       country: new FormControl(this.countryListService.getDefaultContry(), Validators.required),
       phone: new FormControl('', (control) => {
@@ -82,16 +82,6 @@ export class SignUpPage {
       this.mainForm.controls['sponsorReferralCode'].setErrors(null);
       this.subheadingButton = this.translate.instant('sign-up.signUpWithSponsorReferralCodeInstead');
     }
-
-  }
-
-  private normalizedPhone(): string {
-    let strippedPhone: string = (this.mainForm.value.phone || '').replace(/\D/g, '');
-    let extraPrefix: string = this.mainForm.value.country.mobileAreaCodePrefix || '';
-    if (extraPrefix && strippedPhone.startsWith(extraPrefix)) {
-      extraPrefix = '';
-    }
-    return this.mainForm.value.country.telephoneCountryCode + extraPrefix + strippedPhone;
   }
 
   submit() {
@@ -102,7 +92,7 @@ export class SignUpPage {
     let taskState: string;
     loadingModal.present().then(() => {
       return self.auth.requestSignUpCodeGeneration(
-        self.normalizedPhone(),
+        Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix),
         self.mainForm.value.password,
         self.signUpType === 'sponsorReferralCode' ? self.mainForm.value.sponsorReferralCode : null,
         self.signUpType === 'email' ? self.mainForm.value.email : null

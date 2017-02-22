@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { CountryListService } from '../../../services/country-list';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -8,6 +8,8 @@ import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { SignUpPage } from '../sign-up/sign-up';
 import { HomePage } from '../..//home/home';
+import { CustomValidator } from '../../../validators/custom';
+import { Utils } from '../../../services/utils';
 
 @Component({
   selector: 'page-sign-in',
@@ -16,45 +18,26 @@ import { HomePage } from '../..//home/home';
 export class SignInPage {
   countries: any[];
   mainForm: FormGroup;
-  password: string;
 
   constructor(
     public nav: NavController,
-    private navParams: NavParams,
     private countryListService: CountryListService,
     private translate: TranslateService,
     public modalCtrl: ModalController,
     public loadingController: LoadingController,
     public auth: AuthService,
     public toastService: ToastService,
-    public alertCtrl: AlertController,
-    public platform: Platform
+    public alertCtrl: AlertController
   ) {
     this.countries = this.countryListService.getCountryData();
     this.mainForm = new FormGroup({
       country: new FormControl(this.countryListService.getDefaultContry(), Validators.required),
       phone: new FormControl('', (control) => {
-        let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-        let phoneNumberObject;
-        try {
-          phoneNumberObject = phoneNumberUtil.parse(control.value, this.mainForm.value.country.countryCode);
-        } catch (e) { }
-        if (!phoneNumberObject || !phoneNumberUtil.isValidNumber(phoneNumberObject)) {
-          return { 'invalidPhone': true };
-        }
+        return Validators.required(control) || CustomValidator.validatePhoneNumber(this.mainForm.value.country.countryCode, control);
       }),
-      password: new FormControl('', [Validators.required])
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)])
     });
 
-  }
-
-  private normalizedPhone(): string {
-    let strippedPhone: string = (this.mainForm.value.phone || '').replace(/\D/g, '');
-    let extraPrefix: string = this.mainForm.value.country.mobileAreaCodePrefix || '';
-    if (extraPrefix && strippedPhone.startsWith(extraPrefix)) {
-      extraPrefix = '';
-    }
-    return this.mainForm.value.country.telephoneCountryCode + extraPrefix + strippedPhone;
   }
 
   submit() {
@@ -65,7 +48,7 @@ export class SignInPage {
     let taskState: string;
     loadingModal.present().then(() => {
       return self.auth.signIn(
-        self.normalizedPhone(),
+        Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix),
         self.mainForm.value.password
       );
     }).then((newTaskState: string) => {
@@ -116,31 +99,4 @@ export class SignInPage {
     modal.present();
   }
 
-  showSponsorReferralCodeExplanation() {
-    let alert = this.alertCtrl.create({
-      message: this.translate.instant('sign-up.sponsorReferralCodeExplanation'),
-      buttons: [{
-        text: this.translate.instant('ok'),
-        handler: () => {
-          alert.dismiss();
-        }
-      }
-      ]
-    });
-    alert.present();
-  }
-
-  showEmailExplanation() {
-    let alert = this.alertCtrl.create({
-      message: this.translate.instant('sign-up.emailExplanation'),
-      buttons: [{
-        text: this.translate.instant('ok'),
-        handler: () => {
-          alert.dismiss();
-        }
-      }
-      ]
-    });
-    alert.present();
-  }
 }
