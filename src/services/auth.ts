@@ -297,6 +297,10 @@ export class AuthService {
     return status;
   }
 
-
+  requestSignIn(phone: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      resolve('request_sign_in_canceled_because_user_disabled');
+    });
+  }
 
 }

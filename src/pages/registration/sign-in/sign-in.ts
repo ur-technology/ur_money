@@ -34,8 +34,7 @@ export class SignInPage {
       country: new FormControl(this.countryListService.getDefaultContry(), Validators.required),
       phone: new FormControl('', (control) => {
         return Validators.required(control) || CustomValidator.validatePhoneNumber(this.mainForm.value.country.countryCode, control);
-      }),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)])
+      })
     });
 
   }
@@ -47,9 +46,8 @@ export class SignInPage {
     });
     let taskState: string;
     loadingModal.present().then(() => {
-      return self.auth.signIn(
-        Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix),
-        self.mainForm.value.password
+      return self.auth.requestSignIn(
+        Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix)
       );
     }).then((newTaskState: string) => {
       taskState = newTaskState;
@@ -60,7 +58,7 @@ export class SignInPage {
           self.nav.setRoot(HomePage);
           break;
 
-        case 'sign_in_canceled_because_user_not_found':
+        case 'request_sign_in_canceled_because_user_not_found':
           let alert = this.alertCtrl.create({
             message: this.translate.instant('sign-in.userNotFound'),
             buttons: [
@@ -79,7 +77,7 @@ export class SignInPage {
           alert.present();
           break;
 
-        case 'sign_in_canceled_because_user_disabled':
+        case 'request_sign_in_canceled_because_user_disabled':
           self.toastService.showMessage({ messageKey: 'sign-in.userDisabled' });
           break;
 
