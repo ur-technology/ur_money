@@ -7,9 +7,9 @@ import { TermsAndConditionsPage } from '../../terms-and-conditions/terms-and-con
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { SignUpPage } from '../sign-up/sign-up';
-import { HomePage } from '../..//home/home';
 import { CustomValidator } from '../../../validators/custom';
 import { Utils } from '../../../services/utils';
+import { SignInPasswordPage } from '../sign-in-password/sign-in-password';
 
 @Component({
   selector: 'page-sign-in',
@@ -54,8 +54,8 @@ export class SignInPage {
       return loadingModal.dismiss();
     }).then(() => {
       switch (taskState) {
-        case 'sign_in_finished':
-          self.nav.setRoot(HomePage);
+        case 'request_sign_in_completed':
+          self.nav.push(SignInPasswordPage);
           break;
 
         case 'request_sign_in_canceled_because_user_not_found':

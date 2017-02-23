@@ -31,7 +31,8 @@
         "userNotFound": "El número y la contraseña que ingresó no coinciden con nuestros registros. Compruebe e intente nuevamente.",
         "gotoSignUp": "Registrarse?",
         "userDisabled": "Se ha deshabilitado tu cuenta de usuario.",
-        "unexpectedProblem": "Hubo un problema inesperado. Por favor, inténtelo de nuevo más tarde"
+        "unexpectedProblem": "Hubo un problema inesperado. Por favor, inténtelo de nuevo más tarde",
+        "lostPassword": "He perdido mi contraseña"
     },
     "sign-up": {
       "title": "Registro",

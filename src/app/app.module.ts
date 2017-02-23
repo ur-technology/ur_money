@@ -24,9 +24,10 @@ import { UsersPage } from '../pages/admin/users';
 import { UserPage } from '../pages/admin/user';
 import { ChangeSponsorModal } from '../pages/admin/change-sponsor';
 import { SettingsPage } from '../pages/settings/settings/settings';
-import {ChangePasswordPage} from '../pages/settings/change-password/change-password';
+import { ChangePasswordPage } from '../pages/settings/change-password/change-password';
+import { SignInPasswordPage } from '../pages/registration/sign-in-password/sign-in-password';
 import { SettingsAccountPage } from '../pages/settings/settings-account/settings-account';
-import {ChangeEmailPage} from '../pages/settings/change-email/change-email'
+import { ChangeEmailPage } from '../pages/settings/change-email/change-email'
 import { SettingsNotificationsPage } from '../pages/settings/settings-notifications/settings-notifications';
 import { TermsAndConditionsPage } from '../pages/terms-and-conditions/terms-and-conditions';
 import { TransactionsPage } from '../pages/transactions/transactions';
@@ -113,7 +114,8 @@ export function translateLoaderFactory(http: any) {
     Round,
     Timestamp,
     ChangePasswordPage,
-    ChangeEmailPage
+    ChangeEmailPage,
+    SignInPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -165,7 +167,8 @@ export function translateLoaderFactory(http: any) {
     TransactionsPage,
     SponsorWaitPage,
     ChangePasswordPage,
-    ChangeEmailPage
+    ChangeEmailPage,
+    SignInPasswordPage
   ],
   providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
