@@ -38,7 +38,9 @@
     "contactSupportMail": "mailto:support@ur.technology?Subject=Support%20lost%20password",
     "passwordRecoveryTitle": "Password recovery",
     "passwordRecoveryEmail": "Enter email to recover password",
-    "emailSent": "A recovery email has been sent to the address you provided. Please follow its instructions"
+    "emailSent": "A recovery email has been sent to the address you provided. Please follow its instructions",
+    "enterTempPass": "We have sent you a temporary password via SMS.",
+    "enterTempPassPlaceholder": "Enter the temporary password"
   },
   "sign-up": {
     "title": "Sign up",

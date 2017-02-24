@@ -10,6 +10,7 @@ import { SignUpPage } from '../sign-up/sign-up';
 import { CustomValidator } from '../../../validators/custom';
 import { Utils } from '../../../services/utils';
 import { SignInPasswordPage } from '../sign-in-password/sign-in-password';
+import { SignInTemporaryPasswordPage} from '../sign-in-temporary-password/sign-in-temporary-password';
 
 @Component({
   selector: 'page-sign-in',
@@ -57,6 +58,10 @@ export class SignInPage {
       switch (taskState) {
         case 'request_sign_in_completed':
           self.nav.push(SignInPasswordPage, { phone: phone });
+          break;
+
+        case 'request_sign_in_canceled_because_reset_password':
+          self.nav.push(SignInTemporaryPasswordPage, { phone: phone });
           break;
 
         case 'request_sign_in_canceled_because_user_not_found':
