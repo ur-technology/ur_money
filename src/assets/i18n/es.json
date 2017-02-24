@@ -40,7 +40,8 @@
         "passwordRecoveryEmail": "Introduce tu correo electrónico para recuperar la contraseña",
         "emailSent": "Se ha enviado un correo electrónico de recuperación a la dirección que proporcionaste. Por favor, sigue las instrucciones",
         "enterTempPass": "Te hemos enviado una contraseña temporal a través de SMS.",
-        "enterTempPassPlaceholder": "Ingresa la contraseña temporal"
+        "enterTempPassPlaceholder": "Ingresa la contraseña temporal",
+        "resetPassword": "Por favor, cambia tu contraseña"
     },
     "sign-up": {
       "title": "Registro",

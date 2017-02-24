@@ -27,6 +27,7 @@ import { SettingsPage } from '../pages/settings/settings/settings';
 import { ChangePasswordPage } from '../pages/settings/change-password/change-password';
 import { LostPasswordPage } from '../pages/registration/lost-password/lost-password';
 import { SignInTemporaryPasswordPage } from '../pages/registration/sign-in-temporary-password/sign-in-temporary-password';
+import { ResetPasswordPage } from '../pages/registration/reset-password/reset-password';
 import { SignInPasswordPage } from '../pages/registration/sign-in-password/sign-in-password';
 import { SettingsAccountPage } from '../pages/settings/settings-account/settings-account';
 import { ChangeEmailPage } from '../pages/settings/change-email/change-email'
@@ -119,7 +120,8 @@ export function translateLoaderFactory(http: any) {
     ChangeEmailPage,
     SignInPasswordPage,
     LostPasswordPage,
-    SignInTemporaryPasswordPage
+    SignInTemporaryPasswordPage,
+    ResetPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -174,7 +176,8 @@ export function translateLoaderFactory(http: any) {
     ChangeEmailPage,
     SignInPasswordPage,
     LostPasswordPage,
-    SignInTemporaryPasswordPage
+    SignInTemporaryPasswordPage,
+    ResetPasswordPage
   ],
   providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

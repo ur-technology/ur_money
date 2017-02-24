@@ -40,7 +40,8 @@
     "passwordRecoveryEmail": "Enter email to recover password",
     "emailSent": "A recovery email has been sent to the address you provided. Please follow its instructions",
     "enterTempPass": "We have sent you a temporary password via SMS.",
-    "enterTempPassPlaceholder": "Enter the temporary password"
+    "enterTempPassPlaceholder": "Enter the temporary password",
+    "resetPassword": "Please reset your password"
   },
   "sign-up": {
     "title": "Sign up",

@@ -5,7 +5,7 @@ import { LostPasswordPage } from '../lost-password/lost-password';
 import { AuthService } from '../../../services/auth';
 import { ToastService} from '../../../services/toast';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { HomePage } from '../../home/home';
+import { ResetPasswordPage } from '../reset-password/reset-password';
 
 @Component({
   selector: 'page-sign-in-temporary-password',
@@ -33,7 +33,7 @@ export class SignInTemporaryPasswordPage {
     }).then(() => {
       switch (task) {
         case 'sign_in_finished':
-          self.navCtrl.setRoot(HomePage);
+          self.navCtrl.setRoot(ResetPasswordPage);
           break;
         case 'sign_in_canceled_because_password_incorrect':
           self.toastService.showMessage({ messageKey: 'sign-in.credentialsIncorrect' });
