@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { LostPasswordPage } from '../lost-password/lost-password';
 
 @Component({
   selector: 'page-sign-in-password',
@@ -18,6 +19,6 @@ export class SignInPasswordPage {
   }
 
   lostPassword() {
-
+    this.navCtrl.push(LostPasswordPage);
   }
 }

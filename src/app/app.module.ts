@@ -25,6 +25,7 @@ import { UserPage } from '../pages/admin/user';
 import { ChangeSponsorModal } from '../pages/admin/change-sponsor';
 import { SettingsPage } from '../pages/settings/settings/settings';
 import { ChangePasswordPage } from '../pages/settings/change-password/change-password';
+import { LostPasswordPage } from '../pages/registration/lost-password/lost-password';
 import { SignInPasswordPage } from '../pages/registration/sign-in-password/sign-in-password';
 import { SettingsAccountPage } from '../pages/settings/settings-account/settings-account';
 import { ChangeEmailPage } from '../pages/settings/change-email/change-email'
@@ -115,7 +116,8 @@ export function translateLoaderFactory(http: any) {
     Timestamp,
     ChangePasswordPage,
     ChangeEmailPage,
-    SignInPasswordPage
+    SignInPasswordPage,
+    LostPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -168,7 +170,8 @@ export function translateLoaderFactory(http: any) {
     SponsorWaitPage,
     ChangePasswordPage,
     ChangeEmailPage,
-    SignInPasswordPage
+    SignInPasswordPage,
+    LostPasswordPage
   ],
   providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

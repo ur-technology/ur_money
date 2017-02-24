@@ -32,7 +32,13 @@
         "gotoSignUp": "Registrarse?",
         "userDisabled": "Se ha deshabilitado tu cuenta de usuario.",
         "unexpectedProblem": "Hubo un problema inesperado. Por favor, inténtelo de nuevo más tarde",
-        "lostPassword": "He perdido mi contraseña"
+        "lostPassword": "He perdido mi contraseña",
+        "contactSupport": "Contactar soporte",
+        "passwordRecovery": "Te enviaremos una contraseña temporal",
+        "contactSupportMail": "mailto:support@ur.technology?Subject=Soporte%20contraseña%20olvidada",
+        "passwordRecoveryTitle": "Recuperación de contraseña",
+        "passwordRecoveryEmail": "Introduce tu correo electrónico para recuperar la contraseña",
+        "emailSent": "A recovery email has been sent to the address you provided. Please follow its instructions"
     },
     "sign-up": {
       "title": "Registro",

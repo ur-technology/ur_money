@@ -299,7 +299,13 @@ export class AuthService {
 
   requestSignIn(phone: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      resolve('request_sign_in_canceled_because_user_disabled');
+      resolve('request_sign_in_completed');
+    });
+  }
+
+  sendRecoveryEmail(email: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      resolve('email-sent')
     });
   }
 
