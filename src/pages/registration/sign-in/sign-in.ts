@@ -41,13 +41,14 @@ export class SignInPage {
 
   submit() {
     let self = this;
+    let phone = Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix);
     let loadingModal = self.loadingController.create({
       content: self.translate.instant('pleaseWait'),
     });
     let taskState: string;
     loadingModal.present().then(() => {
       return self.auth.requestSignIn(
-        Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix)
+        phone
       );
     }).then((newTaskState: string) => {
       taskState = newTaskState;
@@ -55,7 +56,7 @@ export class SignInPage {
     }).then(() => {
       switch (taskState) {
         case 'request_sign_in_completed':
-          self.nav.push(SignInPasswordPage);
+          self.nav.push(SignInPasswordPage, { phone: phone });
           break;
 
         case 'request_sign_in_canceled_because_user_not_found':

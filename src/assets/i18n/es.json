@@ -24,7 +24,6 @@
         "phoneCorrect": "Es el número de teléfono indicado anteriormente correcto?",
         "errorUserDisabled": "Tu cuenta ha sido deshabilitada.",
         "errorExcessiveLogins": "Tu cuenta se ha bloqueado debido a excesivos intentos fallidos de inicio de sesión.",
-        "unexpectedProblem": "Hubo un problema inesperado al enviar el SMS. Por favor, inténtalo más tarde",
         "noInviteFoundTitle": "Invitación no encontrada",
         "noInviteFoundMessage": "<p>No hemos podido encontrar una invitación asociada con tu número de teléfono. Si te has inscrito en el programa Beta de UR Money, haz clic en el botón 'Estoy en el programa UR Money Beta'.</p>",
         "betaProgramButton": "Estoy en el programa UR Money Beta",
@@ -38,7 +37,7 @@
         "contactSupportMail": "mailto:support@ur.technology?Subject=Soporte%20contraseña%20olvidada",
         "passwordRecoveryTitle": "Recuperación de contraseña",
         "passwordRecoveryEmail": "Introduce tu correo electrónico para recuperar la contraseña",
-        "emailSent": "A recovery email has been sent to the address you provided. Please follow its instructions"
+        "emailSent": "Se ha enviado un correo electrónico de recuperación a la dirección que proporcionaste. Por favor, sigue las instrucciones"
     },
     "sign-up": {
       "title": "Registro",

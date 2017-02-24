@@ -24,11 +24,11 @@
     "phoneCorrect": "Is your phone number above correct?",
     "errorUserDisabled": "Your user account has been disabled.",
     "errorExcessiveLogins": "Your user account has been locked due to excessive failed login attempts.",
-    "unexpectedProblem": "There was an unexpected problem sending the SMS. Please try again later",
     "noInviteFoundTitle": "Invitation not found",
     "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
     "betaProgramButton": "I'm in the UR Money Beta Program",
-    "userNotFound": "The number and password that you entered did not match our records. Please double-check and try again.",
+    "userNotFound": "The number that you entered did not match our records. Please double-check and try again.",
+    "credentialsIncorrect": "The number and password that you entered did not match our records. Please double-check and try again.",
     "gotoSignUp": "Sign up instead?",
     "userDisabled": "Your user account has been disabled.",
     "unexpectedProblem": "There was an unexpected problem. Please try again later",
@@ -38,7 +38,7 @@
     "contactSupportMail": "mailto:support@ur.technology?Subject=Support%20lost%20password",
     "passwordRecoveryTitle": "Password recovery",
     "passwordRecoveryEmail": "Enter email to recover password",
-    "emailSent": "Se ha enviado un correo electrónico de recuperación a la dirección que proporcionaste. Por favor, sigue las instrucciones"
+    "emailSent": "A recovery email has been sent to the address you provided. Please follow its instructions"
   },
   "sign-up": {
     "title": "Sign up",
