@@ -36,17 +36,20 @@ export class AcuantService {
       let taskRef;
 
       frontImageRef.put(front)
-        .then(
-        (frontSnapshot: any) => {
+
+        // Front image upload success
+        .then((frontSnapshot: any) => {
           return backImageRef.put(back);
         },
+        // Front image upload failed
         (error) => {
           log.Warn(error);
           reject('Failed to upload image');
         })
-        .then(
 
-        (backSnapshot: any) => {
+        // Back image upload succeeded	
+        .then((backSnapshot: any) => {
+
           taskRef = firebase.database().ref('/verifyIDQueue/tasks').push({
             id: this.auth.currentUserId,
             type: "national",
@@ -54,9 +57,15 @@ export class AcuantService {
           });
 
           return taskRef;
+        },
+        // Back image upload failed
+        (error) => {
+          log.Warn(error);
+          reject('Failed to upload image');
         })
-        .then(
-        (result) => {
+
+        // Verify ID queue success
+        .then((result) => {
 
           let resultRef = taskRef.child('result');
 
@@ -77,98 +86,99 @@ export class AcuantService {
             }
           });
         },
+        // Verify ID queue failed
         (error) => {
           reject(error);
         })
     })
-    /*
-          let imageToProcess = new FormData();
-          imageToProcess.append("frontImage", front)
-          imageToProcess.append("backImage", back)
-    
-          // FIXME! Move to config
-          let authinfo = $.base64.encode("EE92924A123D");
-    
-          let params: any[] = [
-            this.regionSet(countryCode), // REGIONSET
-            true, // AUTODETECTSTATE
-            -1, // PROCSTATE
-            true, // GETFACEIMAGE
-            true, // GETSIGNIMAGE
-            true, // REFORMATIMAGE
-            0, // REFORMATIMAGECOLOR
-            150, // REFORMATIMAGEDPI
-            105, // IMAGESOURCE
-            true // USEPREPROCESSING
-          ];
-    
-          let paramString = _.join(_.map(params, _.toString), '/');
-          $.ajax({
-            type: "POST",
-            url: `https://cssnwebservices.com/CSSNService/CardProcessor/ProcessDLDuplex/${paramString}`,
-            data: imageToProcess,
-            cache: false,
-            contentType: 'application/octet-stream; charset=utf-8;',
-            dataType: "json",
-            processData: false,
-            beforeSend: (xhr) => {
-              xhr.setRequestHeader("Authorization", "LicenseKey " + authinfo);
-            },
-            success: (idCardData: any) => {
-              let error: string = (idCardData.ResponseCodeAuthorization < 0 && idCardData.ResponseCodeAuthorization) ||
-                (idCardData.ResponseCodeAutoDetectState < 0 && idCardData.ResponseCodeAutoDetectState) ||
-                (idCardData.ResponseCodeProcState < 0 && idCardData.ResponseCodeProcState) ||
-                (idCardData.WebResponseCode < 1 && idCardData.WebResponseCode);
-              if (error) {
-                reject(`error processing id: ${error}`);
-              } else {
-                resolve(idCardData);
-              }
-            },
-            error: (xhr: any, error: any) => {
-              reject(`error submitting id: ${_.toString(error)}`);
-            },
-          });
-        });
-    
-        */
   }
 
-  matchSelfie(idCardFinalImage: Blob, selfieSource: Blob): Promise<any> {
+  matchSelfie(selfieSource: Blob): Promise<any> {
+
+    let taskRef: any;
+    let imageRef = this.userIDPhotoRef('selfie.jpg');
+
     return new Promise((resolve, reject) => {
 
-      let imageToProcess = new FormData();
-      imageToProcess.append("photo1", idCardFinalImage);
-      imageToProcess.append("photo2", selfieSource);
+      imageRef.put(selfieSource)
 
-      // Fixme! get from config
-      let authinfo = $.base64.encode("EE92924A123D");
+        // Image upload success
+        .then((snapshot: any) => {
 
-      $.ajax({
-        type: "POST",
-        url: "https://cssnwebservices.com/CSSNService/CardProcessor/FacialMatch",
-        data: imageToProcess,
-        cache: false,
-        contentType: 'application/octet-stream; charset=utf-8;',
-        dataType: "json",
-        processData: false,
-        beforeSend: (xhr) => {
-          xhr.setRequestHeader("Authorization", "LicenseKey " + authinfo);
+          taskRef = firebase.database().ref('/verifySelfieQueue/tasks').push({
+            id: this.auth.currentUserId,
+          });
+
+          return taskRef;
         },
-        success: (facialMatchData) => {
+        // Image upload failed
+        (error) => {
+          log.Warn(error);
+          reject('Failed to upload image');
+        })
 
-          let error: string = (facialMatchData.ResponseCodeAuthorization < 0 && facialMatchData.ResponseCodeAuthorization) ||
-            (facialMatchData.WebResponseCode < 1 && facialMatchData.WebResponseCode);
-          if (error) {
-            reject(`error matching selfie: ${error}`);
-          } else {
-            resolve(facialMatchData);
-          }
+        // Verify selfie queue success
+        .then((result: any) => {
+
+          let resultRef = taskRef.child('result');
+
+          resultRef.on("value", (snapshot) => {
+
+            let val = snapshot.val();
+
+            if (!val) {
+              return;
+            }
+
+            taskRef.remove();
+
+            if (val.state === 'selfie_verification_success') {
+              resolve();
+            } else {
+              log.info(val.error);
+              reject(val.error)
+            }
+          });
         },
-        error: (xhr, error) => {
-          reject(`error submitting id: ${_.toString(error)}`);
+        // Verify selfie queue failure
+        (error) => {
+          reject(error);
+        })
+
+      /*
+    let imageToProcess = new FormData();
+    imageToProcess.append("photo1", idCardFinalImage);
+    imageToProcess.append("photo2", selfieSource);
+
+    // Fixme! get from config
+    let authinfo = $.base64.encode("EE92924A123D");
+
+    $.ajax({
+      type: "POST",
+      url: "https://cssnwebservices.com/CSSNService/CardProcessor/FacialMatch",
+      data: imageToProcess,
+      cache: false,
+      contentType: 'application/octet-stream; charset=utf-8;',
+      dataType: "json",
+      processData: false,
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("Authorization", "LicenseKey " + authinfo);
+      },
+      success: (facialMatchData) => {
+
+        let error: string = (facialMatchData.ResponseCodeAuthorization < 0 && facialMatchData.ResponseCodeAuthorization) ||
+          (facialMatchData.WebResponseCode < 1 && facialMatchData.WebResponseCode);
+        if (error) {
+          reject(`error matching selfie: ${error}`);
+        } else {
+          resolve(facialMatchData);
         }
-      });
+      },
+      error: (xhr, error) => {
+        reject(`error submitting id: ${_.toString(error)}`);
+      }
+    });
+    */
     });
   }
 

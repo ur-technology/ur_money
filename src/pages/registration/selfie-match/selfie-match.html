@@ -11,7 +11,6 @@
       </ion-card-header>
       <ion-card-content>
 
-          <ion-img [src]="idCardFinalImage"></ion-img>
         <div>
           <ion-img class="preview-image" [src]="selfieSource" [alt]="" (click)="selectFile($event)"></ion-img>
           <input id="selfie" type="file" capture="camera" accept="image/*" (change)="fileChanged($event, null)" />

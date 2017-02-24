@@ -7,7 +7,6 @@ import { ProfileSetupPage } from '../profile-setup/profile-setup';
 import { AcuantService } from '../../../services/acuant';
 import { IDVerifier } from '../../../interfaces/id-verifier';
 import * as firebase from 'firebase';
-import * as _ from 'lodash';
 import * as log from 'loglevel';
 
 declare var $;
@@ -37,10 +36,6 @@ export class SelfieMatchPage {
 
     this.idVerifier = acuantService;
     this.mainForm = new FormGroup({});
-    this.idCardFaceImage = this.navParams.get('idCardFaceImage');
-
-    let byteArray: string = (<any>window).goog.crypt.base64.encodeByteArray(this.idCardFaceImage);
-    this.idCardFinalImage = `data:image/jpg;base64,${byteArray}`;
   }
 
   selectFile(event) {
@@ -74,23 +69,15 @@ export class SelfieMatchPage {
 
     currentUserRef.update({ selfieSource: this.selfieSource }).then(() => {
       return this.idVerifier.matchSelfie(
-        this.dataURLtoBlob(this.idCardFinalImage),
         this.dataURLtoBlob(this.selfieSource),
       )
     })
-      .then((facialMatchData) => {
-
-        this.facialMatchData = facialMatchData
-
-        loadingModal.dismiss().then(() => {
-          return currentUserRef.update({ facialMatchData: this.facialMatchData });
-        });
-      })
       .then(() => {
-        this.nav.push(ProfileSetupPage);
+        loadingModal.dismiss().then(() => {
+          this.nav.push(ProfileSetupPage);
+        });
       },
       (error) => {
-        log.warn(error);
         loadingModal.dismiss().then(() => {
           this.toastCtrl.create({
             message: 'There was an error matching your selfie.',

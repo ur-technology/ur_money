@@ -16,7 +16,7 @@ import { UsersPage } from '../pages/admin/users';
 import { SettingsPage } from '../pages/settings/settings';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
-//import {SelfieMatchPage} from '../pages/registration/selfie-match/selfie-match';
+import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -69,7 +69,12 @@ export class UrMoney {
         if (status === 'unauthenticated') {
           this.nav.setRoot(WelcomePage);
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
-          this.nav.setRoot(IdScanPage);
+
+          if (this.auth.currentUser.idUploaded) {
+            this.nav.setRoot(SelfieMatchPage);
+          } else {
+            this.nav.setRoot(IdScanPage);
+          }
         } else {
           this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
           this.nav.setRoot(HomePage);

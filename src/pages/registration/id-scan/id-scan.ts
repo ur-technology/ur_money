@@ -7,7 +7,6 @@ import { CustomValidator } from '../../../validators/custom';
 import { SelfieMatchPage } from '../selfie-match/selfie-match';
 import { AcuantService } from '../../../services/acuant';
 import { IDVerifier } from '../../../interfaces/id-verifier';
-import * as firebase from 'firebase';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -124,12 +123,8 @@ export class IdScanPage {
         this.idCardData = idCardData;
 
         loadingModal.dismiss().then(() => {
-          let currentUserRef = firebase.database().ref(`/users/${this.auth.currentUserId}`);
-          return currentUserRef.update({ idCardData: _.omitBy(this.idCardData, _.isArray) });
+          this.nav.push(SelfieMatchPage);
         });
-      })
-      .then((idCardData: any) => {
-        this.nav.push(SelfieMatchPage);
       },
       (error) => {
         log.warn(error);

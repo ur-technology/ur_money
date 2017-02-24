@@ -60,6 +60,23 @@
             }
         },
 
+        "verifySelfieQueue": {
+            "tasks": {
+                ".indexOn": "_state",
+                "$task": {
+                    ".write": true,
+                    "_state": {
+                        // allow reading state of a particular record
+                        ".read": true
+                    },
+                    "result": {
+                        // allow reading result of a particular record
+                        ".read": true
+                    }
+                }
+            }
+        },
+
         "phoneLookupQueue": {
             "tasks": {
                 ".indexOn": "_state",
@@ -150,7 +167,7 @@
         },
 
         "users": {
-            ".indexOn": ["phone", "wallet/address", "email", "referralCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions"],
+            ".indexOn": ["phone", "wallet/address", "email", "referralCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions", "idHash"],
             // allow read or write only if the authenticated user is accessing his own user record
             ".read": "root.child('users').child(auth.uid).child('admin').val() == true",
             "$uid": {
