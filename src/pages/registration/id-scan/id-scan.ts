@@ -12,6 +12,8 @@ import * as log from 'loglevel';
 
 declare var $;
 
+const NATIONAL_ID = 'national-id';
+
 @Component({
   selector: 'id-scan-page',
   templateUrl: 'id-scan.html',
@@ -27,6 +29,8 @@ export class IdScanPage {
   faceMatchDataString: string;
   countries: any[];
   countryCode: string;
+  idTypes: any[];
+  idType: string;
   idVerifier: IDVerifier;
 
   constructor(
@@ -55,6 +59,7 @@ export class IdScanPage {
 
   ionViewDidLoad() {
     this.fillCountriesArray();
+    this.fillIdTypesArray();
   }
 
   private fillCountriesArray() {
@@ -64,6 +69,16 @@ export class IdScanPage {
     this.countryCode = this.countryCodeAssociatedWithPhone();
     let country = _.find(this.countries, { alpha2: this.countryCode });
     (<FormControl>this.mainForm.controls['countryCode']).setValue(country);
+  }
+
+  private fillIdTypesArray() {
+
+    this.idTypes = [
+      { id: NATIONAL_ID, name: this.translate.instant('id-scan.nationalId') },
+    ];
+
+    this.idType = NATIONAL_ID;
+    (<FormControl>this.mainForm.controls['idType']).setValue(this.idType);
   }
 
   private countryCodeAssociatedWithPhone() {
@@ -83,7 +98,7 @@ export class IdScanPage {
   }
 
   selectFile(event) {
-    let input = $(event.target).parents("div").children("input[type='file']");
+    let input = $(event.target).children("input[type='file']");
     input.trigger('click');
   }
 
@@ -104,8 +119,13 @@ export class IdScanPage {
     });
   }
 
-  idCardUploaded() {
-    return $("#id-card-front").val() !== '' && $("#id-card-back").val() !== '';
+  idCardUploaded(): boolean {
+
+    if (this.idType == NATIONAL_ID) {
+      return $("#id-card-front").val() !== '' && $("#id-card-back").val() !== '';
+    }
+
+    return false;
   }
 
   submit() {
@@ -113,11 +133,7 @@ export class IdScanPage {
     let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
     loadingModal.present();
 
-    this.idVerifier.extractDataFromNationalID(
-      this.countryCode,
-      this.dataURLtoBlob(this.idCardFrontSource),
-      this.dataURLtoBlob(this.idCardBackSource),
-    )
+    this.verifyID()
       .then((idCardData: any) => {
 
         this.idCardData = idCardData;
@@ -130,12 +146,27 @@ export class IdScanPage {
         log.warn(error);
         loadingModal.dismiss().then(() => {
           this.toastCtrl.create({
-            message: 'Your ID hasn\'t been recognised. Please try again.', // FIXME! Translate
+            message: this.translate.instant('id-scan.idNotRecognised'),
             duration: 6000,
             position: 'bottom'
           }).present();
         });
       });
+  }
+
+  private verifyID(): Promise<any> {
+
+    if (this.idType == NATIONAL_ID) {
+      return this.idVerifier.extractDataFromNationalID(
+        this.countryCode,
+        this.dataURLtoBlob(this.idCardFrontSource),
+        this.dataURLtoBlob(this.idCardBackSource),
+      );
+    }
+
+    return new Promise((resolve, reject) => {
+      reject('unknown ID type');
+    });
   }
 
   private dataURLtoBlob(dataURL: string): Blob {

@@ -105,24 +105,26 @@
   },
   "id-scan": {
     "title": "Setting Up Account",
-    "firstName": "First Name",
-    "middleName": "Middle Name (optional)",
-    "lastName": "Last Name",
-    "name": "Name as it will appear to others",
-    "email": "Email",
     "country": "Country",
+	"idType": "Type of ID",
+	"nationalIdInstructions":"Please take a picture of the front and the back of your driver's license or national ID. Your ID should take up as much of the photo as possible without going off the edges.",
+	"scanFrontOfId":"Tap to capture the front",
+	"scanBackOfId":"Tap to capture the back",
+	"nationalId":"Driver's license or national ID card",
+	"idNotRecognised": "Your ID can't be recognised, or has been used before. Please try again.",
     "city": "City",
     "state": "State or province",
-    "placeholderFirstName": "Enter first name",
-    "placeholderMiddleName": "Enter middle name (optional)",
-    "placeholderLastName": "Enter last name",
-    "placeholderFullName": "Enter how you want to be called",
-    "placeholderEmail": "Enter email",
     "slideTitle": "Step 1 of 4 - Scan Your Id"
   },
   "selfie-match": {
     "title": "Setting Up Account",
-    "slideTitle": "Step 2 of 4 - Take a Selfie"
+    "slideTitle": "Step 2 of 4 - Take a Selfie",
+	"scan": "Tap to take a selfie",
+	"instructions": "We need a picture of your face to verify your ID. Try to take a photo where your face fills as much of the image as possible, without going over the edges.",
+	"cantMatchTitle": "Couldn't match your selfie to your ID",
+	"cantMatchMessage": "We couldn't automatically verify your ID. You can try again, or let a human verify you manually.",
+	"tryAgain": "Try again",
+	"letAHumanDoIt": "Let a human do it"
   },
   "wallet-setup": {
     "title": "Setting Up Account",

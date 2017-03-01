@@ -1,4 +1,4 @@
-import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -32,6 +32,7 @@ export class SelfieMatchPage {
     public auth: AuthService,
     private toastCtrl: ToastController,
     private acuantService: AcuantService,
+    public alertCtrl: AlertController,
   ) {
 
     this.idVerifier = acuantService;
@@ -39,7 +40,7 @@ export class SelfieMatchPage {
   }
 
   selectFile(event) {
-    let input = $(event.target).parents("div").children("input[type='file']");
+    let input = $(event.target).children("input[type='file']");
     input.trigger('click');
   }
 
@@ -79,11 +80,25 @@ export class SelfieMatchPage {
       },
       (error) => {
         loadingModal.dismiss().then(() => {
-          this.toastCtrl.create({
-            message: 'There was an error matching your selfie.',
-            duration: 6000,
-            position: 'bottom'
-          }).present();
+
+          let confirm = this.alertCtrl.create({
+            title: this.translate.instant('selfie-match.cantMatchTitle'),
+            message: this.translate.instant('selfie-match.cantMatchMessage'),
+            buttons: [
+              {
+                text: this.translate.instant('selfie-match.tryAgain'),
+                handler: () => {
+                }
+              },
+              {
+                text: this.translate.instant('selfie-match.letAHumanDoIt'),
+                handler: () => {
+                  // FIXME
+                }
+              }
+            ]
+          });
+          confirm.present();
         });
       });
   }
