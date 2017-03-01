@@ -26,19 +26,19 @@ export class SignInTemporaryPasswordPage {
     let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
 
     loadingModal.present().then(() => {
-      return self.auth.signIn(self.phone, self.mainForm.value.password)
+      return self.auth.requestCheckTempPassword(self.phone, self.mainForm.value.password)
     }).then((newTask: string) => {
       task = newTask;
       return loadingModal.dismiss();
     }).then(() => {
       switch (task) {
-        case 'sign_in_finished':
-          self.navCtrl.setRoot(ResetPasswordPage);
+        case 'request_check_temp_password_succeded':
+          self.navCtrl.setRoot(ResetPasswordPage, {phone: self.phone});
           break;
-        case 'sign_in_canceled_because_password_incorrect':
+        case 'request_check_temp_password_canceled_because_wrong_password':
           self.toastService.showMessage({ messageKey: 'sign-in.credentialsIncorrect' });
           break;
-        case 'request_sign_in_canceled_because_user_disabled':
+        case 'request_check_temp_password_canceled_because_user_not_found':
           self.toastService.showMessage({ messageKey: 'sign-in.userDisabled' });
           break;
         default:

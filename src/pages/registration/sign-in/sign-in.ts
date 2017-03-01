@@ -56,11 +56,11 @@ export class SignInPage {
       return loadingModal.dismiss();
     }).then(() => {
       switch (taskState) {
-        case 'request_sign_in_completed':
+        case 'request_sign_in_succeded':
           self.nav.push(SignInPasswordPage, { phone: phone });
           break;
 
-        case 'request_sign_in_canceled_because_reset_password':
+        case 'request_sign_in_canceled_because_user_does_not_have_password_set':
           self.nav.push(SignInTemporaryPasswordPage, { phone: phone });
           break;
 

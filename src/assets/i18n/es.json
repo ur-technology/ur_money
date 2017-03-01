@@ -39,9 +39,10 @@
         "passwordRecoveryTitle": "Recuperación de contraseña",
         "passwordRecoveryEmail": "Introduce tu correo electrónico para recuperar la contraseña",
         "emailSent": "Se ha enviado un correo electrónico de recuperación a la dirección que proporcionaste. Por favor, sigue las instrucciones",
-        "enterTempPass": "Te hemos enviado una contraseña temporal a través de SMS.",
+        "enterTempPass": "<b>¡Bienvenido!</b> Hemos mejorado nuestro sistema de seguridad. <br/>Debido a que no tenías una contraseña antes, te hemos enviado una contraseña temporal a través de SMS.<br/> Ingresa la contraseña para continuar.",
         "enterTempPassPlaceholder": "Ingresa la contraseña temporal",
-        "resetPassword": "Por favor, cambia tu contraseña"
+        "resetPassword": "<b>¡Estupendo!</b> Ahora elige una nueva contraseña. <br/>Esta será tu contraseña para iniciar sesión de ahora en adelante.",
+        "passwordChanged": "Tu contraseña ha sido cambiada. Para tu seguridad inicia sesión con tu nueva contraseña."
     },
     "sign-up": {
       "title": "Registro",

@@ -185,16 +185,12 @@ export class AuthService {
   }
 
   signIn(phone: string, password: string) {
-    let self = this;
     return new Promise((resolve, reject) => {
       let taskRef;
-      self.generateHashedPassword(password).then((clientHashedPassword: string) => {
         taskRef = firebase.database().ref('/signInQueue/tasks').push({
           phone: phone,
-          clientHashedPassword: clientHashedPassword
+          clientHashedPassword: password
         });
-        return taskRef;
-      }).then(() => {
         let resultRef = taskRef.child('result');
         resultRef.on('value', (snapshot) => {
           let result = snapshot.val();
@@ -226,7 +222,6 @@ export class AuthService {
           reject(error);
         });
       });
-    });
   }
 
   checkSignUpCodeMatching(submittedAuthenticationCode: string): Promise<boolean> {
@@ -297,11 +292,82 @@ export class AuthService {
     return status;
   }
 
-  requestSignIn(phone: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      resolve('request_sign_in_canceled_because_reset_password');
-    });
-  }
+  requestCheckTempPassword(phone: string, tempPassword: string): Promise<any> {
+      return new Promise((resolve, reject) => {
+        let taskRef;
+        taskRef = firebase.database().ref(`/signInQueue/tasks`)
+          .push({ phone: phone, clientHashedPassword: tempPassword, _state: 'sign_in_password_check_request' });
+
+        taskRef.then(() => {
+          taskRef.on('value', (snapshot) => {
+            let taskResult = snapshot.val();
+            if (taskResult.result) {
+              taskRef.off('value');
+              taskRef.remove();
+              resolve(taskResult.result.state)
+            }
+            if (taskResult._error_details) {
+              reject(taskResult._error_details.error);
+              return;
+            }
+          });
+        }, (error) => {
+          reject(error);
+        });
+      });
+    }
+
+    requestChangeTempPassword(phone: string, tempPassword: string): Promise<any> {
+      return new Promise((resolve, reject) => {
+        let taskRef;
+        taskRef = firebase.database().ref(`/signInQueue/tasks`)
+          .push({ phone: phone, clientHashedPassword: tempPassword, _state: 'sign_in_password_change_request' });
+
+        taskRef.then(() => {
+          taskRef.on('value', (snapshot) => {
+            let taskResult = snapshot.val();
+            if (taskResult.result) {
+              taskRef.off('value');
+              taskRef.remove();
+              resolve(taskResult.result.state)
+            }
+            if (taskResult._error_details) {
+              reject(taskResult._error_details.error);
+              return;
+            }
+          });
+        }, (error) => {
+          reject(error);
+        });
+      });
+    }
+
+    requestSignIn(phone: string): Promise<any> {
+      return new Promise((resolve, reject) => {
+        let taskRef;
+        taskRef = firebase.database().ref(`/signInQueue/tasks`)
+          .push({ phone: phone, _state: 'sign_in_requested' });
+
+        taskRef.then(() => {
+          taskRef.on('value', (snapshot) => {
+            let taskResult = snapshot.val();
+            if (taskResult.result) {
+              taskRef.off('value');
+              taskRef.remove();
+              resolve(taskResult.result.state)
+            }
+            if (taskResult._error_details) {
+              reject(taskResult._error_details.error);
+              return;
+            }
+          });
+
+        }, (error) => {
+          reject(error);
+        });
+
+      });
+    }
 
   sendRecoveryEmail(email: string): Promise<any> {
     return new Promise((resolve, reject) => {

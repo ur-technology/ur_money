@@ -33,7 +33,7 @@ export class SignInPasswordPage {
     }).then(() => {
       switch (task) {
         case 'sign_in_finished':
-          self.navCtrl.setRoot(HomePage);
+          // Auth service will redirect to the right page after login
           break;
         case 'sign_in_canceled_because_password_incorrect':
           self.toastService.showMessage({ messageKey: 'sign-in.credentialsIncorrect' });
