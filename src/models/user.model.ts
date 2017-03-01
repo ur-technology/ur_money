@@ -24,6 +24,7 @@ export class UserModel extends FirebaseModel {
   settings: any;
   invitesDisabled: boolean;
   idUploaded: boolean;
+  selfieMatched: boolean;
 
   static fullName(user: any) {
     return _.trim(`${user.firstName || ''} ${user.middleName || ''} ${user.lastName || ''}`).replace(/  /, ' ');
@@ -31,7 +32,7 @@ export class UserModel extends FirebaseModel {
 
   static getUserModelOnlyWithSimpleFields(key: string): Promise<UserModel> {
     return new Promise((successCallback, rejectCallback) => {
-      super.getObjectWithSpecificFields(`${UserModel._containerPath}/${key}`, ['admin', 'address', 'city', 'countryCode', 'downlineLevel', 'email', 'firstName', 'lastName', 'middleName', 'name', 'phone', 'profilePhotoUrl', 'referralCode', 'wallet', 'registration', 'disabled', 'settings', 'idUploaded']).then(resultObject => {
+      super.getObjectWithSpecificFields(`${UserModel._containerPath}/${key}`, ['admin', 'address', 'city', 'countryCode', 'downlineLevel', 'email', 'firstName', 'lastName', 'middleName', 'name', 'phone', 'profilePhotoUrl', 'referralCode', 'wallet', 'registration', 'disabled', 'settings', 'idUploaded', 'selfieMatched']).then(resultObject => {
         let result = new UserModel();
         result.key = key;
         result.fillFields(resultObject);

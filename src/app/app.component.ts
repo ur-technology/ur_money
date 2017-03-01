@@ -70,7 +70,9 @@ export class UrMoney {
           this.nav.setRoot(WelcomePage);
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
 
-          if (this.auth.currentUser.idUploaded) {
+          if (this.auth.currentUser.selfieMatched) {
+            this.nav.setRoot(HomePage);
+          } else if (this.auth.currentUser.idUploaded) {
             this.nav.setRoot(SelfieMatchPage);
           } else {
             this.nav.setRoot(IdScanPage);
