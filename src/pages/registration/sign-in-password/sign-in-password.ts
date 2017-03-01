@@ -5,7 +5,6 @@ import { LostPasswordPage } from '../lost-password/lost-password';
 import { AuthService } from '../../../services/auth';
 import { ToastService} from '../../../services/toast';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { HomePage } from '../../home/home';
 
 @Component({
   selector: 'page-sign-in-password',
