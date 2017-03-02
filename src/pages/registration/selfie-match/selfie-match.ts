@@ -93,7 +93,7 @@ export class SelfieMatchPage {
               {
                 text: this.translate.instant('selfie-match.letAHumanDoIt'),
                 handler: () => {
-                  // FIXME
+                  this.nav.push(ProfileSetupPage);
                 }
               }
             ]
