@@ -42,7 +42,7 @@
     "enterTempPass": "<b>Welcome back! </b>We have improved our security system. <br/>Because you didn't have a password before, we have sent you a temporary password via SMS. <br/>Please enter that password to continue.",
     "enterTempPassPlaceholder": "Enter the temporary password",
     "resetPassword": "<b>Great!</b> Now choose a new password. <br/>This will be your password to sign in from now on",
-    "passwordChanged": "Your password has been changed. For your security log in with your new password."
+    "passwordChanged": "Your password has been changed. For your security, please sign in with your new password."
   },
   "sign-up": {
     "title": "Sign up",

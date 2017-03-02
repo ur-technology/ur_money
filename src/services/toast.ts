@@ -21,7 +21,7 @@ export class ToastService {
       }
       options = _.defaults(options, {
         message: self.translate.instant(options.messageKey || 'unexpectedError'),
-        duration: 5000,
+        duration: 5500,
         position: 'bottom'
       });
       self.toast = self.toastController.create(options);
