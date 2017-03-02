@@ -52,7 +52,8 @@ export class UserModel extends FirebaseModel {
         'notifications',
         'settings',
         'idUploaded',
-        'selfieMatched'
+        'selfieMatched',
+        'selfieConfidence'
       ]).then(resultObject => {
         let result = new UserModel();
         result.key = key;
