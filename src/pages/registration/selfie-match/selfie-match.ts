@@ -7,8 +7,6 @@ import { ProfileSetupPage } from '../profile-setup/profile-setup';
 import { AcuantService } from '../../../services/acuant';
 import { IDVerifier } from '../../../interfaces/id-verifier';
 import { HomePage } from '../../../pages/home/home';
-import * as firebase from 'firebase';
-import * as log from 'loglevel';
 
 declare var $;
 
@@ -72,8 +70,6 @@ export class SelfieMatchPage {
 
     let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
     loadingModal.present();
-
-    let currentUserRef = firebase.database().ref(`/users/${this.auth.currentUserId}`);
 
     this.idVerifier.matchSelfie(this.dataURLtoBlob(this.selfieSource))
       .then(() => {

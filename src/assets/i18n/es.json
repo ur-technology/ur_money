@@ -117,24 +117,26 @@
     },
     "id-scan": {
       "title": "Configuración de la cuenta",
-      "firstName": "Nombre",
-      "middleName": "Segundo nombre (opcional)",
-      "lastName": "Apellido",
-      "name": "Nombre que se mostrará a otros",
-      "email": "Correo electrónico",
       "country": "País",
+      "idType": "Tipo de identificación",
+      "nationalIdInstructions":"Toma una fotografía del frente y la parte posterior de tu licencia de conducir o identificación nacional.",
+      "scanFrontOfId": "Presiona para capturar el frente",
+      "scanBackOfId":"Presiona para capturar la parte posterior",
+      "nationalId":"Licencia de conducir o identificación nacional",
+      "idNotRecognised": "Tu identificación no puede ser reconocida, o ya se ha utilizado antes.",
       "city": "Ciudad",
       "state": "Estado o provincia",
-      "placeholderFirstName": "Ingresa el nombre",
-      "placeholderMiddleName": "Ingresa el segundo nombre (opcional)",
-      "placeholderLastName": "Ingresa el apellido",
-      "placeholderFullName": "Ingresa cómo quieres que te llamen",
-      "placeholderEmail": "Ingresa el correo electrónico",
       "slideTitle": "Paso 1 de 4 - Escanea tu ID"
     },
     "selfie-match": {
       "title": "Configuración de la cuenta",
-      "slideTitle": "Paso 2 de 4 - Toma una selfie"
+      "slideTitle": "Paso 2 de 4 - Toma una selfie",
+      "scan": "Presiona para tomar una selfie",
+      "instructions": "Necesitamos una foto de tu cara para verificar tu identificación. Trata de tomar una foto donde tu rostro llena la mayor parte de la imagen como sea posible, sin pasar por encima de los bordes.",
+      "cantMatchTitle": "No se pudo coincidir tu selfie con tu ID",
+      "cantMatchMessage": "No pudimos verificar automáticamente tu ID. Puedes intentarlo de nuevo, o permitir que alguien de soporte al cliente lo verifique manualmente.",
+      "tryAgain": "Tratar nuevamente",
+      "letAHumanDoIt": "Deja que un humano lo haga"
     },
     "wallet-setup": {
         "title": "Configuración de frase secreta",
