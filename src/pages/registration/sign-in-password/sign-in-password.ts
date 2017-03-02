@@ -3,7 +3,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LostPasswordPage } from '../lost-password/lost-password';
 import { AuthService } from '../../../services/auth';
-import { ToastService} from '../../../services/toast';
+import { ToastService } from '../../../services/toast';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
@@ -25,7 +25,9 @@ export class SignInPasswordPage {
     let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
 
     loadingModal.present().then(() => {
-      return self.auth.signIn(self.phone, self.mainForm.value.password)
+      return this.auth.generateHashedPassword(self.mainForm.value.password);
+    }).then((password) => {
+      return self.auth.signIn(self.phone, password);
     }).then((newTask: string) => {
       task = newTask;
       return loadingModal.dismiss();

@@ -142,7 +142,7 @@ export class AuthService {
     });
   }
 
-  private generateHashedPassword(password: string): Promise<string> {
+  public generateHashedPassword(password: string): Promise<string> {
     return new Promise((resolve, reject) => {
       let scryptAsync = require('scrypt-async');
       scryptAsync(password, 'saltnotneeded', { N: 16384, r: 16, p: 1, dkLen: 64, encoding: 'hex' }, (clientHashedPassword) => {
