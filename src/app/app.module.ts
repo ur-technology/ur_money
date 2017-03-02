@@ -50,6 +50,7 @@ import { CountryListService } from '../services/country-list';
 import { EncryptionService } from '../services/encryption';
 import { EventsService } from '../services/events.service';
 import { ToastService } from '../services/toast';
+import { AcuantService } from '../services/acuant';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { Http, HttpModule } from '@angular/http';
 import { BrowserModule } from "@angular/platform-browser";
@@ -179,6 +180,16 @@ export function translateLoaderFactory(http: any) {
     SignInTemporaryPasswordPage,
     ResetPasswordPage
   ],
-  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [
+    AuthService,
+    ChartDataService,
+    ContactsService,
+    CountryListService,
+    EncryptionService,
+    EventsService,
+    ToastService,
+    AcuantService,
+    UserService,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule { }

@@ -7,7 +7,8 @@ import { UserPage } from './user';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import { FirebaseApp } from 'angularfire2';
-import { Utils} from '../../services/utils';
+import { Utils } from '../../services/utils';
+import * as firebase from 'firebase';
 
 declare var window: any;
 declare var jQuery: any;
