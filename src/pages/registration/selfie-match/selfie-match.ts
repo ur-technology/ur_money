@@ -75,11 +75,7 @@ export class SelfieMatchPage {
 
     let currentUserRef = firebase.database().ref(`/users/${this.auth.currentUserId}`);
 
-    currentUserRef.update({ selfieSource: this.selfieSource }).then(() => {
-      return this.idVerifier.matchSelfie(
-        this.dataURLtoBlob(this.selfieSource),
-      )
-    })
+    this.idVerifier.matchSelfie(this.dataURLtoBlob(this.selfieSource))
       .then(() => {
         loadingModal.dismiss().then(() => {
           this.nav.setRoot(destinationPage);
