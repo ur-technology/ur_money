@@ -144,41 +144,6 @@ export class AcuantService {
         (error) => {
           reject(error);
         })
-
-      /*
-    let imageToProcess = new FormData();
-    imageToProcess.append("photo1", idCardFinalImage);
-    imageToProcess.append("photo2", selfieSource);
-
-    // Fixme! get from config
-    let authinfo = $.base64.encode("EE92924A123D");
-
-    $.ajax({
-      type: "POST",
-      url: "https://cssnwebservices.com/CSSNService/CardProcessor/FacialMatch",
-      data: imageToProcess,
-      cache: false,
-      contentType: 'application/octet-stream; charset=utf-8;',
-      dataType: "json",
-      processData: false,
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader("Authorization", "LicenseKey " + authinfo);
-      },
-      success: (facialMatchData) => {
-
-        let error: string = (facialMatchData.ResponseCodeAuthorization < 0 && facialMatchData.ResponseCodeAuthorization) ||
-          (facialMatchData.WebResponseCode < 1 && facialMatchData.WebResponseCode);
-        if (error) {
-          reject(`error matching selfie: ${error}`);
-        } else {
-          resolve(facialMatchData);
-        }
-      },
-      error: (xhr, error) => {
-        reject(`error submitting id: ${_.toString(error)}`);
-      }
-    });
-    */
     });
   }
 
