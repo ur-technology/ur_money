@@ -6,6 +6,7 @@ import { AuthService } from '../../../services/auth';
 import { ProfileSetupPage } from '../profile-setup/profile-setup';
 import { AcuantService } from '../../../services/acuant';
 import { IDVerifier } from '../../../interfaces/id-verifier';
+import { HomePage } from '../../../pages/home/home';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
 
@@ -63,6 +64,12 @@ export class SelfieMatchPage {
 
   submit() {
 
+    let destinationPage: any = ProfileSetupPage;
+
+    if (this.auth.currentUser.wallet && this.auth.currentUser.wallet.address) {
+      destinationPage = HomePage;
+    }
+
     let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
     loadingModal.present();
 
@@ -75,7 +82,7 @@ export class SelfieMatchPage {
     })
       .then(() => {
         loadingModal.dismiss().then(() => {
-          this.nav.push(ProfileSetupPage);
+          this.nav.setRoot(destinationPage);
         });
       },
       (error) => {
@@ -93,7 +100,7 @@ export class SelfieMatchPage {
               {
                 text: this.translate.instant('selfie-match.letAHumanDoIt'),
                 handler: () => {
-                  this.nav.push(ProfileSetupPage);
+                  this.nav.setRoot(destinationPage);
                 }
               }
             ]

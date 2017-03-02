@@ -80,8 +80,15 @@ export class UrMoney {
             this.nav.setRoot(IdScanPage);
           }
         } else {
-          this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
-          this.nav.setRoot(HomePage);
+
+          if (!this.auth.currentUser.idUploaded) {
+            this.nav.setRoot(IdScanPage);
+          } else if (!this.auth.currentUser.selfieMatched) {
+            this.nav.setRoot(SelfieMatchPage);
+          } else {
+            this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
+            this.nav.setRoot(HomePage);
+          }
         }
       });
 
