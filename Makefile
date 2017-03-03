@@ -6,6 +6,7 @@ GITHASH                := $(shell git describe --tags --always)
 IONIC_BINARY           := ionic
 IONIC_CMD_SERVE        := serve -c
 IONIC_CMD_RUN_ANDROID  := run android -c --prod
+IONIC_CMD_BUILD        := build --prod
 
 # NPM setup
 NPM_BINARY             := npm
@@ -28,6 +29,10 @@ run-development: version-file
 # prevent potential TypeScript errors.
 run-android: version-file
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)
+
+deploy: version-file
+	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
+	@firebase deploy
 
 # Generate a version TypeScript file containing the current date
 # and a version based on the current git tag.
