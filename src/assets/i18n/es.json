@@ -124,101 +124,105 @@
       "scanBackOfId":"Presiona para capturar la parte posterior",
       "nationalId":"Licencia de conducir o identificación nacional",
       "idNotRecognised": "Tu identificación no puede ser reconocida, o ya se ha utilizado antes.",
-      "city": "Ciudad",
-      "state": "Estado o provincia",
-      "slideTitle": "Paso 1 de 4 - Escanea tu ID"
-    },
-    "selfie-match": {
-      "title": "Configuración de la cuenta",
-      "slideTitle": "Paso 2 de 4 - Toma una selfie",
-      "scan": "Presiona para tomar una selfie",
-      "instructions": "Necesitamos una foto de tu cara para verificar tu identificación. Trata de tomar una foto donde tu rostro llena la mayor parte de la imagen como sea posible, sin pasar por encima de los bordes.",
-      "cantMatchTitle": "No se pudo coincidir tu selfie con tu ID",
-      "cantMatchMessage": "No pudimos verificar automáticamente tu ID. Puedes intentarlo de nuevo, o permitir que alguien de soporte al cliente lo verifique manualmente.",
-      "tryAgain": "Tratar nuevamente",
-      "letAHumanDoIt": "Deja que un humano lo haga"
-    },
-    "wallet-setup": {
-        "title": "Configuración de frase secreta",
-        "suggestSecretPhrase": "Generar",
-        "secretPhrasePlaceholder": "Introduce al menos 5 palabras",
-        "confirmWrittenDownTitle": "Escríbelo!",
-        "confirmWrittenDownMessage1": "Esta es tu frase secreta:",
-        "confirmWrittenDownMessage2": "Escribe esta frase en un papel y guárdalo en un lugar seguro.",
-        "confirmWrittenDownMessage3": "ADVERTENCIA: UR Technology no guarda tu frase secreta en nuestros servidores y NO PUEDE recuperarla si se pierde, se olvida o se corrompe.",
-        "confirmWrittenDownButton": "Lo escribí!",
-        "reenterSecretPhraseTitle": "Confirma tu frase secreta",
-        "reenterSecretPhraseMessage": "Por favor vuelve a ingresar tu frase secreta para confirmarla.",
-        "renterSecretPhraseRetryMessage": "INCORECTO - INTENTA DE NUEVO",
-        "renterSecretPhrasePlaceholder": "Vuelve a ingresar tu frase secreta",
-        "youWillReceiveBonus": "Recibirás tu bono de 2.000 UR pronto!",
-        "chooseSecret": "Ingresa de 5 a 10 palabras para tu frase secreta",
-        "message1": "Asegúrate que la recuerdes porque la necesitarás para realizar transacciones más tarde",
-        "message2": "Solo tú lo sabes. Nunca podrá ser recuperado si se pierde.",
-        "message3": "Ingresa palabras para tu contraseña",
-        "message4": "Use el botón Generar de abajo para generar automáticamente una frase de secreta.",
-        "learnSavePhrase": "Si te olvidas tu frase secreta puedes recuperarla mas tarde",
-        "saveSecretPhrase": "Almacenar una copia local de la frase secreta en el dispositivo para emergencias?",
-        "learnMore": "Conocer más",
-        "slideTitle": "Paso 2 de 2 - Configura frase secreta",
-        "secretPhrase": "Frase secreta"
-    },
-    "announcement-initiated": {
-        "title": "Generación de bonificación en curso",
-        "message": "La transacción de bonificación puede tardar unas horas en aparecer en tu cuenta, por favor espere."
-    },
-    "app": {
-      "inviteMessage": "Invita a tus amigos y obtén mas UR",
-      "invite": "Invita",
-      "home": "Inicio",
-      "chat": "Chat",
-      "send": "Enviar UR",
-      "request": "Solicitar UR",
-      "transactions": "Transacciones",
-      "about": "Acerca UR",
-      "users": "Administrar usuarios",
-      "referralCode": "Código de referencia: "
-    },
-    "home": {
-        "bonusGenerating": "Generación De Bonificación En Curso",
-        "waitingForSponsor": "Esperando A Patrocinador Que Complete Su Cuenta",
-        "userDisabled": "Usuario deshabilitado",
-        "newChats": "Tienes nuevos chats",
-        "newTransactions": "Tienes nuevas transacciones"
-    },
-    "contacts": {
-        "invite": "Invitar",
-        "sendUr": "Enviar UR",
-        "requestUr": "Solicitar UR",
-        "chat": "Chat",
-        "inviteMessage": "He descargado la aplicación UR Money y tengo 2.000 unidades de criptomoneda de forma gratuita. Para obtener más información y obtener el tuyo, visita ",
-        "toastMessage": "Elije una aplicación y escribe un mensaje. O bien, puedes pegar el mensaje que hemos colocado en el portapapeles.",
-        "toastTitle": "Compartir mediante",
-        "messageNoContacts": "Parece que no tienes contactos todavía. Invita a un amigo.",
-        "messageContactNotPresent": "El contacto no está en la lista? Invita a un amigo.",
-        "invitesDisabled": "Invitaciones deshabilitadas",
-        "sorryInvitesDisabled": "Las invitaciones están deshabilitadas para esta cuenta.",
-        "select": "Seleccionar"
-    },
-    "contacts-and-chats": {
-        "contacts": "Contactos",
-        "chats": "Chats",
-        "titleChat": "Chatear con",
-        "titleSend": "Enviar UR a",
-        "titleRequest": "Solicitar UR de",
-        "titleInvite": "Invita a un amigo"
-    },
-    "chat": {
-        "typeMessage": "Escribe tu mensaje",
-        "blockMessage": "¿Bloquear a {{value}}? Los contactos bloqueados ya no podrán enviarte mensajes.",
-        "unblockMessage": "Desbloquear a {{value}} para enviarle un mensaje.",
-        "unblock": "Desbloquear",
-        "blockUser": "Bloquear usuario"
-    },
-    "chat-list": {
-        "noChatsYet": "Aún no hay chats"
-    },
-    "transaction": {
+	  "city": "Ciudad",
+	  "state": "Estado o provincia",
+	  "slideTitle": "Paso 1 de 4 - Escanea tu ID",
+	  "cantMatchTitle": "No se pudo coincidir tu selfie con tu ID",
+	  "cantMatchMessage": "No pudimos verificar automáticamente tu ID. Puedes intentarlo de nuevo, o permitir que alguien de soporte al cliente lo verifique manualmente.",
+	  "tryAgain": "Tratar nuevamente",
+	  "letAHumanDoIt": "Deja que un humano lo haga"
+	},
+	"selfie-match": {
+		"title": "Configuración de la cuenta",
+		"slideTitle": "Paso 2 de 4 - Toma una selfie",
+		"scan": "Presiona para tomar una selfie",
+		"instructions": "Necesitamos una foto de tu cara para verificar tu identificación. Trata de tomar una foto donde tu rostro llena la mayor parte de la imagen como sea posible, sin pasar por encima de los bordes.",
+		"cantMatchTitle": "No se pudo coincidir tu selfie con tu ID",
+		"cantMatchMessage": "No pudimos verificar automáticamente tu ID. Puedes intentarlo de nuevo, o permitir que alguien de soporte al cliente lo verifique manualmente.",
+		"tryAgain": "Tratar nuevamente",
+		"letAHumanDoIt": "Deja que un humano lo haga"
+	},
+	"wallet-setup": {
+		"title": "Configuración de frase secreta",
+		"suggestSecretPhrase": "Generar",
+		"secretPhrasePlaceholder": "Introduce al menos 5 palabras",
+		"confirmWrittenDownTitle": "Escríbelo!",
+		"confirmWrittenDownMessage1": "Esta es tu frase secreta:",
+		"confirmWrittenDownMessage2": "Escribe esta frase en un papel y guárdalo en un lugar seguro.",
+		"confirmWrittenDownMessage3": "ADVERTENCIA: UR Technology no guarda tu frase secreta en nuestros servidores y NO PUEDE recuperarla si se pierde, se olvida o se corrompe.",
+		"confirmWrittenDownButton": "Lo escribí!",
+		"reenterSecretPhraseTitle": "Confirma tu frase secreta",
+		"reenterSecretPhraseMessage": "Por favor vuelve a ingresar tu frase secreta para confirmarla.",
+		"renterSecretPhraseRetryMessage": "INCORECTO - INTENTA DE NUEVO",
+		"renterSecretPhrasePlaceholder": "Vuelve a ingresar tu frase secreta",
+		"youWillReceiveBonus": "Recibirás tu bono de 2.000 UR pronto!",
+		"chooseSecret": "Ingresa de 5 a 10 palabras para tu frase secreta",
+		"message1": "Asegúrate que la recuerdes porque la necesitarás para realizar transacciones más tarde",
+		"message2": "Solo tú lo sabes. Nunca podrá ser recuperado si se pierde.",
+		"message3": "Ingresa palabras para tu contraseña",
+		"message4": "Use el botón Generar de abajo para generar automáticamente una frase de secreta.",
+		"learnSavePhrase": "Si te olvidas tu frase secreta puedes recuperarla mas tarde",
+		"saveSecretPhrase": "Almacenar una copia local de la frase secreta en el dispositivo para emergencias?",
+		"learnMore": "Conocer más",
+		"slideTitle": "Paso 2 de 2 - Configura frase secreta",
+		"secretPhrase": "Frase secreta"
+	},
+	"announcement-initiated": {
+		"title": "Generación de bonificación en curso",
+		"message": "La transacción de bonificación puede tardar unas horas en aparecer en tu cuenta, por favor espere."
+	},
+	"app": {
+		"inviteMessage": "Invita a tus amigos y obtén mas UR",
+		"invite": "Invita",
+		"home": "Inicio",
+		"chat": "Chat",
+		"send": "Enviar UR",
+		"request": "Solicitar UR",
+		"transactions": "Transacciones",
+		"about": "Acerca UR",
+		"users": "Administrar usuarios",
+		"referralCode": "Código de referencia: "
+	},
+	"home": {
+		"bonusGenerating": "Generación De Bonificación En Curso",
+		"waitingForSponsor": "Esperando A Patrocinador Que Complete Su Cuenta",
+		"userDisabled": "Usuario deshabilitado",
+		"newChats": "Tienes nuevos chats",
+		"newTransactions": "Tienes nuevas transacciones"
+	},
+	"contacts": {
+		"invite": "Invitar",
+		"sendUr": "Enviar UR",
+		"requestUr": "Solicitar UR",
+		"chat": "Chat",
+		"inviteMessage": "He descargado la aplicación UR Money y tengo 2.000 unidades de criptomoneda de forma gratuita. Para obtener más información y obtener el tuyo, visita ",
+		"toastMessage": "Elije una aplicación y escribe un mensaje. O bien, puedes pegar el mensaje que hemos colocado en el portapapeles.",
+		"toastTitle": "Compartir mediante",
+		"messageNoContacts": "Parece que no tienes contactos todavía. Invita a un amigo.",
+		"messageContactNotPresent": "El contacto no está en la lista? Invita a un amigo.",
+		"invitesDisabled": "Invitaciones deshabilitadas",
+		"sorryInvitesDisabled": "Las invitaciones están deshabilitadas para esta cuenta.",
+		"select": "Seleccionar"
+	},
+	"contacts-and-chats": {
+		"contacts": "Contactos",
+		"chats": "Chats",
+		"titleChat": "Chatear con",
+		"titleSend": "Enviar UR a",
+		"titleRequest": "Solicitar UR de",
+		"titleInvite": "Invita a un amigo"
+	},
+	"chat": {
+		"typeMessage": "Escribe tu mensaje",
+		"blockMessage": "¿Bloquear a {{value}}? Los contactos bloqueados ya no podrán enviarte mensajes.",
+		"unblockMessage": "Desbloquear a {{value}} para enviarle un mensaje.",
+		"unblock": "Desbloquear",
+		"blockUser": "Bloquear usuario"
+	},
+	"chat-list": {
+		"noChatsYet": "Aún no hay chats"
+	},
+	"transaction": {
         "today": "Hoy",
         "last30Days": "Últimos 30 días",
         "last60Days": "Últimos 60 días",

@@ -1,4 +1,4 @@
-import { NavController, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -38,8 +38,8 @@ export class IdScanPage {
     public loadingController: LoadingController,
     public translate: TranslateService,
     public auth: AuthService,
-    private toastCtrl: ToastController,
     private acuantService: AcuantService,
+    public alertCtrl: AlertController,
   ) {
 
     this.idVerifier = acuantService;
@@ -145,10 +145,22 @@ export class IdScanPage {
       (error) => {
         log.warn(error);
         loadingModal.dismiss().then(() => {
-          this.toastCtrl.create({
-            message: this.translate.instant('id-scan.idNotRecognised'),
-            duration: 6000,
-            position: 'bottom'
+          this.alertCtrl.create({
+            title: this.translate.instant('id-scan.cantMatchTitle'),
+            message: this.translate.instant('id-scan.cantMatchMessage'),
+            buttons: [
+              {
+                text: this.translate.instant('id-scan.tryAgain'),
+                handler: () => {
+                }
+              },
+              {
+                text: this.translate.instant('id-scan.letAHumanDoIt'),
+                handler: () => {
+                  this.nav.setRoot(SelfieMatchPage);
+                }
+              }
+            ]
           }).present();
         });
       });

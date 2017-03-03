@@ -126,7 +126,11 @@
     "idNotRecognised": "Your ID can't be recognised, or has been used before. Please try again.",
     "city": "City",
     "state": "State or province",
-    "slideTitle": "Step 1 of 4 - Scan Your Id"
+    "slideTitle": "Step 1 of 4 - Scan Your Id",
+"cantMatchTitle": "Couldn't recognise your ID",
+    "cantMatchMessage": "We couldn't recognise your ID. You can try again, or let someone from customer support verify it manually.",
+    "tryAgain": "Try again",
+    "letAHumanDoIt": "Let a human do it"
   },
   "selfie-match": {
     "title": "Setting Up Account",
