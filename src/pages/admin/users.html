@@ -35,7 +35,8 @@
       <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
       <ion-label>
 		  <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
-		  <p>ID uploaded: {{r.idUploaded}}, Selfie uploaded: {{r.selfieMatched}}, match confidence: {{r.selfieConfidence}}%</p>
+		  <p>ID recognition status: {{r.idRecognitionStatus}}</p>
+		  <p>Selfie match status: {{r.selfieMatchStatus}}</p>
         <p>{{r.phone}} {{r.email}} {{country(r)}}</p>
         <p>{{r.moveRequestedTag}} {{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}} {{r.signUpBonusApprovedTag}}</p>
       </ion-label>
