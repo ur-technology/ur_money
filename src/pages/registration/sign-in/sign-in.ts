@@ -10,7 +10,9 @@ import { SignUpPage } from '../sign-up/sign-up';
 import { CustomValidator } from '../../../validators/custom';
 import { Utils } from '../../../services/utils';
 import { SignInPasswordPage } from '../sign-in-password/sign-in-password';
-import { SignInTemporaryPasswordPage} from '../sign-in-temporary-password/sign-in-temporary-password';
+import { SignInTemporaryPasswordPage } from '../sign-in-temporary-password/sign-in-temporary-password';
+
+declare var trackJs: any;
 
 @Component({
   selector: 'page-sign-in',
@@ -65,6 +67,7 @@ export class SignInPage {
           break;
 
         case 'request_sign_in_canceled_because_user_not_found':
+          trackJs.track('Login failed: user not found');
           let alert = this.alertCtrl.create({
             message: this.translate.instant('sign-in.userNotFound'),
             buttons: [
@@ -88,11 +91,13 @@ export class SignInPage {
           break;
 
         default:
+          trackJs.track('Login failed: unexpected problem');
           self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
 
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
+        trackJs.track('Login failed: unexpected problem');
         self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
       });
     });

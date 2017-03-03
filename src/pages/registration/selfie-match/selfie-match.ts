@@ -9,6 +9,7 @@ import { IDVerifier } from '../../../interfaces/id-verifier';
 import { HomePage } from '../../../pages/home/home';
 
 declare var $;
+declare var trackJs: any;
 
 @Component({
   selector: 'selfie-match-page',
@@ -78,6 +79,7 @@ export class SelfieMatchPage {
         });
       },
       (error) => {
+        trackJs.track('Selfie match failed: ' + error);
         loadingModal.dismiss().then(() => {
 
           let confirm = this.alertCtrl.create({

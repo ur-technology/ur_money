@@ -6,6 +6,8 @@ import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
+declare var trackJs: any;
+
 @Component({
   selector: 'page-sign-in-password',
   templateUrl: 'sign-in-password.html'
@@ -37,16 +39,20 @@ export class SignInPasswordPage {
           // Auth service will redirect to the right page after login
           break;
         case 'sign_in_canceled_because_password_incorrect':
+          trackJs.track('Login failed (password page): incorrect password');
           self.toastService.showMessage({ messageKey: 'sign-in.credentialsIncorrect' });
           break;
         case 'request_sign_in_canceled_because_user_disabled':
+          trackJs.track('Login failed (password page): user disabled');
           self.toastService.showMessage({ messageKey: 'sign-in.userDisabled' });
           break;
         default:
+          trackJs.track('Login failed (password page): unexpected problem');
           self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
+        trackJs.track('Login failed (password page): unexpected problem');
         self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
       });
     });

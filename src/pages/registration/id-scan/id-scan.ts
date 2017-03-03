@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import * as log from 'loglevel';
 
 declare var $;
+declare var trackJs: any;
 
 const NATIONAL_ID = 'national-id';
 
@@ -143,7 +144,7 @@ export class IdScanPage {
         });
       },
       (error) => {
-        log.warn(error);
+        trackJs.track('ID scan failed: ' + error);
         loadingModal.dismiss().then(() => {
           this.alertCtrl.create({
             title: this.translate.instant('id-scan.cantMatchTitle'),

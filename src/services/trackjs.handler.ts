@@ -1,4 +1,4 @@
-import { ErrorHandler} from '@angular/core';
+import { ErrorHandler } from '@angular/core';
 
 declare var trackJs: any;
 
@@ -6,7 +6,7 @@ export class TrackJsErrorHandler extends ErrorHandler {
   handleError(error: any) {
     // Add the error message to the telemetry timeline.
     // It can occasionally have useful additional context.
-    console.warn('entri aca', error.message);
+    console.warn('Tracked error', error.message);
 
     // Assumes we have already loaded and configured TrackJS*
     if (trackJs) {

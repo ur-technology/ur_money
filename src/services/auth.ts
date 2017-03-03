@@ -10,6 +10,8 @@ import { UserService } from './user.service';
 import { UserModel } from '../models/user.model';
 import * as firebase from 'firebase';
 
+declare var trackJs: any;
+
 @Injectable()
 export class AuthService {
   public sponsorReferralCode: string;
@@ -37,6 +39,9 @@ export class AuthService {
       firebase.auth().onAuthStateChanged((authData: any) => {
         if (authData) {
           self.currentUserId = authData.uid;
+          trackJs.addMetadata('user-phone', self.phone);
+          trackJs.addMetadata('user-phone', self.email);
+          trackJs.configure({ userId: self.currentUserId })
 
           this.userService.getCurrentUser(self.currentUserId).then(currentUser => {
             self.currentUser = currentUser;
