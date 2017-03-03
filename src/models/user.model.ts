@@ -85,5 +85,53 @@ export class UserModel extends FirebaseModel {
     });
   }
 
+  checkIfPasswordCorrect(password): Promise<string> {
+    return new Promise((resolve, reject) => {
+      let taskRef;
+      taskRef = FirebaseModel.ref(`/userQueue/tasks`).push({ userId: this.key, clientHashedPassword: password, _state: 'user_check_password_requested' });
+      let resultRef = taskRef.child('result');
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+        if (!taskResult) {
+          return;
+        }
+        resultRef.off('value');
+        if (taskResult.error) {
+          reject(taskResult.error);
+          return;
+        } else {
+          taskRef.remove();
+          resolve(taskResult.state)
+        }
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  changeCurrentPassword(password): Promise<string> {
+    return new Promise((resolve, reject) => {
+      let taskRef;
+      taskRef = firebase.database().ref(`/userQueue/tasks`).push({ userId: this.key, clientHashedPassword: password, _state: 'user_password_change_requested' });
+      let resultRef = taskRef.child('result');
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+        if (!taskResult) {
+          return;
+        }
+        resultRef.off('value');
+        if (taskResult.error) {
+          reject(taskResult.error);
+          return;
+        } else {
+          taskRef.remove();
+          resolve(taskResult.state)
+        }
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
 
 }

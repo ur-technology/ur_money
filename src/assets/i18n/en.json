@@ -127,7 +127,7 @@
     "city": "City",
     "state": "State or province",
     "slideTitle": "Step 1 of 4 - Scan Your Id",
-"cantMatchTitle": "Couldn't recognise your ID",
+    "cantMatchTitle": "Couldn't recognise your ID",
     "cantMatchMessage": "We couldn't recognise your ID. You can try again, or let someone from customer support verify it manually.",
     "tryAgain": "Try again",
     "letAHumanDoIt": "Let a human do it"
@@ -318,7 +318,9 @@
     "updateEmail": "Update email",
     "currentEmail": "Current email",
     "emailUpdated": "Email updated. Please validate your email",
-    "verifyEmailText": "We will send a verification link to the email address you provide."
+    "verifyEmailText": "We will send a verification link to the email address you provide.",
+    "passwordIncorrect": "The current password that you entered does not match our records.",
+    "unexpectedProblemChangingPassword": "There has been a problem while changing the password"
   },
   "terms-and-conditions": {
     "title": "Terms and Conditions",

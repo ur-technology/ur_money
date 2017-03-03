@@ -92,9 +92,11 @@ export class SignUpPage {
     });
     let taskState: string;
     loadingModal.present().then(() => {
+      return self.auth.generateHashedPassword(self.mainForm.value.password);
+    }).then((hashedPassword) => {
       return self.auth.requestSignUpCodeGeneration(
         Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix),
-        self.mainForm.value.password,
+        hashedPassword,
         self.signUpType === 'sponsorReferralCode' ? self.mainForm.value.sponsorReferralCode : null,
         self.signUpType === 'email' ? self.mainForm.value.email : null
       );

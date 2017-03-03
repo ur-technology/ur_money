@@ -318,7 +318,9 @@
         "updateEmail": "Actualizar correo electrónico",
         "currentEmail": "Correo electrónico actual",
         "emailUpdated":"Correo electrónico actualizado. Por favor, valide su correo",
-        "verifyEmailText":"Enviaremos un enlace de verificación a la dirección de correo electrónico que proporciones."
+        "verifyEmailText":"Enviaremos un enlace de verificación a la dirección de correo electrónico que proporciones.",
+        "passwordIncorrect": "La contraseña actual que ingresó no coincide con nuestros registros.",
+        "unexpectedProblemChangingPassword": "Se ha producido un problema al cambiar la contraseña"
     },
     "terms-and-conditions": {
         "title": "Términos y Condiciones",
