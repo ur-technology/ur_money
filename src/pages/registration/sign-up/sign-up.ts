@@ -104,6 +104,7 @@ export class SignUpPage {
     }).then(() => {
       switch (taskState) {
         case 'code_generation_finished':
+          self.auth.countryCode = this.mainForm.value.country.countryCode;
           self.nav.push(AuthenticationCodePage);
           break;
 

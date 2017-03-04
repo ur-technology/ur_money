@@ -46,7 +46,7 @@ export class AuthService {
           this.userService.getCurrentUser(self.currentUserId).then(currentUser => {
             self.currentUser = currentUser;
             if (self.countryCode &&
-              (!self.currentUser.countryCode || !self.currentUser.countryCode.match(/^[A-Z]{2}$/))) {
+              (!self.currentUser.countryCode || (self.currentUser.countryCode && !self.currentUser.countryCode.match(/^[A-Z]{2}$/)))) {
               self.currentUser.countryCode = self.countryCode;
               self.currentUser.update({ countryCode: self.currentUser.countryCode });
             }

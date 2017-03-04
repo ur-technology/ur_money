@@ -67,7 +67,7 @@ export class IdScanPage {
     this.countries = _.sortBy(require('country-data').countries.all, 'name');
     this.countries = _.reject(this.countries, { alpha2: ['CU', 'IR', 'KP', 'SD', 'SY'] });  // remove forbidden countries
     this.countries = _.filter(this.countries, { status: 'assigned' });
-    this.countryCode = this.countryCodeAssociatedWithPhone();
+    this.countryCode = this.auth.currentUser.countryCode;
     let country = _.find(this.countries, { alpha2: this.countryCode });
     (<FormControl>this.mainForm.controls['countryCode']).setValue(country);
   }
@@ -80,18 +80,6 @@ export class IdScanPage {
 
     this.idType = NATIONAL_ID;
     (<FormControl>this.mainForm.controls['idType']).setValue(this.idType);
-  }
-
-  private countryCodeAssociatedWithPhone() {
-    let phoneNumberUtil: any = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-    let countryCode: string;
-    try {
-      let phoneNumberObject: any = phoneNumberUtil.parse(this.auth.currentUser.phone, '');
-      countryCode = phoneNumberUtil.getRegionCodeForNumber(phoneNumberObject);
-    } catch (e) {
-      log.warn(`parse exception was thrown: ${e.toString()}`);
-    }
-    return countryCode || 'US';
   }
 
   onCountrySelected(countrySelected) {

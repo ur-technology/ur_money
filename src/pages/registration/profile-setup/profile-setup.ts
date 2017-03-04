@@ -18,14 +18,20 @@ export class ProfileSetupPage {
     public nav: NavController,
     public auth: AuthService
   ) {
-
-    let name = _.isEmpty(_.trim(this.auth.currentUser.name || '')) ? `${this.auth.currentUser.firstName || ''} ${this.auth.currentUser.lastName || ''}` : this.auth.currentUser.name;
-
     let formElements: any = {
-      name: new FormControl(name, [CustomValidator.nameValidator, Validators.required]),
+      name: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
       email: new FormControl(this.auth.currentUser.email, [Validators.required, CustomValidator.emailValidator])
     };
     this.mainForm = new FormGroup(formElements);
+
+  }
+
+  ionViewDidLoad() {
+    let self = this;
+    self.auth.reloadCurrentUser().then(() => {
+      let name = _.isEmpty(_.trim(self.auth.currentUser.name || '')) ? `${self.auth.currentUser.firstName || ''} ${self.auth.currentUser.lastName || ''}` : self.auth.currentUser.name;
+      (<FormControl>self.mainForm.controls['name']).setValue(name);
+    });
   }
 
 
