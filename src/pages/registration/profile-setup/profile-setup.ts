@@ -18,7 +18,8 @@ export class ProfileSetupPage {
     public nav: NavController,
     public auth: AuthService
   ) {
-    let name = _.isEmpty(_.trim(this.auth.currentUser.name || '')) ? `${this.auth.currentUser.firstName} ${this.auth.currentUser.lastName}` : this.auth.currentUser.name;
+
+    let name = _.isEmpty(_.trim(this.auth.currentUser.name || '')) ? `${this.auth.currentUser.firstName || ''} ${this.auth.currentUser.lastName || ''}` : this.auth.currentUser.name;
 
     let formElements: any = {
       name: new FormControl(name, [CustomValidator.nameValidator, Validators.required]),

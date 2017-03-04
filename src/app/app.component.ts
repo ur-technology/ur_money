@@ -10,6 +10,7 @@ import { ContactsService } from '../services/contacts.service';
 import { Config } from '../config/config'
 import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
 import { WelcomePage } from '../pages/registration/welcome/welcome';
+import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
 import { SendPage } from '../pages/send/send';
 import { InviteLinkPage } from '../pages/invite-link/invite-link';
 import { UsersPage } from '../pages/admin/users';
@@ -73,7 +74,12 @@ export class UrMoney {
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
 
           if (this.auth.currentUser.selfieMatched) {
-            this.nav.setRoot(HomePage);
+
+            if (!this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
+              this.nav.setRoot(ProfileSetupPage);
+            } else {
+              this.nav.setRoot(HomePage);
+            }
           } else if (this.auth.currentUser.idUploaded) {
             this.nav.setRoot(SelfieMatchPage);
           } else {

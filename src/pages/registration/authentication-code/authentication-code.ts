@@ -3,6 +3,7 @@ import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'authentication-code-page',
@@ -10,6 +11,7 @@ import { Component } from '@angular/core';
 })
 export class AuthenticationCodePage {
   authenticationCode: string = '';
+  mainForm: FormGroup;
 
   constructor(public nav: NavController,
     public auth: AuthService,
@@ -17,6 +19,16 @@ export class AuthenticationCodePage {
     public translate: TranslateService,
     public toastService: ToastService
   ) {
+
+    this.mainForm = new FormGroup({
+      code: new FormControl('',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(6),
+        ]
+      ),
+    });
   }
 
   checkCode() {
@@ -28,12 +40,11 @@ export class AuthenticationCodePage {
     loadingModal.present().then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      return self.auth.checkSignUpCodeMatching(self.authenticationCode);
+      return self.auth.checkSignUpCodeMatching(self.mainForm.value.code);
     }).then((codeMatch: boolean) => {
       authenticationCodeMatch = codeMatch;
       return loadingModal.dismiss();
     }).then(() => {
-      this.authenticationCode = '';
       if (authenticationCodeMatch) {
         // do nothing AuthService will handle a redirect
       } else {
@@ -48,17 +59,6 @@ export class AuthenticationCodePage {
 
   resendCode() {
     this.nav.pop();
-  }
-
-  add(numberVar) {
-    if (this.authenticationCode.length < 6)
-      this.authenticationCode = `${this.authenticationCode}${numberVar}`;
-  }
-
-  delete() {
-    if (this.authenticationCode.length > 0) {
-      this.authenticationCode = this.authenticationCode.substring(0, this.authenticationCode.length - 1);
-    }
   }
 
 }

@@ -1,103 +1,24 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>{{"authentication-code.title" | translate}}</ion-title>
-        <ion-buttons end>
-          <button ion-button [disabled]="authenticationCode.length<6"
-              (click)="checkCode()">
-              {{"done" | translate}}
-          </button>
-        </ion-buttons>
-    </ion-navbar>
+	<ion-navbar>
+		<ion-title>{{"authentication-code.title" | translate}}</ion-title>
+	</ion-navbar>
 </ion-header>
 <ion-content class="phone-number phone-number-authentication">
-    <p class="sub-heading">{{"authentication-code.heading1" | translate}}
-        <br/>{{"authentication-code.heading2" | translate}}
-    </p>
-    <div class="authentication-code-container">
-        <div class="pin-input-container">
-            <div class="pin-input">
-                {{authenticationCode.length>=1?authenticationCode.substring(0, 1):''}}
-            </div>
-            <div class="pin-input">
-                {{authenticationCode.length>=2?authenticationCode.substring(1, 2):''}}
-            </div>
-            <div class="pin-input">
-                {{authenticationCode.length>=3?authenticationCode.substring(2, 3):''}}
-            </div>
-            <div class="pin-input">
-                {{authenticationCode.length>=4?authenticationCode.substring(3, 4):''}}
-            </div>
-            <div class="pin-input">
-                {{authenticationCode.length>=5?authenticationCode.substring(4, 5):''}}
-            </div>
-            <div class="pin-input">
-                {{authenticationCode.length>=6?authenticationCode.substring(5,6):''}}
-            </div>
-        </div>
-
-        <div class="verify-btns">
-            <button ion-button small clear
-                (click)="resendCode()">{{"authentication-code.resendCode" | translate}}</button>
-        </div>
-    </div>
-    <div class="unlock-keypad">
-        <ion-row class="row top">
-            <ion-col class="col col-33">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(1)">1</button>
-            </ion-col>
-            <ion-col class="col col-33 mid-col">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(2)">2</button>
-            </ion-col>
-            <ion-col class="col col-33">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(3)">3</button>
-            </ion-col>
-        </ion-row>
-        <ion-row class="row">
-            <ion-col class="col col-33">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(4)">4</button>
-            </ion-col>
-            <ion-col class="col col-33 mid-col">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(5)">5</button>
-            </ion-col>
-            <ion-col class="col col-33">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(6)">6</button>
-            </ion-col>
-        </ion-row>
-        <ion-row class="row">
-            <ion-col class="col col-33">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(7)">7</button>
-            </ion-col>
-            <ion-col class="col col-33 mid-col">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(8)">8</button>
-            </ion-col>
-            <ion-col class="col col-33">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(9)">9</button>
-            </ion-col>
-        </ion-row>
-        <ion-row class="row">
-            <ion-col class="col col-33">
-                <button ion-button clear class="pin-btn"></button>
-            </ion-col>
-            <ion-col class="col col-33 mid-col">
-                <button ion-button clear class="pin-btn"
-                    (click)="add(0)">0</button>
-            </ion-col>
-            <ion-col class="col col-33">
-                <button ion-button icon-only clear class="pin-btn"
-                    (click)="delete()">
-                    <ion-icon name="ios-backspace-outline"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </div>
+	<div class="authentication-code-container" text-center>
+	<h3>{{"authentication-code.heading1" | translate}}</h3>
+	<p>{{"authentication-code.heading2" | translate}}</p>
+		<form [formGroup]="mainForm" > 
+			<div text-center>
+				<ion-input formControlName="code" placeholder="000000" type="tel" maxlength=6 text-center autofocus></ion-input>
+			</div>
+			<div text-center>
+				<button ion-button round (click)="checkCode()" [disabled]="!mainForm.valid">{{'done' | translate}}</button>
+			</div>
+		</form>
+		<div>
+			<button ion-button small clear
+	   (click)="resendCode()">{{"authentication-code.resendCode" | translate}}</button>
+		</div>
+	</div>
 
 </ion-content>
