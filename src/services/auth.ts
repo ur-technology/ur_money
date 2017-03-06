@@ -373,9 +373,35 @@ export class AuthService {
     });
   }
 
-  sendRecoveryEmail(email: string): Promise<any> {
+  sendResetCode(email: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      resolve('email-sent')
+      const taskRef = firebase
+        .database()
+        .ref(`/resetPasswordQueue/tasks`)
+        .push({
+          _state: 'send_reset_code_requested',
+          email
+        });
+      const resultRef = taskRef.child('result');
+
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+
+        if (!taskResult) {
+          return;
+        }
+
+        resultRef.off('value');
+        taskRef.remove();
+
+        if (taskResult.error) {
+          log.error(`send reset code error: ${taskResult.error}`);
+        }
+
+        resolve(taskResult.state);
+      }, (error) => {
+        reject(error);
+      });
     });
   }
 
