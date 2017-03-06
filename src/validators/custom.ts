@@ -125,7 +125,7 @@ export class CustomValidator {
   }
 
   static validateSponsorReferralCode(control) {
-    var pattern = /^[A-Za-z0-9]{6,}$/;
+    var pattern = /^[A-Za-z0-9]{5,}$/;
     if (control.value && !control.value.match(pattern)) {
       return { 'invalidSponsorReferralCode': true };
     }
