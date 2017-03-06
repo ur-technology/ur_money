@@ -11,7 +11,7 @@
     <form [formGroup]="mainForm" >
       <ion-list>
         <ion-item>
-          <ion-select formControlName="country">
+          <ion-select formControlName="country" (ionChange)="onChangeCountry()">
             <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
           </ion-select>
         </ion-item>

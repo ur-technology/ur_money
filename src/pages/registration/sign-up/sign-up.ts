@@ -183,4 +183,9 @@ export class SignUpPage {
     });
     alert.present();
   }
+
+  onChangeCountry() {
+    console.log('onChangeCountry()');
+    (<FormControl>this.mainForm.controls['phone']).reset('');
+  }
 }

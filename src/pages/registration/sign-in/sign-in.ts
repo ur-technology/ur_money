@@ -108,4 +108,7 @@ export class SignInPage {
     modal.present();
   }
 
+  onChangeCountry() {
+    (<FormControl>this.mainForm.controls['phone']).reset('');
+  }
 }
