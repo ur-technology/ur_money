@@ -27,7 +27,7 @@ import { ChangeSponsorModal } from '../pages/admin/change-sponsor';
 import { SettingsPage } from '../pages/settings/settings/settings';
 import { ChangePasswordPage } from '../pages/settings/change-password/change-password';
 import { LostPasswordPage } from '../pages/registration/lost-password/lost-password';
-import { SignInTemporaryPasswordPage } from '../pages/registration/sign-in-temporary-password/sign-in-temporary-password';
+import { SignInTemporaryCodePage } from '../pages/registration/sign-in-temporary-code/sign-in-temporary-code';
 import { ResetPasswordPage } from '../pages/registration/reset-password/reset-password';
 import { SignInPasswordPage } from '../pages/registration/sign-in-password/sign-in-password';
 import { SettingsAccountPage } from '../pages/settings/settings-account/settings-account';
@@ -122,7 +122,7 @@ export function translateLoaderFactory(http: any) {
     ChangeEmailPage,
     SignInPasswordPage,
     LostPasswordPage,
-    SignInTemporaryPasswordPage,
+    SignInTemporaryCodePage,
     ResetPasswordPage
   ],
   imports: [
@@ -178,7 +178,7 @@ export function translateLoaderFactory(http: any) {
     ChangeEmailPage,
     SignInPasswordPage,
     LostPasswordPage,
-    SignInTemporaryPasswordPage,
+    SignInTemporaryCodePage,
     ResetPasswordPage
   ],
   providers: [

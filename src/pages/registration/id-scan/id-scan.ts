@@ -8,7 +8,6 @@ import { SelfieMatchPage } from '../selfie-match/selfie-match';
 import { AcuantService } from '../../../services/acuant';
 import { IDVerifier } from '../../../interfaces/id-verifier';
 import * as _ from 'lodash';
-import * as log from 'loglevel';
 
 declare var $;
 declare var trackJs: any;

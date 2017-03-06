@@ -298,11 +298,11 @@ export class AuthService {
     return status;
   }
 
-  requestCheckTempPassword(phone: string, tempPassword: string): Promise<any> {
+  requestCheckTempCode(phone: string, tempCode: string): Promise<any> {
     return new Promise((resolve, reject) => {
       let taskRef;
       taskRef = firebase.database().ref(`/signInQueue/tasks`)
-        .push({ phone: phone, clientHashedPassword: tempPassword, _state: 'sign_in_password_check_request' });
+        .push({ phone: phone, clientHashedPassword: tempCode, _state: 'sign_in_password_check_request' });
       let resultRef = taskRef.child('result');
       resultRef.on('value', (snapshot) => {
         let taskResult = snapshot.val();

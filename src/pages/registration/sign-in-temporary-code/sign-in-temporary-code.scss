@@ -1,10 +1,20 @@
-page-sign-in-temporary-password {
+page-sign-in-temporary-code {
   .welcome-ur {
     padding: 2.3rem 16px 1.5rem 0;
     background-size: cover;
     text-align: center;
     width: 100%;
   }
+
+  input:first-of-type {
+    width: 6em;
+    border: 2px solid color($colors,primary);
+    padding: 0.5em;
+    border-radius: 2em;
+    font-size: 1.75em;
+    margin-bottom: 1em;
+  }
+
   .sub-heading {
     font-size: 1.6rem;
     text-align: justify;

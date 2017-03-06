@@ -10,7 +10,7 @@ import { SignUpPage } from '../sign-up/sign-up';
 import { CustomValidator } from '../../../validators/custom';
 import { Utils } from '../../../services/utils';
 import { SignInPasswordPage } from '../sign-in-password/sign-in-password';
-import { SignInTemporaryPasswordPage } from '../sign-in-temporary-password/sign-in-temporary-password';
+import { SignInTemporaryCodePage } from '../sign-in-temporary-code/sign-in-temporary-code';
 
 declare var trackJs: any;
 
@@ -63,7 +63,7 @@ export class SignInPage {
           break;
 
         case 'request_sign_in_canceled_because_user_does_not_have_password_set':
-          self.nav.push(SignInTemporaryPasswordPage, { phone: phone });
+          self.nav.push(SignInTemporaryCodePage, { phone: phone });
           break;
 
         case 'request_sign_in_canceled_because_user_not_found':
