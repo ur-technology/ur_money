@@ -185,7 +185,6 @@ export class SignUpPage {
   }
 
   onChangeCountry() {
-    console.log('onChangeCountry()');
     (<FormControl>this.mainForm.controls['phone']).reset('');
   }
 }

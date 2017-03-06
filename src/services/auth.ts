@@ -242,33 +242,34 @@ export class AuthService {
         submittedAuthenticationCode: submittedAuthenticationCode,
         _state: 'code_matching_requested'
       }).then(() => {
-        let resultRef = taskRef.child('result');
+        let resultRef = taskRef.child('_state');
         resultRef.on('value', (snapshot) => {
-          let result = snapshot.val();
-          if (!result) {
-            return;
-          }
-          resultRef.off('value');
-          if (result.error) {
-            reject(result.error);
-            return;
-          } else if (!result.codeMatch) {
-            log.debug('Submitted authentication code was not correct.');
-            resolve(false);
-            return;
-          }
+          let state = snapshot.val();
+          if (state && (state !== 'code_matching_requested') && (state !== 'code_matching_in_progress')) {
+            resultRef.off('value');
 
-          log.debug('Submitted authentication code was correct.');
-          firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
-            log.debug('Authentication succeded!');
-            taskRef.remove();
-            this.taskId = undefined;
-            resolve(true);
-          }).catch((error) => {
-            taskRef.update({ authenticationError: error });
-            log.warn('Unable to authenticate!');
-            reject('Unable to authenticate');
-          });
+            switch (state) {
+              case 'code_matching_canceled_because_no_match':
+                resolve(false);
+                break;
+              case 'code_matching_succeeded':
+                taskRef.child('result').once('value', snapshot => {
+                  let result = snapshot.val();
+                  log.debug('Submitted authentication code was correct.');
+                  firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
+                    log.debug('Authentication succeded!');
+                    taskRef.remove();
+                    self.taskId = undefined;
+                    resolve(true);
+                  }).catch((error) => {
+                    taskRef.update({ authenticationError: error });
+                    log.warn('Unable to authenticate!');
+                    reject('Unable to authenticate');
+                  });
+                });
+                break;
+            }
+          }
         });
       });
     });
