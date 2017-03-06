@@ -405,4 +405,37 @@ export class AuthService {
     });
   }
 
+  resetPasswordWithCode(resetCode: string, newPassword: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const taskRef = firebase
+        .database()
+        .ref(`/resetPasswordQueue/tasks`)
+        .push({
+          _state: 'reset_password_requested',
+          resetCode,
+          newPassword
+        });
+      const resultRef = taskRef.child('result');
+
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+
+        if (!taskResult) {
+          return;
+        }
+
+        resultRef.off('value');
+        taskRef.remove();
+
+        if (taskResult.error) {
+          log.error(`reset password error: ${taskResult.error}`);
+        }
+
+        resolve(taskResult.state);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
 }
