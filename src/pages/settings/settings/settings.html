@@ -5,7 +5,7 @@
 </ion-header>
 <ion-content class="settings">
   <ion-list>
-    <ion-item-divider color="light">{{auth.currentUser?auth.currentUser.firstName:''}} {{auth.currentUser?auth.currentUser.lastName:''}} - Referral code: {{auth.currentUser?auth.currentUser.referralCode:''}}</ion-item-divider>
+    <ion-item-divider color="light">{{auth.currentUser?auth.currentUser.firstName:''}} {{auth.currentUser?auth.currentUser.lastName:''}} - {{"settings.referralCode" | translate}}: {{auth.currentUser?auth.currentUser.referralCode:''}}</ion-item-divider>
     <button ion-item (click)="gotoSettingAccount()">
       <ion-label>{{'settings.account' | translate}}</ion-label>
     </button>

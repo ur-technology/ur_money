@@ -39,7 +39,7 @@
     "passwordRecoveryTitle": "Password recovery",
     "passwordRecoveryEmail": "Enter email to recover password",
     "emailSent": "A recovery email has been sent to the address you provided. Please follow the instructions",
-    "enterTempPass": "<h3>Welcome back!</h3><p>We have improved our security system. Because you didn't have a password before, we have sent you a temporary code via SMS. <p>Please enter that code to continue.</p>",
+    "enterTempPass": "<h3>Welcome back!</h3><p>We have improved our security system. Because you didn't have a password before, we have sent you a temporary code via SMS. </p><p>Please enter that code to continue.</p>",
     "enterTempPassPlaceholder": "Enter the temporary password",
     "resetPassword": "<h3>Great!</h3><p>Now please choose a new password. This will be your password to sign in from now on.</p>",
     "passwordChanged": "Your password has been changed. For your security, please sign in with your new password."
@@ -320,7 +320,8 @@
     "emailUpdated": "Email updated. Please validate your email",
     "verifyEmailText": "We will send a verification link to the email address you provide.",
     "passwordIncorrect": "The current password that you entered does not match our records.",
-    "unexpectedProblemChangingPassword": "There has been a problem while changing the password"
+    "unexpectedProblemChangingPassword": "There has been a problem while changing the password",
+    "referralCode": "Referral code"
   },
   "terms-and-conditions": {
     "title": "Terms and Conditions",
