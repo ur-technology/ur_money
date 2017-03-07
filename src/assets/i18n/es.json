@@ -156,7 +156,7 @@
 		"renterSecretPhraseRetryMessage": "INCORECTO - INTENTA DE NUEVO",
 		"renterSecretPhrasePlaceholder": "Vuelve a ingresar tu frase secreta",
 		"youWillReceiveBonus": "Recibirás tu bono de 2.000 UR pronto!",
-		"chooseSecret": "Ingresa de 5 a 10 palabras para tu frase secreta",
+		"chooseSecret": "Ingresa de 5 a 10 palabras para tu frase secreta. Sólo letras o números. No caractéres especiales.",
 		"message1": "Asegúrate que la recuerdes porque la necesitarás para realizar transacciones más tarde",
 		"message2": "Solo tú lo sabes. Nunca podrá ser recuperado si se pierde.",
 		"message3": "Ingresa palabras para tu contraseña",
@@ -165,7 +165,8 @@
 		"saveSecretPhrase": "Almacenar una copia local de la frase secreta en el dispositivo para emergencias?",
 		"learnMore": "Conocer más",
 		"slideTitle": "Paso 2 de 2 - Configura frase secreta",
-		"secretPhrase": "Frase secreta"
+		"secretPhrase": "Frase secreta",
+    "secretPhraseIncorrect": "Frase secreta incorrecta."
 	},
 	"announcement-initiated": {
 		"title": "Generación de bonificación en curso",

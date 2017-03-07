@@ -72,7 +72,7 @@ export class CustomValidator {
   }
 
   static secretPhraseValidator(control) {
-    var pattern = /^ *([^\b]+ ){4}[^\b]+ *$$/;
+    var pattern = /^([a-z0-9A-Z]+ ){4,9}([a-z0-9A-Z]+){1}$$/;
     if (!control.value.match(pattern)) {
       return { 'invalidSecretPhrase': true };
     }

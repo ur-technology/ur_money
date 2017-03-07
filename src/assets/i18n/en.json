@@ -156,7 +156,7 @@
     "renterSecretPhraseRetryMessage": "INCORRECT - PLEASE TRY AGAIN",
     "renterSecretPhrasePlaceholder": "Re-enter your secret phrase",
     "youWillReceiveBonus": "You will receive your 2,000 UR bonus soon!",
-    "chooseSecret": "Enter a 5-10 word secret phrase.",
+    "chooseSecret": "Enter a 5-10 word secret phrase. Only letters or numbers. No special characters",
     "message1": "Make sure you remember it because you will need it to make transactions later.",
     "message2": "Only you know it. It can never be recovered if lost.",
     "message3": "It’s a string of words that’s never appeared in print or online—ever!",
@@ -165,7 +165,8 @@
     "saveSecretPhrase": "Store a copy of your secret phrase on device for emergencies?",
     "learnMore": "Learn more",
     "slideTitle": "Step 4 of 4 - Secret Phrase Setup",
-    "secretPhrase": "Secret phrase"
+    "secretPhrase": "Secret phrase",
+    "secretPhraseIncorrect": "Secret phrase incorrect."
   },
   "announcement-initiated": {
     "title": "Bonus generation in progress",
