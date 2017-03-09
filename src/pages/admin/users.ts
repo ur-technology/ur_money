@@ -126,7 +126,18 @@ export class UsersPage {
   approveSignUpBonus(user: any) {
     user.signUpBonusApproved = true;
     user.signUpBonusApprovedTag = 'Bonus-Approved';
-    firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true });
+    firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true })
+      .then(() => {
+        return firebase.database().ref('/walletCreatedQueue/tasks').push({
+          userId: user.userId
+        })
+      })
+      .then(() => {
+      },
+      (error) => {
+        alert(error);
+      })
+      ;
     return false;
   }
 

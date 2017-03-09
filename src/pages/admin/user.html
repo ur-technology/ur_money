@@ -1,235 +1,267 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Edit User Info</ion-title>
-    <ion-buttons end>
-    </ion-buttons>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>Edit User Info</ion-title>
+		<ion-buttons end>
+		</ion-buttons>
+	</ion-navbar>
 </ion-header>
 <ion-content
-  #content
-  class="settings">
-  <form [formGroup]="mainForm">
+	#content
+	class="settings">
+	<form [formGroup]="mainForm">
 
-    <ion-item-divider color="light">Profile Info</ion-item-divider>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <button ion-button type="button" color="danger" item-right [disabled]="mainForm.pristine" (click)="saveProfile()">Save Changes</button>
-        </ion-col>
-      </ion-row>
+		<ion-item-divider color="light">Profile Info</ion-item-divider>
+		<ion-grid>
+			<ion-row>
+				<ion-col>
+					<button ion-button type="button" color="danger" item-right [disabled]="mainForm.pristine" (click)="saveProfile()">Save Changes</button>
+				</ion-col>
+			</ion-row>
 
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label>First Name</ion-label>
-            <ion-input
-              type="text"
-              [(ngModel)]="user.firstName"
-              formControlName="firstName">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Middle Name</ion-label>
-            <ion-input
-              type="text"
-              [(ngModel)]="user.middleName"
-              formControlName="middleName">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Last Name</ion-label>
-            <ion-input
-              type="text"
-              [(ngModel)]="user.lastName"
-              formControlName="lastName">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>First Name</ion-label>
+						<ion-input
+									  type="text"
+		   [(ngModel)]="user.firstName"
+		   formControlName="firstName">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Middle Name</ion-label>
+						<ion-input
+	 type="text"
+  [(ngModel)]="user.middleName"
+  formControlName="middleName">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Last Name</ion-label>
+						<ion-input
+  type="text"
+  [(ngModel)]="user.lastName"
+  formControlName="lastName">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
 
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label>Display Name</ion-label>
-            <ion-input
-              type="text"
-              [(ngModel)]="user.name"
-              formControlName="name">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Email</ion-label>
-            <ion-input type="text"
-              [(ngModel)]="user.email"
-              formControlName="email"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Phone</ion-label>
-            <ion-input type="text"
-              [(ngModel)]="user.phone"
-              formControlName="phone"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>Display Name</ion-label>
+						<ion-input
+  type="text"
+  [(ngModel)]="user.name"
+  formControlName="name">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Email</ion-label>
+						<ion-input type="text"
+				 [(ngModel)]="user.email"
+				 formControlName="email"></ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Phone</ion-label>
+						<ion-input type="text"
+				 [(ngModel)]="user.phone"
+				 formControlName="phone"></ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
 
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label>Country</ion-label>
-            <ion-select formControlName="countryCode" (ionChange)="onCountrySelected($event)">
-              <ion-option [value]="c" *ngFor="let c of countries">
-                {{c.name}}
-              </ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Prefinery IP Address</ion-label>
-            <ion-input type="text"
-              [disabled]="true"
-              [(ngModel)]="user.ipAddress"
-              formControlName="ipAddress">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Downline Size</ion-label>
-            <ion-input type="text"
-              [disabled]="true"
-              [(ngModel)]="user.downlineSize"
-              formControlName="downlineSize"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>Country</ion-label>
+						<ion-select formControlName="countryCode" (ionChange)="onCountrySelected($event)">
+							<ion-option [value]="c" *ngFor="let c of countries">
+								{{c.name}}
+							</ion-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Prefinery IP Address</ion-label>
+						<ion-input type="text"
+				 [disabled]="true"
+				 [(ngModel)]="user.ipAddress"
+				 formControlName="ipAddress">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Downline Size</ion-label>
+						<ion-input type="text"
+				 [disabled]="true"
+				 [(ngModel)]="user.downlineSize"
+				 formControlName="downlineSize"></ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<a href="https://console.firebase.google.com/project/{{env}}/storage/files/user/{{user.userId}}/id-images/" target="_blank"><ion-icon name="images"></ion-icon> View uploaded identity documents</a>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
 
-    <ion-item-divider color="light">Account Info</ion-item-divider>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label>Move Requested</ion-label>
-            <ion-checkbox color="danger" checked="{{user.moveRequested}}" (ionChange)="toggle('moveRequested')"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Disabled</ion-label>
-            <ion-checkbox color="danger" checked="{{user.disabled}}" (ionChange)="toggle('disabled')"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Fraud Suspected</ion-label>
-            <ion-checkbox color="danger" checked="{{user.fraudSuspected}}" (ionChange)="toggle('fraudSuspected')"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Duplicate</ion-label>
-            <ion-checkbox color="danger" checked="{{user.duplicate}}" (ionChange)="toggle('duplicate')"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>Bonus Approved</ion-label>
-            <ion-checkbox color="danger" checked="{{user.signUpBonusApproved}}" (ionChange)="toggle('signUpBonusApproved')"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label>Status</ion-label>
-            <ion-input
-              type="text"
-              [disabled]="true"
-              [(ngModel)]="user.status"
-              [ngModelOptions]="{standalone: true}">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>User Id</ion-label>
-            <ion-input
-              type="text"
-              [disabled]="true"
-              [(ngModel)]="user.userId"
-              [ngModelOptions]="{standalone: true}">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-item-divider *ngIf="sponsor" color="light">Sponsor Info</ion-item-divider>
-      <ion-row *ngIf="sponsor">
-        <ion-col>
-          <ion-item>
-            <ion-label>
-              Sponsor Name
-            </ion-label>
-            <ion-input
-              type="text"
-              [disabled]="true"
-              [(ngModel)]="sponsor.name"
-              formControlName="sponsorName">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>
-              Sponsor Contact
-            </ion-label>
-            <ion-input
-              type="text"
-              [disabled]="true"
-              [(ngModel)]="sponsor.contact"
-              formControlName="sponsorContact">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col width-20>
-          <ion-item>
-            <ion-label></ion-label>
-            <button ion-button type="button" color="secondary" item-right (click)="goToUserPage(sponsor)">View</button>
-            <button ion-button type="button" color="danger" item-right [disabled]="!sponsorChangeable()" (click)="changeSponsor($event)">Change</button>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+		<ion-item-divider color="light">Account Info</ion-item-divider>
+		<ion-grid>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>Move Requested</ion-label>
+						<ion-checkbox color="danger" checked="{{user.moveRequested}}" (ionChange)="toggle('moveRequested')"></ion-checkbox>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Disabled</ion-label>
+						<ion-checkbox color="danger" checked="{{user.disabled}}" (ionChange)="toggle('disabled')"></ion-checkbox>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Fraud Suspected</ion-label>
+						<ion-checkbox color="danger" checked="{{user.fraudSuspected}}" (ionChange)="toggle('fraudSuspected')"></ion-checkbox>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Duplicate</ion-label>
+						<ion-checkbox color="danger" checked="{{user.duplicate}}" (ionChange)="toggle('duplicate')"></ion-checkbox>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>ID documents uploaded</ion-label>
+						<ion-checkbox color="danger" checked="{{user.idUploaded}}" (ionChange)="toggle('idUploaded')"></ion-checkbox>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Selfie uploaded</ion-label>
+						<ion-checkbox color="danger" checked="{{user.selfieMatched}}" (ionChange)="toggle('selfieMatched')"></ion-checkbox>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Selfie confidence %</ion-label>
+						<ion-input
+								   type="text"
+								   [disabled]="true"
+								   [(ngModel)]="user.selfieConfidence"
+								   [ngModelOptions]="{standalone: true}">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Bonus Approved</ion-label>
+						<ion-checkbox color="danger" checked="{{user.signUpBonusApproved}}" (ionChange)="toggle('signUpBonusApproved')"></ion-checkbox>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>Status</ion-label>
+						<ion-input
+								   type="text"
+		   [disabled]="true"
+		   [(ngModel)]="user.status"
+		   [ngModelOptions]="{standalone: true}">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>User Id</ion-label>
+						<ion-input
+		   type="text"
+	 [disabled]="true"
+	 [(ngModel)]="user.userId"
+	 [ngModelOptions]="{standalone: true}">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-item-divider *ngIf="sponsor" color="light">Sponsor Info</ion-item-divider>
+			<ion-row *ngIf="sponsor">
+				<ion-col>
+					<ion-item>
+						<ion-label>
+							Sponsor Name
+						</ion-label>
+						<ion-input
+									 type="text"
+		  [disabled]="true"
+		  [(ngModel)]="sponsor.name"
+		  formControlName="sponsorName">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>
+							Sponsor Contact
+						</ion-label>
+						<ion-input
+	type="text"
+ [disabled]="true"
+ [(ngModel)]="sponsor.contact"
+ formControlName="sponsorContact">
+						</ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col width-20>
+					<ion-item>
+						<ion-label></ion-label>
+						<button ion-button type="button" color="secondary" item-right (click)="goToUserPage(sponsor)">View</button>
+						<button ion-button type="button" color="danger" item-right [disabled]="!sponsorChangeable()" (click)="changeSponsor($event)">Change</button>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
 
-    <ion-item-divider color="light">Direct Referrals ({{showSpinner ? 'Please wait...' : referrals.length}})</ion-item-divider>
-    <ion-item>
-      <ion-list class="users-list" *ngIf="!showSpinner">
-        <ion-item detail-none *ngFor="let r of referrals" class="item item-avatar">
-          <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
-          <ion-label>
-            <h3>{{r.name}} (Downline: {{r.downlineSize}}, Status: {{getUserStatus(r)}})</h3>
-            <p>{{r.phone}} {{r.email}} {{country(r)}}</p>
+		<ion-item-divider color="light">Direct Referrals ({{showSpinner ? 'Please wait...' : referrals.length}})</ion-item-divider>
+		<ion-item>
+			<ion-list class="users-list" *ngIf="!showSpinner">
+				<ion-item detail-none *ngFor="let r of referrals" class="item item-avatar">
+					<ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
+					<ion-label>
+						<h3>{{r.name}} (Downline: {{r.downlineSize}}, Status: {{getUserStatus(r)}})</h3>
+						<p>{{r.phone}} {{r.email}} {{country(r)}}</p>
 
-            <p>{{r.moveRequestedTag}} {{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}} {{r.signUpBonusApprovedTag}}</p>
-          </ion-label>
-          <button ion-button type="button" color="secondary" item-right [disabled]="r.signUpBonusApproved" (click)="approveSignUpBonus(r)">Approve</button>
-          <button ion-button type="button" color="secondary" item-right (click)="goToUserPage(r)">View</button>
-        </ion-item>
+						<p>{{r.moveRequestedTag}} {{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}} {{r.signUpBonusApprovedTag}}</p>
+					</ion-label>
+					<button ion-button type="button" color="secondary" item-right [disabled]="r.signUpBonusApproved" (click)="approveSignUpBonus(r)">Approve</button>
+					<button ion-button type="button" color="secondary" item-right (click)="goToUserPage(r)">View</button>
+				</ion-item>
 
-        <ion-item detail-none *ngIf="referrals.length === 0" class="item item-avatar">
-          No Direct Referrals
-        </ion-item>
+				<ion-item detail-none *ngIf="referrals.length === 0" class="item item-avatar">
+					No Direct Referrals
+				</ion-item>
 
-      </ion-list>
-    </ion-item>
+			</ion-list>
+		</ion-item>
 
-  </form>
+	</form>
 </ion-content>

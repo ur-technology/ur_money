@@ -168,7 +168,7 @@ export class WalletSetupPage {
       }
     }).then(() => {
       self.loadingModal.dismiss().then(() => {
-        firebase.database().ref('/identityAnnouncementQueue/tasks').push({
+        firebase.database().ref('/walletCreatedQueue/tasks').push({
           userId: this.auth.currentUserId
         }).then();
         self.nav.setRoot(IntroPage);
