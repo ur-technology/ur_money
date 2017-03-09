@@ -10,6 +10,8 @@ import { UserService } from './user.service';
 import { UserModel } from '../models/user.model';
 import * as firebase from 'firebase';
 
+declare var trackJs: any;
+
 @Injectable()
 export class AuthService {
   public sponsorReferralCode: string;
@@ -37,11 +39,14 @@ export class AuthService {
       firebase.auth().onAuthStateChanged((authData: any) => {
         if (authData) {
           self.currentUserId = authData.uid;
+          trackJs.addMetadata('user-phone', self.phone);
+          trackJs.addMetadata('user-phone', self.email);
+          trackJs.configure({ userId: self.currentUserId })
 
           this.userService.getCurrentUser(self.currentUserId).then(currentUser => {
             self.currentUser = currentUser;
             if (self.countryCode &&
-              (!self.currentUser.countryCode || !self.currentUser.countryCode.match(/^[A-Z]{2}$/))) {
+              (!self.currentUser.countryCode || (self.currentUser.countryCode && !self.currentUser.countryCode.match(/^[A-Z]{2}$/)))) {
               self.currentUser.countryCode = self.countryCode;
               self.currentUser.update({ countryCode: self.currentUser.countryCode });
             }
@@ -142,7 +147,7 @@ export class AuthService {
     });
   }
 
-  private generateHashedPassword(password: string): Promise<string> {
+  public generateHashedPassword(password: string): Promise<string> {
     return new Promise((resolve, reject) => {
       let scryptAsync = require('scrypt-async');
       scryptAsync(password, 'saltnotneeded', { N: 16384, r: 16, p: 1, dkLen: 64, encoding: 'hex' }, (clientHashedPassword) => {
@@ -185,46 +190,41 @@ export class AuthService {
   }
 
   signIn(phone: string, password: string) {
-    let self = this;
     return new Promise((resolve, reject) => {
       let taskRef;
-      self.generateHashedPassword(password).then((clientHashedPassword: string) => {
-        taskRef = firebase.database().ref('/signInQueue/tasks').push({
-          phone: phone,
-          clientHashedPassword: clientHashedPassword
-        });
-        return taskRef;
-      }).then(() => {
-        let resultRef = taskRef.child('result');
-        resultRef.on('value', (snapshot) => {
-          let result = snapshot.val();
-          if (!result) {
-            return;
-          }
-          resultRef.off('value');
-          if (result.error) {
-            reject(result.error);
-            return;
-          } else if (result.passwordMatch) {
-            log.debug('Submitted authentication code was correct.');
-            firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
-              log.debug('Authentication succeded!');
-              taskRef.remove();
-              resolve(result.state);
-            }).catch((error) => {
-              taskRef.update({ authenticationError: error });
-              log.warn('Unable to authenticate!');
-              reject('Unable to authenticate');
-            });
-          } else {
-            log.debug('Submitted authentication code was not correct.');
+      taskRef = firebase.database().ref('/signInQueue/tasks').push({
+        phone: phone,
+        clientHashedPassword: password
+      });
+      let resultRef = taskRef.child('result');
+      resultRef.on('value', (snapshot) => {
+        let result = snapshot.val();
+        if (!result) {
+          return;
+        }
+        resultRef.off('value');
+        if (result.error) {
+          reject(result.error);
+          return;
+        } else if (result.passwordMatch) {
+          log.debug('Submitted authentication code was correct.');
+          firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
+            log.debug('Authentication succeded!');
             taskRef.remove();
             resolve(result.state);
-            return;
-          }
-        }, (error) => {
-          reject(error);
-        });
+          }).catch((error) => {
+            taskRef.update({ authenticationError: error });
+            log.warn('Unable to authenticate!');
+            reject('Unable to authenticate');
+          });
+        } else {
+          log.debug('Submitted authentication code was not correct.');
+          taskRef.remove();
+          resolve(result.state);
+          return;
+        }
+      }, (error) => {
+        reject(error);
       });
     });
   }
@@ -242,33 +242,34 @@ export class AuthService {
         submittedAuthenticationCode: submittedAuthenticationCode,
         _state: 'code_matching_requested'
       }).then(() => {
-        let resultRef = taskRef.child('result');
+        let resultRef = taskRef.child('_state');
         resultRef.on('value', (snapshot) => {
-          let result = snapshot.val();
-          if (!result) {
-            return;
-          }
-          resultRef.off('value');
-          if (result.error) {
-            reject(result.error);
-            return;
-          } else if (!result.codeMatch) {
-            log.debug('Submitted authentication code was not correct.');
-            resolve(false);
-            return;
-          }
+          let state = snapshot.val();
+          if (state && (state !== 'code_matching_requested') && (state !== 'code_matching_in_progress')) {
+            resultRef.off('value');
 
-          log.debug('Submitted authentication code was correct.');
-          firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
-            log.debug('Authentication succeded!');
-            taskRef.remove();
-            this.taskId = undefined;
-            resolve(true);
-          }).catch((error) => {
-            taskRef.update({ authenticationError: error });
-            log.warn('Unable to authenticate!');
-            reject('Unable to authenticate');
-          });
+            switch (state) {
+              case 'code_matching_canceled_because_no_match':
+                resolve(false);
+                break;
+              case 'code_matching_succeeded':
+                taskRef.child('result').once('value', snapshot => {
+                  let result = snapshot.val();
+                  log.debug('Submitted authentication code was correct.');
+                  firebase.auth().signInWithCustomToken(result.authToken).then((authData) => {
+                    log.debug('Authentication succeded!');
+                    taskRef.remove();
+                    self.taskId = undefined;
+                    resolve(true);
+                  }).catch((error) => {
+                    taskRef.update({ authenticationError: error });
+                    log.warn('Unable to authenticate!');
+                    reject('Unable to authenticate');
+                  });
+                });
+                break;
+            }
+          }
         });
       });
     });
@@ -284,6 +285,7 @@ export class AuthService {
     }
 
     let status = _.trim((this.currentUser.registration && this.currentUser.registration.status) || '') || 'initial';
+
     if ((this.currentUser.wallet && this.currentUser.wallet.address) && (status === 'initial')) {
       status = 'wallet-generated';
     }
@@ -297,25 +299,84 @@ export class AuthService {
     return status;
   }
 
-  envMode() {
-    let matches = Config.firebaseProjectId.match(/ur-money-(\w+)/);
-    return (matches && matches[1]) || 'unknown';
+  requestCheckTempCode(phone: string, tempCode: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let taskRef;
+      taskRef = firebase.database().ref(`/signInQueue/tasks`)
+        .push({ phone: phone, clientHashedPassword: tempCode, _state: 'sign_in_password_check_request' });
+      let resultRef = taskRef.child('result');
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+        if (!taskResult) {
+          return;
+        }
+        resultRef.off('value');
+        if (taskResult.error) {
+          reject(taskResult.error);
+          return;
+        } else {
+          taskRef.remove();
+          resolve(taskResult.state)
+        }
+      }, (error) => {
+        reject(error);
+      });
+    });
   }
 
-  envModeDisplay() {
-    let mode = this.envMode();
-    return mode === 'production' ? '' : `${_.startCase(mode)} mode`;
+  requestChangeTempPassword(phone: string, tempPassword: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let taskRef;
+      taskRef = firebase.database().ref(`/signInQueue/tasks`).push({ phone: phone, clientHashedPassword: tempPassword, _state: 'sign_in_password_change_request' });
+      let resultRef = taskRef.child('result');
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+        if (!taskResult) {
+          return;
+        }
+        resultRef.off('value');
+        if (taskResult.error) {
+          reject(taskResult.error);
+          return;
+        } else {
+          taskRef.remove();
+          resolve(taskResult.state)
+        }
+      }, (error) => {
+        reject(error);
+      });
+    });
   }
 
-  referralLink(window): string {
-    let base: string;
-    if (Config.targetPlatform === 'web') {
-      base = window.location.origin;
-    } else if (this.envMode() === 'production') {
-      base = 'https://web.ur.technology';
-    } else {
-      base = 'https://ur-money-staging.firebaseapp.com';
-    }
-    return `${base}/r/${this.currentUser.referralCode}`;
+  requestSignIn(phone: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let taskRef;
+      taskRef = firebase.database().ref(`/signInQueue/tasks`).push({ phone: phone, _state: 'sign_in_requested' });
+      let resultRef = taskRef.child('result');
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+        if (!taskResult) {
+          return;
+        }
+        resultRef.off('value');
+        if (taskResult.error) {
+          reject(taskResult.error);
+          return;
+        } else {
+          taskRef.remove();
+          resolve(taskResult.state)
+        }
+      }, (error) => {
+        reject(error);
+      });
+
+    });
   }
+
+  sendRecoveryEmail(email: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      resolve('email-sent')
+    });
+  }
+
 }

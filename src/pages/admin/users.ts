@@ -7,6 +7,8 @@ import { UserPage } from './user';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import { FirebaseApp } from 'angularfire2';
+import { Utils } from '../../services/utils';
+import * as firebase from 'firebase';
 
 declare var window: any;
 declare var jQuery: any;
@@ -124,7 +126,18 @@ export class UsersPage {
   approveSignUpBonus(user: any) {
     user.signUpBonusApproved = true;
     user.signUpBonusApprovedTag = 'Bonus-Approved';
-    firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true });
+    firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true })
+      .then(() => {
+        return firebase.database().ref('/walletCreatedQueue/tasks').push({
+          userId: user.userId
+        })
+      })
+      .then(() => {
+      },
+      (error) => {
+        alert(error);
+      })
+      ;
     return false;
   }
 
@@ -133,4 +146,7 @@ export class UsersPage {
     return (countryObject && countryObject.name) || (u.prefineryUser && u.prefineryUser.country) || 'None';
   }
 
+  envModeDisplay() {
+    return Utils.envModeDisplay();
+  }
 }

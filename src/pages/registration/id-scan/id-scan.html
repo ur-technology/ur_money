@@ -1,45 +1,60 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>{{"id-scan.title" | translate}}</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>{{"id-scan.title" | translate}}</ion-title>
+	</ion-navbar>
 </ion-header>
 <ion-content>
-  <form [formGroup]="mainForm">
-    <ion-card>
-      <ion-card-header>
-        <ion-label text-center color="primary">{{"id-scan.slideTitle" | translate}}</ion-label>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-list>
-          <ion-item>
-            <ion-label stacked>{{'id-scan.country' | translate}}</ion-label>
-            <ion-select formControlName="countryCode" (ionChange)="onCountrySelected($event)">
-              <ion-option [value]="c" *ngFor="let c of countries">
-                {{c.name}}
-              </ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-list>
+	<form [formGroup]="mainForm">
+		<ion-card>
+			<ion-card-header>
+				<ion-label text-center color="primary">{{"id-scan.slideTitle" | translate}}</ion-label>
+			</ion-card-header>
 
+			<ion-card-content>
+				<ion-list>
+					<ion-item>
+						<ion-label stacked>{{'id-scan.country' | translate}}</ion-label>
+						<ion-select formControlName="countryCode" (ionChange)="onCountrySelected($event)">
+							<ion-option [value]="c" *ngFor="let c of countries">
+								{{c.name}}
+							</ion-option>
+						</ion-select>
+					</ion-item>
+					<ion-item>
+						<ion-label stacked>{{'id-scan.idType' | translate}}</ion-label>
+						<ion-select formControlName="idType">
+							<ion-option [value]="i.id" *ngFor="let i of idTypes">
+								{{ i.name }}
+							</ion-option>
+						</ion-select>
+					</ion-item>
+				</ion-list>
 
-        <div>
-          <ion-img class="preview-image" [src]="idCardFrontSource" [alt]="" (click)="selectFile($event)"></ion-img>
-          <input id="id-card-front" type="file" capture="camera" accept="image/*" (change)="fileChanged($event, 'DriversLicenseDuplex')" />
-        </div>
-        <div>
-          <ion-img class="preview-image" [src]="idCardBackSource" [alt]="" (click)="selectFile($event)"></ion-img>
-          <input id="id-card-back" type="file" capture="camera" accept="image/*" (change)="fileChanged($event, 'DriversLicenseDuplex')" />
-        </div>
+				<div class="id-type" *ngIf="idType == 'national-id'">
 
-      </ion-card-content>
-      <ion-item class="footer-card">
-        <button ion-button item-right clear default [disabled]="!idCardUploaded()" icon-right (click)="submit()">
-          {{"continue" | translate}}
-          <ion-icon name="arrow-forward"></ion-icon>
-        </button>
-      </ion-item>
-    </ion-card>
-  </form>
+					<p>{{'id-scan.nationalIdInstructions' | translate}}</p>
+					<button (click)="selectFile($event)">
+						<ion-img class="preview-image" [src]="idCardFrontSource" [alt]=""></ion-img>
+						<input id="id-card-front" type="file" capture="camera" accept="image/*" (change)="fileChanged($event, 'DriversLicenseDuplex')" />
+						<ion-icon name="camera"></ion-icon> {{'id-scan.scanFrontOfId' | translate}}
+					</button>
+
+					<button (click)="selectFile($event)">
+						<ion-img class="preview-image" [src]="idCardBackSource" [alt]=""></ion-img>
+						<input id="id-card-back" type="file" capture="camera" accept="image/*" (change)="fileChanged($event, 'DriversLicenseDuplex')" />
+						<ion-icon name="camera"></ion-icon> {{'id-scan.scanBackOfId' | translate}}
+					</button>
+				</div>
+
+			</ion-card-content>
+			<ion-item class="footer-card">
+				<button ion-button item-right clear default [disabled]="!idCardUploaded()" icon-right (click)="submit()">
+					{{"continue" | translate}}
+					<ion-icon name="arrow-forward"></ion-icon>
+				</button>
+			</ion-item>
+		</ion-card>
+	</form>
 </ion-content>
 <ion-footer>
 

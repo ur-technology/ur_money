@@ -1,4 +1,4 @@
-import { NavController, Platform, AlertController, ToastController, LoadingController } from 'ionic-angular';
+import { NavController, Platform, AlertController, LoadingController } from 'ionic-angular';
 import { Inject, Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FirebaseApp } from 'angularfire2';
@@ -12,7 +12,7 @@ import { EncryptionService } from '../../../services/encryption';
 import { Config } from '../../../config/config';
 import { IntroPage } from '../intro/intro'
 import * as firebase from 'firebase';
-
+import { ToastService } from '../../../services/toast'
 declare var jQuery: any;
 
 @Component({
@@ -31,10 +31,10 @@ export class WalletSetupPage {
     public auth: AuthService,
     public platform: Platform,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController,
     public loadingController: LoadingController,
     public translate: TranslateService,
     public encryptionService: EncryptionService,
+    private toastService: ToastService,
     @Inject(FirebaseApp) firebase: any
   ) {
     this.mainForm = new FormGroup({
@@ -59,21 +59,40 @@ export class WalletSetupPage {
   }
 
   confirmSecretPhraseWrittenDown() {
-    let message1 = this.translate.instant('wallet-setup.confirmWrittenDownMessage1');
-    let message2 = this.translate.instant('wallet-setup.confirmWrittenDownMessage2');
-    let message3 = this.translate.instant('wallet-setup.confirmWrittenDownMessage3');
-    let alert = this.alertCtrl.create({
-      title: this.translate.instant('wallet-setup.confirmWrittenDownTitle'),
-      message: `<p>${message1}</p><p><b>${this.profile.secretPhrase}</b></p><p>${message2}</p><p>${message3}</p>`,
-      buttons: [
-        { text: this.translate.instant('cancel'), handler: () => { alert.dismiss(); } },
+    let self = this;
+
+    let alert = self.alertCtrl.create({
+      title: self.translate.instant('wallet-setup.reenterSecretPhraseTitle'),
+      message: self.translate.instant('wallet-setup.reenterSecretPhraseMessage'),
+      inputs: [
         {
-          text: this.translate.instant('wallet-setup.confirmWrittenDownButton'), handler: () => {
-            alert.dismiss().then(() => {
-              this.loadingModal.present().then(() => {
-                this.generateAddress();
+          name: 'passphrase',
+          type: 'password',
+          placeholder: self.translate.instant('wallet-setup.secretPhrase')
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+          }
+        },
+        {
+          text: self.translate.instant('ok'),
+          handler: (data) => {
+            if (data.passphrase === self.profile.secretPhrase) {
+              alert.dismiss().then(() => {
+                self.loadingModal.present().then(() => {
+                  self.generateAddress();
+                });
               });
-            });
+            } else {
+              alert.dismiss().then(() => {
+                self.toastService.showMessage({ messageKey: 'wallet-setup.secretPhraseIncorrect' });
+              });
+            }
+
           }
         }
       ]
@@ -87,7 +106,7 @@ export class WalletSetupPage {
     WalletModel.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
       let wallet: WalletModel = new WalletModel(walletData);
       self.profile.address = wallet.getAddress();
-      if (self.platform.is('cordova')) {
+      if (self.platform.is('android')) {
         NativeStorage.clear().then(() => {
           self.savePassPhrase().then(() => {
             self.saveWallet();
@@ -149,7 +168,7 @@ export class WalletSetupPage {
       }
     }).then(() => {
       self.loadingModal.dismiss().then(() => {
-        firebase.database().ref('/identityAnnouncementQueue/tasks').push({
+        firebase.database().ref('/walletCreatedQueue/tasks').push({
           userId: this.auth.currentUserId
         }).then();
         self.nav.setRoot(IntroPage);

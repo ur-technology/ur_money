@@ -1,50 +1,45 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>{{"profile-setup.title" | translate}}</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>{{"profile-setup.title" | translate}}</ion-title>
+	</ion-navbar>
 </ion-header>
 <ion-content>
-  <form id="myForm" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && confirmSecretPhraseWrittenDown()">
-    <ion-card>
-      <ion-card-header>
-        <ion-label text-center color="primary">{{"wallet-setup.slideTitle" | translate}}</ion-label>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-list>
-          <ion-item text-wrap>
-          <p>
-            {{"wallet-setup.chooseSecret" | translate}}
-          </p>
-          <br />
-          <p>
-            {{"wallet-setup.message1" | translate}}
-          </p>
-          <br />
-          <p>
-            {{"wallet-setup.message4" | translate}}
-          </p>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>{{'wallet-setup.secretPhrase' | translate}}</ion-label>
-            <ion-input type="text"  clearInput="true" autocorrect="off" autocapitalize="none" [(ngModel)]="profile.secretPhrase" formControlName="secretPhrase" placeholder="{{'wallet-setup.secretPhrasePlaceholder' | translate}}"></ion-input>
-            <button item-right ion-button icon-right type="text" class="button-generate" color="secondary" (click)="suggestSecretPhrase()">Generate <ion-icon name="color-wand"></ion-icon>
-        </button>
-          </ion-item>
-        </ion-list>
-        <ion-item text-wrap *ngIf="configPlatform!='web'">
-          <ion-label>{{'wallet-setup.saveSecretPhrase' | translate}}</ion-label>
-          <ion-checkbox class="checkbox-wallet" formControlName="savePhrase"></ion-checkbox>
-          <button ion-button outline round type="text" item-right (click)="alertSecretPhrase()" form="aa"><ion-icon name="help"></ion-icon></button>
-        </ion-item>
-      </ion-card-content>
-      <ion-item class="footer-card">
-        <button type="submit" ion-button item-right clear default [disabled]="!mainForm.valid" icon-right>
-             {{"continue" | translate}}
-             <ion-icon name="arrow-forward"></ion-icon>
-           </button>
-      </ion-item>
-    </ion-card>
-  </form>
+	<form id="myForm" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && confirmSecretPhraseWrittenDown()">
+		<ion-card>
+			<ion-card-header>
+				<ion-label text-center color="primary">{{"wallet-setup.slideTitle" | translate}}</ion-label>
+			</ion-card-header>
+			<ion-card-content>
+				<ion-list>
+					<ion-item text-wrap>
+						<p>
+						{{"wallet-setup.chooseSecret" | translate}}
+						</p>
+						<p>
+						{{"wallet-setup.message1" | translate}}
+						</p>
+					</ion-item>
+					<ion-item>
+						<ion-label stacked>{{'wallet-setup.secretPhrase' | translate}}</ion-label>
+						<ion-input type="text"  clearInput="true" autocorrect="off" autocapitalize="none" [(ngModel)]="profile.secretPhrase" formControlName="secretPhrase" placeholder="{{'wallet-setup.secretPhrasePlaceholder' | translate}}"></ion-input>
+					</ion-item>
+				</ion-list>
+				<div class="generate">
+						<p>
+						{{"wallet-setup.message4" | translate}}
+						</p>
+						<button item-right ion-button icon-right type="text" class="button-generate" color="secondary" (click)="suggestSecretPhrase()">Generate <ion-icon name="color-wand"></ion-icon>
+						</button>
+				</div>
+			</ion-card-content>
+			<ion-item class="footer-card">
+				<button type="submit" ion-button item-right clear default [disabled]="!mainForm.valid" icon-right>
+					{{"continue" | translate}}
+					<ion-icon name="arrow-forward"></ion-icon>
+				</button>
+			</ion-item>
+		</ion-card>
+	</form>
 </ion-content>
 <ion-footer>
 

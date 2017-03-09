@@ -14,6 +14,7 @@ import { SendPage } from './../send/send';
 import { InviteLinkPage } from './../invite-link/invite-link';
 import { SponsorWaitPage } from '../sponsor-wait/sponsor-wait';
 import { BigNumber } from 'bignumber.js';
+import { Utils } from '../../services/utils';
 declare var jQuery: any;
 
 @Component({
@@ -183,4 +184,9 @@ export class HomePage {
       }[this.auth.getUserStatus()] || AnnouncementInitiatedPage);
     }
   }
+
+  envModeDisplay() {
+    return Utils.envModeDisplay();
+  }
+
 }

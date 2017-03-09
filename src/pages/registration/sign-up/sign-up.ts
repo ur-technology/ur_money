@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { CountryListService } from '../../../services/country-list';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom';
@@ -9,6 +9,7 @@ import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { AuthenticationCodePage } from '../authentication-code/authentication-code';
 import { SignInPage } from '../sign-in/sign-in';
+import { Utils } from '../../../services/utils';
 
 @Component({
   selector: 'page-sign-up',
@@ -18,61 +19,39 @@ export class SignUpPage {
   countries: any[];
   mainForm: FormGroup;
   signUpType: string;
-  subheadingTitle = '';
   subheadingButton = '';
-  sponsorReferralCode: string;
-  email: string;
-  password: string;
 
   constructor(
     public nav: NavController,
-    private navParams: NavParams,
     private countryListService: CountryListService,
     private translate: TranslateService,
     public modalCtrl: ModalController,
     public loadingController: LoadingController,
     public auth: AuthService,
     public toastService: ToastService,
-    public alertCtrl: AlertController,
-    public platform: Platform
+    public alertCtrl: AlertController
   ) {
 
     this.countries = this.countryListService.getCountryData();
-    this.signUpType = this.navParams.get('signUpType') || 'sponsorReferralCode';
-    this.extractSponsorReferralCodeFromUrl();
+    this.signUpType = 'sponsorReferralCode';
     this.mainForm = new FormGroup({
       country: new FormControl(this.countryListService.getDefaultContry(), Validators.required),
       phone: new FormControl('', (control) => {
-        let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-        let phoneNumberObject;
-        try {
-          phoneNumberObject = phoneNumberUtil.parse(control.value, this.mainForm.value.country.countryCode);
-        } catch (e) { }
-        if (!phoneNumberObject || !phoneNumberUtil.isValidNumber(phoneNumberObject)) {
-          return { 'invalidPhone': true };
-        }
+        return Validators.required(control) || CustomValidator.validatePhoneNumber(this.mainForm.value.country.countryCode, control);
       }),
-      sponsorReferralCode: new FormControl(this.sponsorReferralCode || '', (control) => {
+      sponsorReferralCode: new FormControl(this.extractSponsorReferralCodeFromUrl() || '', (control) => {
         if (this.signUpType === 'sponsorReferralCode') {
-          if (!/^[a-z0-9]{6,}$/.test(control.value || '')) {
-            return { 'invalidSponsorReferralCode': true };
-          }
+          return Validators.required(control) || CustomValidator.validateSponsorReferralCode(control);
         }
       }),
-      email: new FormControl(this.email, (control) => {
+      email: new FormControl('', (control) => {
         if (this.signUpType === 'email') {
           return Validators.required(control) || CustomValidator.emailValidator(control);
         }
       }),
-      password: new FormControl('', [Validators.required]),
-      passwordConfirmation: new FormControl('', (control) => {
-        let error = Validators.required(control);
-        if (!error && control.value !== this.mainForm.value.password) {
-          error = { 'mismatchedPassword': true };
-        }
-        return error;
-      })
-    });
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]),
+      passwordConfirmation: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)])
+    }, CustomValidator.isMatchingPassword);
 
   }
 
@@ -83,7 +62,7 @@ export class SignUpPage {
       let params: string = window.location.search || '';
       matches = params.match(/[\?\&]r\=([a-zA-Z0-9]+)/);
     }
-    this.sponsorReferralCode = matches && matches[1];
+    return matches && matches[1];
   }
 
   ionViewDidLoad() {
@@ -93,23 +72,17 @@ export class SignUpPage {
   changeSignUpType() {
     this.signUpType = this.signUpType === 'sponsorReferralCode' ? 'email' : 'sponsorReferralCode';
     this.changeTitlesBySignUpType();
+
   }
 
   private changeTitlesBySignUpType() {
-    this.subheadingButton = this.translate.instant(
-      this.signUpType === 'sponsorReferralCode' ?
-        'sign-up.signUpWithEmailCodeInstead' :
-        'sign-up.signUpWithSponsorReferralCodeInstead'
-    );
-  }
-
-  private normalizedPhone(): string {
-    let strippedPhone: string = (this.mainForm.value.phone || '').replace(/\D/g, '');
-    let extraPrefix: string = this.mainForm.value.country.mobileAreaCodePrefix || '';
-    if (extraPrefix && strippedPhone.startsWith(extraPrefix)) {
-      extraPrefix = '';
+    if (this.signUpType === 'sponsorReferralCode') {
+      this.mainForm.controls['email'].setErrors(null);
+      this.subheadingButton = this.translate.instant('sign-up.signUpWithEmailCodeInstead');
+    } else {
+      this.mainForm.controls['sponsorReferralCode'].setErrors(null);
+      this.subheadingButton = this.translate.instant('sign-up.signUpWithSponsorReferralCodeInstead');
     }
-    return this.mainForm.value.country.telephoneCountryCode + extraPrefix + strippedPhone;
   }
 
   submit() {
@@ -120,10 +93,10 @@ export class SignUpPage {
     let taskState: string;
     loadingModal.present().then(() => {
       return self.auth.requestSignUpCodeGeneration(
-        self.normalizedPhone(),
+        Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix),
         self.mainForm.value.password,
-        self.signUpType === 'sponsorReferralCode' ? self.sponsorReferralCode : null,
-        self.signUpType === 'email' ? self.email : null
+        self.signUpType === 'sponsorReferralCode' ? self.mainForm.value.sponsorReferralCode : null,
+        self.signUpType === 'email' ? self.mainForm.value.email : null
       );
     }).then((newTaskState: string) => {
       taskState = newTaskState;
@@ -131,7 +104,8 @@ export class SignUpPage {
     }).then(() => {
       switch (taskState) {
         case 'code_generation_finished':
-          self.nav.setRoot(AuthenticationCodePage);
+          self.auth.countryCode = this.mainForm.value.country.countryCode;
+          self.nav.push(AuthenticationCodePage);
           break;
 
         case 'code_generation_canceled_because_user_already_signed_up':
@@ -154,21 +128,25 @@ export class SignUpPage {
           break;
 
         case 'code_generation_canceled_because_voip_phone_not_allowed':
-          self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+          break;
+
+        case 'code_generation_canceled_because_email_not_found':
+          self.toastService.showMessage({ messageKey: 'sign-up.betaEmailNotFound' });
           break;
 
         case 'code_generation_canceled_because_sponsor_not_found':
         case 'code_generation_canceled_because_sponsor_disabled':
-          self.toastService.showMessage({ messageKey: 'phone-number.sponsorNotFoundMessage' });
+          self.toastService.showMessage({ messageKey: 'sign-up.sponsorNotFoundMessage' });
           break;
 
         default:
-          self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
 
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({ messageKey: 'phone-number.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
       });
     });
   }
@@ -204,5 +182,9 @@ export class SignUpPage {
       ]
     });
     alert.present();
+  }
+
+  onChangeCountry() {
+    (<FormControl>this.mainForm.controls['phone']).reset('');
   }
 }

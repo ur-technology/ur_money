@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Utils } from '../../services/utils';
 declare var window: any;
 
 @Component({
@@ -119,7 +120,7 @@ export class ContactsComponent {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
           // file: 'https://ur.technology/wp-content/uploads/2016/11/icon-android-192x192.png',
-          url: self.auth.referralLink(window),
+          url: Utils.referralLink(self.auth.currentUser.referralCode),
           chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions');

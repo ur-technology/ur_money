@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { WalletModel } from '../models/wallet';
@@ -72,7 +72,7 @@ export class CustomValidator {
   }
 
   static secretPhraseValidator(control) {
-    var pattern = /^ *([^\b]+ ){4}[^\b]+ *$$/;
+    var pattern = /^([a-z0-9]+ ){4,9}([a-z0-9]+){1}$$/;
     if (!control.value.match(pattern)) {
       return { 'invalidSecretPhrase': true };
     }
@@ -99,6 +99,35 @@ export class CustomValidator {
   static numericRangeValidator(control) {
     if (control.value !== undefined && CustomValidator.minValidAmount !== undefined && CustomValidator.maxValidAmount !== undefined && (control.value < CustomValidator.minValidAmount || control.value > CustomValidator.maxValidAmount)) {
       return { 'numberOutOfRange': true };
+    }
+  }
+
+  static isMatchingPassword(group: FormGroup) {
+    let firstPassword = group.controls['password'].value;
+    let secondPassword: FormControl = <FormControl>group.controls['passwordConfirmation'];
+
+    if ((firstPassword && secondPassword.value) && (firstPassword != secondPassword.value)) {
+      secondPassword.setErrors({ mismatch: true });
+      return { 'mismatch': true };
+    }
+    return null;
+  }
+
+  static validatePhoneNumber(countryCode: string, control) {
+    let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+    let phoneNumberObject;
+    try {
+      phoneNumberObject = phoneNumberUtil.parse(control.value, countryCode);
+    } catch (e) { }
+    if (!phoneNumberObject || !phoneNumberUtil.isValidNumber(phoneNumberObject)) {
+      return { 'invalidPhone': true };
+    }
+  }
+
+  static validateSponsorReferralCode(control) {
+    var pattern = /^[A-Za-z0-9]{5,}$/;
+    if (control.value && !control.value.match(pattern)) {
+      return { 'invalidSponsorReferralCode': true };
     }
   }
 

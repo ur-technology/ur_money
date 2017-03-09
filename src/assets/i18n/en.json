@@ -16,7 +16,7 @@
     "signUp": "Sign Up",
     "signIn": "Sign In"
   },
-  "phone-number": {
+  "sign-in": {
     "title": "Enter phone number",
     "heading": "Please confirm your country code and enter your phone number",
     "phoneNumber": "Enter your phone number",
@@ -24,10 +24,25 @@
     "phoneCorrect": "Is your phone number above correct?",
     "errorUserDisabled": "Your user account has been disabled.",
     "errorExcessiveLogins": "Your user account has been locked due to excessive failed login attempts.",
-    "unexpectedProblem": "There was an unexpected problem sending the SMS. Please try again later",
     "noInviteFoundTitle": "Invitation not found",
     "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
-    "betaProgramButton": "I'm in the UR Money Beta Program"
+    "betaProgramButton": "I'm in the UR Money Beta Program",
+    "userNotFound": "The number that you entered did not match our records. Please double-check and try again.",
+    "credentialsIncorrect": "The number and password that you entered did not match our records. Please double-check and try again.",
+    "gotoSignUp": "Sign up instead?",
+    "userDisabled": "Your user account has been disabled.",
+    "unexpectedProblem": "There was an unexpected problem. Please try again later",
+    "lostPassword": "I've lost my password",
+    "contactSupport": "Contact support",
+    "passwordRecovery": "We will send you a temporary password",
+    "contactSupportMail": "mailto:support@ur.technology?Subject=Support%20lost%20password",
+    "passwordRecoveryTitle": "Password recovery",
+    "passwordRecoveryEmail": "Enter email to recover password",
+    "emailSent": "A recovery email has been sent to the address you provided. Please follow the instructions",
+    "enterTempPass": "<h3>Welcome back!</h3><p>We have improved our security system. Because you didn't have a password before, we have sent you a temporary code via SMS. </p><p>Please enter that code to continue.</p>",
+    "enterTempPassPlaceholder": "Enter the temporary password",
+    "resetPassword": "<h3>Great!</h3><p>Now please choose a new password. This will be your password to sign in from now on.</p>",
+    "passwordChanged": "Your password has been changed. For your security, please sign in with your new password."
   },
   "sign-up": {
     "title": "Sign up",
@@ -35,40 +50,34 @@
     "placeholderPassword": "Enter your password",
     "passwordConfirmation": "Password confirmation",
     "placeholderPasswordConfirmation": "Re-enter your password",
-
     "sponsorReferralCode": "Sponsor's referral code",
     "placeholderSponsorReferralCode": "Enter your sponsor's referral code",
-
     "placeholderEmail": "Enter your beta program email",
-
     "headingReferral": "Welcome! you have been invited by <b>{{sponsor}}</b> to be part of UR Money.",
     "headingNoReferral": "Welcome. To be part of UR network, you have to enter your sponsor's referral code",
     "headingEmail": "Please confirm your country, enter your phone number and your email",
-    "signUpWithEmailInstead": "Sign up with email instead",
+    "signUpWithEmailCodeInstead": "Sign up with email instead",
     "signUpWithSponsorReferralCodeInstead": "Sign up with referral code instead",
     "userAlreadyExists": "This phone number already exists on our records, please go to sign in page",
     "gotoSignIn": "Sign In",
+    "betaEmailNotFound": "The email that you entered was not found in our records. Please double-check and try again.",
     "sponsorNotFoundMessage": "There is no sponsor with that referral code, please try another referral code",
     "sponsorDisabledMessage": "The sponsor is disabled, please try another referral code",
     "enterFields": "Please enter all the fields",
-    "alertInfoReferral": "You need your sponsor's referral code in order to sign up. Please, ask the referral code to your sponsor or click on the invitation link that was sent to you.",
-    "alertInfoEmail": "If you joined our beta program, enter that email."
+    "sponsorReferralCodeExplanation": "You need your sponsor's referral code in order to sign up. Please, ask the referral code to your sponsor or click on the invitation link that was sent to you.",
+    "emailExplanation": "If you joined our beta program, enter that email."
   },
   "choose-contact": {
     "title": "Choose contact or enter UR address",
     "placeholderAddress": "Enter the receiver's UR address"
   },
-  "email-address": {
-    "title": "Enter email address",
-    "heading": "Please enter the email address that you have registered in the UR Money Beta Program",
-    "placeholder": "Enter your email address",
-    "errorUserDisabled": "Your user account has been disabled.",
-    "unexpectedProblem": "There was an unexpected problem sending you an email. Please try again later",
-    "noInviteFoundTitle": "Invitation not found",
-    "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
-    "betaProgramButton": "I'm in the UR Money Beta Program",
-    "errorUserNotInBetaProgram": "We do not have a record of that email being registered in our beta program.",
-    "unexpectedProblem": "There was an unexpected problem sending the email. Please try again later"
+  "authentication-code": {
+    "title": "Verification code",
+    "heading1": "We have sent you an SMS with a verification code.",
+    "heading2": "To complete your phone number verification, please enter the 6-digit verification code.",
+    "resendCode": "Didn't receive verification code? Send again",
+    "unableToProcessCode": "We were unable to process your verification code. Please try again later",
+    "invalidCode": "The verification code you entered is incorrect or expired. Please try again."
   },
   "intro": {
     "title": "Set Up Profile",
@@ -83,94 +92,13 @@
     "message3": "We will also need access to your contacts so you can invite them, chat with them and make transactions with them.",
     "message4": "You are all done. <b>Enjoy UR Money!<b/>"
   },
-  "identity-verification-intro": {
-    "slideTitle": "You’re just a few steps away from claiming your <b>2,000 UR!</b>",
-    "slideMessage": "In order to provide a safe environment, we ask all community members to verify their identity. To do this, we will need to ask you for several pieces of identifying information including mobile phone number, name, address, date of birth, etc., and then share this info with Trulioo, Inc., a Canada-based identity verification service.",
-    "costToBuy": "The cost of verifying the identity will be {{value}}",
-    "verificationPurchased": "You have already bought the verification. Please, continue to verify your identity."
-  },
-  "identity-verification-personal-info": {
-    "slideTitle": "Step 1 of 3 - Personal Info",
-    "gender": "Gender",
-    "dateOfBirth": "Date of Birth",
-    "placeholderGender": "Choose gender"
-  },
-  "identity-verification-address": {
-    "slideTitle": "Step 2 of 3 - Address ",
-    "countryCode": "Country",
-    "buildingNumber": "Building/House Number",
-    "streetName": "Street Name",
-    "streetType": "Street type",
-    "unitNumber": "Unit Number",
-    "buildingName": "Building Name",
-    "address1": "Address",
-    "city": "City",
-    "suburb": "Suburb",
-    "stateProvinceCode": "State or Province",
-    "postalCode": "Zip/Postal Code",
-    "placeholderBuildingNumber": "Enter your building or house number",
-    "placeholderStreetName": "Enter the name of the street",
-    "placeholderStreeType": "Enter the type of the street",
-    "placeholderUnitNumber": "Enter the unit number",
-    "placeholderBuildingName": "Enter the building name",
-    "placeholderAddress1": "Enter your address",
-    "placeholderCity": "Enter city name",
-    "placeholderSuburb": "Enter suburb name",
-    "placeholderProvince": "Choose your state or province",
-    "placeholderProvinceInput": "Enter your state or province",
-    "placeholderPostal": "Enter your zip or postal code"
-  },
-  "identity-verification-document": {
-    "slideTitle": "Step 3 of 3 - Verification Document",
-    "idType": "ID Type",
-    "driverLicenceState": "Driver Licence State",
-    "driverLicenceNumber": "Driver Licence Number",
-    "MRI1": "Machine readable Line 1",
-    "MRI2": "Machine readable Line 2",
-    "passportNumber": "Passport Number",
-    "passportExpirationDate": "Expiration Date",
-    "passportExpirationDay": "Expiration Day",
-    "passportExpirationMonth": "Expiration Month",
-    "passportExpirationYear": "Expiration Year",
-    "id": "Id",
-    "placeholderDriverlicenceState": "Choose driver licence state",
-    "placeholderDriverlicenceNumber": "Enter your driver licence number",
-    "placeholderId": "Enter your Id",
-    "placeholderMRZ1": "Enter the passport Machine Readable Zone line 1",
-    "placeholderMRZ2": "Enter the passport Machine Readable Zone line 2",
-    "placeholderPassportNumber": "Enter passport number",
-    "placeholderPassportExpirationDay": "Enter passport expiration day",
-    "placeholderPassportExpirationMonth": "Enter passport expiration month",
-    "placeholderPassportExpirationYear": "Enter passport expiration year"
-  },
-  "identity-verification-summary": {
-    "slideTitle": "Review your information",
-    "personalInfo": "Personal information",
-    "name": "Name",
-    "location": "Location",
-    "additionaInfo": "Additional Info",
-    "verifyMyInfo": "Verify My Info"
-  },
-  "identity-verification-finish": {
-    "slideTitle": "<b>Congratulations!</b> You just earned your <b>2000 UR</b>",
-    "slideMessage": "You will see your 2,000 UR bonus in your homepage soon!"
-  },
   "identity-verification-sponsor-wait": {
     "slideTitle": "<b>Waiting for sponsor to complete profile setup</b>",
     "slideMessage": "We are currently waiting for <b>{{value}}</b> to complete their account before you can get your 2000 UR.</br>Your <b>bonus</b> will be generated soon.",
     "sendMessage": "Send a message to {{sponsor}}",
     "title": "Waiting sponsor to complete account"
   },
-  "verify-phone-number": {
-    "title": "Verfify Phone Number",
-    "heading1": "We have sent you an SMS with a verification code.",
-    "heading2": "To complete your phone number verification, please enter the 6-digit verification code.",
-    "resendCode": "Didn't receive verification code? Send again",
-    "unableToProcessCode": "We were unable to process your verification code. Please try again later",
-    "invalidCode": "The verification code you entered is incorrect or expired. Please try again.",
-    "slideTitle": "Please verify your phone number"
-  },
-  "id-scan": {
+  "profile-setup": {
     "title": "Setting Up Account",
     "firstName": "First Name",
     "middleName": "Middle Name (optional)",
@@ -185,59 +113,64 @@
     "placeholderLastName": "Enter last name",
     "placeholderFullName": "Enter how you want to be called",
     "placeholderEmail": "Enter email",
-    "slideTitle": "Step 1 of 4 - Scan Your Id"
+    "slideTitle": "Step 3 of 4 - Profile Info"
+  },
+  "id-scan": {
+    "title": "Setting Up Account",
+    "country": "Country",
+    "idType": "Type of ID",
+    "nationalIdInstructions": "Please take a picture of the front and the back of your driver's license or national ID. Your ID should take up as much of the photo as possible without going off the edges.",
+    "scanFrontOfId": "Tap to capture the front",
+    "scanBackOfId": "Tap to capture the back",
+    "nationalId": "Driver's license or national ID card",
+    "idNotRecognised": "Your ID can't be recognised, or has been used before. Please try again.",
+    "city": "City",
+    "state": "State or province",
+    "slideTitle": "Step 1 of 4 - Scan Your Id",
+    "cantMatchTitle": "Couldn't recognise your ID",
+    "cantMatchMessage": "We couldn't recognise your ID. You can try again, or let someone from customer support verify it manually.",
+    "tryAgain": "Try again",
+    "letAHumanDoIt": "Let a human do it"
   },
   "selfie-match": {
     "title": "Setting Up Account",
-    "slideTitle": "Step 2 of 4 - Take a Selfie"
+    "slideTitle": "Step 2 of 4 - Take a Selfie",
+    "scan": "Tap to take a selfie",
+    "instructions": "We need a picture of your face to verify your ID. Try to take a photo where your face fills as much of the image as possible, without going over the edges.",
+    "cantMatchTitle": "Couldn't match your selfie to your ID",
+    "cantMatchMessage": "We couldn't automatically verify your ID. You can try again, or let someone from customer support verify you manually.",
+    "tryAgain": "Try again",
+    "letAHumanDoIt": "Let a human do it"
   },
-  "profile-setup": {
-    "title": "Setting Up Account",
-    "name": "Name as it will appear to others",
-    "email": "Email",
-    "slideTitle": "Step 3 of 4 - Profile Info"
-  },
-  "secret-phrase-setup": {
+  "wallet-setup": {
     "title": "Setting Up Account",
     "suggestSecretPhrase": "Generate",
-    "secretPhrasePlaceholder": "Enter at least 5 words",
+    "secretPhrasePlaceholder": "Enter at least 5 lowercase words",
     "confirmWrittenDownTitle": "Write It Down!",
     "confirmWrittenDownMessage1": "This is your secret phrase:",
     "confirmWrittenDownMessage2": "Write this phrase on a piece of paper and store it in a safe place.",
     "confirmWrittenDownMessage3": "WARNING: UR Technology does not store your secret phrase on our servers and will NOT be able to recover it if it is lost, forgotten or corrupted.",
     "confirmWrittenDownButton": "I wrote it down!",
     "reenterSecretPhraseTitle": "Confirm Your Secret Phrase",
-    "reenterSecretPhraseMessage": "Please confirm your secret phrase by re-entering it.",
+    "reenterSecretPhraseMessage": "Please confirm your secret phrase by re-entering it. Once you've entered it correctly here you won't be able to see it again, so make sure you've recorded it in an appropriate way.",
     "renterSecretPhraseRetryMessage": "INCORRECT - PLEASE TRY AGAIN",
     "renterSecretPhrasePlaceholder": "Re-enter your secret phrase",
     "youWillReceiveBonus": "You will receive your 2,000 UR bonus soon!",
-    "chooseSecret": "Enter a 5-10 word secret phrase.",
-    "message1": "Make sure you remember it because you will need it to make transactions later.",
+    "chooseSecret": "Choose a 5 to 10 word secret phrase using only lowercase letters aand numbers.",
+    "message1": "Make sure you remember your secret phrase or keep a record of it because you will need it to make transactions later. We don't store your secret phrase, and it can never be recovered if you lose it. For maximum security, try to pick a string of words that has never appeared in print or online, and that no one would guess.",
     "message2": "Only you know it. It can never be recovered if lost.",
     "message3": "It’s a string of words that’s never appeared in print or online—ever!",
-    "message4": "You can use the Generate button below to automatically generate a secret phrase.",
+    "message4": "You can use the Generate button below to generate a random secret phrase. This could be more secure than choosing your own, but it might be harder to remember.",
     "learnSavePhrase": "By checking this box, you are choosing to store your your secret phrase on your device. This approach to safeguarding your secret phrase has advantages and disadvantages. The main advantage is that, if your forget your secret phrase and also lose your written copy of it, you will usually be able to recover it using this approach. The main disadvantage is that you could increase the chances of having your secret phrase stolen if someone gets physical or remote access to your device. Furthermore, saving your secret phrase to your device is NOT 100% reliable, so please continue to write down your secret phrase and store it in a safe place.",
     "saveSecretPhrase": "Store a copy of your secret phrase on device for emergencies?",
     "learnMore": "Learn more",
     "slideTitle": "Step 4 of 4 - Secret Phrase Setup",
-    "secretPhrase": "Secret phrase"
-  },
-  "verification-pending": {
-    "title": "Verification pending",
-    "message": "Thank you for submitting your verification request. Most requests are processed within 72 hours. We will notify you via text message when we are finished processing your request."
-  },
-  "verification-failed": {
-    "title": "Verification Failed",
-    "slideTitle": "Identity verification failed",
-    "message": "We're sorry. We were unable to verify your identity.<br/> If you have any questions about your failed identity verification, contact us via email at <b>support@ur.technology</b> <br/> When you contact us please provide us with your name, address, and any other information we may need to identify you."
+    "secretPhrase": "Secret phrase",
+    "secretPhraseIncorrect": "The secret phrase you re-entered is incorrect. Please try again."
   },
   "announcement-initiated": {
     "title": "Bonus generation in progress",
     "message": "Bonus transaction may take a few hours to show up in your account, please be patient."
-  },
-  "country-not-supported": {
-    "title": "UR Money",
-    "message": "Thank you for your interest in UR money. When we launch in your country, we will notify you."
   },
   "app": {
     "inviteMessage": "Invite your friends and get more UR",
@@ -370,12 +303,26 @@
     "URWalletAddress": "UR address",
     "notifications": "Notifications",
     "chatNotifications": "Chat notifications",
-    "transactionNotifications": "Transaction notifications"
-  },
-  "request": {
-    "balance": "Balance:",
-    "enterMessage": "Enter option message",
-    "send": "Send"
+    "transactionNotifications": "Transaction notifications",
+    "country": "Country",
+    "name": "Name as it will appear to others",
+    "account": "Account",
+    "general": "General",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "verifyPassword": "Verify password",
+    "change": "Change",
+    "passwordChanged": "Password changed",
+    "atLeastCharacters": "At least 6 characters",
+    "email": "Email",
+    "updateEmail": "Update email",
+    "currentEmail": "Current email",
+    "emailUpdated": "Email updated. Please validate your email",
+    "verifyEmailText": "We will send a verification link to the email address you provide.",
+    "passwordIncorrect": "The current password that you entered does not match our records.",
+    "unexpectedProblemChangingPassword": "There has been a problem while changing the password",
+    "referralCode": "Referral code"
   },
   "terms-and-conditions": {
     "title": "Terms and Conditions",

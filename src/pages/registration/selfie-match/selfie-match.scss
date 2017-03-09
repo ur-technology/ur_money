@@ -1,14 +1,47 @@
 selfie-match-page {
-  input[type='file'] {
-    display: none;
-  }
 
-  .preview-image img {
-    min-width: 100% !important;
-    max-height: 50% !important;
-    width: auto !important;
-    height: auto !important;
-  }
+	.selfie-container {
+		
+		margin-top: 1em;
+
+		button {
+
+			$height: 42px;
+
+			margin-top: 1em;
+			height: $height;
+			width: 100%;
+			display: block;
+			line-height: $height;
+			color: white;
+			font-size: 1.2em;
+			@include appearance(none);
+			background-color: color($colors, primary);
+			transition: background-color, opacity 100ms linear;
+			cursor: pointer; 
+			white-space: nowrap;
+			text-align: center;
+			position: relative;
+			padding: 0 !important;
+
+			ion-img, .preview-image img {
+				width: $height !important;
+				height: $height !important;
+				position: absolute;
+				left: 0px;
+			}
+
+				ion-icon {
+					display: inline-block;
+					position: relative;
+					top: 0.1em;
+				}
+
+			input[type='file'] {
+				display: none;
+			}
+		}
+	}
 
   ion-card-header {
     background-color: color($colors, light);

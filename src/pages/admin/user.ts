@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth';
 import { CustomValidator } from '../../validators/custom';
 import { UserModel } from '../../models/user.model';
 import { ChangeSponsorModal } from './change-sponsor';
+import { Config } from '../../config/config';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -20,6 +21,7 @@ export class UserPage {
   countries: any[];
   user: any;
   sponsor: any;
+  env: string;
   inEditMode: boolean = true;
   showSpinner: boolean = false;
   referrals: any[];
@@ -48,6 +50,7 @@ export class UserPage {
       sponsorContact: new FormControl({ value: '', disabled: true })
     });
 
+    this.env = Config.firebaseProjectId;
     this.user = this.navParams.get('user');
     this.user.firstName = this.user.firstName || '';
     this.user.middleName = this.user.middleName || '';
@@ -63,6 +66,9 @@ export class UserPage {
     this.user.fraudSuspected = !!this.user.fraudSuspected;
     this.user.duplicate = !!this.user.duplicate;
     this.user.status = this.getUserStatus(this.user);
+    this.user.idUploaded = this.user.idUploaded;
+    this.user.selfieMatched = this.user.selfieMatched;
+    this.user.selfieConfidence = this.user.selfieConfidence;
 
     this.user.ipAddress = (this.user.prefineryUser && this.user.prefineryUser.ipAddress) || 'None';
 
@@ -128,7 +134,18 @@ export class UserPage {
   approveSignUpBonus(user: any) {
     user.signUpBonusApproved = true;
     user.signUpBonusApprovedTag = 'Bonus-Approved';
-    firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true });
+    firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true })
+      .then(() => {
+        return firebase.database().ref('/walletCreatedQueue/tasks').push({
+          userId: user.userId
+        })
+      })
+      .then(() => {
+      },
+      (error) => {
+        alert(error);
+      })
+      ;
     return false;
   }
 
@@ -142,7 +159,14 @@ export class UserPage {
     this.user[fieldName] = !this.user[fieldName];
     attrs[fieldName] = this.user[fieldName];
     this.db.ref(`/users/${this.user.userId}`).update(attrs).then(() => {
-      log.debug(`updated: `, attrs);
+
+      // Special case for bonus approved: re-add to ID announcement
+      if (fieldName === 'signUpBonusApproved' && this.user[fieldName]) {
+        firebase.database().ref('/walletCreatedQueue/tasks').push({
+          userId: this.user.userId
+        }).then();
+      }
+
     }, (error) => {
       this.showSpinner = false;
       log.warn(error);

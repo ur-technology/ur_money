@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-      <ion-title>Search Users {{auth.envModeDisplay()}}</ion-title>
+      <ion-title>Search Users {{envModeDisplay()}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -34,7 +34,9 @@
     <ion-item detail-none *ngFor="let r of (displayableUsers || [])" class="item item-avatar">
       <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
       <ion-label>
-        <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
+		  <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
+		  <p>ID recognition status: {{r.idRecognitionStatus}}</p>
+		  <p>Selfie match status: {{r.selfieMatchStatus}}</p>
         <p>{{r.phone}} {{r.email}} {{country(r)}}</p>
         <p>{{r.moveRequestedTag}} {{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}} {{r.signUpBonusApprovedTag}}</p>
       </ion-label>

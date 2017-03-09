@@ -2,13 +2,10 @@
 
   <ion-content class="ur-menu">
     <div class="menu-bar">
-      <!-- <button clear light class="left" (click)="signOut()">
-         <ion-icon name="power"></ion-icon>
-      </button> -->
       <button ion-button icon-only clear color="light" class="right" (click)="openSettings()">
          <ion-icon name="settings"></ion-icon>
       </button>
-      <div class="right">{{auth.envModeDisplay()}}</div>
+      <div class="right">{{envModeDisplay()}}</div>
     </div>
     <div class="menu-profile" *ngIf="auth.currentUser">
       <img class="menu-avatar" [src]="auth.currentUser.profilePhotoUrl" alt="">

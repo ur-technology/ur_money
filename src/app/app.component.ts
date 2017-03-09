@@ -10,13 +10,16 @@ import { ContactsService } from '../services/contacts.service';
 import { Config } from '../config/config'
 import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
 import { WelcomePage } from '../pages/registration/welcome/welcome';
+import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
 import { SendPage } from '../pages/send/send';
 import { InviteLinkPage } from '../pages/invite-link/invite-link';
 import { UsersPage } from '../pages/admin/users';
-import { SettingsPage } from '../pages/settings/settings';
+import { SettingsPage } from '../pages/settings/settings/settings';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
-//import {SelfieMatchPage} from '../pages/registration/selfie-match/selfie-match';
+import { Utils } from '../services/utils';
+import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
+
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -69,10 +72,29 @@ export class UrMoney {
         if (status === 'unauthenticated') {
           this.nav.setRoot(WelcomePage);
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
-          this.nav.setRoot(IdScanPage);
+
+          if (this.auth.currentUser.selfieMatched) {
+
+            if (!this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
+              this.nav.setRoot(ProfileSetupPage);
+            } else {
+              this.nav.setRoot(HomePage);
+            }
+          } else if (this.auth.currentUser.idUploaded) {
+            this.nav.setRoot(SelfieMatchPage);
+          } else {
+            this.nav.setRoot(IdScanPage);
+          }
         } else {
-          this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
-          this.nav.setRoot(HomePage);
+
+          if (!this.auth.currentUser.idUploaded) {
+            this.nav.setRoot(IdScanPage);
+          } else if (!this.auth.currentUser.selfieMatched) {
+            this.nav.setRoot(SelfieMatchPage);
+          } else {
+            this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
+            this.nav.setRoot(HomePage);
+          }
         }
       });
 
@@ -138,5 +160,9 @@ export class UrMoney {
     } else {
       this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
     }
+  }
+
+  envModeDisplay() {
+    return Utils.envModeDisplay();
   }
 }

@@ -1,5 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
+import { TrackJsErrorHandler } from '../services/trackjs.handler';
 import { UrMoney } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
@@ -23,7 +24,15 @@ import { ChooseContactPage } from '../pages/choose-contact/choose-contact';
 import { UsersPage } from '../pages/admin/users';
 import { UserPage } from '../pages/admin/user';
 import { ChangeSponsorModal } from '../pages/admin/change-sponsor';
-import { SettingsPage } from '../pages/settings/settings';
+import { SettingsPage } from '../pages/settings/settings/settings';
+import { ChangePasswordPage } from '../pages/settings/change-password/change-password';
+import { LostPasswordPage } from '../pages/registration/lost-password/lost-password';
+import { SignInTemporaryCodePage } from '../pages/registration/sign-in-temporary-code/sign-in-temporary-code';
+import { ResetPasswordPage } from '../pages/registration/reset-password/reset-password';
+import { SignInPasswordPage } from '../pages/registration/sign-in-password/sign-in-password';
+import { SettingsAccountPage } from '../pages/settings/settings-account/settings-account';
+import { ChangeEmailPage } from '../pages/settings/change-email/change-email'
+import { SettingsNotificationsPage } from '../pages/settings/settings-notifications/settings-notifications';
 import { TermsAndConditionsPage } from '../pages/terms-and-conditions/terms-and-conditions';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { ChatListComponent } from '../components/chat-list/chat-list';
@@ -42,6 +51,7 @@ import { CountryListService } from '../services/country-list';
 import { EncryptionService } from '../services/encryption';
 import { EventsService } from '../services/events.service';
 import { ToastService } from '../services/toast';
+import { AcuantService } from '../services/acuant';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { Http, HttpModule } from '@angular/http';
 import { BrowserModule } from "@angular/platform-browser";
@@ -94,6 +104,8 @@ export function translateLoaderFactory(http: any) {
     UserPage,
     ChangeSponsorModal,
     SettingsPage,
+    SettingsAccountPage,
+    SettingsNotificationsPage,
     TermsAndConditionsPage,
     TransactionsPage,
     SponsorWaitPage,
@@ -105,7 +117,13 @@ export function translateLoaderFactory(http: any) {
     FilterPipe,
     OrderBy,
     Round,
-    Timestamp
+    Timestamp,
+    ChangePasswordPage,
+    ChangeEmailPage,
+    SignInPasswordPage,
+    LostPasswordPage,
+    SignInTemporaryCodePage,
+    ResetPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -151,10 +169,29 @@ export function translateLoaderFactory(http: any) {
     ChangeSponsorModal,
     UsersPage,
     SettingsPage,
+    SettingsAccountPage,
+    SettingsNotificationsPage,
     TermsAndConditionsPage,
     TransactionsPage,
-    SponsorWaitPage
+    SponsorWaitPage,
+    ChangePasswordPage,
+    ChangeEmailPage,
+    SignInPasswordPage,
+    LostPasswordPage,
+    SignInTemporaryCodePage,
+    ResetPasswordPage
   ],
-  providers: [AuthService, ChartDataService, ContactsService, CountryListService, EncryptionService, EventsService, ToastService, UserService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [
+    AuthService,
+    ChartDataService,
+    ContactsService,
+    CountryListService,
+    EncryptionService,
+    EventsService,
+    ToastService,
+    AcuantService,
+    UserService,
+    { provide: ErrorHandler, useClass: TrackJsErrorHandler },
+  ]
 })
 export class AppModule { }

@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'settings.notifications' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label>{{'settings.chatNotifications' | translate}}</ion-label>
+    <ion-toggle [checked]="chatNotificationsEnabled" (ionChange)="changeChatNotification($event)"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>{{'settings.transactionNotifications' | translate}}</ion-label>
+    <ion-toggle [checked]="transactionNotificationsEnabled" (ionChange)="changeTransactionNotification($event)"></ion-toggle>
+  </ion-item>
+</ion-content>

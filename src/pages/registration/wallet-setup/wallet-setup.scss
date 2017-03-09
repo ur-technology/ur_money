@@ -1,22 +1,47 @@
 wallet-setup-page {
 
-  ion-card-header {
-    background-color: color($colors, light);
-  }
+	p {
+		margin-top: 1em !important;
+		margin-bottom: 1em !important;
+	}
 
-  ion-item {
-    padding-left: 0 !important;
-  }
+	ion-item p:last-of-type {
+		margin-bottom: 0 !important;
+	}
 
-  .footer-card {
-    background-color: color($colors, light);
-  }
+	ion-card-header {
+		background-color: color($colors, light);
+	}
 
-  .card-md .item-md.item-block .item-inner {
-    border-bottom: 1px solid #dedede;
-  }
+	ion-item {
+		padding-left: 0 !important;
+	}
 
-  .checkbox-wallet{
-    margin-right: 15px !important;
-  }
+	.footer-card {
+		background-color: color($colors, light);
+	}
+
+	.card-md .item-md.item-block .item-inner {
+		border-bottom: 1px solid #dedede;
+	}
+
+	.checkbox-wallet{
+		margin-right: 15px !important;
+	}
+
+	.generate {
+		margin-top: 1em;
+		border-radius: 0.25em;
+		padding: 1em;
+		background-color: color($colors, light);
+
+		p {
+			margin-top: 0 !important;
+		}
+
+		.button-generate {
+			display: block !important;
+			width: 100% !important;
+		}
+	}
 }

@@ -2,7 +2,7 @@
 
 declare namespace firebase.database.ServerValue {
   /* tslint:disable */
-  //var TIMESTAMP: any;
+  var TIMESTAMP: any;
   /* tslint:enable */
 }
 declare namespace firebase.auth {

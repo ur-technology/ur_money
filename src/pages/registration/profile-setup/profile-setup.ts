@@ -14,44 +14,29 @@ import { Component } from '@angular/core';
 export class ProfileSetupPage {
   mainForm: FormGroup;
   errorMessage: string;
-  countries: any[];
-  profile: any;
   constructor(
     public nav: NavController,
     public auth: AuthService
   ) {
-    this.profile = _.pick(this.auth.currentUser, ['name', 'email']);
-    if (_.isEmpty(_.trim(this.profile.name || ''))) {
-      this.profile.name = `${this.auth.currentUser.firstName} ${this.auth.currentUser.lastName}`;
-    }
-
     let formElements: any = {
       name: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
-      email: new FormControl('', [Validators.required, CustomValidator.emailValidator])
+      email: new FormControl(this.auth.currentUser.email, [Validators.required, CustomValidator.emailValidator])
     };
     this.mainForm = new FormGroup(formElements);
+
   }
 
   ionViewDidLoad() {
-    this.fillCountriesArray();
+    let self = this;
+    self.auth.reloadCurrentUser().then(() => {
+      let name = _.isEmpty(_.trim(self.auth.currentUser.name || '')) ? `${self.auth.currentUser.firstName || ''} ${self.auth.currentUser.lastName || ''}` : self.auth.currentUser.name;
+      (<FormControl>self.mainForm.controls['name']).setValue(name);
+    });
   }
 
-  onCountrySelected(countrySelected) {
-    this.profile.countryCode = countrySelected.alpha2;
-  }
-
-  fillCountriesArray() {
-    this.countries = _.sortBy(require('country-data').countries.all, 'name');
-    this.countries = _.reject(this.countries, { alpha2: ['CU', 'IR', 'KP', 'SD', 'SY'] });  // remove forbidden countries
-    this.countries = _.filter(this.countries, { status: 'assigned' });
-
-    let country = _.find(this.countries, { alpha2: this.auth.currentUser.countryCode || 'US' });
-    (<FormControl>this.mainForm.controls['countryCode']).setValue(country);
-  }
 
   submit() {
-    this.profile = _.omitBy(this.profile, _.isUndefined);
-    this.auth.currentUser.update(this.profile).then(() => {
+    this.auth.currentUser.update(this.mainForm.value).then(() => {
       this.nav.push(WalletSetupPage);
     }).catch((error) => {
       log.warn('unable to save profile info');

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{auth.envModeDisplay()}}</ion-title>
+    <ion-title>{{envModeDisplay()}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content
@@ -13,7 +13,7 @@
   <div class="about-text">
     <h1 class="heading">{{"about.heading" | translate}}</h1>
     <p>
-      {{getTextUrCurrency()}}
+      {{"about.urCurrency" | translate}}
       <br>
       <br> {{"about.urTechnologyInc" | translate}}
       <br>
@@ -29,7 +29,7 @@
       <br>
       <br>
       <br>
-	  <br> Version Info: <strong>{{versionNumber}}</strong> (built on {{buildDate}}) / {{auth.envMode()}} 
+	  <br> Version Info: <strong>{{versionNumber}}</strong> (built on {{buildDate}}) / {{envModeDisplay()}}
     </p>
   </div>
 </ion-content>

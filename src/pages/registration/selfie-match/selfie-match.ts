@@ -1,14 +1,15 @@
-import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AuthService } from '../../../services/auth';
 import { ProfileSetupPage } from '../profile-setup/profile-setup';
-import * as firebase from 'firebase';
-import * as _ from 'lodash';
-import * as log from 'loglevel';
+import { AcuantService } from '../../../services/acuant';
+import { IDVerifier } from '../../../interfaces/id-verifier';
+import { HomePage } from '../../../pages/home/home';
 
 declare var $;
+declare var trackJs: any;
 
 @Component({
   selector: 'selfie-match-page',
@@ -20,6 +21,8 @@ export class SelfieMatchPage {
   selfieSource: string;
   facialMatchData: string;
   idCardFaceImage: any;
+  idCardFinalImage: any;
+  idVerifier: IDVerifier;
 
   constructor(
     public nav: NavController,
@@ -27,15 +30,17 @@ export class SelfieMatchPage {
     public loadingController: LoadingController,
     public translate: TranslateService,
     public auth: AuthService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private acuantService: AcuantService,
+    public alertCtrl: AlertController,
   ) {
+
+    this.idVerifier = acuantService;
     this.mainForm = new FormGroup({});
-    this.idCardFaceImage = this.navParams.get('idCardFaceImage');
-    this.selfieSource = "../../assets/img/selfie.placeholder.png";
   }
 
   selectFile(event) {
-    let input = $(event.target).parents("div").children("input[type='file']");
+    let input = $(event.target).children("input[type='file']");
     input.trigger('click');
   }
 
@@ -53,74 +58,50 @@ export class SelfieMatchPage {
   }
 
   selfieUploaded() {
-    return true;
-    // return $("#selfie").val() !== '';
+    return $("#selfie").val() !== '';
   }
 
   submit() {
-    let currentUserRef = firebase.database().ref(`/users/${this.auth.currentUserId}`);
-    currentUserRef.update({ selfieSource: this.selfieSource }).then(() => {
-      return this.matchSelfie();
-    }).then(() => {
-      return currentUserRef.update({ facialMatchData: this.facialMatchData });
-    }).then(() => {
-      this.nav.push(ProfileSetupPage);
-    }, (error) => {
-      log.warn(error);
-      this.toastCtrl.create({
-        message: 'There was an error matching your selfie.',
-        duration: 6000,
-        position: 'bottom'
-      }).present();
-    });
-  }
 
-  matchSelfie(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (!this.idCardFaceImage) {
-        resolve();
-        return;
-      }
+    let destinationPage: any = ProfileSetupPage;
 
-      let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
-      loadingModal.present();
+    if (this.auth.currentUser.wallet && this.auth.currentUser.wallet.address) {
+      destinationPage = HomePage;
+    }
 
-      let imageToProcess = new FormData();
-      let byteArray: string = (<any>window).goog.crypt.base64.encodeByteArray(this.idCardFaceImage);
-      let idCardFaceSource = `data:image/jpg;base64,${byteArray}`;
-      imageToProcess.append("photo1", this.dataURLtoBlob(idCardFaceSource));
-      imageToProcess.append("photo2", this.dataURLtoBlob(this.selfieSource));
-      let authinfo = $.base64.encode("EE92924A123D");
-      $.ajax({
-        type: "POST",
-        url: "https://cssnwebservices.com/CSSNService/CardProcessor/FacialMatch",
-        data: imageToProcess,
-        cache: false,
-        contentType: 'application/octet-stream; charset=utf-8;',
-        dataType: "json",
-        processData: false,
-        beforeSend: (xhr) => {
-          xhr.setRequestHeader("Authorization", "LicenseKey " + authinfo);
-        },
-        success: (facialMatchData) => {
-          loadingModal.dismiss().then(() => {
-            this.facialMatchData = facialMatchData;
-            let error: string = (facialMatchData.ResponseCodeAuthorization < 0 && facialMatchData.ResponseCodeAuthorization) ||
-              (facialMatchData.WebResponseCode < 1 && facialMatchData.WebResponseCode);
-            if (error) {
-              reject(`error matching selfie: ${error}`);
-            } else {
-              resolve();
-            }
+    let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+    loadingModal.present();
+
+    this.idVerifier.matchSelfie(this.dataURLtoBlob(this.selfieSource))
+      .then(() => {
+        loadingModal.dismiss().then(() => {
+          this.nav.setRoot(destinationPage);
+        });
+      },
+      (error) => {
+        trackJs.track('Selfie match failed: ' + error);
+        loadingModal.dismiss().then(() => {
+
+          let confirm = this.alertCtrl.create({
+            title: this.translate.instant('selfie-match.cantMatchTitle'),
+            message: this.translate.instant('selfie-match.cantMatchMessage'),
+            buttons: [
+              {
+                text: this.translate.instant('selfie-match.tryAgain'),
+                handler: () => {
+                }
+              },
+              {
+                text: this.translate.instant('selfie-match.letAHumanDoIt'),
+                handler: () => {
+                  this.nav.setRoot(destinationPage);
+                }
+              }
+            ]
           });
-        },
-        error: (xhr, error) => {
-          loadingModal.dismiss().then(() => {
-            reject(`error submitting id: ${_.toString(error)}`);
-          });
-        }
+          confirm.present();
+        });
       });
-    });
   }
 
   private dataURLtoBlob(dataURL: string): any {
