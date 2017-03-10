@@ -57,7 +57,7 @@ export class ResetPasswordWithCodePage {
           .then(() => {
             switch (taskState) {
               case 'reset_password_finished':
-                this.toastService.showMessage({ messageKey: 'sign-in.resetPassword' });
+                this.toastService.showMessage({ messageKey: 'sign-in.passwordChanged' });
                 this.navCtrl.setRoot(SignInPage);
                 break;
 
