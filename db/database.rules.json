@@ -212,7 +212,7 @@
 		},
 
 		"users": {
-			".indexOn": ["phone", "wallet/address", "email", "referralCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions", "idHash"],
+			".indexOn": ["phone", "wallet/address", "email", "referralCode", "resetCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions", "idHash"],
 			// allow read or write only if the authenticated user is accessing his own user record
 			".read": "root.child('users').child(auth.uid).child('admin').val() == true",
 			"$uid": {
