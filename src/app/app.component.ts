@@ -16,6 +16,7 @@ import { IdScanPage } from '../pages/registration/id-scan/id-scan';
 import { InviteLinkPage } from '../pages/invite-link/invite-link';
 import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
 import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
+import { ResetPasswordWithCodePage } from '../pages/registration/reset-password-with-code/reset-password-with-code';
 import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
 import { SendPage } from '../pages/send/send';
 import { SettingsPage } from '../pages/settings/settings/settings';
@@ -73,7 +74,13 @@ export class UrMoney {
 
         let status = this.auth.getUserStatus();
         if (status === 'unauthenticated') {
-          this.nav.setRoot(WelcomePage);
+          let resetCode = Utils.getUrlParamByName('reset-code');
+
+          if (resetCode) {
+            this.nav.setRoot(ResetPasswordWithCodePage, { resetCode });
+          } else {
+            this.nav.setRoot(WelcomePage);
+          }
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
 
           if (this.auth.currentUser.selfieMatched) {
