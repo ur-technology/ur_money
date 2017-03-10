@@ -152,7 +152,7 @@
     "confirmWrittenDownMessage3": "WARNING: UR Technology does not store your secret phrase on our servers and will NOT be able to recover it if it is lost, forgotten or corrupted.",
     "confirmWrittenDownButton": "I wrote it down!",
     "reenterSecretPhraseTitle": "Confirm Your Secret Phrase",
-    "reenterSecretPhraseMessage": "Please confirm your secret phrase by re-entering it. Once you've entered it correctly here you won't be able to see it again, so make sure you've recorded it in an appropriate way.",
+    "reenterSecretPhraseMessage": "Please confirm your secret phrase by re-entering it. After validating the passphrase, it will automatically download a backup PDF with your passphrase.",
     "renterSecretPhraseRetryMessage": "INCORRECT - PLEASE TRY AGAIN",
     "renterSecretPhrasePlaceholder": "Re-enter your secret phrase",
     "youWillReceiveBonus": "You will receive your 2,000 UR bonus soon!",
@@ -166,7 +166,11 @@
     "learnMore": "Learn more",
     "slideTitle": "Step 4 of 4 - Secret Phrase Setup",
     "secretPhrase": "Secret phrase",
-    "secretPhraseIncorrect": "The secret phrase you re-entered is incorrect. Please try again."
+    "secretPhraseIncorrect": "The secret phrase you re-entered is incorrect. Please try again.",
+    "pdfMessage1": "This is your passphrase:",
+    "pdfMessage2": "Please keep it in a safe place.",
+    "pdfMessage3": "Do not lose it, you will need the passphrase to make transactions.",
+    "okValidate": "Confirm and download PDF"
   },
   "announcement-initiated": {
     "title": "Bonus generation in progress",

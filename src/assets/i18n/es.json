@@ -152,7 +152,7 @@
 		"confirmWrittenDownMessage3": "ADVERTENCIA: UR Technology no guarda tu frase secreta en nuestros servidores y NO PUEDE recuperarla si se pierde, se olvida o se corrompe.",
 		"confirmWrittenDownButton": "Lo escribí!",
 		"reenterSecretPhraseTitle": "Confirma tu frase secreta",
-		"reenterSecretPhraseMessage": "Por favor vuelve a ingresar tu frase secreta para confirmarla.",
+		"reenterSecretPhraseMessage": "Por favor vuelve a ingresar tu frase secreta para confirmarla. Después de validar la frase secreta, se descargará automáticamente un PDF con tu frase secreta.",
 		"renterSecretPhraseRetryMessage": "INCORECTO - INTENTA DE NUEVO",
 		"renterSecretPhrasePlaceholder": "Vuelve a ingresar tu frase secreta",
 		"youWillReceiveBonus": "Recibirás tu bono de 2.000 UR pronto!",
@@ -166,7 +166,11 @@
 		"learnMore": "Conocer más",
 		"slideTitle": "Paso 2 de 2 - Configura frase secreta",
 		"secretPhrase": "Frase secreta",
-    "secretPhraseIncorrect": "Frase secreta incorrecta."
+    "secretPhraseIncorrect": "Frase secreta incorrecta.",
+    "pdfMessage1": "Ésta es su contraseña:",
+    "pdfMessage2": "Guárdelo en un lugar seguro.",
+    "pdfMessage3": "No lo pierda, necesitará la contraseña para realizar transacciones.",
+    "okValidate": "Confirmar y descargar PDF"
 	},
 	"announcement-initiated": {
 		"title": "Generación de bonificación en curso",

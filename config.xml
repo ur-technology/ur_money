@@ -117,4 +117,6 @@
       <variable name="DEEPLINK_5_SCHEME" value=" " />
       <variable name="DEEPLINK_5_HOST" value=" " />
   </plugin>
+  <plugin name="cordova-plugin-file" spec="~4.3.2" />
+  <plugin name="cordova-plugin-file-opener2" spec="~2.0.8" />
 </widget>
