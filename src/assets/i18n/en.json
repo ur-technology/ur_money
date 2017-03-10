@@ -269,7 +269,8 @@
     "placeholderAmount": "Enter amount",
     "placeholderSentTo": "Choose contact or enter UR address",
     "placeholderSentToWeb": "Enter UR address",
-    "placeholderPhrase": "Enter your secret phrase"
+    "placeholderPhrase": "Enter your secret phrase",
+	"notApprovedYet": "Your account hasn't been verified yet, so you can't send UR."
   },
   "invite-link": {
     "title": "Invite Friends",
