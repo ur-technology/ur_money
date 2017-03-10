@@ -373,13 +373,13 @@ export class AuthService {
     });
   }
 
-  sendResetCode(email: string): Promise<any> {
+  sendRecoveryEmail(email: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const taskRef = firebase
         .database()
         .ref(`/resetPasswordQueue/tasks`)
         .push({
-          _state: 'send_reset_code_requested',
+          _state: 'send_recovery_email_requested',
           email
         });
       const resultRef = taskRef.child('result');
@@ -395,7 +395,7 @@ export class AuthService {
         taskRef.remove();
 
         if (taskResult.error) {
-          log.error(`send reset code error: ${taskResult.error}`);
+          log.error(`send recovery email error: ${taskResult.error}`);
         }
 
         resolve(taskResult.state);
