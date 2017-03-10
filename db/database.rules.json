@@ -1,213 +1,225 @@
 {
-    "rules": {
-        // disallow writing anything in the db
-        ".write": false,
-        // disallow reading anything in the db
-        ".read": false,
+	"rules": {
+		// disallow writing anything in the db
+		".write": false,
+		// disallow reading anything in the db
+		".read": false,
 
-        "connectionCheckDummyData": {
-            ".read": true
-        },
+		"connectionCheckDummyData": {
+			".read": true
+		},
 
-        "signUpQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    "_state": {
-                        // allow reading state of a particular record
-                        ".read": true
-                    },
-                    "result": {
-                        // allow reading result of a particular record
-                        ".read": true
-                    }
-                }
-            }
-        },
+		"signUpQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					".write": true,
+					"_state": {
+						// allow reading state of a particular record
+						".read": true
+					},
+					"result": {
+						// allow reading result of a particular record
+						".read": true
+					}
+				}
+			}
+		},
 
-        "sendEmailQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    "_state": {
-                        // allow reading state of a particular record
-                        ".read": true
-                    },
-                    "result": {
-                        // allow reading result of a particular record
-                        ".read": true
-                    }
-                }
-            }
-        },
+		"sendEmailQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					".write": true,
+					"_state": {
+						// allow reading state of a particular record
+						".read": true
+					},
+					"result": {
+						// allow reading result of a particular record
+						".read": true
+					}
+				}
+			}
+		},
 
-        "signInQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    "_state": {
-                        // allow reading state of a particular record
-                        ".read": true
-                    },
-                    "result": {
-                        // allow reading result of a particular record
-                        ".read": true
-                    }
-                }
-            }
-        },
+		"signInQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					".write": true,
+					"_state": {
+						// allow reading state of a particular record
+						".read": true
+					},
+					"result": {
+						// allow reading result of a particular record
+						".read": true
+					}
+				}
+			}
+		},
 
-        "verifyIDQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    "_state": {
-                        // allow reading state of a particular record
-                        ".read": true
-                    },
-                    "result": {
-                        // allow reading result of a particular record
-                        ".read": true
-                    }
-                }
-            }
-        },
+		"verifyIDQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					".write": true,
+					"_state": {
+						// allow reading state of a particular record
+						".read": true
+					},
+					"result": {
+						// allow reading result of a particular record
+						".read": true
+					}
+				}
+			}
+		},
 
-        "verifySelfieQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    "_state": {
-                        // allow reading state of a particular record
-                        ".read": true
-                    },
-                    "result": {
-                        // allow reading result of a particular record
-                        ".read": true
-                    }
-                }
-            }
-        },
+		"verifySelfieQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					".write": true,
+					"_state": {
+						// allow reading state of a particular record
+						".read": true
+					},
+					"result": {
+						// allow reading result of a particular record
+						".read": true
+					}
+				}
+			}
+		},
 
-        "phoneLookupQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    // allow write only if the authenticated user is writing his own data
-                    ".write": "(newData.exists() && newData.child('userId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
-                    // allow read only if the authenticated user is reading his own data
-                    ".read": "data.child('userId').val()===auth.uid"
-                }
-            }
-        },
+		"phoneLookupQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					// allow write only if the authenticated user is writing his own data
+					".write": "(newData.exists() && newData.child('userId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
+					// allow read only if the authenticated user is reading his own data
+					".read": "data.child('userId').val()===auth.uid"
+				}
+			}
+		},
 
-        "userQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    // allow write only if the authenticated user is writing his own data
-                    ".write": "(newData.exists() && newData.child('userId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
-                    // allow read only if the authenticated user is reading his own data
-                    ".read": "data.child('userId').val()===auth.uid"
-                }
-            }
-        },
+		"userQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					// allow write only if the authenticated user is writing his own data
+					".write": "(newData.exists() && newData.child('userId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
+					// allow read only if the authenticated user is reading his own data
+					".read": "data.child('userId').val()===auth.uid"
+				}
+			}
+		},
 
-        "chatMessageCopyingQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    // allow write only if the authenticated user is writing his own data
-                    ".write": "(newData.exists() && newData.child('userId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
-                    // allow read only if the authenticated user is reading his own data
-                    ".read": "data.child('userId').val()===auth.uid"
-                }
-            }
-        },
+		"chatMessageCopyingQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					// allow write only if the authenticated user is writing his own data
+					".write": "(newData.exists() && newData.child('userId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
+					// allow read only if the authenticated user is reading his own data
+					".read": "data.child('userId').val()===auth.uid"
+				}
+			}
+		},
 
-        "chatSummaryCopyingQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    // allow write only if the authenticated user is writing his own data
-                    ".write": "(newData.exists() && newData.child('userId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
-                    // allow read only if the authenticated user is reading his own data
-                    ".read": "data.child('userId').val()===auth.uid"
-                }
-            }
-        },
+		"chatSummaryCopyingQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					// allow write only if the authenticated user is writing his own data
+					".write": "(newData.exists() && newData.child('userId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
+					// allow read only if the authenticated user is reading his own data
+					".read": "data.child('userId').val()===auth.uid"
+				}
+			}
+		},
 
-        "identityAnnouncementQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    ".read": true
-                }
-            }
-        },
+		"identityAnnouncementQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					".write": true,
+					".read": true
+				}
+			}
+		},
 
-        "walletCreatedQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    ".write": true,
-                    ".read": true
-                }
-            }
-        },
+		"walletCreatedQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					".write": true,
+					".read": true
+				}
+			}
+		},
 
-        "invitationQueue": {
-            "tasks": {
-                ".indexOn": "_state",
-                "$task": {
-                    // allow write only if the authenticated user is writing his own data
-                    ".write": "(newData.exists() && newData.child('sponsorUserId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
-                    // allow read only if the authenticated user is reading his own data
-                    ".read": "data.child('userId').val()===auth.uid"
-                }
-            }
-        },
+		"invitationQueue": {
+			"tasks": {
+				".indexOn": "_state",
+				"$task": {
+					// allow write only if the authenticated user is writing his own data
+					".write": "(newData.exists() && newData.child('sponsorUserId').val()===auth.uid) || (data.exists() && data.child('userId').val()===auth.uid)",
+					// allow read only if the authenticated user is reading his own data
+					".read": "data.child('userId').val()===auth.uid"
+				}
+			}
+		},
 
-        "urTransactionImportQueue": {
-            "tasks": {
-              "1": {
-                ".indexOn": "_state"
-              },
-              "2": {
-                ".indexOn": "_state"
-              },
-              "3": {
-                ".indexOn": "_state"
-              },
-              "4": {
-                ".indexOn": "_state"
-              },
-              "5": {
-                ".indexOn": "_state"
-              }
-            }
-        },
+		"urTransactionImportQueue": {
+			"tasks": {
+				"1": {
+					".indexOn": "_state"
+				},
+				"2": {
+					".indexOn": "_state"
+				},
+				"3": {
+					".indexOn": "_state"
+				},
+				"4": {
+					".indexOn": "_state"
+				},
+				"5": {
+					".indexOn": "_state"
+				}
+			}
+		},
 
-        "users": {
-            ".indexOn": ["phone", "wallet/address", "email", "referralCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions", "idHash"],
-            // allow read or write only if the authenticated user is accessing his own user record
-            ".read": "root.child('users').child(auth.uid).child('admin').val() == true",
-            "$uid": {
-                ".read": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
-                ".write": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
-                "transactions": {
-                    ".indexOn": ["sortKey", "type", "updatedAt"]
-                },
-                "events": {
-                    ".indexOn": ["notificationProcessed", "updatedAt"]
-                }
-            }
-        }
-    }
+		"users": {
+			".indexOn": ["phone", "wallet/address", "email", "referralCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions", "idHash"],
+			// allow read or write only if the authenticated user is accessing his own user record
+			".read": "root.child('users').child(auth.uid).child('admin').val() == true",
+			"$uid": {
+				".read": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
+				".write": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
+				"transactions": {
+					".indexOn": ["sortKey", "type", "updatedAt"]
+				},
+				"events": {
+					".indexOn": ["notificationProcessed", "updatedAt"]
+				},
+				"admin": {
+					".write": false
+				},
+				"idUploaded": {
+					".write": false
+				},
+				"selfieMatched": {
+					".write": false
+				},
+				"idHash": {
+					".write": false
+				}
+			}
+		}
+	}
 }
