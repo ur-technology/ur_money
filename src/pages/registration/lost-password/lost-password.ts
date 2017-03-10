@@ -24,21 +24,21 @@ export class LostPasswordPage {
 
     loadingModal.present()
       .then(() => {
-        return self.auth.sendResetCode(self.mainForm.value.email);
+        return self.auth.sendRecoveryEmail(self.mainForm.value.email);
       })
       .then((taskState: string) => {
         loadingModal
           .dismiss()
           .then(() => {
             switch (taskState) {
-              case 'send_reset_code_finished':
-                self.toastService.showMessage({ messageKey: 'sign-in.sentResetCode' });
+              case 'send_recovery_email_finished':
+                self.toastService.showMessage({ messageKey: 'sign-in.sentRecoveryEmail' });
                 self.navCtrl.setRoot(ResetPasswordWithCodePage);
                 break;
-              case 'send_reset_code_canceled_because_user_not_found':
+              case 'send_recovery_email_canceled_because_user_not_found':
                 self.toastService.showMessage({ messageKey: 'sign-in.emailNotFound'});
                 break;
-              case 'send_reset_code_canceled_because_user_disabled':
+              case 'send_recovery_email_canceled_because_user_disabled':
                 self.toastService.showMessage({ messageKey: 'sign-in.userDisabled'});
                 break;
               default:
