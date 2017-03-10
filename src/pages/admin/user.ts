@@ -66,9 +66,6 @@ export class UserPage {
     this.user.fraudSuspected = !!this.user.fraudSuspected;
     this.user.duplicate = !!this.user.duplicate;
     this.user.status = this.getUserStatus(this.user);
-    this.user.idUploaded = this.user.idUploaded;
-    this.user.selfieMatched = this.user.selfieMatched;
-    this.user.selfieConfidence = this.user.selfieConfidence;
 
     this.user.ipAddress = (this.user.prefineryUser && this.user.prefineryUser.ipAddress) || 'None';
 

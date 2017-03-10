@@ -202,6 +202,17 @@
 						</ion-input>
 					</ion-item>
 				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Referral code</ion-label>
+						<ion-input
+	 type="text"
+  [disabled]="true"
+  [(ngModel)]="user.referralCode"
+  [ngModelOptions]="{standalone: true}">
+						</ion-input>
+					</ion-item>
+				</ion-col>
 			</ion-row>
 			<ion-item-divider *ngIf="sponsor" color="light">Sponsor Info</ion-item-divider>
 			<ion-row *ngIf="sponsor">
