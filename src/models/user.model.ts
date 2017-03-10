@@ -27,6 +27,7 @@ export class UserModel extends FirebaseModel {
   selfieMatched: boolean;
   idRecognitionStatus: string;
   selfieMatchStatus: string;
+  signUpBonusApproved: boolean;
 
   static fullName(user: any) {
     return _.trim(`${user.firstName || ''} ${user.middleName || ''} ${user.lastName || ''}`).replace(/  /, ' ');
@@ -57,7 +58,8 @@ export class UserModel extends FirebaseModel {
         'selfieMatched',
         'selfieConfidence',
         'idRecognitionStatus',
-        'selfieMatchStatus'
+        'selfieMatchStatus',
+        'signUpBonusApproved'
       ]).then(resultObject => {
         let result = new UserModel();
         result.key = key;
@@ -133,5 +135,13 @@ export class UserModel extends FirebaseModel {
     });
   }
 
-
+  isVerified(): boolean {
+    // This may need to be improved eventually. The legacy data uses
+    // signUpBonusApproved to indicate that a user is approved in a
+    // general sense (that is, we don't think they're a fraudster).
+    // The automatic ID verification sets this flag, and so does the
+    // user management system, so it seems reasonable to use it as
+    // an indication of ID verifications – even if it's misnamed.
+    return this.signUpBonusApproved;
+  }
 }
