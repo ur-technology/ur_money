@@ -1,4 +1,4 @@
-import {Config} from '../config/config';
+import { Config } from '../config/config';
 import * as _ from 'lodash';
 
 export class Utils {
@@ -20,5 +20,21 @@ export class Utils {
       extraPrefix = '';
     }
     return telephoneCountryCode + extraPrefix + strippedPhone;
+  }
+
+  static getUrlParamByName(name: string, url: string = ''): string {
+    url = url || window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const results = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`).exec(url);
+
+    if (!results) {
+      return null;
+    }
+
+    if (!results[2]) {
+      return '';
+    }
+
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 }
