@@ -16,6 +16,10 @@
     "signUp": "Sign Up",
     "signIn": "Sign In"
   },
+  "verify-email": {
+    "message": "Your email is not verified yet.",
+    "buttonText": "Verify Now"
+  },
   "sign-in": {
     "title": "Enter phone number",
     "heading": "Please confirm your country code and enter your phone number",
