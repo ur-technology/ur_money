@@ -138,7 +138,7 @@
     "scan": "Tap to take a selfie",
     "instructions": "We need a picture of your face to verify your ID. Try to take a photo where your face fills as much of the image as possible, without going over the edges.",
     "cantMatchTitle": "Couldn't match your selfie to your ID",
-    "cantMatchMessage": "We couldn't automatically verify your ID. You can try again, or let someone from customer support verify you manually.",
+    "cantMatchMessage": "We couldn't process your ID.",
     "tryAgain": "Try again",
     "letAHumanDoIt": "Let a human do it"
   },

@@ -90,12 +90,6 @@ export class SelfieMatchPage {
                 text: this.translate.instant('selfie-match.tryAgain'),
                 handler: () => {
                 }
-              },
-              {
-                text: this.translate.instant('selfie-match.letAHumanDoIt'),
-                handler: () => {
-                  this.nav.setRoot(destinationPage);
-                }
               }
             ]
           });

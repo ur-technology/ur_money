@@ -105,6 +105,25 @@ export class UserPage {
         log.warn(error);
       });
     }
+
+
+    if (this.queryParams()['approve']) {
+      this.approveSignUpBonus(this.user);
+    }
+  }
+
+  private queryParams(): any {
+    let qs = window.location.search.split('+').join(' ');
+
+    var params = {},
+      tokens,
+      re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+      params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
   }
 
   onCountrySelected(countrySelected) {

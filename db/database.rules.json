@@ -77,7 +77,7 @@
 			}
 		},
 
-		"verifySelfieQueue": {
+		"manualIDVerification": {
 			"tasks": {
 				".indexOn": "_state",
 				"$task": {
