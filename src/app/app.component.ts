@@ -19,9 +19,11 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
 import { Utils } from '../services/utils';
 import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
+import { UserPage } from '../pages/admin/user';
 
 import * as _ from 'lodash';
 import * as log from 'loglevel';
+import * as firebase from 'firebase';
 
 @Component({
   templateUrl: 'app.html',
@@ -54,6 +56,8 @@ export class UrMoney {
       }
 
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
+      let params = this.queryParams();
+
       log.setDefaultLevel(logLevel);
 
       this.auth.respondToAuth((error) => {
@@ -91,6 +95,19 @@ export class UrMoney {
             this.nav.setRoot(IdScanPage);
           } else if (!this.auth.currentUser.selfieMatched) {
             this.nav.setRoot(SelfieMatchPage);
+          } else if (this.auth.currentUser.admin && params['admin-redirect']) {
+
+            switch (params['redirect']) {
+
+              case 'user':
+                this.lookupUserById(params['id']).then((user) => {
+                  this.nav.setRoot(UserPage, { user: user });
+                });
+
+              default:
+                this.nav.setRoot(HomePage);
+            }
+
           } else {
             this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
             this.nav.setRoot(HomePage);
@@ -99,6 +116,37 @@ export class UrMoney {
       });
 
       log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
+    });
+  }
+
+  private queryParams(): any {
+    let qs = window.location.search.split('+').join(' ');
+
+    var params = {},
+      tokens,
+      re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+      params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+  }
+
+  lookupUserById(userId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let userRef = firebase.database().ref(`/users/${userId}`);
+      userRef.once('value', (snapshot: firebase.database.DataSnapshot) => {
+        let user: any = snapshot.val();
+        if (user) {
+          user.userId = userId;
+          resolve(user);
+        } else {
+          let error = `no user exists at location ${userRef.toString()}`
+          log.warn('  ' + error);
+          reject(error);
+        }
+      });
     });
   }
 
