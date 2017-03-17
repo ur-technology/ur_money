@@ -29,6 +29,7 @@ import { ChangePasswordPage } from '../pages/settings/change-password/change-pas
 import { LostPasswordPage } from '../pages/registration/lost-password/lost-password';
 import { SignInTemporaryCodePage } from '../pages/registration/sign-in-temporary-code/sign-in-temporary-code';
 import { ResetPasswordPage } from '../pages/registration/reset-password/reset-password';
+import { ResetPasswordWithCodePage } from '../pages/registration/reset-password-with-code/reset-password-with-code';
 import { SignInPasswordPage } from '../pages/registration/sign-in-password/sign-in-password';
 import { SettingsAccountPage } from '../pages/settings/settings-account/settings-account';
 import { ChangeEmailPage } from '../pages/settings/change-email/change-email'
@@ -123,7 +124,8 @@ export function translateLoaderFactory(http: any) {
     SignInPasswordPage,
     LostPasswordPage,
     SignInTemporaryCodePage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    ResetPasswordWithCodePage,
   ],
   imports: [
     BrowserModule,
@@ -179,7 +181,8 @@ export function translateLoaderFactory(http: any) {
     SignInPasswordPage,
     LostPasswordPage,
     SignInTemporaryCodePage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    ResetPasswordWithCodePage,
   ],
   providers: [
     AuthService,

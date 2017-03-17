@@ -1,25 +1,29 @@
 import { ViewChild, Component } from '@angular/core';
 import { Platform, Nav, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-import { HomePage } from '../pages/home/home';
-import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
-import { TransactionsPage } from '../pages/transactions/transactions';
-import { AboutPage } from '../pages/about/about';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+
+import { Config } from '../config/config'
+
 import { AuthService } from '../services/auth';
 import { ContactsService } from '../services/contacts.service';
-import { Config } from '../config/config'
-import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
-import { WelcomePage } from '../pages/registration/welcome/welcome';
-import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
-import { SendPage } from '../pages/send/send';
-import { InviteLinkPage } from '../pages/invite-link/invite-link';
-import { UsersPage } from '../pages/admin/users';
-import { SettingsPage } from '../pages/settings/settings/settings';
-import { TranslateService } from 'ng2-translate/ng2-translate';
-import { IdScanPage } from '../pages/registration/id-scan/id-scan';
 import { Utils } from '../services/utils';
+
+import { AboutPage } from '../pages/about/about';
+import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
+import { HomePage } from '../pages/home/home';
+import { IdScanPage } from '../pages/registration/id-scan/id-scan';
+import { InviteLinkPage } from '../pages/invite-link/invite-link';
+import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
+import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
+import { ResetPasswordWithCodePage } from '../pages/registration/reset-password-with-code/reset-password-with-code';
 import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
+import { SendPage } from '../pages/send/send';
+import { SettingsPage } from '../pages/settings/settings/settings';
 import { UserPage } from '../pages/admin/user';
+import { TransactionsPage } from '../pages/transactions/transactions';
+import { UsersPage } from '../pages/admin/users';
+import { WelcomePage } from '../pages/registration/welcome/welcome';
 
 import * as _ from 'lodash';
 import * as log from 'loglevel';
@@ -74,7 +78,13 @@ export class UrMoney {
 
         let status = this.auth.getUserStatus();
         if (status === 'unauthenticated') {
-          this.nav.setRoot(WelcomePage);
+          let resetCode = Utils.getUrlParamByName('reset-code');
+
+          if (resetCode) {
+            this.nav.setRoot(ResetPasswordWithCodePage, { resetCode });
+          } else {
+            this.nav.setRoot(WelcomePage);
+          }
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
 
           if (this.auth.currentUser.selfieMatched) {
