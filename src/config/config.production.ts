@@ -4,7 +4,7 @@ export let Config: any = {
   'firebaseProjectId': 'ur-money-production',
   'firebaseApiKey': 'AIzaSyCAfUyRbUHkuRQhKOSgmMTrMtR2vVgeJqo',
   'stripePublishableKey': 'pk_live_0AFFhzUArOgWBSlKm3IOXFwo',
-  'targetPlatform': 'UNKNOWN_TARGET_PLATFORM',
+  'targetPlatform': 'web',
   'versionNumber': 'UNKNOWN_VERSION_NUMBER',
   'deeplinkHost': 'web.ur.technology'
 };
