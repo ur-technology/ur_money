@@ -46,20 +46,20 @@ export class LostPasswordPage {
                 self.navCtrl.setRoot(ResetPasswordWithCodePage);
                 break;
               case 'send_recovery_email_canceled_because_user_not_found':
-                self.toastService.showMessage({ messageKey: 'sign-in.emailNotFound'});
+                self.toastService.showMessage({ messageKey: 'errors.emailNotFound'});
                 break;
               case 'send_recovery_email_canceled_because_user_disabled':
-                self.toastService.showMessage({ messageKey: 'sign-in.userDisabled'});
+                self.toastService.showMessage({ messageKey: 'errors.userDisabled'});
                 break;
               default:
-                self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+                self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
             }
           });
       }, (error) => {
         loadingModal
           .dismiss()
           .then(() => {
-            self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+            self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
           });
       });
   }

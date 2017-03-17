@@ -124,20 +124,20 @@ export class HomePage {
                 this.toast.showMessage({ messageKey: 'verify-email.verifyEmailSent' });
                 break;
               case 'send_verification_email_canceled_because_user_not_found':
-                this.toast.showMessage({ messageKey: 'verify-email.emailNotFound'});
+                this.toast.showMessage({ messageKey: 'errors.emailNotFound'});
                 break;
               case 'send_verification_email_canceled_because_user_disabled':
-                this.toast.showMessage({ messageKey: 'verify-email.userDisabled'});
+                this.toast.showMessage({ messageKey: 'errors.userDisabled'});
                 break;
               default:
-                this.toast.showMessage({ messageKey: 'verify-email.unexpectedProblem' });
+                this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
             }
           });
       }, (error) => {
         loadingModal
           .dismiss()
           .then(() => {
-            this.toast.showMessage({ messageKey: 'verify-email.unexpectedProblem' });
+            this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
           });
       });
   }

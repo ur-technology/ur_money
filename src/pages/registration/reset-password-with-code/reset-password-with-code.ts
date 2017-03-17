@@ -66,18 +66,18 @@ export class ResetPasswordWithCodePage {
                 break;
 
               case 'reset_password_canceled_because_user_disabled':
-                this.toastService.showMessage({ messageKey: 'sign-in.userDisabled'});
+                this.toastService.showMessage({ messageKey: 'errors.userDisabled'});
                 break;
 
               default:
-                this.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+                this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
             }
           });
       }, (error) => {
         loadingModal
           .dismiss()
           .then(() => {
-            this.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+            this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
           });
       });
   }

@@ -38,14 +38,14 @@ export class SignInTemporaryCodePage {
           self.toastService.showMessage({ messageKey: 'sign-in.credentialsIncorrect' });
           break;
         case 'request_check_temp_password_canceled_because_user_not_found':
-          self.toastService.showMessage({ messageKey: 'sign-in.userDisabled' });
+          self.toastService.showMessage({ messageKey: 'errors.userDisabled' });
           break;
         default:
-          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       });
     });
   }

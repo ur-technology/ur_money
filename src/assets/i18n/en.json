@@ -19,10 +19,7 @@
   "verify-email": {
     "message": "Your email is not verified yet.",
     "buttonText": "Verify Now",
-    "verifyEmailSent": "A verification email has been sent to the address you provided. Please follow the instructions",
-    "emailNotFound": "The email that you entered did not match our records. Please double-check and try again.",
-    "userDisabled": "Your user account has been disabled.",
-    "unexpectedProblem": "There was an unexpected problem. Please try again later"
+    "verifyEmailSent": "A verification email has been sent to the address you provided. Please follow the instructions"    
   },
   "sign-in": {
     "title": "Enter phone number",
@@ -30,7 +27,6 @@
     "phoneNumber": "Enter your phone number",
     "numberConfirmation": "Number confirmation",
     "phoneCorrect": "Is your phone number above correct?",
-    "errorUserDisabled": "Your user account has been disabled.",
     "errorExcessiveLogins": "Your user account has been locked due to excessive failed login attempts.",
     "noInviteFoundTitle": "Invitation not found",
     "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
@@ -38,8 +34,6 @@
     "userNotFound": "The number that you entered did not match our records. Please double-check and try again.",
     "credentialsIncorrect": "The number and password that you entered did not match our records. Please double-check and try again.",
     "gotoSignUp": "Sign up instead?",
-    "userDisabled": "Your user account has been disabled.",
-    "unexpectedProblem": "There was an unexpected problem. Please try again later",
     "lostPassword": "I've lost my password",
     "contactSupport": "Contact support",
     "passwordRecovery": "We will send you a temporary password",
@@ -49,7 +43,6 @@
     "emailSent": "A recovery email has been sent to the address you provided. Please follow the instructions",
     "sentRecoveryEmail": "A recovery email has been sent to the email address you provided. Please follow the instructions",
     "resetCodeNotFound": "The reset code that you entered did not match our records. Please double-check and try again.",
-    "emailNotFound": "The email that you entered did not match our records. Please double-check and try again.",
     "enterTempPass": "<h3>Welcome back!</h3><p>We have improved our security system. Because you didn't have a password before, we have sent you a temporary code via SMS. </p><p>Please enter that code to continue.</p>",
     "enterTempPassPlaceholder": "Enter the temporary password",
     "resetPassword": "<h3>Great!</h3><p>Now please choose a new password. This will be your password to sign in from now on.</p>",
@@ -351,6 +344,11 @@
   "terms-and-conditions": {
     "title": "Terms and Conditions",
     "text": "Text of terms and conditions"
+  },
+  "errors": {
+    "emailNotFound": "The email that you entered did not match our records. Please double-check and try again.",
+    "userDisabled": "Your user account has been disabled.",
+    "unexpectedProblem": "There was an unexpected problem. Please try again later"
   },
   "done": "Done",
   "edit": "Edit",
