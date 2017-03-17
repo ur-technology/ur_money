@@ -79,7 +79,7 @@ export class AcuantService {
 
             taskRef.remove();
 
-            if (val.state == 'id_verification_success') {
+            if (val._state == 'id_verification_success') {
               resolve();
             } else {
               reject(val.error)
@@ -132,7 +132,7 @@ export class AcuantService {
 
             taskRef.remove();
 
-            if (val.state === 'selfie_verification_success') {
+            if (val._state === 'selfie_verification_success') {
               resolve();
             } else {
               log.info(val.error);
