@@ -61,7 +61,7 @@ export class UrMoney {
       }
 
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
-      let params = this.queryParams();
+      let params = Utils.queryParams();
 
       log.setDefaultLevel(logLevel);
 
@@ -79,7 +79,7 @@ export class UrMoney {
 
         let status = this.auth.getUserStatus();
         if (status === 'unauthenticated') {
-          let resetCode = Utils.getUrlParamByName('reset-code');
+          let resetCode = params['reset-code'];
 
           if (resetCode) {
             this.nav.setRoot(ResetPasswordWithCodePage, { resetCode });
@@ -128,20 +128,6 @@ export class UrMoney {
 
       log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
     });
-  }
-
-  private queryParams(): any {
-    let qs = window.location.search.split('+').join(' ');
-
-    var params = {},
-      tokens,
-      re = /[?&]?([^=]+)=([^&]*)/g;
-
-    while (tokens = re.exec(qs)) {
-      params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-    }
-
-    return params;
   }
 
   lookupUserById(userId: string): Promise<any> {
