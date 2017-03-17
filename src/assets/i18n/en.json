@@ -116,7 +116,8 @@
     "placeholderLastName": "Enter last name",
     "placeholderFullName": "Enter how you want to be called",
     "placeholderEmail": "Enter email",
-    "slideTitle": "Step 3 of 4 - Profile Info"
+    "slideTitle": "Step 3 of 4 - Profile Info",
+	"realNameExplanation": "This should be your real name, as in the name that's listed on your credit card, driver's license or student ID. It will only be used within the UR application so that other people know who they're transacting with."
   },
   "id-scan": {
     "title": "Setting Up Account",
@@ -159,7 +160,7 @@
     "renterSecretPhraseRetryMessage": "INCORRECT - PLEASE TRY AGAIN",
     "renterSecretPhrasePlaceholder": "Re-enter your secret phrase",
     "youWillReceiveBonus": "You will receive your 2,000 UR bonus soon!",
-    "chooseSecret": "Choose a 5 to 10 word secret phrase using only lowercase letters aand numbers.",
+    "chooseSecret": "Choose a 5 to 10 word secret phrase using only lowercase letters and numbers.",
     "message1": "Make sure you remember your secret phrase or keep a record of it because you will need it to make transactions later. We don't store your secret phrase, and it can never be recovered if you lose it. For maximum security, try to pick a string of words that has never appeared in print or online, and that no one would guess.",
     "message2": "Only you know it. It can never be recovered if lost.",
     "message3": "It’s a string of words that’s never appeared in print or online—ever!",
