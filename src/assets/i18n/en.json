@@ -18,7 +18,11 @@
   },
   "verify-email": {
     "message": "Your email is not verified yet.",
-    "buttonText": "Verify Now"
+    "buttonText": "Verify Now",
+    "verifyEmailSent": "A verification email has been sent to the address you provided. Please follow the instructions",
+    "emailNotFound": "The email that you entered did not match our records. Please double-check and try again.",
+    "userDisabled": "Your user account has been disabled.",
+    "unexpectedProblem": "There was an unexpected problem. Please try again later"
   },
   "sign-in": {
     "title": "Enter phone number",
