@@ -373,13 +373,14 @@ export class AuthService {
     });
   }
 
-  sendRecoveryEmail(email: string): Promise<any> {
+  sendRecoveryEmail(phone: string, email: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const taskRef = firebase
         .database()
         .ref(`/resetPasswordQueue/tasks`)
         .push({
           _state: 'send_recovery_email_requested',
+          phone,
           email
         });
       const resultRef = taskRef.child('result');
