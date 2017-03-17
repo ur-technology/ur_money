@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { ElementRef, Inject, Component, trigger, state, style, transition, animate } from '@angular/core';
 import { AngularFire } from 'angularfire2';
-import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { NavController, NavParams, Platform, AlertController, LoadingController } from 'ionic-angular';
 import { BigNumber } from 'bignumber.js';
 
 import { Config } from '../../config/config';
@@ -53,6 +53,7 @@ export class HomePage {
     navParams: NavParams,
     public nav: NavController,
     public platform: Platform,
+    private loadingController: LoadingController,
     public angularFire: AngularFire,
     public auth: AuthService,
     public chartData: ChartDataService,
@@ -88,7 +89,7 @@ export class HomePage {
     if (!this.auth.currentUser.isEmailVerified) {
       this.toast
         .showMessage({
-          message: this.translate.instant('verify-email.message'),
+          messageKey: 'verify-email.message',
           duration: 10000,
           showCloseButton: true,
           closeButtonText: this.translate.instant('verify-email.buttonText')
@@ -96,11 +97,49 @@ export class HomePage {
         .then((toast: any) => {
           toast.onDidDismiss((data, role) => {
             if (role === 'close') {
-              // TODO: Send verify email
+              this.sendVerificationEmail();
             }
           });
         });
     }
+  }
+
+  private sendVerificationEmail() {
+    let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+
+    loadingModal
+      .present()
+      .then(() => {
+        return this.auth.sendVerificationEmail(
+          this.auth.currentUser.phone,
+          this.auth.currentUser.email
+        );
+      })
+      .then((taskState: string) => {
+        loadingModal
+          .dismiss()
+          .then(() => {
+            switch (taskState) {
+              case 'send_verification_email_finished':
+                this.toast.showMessage({ messageKey: 'verify-email.verifyEmailSent' });
+                break;
+              case 'send_verification_email_canceled_because_user_not_found':
+                this.toast.showMessage({ messageKey: 'verify-email.emailNotFound'});
+                break;
+              case 'send_verification_email_canceled_because_user_disabled':
+                this.toast.showMessage({ messageKey: 'verify-email.userDisabled'});
+                break;
+              default:
+                this.toast.showMessage({ messageKey: 'verify-email.unexpectedProblem' });
+            }
+          });
+      }, (error) => {
+        loadingModal
+          .dismiss()
+          .then(() => {
+            this.toast.showMessage({ messageKey: 'verify-email.unexpectedProblem' });
+          });
+      });
   }
 
   private setBalanceValues() {

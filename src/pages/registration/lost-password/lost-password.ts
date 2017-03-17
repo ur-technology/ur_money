@@ -31,7 +31,8 @@ export class LostPasswordPage {
     let self = this;
     let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
 
-    loadingModal.present()
+    loadingModal
+      .present()
       .then(() => {
         return self.auth.sendRecoveryEmail(self.phone, self.mainForm.value.email);
       })
@@ -54,13 +55,13 @@ export class LostPasswordPage {
                 self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
             }
           });
-    }, (error) => {
-      loadingModal
-        .dismiss()
+      }, (error) => {
+        loadingModal
+          .dismiss()
           .then(() => {
             self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
-        });
-    });
+          });
+      });
   }
 
 
