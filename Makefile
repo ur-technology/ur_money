@@ -15,6 +15,12 @@ NPM_CMD_INSTALL_GLOBAL := install -g
 # NPM functions
 install_global_npm     = sudo $(NPM_BINARY) $(NPM_CMD_INSTALL_GLOBAL) $(1)
 
+# Config setup
+CONFIG_PATH            = src/config/config.ts
+
+# Config functions
+overwrite_config       = cp src/config/config.$(1).ts $(CONFIG_PATH)
+
 # The default operation is to serve the application in dev mode.
 run: run-development
 
@@ -30,9 +36,15 @@ run-development: version-file
 run-android: version-file
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)
 
-deploy: version-file
+deploy-staging: version-file
+	@$(call overwrite_config,staging)
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
-	@firebase deploy
+	@firebase deploy --project ur-money-staging
+
+deploy-production: version-file
+	@$(call overwrite_config,production)
+	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
+	@firebase deploy --project ur-money-production
 
 # Generate a version TypeScript file containing the current date
 # and a version based on the current git tag.
