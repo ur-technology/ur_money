@@ -59,6 +59,6 @@ export class SignInPasswordPage {
   }
 
   lostPassword() {
-    this.navCtrl.push(LostPasswordPage);
+    this.navCtrl.push(LostPasswordPage, { phone: this.phone });
   }
 }

@@ -13,9 +13,18 @@ import { AuthService } from '../../../services/auth';
 })
 export class LostPasswordPage {
   mainForm: FormGroup;
+  phone: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private loadingController: LoadingController, private translate: TranslateService, private toastService: ToastService, private auth: AuthService) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private loadingController: LoadingController,
+    private translate: TranslateService,
+    private toastService: ToastService,
+    private auth: AuthService
+  ) {
     this.mainForm = new FormGroup({ email: new FormControl('', [Validators.required, CustomValidator.emailValidator]) });
+    this.phone = this.navParams.get('phone');
   }
 
   submit() {
@@ -24,7 +33,7 @@ export class LostPasswordPage {
 
     loadingModal.present()
       .then(() => {
-        return self.auth.sendRecoveryEmail(self.mainForm.value.email);
+        return self.auth.sendRecoveryEmail(self.phone, self.mainForm.value.email);
       })
       .then((taskState: string) => {
         loadingModal

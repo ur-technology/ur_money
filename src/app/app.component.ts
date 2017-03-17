@@ -1,15 +1,18 @@
+import * as _ from 'lodash';
+import * as log from 'loglevel';
+import * as firebase from 'firebase';
+
 import { ViewChild, Component } from '@angular/core';
 import { Platform, Nav, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-
-import { Config } from '../config/config'
 
 import { AuthService } from '../services/auth';
 import { ContactsService } from '../services/contacts.service';
 import { Utils } from '../services/utils';
 
 import { AboutPage } from '../pages/about/about';
+import { Config } from '../config/config'
 import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
 import { HomePage } from '../pages/home/home';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
@@ -20,14 +23,11 @@ import { ResetPasswordWithCodePage } from '../pages/registration/reset-password-
 import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
 import { SendPage } from '../pages/send/send';
 import { SettingsPage } from '../pages/settings/settings/settings';
-import { UserPage } from '../pages/admin/user';
 import { TransactionsPage } from '../pages/transactions/transactions';
+import { UserPage } from '../pages/admin/user';
 import { UsersPage } from '../pages/admin/users';
 import { WelcomePage } from '../pages/registration/welcome/welcome';
 
-import * as _ from 'lodash';
-import * as log from 'loglevel';
-import * as firebase from 'firebase';
 
 @Component({
   templateUrl: 'app.html',
