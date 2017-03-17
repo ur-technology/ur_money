@@ -1,10 +1,10 @@
-import { Component, Input, Inject, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { BigNumber } from 'bignumber.js';
 import { ChartDataService } from '../../services/chart-data.service';
 import { AuthService } from '../../services/auth';
 import * as _ from 'lodash';
-import { FirebaseApp } from 'angularfire2';
+import * as firebase from 'firebase';
 import * as moment from 'moment';
 import { App } from 'ionic-angular';
 import { ContactsAndChatsPage } from '../../pages/contacts-and-chats/contacts-and-chats';
@@ -25,7 +25,7 @@ export class TransactionComponent {
   numberOfItemsToShow: number = 20;
   @Input() transactionType: string;
 
-  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, @Inject(FirebaseApp) firebase: any) {
+  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService) {
   }
 
   filterTransactions(newFilterOption?) {

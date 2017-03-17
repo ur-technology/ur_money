@@ -1,9 +1,9 @@
-import { ViewChild, Inject, Component } from '@angular/core';
+import { ViewChild, Component } from '@angular/core';
 import { NavController, NavParams, Platform, Content, AlertController, PopoverController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
-import { FirebaseApp } from 'angularfire2';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import { AuthService } from '../../services/auth';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -27,7 +27,7 @@ export class ChatPage {
   messageTextAreaHeight: number;
   @ViewChild(Content) content: Content;
 
-  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public translate: TranslateService, public alertCtrl: AlertController, public popoverCtrl: PopoverController, @Inject(FirebaseApp) firebase: any) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public translate: TranslateService, public alertCtrl: AlertController, public popoverCtrl: PopoverController) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');

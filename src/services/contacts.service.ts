@@ -1,11 +1,10 @@
-import { Injectable, EventEmitter, Inject } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Contacts } from 'ionic-native';
 import { FakeContactsSource } from '../models/fake-contacts-source';
 import { ContactModel } from '../models/contact.model';
 import { UserModel } from '../models/user.model';
 import * as _ from 'lodash';
-import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 import * as firebase from 'firebase';
 
@@ -22,7 +21,7 @@ export class ContactsService {
   contactGroups: any;
   contactsLoadedEmitter = new EventEmitter();
 
-  constructor(private platform: Platform, @Inject(FirebaseApp) firebase: any) {
+  constructor(private platform: Platform) {
   }
 
   getContacts(): Promise<ContactGroups> {
