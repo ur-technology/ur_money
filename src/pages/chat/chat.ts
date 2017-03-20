@@ -208,9 +208,11 @@ export class ChatPage {
 
   saveEvent() {
     let eventRef = firebase.database().ref(`/users/${this.auth.currentUserId}/events/${this.chatId}`);
+    let messageSummary = this.messageText.length>50?`${this.messageText.substring(0,50)}...`:this.messageText;
+    console.log('messageSummary',messageSummary);
     eventRef.set({
       createdAt: firebase.database.ServerValue.TIMESTAMP,
-      messageText: `${this.translate.instant('you')}: ${this.messageText}`,
+      messageText: `${this.translate.instant('you')}: ${messageSummary}`,
       notificationProcessed: 'true',
       profilePhotoUrl: this.chatSummary.users[this.chatSummary.displayUserId].profilePhotoUrl,
       sourceId: this.chatId,
