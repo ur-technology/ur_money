@@ -16,24 +16,7 @@
       <ion-item *ngFor="let menuItem of menuItems" tappable (click)="openPage(menuItem)">
         <i [class]="menuItem.icon" item-left></i> {{menuItem.title}}
       </ion-item>
-
-
     </ion-list>
-    <div class="menu-footer" (click)="invite()">
-      <ion-row class="add-loved-once">
-        <ion-col class="text-center">
-          <a href="#" class="add-loved"></a>
-        </ion-col>
-        <ion-col class="text-center">
-          <div class="angle-icon"></div>
-        </ion-col>
-        <ion-col class="text-center">
-          <a href="#" class="add-once"></a>
-        </ion-col>
-      </ion-row>
-      <p class="invite-text">{{"app.inviteMessage" | translate}}</p>
-      <button ion-button outline class="invite-btn">{{"app.invite" | translate}} </button>
-    </div>
   </ion-content>
 
 </ion-menu>

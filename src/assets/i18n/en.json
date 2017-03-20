@@ -117,7 +117,7 @@
     "placeholderFullName": "Enter how you want to be called",
     "placeholderEmail": "Enter email",
     "slideTitle": "Step 3 of 4 - Profile Info",
-	"realNameExplanation": "This should be your real name, as in the name that's listed on your credit card, driver's license or student ID. It will only be used within the UR application so that other people know who they're transacting with."
+	  "realNameExplanation": "This should be your real name, as in the name that's listed on your credit card, driver's license or student ID. It will only be used within the UR application so that other people know who they're transacting with."
   },
   "id-scan": {
     "title": "Setting Up Account",
@@ -179,6 +179,7 @@
   "app": {
     "inviteMessage": "Invite your friends and get more UR",
     "invite": "Invite",
+    "inviteFriends": "Invite friends",
     "home": "Home",
     "chat": "Chat",
     "send": "Send UR",
@@ -274,7 +275,7 @@
     "placeholderSentTo": "Choose contact or enter UR address",
     "placeholderSentToWeb": "Enter UR address",
     "placeholderPhrase": "Enter your secret phrase",
-	"notApprovedYet": "Your account hasn't been verified yet, so you can't send UR."
+	  "notApprovedYet": "Your account has not been verified yet, so you can't send UR."
   },
   "invite-link": {
     "title": "Invite Friends",
