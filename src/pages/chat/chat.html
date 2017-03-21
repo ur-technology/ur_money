@@ -28,10 +28,10 @@
         class="bar item-input-inset">
         <div class="ur-message-send">
             <label class="item-input-wrapper">
-                <ion-textarea type="text"
+                <textarea type="text" (focus)="messageTextFocus()"
                     [style.min-height]="messageTextAreaHeight+'px'"
                     [(ngModel)]="messageText"
-                    placeholder="{{'chat.typeMessage' | translate}}"></ion-textarea>
+                    placeholder="{{'chat.typeMessage' | translate}}"></textarea>
             </label>
         </div>
         <ion-buttons end>
