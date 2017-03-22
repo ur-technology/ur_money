@@ -128,7 +128,7 @@ export class SignUpPage {
           break;
 
         case 'code_generation_canceled_because_voip_phone_not_allowed':
-          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'sign-up.voipNotAllowed' });
           break;
 
         case 'code_generation_canceled_because_email_not_found':

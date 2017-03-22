@@ -52,6 +52,7 @@
     "password": "Password",
     "placeholderPassword": "Enter your password",
     "passwordConfirmation": "Password confirmation",
+	"voipNotAllowed": "Signups via a VOIP or other virtual service like Skype and Google voice are not allowed. Please use a number provided by a conventional mobile carrier.",
     "placeholderPasswordConfirmation": "Re-enter your password",
     "sponsorReferralCode": "Sponsor's referral code",
     "placeholderSponsorReferralCode": "Enter your sponsor's referral code",
