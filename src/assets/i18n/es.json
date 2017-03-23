@@ -52,6 +52,7 @@
       "password": "Contraseña",
       "placeholderPassword": "Ingresa tu contraseña",
       "passwordConfirmation": "Confirmación de contraseña",
+      "voipNotAllowed": "Las inscripciones a través de un VOIP u otro servicio virtual como Skype y Google Voice no están permitidos. Utilice un número proporcionado por un operador móvil convencional.",
       "placeholderPasswordConfirmation": "Reingresa tu contraseña",
       "sponsorReferralCode": "Código de referencia del patrocinador",
       "placeholderSponsorReferralCode": "Ingrese el código de referencia de su patrocinador",
@@ -120,6 +121,8 @@
         "realNameExplanation": "Este debe ser tu nombre real, como en el nombre que aparece en tu tarjeta de crédito, licencia de conducir o identificación de estudiante. Sólo se utilizará dentro de la aplicación UR para que otras personas sepan con quién están realizando transacciones."
     },
     "id-scan": {
+      "reassuringMessage": "Para ayudar a prevenir el fraude y crear un entorno seguro para nuestra comunidad, requerimos que todos los usuarios proporcionen imágenes de sus documentos de identidad y una foto de ellos mismos para su verificación. Sólo utilizamos estas imágenes para la verificación de la identidad y las medidas de lucha contra el fraude. Almacenamos toda la información personal, incluyendo imágenes de identificación, de forma segura y no compartimos ningún detalle a menos que lo requiera la ley. Para obtener más información sobre lo que hacemos con sus datos, consulte nuestra ",
+    	"privacyPolicy":"Política de Privacidad.",
       "title": "Configuración de la cuenta",
       "country": "País",
       "idType": "Tipo de identificación",

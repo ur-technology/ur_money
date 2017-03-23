@@ -52,7 +52,7 @@
     "password": "Password",
     "placeholderPassword": "Enter your password",
     "passwordConfirmation": "Password confirmation",
-	"voipNotAllowed": "Signups via a VOIP or other virtual service like Skype and Google voice are not allowed. Please use a number provided by a conventional mobile carrier.",
+	  "voipNotAllowed": "Signups via a VOIP or other virtual service like Skype and Google voice are not allowed. Please use a number provided by a conventional mobile carrier.",
     "placeholderPasswordConfirmation": "Re-enter your password",
     "sponsorReferralCode": "Sponsor's referral code",
     "placeholderSponsorReferralCode": "Enter your sponsor's referral code",
@@ -121,8 +121,8 @@
 	  "realNameExplanation": "This should be your real name, as in the name that's listed on your credit card, driver's license or student ID. It will only be used within the UR application so that other people know who they're transacting with."
   },
   "id-scan": {
-	"reassuringMessage": "In order to help prevent fraud and create a secure environment for our community, we require all users to provide images of their identity documents and a picture of themselves for verification. We only use these images for identity verification and counter-fraud measures. We store all personal information, including ID images, securely and we don't share any details unless required by law. For more information about what we do with your data, see our",
-	"privacyPolicy":"Privacy Policy",
+	  "reassuringMessage": "In order to help prevent fraud and create a secure environment for our community, we require all users to provide images of their identity documents and a picture of themselves for verification. We only use these images for identity verification and counter-fraud measures. We store all personal information, including ID images, securely and we don't share any details unless required by law. For more information about what we do with your data, see our",
+	  "privacyPolicy":"Privacy Policy",
     "title": "Setting Up Account",
     "country": "Country",
     "idType": "Type of ID",
