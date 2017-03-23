@@ -194,7 +194,8 @@
 		"waitingForSponsor": "Esperando A Patrocinador Que Complete Su Cuenta",
 		"userDisabled": "Usuario deshabilitado",
 		"newChats": "Tienes nuevos chats",
-		"newTransactions": "Tienes nuevas transacciones"
+		"newTransactions": "Tienes nuevas transacciones",
+    "noInvitesAllowed": "Espera hasta que se confirme tu bono para invitar a amigos"
 	},
 	"contacts": {
 		"invite": "Invitar",
@@ -347,5 +348,6 @@
     "signOut": "Salir",
     "search": "Buscar",
     "noInternetConnection": "No hay conexión a Internet disponible. Por favor, inténtelo de nuevo más tarde.",
-    "unexpectedErrorMessage": "Ha ocurrido un error inesperado. Por favor, inténtalo más tarde."
+    "unexpectedErrorMessage": "Ha ocurrido un error inesperado. Por favor, inténtalo más tarde.",
+    "dismiss": "Cerrar"
 }

@@ -197,7 +197,8 @@
     "waitingForSponsor": "Waiting for Sponsor To Set Up Account",
     "userDisabled": "User disabled",
     "newChats": "You have new chats",
-    "newTransactions": "You have new transactions"
+    "newTransactions": "You have new transactions",
+    "noInvitesAllowed": "Please wait until your bonus is confirmed to invite friends"
   },
   "contacts": {
     "invite": "Invite",
@@ -350,5 +351,6 @@
   "signOut": "Sign out",
   "search": "Search",
   "noInternetConnection": "No internet connection available. Please try again later.",
-  "unexpectedErrorMessage": "An unexpected error has occurred. Please try again later."
+  "unexpectedErrorMessage": "An unexpected error has occurred. Please try again later.",
+  "dismiss": "Dismiss"
 }

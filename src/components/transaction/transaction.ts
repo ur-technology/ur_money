@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { BigNumber } from 'bignumber.js';
 import { ChartDataService } from '../../services/chart-data.service';
 import { AuthService } from '../../services/auth';
@@ -9,6 +9,9 @@ import * as moment from 'moment';
 import { App } from 'ionic-angular';
 import { ContactsAndChatsPage } from '../../pages/contacts-and-chats/contacts-and-chats';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Config } from '../../config/config';
+import { InviteLinkPage } from '../../pages/invite-link/invite-link';
+
 
 @Component({
   selector: 'transaction-component',
@@ -25,7 +28,7 @@ export class TransactionComponent {
   numberOfItemsToShow: number = 20;
   @Input() transactionType: string;
 
-  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService) {
+  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, private alertCtrl: AlertController) {
   }
 
   filterTransactions(newFilterOption?) {
@@ -130,7 +133,19 @@ export class TransactionComponent {
   }
 
   invite() {
-    this.app.getRootNav().push(ContactsAndChatsPage, { goal: 'invite' });
+    if (!this.auth.announcementConfirmed()) {
+      let alert = this.alertCtrl.create({
+        subTitle: this.translate.instant('home.noInvitesAllowed'),
+        buttons: [this.translate.instant('dismiss')]
+      });
+      alert.present();
+    } else {
+      if (Config.targetPlatform === 'web') {
+        this.nav.push(InviteLinkPage);
+      } else {
+        this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
+      }
+    }
   }
 
   selectedTransactionType(): string {
