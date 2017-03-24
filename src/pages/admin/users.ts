@@ -1,12 +1,11 @@
 import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
-import { Inject, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AuthService } from '../../services/auth';
 import { Config } from '../../config/config';
 import { UserPage } from './user';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import { FirebaseApp } from 'angularfire2';
 import { Utils } from '../../services/utils';
 import * as firebase from 'firebase';
 
@@ -36,7 +35,6 @@ export class UsersPage {
     private translate: TranslateService,
     public auth: AuthService,
     private alertCtrl: AlertController,
-    @Inject(FirebaseApp) firebase: any
   ) {
     this.countries = require('country-data').countries.all;
     this.searchTypes = ['Email', 'Phone', 'Full Name', 'Last Name', 'User Id', 'Sponsor Full Name', 'Sponsor User Id'];

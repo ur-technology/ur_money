@@ -1,6 +1,5 @@
-import { Injectable, EventEmitter, Inject } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
-import { FirebaseApp } from 'angularfire2';
 import * as moment from 'moment';
 import { AuthService } from '../services/auth';
 import { BigNumber } from 'bignumber.js';
@@ -21,7 +20,7 @@ export class ChartDataService {
   public estimatedFeeUR: any;
   public priorBalanceWei: any;
 
-  constructor(public auth: AuthService, @Inject(FirebaseApp) firebase: any) {
+  constructor(public auth: AuthService) {
     this.pointsLoaded = false;
 
     // use fixed estimated fee for performance reasons

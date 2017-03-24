@@ -1,4 +1,4 @@
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ElementRef, Inject, Component } from '@angular/core';
 import { ContactsAndChatsPage } from '../contacts-and-chats/contacts-and-chats';
@@ -34,7 +34,7 @@ export class HomePage {
   constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
     public angularFire: AngularFire, public auth: AuthService,
-    public translate: TranslateService
+    public translate: TranslateService, private alertCtrl: AlertController
 
   ) {
     this.elementRef = elementRef;
@@ -161,10 +161,18 @@ export class HomePage {
   }
 
   invite() {
-    if (Config.targetPlatform === 'web') {
-      this.nav.push(InviteLinkPage);
+    if (!this.auth.announcementConfirmed()) {
+      let alert = this.alertCtrl.create({
+        subTitle: this.translate.instant('home.noInvitesAllowed'),
+        buttons: [this.translate.instant('dismiss')]
+      });
+      alert.present();
     } else {
-      this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
+      if (Config.targetPlatform === 'web') {
+        this.nav.push(InviteLinkPage);
+      } else {
+        this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
+      }
     }
   }
 

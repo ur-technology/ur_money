@@ -7,7 +7,6 @@
     "ionic:serve": "ionic-app-scripts serve",
     "lint": "ionic-app-scripts lint"
   },
-
   "dependencies": {
     "@angular/common": "2.2.1",
     "@angular/compiler": "2.2.1",

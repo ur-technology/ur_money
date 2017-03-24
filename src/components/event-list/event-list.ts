@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, Platform, ToastController } from 'ionic-angular';
-import { FirebaseApp } from 'angularfire2';
+import * as firebase from 'firebase';
 import { App } from 'ionic-angular';
 import { EventsService } from '../../services/events.service';
 import { ChatPage } from '../../pages/chat/chat';
@@ -16,7 +16,7 @@ import * as _ from 'lodash';
 })
 export class EventListComponent {
   events = [];
-  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App, @Inject(FirebaseApp) firebase: any, public translate: TranslateService) {
+  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App, public translate: TranslateService) {
     if (platform.is('cordova')) {
       this.listenForNewEvents();
       this.listenForNotificationSelection();

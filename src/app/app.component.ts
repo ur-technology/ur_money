@@ -1,29 +1,33 @@
-import { ViewChild, Component } from '@angular/core';
-import { Platform, Nav, MenuController } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
-import { HomePage } from '../pages/home/home';
-import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
-import { TransactionsPage } from '../pages/transactions/transactions';
-import { AboutPage } from '../pages/about/about';
-import { AuthService } from '../services/auth';
-import { ContactsService } from '../services/contacts.service';
-import { Config } from '../config/config'
-import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
-import { WelcomePage } from '../pages/registration/welcome/welcome';
-import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
-import { SendPage } from '../pages/send/send';
-import { InviteLinkPage } from '../pages/invite-link/invite-link';
-import { UsersPage } from '../pages/admin/users';
-import { SettingsPage } from '../pages/settings/settings/settings';
-import { TranslateService } from 'ng2-translate/ng2-translate';
-import { IdScanPage } from '../pages/registration/id-scan/id-scan';
-import { Utils } from '../services/utils';
-import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
-import { UserPage } from '../pages/admin/user';
-
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import * as firebase from 'firebase';
+
+import { ViewChild, Component } from '@angular/core';
+import { Platform, Nav, MenuController } from 'ionic-angular';
+import { StatusBar, Splashscreen } from 'ionic-native';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+
+import { AuthService } from '../services/auth';
+import { ContactsService } from '../services/contacts.service';
+import { Utils } from '../services/utils';
+
+import { AboutPage } from '../pages/about/about';
+import { Config } from '../config/config'
+import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
+import { HomePage } from '../pages/home/home';
+import { IdScanPage } from '../pages/registration/id-scan/id-scan';
+import { InviteLinkPage } from '../pages/invite-link/invite-link';
+import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
+import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
+import { ResetPasswordWithCodePage } from '../pages/registration/reset-password-with-code/reset-password-with-code';
+import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
+import { SendPage } from '../pages/send/send';
+import { SettingsPage } from '../pages/settings/settings/settings';
+import { TransactionsPage } from '../pages/transactions/transactions';
+import { UserPage } from '../pages/admin/user';
+import { UsersPage } from '../pages/admin/users';
+import { WelcomePage } from '../pages/registration/welcome/welcome';
+
 
 @Component({
   templateUrl: 'app.html',
@@ -74,7 +78,13 @@ export class UrMoney {
 
         let status = this.auth.getUserStatus();
         if (status === 'unauthenticated') {
-          this.nav.setRoot(WelcomePage);
+          let resetCode = Utils.getUrlParamByName('reset-code');
+
+          if (resetCode) {
+            this.nav.setRoot(ResetPasswordWithCodePage, { resetCode });
+          } else {
+            this.nav.setRoot(WelcomePage);
+          }
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
 
           if (this.auth.currentUser.selfieMatched) {
@@ -159,9 +169,10 @@ export class UrMoney {
       }
 
       this.menuItems.push({ title: 'Send UR', page: SendPage, pageParams: { contact: {} }, icon: 'icon menu-icon menu-icon-send-ur', value: 'send' });
-
-      // this.menuItems.push({ title: 'Request UR', page: ContactsAndChatsPage, pageParams: { goal: 'request' }, icon: 'icon menu-icon menu-icon-request-ur', value: 'request' });
       this.menuItems.push({ title: 'Transactions', page: TransactionsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'transactions' });
+      if (this.auth.announcementConfirmed()) {
+        this.menuItems.push({ title: 'Invite friends', page: Config.targetPlatform === 'web' ? InviteLinkPage : ContactsAndChatsPage, pageParams: { goal: 'invite' }, icon: 'icon menu-icon menu-icon-invite', value: 'inviteFriends' });
+      }
     }
     this.menuItems.push({ title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' });
     if (this.auth.currentUser && this.auth.currentUser.admin) {

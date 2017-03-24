@@ -1,8 +1,8 @@
 import { AlertController, NavController, NavParams, Platform, LoadingController, ModalController } from 'ionic-angular';
-import { Inject, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
-import { FirebaseApp } from 'angularfire2';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { BigNumber } from 'bignumber.js';
@@ -45,8 +45,7 @@ export class SendPage {
     public translate: TranslateService,
     public chartData: ChartDataService,
     public encryptionService: EncryptionService,
-    public modalController: ModalController,
-    @Inject(FirebaseApp) firebase: any
+    public modalController: ModalController
   ) {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),

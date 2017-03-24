@@ -2,7 +2,7 @@ import { ErrorHandler } from '@angular/core';
 
 declare var trackJs: any;
 
-export class TrackJsErrorHandler extends ErrorHandler {
+export class TrackJsErrorHandler implements ErrorHandler {
   handleError(error: any) {
     // Add the error message to the telemetry timeline.
     // It can occasionally have useful additional context.

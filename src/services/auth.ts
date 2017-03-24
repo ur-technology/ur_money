@@ -1,10 +1,9 @@
-import { Injectable, Inject, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import { ContactsService } from '../services/contacts.service';
 import { Config } from '../config/config';
-import { FirebaseApp } from 'angularfire2';
 import { BigNumber } from 'bignumber.js';
 import { UserService } from './user.service';
 import { UserModel } from '../models/user.model';
@@ -28,9 +27,7 @@ export class AuthService {
   constructor(
     public angularFire: AngularFire,
     public contactsService: ContactsService,
-    private userService: UserService,
-    @Inject(FirebaseApp) firebase: any
-  ) {
+    private userService: UserService  ) {
   }
 
   respondToAuth(callback: any) {
@@ -373,9 +370,69 @@ export class AuthService {
     });
   }
 
-  sendRecoveryEmail(email: string): Promise<any> {
+  sendRecoveryEmail(phone: string, email: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      resolve('email-sent')
+      const taskRef = firebase
+        .database()
+        .ref(`/resetPasswordQueue/tasks`)
+        .push({
+          _state: 'send_recovery_email_requested',
+          phone,
+          email
+        });
+      const resultRef = taskRef.child('result');
+
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+
+        if (!taskResult) {
+          return;
+        }
+
+        resultRef.off('value');
+        taskRef.remove();
+
+        if (taskResult.error) {
+          log.error(`send recovery email error: ${taskResult.error}`);
+        }
+
+        resolve(taskResult.state);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  resetPasswordWithCode(resetCode: string, newPassword: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const taskRef = firebase
+        .database()
+        .ref(`/resetPasswordQueue/tasks`)
+        .push({
+          _state: 'reset_password_requested',
+          resetCode,
+          newPassword
+        });
+      const resultRef = taskRef.child('result');
+
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+
+        if (!taskResult) {
+          return;
+        }
+
+        resultRef.off('value');
+        taskRef.remove();
+
+        if (taskResult.error) {
+          log.error(`reset password error: ${taskResult.error}`);
+        }
+
+        resolve(taskResult.state);
+      }, (error) => {
+        reject(error);
+      });
     });
   }
 

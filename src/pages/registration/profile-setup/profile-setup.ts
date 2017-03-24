@@ -1,5 +1,6 @@
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import * as firebase from 'firebase';
@@ -17,7 +18,9 @@ export class ProfileSetupPage {
   errorMessage: string;
   constructor(
     public nav: NavController,
-    public auth: AuthService
+    public auth: AuthService,
+    private translate: TranslateService,
+    public alertCtrl: AlertController
   ) {
     let formElements: any = {
       name: new FormControl('', [CustomValidator.nameValidator, Validators.required]),
@@ -35,6 +38,19 @@ export class ProfileSetupPage {
     });
   }
 
+  showRealNameExplanation() {
+    let alert = this.alertCtrl.create({
+      message: this.translate.instant('profile-setup.realNameExplanation'),
+      buttons: [{
+        text: this.translate.instant('ok'),
+        handler: () => {
+          alert.dismiss();
+        }
+      }
+      ]
+    });
+    alert.present();
+  }
 
   submit() {
     this.auth.currentUser.update(this.mainForm.value).then(() => {

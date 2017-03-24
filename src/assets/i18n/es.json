@@ -39,6 +39,9 @@
         "passwordRecoveryTitle": "Recuperación de contraseña",
         "passwordRecoveryEmail": "Introduce tu correo electrónico para recuperar la contraseña",
         "emailSent": "Se ha enviado un correo electrónico de recuperación a la dirección que proporcionaste. Por favor, sigue las instrucciones",
+        "sentRecoveryEmail": "Se ha enviado un correo electrónico de recuperación a la dirección de correo electrónico que proporcionaste. Sige las instrucciones",
+        "resetCodeNotFound": "El código que ingresaste no coincide con nuestros registros. Comprueba e intenta nuevamente.",
+        "emailNotFound": "El correo electrónico que ingresaste no coincide con nuestros registros. Comprueba e intenta nuevamente.",
         "enterTempPass": "<h3>¡Bienvenido!</h3><p>Hemos mejorado nuestro sistema de seguridad. Debido a que no tenías una contraseña antes, te hemos enviado un código temporal a través de SMS.</p><p> Ingresa el código para continuar.</p>",
         "enterTempPassPlaceholder": "Ingresa la contraseña temporal",
         "resetPassword": "<h3>¡Estupendo!</h3> <p>Ahora elige una nueva contraseña. Esta será tu contraseña para iniciar sesión de ahora en adelante.</p>",
@@ -49,6 +52,7 @@
       "password": "Contraseña",
       "placeholderPassword": "Ingresa tu contraseña",
       "passwordConfirmation": "Confirmación de contraseña",
+      "voipNotAllowed": "Las inscripciones a través de un VOIP u otro servicio virtual como Skype y Google Voice no están permitidos. Utilice un número proporcionado por un operador móvil convencional.",
       "placeholderPasswordConfirmation": "Reingresa tu contraseña",
       "sponsorReferralCode": "Código de referencia del patrocinador",
       "placeholderSponsorReferralCode": "Ingrese el código de referencia de su patrocinador",
@@ -113,9 +117,12 @@
         "placeholderLastName": "Ingresa el apellido",
         "placeholderFullName": "Ingresa cómo quieres que te llamen",
         "placeholderEmail": "Ingresa el correo electrónico",
-        "slideTitle": "Paso 3 de 4 - Información de perfil"
+        "slideTitle": "Paso 3 de 4 - Información de perfil",
+        "realNameExplanation": "Este debe ser tu nombre real, como en el nombre que aparece en tu tarjeta de crédito, licencia de conducir o identificación de estudiante. Sólo se utilizará dentro de la aplicación UR para que otras personas sepan con quién están realizando transacciones."
     },
     "id-scan": {
+      "reassuringMessage": "Para ayudar a prevenir el fraude y crear un entorno seguro para nuestra comunidad, requerimos que todos los usuarios proporcionen imágenes de sus documentos de identidad y una foto de ellos mismos para su verificación. Sólo utilizamos estas imágenes para la verificación de la identidad y las medidas de lucha contra el fraude. Almacenamos toda la información personal, incluyendo imágenes de identificación, de forma segura y no compartimos ningún detalle a menos que lo requiera la ley. Para obtener más información sobre lo que hacemos con sus datos, consulte nuestra ",
+    	"privacyPolicy":"Política de Privacidad.",
       "title": "Configuración de la cuenta",
       "country": "País",
       "idType": "Tipo de identificación",
@@ -161,7 +168,7 @@
 		"message2": "Solo tú lo sabes. Nunca podrá ser recuperado si se pierde.",
 		"message3": "Ingresa palabras para tu contraseña",
 		"message4": "Use el botón Generar de abajo para generar automáticamente una frase de secreta.",
-		"learnSavePhrase": "Si te olvidas tu frase secreta puedes recuperarla mas tarde",
+		"learnSavePhrase": "Al marcar esta casilla, está eligiendo almacenar su frase secreta en su dispositivo. Guardar su frase secreta tiene ventajas y desventajas. La principal ventaja es que, si se olvida su frase secreta y también pierde su copia escrita de ella, por lo general será capaz de recuperarla utilizando este método. La principal desventaja es que usted podría aumentar las posibilidades de que su frase secreta sea robada si alguien obtiene acceso físico o remoto a su dispositivo. Además, guardar tu frase secreta en tu dispositivo NO es 100% confiable, así que guárdala en un lugar seguro.",
 		"saveSecretPhrase": "Almacenar una copia local de la frase secreta en el dispositivo para emergencias?",
 		"learnMore": "Conocer más",
 		"slideTitle": "Paso 2 de 2 - Configura frase secreta",
@@ -175,6 +182,7 @@
 	"app": {
 		"inviteMessage": "Invita a tus amigos y obtén mas UR",
 		"invite": "Invita",
+    "inviteFriends": "Invitar amigos",
 		"home": "Inicio",
 		"chat": "Chat",
 		"send": "Enviar UR",
@@ -189,7 +197,8 @@
 		"waitingForSponsor": "Esperando A Patrocinador Que Complete Su Cuenta",
 		"userDisabled": "Usuario deshabilitado",
 		"newChats": "Tienes nuevos chats",
-		"newTransactions": "Tienes nuevas transacciones"
+		"newTransactions": "Tienes nuevas transacciones",
+    "noInvitesAllowed": "Espera hasta que se confirme tu bono para invitar a amigos"
 	},
 	"contacts": {
 		"invite": "Invitar",
@@ -269,7 +278,8 @@
         "placeholderAmount": "Ingresa la cantidad",
         "placeholderSentTo": "Elige contacto o introduce la dirección UR",
         "placeholderSentToWeb": "Introduce la dirección UR",
-        "placeholderPhrase": "Introduce tu frase secreta"
+        "placeholderPhrase": "Introduce tu frase secreta",
+        "notApprovedYet": "Tu cuenta aún no se ha verificado, por lo que no puedes enviar UR."
     },
     "invite-link": {
       "title": "Invitar a amigos",
@@ -310,6 +320,7 @@
         "general": "General",
         "changePassword": "Cambia la contraseña",
         "currentPassword": "Contraseña actual",
+        "resetCode": "Restablecer Código",
         "newPassword": "Nueva contraseña",
         "verifyPassword": "Verificar contraseña",
         "change": "Cambiar",
@@ -340,5 +351,6 @@
     "signOut": "Salir",
     "search": "Buscar",
     "noInternetConnection": "No hay conexión a Internet disponible. Por favor, inténtelo de nuevo más tarde.",
-    "unexpectedErrorMessage": "Ha ocurrido un error inesperado. Por favor, inténtalo más tarde."
+    "unexpectedErrorMessage": "Ha ocurrido un error inesperado. Por favor, inténtalo más tarde.",
+    "dismiss": "Cerrar"
 }

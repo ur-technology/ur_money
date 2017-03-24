@@ -1,10 +1,7 @@
-import { FirebaseApp } from 'angularfire2';
-import { Inject } from '@angular/core';
 import * as firebase from 'firebase';
 
 export class FirebaseModel {
   public key: string;
-  @Inject(FirebaseApp) firebase: any
 
   static ref(containerPath: string): firebase.database.Reference {
     return firebase.database().ref(containerPath);

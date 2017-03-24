@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom';
-import { WelcomePage } from '../welcome/welcome';
+import { ResetPasswordWithCodePage } from '../reset-password-with-code/reset-password-with-code';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ToastService } from '../../../services/toast';
 import { AuthService } from '../../../services/auth';
@@ -13,35 +13,53 @@ import { AuthService } from '../../../services/auth';
 })
 export class LostPasswordPage {
   mainForm: FormGroup;
+  phone: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private loadingController: LoadingController, private translate: TranslateService, private toastService: ToastService, private auth: AuthService) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private loadingController: LoadingController,
+    private translate: TranslateService,
+    private toastService: ToastService,
+    private auth: AuthService
+  ) {
     this.mainForm = new FormGroup({ email: new FormControl('', [Validators.required, CustomValidator.emailValidator]) });
+    this.phone = this.navParams.get('phone');
   }
 
   submit() {
     let self = this;
-    let taskState: string;
     let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
 
-    loadingModal.present().then(() => {
-      return self.auth.sendRecoveryEmail(self.mainForm.value.email);
-    }).then((newTaskState: string) => {
-      taskState = newTaskState;
-      return loadingModal.dismiss();
-    }).then(() => {
-      switch (taskState) {
-        case 'email-sent':
-        self.toastService.showMessage({messageKey:'sign-in.emailSent'});
-        self.navCtrl.setRoot(WelcomePage);
-          break;
-        default:
-          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
-
-      }
+    loadingModal.present()
+      .then(() => {
+        return self.auth.sendRecoveryEmail(self.phone, self.mainForm.value.email);
+      })
+      .then((taskState: string) => {
+        loadingModal
+          .dismiss()
+          .then(() => {
+            switch (taskState) {
+              case 'send_recovery_email_finished':
+                self.toastService.showMessage({ messageKey: 'sign-in.sentRecoveryEmail' });
+                self.navCtrl.setRoot(ResetPasswordWithCodePage);
+                break;
+              case 'send_recovery_email_canceled_because_user_not_found':
+                self.toastService.showMessage({ messageKey: 'sign-in.emailNotFound'});
+                break;
+              case 'send_recovery_email_canceled_because_user_disabled':
+                self.toastService.showMessage({ messageKey: 'sign-in.userDisabled'});
+                break;
+              default:
+                self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+            }
+          });
     }, (error) => {
-      loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
-      });
+      loadingModal
+        .dismiss()
+          .then(() => {
+            self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+        });
     });
   }
 

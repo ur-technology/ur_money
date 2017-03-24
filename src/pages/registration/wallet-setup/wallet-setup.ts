@@ -1,7 +1,6 @@
 import { NavController, Platform, AlertController, LoadingController } from 'ionic-angular';
-import { Inject, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 import { NativeStorage } from 'ionic-native';
 import { WalletModel } from '../../../models/wallet';
@@ -35,7 +34,6 @@ export class WalletSetupPage {
     public translate: TranslateService,
     public encryptionService: EncryptionService,
     private toastService: ToastService,
-    @Inject(FirebaseApp) firebase: any
   ) {
     this.mainForm = new FormGroup({
       secretPhrase: new FormControl('', CustomValidator.secretPhraseValidator),

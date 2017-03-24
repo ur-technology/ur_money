@@ -1,7 +1,15 @@
 id-scan-page {
 
+	.disclaimer {
+		margin-top: 1em;
+		padding: 1em;
+		background-color: #fbf6c4;
+		font-weight: bold;
+		border-radius: 0.5em;
+	}
+
 	.id-type {
-		
+
 		margin-top: 1em;
 
 		button {
@@ -31,11 +39,11 @@ id-scan-page {
 				left: 0px;
 			}
 
-				ion-icon {
-					display: inline-block;
-					position: relative;
-					top: 0.1em;
-				}
+			ion-icon {
+				display: inline-block;
+				position: relative;
+				top: 0.1em;
+			}
 
 			input[type='file'] {
 				display: none;

@@ -39,6 +39,9 @@
     "passwordRecoveryTitle": "Password recovery",
     "passwordRecoveryEmail": "Enter email to recover password",
     "emailSent": "A recovery email has been sent to the address you provided. Please follow the instructions",
+    "sentRecoveryEmail": "A recovery email has been sent to the email address you provided. Please follow the instructions",
+    "resetCodeNotFound": "The reset code that you entered did not match our records. Please double-check and try again.",
+    "emailNotFound": "The email that you entered did not match our records. Please double-check and try again.",
     "enterTempPass": "<h3>Welcome back!</h3><p>We have improved our security system. Because you didn't have a password before, we have sent you a temporary code via SMS. </p><p>Please enter that code to continue.</p>",
     "enterTempPassPlaceholder": "Enter the temporary password",
     "resetPassword": "<h3>Great!</h3><p>Now please choose a new password. This will be your password to sign in from now on.</p>",
@@ -49,6 +52,7 @@
     "password": "Password",
     "placeholderPassword": "Enter your password",
     "passwordConfirmation": "Password confirmation",
+	  "voipNotAllowed": "Signups via a VOIP or other virtual service like Skype and Google voice are not allowed. Please use a number provided by a conventional mobile carrier.",
     "placeholderPasswordConfirmation": "Re-enter your password",
     "sponsorReferralCode": "Sponsor's referral code",
     "placeholderSponsorReferralCode": "Enter your sponsor's referral code",
@@ -113,9 +117,12 @@
     "placeholderLastName": "Enter last name",
     "placeholderFullName": "Enter how you want to be called",
     "placeholderEmail": "Enter email",
-    "slideTitle": "Step 3 of 4 - Profile Info"
+    "slideTitle": "Step 3 of 4 - Profile Info",
+	  "realNameExplanation": "This should be your real name, as in the name that's listed on your credit card, driver's license or student ID. It will only be used within the UR application so that other people know who they're transacting with."
   },
   "id-scan": {
+	  "reassuringMessage": "In order to help prevent fraud and create a secure environment for our community, we require all users to provide images of their identity documents and a picture of themselves for verification. We only use these images for identity verification and counter-fraud measures. We store all personal information, including ID images, securely and we don't share any details unless required by law. For more information about what we do with your data, see our",
+	  "privacyPolicy":"Privacy Policy",
     "title": "Setting Up Account",
     "country": "Country",
     "idType": "Type of ID",
@@ -156,7 +163,7 @@
     "renterSecretPhraseRetryMessage": "INCORRECT - PLEASE TRY AGAIN",
     "renterSecretPhrasePlaceholder": "Re-enter your secret phrase",
     "youWillReceiveBonus": "You will receive your 2,000 UR bonus soon!",
-    "chooseSecret": "Choose a 5 to 10 word secret phrase using only lowercase letters aand numbers.",
+    "chooseSecret": "Choose a 5 to 10 word secret phrase using only lowercase letters and numbers.",
     "message1": "Make sure you remember your secret phrase or keep a record of it because you will need it to make transactions later. We don't store your secret phrase, and it can never be recovered if you lose it. For maximum security, try to pick a string of words that has never appeared in print or online, and that no one would guess.",
     "message2": "Only you know it. It can never be recovered if lost.",
     "message3": "It’s a string of words that’s never appeared in print or online—ever!",
@@ -175,6 +182,7 @@
   "app": {
     "inviteMessage": "Invite your friends and get more UR",
     "invite": "Invite",
+    "inviteFriends": "Invite friends",
     "home": "Home",
     "chat": "Chat",
     "send": "Send UR",
@@ -189,7 +197,8 @@
     "waitingForSponsor": "Waiting for Sponsor To Set Up Account",
     "userDisabled": "User disabled",
     "newChats": "You have new chats",
-    "newTransactions": "You have new transactions"
+    "newTransactions": "You have new transactions",
+    "noInvitesAllowed": "Please wait until your bonus is confirmed to invite friends"
   },
   "contacts": {
     "invite": "Invite",
@@ -270,7 +279,7 @@
     "placeholderSentTo": "Choose contact or enter UR address",
     "placeholderSentToWeb": "Enter UR address",
     "placeholderPhrase": "Enter your secret phrase",
-	"notApprovedYet": "Your account hasn't been verified yet, so you can't send UR."
+	  "notApprovedYet": "Your account has not been verified yet, so you can't send UR."
   },
   "invite-link": {
     "title": "Invite Friends",
@@ -311,6 +320,7 @@
     "general": "General",
     "changePassword": "Change password",
     "currentPassword": "Current password",
+    "resetCode": "Reset code",
     "newPassword": "New password",
     "verifyPassword": "Verify password",
     "change": "Change",
@@ -341,5 +351,6 @@
   "signOut": "Sign out",
   "search": "Search",
   "noInternetConnection": "No internet connection available. Please try again later.",
-  "unexpectedErrorMessage": "An unexpected error has occurred. Please try again later."
+  "unexpectedErrorMessage": "An unexpected error has occurred. Please try again later.",
+  "dismiss": "Dismiss"
 }

@@ -1,9 +1,9 @@
-import { ViewChild, Inject, Component } from '@angular/core';
+import { ViewChild, Component } from '@angular/core';
 import { NavController, NavParams, Platform, Content, AlertController, PopoverController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
-import { FirebaseApp } from 'angularfire2';
+import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import { AuthService } from '../../services/auth';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -27,7 +27,7 @@ export class ChatPage {
   messageTextAreaHeight: number;
   @ViewChild(Content) content: Content;
 
-  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public translate: TranslateService, public alertCtrl: AlertController, public popoverCtrl: PopoverController, @Inject(FirebaseApp) firebase: any) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public translate: TranslateService, public alertCtrl: AlertController, public popoverCtrl: PopoverController) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
@@ -38,14 +38,15 @@ export class ChatPage {
   }
 
   onKeyboardShow(e) {
-    this.scrollToBottomPage();
+    let self = this;
+    self.scrollToBottomPage();
   }
 
   scrollToBottomPage() {
     let self = this;
     setTimeout(() => {
       self.content.scrollToBottom();
-    }, 50);
+    }, 150);
   }
 
   ionViewDidLoad() {
@@ -89,7 +90,7 @@ export class ChatPage {
 
     jQuery('textarea').on('input', event => {
       this.messageTextAreaHeight = Math.min(event.target.scrollHeight, MESSAGE_TEXT_AREA_MAXIMUM_HEIGHT);
-      event.target.rows = this.messageTextAreaHeight / MESSAGE_TEXT_AREA_ROW_HEIGHT;
+      event.target.rows = Math.ceil(this.messageTextAreaHeight / MESSAGE_TEXT_AREA_ROW_HEIGHT);
     });
   }
 
@@ -208,9 +209,10 @@ export class ChatPage {
 
   saveEvent() {
     let eventRef = firebase.database().ref(`/users/${this.auth.currentUserId}/events/${this.chatId}`);
+    let messageSummary = this.messageText.length > 50 ? `${this.messageText.substring(0, 50)}...` : this.messageText;
     eventRef.set({
       createdAt: firebase.database.ServerValue.TIMESTAMP,
-      messageText: `${this.translate.instant('you')}: ${this.messageText}`,
+      messageText: `${this.translate.instant('you')}: ${messageSummary}`,
       notificationProcessed: 'true',
       profilePhotoUrl: this.chatSummary.users[this.chatSummary.displayUserId].profilePhotoUrl,
       sourceId: this.chatId,
@@ -264,7 +266,7 @@ export class ChatPage {
   resetMessageTextArea() {
     this.messageText = '';
     this.messageTextAreaHeight = 32;
-    jQuery('textarea')[0].rows = 2;
+    jQuery('textarea')[0].rows = 1;
   }
 
   blockContact() {
@@ -296,6 +298,13 @@ export class ChatPage {
       .update({ blocked: value }).then(() => {
         this.lookupChatSummaryViaChatId();
       });
+  }
+
+  messageTextFocus() {
+    let self = this;
+    setTimeout(() => {
+      self.scrollToBottomPage();
+    }, 1000);
   }
 
   presentPopover(event) {

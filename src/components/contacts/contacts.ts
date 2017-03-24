@@ -1,11 +1,10 @@
-import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { SocialSharing, Clipboard, Toast } from 'ionic-native';
 import { ContactsService } from '../../services/contacts.service';
 import { AuthService } from '../../services/auth';
 import { App } from 'ionic-angular';
 import * as _ from 'lodash';
-import { FirebaseApp } from 'angularfire2';
 import * as log from 'loglevel';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Utils } from '../../services/utils';
@@ -36,7 +35,7 @@ export class ContactsComponent {
     public auth: AuthService,
     public platform: Platform,
     public alertCtrl: AlertController,
-    public app: App, public translate: TranslateService, @Inject(FirebaseApp) firebase: any
+    public app: App, public translate: TranslateService
   ) {
     this.startTime = (new Date()).getTime();
   }
