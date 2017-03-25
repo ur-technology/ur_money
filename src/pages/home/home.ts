@@ -183,18 +183,18 @@ export class HomePage {
   }
 
   invite() {
-    // if (!this.auth.announcementConfirmed()) {
-    //   let alert = this.alertCtrl.create({
-    //     subTitle: this.translate.instant('home.noInvitesAllowed'),
-    //     buttons: [this.translate.instant('dismiss')]
-    //   });
-    //   alert.present();
-    // } else {
+    if (!this.auth.announcementConfirmed()) {
+      let alert = this.alertCtrl.create({
+        subTitle: this.translate.instant('home.noInvitesAllowed'),
+        buttons: [this.translate.instant('dismiss')]
+      });
+      alert.present();
+    } else {
       if (Config.targetPlatform === 'web') {
         this.nav.push(InviteLinkPage);
       } else {
         this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
-      // }
+      }
     }
   }
 
