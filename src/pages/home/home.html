@@ -63,6 +63,27 @@
      <ion-fab right bottom>
        <button ion-fab (click)="startNewChat()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
+    <div class="modal" [hidden]="!showBonusRewardModal" [@fadeIn]="fadeInState" text-center>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="images-container">
+          <img src="assets/img/wallet.svg" class="wallet" />
+        </div>
+
+        <h1>
+          {{"home.congratulations" | translate}}
+        </h1>
+        <p>
+          {{"home.rewardMessage" | translate}}
+        </p>
+        <p>
+          {{"home.inviteFriendsRewards" | translate}}
+        </p>
+        <p>
+          <button ion-button round (click)="hideModalAndInviteFriends()">Invite</button>
+        </p>
+      </div>
+    </div>
 </ion-content>
 <ion-footer>
     <div class="bar bar-footer dash-footer">

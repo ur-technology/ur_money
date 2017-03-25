@@ -198,7 +198,10 @@
     "userDisabled": "User disabled",
     "newChats": "You have new chats",
     "newTransactions": "You have new transactions",
-    "noInvitesAllowed": "Please wait until your bonus is confirmed to invite friends"
+    "noInvitesAllowed": "Please wait until your bonus is confirmed to invite friends",
+    "congratulations": "Congratulations!!",
+    "rewardMessage": "You have been rewarded with 2000 UR",
+    "inviteFriendsRewards": "Invite your friends to increase your wallet"
   },
   "contacts": {
     "invite": "Invite",

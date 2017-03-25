@@ -100,8 +100,6 @@ export class ChatPage {
       if (chatSummariesSnapshot.exists()) {
         let chatSummaries = chatSummariesSnapshot.val();
         self.chatId = _.findKey(chatSummaries, (chatSummary: any, chatId: string) => {
-          log.debug('chatSummary.users', chatSummary.users);
-          log.debug('_.keys(chatSummary.users)', _.keys(chatSummary.users));
           return _.includes(_.keys(chatSummary.users), self.contact.userId);
         });
         if (self.chatId) {
