@@ -46,6 +46,9 @@ deploy-production: version-file
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
 	@firebase deploy --project ur-money-production
 
+copy-web-index:
+	@sed -e 's/<\/title>/<\/title>\n  <base href="/">/' www/index.html > www/index.web.html 
+
 # Generate a version TypeScript file containing the current date
 # and a version based on the current git tag.
 version-file:
