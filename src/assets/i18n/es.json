@@ -198,7 +198,10 @@
 		"userDisabled": "Usuario deshabilitado",
 		"newChats": "Tienes nuevos chats",
 		"newTransactions": "Tienes nuevas transacciones",
-    "noInvitesAllowed": "Espera hasta que se confirme tu bono para invitar a amigos"
+    "noInvitesAllowed": "Espera hasta que se confirme tu bono para invitar a amigos",
+    "congratulations": "¡¡Felicitaciones!!",
+    "rewardMessage": " Has sido recompensado con 2000 UR",
+    "inviteFriendsRewards": "Invita a tus amigos a aumentar tu billetera"
 	},
 	"contacts": {
 		"invite": "Invitar",

@@ -1,6 +1,6 @@
 import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { ChartDataService } from '../../services/chart-data.service';
-import { ElementRef, Inject, Component } from '@angular/core';
+import { ElementRef, Inject, Component, trigger, state, style, transition, animate } from '@angular/core';
 import { ContactsAndChatsPage } from '../contacts-and-chats/contacts-and-chats';
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -19,7 +19,18 @@ declare var jQuery: any;
 
 @Component({
   selector: 'home-page',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  animations: [
+    trigger('fadeIn', [
+      state('inactive, void',
+        style({ opacity: 0 })),
+      state('active',
+        style({ opacity: 1 })),
+      transition('inactive => active', [
+        animate(1000)
+      ])
+    ])
+  ]
 })
 export class HomePage {
   elementRef: ElementRef;
@@ -30,6 +41,8 @@ export class HomePage {
   selectedOption: any;
   balanceChangeUR: any;
   balanceChangePercent: any;
+  fadeInState = 'inactive';
+  showBonusRewardModal: boolean = false;
 
   constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController,
     navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
@@ -42,6 +55,8 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    let self = this;
+
     this.renderChart();
     this.auth.walletChanged.subscribe(() => {
       this.setBalanceValues();
@@ -51,6 +66,13 @@ export class HomePage {
       this.setBalanceValues();
       this.renderChart();
     });
+
+    setTimeout(() => {
+      if (self.auth.currentUser.showBonusConfirmedCallToAction) {
+        self.fadeInState = 'active';
+        self.showBonusRewardModal = true;
+      }
+    }, 1500);
   }
 
   private setBalanceValues() {
@@ -174,6 +196,17 @@ export class HomePage {
         this.nav.push(ContactsAndChatsPage, { goal: 'invite' });
       }
     }
+  }
+
+  hideModalAndInviteFriends() {
+    let self = this;
+
+    self.auth.currentUser.update({ showBonusConfirmedCallToAction: null }).then(() => {
+      self.auth.currentUser.showBonusConfirmedCallToAction = false;
+      self.showBonusRewardModal = false;
+      self.invite();
+    })
+
   }
 
   accountReady() {

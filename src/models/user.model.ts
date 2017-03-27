@@ -28,6 +28,7 @@ export class UserModel extends FirebaseModel {
   idRecognitionStatus: string;
   selfieMatchStatus: string;
   signUpBonusApproved: boolean;
+  showBonusConfirmedCallToAction : boolean;
 
   static fullName(user: any) {
     return _.trim(`${user.firstName || ''} ${user.middleName || ''} ${user.lastName || ''}`).replace(/  /, ' ');
@@ -59,7 +60,8 @@ export class UserModel extends FirebaseModel {
         'selfieConfidence',
         'idRecognitionStatus',
         'selfieMatchStatus',
-        'signUpBonusApproved'
+        'signUpBonusApproved',
+        'showBonusConfirmedCallToAction'
       ]).then(resultObject => {
         let result = new UserModel();
         result.key = key;
