@@ -290,7 +290,9 @@
       "explanation2": "Para obtener crédito por referir a tus amigos, envía el enlace personalizado a continuación usando tu red social o aplicación de mensajería favorita.",
       "personalizedReferralLink": "Enlace de referencia personalizado",
       "copyToClipboard": "Copiar al portapapeles",
-      "referralCode": "Tu código de referencia es: "
+      "referralCode": "Tu código de referencia es: ",
+      "messageLabel": "Mensaje",
+      "messageText": "¡Hola!, estoy usando el UR Money y me dieron UR gratis!! Tu también puedes obtener UR después de que te inscribas. Aquí está mi invitación {{value}}"
     },
     "about": {
         "heading": "Acerca UR",
