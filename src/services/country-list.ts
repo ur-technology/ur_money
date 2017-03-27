@@ -294,7 +294,7 @@ export class CountryListService {
         'countryCode': 'CW'
       },
       {
-        'telephoneCountryCode': '+537',
+        'telephoneCountryCode': '+357',
         'name': 'Cyprus',
         'countryCode': 'CY'
       },
