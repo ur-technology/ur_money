@@ -54,9 +54,7 @@ export class SendPage {
       contact: new FormControl('', [Validators.required])
     });
     this.placeholderSentTo = Config.targetPlatform === 'web' ? this.translate.instant('send.placeholderSentToWeb') : this.translate.instant('send.placeholderSentTo');
-
-    // FIXME! This must be removed when coin send is working!
-    this.userVerified = auth.currentUser.admin; //auth.currentUser.isVerified();
+    this.userVerified = auth.currentUser.isVerified();
   }
 
   reflectMaxAmountOnPage() {
