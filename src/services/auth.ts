@@ -469,4 +469,36 @@ export class AuthService {
     });
   }
 
+  verifyEmail(verificationCode: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const taskRef = firebase
+        .database()
+        .ref(`/verifyEmailQueue/tasks`)
+        .push({
+          _state: 'verify_email_requested',
+          verificationCode
+        });
+      const resultRef = taskRef.child('result');
+
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+
+        if (!taskResult) {
+          return;
+        }
+
+        resultRef.off('value');
+        taskRef.remove();
+
+        if (taskResult.error) {
+          log.error(`verify email error: ${taskResult.error}`);
+        }
+
+        resolve(taskResult.state);
+      }, (error) => {
+        reject(error);
+      })
+    });
+  }
+
 }

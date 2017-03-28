@@ -19,7 +19,9 @@
   "verify-email": {
     "message": "Your email is not verified yet.",
     "buttonText": "Verify Now",
-    "verifyEmailSent": "A verification email has been sent to the address you provided. Please follow the instructions"    
+    "verifyEmailSent": "A verification email has been sent to the address you provided. Please follow the instructions",
+    "emailVerified": "Your email has been verified",
+    "verificationCodeNotFound": "The verification code that you entered did not match our records. Please double-check and try again."
   },
   "sign-in": {
     "title": "Enter phone number",
