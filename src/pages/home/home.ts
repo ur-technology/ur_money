@@ -86,7 +86,11 @@ export class HomePage {
   }
 
   private showEmailVerifyNotification() {
-    if (!this.auth.currentUser.isEmailVerified) {
+    let params = Utils.queryParams();
+    
+    // Show verify notification when email is not verified
+    // Hide verify notification when verification code is entered
+    if (!this.auth.currentUser.isEmailVerified && !params['verification-code']) {
       this.toast
         .showMessage({
           messageKey: 'verify-email.message',
