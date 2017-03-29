@@ -238,7 +238,8 @@
 						"sortKey",
 						"type",
 						"updatedAt"
-					]
+					],
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
 				},
 				"events":{  
 					".indexOn":[  
