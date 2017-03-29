@@ -290,7 +290,9 @@
     "explanation2": "To get credit for referring your friends, send the personalized link below using your favorite social network or messaging app.",
     "personalizedReferralLink": "Personalized Referral Link",
     "copyToClipboard": "Copy To Clipboard",
-    "referralCode": "Your referral code is: "
+    "referralCode": "Your referral code is: ",
+    "messageLabel": "Message",
+    "messageText": "Hi, I am using UR Money and got some bonus UR!! You can get some UR too after you sign up. Here is my invite {{value}}"
   },
   "about": {
     "heading": "About UR",

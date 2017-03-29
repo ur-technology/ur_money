@@ -13,8 +13,16 @@
       <ion-input id="referral-link-input" readonly
         type="text"
         formControlName="referralLink"></ion-input>
-        <button item-right icon-left ion-button id="copy-button" type="text" color="secondary" small data-clipboard-target="#referral-link-input input">
-          <ion-icon name="clipboard"></ion-icon>{{"invite-link.copyToClipboard" | translate}}
+        <button item-right icon-only ion-button id="copy-button" type="text" color="secondary" small data-clipboard-target="#referral-link-input input">
+          <ion-icon name="clipboard"></ion-icon>
+        </button>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{'invite-link.messageLabel' | translate}}</ion-label>
+      <ion-textarea id="referral-link-message" readonly rows="3"
+        type="text" formControlName="referralMessage">{{'invite-link.personalizedReferralLink' | translate}}</ion-textarea>
+        <button item-right icon-only ion-button id="copy-button" type="text" color="secondary" small data-clipboard-target="#referral-link-message textarea">
+          <ion-icon name="clipboard"></ion-icon>
         </button>
     </ion-item>
   </form>
