@@ -33,7 +33,7 @@
           <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
         </ion-select>
       </ion-item>
-      <button ion-item>
+      <button ion-item (click)="changeEmail()">
         <h3 ion-text class="labelStacked" color="primary">{{'settings.email' | translate}}</h3>
         <p>{{auth.currentUser.email}}</p>
       </button>

@@ -1,15 +1,20 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { AuthService } from '../../../services/auth';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {CountryListService} from '../../../services/country-list';
-import { CustomValidator } from '../../../validators/custom';
 import * as _ from 'lodash';
-import {HomePage} from '../../home/home';
 import * as log from 'loglevel';
+
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import {ChangePasswordPage} from '../change-password/change-password';
-import {ChangeEmailPage} from '../change-email/change-email';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { AuthService } from '../../../services/auth';
+import { CountryListService } from '../../../services/country-list';
+
+import { CustomValidator } from '../../../validators/custom';
+
+import { HomePage } from '../../home/home';
+import { ChangePasswordPage } from '../change-password/change-password';
+import { ChangeEmailPage } from '../change-email/change-email';
+
 
 @Component({
   selector: 'page-settings-account',
@@ -20,7 +25,14 @@ export class SettingsAccountPage {
   countries: any[];
   profile: any;
 
-  constructor(public nav: NavController, public navParams: NavParams, public auth: AuthService, private countryListService: CountryListService, public toastCtrl: ToastController, public translate: TranslateService) {
+  constructor(
+    public nav: NavController,
+    public navParams: NavParams,
+    public auth: AuthService,
+    private countryListService: CountryListService,
+    public toastCtrl: ToastController,
+    public translate: TranslateService
+  ) {
     this.countries = this.countryListService.getCountryData();
     this.loadFormGroup();
   }
@@ -45,23 +57,27 @@ export class SettingsAccountPage {
 
   submit() {
     let self = this;
-    let profile = {
+    let profile: any = {
       firstName: self.mainForm.value.firstName,
       lastName: self.mainForm.value.lastName,
       middleName: self.mainForm.value.middleName,
       name: self.mainForm.value.name,
       countryCode: self.mainForm.value.countryCode.countryCode
     };
-    self.auth.currentUser.update(_.omitBy(profile, _.isNil)).then(() => {
-      let toast = this.toastCtrl.create({ message: this.translate.instant('settings.profileUpdated'), duration: 3000, position: 'bottom' });
-      toast.present();
-      this.nav.setRoot(HomePage);
-    }).catch((error) => {
-      log.warn('unable to save profile');
-    });
+
+    self.auth.currentUser
+      .update(_.omitBy(profile, _.isNil))
+      .then((response) => {
+        let toast = this.toastCtrl.create({ message: this.translate.instant('settings.profileUpdated'), duration: 3000, position: 'bottom' });
+        toast.present();
+        this.nav.setRoot(HomePage);
+      })
+      .catch((error) => {
+        log.warn('unable to save profile');
+      });
   }
 
-  updateEmail() {
+  changeEmail() {
     this.nav.push(ChangeEmailPage);
   }
 
