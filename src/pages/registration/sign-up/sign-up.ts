@@ -148,12 +148,12 @@ export class SignUpPage {
           break;
 
         default:
-          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
 
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       });
     });
   }

@@ -87,18 +87,18 @@ export class SignInPage {
           break;
 
         case 'request_sign_in_canceled_because_user_disabled':
-          self.toastService.showMessage({ messageKey: 'sign-in.userDisabled' });
+          self.toastService.showMessage({ messageKey: 'errors.userDisabled' });
           break;
 
         default:
           trackJs.track('Login failed: unexpected problem');
-          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
 
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
         trackJs.track('Login failed: unexpected problem');
-        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       });
     });
   }

@@ -22,19 +22,17 @@ export class Utils {
     return telephoneCountryCode + extraPrefix + strippedPhone;
   }
 
-  static getUrlParamByName(name: string, url: string = ''): string {
-    url = url || window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    const results = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`).exec(url);
+  static queryParams(): any {
+    let qs = window.location.search.split('+').join(' ');
 
-    if (!results) {
-      return null;
+    var params = {},
+      tokens,
+      re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+      params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
     }
 
-    if (!results[2]) {
-      return '';
-    }
-
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    return params;
   }
 }

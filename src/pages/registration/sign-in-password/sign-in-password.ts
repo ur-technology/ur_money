@@ -44,16 +44,16 @@ export class SignInPasswordPage {
           break;
         case 'request_sign_in_canceled_because_user_disabled':
           trackJs.track('Login failed (password page): user disabled');
-          self.toastService.showMessage({ messageKey: 'sign-in.userDisabled' });
+          self.toastService.showMessage({ messageKey: 'errors.userDisabled' });
           break;
         default:
           trackJs.track('Login failed (password page): unexpected problem');
-          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
         trackJs.track('Login failed (password page): unexpected problem');
-        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       });
     });
   }

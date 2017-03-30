@@ -7,12 +7,14 @@ import { Platform, Nav, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
+import { Config } from '../config/config'
+
 import { AuthService } from '../services/auth';
 import { ContactsService } from '../services/contacts.service';
+import { ToastService } from '../services/toast';
 import { Utils } from '../services/utils';
 
 import { AboutPage } from '../pages/about/about';
-import { Config } from '../config/config'
 import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
 import { HomePage } from '../pages/home/home';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
@@ -42,7 +44,8 @@ export class UrMoney {
     public menu: MenuController,
     public auth: AuthService,
     public translate: TranslateService,
-    public contactsService: ContactsService
+    public contactsService: ContactsService,
+    public toastService: ToastService
   ) {
     this.initializeApp();
     this.translateConfig();
@@ -60,7 +63,7 @@ export class UrMoney {
       }
 
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
-      let params = this.queryParams();
+      let params = Utils.queryParams();
 
       log.setDefaultLevel(logLevel);
 
@@ -76,9 +79,15 @@ export class UrMoney {
 
         this.initializeMenu();
 
+        // Verify email if verification code is present
+        let verificationCode = params['verification-code'];
+        if (verificationCode) {
+          this.verifyEmail(verificationCode);
+        }
+
         let status = this.auth.getUserStatus();
         if (status === 'unauthenticated') {
-          let resetCode = Utils.getUrlParamByName('reset-code');
+          let resetCode = params['reset-code'];
 
           if (resetCode) {
             this.nav.setRoot(ResetPasswordWithCodePage, { resetCode });
@@ -127,20 +136,6 @@ export class UrMoney {
 
       log.info(`UrMoney initialized with firebaseProjectId ${Config.firebaseProjectId}`);
     });
-  }
-
-  private queryParams(): any {
-    let qs = window.location.search.split('+').join(' ');
-
-    var params = {},
-      tokens,
-      re = /[?&]?([^=]+)=([^&]*)/g;
-
-    while (tokens = re.exec(qs)) {
-      params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-    }
-
-    return params;
   }
 
   lookupUserById(userId: string): Promise<any> {
@@ -223,5 +218,28 @@ export class UrMoney {
 
   envModeDisplay() {
     return Utils.envModeDisplay();
+  }
+
+  private verifyEmail(verificationCode: string) {
+    this.auth
+      .verifyEmail(verificationCode)
+      .then((taskState: string) => {
+        switch (taskState) {
+          case 'verify_email_finished':
+            this.toastService.showMessage({ messageKey: 'verify-email.emailVerified' });
+            break;
+
+          case 'verify_email_canceled_because_user_not_found':
+            this.toastService.showMessage({ messageKey: 'verify-email.verificationCodeNotFound'});
+            break;
+
+          case 'verify_email_canceled_because_user_disabled':
+            this.toastService.showMessage({ messageKey: 'errors.userDisabled'});
+            break;
+
+          default:
+            this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+        }
+      });
   }
 }

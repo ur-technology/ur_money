@@ -1,20 +1,24 @@
-import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
-import { ChartDataService } from '../../services/chart-data.service';
-import { ElementRef, Inject, Component, trigger, state, style, transition, animate } from '@angular/core';
-import { ContactsAndChatsPage } from '../contacts-and-chats/contacts-and-chats';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { ElementRef, Inject, Component, trigger, state, style, transition, animate } from '@angular/core';
 import { AngularFire } from 'angularfire2';
-import { AuthService } from '../../services/auth';
-import { Config } from '../../config/config';
-import { TranslateService } from 'ng2-translate/ng2-translate';
-import { AnnouncementInitiatedPage } from '../announcement-initiated/announcement-initiated';
-import { TransactionsPage } from './../transactions/transactions';
-import { SendPage } from './../send/send';
-import { InviteLinkPage } from './../invite-link/invite-link';
-import { SponsorWaitPage } from '../sponsor-wait/sponsor-wait';
+import { NavController, NavParams, Platform, AlertController, LoadingController } from 'ionic-angular';
 import { BigNumber } from 'bignumber.js';
+
+import { Config } from '../../config/config';
+import { AuthService } from '../../services/auth';
+import { ChartDataService } from '../../services/chart-data.service';
+import { ToastService } from '../../services/toast';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Utils } from '../../services/utils';
+
+import { AnnouncementInitiatedPage } from '../announcement-initiated/announcement-initiated';
+import { ContactsAndChatsPage } from '../contacts-and-chats/contacts-and-chats';
+import { InviteLinkPage } from './../invite-link/invite-link';
+import { SendPage } from './../send/send';
+import { SponsorWaitPage } from '../sponsor-wait/sponsor-wait';
+import { TransactionsPage } from './../transactions/transactions';
+
 declare var jQuery: any;
 
 @Component({
@@ -44,19 +48,25 @@ export class HomePage {
   fadeInState = 'inactive';
   showBonusRewardModal: boolean = false;
 
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController,
-    navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
-    public angularFire: AngularFire, public auth: AuthService,
-    public translate: TranslateService, private alertCtrl: AlertController
-
+  constructor(
+    @Inject(ElementRef) elementRef: ElementRef,
+    navParams: NavParams,
+    public nav: NavController,
+    public platform: Platform,
+    private loadingController: LoadingController,
+    public angularFire: AngularFire,
+    public auth: AuthService,
+    public chartData: ChartDataService,
+    public toast: ToastService,
+    public translate: TranslateService,
+    private alertCtrl: AlertController
   ) {
     this.elementRef = elementRef;
     this.sendButtonHidden = Config.targetPlatform === 'ios';
   }
 
   ionViewDidEnter() {
-    let self = this;
-
+    this.showEmailVerifyNotification();
     this.renderChart();
     this.auth.walletChanged.subscribe(() => {
       this.setBalanceValues();
@@ -68,11 +78,72 @@ export class HomePage {
     });
 
     setTimeout(() => {
-      if (self.auth.currentUser.showBonusConfirmedCallToAction) {
-        self.fadeInState = 'active';
-        self.showBonusRewardModal = true;
+      if (this.auth.currentUser.showBonusConfirmedCallToAction) {
+        this.fadeInState = 'active';
+        this.showBonusRewardModal = true;
       }
     }, 1500);
+  }
+
+  private showEmailVerifyNotification() {
+    let params = Utils.queryParams();
+    
+    // Show verify notification when email is not verified
+    // Hide verify notification when verification code is entered
+    if (!this.auth.currentUser.isEmailVerified && !params['verification-code']) {
+      this.toast
+        .showMessage({
+          messageKey: 'verify-email.message',
+          duration: 10000,
+          showCloseButton: true,
+          closeButtonText: this.translate.instant('verify-email.buttonText')
+        })
+        .then((toast: any) => {
+          toast.onDidDismiss((data, role) => {
+            if (role === 'close') {
+              this.sendVerificationEmail();
+            }
+          });
+        });
+    }
+  }
+
+  private sendVerificationEmail() {
+    let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+
+    loadingModal
+      .present()
+      .then(() => {
+        return this.auth.sendVerificationEmail(
+          this.auth.currentUser.phone,
+          this.auth.currentUser.email
+        );
+      })
+      .then((taskState: string) => {
+        loadingModal
+          .dismiss()
+          .then(() => {
+            switch (taskState) {
+              case 'send_verification_email_finished':
+                this.toast.showMessage({ messageKey: 'verify-email.verifyEmailSent' });
+                break;
+              case 'send_verification_email_canceled_because_user_not_found':
+                this.toast.showMessage({ messageKey: 'errors.emailNotFound'});
+                break;
+              case 'send_verification_email_canceled_because_user_disabled':
+                this.toast.showMessage({ messageKey: 'errors.userDisabled'});
+                break;
+              default:
+                this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+            }
+          });
+      }, (error) => {
+        loadingModal
+          .dismiss()
+          .then(() => {
+            this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+          });
+      });
   }
 
   private setBalanceValues() {

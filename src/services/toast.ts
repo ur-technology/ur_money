@@ -25,7 +25,9 @@ export class ToastService {
         position: 'bottom'
       });
       self.toast = self.toastController.create(options);
-      return self.toast.present();
+      self.toast.present();
+
+      return self.toast;
     });
   }
 
