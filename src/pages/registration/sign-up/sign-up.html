@@ -1,55 +1,60 @@
 <ion-header>
-  <ion-navbar>
-  </ion-navbar>
+	<ion-navbar>
+	</ion-navbar>
 </ion-header>
 <ion-content class="main-splash" scroll="false">
-  <div class="ur-logo">
-    <img src="assets/img/ur-logo.png" alt="logo">
-    <img src="assets/img/ur-slogan.png" alt="logo">
-  </div>
-  <div class="welcome-ur">
-    <form [formGroup]="mainForm" >
-      <ion-list>
-        <ion-item>
-          <ion-select formControlName="country" (ionChange)="onChangeCountry()">
-            <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <div item-content class="phone-content">
-            <span class="countryCode">{{mainForm.value.country.telephoneCountryCode}}</span>
-            <ion-input formControlName="phone" placeholder="{{'sign-in.phoneNumber' | translate}}" type="tel"></ion-input>
-          </div>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked color="primary">{{'sign-up.password' | translate}}</ion-label>
-          <ion-input type="password" formControlName="password" placeholder='{{ "settings.atLeastCharacters" | translate }}'></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked color="primary">{{'sign-up.passwordConfirmation' | translate}}</ion-label>
-          <ion-input type="password" formControlName="passwordConfirmation" placeholder='{{ "settings.atLeastCharacters" | translate }}'></ion-input>
-        </ion-item>
-        <ion-item *ngIf="signUpType=='sponsorReferralCode'">
-          <ion-label stacked color="primary">{{'sign-up.sponsorReferralCode' | translate}}</ion-label>
-          <ion-input type="text" formControlName="sponsorReferralCode" placeholder='{{ "sign-up.placeholderSponsorReferralCode" | translate }}'></ion-input>
-          <button ion-button outline round type="text" item-right class="buttonInfo" (click)="showSponsorReferralCodeExplanation()"><ion-icon name="help"></ion-icon></button>
-        </ion-item>
-        <ion-item *ngIf="signUpType!='sponsorReferralCode'">
-          <ion-label stacked color="primary">{{'profile-setup.email' | translate}}</ion-label>
-          <ion-input type="text" formControlName="email" placeholder='{{ "sign-up.placeholderEmail" | translate }}' ></ion-input>
-          <button ion-button outline round type="text" class="buttonInfo" item-right (click)="showEmailExplanation()"><ion-icon name="help"></ion-icon></button>
-        </ion-item>
-        <button ion-button clear class="headingType" (click)="changeSignUpType()">{{subheadingButton}}</button>
+	<div class="ur-logo">
+		<img src="assets/img/ur-logo.png" alt="logo">
+		<img src="assets/img/ur-slogan.png" alt="logo">
+	</div>
+	<div class="welcome-ur">
+		<form [formGroup]="mainForm" >
+			<ion-list>
+				<ion-item>
+					<ion-select formControlName="country" (ionChange)="onChangeCountry()">
+						<ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
+					</ion-select>
+				</ion-item>
+				<ion-item *ngIf="!countryValid">
+					<div class="countryNotAllowed">
+						We are improving the UR network in your country, and we can't currently accept new signups. Please try again soon.
+					</div>
+				</ion-item>
+				<ion-item>
+					<div item-content class="phone-content">
+						<span class="countryCode">{{mainForm.value.country.telephoneCountryCode}}</span>
+						<ion-input formControlName="phone" placeholder="{{'sign-in.phoneNumber' | translate}}" type="tel"></ion-input>
+					</div>
+				</ion-item>
+				<ion-item>
+					<ion-label stacked color="primary">{{'sign-up.password' | translate}}</ion-label>
+					<ion-input type="password" formControlName="password" placeholder='{{ "settings.atLeastCharacters" | translate }}'></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label stacked color="primary">{{'sign-up.passwordConfirmation' | translate}}</ion-label>
+					<ion-input type="password" formControlName="passwordConfirmation" placeholder='{{ "settings.atLeastCharacters" | translate }}'></ion-input>
+				</ion-item>
+				<ion-item *ngIf="signUpType=='sponsorReferralCode'">
+					<ion-label stacked color="primary">{{'sign-up.sponsorReferralCode' | translate}}</ion-label>
+					<ion-input type="text" formControlName="sponsorReferralCode" placeholder='{{ "sign-up.placeholderSponsorReferralCode" | translate }}'></ion-input>
+					<button ion-button outline round type="text" item-right class="buttonInfo" (click)="showSponsorReferralCodeExplanation()"><ion-icon name="help"></ion-icon></button>
+				</ion-item>
+				<ion-item *ngIf="signUpType!='sponsorReferralCode'">
+					<ion-label stacked color="primary">{{'profile-setup.email' | translate}}</ion-label>
+					<ion-input type="text" formControlName="email" placeholder='{{ "sign-up.placeholderEmail" | translate }}' ></ion-input>
+					<button ion-button outline round type="text" class="buttonInfo" item-right (click)="showEmailExplanation()"><ion-icon name="help"></ion-icon></button>
+				</ion-item>
+				<button ion-button clear class="headingType" (click)="changeSignUpType()">{{subheadingButton}}</button>
 
-        <p class="terms" text-center>
-          {{ "welcome.terms" | translate }} {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
-        </p>
-        <div text-center>
-          <button ion-button round (click)="submit()" [disabled]="!mainForm.valid">{{'welcome.agreeAndContinue' | translate}}</button>
-        </div>
-      </ion-list>
-    </form>
-  </div>
+				<p class="terms" text-center>
+				{{ "welcome.terms" | translate }} {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
+				</p>
+				<div text-center>
+					<button ion-button round (click)="submit()" [disabled]="!mainForm.valid || !countryValid">{{'welcome.agreeAndContinue' | translate}}</button>
+				</div>
+			</ion-list>
+		</form>
+	</div>
 </ion-content>
 <ion-footer>
 
