@@ -248,28 +248,80 @@
 		"users": {
 			".indexOn": ["phone", "wallet/address", "email", "referralCode", "resetCode", "verificationCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions", "idHash"],
 			// allow read or write only if the authenticated user is accessing his own user record
+			".indexOn": ["phone", "wallet/address", "email", "referralCode", "resetCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions", "idHash"],
 			".read": "root.child('users').child(auth.uid).child('admin').val() == true",
-			"$uid": {
-				".read": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
-				".write": "$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
-				"transactions": {
-					".indexOn": ["sortKey", "type", "updatedAt"]
+			"$uid":{  
+				".read":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
+				"transactions":{  
+					".indexOn":[  
+						"sortKey",
+						"type",
+						"updatedAt"
+					],
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
 				},
-				"events": {
-					".indexOn": ["notificationProcessed", "updatedAt"]
+				"events":{  
+					".indexOn":[  
+						"notificationProcessed",
+						"updatedAt"
+					],
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
 				},
-				"admin": {
-					".write": false
+				"notifications":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
 				},
-				"idUploaded": {
-					".write": false
+				"chatSummaries":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
 				},
-				"selfieMatched": {
-					".write": false
+				"howBonusConfirmedCallToAction":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
 				},
-				"idHash": {
-					".write": false
+				"name":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"email":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"wallet":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"firstName":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"lastName":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"middleName":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"countryCode":{  
+					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"signUpBonusApproved":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"phone":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"moveRequested":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"fraudSuspected":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"duplicate":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"idUploaded":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"disabled":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"selfieMatched":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
 				}
+
 			}
 		}
 	}

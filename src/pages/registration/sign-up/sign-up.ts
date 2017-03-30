@@ -11,6 +11,11 @@ import { AuthenticationCodePage } from '../authentication-code/authentication-co
 import { SignInPage } from '../sign-in/sign-in';
 import { Utils } from '../../../services/utils';
 
+let prohitedCountryCode: Array<string> = [
+  "VN",
+  "ID",
+];
+
 @Component({
   selector: 'page-sign-up',
   templateUrl: 'sign-up.html'
@@ -20,6 +25,7 @@ export class SignUpPage {
   mainForm: FormGroup;
   signUpType: string;
   subheadingButton = '';
+  countryValid: boolean;
 
   constructor(
     public nav: NavController,
@@ -53,6 +59,7 @@ export class SignUpPage {
       passwordConfirmation: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)])
     }, CustomValidator.isMatchingPassword);
 
+    this.countryValid = this.isCountryValid();
   }
 
   private extractSponsorReferralCodeFromUrl() {
@@ -186,5 +193,11 @@ export class SignUpPage {
 
   onChangeCountry() {
     (<FormControl>this.mainForm.controls['phone']).reset('');
+
+    this.countryValid = this.isCountryValid();
+  }
+
+  private isCountryValid(): boolean {
+    return !(prohitedCountryCode.indexOf(this.mainForm.value.country.countryCode) > -1);
   }
 }
