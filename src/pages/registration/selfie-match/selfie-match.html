@@ -13,6 +13,7 @@
 
 				<div class="selfie-container">
 					<p>{{"selfie-match.instructions" | translate}}</p>
+					<img src="/assets/img/selfie-diagram.png" />
 					<button (click)="selectFile($event)">
 						<ion-img class="preview-image" [src]="selfieSource" [alt]=""></ion-img>
 						<input id="selfie" type="file" capture="user" accept="image/*" (change)="fileChanged($event, null)" />
