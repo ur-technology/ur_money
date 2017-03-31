@@ -36,6 +36,7 @@
 				<div class="id-type" *ngIf="idType == 'national-id'">
 
 					<p>{{'id-scan.nationalIdInstructions' | translate}}</p>
+					<img src="/assets/img/sample-ids.png" />
 					<button (click)="selectFile($event)">
 						<ion-img class="preview-image" [src]="idCardFrontSource" [alt]=""></ion-img>
 						<input id="id-card-front" type="file" capture="camera" accept="image/*" (change)="fileChanged($event, 'DriversLicenseDuplex')" />
