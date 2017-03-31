@@ -4,6 +4,13 @@ selfie-match-page {
 		
 		margin-top: 1em;
 
+		img {
+			width: auto;
+			max-height: 600px;
+			margin: 0 auto;
+			margin-top: 1em;
+		}
+
 		button {
 
 			$height: 42px;
