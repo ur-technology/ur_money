@@ -9,6 +9,23 @@
 			".read": true
 		},
 
+		"checkEmailUniquenessQueue": {
+            "tasks": {
+                ".indexOn": "_state",
+                "$task": {
+                    ".write": true,
+                    "_state": {
+                        // allow reading state of a particular record
+                        ".read": true
+                    },
+                    "result": {
+                        // allow reading result of a particular record
+                        ".read": true
+                    }
+                }
+            }
+        },
+
 		"signUpQueue": {
 			"tasks": {
 				".indexOn": "_state",
