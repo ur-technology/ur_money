@@ -38,7 +38,9 @@ export class ProfileSetupPage {
   ionViewDidLoad() {
     let self = this;
     self.auth.reloadCurrentUser().then(() => {
-      let name = _.isEmpty(_.trim(self.auth.currentUser.name || '')) ? `${self.auth.currentUser.firstName || ''} ${self.auth.currentUser.lastName || ''}` : self.auth.currentUser.name;
+      let name = _.isEmpty(_.trim(self.auth.currentUser.name || '')) ?
+        `${self.auth.currentUser.firstName || ''} ${self.auth.currentUser.lastName || ''}` :
+        self.auth.currentUser.name;
       (<FormControl>self.mainForm.controls['name']).setValue(name);
     });
   }
@@ -51,8 +53,7 @@ export class ProfileSetupPage {
         handler: () => {
           alert.dismiss();
         }
-      }
-      ]
+      }]
     });
     alert.present();
   }
@@ -110,5 +111,5 @@ export class ProfileSetupPage {
             log.warn('unable to save profile info');
           });
       });
-    };
+  }
 }
