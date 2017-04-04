@@ -69,6 +69,10 @@ export class ResetPasswordWithCodePage {
                 this.toastService.showMessage({ messageKey: 'errors.userDisabled'});
                 break;
 
+              case 'reset_password_canceled_because_email_not_verified':
+                this.toastService.showMessage({ messageKey: 'errors.emailNotVerified'});
+                break;
+
               default:
                 this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
             }
