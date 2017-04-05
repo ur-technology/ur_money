@@ -116,7 +116,7 @@ export class CountryListService {
       {
         'telephoneCountryCode': '+375',
         'name': 'Belarus',
-        'countryCode': 'By'
+        'countryCode': 'BY'
       },
       {
         'telephoneCountryCode': '+32',

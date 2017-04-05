@@ -12,8 +12,11 @@ import { SignInPage } from '../sign-in/sign-in';
 import { Utils } from '../../../services/utils';
 
 let prohitedCountryCode: Array<string> = [
-  "VN",
-  "ID",
+  "VN", // Vietnam
+  "ID", // Indonesia
+  "BY", // Belarus
+  "RU", // Russia
+  "UA", // Ukraine
 ];
 
 @Component({
