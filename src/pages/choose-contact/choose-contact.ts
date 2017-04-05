@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ViewController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../validators/custom';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
 @Component({
   selector: 'page-choose-contact',
@@ -11,8 +12,10 @@ export class ChooseContactPage {
   option: string = 'contact';
   addressText: string;
   mainForm: FormGroup;
+  pageName = 'ChooseContactPage';
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, params: NavParams) {
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, params: NavParams,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     let addr = params.get('walletAddress');
     if (addr) {
       this.addressText = addr;
@@ -24,7 +27,7 @@ export class ChooseContactPage {
   }
 
   ionViewDidLoad() {
-
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
   }
 
   incorrectToField(): boolean {
@@ -33,11 +36,13 @@ export class ChooseContactPage {
   }
 
   dismissWalletAddress() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Choose contact. Dismiss wallet', 'dismissWalletAddress()');
     let data = { walletAddress: (<FormControl>this.mainForm.get('addressWallet')).value };
     this.viewCtrl.dismiss(data);
   }
 
   onContactSelected(contact) {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Choose contact', 'onContactSelected()');
     this.viewCtrl.dismiss(contact);
   }
 

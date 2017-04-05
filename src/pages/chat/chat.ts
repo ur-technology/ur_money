@@ -9,6 +9,7 @@ import { AuthService } from '../../services/auth';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { PopoverChatPage } from './popover-chat';
 import { Keyboard } from 'ionic-native';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
 declare var jQuery: any;
 
@@ -26,8 +27,10 @@ export class ChatPage {
   messagesRef: Subscription;
   messageTextAreaHeight: number;
   @ViewChild(Content) content: Content;
+  pageName = 'ChatPage';
 
-  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public translate: TranslateService, public alertCtrl: AlertController, public popoverCtrl: PopoverController) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public translate: TranslateService, public alertCtrl: AlertController, public popoverCtrl: PopoverController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
@@ -50,9 +53,12 @@ export class ChatPage {
   }
 
   ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
     if (this.chatSummary) {
+      this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded with chatSummary', 'ionViewDidLoad()');
       this.loadMessages();
     } else if (this.chatId) {
+      this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded with chatId', 'ionViewDidLoad()');
       this.lookupChatSummaryViaChatIdAndLoadMessages();
     } else {
       this.lookupChatSummaryViaContactAndLoadMessages();
@@ -138,6 +144,7 @@ export class ChatPage {
   }
 
   alertBlockedContact(isFirstMessageInChat) {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Show alert of blocked user', 'alertBlockedContact()');
     let alert = this.alertCtrl.create({
       message: this.translate.instant('chat.unblockMessage', { value: this.displayUser().name }),
       buttons: [
@@ -163,6 +170,7 @@ export class ChatPage {
     if (!this.validateMessage()) {
       return;
     }
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Send message', 'sendMessageClick()');
 
     let isFirstMessageInChat = this.chatSummaryUnsaved();
     if (this.chatSummaryUnsaved()) {
@@ -268,6 +276,7 @@ export class ChatPage {
   }
 
   blockContact() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on Block contact button', 'blockContact()');
     let alert = this.alertCtrl.create({
       message: this.translate.instant('chat.blockMessage', { value: this.displayUser().name }),
       buttons: [

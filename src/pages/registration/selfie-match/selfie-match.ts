@@ -7,6 +7,7 @@ import { ProfileSetupPage } from '../profile-setup/profile-setup';
 import { AcuantService } from '../../../services/acuant';
 import { IDVerifier } from '../../../interfaces/id-verifier';
 import { HomePage } from '../../../pages/home/home';
+import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 
 declare var $;
 declare var trackJs: any;
@@ -23,6 +24,7 @@ export class SelfieMatchPage {
   idCardFaceImage: any;
   idCardFinalImage: any;
   idVerifier: IDVerifier;
+  pageName = 'SelfieMatchPage';
 
   constructor(
     public nav: NavController,
@@ -33,10 +35,15 @@ export class SelfieMatchPage {
     private toastCtrl: ToastController,
     private acuantService: AcuantService,
     public alertCtrl: AlertController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
 
     this.idVerifier = acuantService;
     this.mainForm = new FormGroup({});
+  }
+
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
   }
 
   selectFile(event) {
@@ -62,7 +69,7 @@ export class SelfieMatchPage {
   }
 
   submit() {
-
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked submit selfie button', 'submit()');
     let destinationPage: any = ProfileSetupPage;
 
     if (this.auth.currentUser.wallet && this.auth.currentUser.wallet.address) {
@@ -75,10 +82,12 @@ export class SelfieMatchPage {
     this.idVerifier.matchSelfie(this.dataURLtoBlob(this.selfieSource))
       .then(() => {
         loadingModal.dismiss().then(() => {
+          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Selfie matched', 'submit()');
           this.nav.setRoot(destinationPage);
         });
       },
       (error) => {
+        this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Selfie matched failed'+ error, 'submit()');
         trackJs.track('Selfie match failed: ' + error);
         loadingModal.dismiss().then(() => {
 

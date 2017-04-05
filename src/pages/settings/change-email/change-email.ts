@@ -8,14 +8,14 @@ import { ToastService } from '../../../services/toast';
 import { UserService } from '../../../services/user.service';
 
 import { CustomValidator } from '../../../validators/custom';
-
+import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 
 @Component({
   selector: 'page-change-email',
   templateUrl: 'change-email.html'
 })
 export class ChangeEmailPage {
-
+  pageName = 'ChangeEmailPage';
   mainForm: FormGroup;
 
   constructor(
@@ -25,17 +25,24 @@ export class ChangeEmailPage {
     private toastService: ToastService,
     private userService: UserService,
     private loadingController: LoadingController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.mainForm = new FormGroup({
       email: new FormControl('', [Validators.required, CustomValidator.emailValidator])
     });
   }
 
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  }
+
   submit() {
     if (this.mainForm.value.email === this.auth.currentUser.email) {
       return;
     }
+
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on submit button', 'submit()');
 
     let loading = this.loadingController.create({content: this.translate.instant('pleaseWait')});
 
@@ -66,9 +73,11 @@ export class ChangeEmailPage {
         loading.dismiss();
 
         if (taskState === 'send_verification_email_finished') {
+          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Email changed', 'submit()');
           this.toastService.showMessage({ messageKey: 'settings.emailUpdated' });
           this.navCtrl.pop();
         } else {
+          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Error changing email', 'submit()');
           this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
         }
       }, error => {

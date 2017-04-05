@@ -8,6 +8,7 @@ import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { AuthService } from '../../../services/auth';
 import { CountryListService } from '../../../services/country-list';
+import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 
 import { CustomValidator } from '../../../validators/custom';
 
@@ -24,6 +25,7 @@ export class SettingsAccountPage {
   mainForm: FormGroup;
   countries: any[];
   profile: any;
+  pageName = 'SettingsAccountPage';
 
   constructor(
     public nav: NavController,
@@ -31,13 +33,15 @@ export class SettingsAccountPage {
     public auth: AuthService,
     private countryListService: CountryListService,
     public toastCtrl: ToastController,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.countries = this.countryListService.getCountryData();
     this.loadFormGroup();
   }
 
   ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
   }
 
   private loadFormGroup() {
@@ -57,6 +61,7 @@ export class SettingsAccountPage {
 
   submit() {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit button', 'submit()');
     let profile: any = {
       firstName: self.mainForm.value.firstName,
       lastName: self.mainForm.value.lastName,
@@ -78,10 +83,12 @@ export class SettingsAccountPage {
   }
 
   changeEmail() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on change email button', 'changeEmail()');
     this.nav.push(ChangeEmailPage);
   }
 
   changePassword() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on change password button', 'changePassword()');
     this.nav.push(ChangePasswordPage);
   }
 }

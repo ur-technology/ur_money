@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth';
 import { ContactsService } from '../services/contacts.service';
 import { ToastService } from '../services/toast';
 import { Utils } from '../services/utils';
+import { GoogleAnalyticsEventsService } from '../services/google-analytics-events.service';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
@@ -37,6 +38,7 @@ import { WelcomePage } from '../pages/registration/welcome/welcome';
 export class UrMoney {
   @ViewChild(Nav) nav: Nav;
   menuItems: any[];
+  pageName = 'appComponent';
 
 
   constructor(
@@ -45,7 +47,8 @@ export class UrMoney {
     public auth: AuthService,
     public translate: TranslateService,
     public contactsService: ContactsService,
-    public toastService: ToastService
+    public toastService: ToastService,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.initializeApp();
     this.translateConfig();
@@ -194,6 +197,7 @@ export class UrMoney {
   }
 
   openPage(menuItem) {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, `Clicked side menu - ${menuItem.title}`, 'openPage()');
     this.menu.close();
     if (menuItem.page === HomePage) {
       this.nav.setRoot(HomePage, {}, { animate: true, direction: 'back' });

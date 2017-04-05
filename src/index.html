@@ -15,9 +15,13 @@
   <meta name="theme-color" content="#4e8ef7">
 
   <!-- BEGIN TRACKJS -->
-<script type="text/javascript">window._trackJs = { token: '262efa36fe58453fb79052ad719f619e' };</script>
-<script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
-<!-- END TRACKJS -->
+  <script type="text/javascript">
+    window._trackJs = {
+      token: '262efa36fe58453fb79052ad719f619e'
+    };
+  </script>
+  <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
+  <!-- END TRACKJS -->
 
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/intlTelInput.js"></script>
@@ -27,13 +31,29 @@
 
   <script src="assets/js/acuant/base.js"></script>
   <script>
-      goog.require('goog.crypt.base64');
+    goog.require('goog.crypt.base64');
   </script>
   <!-- <script src="js/MiscJS/jquery.base64.js"></script> -->
   <script src="assets/js/acuant/binaryajax.js"></script>
   <script src="assets/js/acuant/exif.js"></script>
   <script src="assets/js/acuant/canvasResize.js"></script>
   <script src="assets/js/acuant/jquery.base64.js"></script>
+
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-96701396-1', 'auto');
+  </script>
   <!-- cordova.js required for cordova apps -->
 
   <link href="build/main.css?v.1.3.4" rel="stylesheet">
@@ -44,7 +64,6 @@
 
   <!-- Ionic's root component and where the app will load -->
   <ion-app></ion-app>
-
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>
 

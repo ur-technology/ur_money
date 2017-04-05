@@ -10,6 +10,7 @@ import { ToastService } from '../../../services/toast';
 import { AuthenticationCodePage } from '../authentication-code/authentication-code';
 import { SignInPage } from '../sign-in/sign-in';
 import { Utils } from '../../../services/utils';
+import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 
 let prohitedCountryCode: Array<string> = [
   "VN", // Vietnam
@@ -29,6 +30,7 @@ export class SignUpPage {
   signUpType: string;
   subheadingButton = '';
   countryValid: boolean;
+  pageName = 'SignUpPage';
 
   constructor(
     public nav: NavController,
@@ -38,7 +40,8 @@ export class SignUpPage {
     public loadingController: LoadingController,
     public auth: AuthService,
     public toastService: ToastService,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
 
     this.countries = this.countryListService.getCountryData();
@@ -76,11 +79,13 @@ export class SignUpPage {
   }
 
   ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
     this.changeTitlesBySignUpType();
   }
 
   changeSignUpType() {
     this.signUpType = this.signUpType === 'sponsorReferralCode' ? 'email' : 'sponsorReferralCode';
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, `Changed sign up type - ${this.signUpType}`, 'changeTitlesBySignUpType()');
     this.changeTitlesBySignUpType();
 
   }
@@ -97,6 +102,7 @@ export class SignUpPage {
 
   submit() {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Sign up requested', 'submit()');
     let loadingModal = self.loadingController.create({
       content: self.translate.instant('pleaseWait'),
     });
@@ -114,11 +120,13 @@ export class SignUpPage {
     }).then(() => {
       switch (taskState) {
         case 'code_generation_finished':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Go to AuthenticationCodePage', 'submit()');
           self.auth.countryCode = this.mainForm.value.country.countryCode;
           self.nav.push(AuthenticationCodePage);
           break;
 
         case 'code_generation_canceled_because_user_already_signed_up':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'user Already Exists', 'submit()');
           let alert = this.alertCtrl.create({
             message: this.translate.instant('sign-up.userAlreadyExists'),
             buttons: [
@@ -138,23 +146,28 @@ export class SignUpPage {
           break;
 
         case 'code_generation_canceled_because_voip_phone_not_allowed':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'code_generation_canceled_because_voip_phone_not_allowed',  'submit()');
           self.toastService.showMessage({ messageKey: 'sign-up.voipNotAllowed' });
           break;
 
         case 'code_generation_canceled_because_email_not_found':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'code_generation_canceled_because_email_not_found', 'submit()');
           self.toastService.showMessage({ messageKey: 'sign-up.betaEmailNotFound' });
           break;
 
         case 'code_generation_canceled_because_sponsor_not_found':
         case 'code_generation_canceled_because_sponsor_disabled':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'sponsor not found', 'submit()');
           self.toastService.showMessage({ messageKey: 'sign-up.sponsorNotFoundMessage' });
           break;
 
         default:
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'error unexpectedProblem', 'submit()');
           self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
 
       }
     }, (error) => {
+      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'error unexpectedProblem', 'submit()');
       loadingModal.dismiss().then(() => {
         self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       });
@@ -162,11 +175,13 @@ export class SignUpPage {
   }
 
   openTermsAndConditions() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Open Terms And Conditions Page', 'openTermsAndConditions()');
     let modal = this.modalCtrl.create(TermsAndConditionsPage);
     modal.present();
   }
 
   showSponsorReferralCodeExplanation() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Sponsor explanation button', 'showSponsorReferralCodeExplanation()');
     let alert = this.alertCtrl.create({
       message: this.translate.instant('sign-up.sponsorReferralCodeExplanation'),
       buttons: [{
@@ -181,6 +196,7 @@ export class SignUpPage {
   }
 
   showEmailExplanation() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Sponsor explanation button', 'showEmailExplanation()');
     let alert = this.alertCtrl.create({
       message: this.translate.instant('sign-up.emailExplanation'),
       buttons: [{

@@ -7,6 +7,7 @@ import { CustomValidator } from '../../validators/custom';
 import { UserModel } from '../../models/user.model';
 import { ChangeSponsorModal } from './change-sponsor';
 import { Config } from '../../config/config';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -27,6 +28,7 @@ export class UserPage {
   showSpinner: boolean = false;
   referrals: any[];
   db: any;
+  pageName = 'UserPage';
 
   constructor(
     public nav: NavController,
@@ -34,7 +36,8 @@ export class UserPage {
     public auth: AuthService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
 
     this.mainForm = new FormGroup({
@@ -113,6 +116,10 @@ export class UserPage {
     }
   }
 
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  }
+
   onCountrySelected(countrySelected) {
     this.user.countryCode = countrySelected.alpha2;
   }
@@ -137,6 +144,7 @@ export class UserPage {
   approveSignUpBonus(user: any) {
     user.signUpBonusApproved = true;
     user.signUpBonusApprovedTag = 'Bonus-Approved';
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Bonus has been approved', `To user: ${user.userId} - approveSignUpBonus()`);
     firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true })
       .then(() => {
         return firebase.database().ref('/walletCreatedQueue/tasks').push({
@@ -208,6 +216,7 @@ export class UserPage {
   }
 
   saveProfile() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on save profile', 'saveProfile()');
     let attrs: any = _.pick(this.user, ['firstName', 'middleName', 'lastName', 'countryCode', 'phone', 'email']);
     _.each(attrs, (value, attr) => { attrs[attr] = _.trim(value || ''); });
     this.db.ref(`/users/${this.user.userId}`).update(attrs).then(() => {

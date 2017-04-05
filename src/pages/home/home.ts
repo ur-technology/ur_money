@@ -11,6 +11,7 @@ import { ChartDataService } from '../../services/chart-data.service';
 import { ToastService } from '../../services/toast';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Utils } from '../../services/utils';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
 import { AnnouncementInitiatedPage } from '../announcement-initiated/announcement-initiated';
 import { ContactsAndChatsPage } from '../contacts-and-chats/contacts-and-chats';
@@ -48,6 +49,7 @@ export class HomePage {
   fadeInState = 'inactive';
   showBonusRewardModal: boolean = false;
   params: any;
+  pageName = 'HomePage';
 
   constructor(
     @Inject(ElementRef) elementRef: ElementRef,
@@ -60,7 +62,8 @@ export class HomePage {
     public chartData: ChartDataService,
     public toast: ToastService,
     public translate: TranslateService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.elementRef = elementRef;
     this.sendButtonHidden = Config.targetPlatform === 'ios';
@@ -68,6 +71,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidEnter()');
     //this.showEmailVerifyNotification();
     this.renderChart();
     this.auth.walletChanged.subscribe(() => {
@@ -87,30 +91,8 @@ export class HomePage {
     }, 1500);
   }
 
-  private showEmailVerifyNotification() {
-    let params = Utils.queryParams();
-
-    // Show verify notification when email is not verified
-    // Hide verify notification when verification code is entered
-    if (!this.auth.currentUser.isEmailVerified && !params['verification-code']) {
-      this.toast
-        .showMessage({
-          messageKey: 'verify-email.message',
-          duration: 10000,
-          showCloseButton: true,
-          closeButtonText: this.translate.instant('verify-email.buttonText')
-        })
-        .then((toast: any) => {
-          toast.onDidDismiss((data, role) => {
-            if (role === 'close') {
-              this.sendVerificationEmail();
-            }
-          });
-        });
-    }
-  }
-
-  private sendVerificationEmail() {
+  sendVerificationEmail() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on Send verification email button', 'sendVerificationEmail()');
     let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
 
     loadingModal
@@ -127,15 +109,19 @@ export class HomePage {
           .then(() => {
             switch (taskState) {
               case 'send_verification_email_finished':
+                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_finished', 'sendVerificationEmail()');
                 this.toast.showMessage({ messageKey: 'verify-email.verifyEmailSent' });
                 break;
               case 'send_verification_email_canceled_because_user_not_found':
+                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_not_found', 'sendVerificationEmail()');
                 this.toast.showMessage({ messageKey: 'errors.emailNotFound' });
                 break;
               case 'send_verification_email_canceled_because_user_disabled':
+                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_disabled', 'sendVerificationEmail()');
                 this.toast.showMessage({ messageKey: 'errors.userDisabled' });
                 break;
               default:
+                this.googleAnalyticsEventsService.emitEvent(this.pageName, '', 'sendVerificationEmail()');
                 this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
             }
           });
@@ -174,6 +160,7 @@ export class HomePage {
   }
 
   startNewChat() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'clicked on plus button on home', 'startNewChat()');
     this.nav.push(ContactsAndChatsPage, { goal: 'chat' });
   }
 
@@ -248,14 +235,12 @@ export class HomePage {
   }
 
   send() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send()', 'clicked on send button on home');
     this.nav.push(SendPage, { contact: {} });
   }
 
-  request() {
-    this.nav.push(ContactsAndChatsPage, { goal: 'request' });
-  }
-
   invite() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'clicked on invite button on home', 'invite()');
     if (!this.auth.announcementConfirmed()) {
       let alert = this.alertCtrl.create({
         subTitle: this.translate.instant('home.noInvitesAllowed'),
@@ -273,7 +258,7 @@ export class HomePage {
 
   hideModalAndInviteFriends() {
     let self = this;
-
+    self.googleAnalyticsEventsService.emitEvent(this.pageName, 'dismissed modal animation that shows when bonus has been approved', 'hideModalAndInviteFriends()');
     self.auth.currentUser.update({ showBonusConfirmedCallToAction: null }).then(() => {
       self.auth.currentUser.showBonusConfirmedCallToAction = false;
       self.showBonusRewardModal = false;
@@ -287,9 +272,12 @@ export class HomePage {
   }
 
   goToNextStep() {
+
     if (this.accountReady()) {
+      this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on 2000 UR sign. Account ready', 'goToNextStep()');
       this.nav.push(TransactionsPage);
     } else {
+      this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on 2000 UR sign.', 'goToNextStep()');
       this.nav.push({
         'announcement-initiated': AnnouncementInitiatedPage,
         'announcement-requested': AnnouncementInitiatedPage,

@@ -7,6 +7,7 @@ import { ChatPage } from '../../pages/chat/chat';
 import { TransactionsPage } from '../../pages/transactions/transactions';
 import { LocalNotifications } from 'ionic-native';
 import { AuthService } from '../../services/auth';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import * as _ from 'lodash';
 
@@ -16,7 +17,10 @@ import * as _ from 'lodash';
 })
 export class EventListComponent {
   events = [];
-  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App, public translate: TranslateService) {
+  pageName = 'EventListComponent';
+
+  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App, public translate: TranslateService,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     if (platform.is('cordova')) {
       this.listenForNewEvents();
       this.listenForNotificationSelection();
@@ -36,6 +40,7 @@ export class EventListComponent {
   listenForNotificationSelection() {
     LocalNotifications.on('click', (notification, state) => {
       let data = JSON.parse(notification.data);
+      this.googleAnalyticsEventsService.emitEvent(this.pageName, `Clicked in a notification - ${data.sourceType}`, 'listenForNotificationSelection()');
       this.openPageByEventType(data.sourceType, data.sourceId);
     });
   }
@@ -98,9 +103,11 @@ export class EventListComponent {
   openPageByEventType(sourceType: string, sourceId: string) {
     if (sourceType === 'message') {
       if (sourceId) {
+        this.googleAnalyticsEventsService.emitEvent(this.pageName, `Clicked a event. Going to chat page`, 'openPageByEventType()');
         this.app.getRootNav().push(ChatPage, { chatId: sourceId });
       }
     } else if (sourceType === 'transaction') {
+      this.googleAnalyticsEventsService.emitEvent(this.pageName, `Clicked a event. Going to transactions page`, 'openPageByEventType()');
       this.app.getRootNav().push(TransactionsPage, {});
     }
   }
