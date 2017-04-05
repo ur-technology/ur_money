@@ -313,6 +313,9 @@
 				"countryCode":{  
 					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
 				},
+				"isEmailVerified":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
+				},
 				"signUpBonusApproved":{  
 					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
 				},

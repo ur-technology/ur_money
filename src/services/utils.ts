@@ -5,7 +5,7 @@ export class Utils {
 
   static envModeDisplay() {
     let matches = Config.firebaseProjectId.match(/ur-money-(\w+)/);
-    let mode =  (matches && matches[1]) || 'unknown';
+    let mode = (matches && matches[1]) || 'unknown';
     return mode === 'production' ? '' : `${_.startCase(mode)} mode`;
   }
 

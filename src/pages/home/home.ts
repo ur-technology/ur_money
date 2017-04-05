@@ -47,6 +47,7 @@ export class HomePage {
   balanceChangePercent: any;
   fadeInState = 'inactive';
   showBonusRewardModal: boolean = false;
+  params: any;
 
   constructor(
     @Inject(ElementRef) elementRef: ElementRef,
@@ -63,10 +64,11 @@ export class HomePage {
   ) {
     this.elementRef = elementRef;
     this.sendButtonHidden = Config.targetPlatform === 'ios';
+    this.params = Utils.queryParams();
   }
 
   ionViewDidEnter() {
-    this.showEmailVerifyNotification();
+    //this.showEmailVerifyNotification();
     this.renderChart();
     this.auth.walletChanged.subscribe(() => {
       this.setBalanceValues();
@@ -87,7 +89,7 @@ export class HomePage {
 
   private showEmailVerifyNotification() {
     let params = Utils.queryParams();
-    
+
     // Show verify notification when email is not verified
     // Hide verify notification when verification code is entered
     if (!this.auth.currentUser.isEmailVerified && !params['verification-code']) {
@@ -128,10 +130,10 @@ export class HomePage {
                 this.toast.showMessage({ messageKey: 'verify-email.verifyEmailSent' });
                 break;
               case 'send_verification_email_canceled_because_user_not_found':
-                this.toast.showMessage({ messageKey: 'errors.emailNotFound'});
+                this.toast.showMessage({ messageKey: 'errors.emailNotFound' });
                 break;
               case 'send_verification_email_canceled_because_user_disabled':
-                this.toast.showMessage({ messageKey: 'errors.userDisabled'});
+                this.toast.showMessage({ messageKey: 'errors.userDisabled' });
                 break;
               default:
                 this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });

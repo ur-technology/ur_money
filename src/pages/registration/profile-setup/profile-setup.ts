@@ -82,14 +82,6 @@ export class ProfileSetupPage {
         return this.auth.currentUser.update(this.mainForm.value);
       })
       .then(() => {
-        return firebase
-          .database()
-          .ref('/manualIDVerification/tasks')
-          .push({
-            id: this.auth.currentUserId
-          });
-      })
-      .then(() => {
         return this.auth.sendVerificationEmail(
           this.auth.currentUser.phone,
           this.auth.currentUser.email
@@ -105,11 +97,11 @@ export class ProfileSetupPage {
                 break;
 
               case 'send_verification_email_canceled_because_user_not_found':
-                this.toast.showMessage({ messageKey: 'errors.emailNotFound'});
+                this.toast.showMessage({ messageKey: 'errors.emailNotFound' });
                 break;
 
               case 'send_verification_email_canceled_because_user_disabled':
-                this.toast.showMessage({ messageKey: 'errors.userDisabled'});
+                this.toast.showMessage({ messageKey: 'errors.userDisabled' });
                 break;
 
               default:

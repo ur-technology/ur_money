@@ -111,7 +111,7 @@ export class UserPage {
     if (Utils.queryParams()['approve']) {
       this.approveSignUpBonus(this.user);
     }
-  }  
+  }
 
   onCountrySelected(countrySelected) {
     this.user.countryCode = countrySelected.alpha2;

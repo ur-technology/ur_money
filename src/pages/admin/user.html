@@ -163,13 +163,8 @@
 				</ion-col>
 				<ion-col>
 					<ion-item>
-						<ion-label>Selfie confidence %</ion-label>
-						<ion-input
-								   type="text"
-								   [disabled]="true"
-								   [(ngModel)]="user.selfieConfidence"
-								   [ngModelOptions]="{standalone: true}">
-						</ion-input>
+						<ion-label>Email verified</ion-label>
+						<ion-checkbox color="danger" checked="{{user.isEmailVerified}}" (ionChange)="toggle('isEmailVerified')"></ion-checkbox>
 					</ion-item>
 				</ion-col>
 				<ion-col>

@@ -27,7 +27,7 @@ export class AuthService {
   constructor(
     public angularFire: AngularFire,
     public contactsService: ContactsService,
-    private userService: UserService  ) {
+    private userService: UserService) {
   }
 
   respondToAuth(callback: any) {

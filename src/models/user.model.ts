@@ -28,7 +28,7 @@ export class UserModel extends FirebaseModel {
   idRecognitionStatus: string;
   selfieMatchStatus: string;
   signUpBonusApproved: boolean;
-  showBonusConfirmedCallToAction : boolean;
+  showBonusConfirmedCallToAction: boolean;
   isEmailVerified: boolean;
 
   static fullName(user: any) {
