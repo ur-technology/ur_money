@@ -5,6 +5,8 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
+import { UserService } from '../../../services/user.service';
+
 import { CustomValidator } from '../../../validators/custom';
 
 
@@ -21,6 +23,7 @@ export class ChangeEmailPage {
     public navParams: NavParams,
     private auth: AuthService,
     private toastService: ToastService,
+    private userService: UserService,
     private loadingController: LoadingController,
     private translate: TranslateService
   ) {
@@ -35,12 +38,23 @@ export class ChangeEmailPage {
     }
 
     let loading = this.loadingController.create({content: this.translate.instant('pleaseWait')});
-    loading.present();
 
-    this.auth.currentUser
-      .update({
-        email: this.mainForm.value.email,
-        isEmailVerified: false,
+    loading
+      .present()
+      .then(() => {
+        // Check email uniqueness
+        return this.userService.checkEmailUniqueness(this.mainForm.value.email);
+      })
+      .then((isUnique: boolean) => {
+        if (!isUnique) {
+          throw 'email_exists';
+        }
+
+        return this.auth.currentUser
+          .update({
+            email: this.mainForm.value.email,
+            isEmailVerified: false,
+          });
       })
       .then(() => {
         return this.auth.sendVerificationEmail(
@@ -57,6 +71,16 @@ export class ChangeEmailPage {
         } else {
           this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
         }
+      }, error => {
+        loading
+          .dismiss()
+          .then(() => {
+            if (error === 'email_exists') {
+              this.toastService.showMessage({ messageKey: 'errors.emailNotUnique' });
+            } else {
+              this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+            }
+          });
       });
   }
 }

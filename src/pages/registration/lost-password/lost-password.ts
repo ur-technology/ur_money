@@ -45,12 +45,19 @@ export class LostPasswordPage {
                 self.toastService.showMessage({ messageKey: 'sign-in.sentRecoveryEmail' });
                 self.navCtrl.setRoot(ResetPasswordWithCodePage);
                 break;
+
               case 'send_recovery_email_canceled_because_user_not_found':
                 self.toastService.showMessage({ messageKey: 'errors.emailNotFound'});
                 break;
+
               case 'send_recovery_email_canceled_because_user_disabled':
                 self.toastService.showMessage({ messageKey: 'errors.userDisabled'});
                 break;
+
+              case 'send_recovery_email_canceled_because_email_not_verified':
+                self.toastService.showMessage({ messageKey: 'errors.emailNotVerified'});
+                break;
+
               default:
                 self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
             }

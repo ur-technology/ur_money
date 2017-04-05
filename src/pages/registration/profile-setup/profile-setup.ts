@@ -9,6 +9,8 @@ import { Component } from '@angular/core';
 
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
+import { UserService } from '../../../services/user.service';
+
 import { CustomValidator } from '../../../validators/custom';
 import { WalletSetupPage } from '../../../pages/registration/wallet-setup/wallet-setup';
 
@@ -23,6 +25,7 @@ export class ProfileSetupPage {
     public nav: NavController,
     public auth: AuthService,
     public toast: ToastService,
+    public userService: UserService,
     private translate: TranslateService,
     private alertCtrl: AlertController,
     private loadingController: LoadingController
@@ -38,7 +41,9 @@ export class ProfileSetupPage {
   ionViewDidLoad() {
     let self = this;
     self.auth.reloadCurrentUser().then(() => {
-      let name = _.isEmpty(_.trim(self.auth.currentUser.name || '')) ? `${self.auth.currentUser.firstName || ''} ${self.auth.currentUser.lastName || ''}` : self.auth.currentUser.name;
+      let name = _.isEmpty(_.trim(self.auth.currentUser.name || '')) ?
+        `${self.auth.currentUser.firstName || ''} ${self.auth.currentUser.lastName || ''}` :
+        self.auth.currentUser.name;
       (<FormControl>self.mainForm.controls['name']).setValue(name);
     });
   }
@@ -51,8 +56,7 @@ export class ProfileSetupPage {
         handler: () => {
           alert.dismiss();
         }
-      }
-      ]
+      }]
     });
     alert.present();
   }
@@ -63,6 +67,18 @@ export class ProfileSetupPage {
     loadingModal
       .present()
       .then(() => {
+        // Check email uniqueness
+        if (this.auth.currentUser.email === this.mainForm.value.email) {
+          return true;
+        } else {
+          return this.userService.checkEmailUniqueness(this.mainForm.value.email);
+        }
+      })
+      .then((isUnique: boolean) => {
+        if (!isUnique) {
+          throw 'email_exists';
+        }
+
         return this.auth.currentUser.update(this.mainForm.value);
       })
       .then(() => {
@@ -106,9 +122,13 @@ export class ProfileSetupPage {
         loadingModal
           .dismiss()
           .then(() => {
-            this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+            if (error === 'email_exists') {
+              this.toast.showMessage({ messageKey: 'errors.emailNotUnique' });
+            } else {
+              this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+            }
             log.warn('unable to save profile info');
           });
       });
-    };
+  }
 }
