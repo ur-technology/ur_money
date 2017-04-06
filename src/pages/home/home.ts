@@ -121,11 +121,12 @@ export class HomePage {
                 this.toast.showMessage({ messageKey: 'errors.userDisabled' });
                 break;
               default:
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, '', 'sendVerificationEmail()');
+                this.googleAnalyticsEventsService .emitEvent(this.pageName, 'no taskState', 'sendVerificationEmail()');
                 this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
             }
           });
       }, (error) => {
+        this.googleAnalyticsEventsService .emitEvent(this.pageName, 'Catch error', 'sendVerificationEmail()');
         loadingModal
           .dismiss()
           .then(() => {
