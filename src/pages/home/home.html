@@ -59,6 +59,10 @@
             1Y
         </ion-segment-button>
     </ion-segment>
+	<div class="warning" *ngIf="!auth.currentUser.isEmailVerified && !params['verification-code']">
+		<p>{{"verify-email.message" | translate}}</p>
+		<p><button ion-button round (click)="sendVerificationEmail()">{{'verify-email.buttonText' | translate}}</button></p>
+	</div>
     <events-list></events-list>
      <ion-fab right bottom>
        <button ion-fab (click)="startNewChat()"><ion-icon name="add"></ion-icon></button>

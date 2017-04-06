@@ -1,20 +1,25 @@
-import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
-import { ChartDataService } from '../../services/chart-data.service';
-import { ElementRef, Inject, Component, trigger, state, style, transition, animate } from '@angular/core';
-import { ContactsAndChatsPage } from '../contacts-and-chats/contacts-and-chats';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { ElementRef, Inject, Component, trigger, state, style, transition, animate } from '@angular/core';
 import { AngularFire } from 'angularfire2';
-import { AuthService } from '../../services/auth';
-import { Config } from '../../config/config';
-import { TranslateService } from 'ng2-translate/ng2-translate';
-import { AnnouncementInitiatedPage } from '../announcement-initiated/announcement-initiated';
-import { TransactionsPage } from './../transactions/transactions';
-import { SendPage } from './../send/send';
-import { InviteLinkPage } from './../invite-link/invite-link';
-import { SponsorWaitPage } from '../sponsor-wait/sponsor-wait';
+import { NavController, NavParams, Platform, AlertController, LoadingController } from 'ionic-angular';
 import { BigNumber } from 'bignumber.js';
+
+import { Config } from '../../config/config';
+import { AuthService } from '../../services/auth';
+import { ChartDataService } from '../../services/chart-data.service';
+import { ToastService } from '../../services/toast';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Utils } from '../../services/utils';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
+
+import { AnnouncementInitiatedPage } from '../announcement-initiated/announcement-initiated';
+import { ContactsAndChatsPage } from '../contacts-and-chats/contacts-and-chats';
+import { InviteLinkPage } from './../invite-link/invite-link';
+import { SendPage } from './../send/send';
+import { SponsorWaitPage } from '../sponsor-wait/sponsor-wait';
+import { TransactionsPage } from './../transactions/transactions';
+
 declare var jQuery: any;
 
 @Component({
@@ -43,20 +48,31 @@ export class HomePage {
   balanceChangePercent: any;
   fadeInState = 'inactive';
   showBonusRewardModal: boolean = false;
+  params: any;
+  pageName = 'HomePage';
 
-  constructor( @Inject(ElementRef) elementRef: ElementRef, public nav: NavController,
-    navParams: NavParams, public chartData: ChartDataService, public platform: Platform,
-    public angularFire: AngularFire, public auth: AuthService,
-    public translate: TranslateService, private alertCtrl: AlertController
-
+  constructor(
+    @Inject(ElementRef) elementRef: ElementRef,
+    navParams: NavParams,
+    public nav: NavController,
+    public platform: Platform,
+    private loadingController: LoadingController,
+    public angularFire: AngularFire,
+    public auth: AuthService,
+    public chartData: ChartDataService,
+    public toast: ToastService,
+    public translate: TranslateService,
+    private alertCtrl: AlertController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.elementRef = elementRef;
     this.sendButtonHidden = Config.targetPlatform === 'ios';
+    this.params = Utils.queryParams();
   }
 
   ionViewDidEnter() {
-    let self = this;
-
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidEnter()');
+    //this.showEmailVerifyNotification();
     this.renderChart();
     this.auth.walletChanged.subscribe(() => {
       this.setBalanceValues();
@@ -68,11 +84,54 @@ export class HomePage {
     });
 
     setTimeout(() => {
-      if (self.auth.currentUser.showBonusConfirmedCallToAction) {
-        self.fadeInState = 'active';
-        self.showBonusRewardModal = true;
+      if (this.auth.currentUser.showBonusConfirmedCallToAction) {
+        this.fadeInState = 'active';
+        this.showBonusRewardModal = true;
       }
     }, 1500);
+  }
+
+  sendVerificationEmail() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on Send verification email button', 'sendVerificationEmail()');
+    let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+
+    loadingModal
+      .present()
+      .then(() => {
+        return this.auth.sendVerificationEmail(
+          this.auth.currentUser.phone,
+          this.auth.currentUser.email
+        );
+      })
+      .then((taskState: string) => {
+        loadingModal
+          .dismiss()
+          .then(() => {
+            switch (taskState) {
+              case 'send_verification_email_finished':
+                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_finished', 'sendVerificationEmail()');
+                this.toast.showMessage({ messageKey: 'verify-email.verifyEmailSent' });
+                break;
+              case 'send_verification_email_canceled_because_user_not_found':
+                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_not_found', 'sendVerificationEmail()');
+                this.toast.showMessage({ messageKey: 'errors.emailNotFound' });
+                break;
+              case 'send_verification_email_canceled_because_user_disabled':
+                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_disabled', 'sendVerificationEmail()');
+                this.toast.showMessage({ messageKey: 'errors.userDisabled' });
+                break;
+              default:
+                this.googleAnalyticsEventsService.emitEvent(this.pageName, '', 'sendVerificationEmail()');
+                this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+            }
+          });
+      }, (error) => {
+        loadingModal
+          .dismiss()
+          .then(() => {
+            this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+          });
+      });
   }
 
   private setBalanceValues() {
@@ -101,6 +160,7 @@ export class HomePage {
   }
 
   startNewChat() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'clicked on plus button on home', 'startNewChat()');
     this.nav.push(ContactsAndChatsPage, { goal: 'chat' });
   }
 
@@ -175,14 +235,12 @@ export class HomePage {
   }
 
   send() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send()', 'clicked on send button on home');
     this.nav.push(SendPage, { contact: {} });
   }
 
-  request() {
-    this.nav.push(ContactsAndChatsPage, { goal: 'request' });
-  }
-
   invite() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'clicked on invite button on home', 'invite()');
     if (!this.auth.announcementConfirmed()) {
       let alert = this.alertCtrl.create({
         subTitle: this.translate.instant('home.noInvitesAllowed'),
@@ -200,7 +258,7 @@ export class HomePage {
 
   hideModalAndInviteFriends() {
     let self = this;
-
+    self.googleAnalyticsEventsService.emitEvent(this.pageName, 'dismissed modal animation that shows when bonus has been approved', 'hideModalAndInviteFriends()');
     self.auth.currentUser.update({ showBonusConfirmedCallToAction: null }).then(() => {
       self.auth.currentUser.showBonusConfirmedCallToAction = false;
       self.showBonusRewardModal = false;
@@ -214,9 +272,12 @@ export class HomePage {
   }
 
   goToNextStep() {
+
     if (this.accountReady()) {
+      this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on 2000 UR sign. Account ready', 'goToNextStep()');
       this.nav.push(TransactionsPage);
     } else {
+      this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on 2000 UR sign.', 'goToNextStep()');
       this.nav.push({
         'announcement-initiated': AnnouncementInitiatedPage,
         'announcement-requested': AnnouncementInitiatedPage,

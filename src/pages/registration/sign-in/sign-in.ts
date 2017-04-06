@@ -11,6 +11,7 @@ import { CustomValidator } from '../../../validators/custom';
 import { Utils } from '../../../services/utils';
 import { SignInPasswordPage } from '../sign-in-password/sign-in-password';
 import { SignInTemporaryCodePage } from '../sign-in-temporary-code/sign-in-temporary-code';
+import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 
 declare var trackJs: any;
 
@@ -21,6 +22,7 @@ declare var trackJs: any;
 export class SignInPage {
   countries: any[];
   mainForm: FormGroup;
+  pageName = 'SignInPage';
 
   constructor(
     public nav: NavController,
@@ -30,7 +32,8 @@ export class SignInPage {
     public loadingController: LoadingController,
     public auth: AuthService,
     public toastService: ToastService,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.countries = this.countryListService.getCountryData();
     this.mainForm = new FormGroup({
@@ -42,9 +45,14 @@ export class SignInPage {
 
   }
 
+  ionViewDidLoad(){
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  }
+
   submit() {
     let self = this;
     let phone = Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix);
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked sign In button', `Phone: ${phone} - submit()`);
     let loadingModal = self.loadingController.create({
       content: self.translate.instant('pleaseWait'),
     });
@@ -59,14 +67,17 @@ export class SignInPage {
     }).then(() => {
       switch (taskState) {
         case 'request_sign_in_succeded':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Going to SignInPasswordPage', `Phone: ${phone} - submit()`);
           self.nav.push(SignInPasswordPage, { phone: phone });
           break;
 
         case 'request_sign_in_canceled_because_user_does_not_have_password_set':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Going to SignInTemporaryCodePage', `Phone: ${phone} - submit()`);
           self.nav.push(SignInTemporaryCodePage, { phone: phone });
           break;
 
         case 'request_sign_in_canceled_because_user_not_found':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: user not found', `Phone: ${phone} - submit()`);
           trackJs.track('Login failed: user not found');
           let alert = this.alertCtrl.create({
             message: this.translate.instant('sign-in.userNotFound'),
@@ -87,23 +98,27 @@ export class SignInPage {
           break;
 
         case 'request_sign_in_canceled_because_user_disabled':
-          self.toastService.showMessage({ messageKey: 'sign-in.userDisabled' });
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error user disabled', `Phone: ${phone} - submit()`);
+          self.toastService.showMessage({ messageKey: 'errors.userDisabled' });
           break;
 
         default:
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', `Phone: ${phone} - submit()`);
           trackJs.track('Login failed: unexpected problem');
-          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
 
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', `Phone: ${phone} - submit()`);
         trackJs.track('Login failed: unexpected problem');
-        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       });
     });
   }
 
   openTermsAndConditions() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Open terms-and-conditions page', 'openTermsAndConditions()');
     let modal = this.modalCtrl.create(TermsAndConditionsPage);
     modal.present();
   }

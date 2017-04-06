@@ -16,13 +16,19 @@
     "signUp": "Sign Up",
     "signIn": "Sign In"
   },
+  "verify-email": {
+    "message": "Your email address has not been verified yet. We require you to validate your email address before we can process your bonus. You should have been sent a verification email at the address you provided; if you haven't received it, you can resend it using the button below. If you need to change your email address, you can do so in the settings menu, under Account > Email.",
+    "buttonText": "Resend verification email",
+    "verifyEmailSent": "A verification email has been sent to the address you provided. Please read it and follow the instructions.",
+    "emailVerified": "Your email has been verified",
+    "verificationCodeNotFound": "The verification code that you entered did not match our records. Please double-check and try again."
+  },
   "sign-in": {
     "title": "Enter phone number",
     "heading": "Please confirm your country code and enter your phone number",
     "phoneNumber": "Enter your phone number",
     "numberConfirmation": "Number confirmation",
     "phoneCorrect": "Is your phone number above correct?",
-    "errorUserDisabled": "Your user account has been disabled.",
     "errorExcessiveLogins": "Your user account has been locked due to excessive failed login attempts.",
     "noInviteFoundTitle": "Invitation not found",
     "noInviteFoundMessage": "<p>We were not able to find an invitation associated with your phone number. If you signed up with the UR Money Beta Program, please click the button 'I'm in the UR Money Beta' Program below.</p>",
@@ -30,8 +36,6 @@
     "userNotFound": "The number that you entered did not match our records. Please double-check and try again.",
     "credentialsIncorrect": "The number and password that you entered did not match our records. Please double-check and try again.",
     "gotoSignUp": "Sign up instead?",
-    "userDisabled": "Your user account has been disabled.",
-    "unexpectedProblem": "There was an unexpected problem. Please try again later",
     "lostPassword": "I've lost my password",
     "contactSupport": "Contact support",
     "passwordRecovery": "We will send you a temporary password",
@@ -41,7 +45,6 @@
     "emailSent": "A recovery email has been sent to the address you provided. Please follow the instructions",
     "sentRecoveryEmail": "A recovery email has been sent to the email address you provided. Please follow the instructions",
     "resetCodeNotFound": "The reset code that you entered did not match our records. Please double-check and try again.",
-    "emailNotFound": "The email that you entered did not match our records. Please double-check and try again.",
     "enterTempPass": "<h3>Welcome back!</h3><p>We have improved our security system. Because you didn't have a password before, we have sent you a temporary code via SMS. </p><p>Please enter that code to continue.</p>",
     "enterTempPassPlaceholder": "Enter the temporary password",
     "resetPassword": "<h3>Great!</h3><p>Now please choose a new password. This will be your password to sign in from now on.</p>",
@@ -91,10 +94,10 @@
     "notReadyMessage": "Since identity verification is required for the use of the UR Money app, you will need to sign out for now. Are you sure you want to sign out?",
     "yesSignOut": "Yes, sign me out.",
     "welcome": "Welcome to UR Money",
-    "message1": "<b>Congratulations!</b> We are processing your 2,000 UR bonus!",
-    "message2": "You will be able to receive and send UR to your friends and family soon.",
-    "message3": "We will also need access to your contacts so you can invite them, chat with them and make transactions with them.",
-    "message4": "You are all done. <b>Enjoy UR Money!<b/>"
+    "message1": "<b>Congratulations!</b> We will process your 2,000 UR bonus as soon as you've verified your email address.",
+    "message2": "You will be able to receive and send UR to your friends and family when you've received your bonus.",
+    "message3": "Please check your email for a verification link.",
+    "message4": "<b>Enjoy UR Money!<b/>"
   },
   "identity-verification-sponsor-wait": {
     "slideTitle": "<b>Waiting for sponsor to complete profile setup</b>",
@@ -108,7 +111,7 @@
     "middleName": "Middle Name (optional)",
     "lastName": "Last Name",
     "name": "Name as it will appear to others",
-    "email": "Email",
+    "email": "Email address",
     "country": "Country",
     "city": "City",
     "state": "State or province",
@@ -343,6 +346,13 @@
   "terms-and-conditions": {
     "title": "Terms and Conditions",
     "text": "Text of terms and conditions"
+  },
+  "errors": {
+    "emailNotFound": "The email that you entered did not match our records. Please double-check and try again.",
+    "emailNotVerified": "Your email is not verified.",
+    "emailNotUnique": "That email is already registered to another account.",
+    "userDisabled": "Your user account has been disabled.",
+    "unexpectedProblem": "There was an unexpected problem. Please try again later"
   },
   "done": "Done",
   "edit": "Edit",

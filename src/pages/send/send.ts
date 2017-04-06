@@ -16,6 +16,7 @@ import { AuthService } from '../../services/auth';
 import { EncryptionService } from '../../services/encryption';
 import { Config } from '../../config/config';
 import { ChooseContactPage } from '../choose-contact/choose-contact';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 declare var jQuery: any;
 
 @Component({
@@ -33,6 +34,7 @@ export class SendPage {
   refreshIntervalId: any;
   public placeholderSentTo: string;
   public sendInProgress: boolean = false;
+  pageName = 'SendPage';
 
   constructor(
     public nav: NavController,
@@ -45,7 +47,8 @@ export class SendPage {
     public translate: TranslateService,
     public chartData: ChartDataService,
     public encryptionService: EncryptionService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
@@ -55,6 +58,10 @@ export class SendPage {
     });
     this.placeholderSentTo = Config.targetPlatform === 'web' ? this.translate.instant('send.placeholderSentToWeb') : this.translate.instant('send.placeholderSentTo');
     this.userVerified = auth.currentUser.isVerified();
+  }
+
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
   }
 
   reflectMaxAmountOnPage() {
@@ -67,6 +74,7 @@ export class SendPage {
 
   chooseContact() {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Show choose contact modal', 'chooseContact()');
     if (Config.targetPlatform !== 'web') {
       let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: this.mainForm.controls['addressWallet'].value });
       chooseModal.onDidDismiss(data => {
@@ -91,6 +99,7 @@ export class SendPage {
 
   ngOnInit() {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Init page', 'ngOnInit()');
     if (self.platform.is('cordova')) {
       NativeStorage.getItem('phrase').then(data => {
         let value = self.encryptionService.decrypt(data.property);
@@ -161,6 +170,7 @@ export class SendPage {
 
   sendUR() {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on Send ur button', 'sendUR()');
     self.sendInProgress = true;
     self.confirm().then(() => {
       return self.showLoadingModal();
@@ -169,39 +179,43 @@ export class SendPage {
     }).then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      let address = self.contact ? self.contact.wallet.address : this.mainForm.controls['addressWallet'].value;
+      let address = self.contact ? self.contact.wallet.address : self.mainForm.controls['addressWallet'].value;
       address = WalletModel.prefixAddress(address);
       return self.wallet.sendRawTransaction(address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
       return self.saveTransaction(urTransaction);
     }).then(() => {
+      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Send UR succeeded. Go to Home page', 'sendUR()');
       self.nav.setRoot(HomePage);
       return self.toastService.showMessage({ messageKey: 'send.urSent' });
     }).then(() => {
       return self.loadingModal.dismiss();
     }, (error: any) => {
-      this.sendInProgress = false;
+      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error sending UR', 'sendUR()');
+      self.sendInProgress = false;
       self.loadingModal && self.loadingModal.dismiss().then(() => {
         if (error.messageKey === 'canceled') {
           // do nothing
         } else if (error.messageKey === 'send.incorrectSecretPhrase') {
-          if (this.phraseSaved) {
-            let alert = this.alertCtrl.create({
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error sending UR. Passphrase incorrect', 'sendUR()');
+          if (self.phraseSaved) {
+            self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Going to show saved passphrase modal', 'sendUR()');
+            let alert = self.alertCtrl.create({
               title: 'Secret phrase incorrect',
               message: 'Did you forget the secret phrase? Tap Recover to show your secret phrase.',
               buttons: [{
                 text: 'Cancel',
                 role: 'cancel'
               },
-              {
-                text: 'Recover',
-                handler: () => {
+                {
+                  text: 'Recover',
+                  handler: () => {
 
-                  alert.dismiss().then(() => {
-                    this.countDown();
-                  });
-                }
-              }]
+                    alert.dismiss().then(() => {
+                      self.countDown();
+                    });
+                  }
+                }]
             });
             alert.present();
           } else {
@@ -215,6 +229,7 @@ export class SendPage {
           } else if (error.messageKey) {
             messageKey = error.messageKey;
           }
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error sending UR' + messageKey, 'sendUR()');
           self.toastService.showMessage({ messageKey: messageKey });
           if (!error.messageKey) {
             log.debug(error.message || error);

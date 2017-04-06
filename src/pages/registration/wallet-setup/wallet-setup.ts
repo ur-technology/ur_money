@@ -11,7 +11,8 @@ import { EncryptionService } from '../../../services/encryption';
 import { Config } from '../../../config/config';
 import { IntroPage } from '../intro/intro'
 import * as firebase from 'firebase';
-import { ToastService } from '../../../services/toast'
+import { ToastService } from '../../../services/toast';
+import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 declare var jQuery: any;
 
 @Component({
@@ -24,6 +25,7 @@ export class WalletSetupPage {
   profile: any;
   loadingModal: any;
   configPlatform: string;
+  pageName = 'WalletSetupPage';
 
   constructor(
     public nav: NavController,
@@ -34,6 +36,7 @@ export class WalletSetupPage {
     public translate: TranslateService,
     public encryptionService: EncryptionService,
     private toastService: ToastService,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.mainForm = new FormGroup({
       secretPhrase: new FormControl('', CustomValidator.secretPhraseValidator),
@@ -49,7 +52,12 @@ export class WalletSetupPage {
     this.configPlatform = Config.targetPlatform;
   }
 
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  }
+
   suggestSecretPhrase() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Suggest secret phrase ', 'suggestSecretPhrase()');
     var secureRandword = require('secure-randword');
     this.profile.secretPhrase = secureRandword(5).join(' ');
     this.mainForm.controls['secretPhrase'].markAsDirty();
@@ -100,6 +108,7 @@ export class WalletSetupPage {
 
   generateAddress() {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Generate wallet Address', 'generateAddress()');
 
     WalletModel.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
       let wallet: WalletModel = new WalletModel(walletData);
@@ -114,6 +123,7 @@ export class WalletSetupPage {
         self.saveWallet();
       }
     }).catch((error) => {
+      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error Generate wallet Address', 'generateAddress()');
       self.loadingModal.dismiss();
       log.warn('unable to get address!');
     });
@@ -128,9 +138,11 @@ export class WalletSetupPage {
         NativeStorage.setItem('phrase', { property: valueEncrypted })
           .then(
           () => {
+            self.googleAnalyticsEventsService.emitEvent(self.pageName, 'PassPhrase saved in device', 'savePassPhrase()');
             resolve();
           },
           error => {
+            self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error saving PassPhrase in device', 'savePassPhrase()');
             resolve();
           }
           );
@@ -141,6 +153,7 @@ export class WalletSetupPage {
   }
 
   alertSecretPhrase() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Alert secret phrase', 'alertSecretPhrase()');
     let alerta = this.alertCtrl.create({
       message: this.translate.instant('wallet-setup.learnSavePhrase'),
       buttons: [{
@@ -169,6 +182,7 @@ export class WalletSetupPage {
         firebase.database().ref('/walletCreatedQueue/tasks').push({
           userId: this.auth.currentUserId
         }).then();
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Set root page IntroPage', 'saveWallet()');
         self.nav.setRoot(IntroPage);
       });
     }).catch((error) => {

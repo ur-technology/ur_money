@@ -6,6 +6,7 @@ import { ResetPasswordWithCodePage } from '../reset-password-with-code/reset-pas
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ToastService } from '../../../services/toast';
 import { AuthService } from '../../../services/auth';
+import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 
 @Component({
   selector: 'page-lost-password',
@@ -14,6 +15,7 @@ import { AuthService } from '../../../services/auth';
 export class LostPasswordPage {
   mainForm: FormGroup;
   phone: string;
+  pageName = 'LostPasswordPage';
 
   constructor(
     public navCtrl: NavController,
@@ -21,17 +23,24 @@ export class LostPasswordPage {
     private loadingController: LoadingController,
     private translate: TranslateService,
     private toastService: ToastService,
-    private auth: AuthService
+    private auth: AuthService,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.mainForm = new FormGroup({ email: new FormControl('', [Validators.required, CustomValidator.emailValidator]) });
     this.phone = this.navParams.get('phone');
   }
 
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  }
+
   submit() {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Click on submit', 'submit()');
     let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
 
-    loadingModal.present()
+    loadingModal
+      .present()
       .then(() => {
         return self.auth.sendRecoveryEmail(self.phone, self.mainForm.value.email);
       })
@@ -41,26 +50,38 @@ export class LostPasswordPage {
           .then(() => {
             switch (taskState) {
               case 'send_recovery_email_finished':
+                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Go to ResetPasswordWithCodePage', 'submit()');
                 self.toastService.showMessage({ messageKey: 'sign-in.sentRecoveryEmail' });
                 self.navCtrl.setRoot(ResetPasswordWithCodePage);
                 break;
+
               case 'send_recovery_email_canceled_because_user_not_found':
-                self.toastService.showMessage({ messageKey: 'sign-in.emailNotFound'});
+                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. Email not found', 'submit()');
+                self.toastService.showMessage({ messageKey: 'errors.emailNotFound'});
                 break;
+
               case 'send_recovery_email_canceled_because_user_disabled':
-                self.toastService.showMessage({ messageKey: 'sign-in.userDisabled'});
+                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. User disabled', 'submit()');
+                self.toastService.showMessage({ messageKey: 'errors.userDisabled'});
                 break;
+
+              case 'send_recovery_email_canceled_because_email_not_verified':
+                self.toastService.showMessage({ messageKey: 'errors.emailNotVerified'});
+                break;
+
               default:
-                self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. unexpected Problem', 'submit()');
+                self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
             }
           });
-    }, (error) => {
-      loadingModal
-        .dismiss()
+      }, (error) => {
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error catch. unexpected Problem', 'submit()');
+        loadingModal
+          .dismiss()
           .then(() => {
-            self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
-        });
-    });
+            self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+          });
+      });
   }
 
 

@@ -1,5 +1,6 @@
 import { NavParams, ViewController, ToastController } from 'ionic-angular';
 import { Component } from '@angular/core';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 
@@ -12,11 +13,13 @@ export class ChangeSponsorModal {
   user: any;
   errorMessage: string;
   showSpinner: boolean = false;
+  pageName = 'ChangeSponsorModal';
 
   constructor(
     private navParams: NavParams,
     private viewCtrl: ViewController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.user = this.navParams.get('user');
     this.oldSponsor = this.navParams.get('oldSponsor');
@@ -24,14 +27,19 @@ export class ChangeSponsorModal {
     this.errorMessage = '';
   }
 
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  }
+
   cancel(event) {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on cancel', 'cancel()');
     event.stopPropagation();
     this.viewCtrl.dismiss(undefined);
   }
 
   saveChange(event) {
     event.stopPropagation();
-
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on save button', 'saveChange()');
     this.errorMessage = '';
     this.newSponsorEmail = _.trim(this.newSponsorEmail);
     if (!this.newSponsorEmail) {

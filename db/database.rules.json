@@ -9,6 +9,23 @@
 			".read": true
 		},
 
+		"checkEmailUniquenessQueue": {
+            "tasks": {
+                ".indexOn": "_state",
+                "$task": {
+                    ".write": true,
+                    "_state": {
+                        // allow reading state of a particular record
+                        ".read": true
+                    },
+                    "result": {
+                        // allow reading result of a particular record
+                        ".read": true
+                    }
+                }
+            }
+        },
+
 		"signUpQueue": {
 			"tasks": {
 				".indexOn": "_state",
@@ -44,21 +61,38 @@
 		},
 
 		"resetPasswordQueue": {
-			"tasks": {
-				".indexOn": "_state",
-				"$task": {
-					".write": true,
-					"_state": {
-						// allow reading state of a particular record
-						".read": true
-					},
-					"result": {
-						// allow reading result of a particular record
-						".read": true
-					}
-				}
-			}
-		},
+            "tasks": {
+                ".indexOn": "_state",
+                "$task": {
+                    ".write": true,
+                    "_state": {
+                        // allow reading state of a particular record
+                        ".read": true
+                    },
+                    "result": {
+                        // allow reading result of a particular record
+                        ".read": true
+                    }
+                }
+            }
+        },
+		
+		"verifyEmailQueue": {
+            "tasks": {
+                ".indexOn": "_state",
+                "$task": {
+                    ".write": true,
+                    "_state": {
+                        // allow reading state of a particular record
+                        ".read": true
+                    },
+                    "result": {
+                        // allow reading result of a particular record
+                        ".read": true
+                    }
+                }
+            }
+        },
 
 		"signInQueue": {
 			"tasks": {
@@ -229,7 +263,8 @@
 		},
 
 		"users": {
-			".indexOn": ["phone", "wallet/address", "email", "referralCode", "resetCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions", "idHash"],
+			".indexOn": ["phone", "wallet/address", "email", "referralCode", "resetCode", "verificationCode", "disabled", "failedLoginCount", "sponsor/userId", "registration/status", "prefineryUser/id", "lastName", "name", "transactions", "idHash"],
+			// allow read or write only if the authenticated user is accessing his own user record
 			".read": "root.child('users').child(auth.uid).child('admin').val() == true",
 			"$uid":{  
 				".read":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true",
@@ -277,6 +312,9 @@
 				},
 				"countryCode":{  
 					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
+				},
+				"isEmailVerified":{  
+					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
 				},
 				"signUpBonusApproved":{  
 					".write":"root.child('users').child(auth.uid).child('admin').val() == true"

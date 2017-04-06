@@ -5,6 +5,7 @@ import { LostPasswordPage } from '../lost-password/lost-password';
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 
 declare var trackJs: any;
 
@@ -13,16 +14,23 @@ declare var trackJs: any;
   templateUrl: 'sign-in-password.html'
 })
 export class SignInPasswordPage {
+  pageName = 'SignInPasswordPage';
   mainForm: FormGroup;
   phone: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private toastService: ToastService, private loadingController: LoadingController, private translate: TranslateService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private toastService: ToastService, private loadingController: LoadingController, private translate: TranslateService,
+  private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     this.mainForm = new FormGroup({ password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]) });
     this.phone = this.navParams.get('phone');
   }
 
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  }
+
   submit() {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit password button', 'submit()');
     let task: string;
     let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
 
@@ -36,29 +44,35 @@ export class SignInPasswordPage {
     }).then(() => {
       switch (task) {
         case 'sign_in_finished':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Sign in finished', 'submit()');
           // Auth service will redirect to the right page after login
           break;
         case 'sign_in_canceled_because_password_incorrect':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: incorrect password' , 'submit()');
           trackJs.track('Login failed (password page): incorrect password');
           self.toastService.showMessage({ messageKey: 'sign-in.credentialsIncorrect' });
           break;
         case 'request_sign_in_canceled_because_user_disabled':
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: user disabled', 'submit()');
           trackJs.track('Login failed (password page): user disabled');
-          self.toastService.showMessage({ messageKey: 'sign-in.userDisabled' });
+          self.toastService.showMessage({ messageKey: 'errors.userDisabled' });
           break;
         default:
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', 'submit()');
           trackJs.track('Login failed (password page): unexpected problem');
-          self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+          self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', 'submit()');
         trackJs.track('Login failed (password page): unexpected problem');
-        self.toastService.showMessage({ messageKey: 'sign-in.unexpectedProblem' });
+        self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
       });
     });
   }
 
   lostPassword() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Go to lost password page', 'lostPassword()');
     this.navCtrl.push(LostPasswordPage, { phone: this.phone });
   }
 }

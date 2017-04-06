@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.0.0",
+    "@types/google.analytics": "0.0.33",
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [

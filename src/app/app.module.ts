@@ -61,6 +61,7 @@ import { FormsModule } from '@angular/forms';
 import { Config } from '../config/config';
 import { SponsorWaitPage } from '../pages/sponsor-wait/sponsor-wait';
 import { UserService } from '../services/user.service';
+import { GoogleAnalyticsEventsService } from '../services/google-analytics-events.service';
 
 
 export const firebaseConfig = {
@@ -194,6 +195,7 @@ export function translateLoaderFactory(http: any) {
     ToastService,
     AcuantService,
     UserService,
+    GoogleAnalyticsEventsService,
     { provide: ErrorHandler, useClass: TrackJsErrorHandler },
   ]
 })

@@ -7,6 +7,7 @@ import { CustomValidator } from '../../../validators/custom';
 import { SelfieMatchPage } from '../selfie-match/selfie-match';
 import { AcuantService } from '../../../services/acuant';
 import { IDVerifier } from '../../../interfaces/id-verifier';
+import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 import * as _ from 'lodash';
 
 declare var $;
@@ -32,6 +33,7 @@ export class IdScanPage {
   idTypes: any[];
   idType: string;
   idVerifier: IDVerifier;
+  pageName = 'IdScanPage';
 
   constructor(
     public nav: NavController,
@@ -40,6 +42,7 @@ export class IdScanPage {
     public auth: AuthService,
     private acuantService: AcuantService,
     public alertCtrl: AlertController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
 
     this.idVerifier = acuantService;
@@ -58,6 +61,7 @@ export class IdScanPage {
   }
 
   ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
     this.fillCountriesArray();
     this.fillIdTypesArray();
   }
@@ -117,7 +121,7 @@ export class IdScanPage {
   }
 
   submit() {
-
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit id verification', 'submit()');
     let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
     loadingModal.present();
 
@@ -127,10 +131,12 @@ export class IdScanPage {
         this.idCardData = idCardData;
 
         loadingModal.dismiss().then(() => {
+          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Go to SelfieMatchPage', 'submit()');
           this.nav.push(SelfieMatchPage);
         });
       },
       (error) => {
+        this.googleAnalyticsEventsService.emitEvent(this.pageName, 'ID scan failed: ' + error, 'submit()');
         trackJs.track('ID scan failed: ' + error);
         loadingModal.dismiss().then(() => {
           this.alertCtrl.create({

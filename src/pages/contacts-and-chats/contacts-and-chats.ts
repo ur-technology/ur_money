@@ -7,6 +7,7 @@ import { SocialSharing, Clipboard, Toast } from 'ionic-native';
 import * as log from 'loglevel';
 import { ChatPage } from '../../pages/chat/chat';
 import { Utils } from '../../services/utils';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
 declare var jQuery: any;
 
@@ -18,8 +19,10 @@ export class ContactsAndChatsPage {
   goal: any;
   segmentSelected: string = 'contacts';
   targetPlatform = Config.targetPlatform;
+  pageName = 'ContactsAndChatsPage';
 
-  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService, public alertCtrl: AlertController) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService, public alertCtrl: AlertController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     this.goal = navParams.get('goal');
     if (this.targetPlatform === 'web') {
       this.segmentSelected = 'chats';
@@ -30,12 +33,17 @@ export class ContactsAndChatsPage {
     jQuery('.contentPage').css('top', this.targetPlatform === 'ios' ? '63px' : '43px');
   }
 
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  }
+
   goalChanged(data) {
     this.goal = data.goal;
   }
 
   onContactSelected(data) {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Chose contact. Go to chat page', 'onContactSelected()');
     let contact = data.contact;
     self.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
       self.nav.push(ChatPage, { contact: contact });
@@ -58,6 +66,7 @@ export class ContactsAndChatsPage {
 
   shareLink() {
     let self = this;
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Click on share button page', 'shareLink()');
 
     if (!self.platform.is('cordova')) {
       // HACK: this code is here to test invitations in ionic serve

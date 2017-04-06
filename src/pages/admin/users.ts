@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import * as log from 'loglevel';
 import { Utils } from '../../services/utils';
 import * as firebase from 'firebase';
+import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
 declare var window: any;
 declare var jQuery: any;
@@ -27,6 +28,7 @@ export class UsersPage {
   searchType: string;
   searchText: string;
   countries: any[];
+  pageName = 'UsersPage';
 
   constructor(
     private nav: NavController,
@@ -35,6 +37,7 @@ export class UsersPage {
     private translate: TranslateService,
     public auth: AuthService,
     private alertCtrl: AlertController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.countries = require('country-data').countries.all;
     this.searchTypes = ['Email', 'Phone', 'Full Name', 'Last Name', 'User Id', 'Sponsor Full Name', 'Sponsor User Id'];
@@ -46,6 +49,10 @@ export class UsersPage {
     jQuery('.contentPage').css('top', Config.targetPlatform === 'ios' ? '63px' : '43px');
   }
 
+  ionViewDidLoad() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  }
+
   searchTextChanged() {
     if (this.paginatedUsers && this.paginatedUsers.length > 0) {
       this.paginatedUsers = this.numberOfPages = this.displayableUsers = undefined;
@@ -54,8 +61,11 @@ export class UsersPage {
 
   searchUsers() {
     if (!this.auth.currentUser.admin) {
+      this.googleAnalyticsEventsService.emitEvent(this.pageName, 'No admin user wanted to search for users', 'searchUsers()');
       return;
     }
+
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on search users', 'searchUsers()');
 
     this.searchText = _.trim(this.searchText || '');
     if (!this.searchText) {
@@ -124,6 +134,7 @@ export class UsersPage {
   approveSignUpBonus(user: any) {
     user.signUpBonusApproved = true;
     user.signUpBonusApprovedTag = 'Bonus-Approved';
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Sign up bonus approved', 'approveSignUpBonus()');
     firebase.database().ref(`/users/${user.userId}`).update({ signUpBonusApproved: true })
       .then(() => {
         return firebase.database().ref('/walletCreatedQueue/tasks').push({

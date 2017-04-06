@@ -27,7 +27,7 @@ export class AuthService {
   constructor(
     public angularFire: AngularFire,
     public contactsService: ContactsService,
-    private userService: UserService  ) {
+    private userService: UserService) {
   }
 
   respondToAuth(callback: any) {
@@ -433,6 +433,71 @@ export class AuthService {
       }, (error) => {
         reject(error);
       });
+    });
+  }
+
+  sendVerificationEmail(phone: string, email: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const taskRef = firebase
+        .database()
+        .ref(`/verifyEmailQueue/tasks`)
+        .push({
+          _state: 'send_verification_email_requested',
+          phone,
+          email
+        });
+      const resultRef = taskRef.child('result');
+
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+
+        if (!taskResult) {
+          return;
+        }
+
+        resultRef.off('value');
+        taskRef.remove();
+
+        if (taskResult.error) {
+          log.error(`send verification email error: ${taskResult.error}`);
+        }
+
+        resolve(taskResult.state);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  verifyEmail(verificationCode: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const taskRef = firebase
+        .database()
+        .ref(`/verifyEmailQueue/tasks`)
+        .push({
+          _state: 'verify_email_requested',
+          verificationCode
+        });
+      const resultRef = taskRef.child('result');
+
+      resultRef.on('value', (snapshot) => {
+        let taskResult = snapshot.val();
+
+        if (!taskResult) {
+          return;
+        }
+
+        resultRef.off('value');
+        taskRef.remove();
+
+        if (taskResult.error) {
+          log.error(`verify email error: ${taskResult.error}`);
+        }
+
+        resolve(taskResult.state);
+      }, (error) => {
+        reject(error);
+      })
     });
   }
 

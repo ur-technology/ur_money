@@ -284,6 +284,11 @@ export class CountryListService {
         'countryCode': 'CR'
       },
       {
+        'telephoneCountryCode': '+225',
+        'name': 'Côte d’Ivoire',
+        'countryCode': 'CI'
+      },
+      {
         'telephoneCountryCode': '+385',
         'name': 'Croatia',
         'countryCode': 'HR'

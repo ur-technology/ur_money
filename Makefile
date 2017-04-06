@@ -36,12 +36,12 @@ run-development: version-file
 run-android: version-file
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)
 
-deploy-staging: version-file
+deploy-staging: version-file copy-web-index
 	@$(call overwrite_config,staging)
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
 	@firebase deploy --project ur-money-staging
 
-deploy-production: version-file
+deploy-production: version-file copy-web-index
 	@$(call overwrite_config,production)
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
 	@firebase deploy --project ur-money-production
