@@ -41,7 +41,7 @@ deploy-staging: version-file copy-web-index
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
 	@firebase deploy --project ur-money-staging
 
-deploy-production: version-file copy-web-index
+deploy-production: version-file
 	@$(call overwrite_config,production)
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
 	@firebase deploy --project ur-money-production
