@@ -38,16 +38,16 @@ run-android: version-file
 
 deploy-staging: version-file copy-web-index
 	@$(call overwrite_config,staging)
-	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
+	@$(IONIC_BINARY) $(IONIC_CMD_BUILD)
 	@firebase deploy --project ur-money-staging
 
-deploy-production: version-file
+deploy-production: version-file copy-web-index
 	@$(call overwrite_config,production)
-	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
+	@$(IONIC_BINARY) $(IONIC_CMD_BUILD)
 	@firebase deploy --project ur-money-production
 
 copy-web-index:
-	@sed -e 's/<\/title>/<\/title>\n  <base href="/">/' www/index.html > www/index.web.html 
+	@sed -e 's/<\/title>/<\/title>\\\n  <base href="\/">/' www/index.html > www/index.web.html
 
 # Generate a version TypeScript file containing the current date
 # and a version based on the current git tag.
