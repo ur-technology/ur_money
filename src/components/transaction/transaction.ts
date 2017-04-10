@@ -1,6 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
-import { BigNumber } from 'bignumber.js';
+import Decimal from 'decimal.js';
 import { ChartDataService } from '../../services/chart-data.service';
 import { AuthService } from '../../services/auth';
 import * as _ from 'lodash';
@@ -21,7 +21,7 @@ export class TransactionComponent {
   showSpinner: boolean = false;
   transactions = [];
   filteredTransactions = [];
-  filteredTransactionsTotal: any = new BigNumber(0);
+  filteredTransactionsTotal: any = new Decimal(0);
   lastUpdated: any;
   filterOption: string = 'all';
   lastValue: any;
@@ -39,7 +39,7 @@ export class TransactionComponent {
     self.filteredTransactions = self.filterOption === 'all' ? self.transactions : _.filter(self.transactions, (transaction: any) => {
       return moment(transaction.updatedAt).isAfter(self.startTime());
     });
-    self.filteredTransactionsTotal = new BigNumber(0);
+    self.filteredTransactionsTotal = new Decimal(0);
     _.each(self.filteredTransactions, transaction => {
       self.filteredTransactionsTotal = self.filteredTransactionsTotal.plus(transaction.amount);
     });
@@ -48,13 +48,13 @@ export class TransactionComponent {
   }
 
   weiToURString(amount: any): string {
-    let convertedAmount = (new BigNumber(amount)).dividedBy(1000000000000000000);
-    return convertedAmount.toFormat(2);
+    let convertedAmount = (new Decimal(amount)).dividedBy(1000000000000000000);
+    return convertedAmount;
   }
 
   selectedTransactionTypeTotal(): string {
     if (this.transactionType === 'all') {
-      return this.auth.currentBalanceUR().toFormat(2);
+      return this.auth.currentBalanceUR();
     } else {
       return this.weiToURString(this.filteredTransactionsTotal);
     }

@@ -1,6 +1,6 @@
 import * as log from 'loglevel';
 import { Config } from '../config/config';
-// import {BigNumber} from 'bignumber.js';
+// import {Decimal} from 'decimal.js';
 
 export class WalletModel {
 
@@ -40,22 +40,22 @@ export class WalletModel {
   }
 
   // public static estimatedFeeWei(): any {
-  //   let gas = new BigNumber(21000);
+  //   let gas = new Decimal(21000);
   //   let gasPrice = this.web3().eth.gasPrice;
   //   let calculatedFee = gas.times(gasPrice);
   //   let minimumFee = this.web3().toWei(0.095);
-  //   return BigNumber.max(calculatedFee, minimumFee);
+  //   return Decimal.max(calculatedFee, minimumFee);
   // }
   //
   // private static calculateBalanceInfo(balanceWei, rounding?: boolean, pendingAmountWei?: any): any {
-  //   let currentBalance = new BigNumber(balanceWei).dividedBy('1000000000000000000');
-  //   let availableBalance = BigNumber.max(balanceWei.plus(pendingAmountWei || 0), 0).dividedBy('1000000000000000000');
+  //   let currentBalance = new Decimal(balanceWei).dividedBy('1000000000000000000');
+  //   let availableBalance = Decimal.max(balanceWei.plus(pendingAmountWei || 0), 0).dividedBy('1000000000000000000');
   //   let estimatedFee = this.estimatedFeeWei().dividedBy('1000000000000000000');
   //
   //   if (rounding) {
-  //     currentBalance = currentBalance.round(0, BigNumber.ROUND_HALF_FLOOR);
-  //     availableBalance = availableBalance.round(0, BigNumber.ROUND_HALF_FLOOR);
-  //     estimatedFee = estimatedFee.round(5, BigNumber.ROUND_UP);
+  //     currentBalance = currentBalance.round(0, Decimal.ROUND_HALF_FLOOR);
+  //     availableBalance = availableBalance.round(0, Decimal.ROUND_HALF_FLOOR);
+  //     estimatedFee = estimatedFee.round(5, Decimal.ROUND_UP);
   //   }
   //
   //   return {

@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { BigNumber } from 'bignumber.js';
+import Decimal from 'decimal.js';
 import { NativeStorage } from 'ionic-native';
 import { HomePage } from '../home/home';
 import { WalletModel } from '../../models/wallet';
@@ -25,8 +25,8 @@ declare var jQuery: any;
 export class SendPage {
   contact: any;
   mainForm: FormGroup;
-  availableBalanceUR: any = new BigNumber(0);
-  maxAmountUR: any = new BigNumber(0);
+  availableBalanceUR: any = new Decimal(0);
+  maxAmountUR: any = new Decimal(0);
   userVerified: boolean;
   private wallet: WalletModel;
   private loadingModal: any;
@@ -66,10 +66,10 @@ export class SendPage {
 
   reflectMaxAmountOnPage() {
     let availableBalanceWei = this.auth.currentBalanceWei().plus(this.chartData.pendingSentAmountWei());
-    this.availableBalanceUR = availableBalanceWei.dividedBy(1000000000000000000).round(2, BigNumber.ROUND_HALF_FLOOR);
-    this.maxAmountUR = BigNumber.max(this.availableBalanceUR.minus(this.chartData.estimatedFeeUR), 0).round(2, BigNumber.ROUND_HALF_FLOOR);
+    this.availableBalanceUR = availableBalanceWei.dividedBy(1000000000000000000).round(2, Decimal.ROUND_HALF_FLOOR);
+    this.maxAmountUR = Decimal.max(this.availableBalanceUR.minus(this.chartData.estimatedFeeUR), 0).round(2, Decimal.ROUND_HALF_FLOOR);
     CustomValidator.maxValidAmount = this.maxAmountUR.toNumber();
-    CustomValidator.minValidAmount = new BigNumber(0.000000000000000001).toNumber();
+    CustomValidator.minValidAmount = new Decimal(0.000000000000000001).toNumber();
   }
 
   chooseContact() {
@@ -340,7 +340,7 @@ export class SendPage {
 
   formatUR(amount: number): string {
     if (amount) {
-      return (new BigNumber(amount)).toFormat(2);
+      return (new Decimal(amount)).toFormat(2);
     } else {
       return '';
     }
