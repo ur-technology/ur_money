@@ -44,6 +44,7 @@ import { DateAndTime } from '../pipes/dateAndTime.pipe';
 import { FilterPipe } from '../pipes/filterPipe';
 import { OrderBy } from '../pipes/orderBy';
 import { Round } from '../pipes/round';
+import { UrFormat } from '../pipes/urFormat';
 import { Timestamp } from '../pipes/timestamp';
 import { AuthService } from '../services/auth';
 import { ChartDataService } from '../services/chart-data.service';
@@ -119,6 +120,7 @@ export function translateLoaderFactory(http: any) {
     FilterPipe,
     OrderBy,
     Round,
+    UrFormat,
     Timestamp,
     ChangePasswordPage,
     ChangeEmailPage,
@@ -196,6 +198,7 @@ export function translateLoaderFactory(http: any) {
     AcuantService,
     UserService,
     GoogleAnalyticsEventsService,
+    UrFormat,
     { provide: ErrorHandler, useClass: TrackJsErrorHandler },
   ]
 })

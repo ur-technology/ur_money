@@ -151,8 +151,8 @@ export class HomePage {
       let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
       let startingBalanceWei = this.chartData.priorBalanceWei || new Decimal(firstTransaction ? firstTransaction.balance : 0);
       let balanceChangeWei = this.auth.currentBalanceWei().minus(startingBalanceWei);
-      this.balanceChangeUR = balanceChangeWei.dividedBy(1000000000000000000).round(0, Decimal.ROUND_HALF_FLOOR);
-      this.balanceChangePercent = startingBalanceWei.isZero() ? null : balanceChangeWei.times(100).dividedBy(startingBalanceWei).round(0, Decimal.ROUND_HALF_FLOOR);
+      this.balanceChangeUR = balanceChangeWei.dividedBy(1000000000000000000).toDecimalPlaces(0, Decimal.ROUND_HALF_FLOOR);
+      this.balanceChangePercent = startingBalanceWei.isZero() ? null : balanceChangeWei.times(100).dividedBy(startingBalanceWei).toDecimalPlaces(0, Decimal.ROUND_HALF_FLOOR);
     } else {
       this.balanceChangeUR = null;
       this.balanceChangePercent = null;

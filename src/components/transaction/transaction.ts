@@ -11,6 +11,7 @@ import { ContactsAndChatsPage } from '../../pages/contacts-and-chats/contacts-an
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Config } from '../../config/config';
 import { InviteLinkPage } from '../../pages/invite-link/invite-link';
+import { UrFormat } from '../../pipes/urFormat';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class TransactionComponent {
   numberOfItemsToShow: number = 20;
   @Input() transactionType: string;
 
-  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, private alertCtrl: AlertController) {
+  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, private alertCtrl: AlertController, private urFormat: UrFormat ) {
   }
 
   filterTransactions(newFilterOption?) {
@@ -49,12 +50,12 @@ export class TransactionComponent {
 
   weiToURString(amount: any): string {
     let convertedAmount = (new Decimal(amount)).dividedBy(1000000000000000000);
-    return convertedAmount;
+    return this.urFormat.transform(convertedAmount, null);
   }
 
   selectedTransactionTypeTotal(): string {
     if (this.transactionType === 'all') {
-      return this.auth.currentBalanceUR();
+      return this.urFormat.transform(this.auth.currentBalanceUR(), null);
     } else {
       return this.weiToURString(this.filteredTransactionsTotal);
     }

@@ -17,6 +17,7 @@ import { EncryptionService } from '../../services/encryption';
 import { Config } from '../../config/config';
 import { ChooseContactPage } from '../choose-contact/choose-contact';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
+import { UrFormat } from '../../pipes/urFormat';
 declare var jQuery: any;
 
 @Component({
@@ -48,7 +49,8 @@ export class SendPage {
     public chartData: ChartDataService,
     public encryptionService: EncryptionService,
     public modalController: ModalController,
-    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+    private urFormat: UrFormat
   ) {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
@@ -66,8 +68,8 @@ export class SendPage {
 
   reflectMaxAmountOnPage() {
     let availableBalanceWei = this.auth.currentBalanceWei().plus(this.chartData.pendingSentAmountWei());
-    this.availableBalanceUR = availableBalanceWei.dividedBy(1000000000000000000).round(2, Decimal.ROUND_HALF_FLOOR);
-    this.maxAmountUR = Decimal.max(this.availableBalanceUR.minus(this.chartData.estimatedFeeUR), 0).round(2, Decimal.ROUND_HALF_FLOOR);
+    this.availableBalanceUR = availableBalanceWei.dividedBy(1000000000000000000).toDecimalPlaces(2, Decimal.ROUND_HALF_FLOOR);
+    this.maxAmountUR = Decimal.max(this.availableBalanceUR.minus(this.chartData.estimatedFeeUR), 0).toDecimalPlaces(2, Decimal.ROUND_HALF_FLOOR);
     CustomValidator.maxValidAmount = this.maxAmountUR.toNumber();
     CustomValidator.minValidAmount = new Decimal(0.000000000000000001).toNumber();
   }

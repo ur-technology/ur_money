@@ -1,6 +1,7 @@
 import * as log from 'loglevel';
 import { Config } from '../config/config';
 // import {Decimal} from 'decimal.js';
+// import { UrFormat } from '../../pipes/urFormat';
 
 export class WalletModel {
 
@@ -53,9 +54,9 @@ export class WalletModel {
   //   let estimatedFee = this.estimatedFeeWei().dividedBy('1000000000000000000');
   //
   //   if (rounding) {
-  //     currentBalance = currentBalance.round(0, Decimal.ROUND_HALF_FLOOR);
-  //     availableBalance = availableBalance.round(0, Decimal.ROUND_HALF_FLOOR);
-  //     estimatedFee = estimatedFee.round(5, Decimal.ROUND_UP);
+  //     currentBalance = currentBalance.toDecimalPlaces(0, Decimal.ROUND_HALF_FLOOR);
+  //     availableBalance = availableBalance.toDecimalPlaces(0, Decimal.ROUND_HALF_FLOOR);
+  //     estimatedFee = estimatedFee.toDecimalPlaces(5, Decimal.ROUND_UP);
   //   }
   //
   //   return {

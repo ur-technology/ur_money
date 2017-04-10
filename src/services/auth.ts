@@ -27,7 +27,7 @@ export class AuthService {
   constructor(
     public angularFire: AngularFire,
     public contactsService: ContactsService,
-    private userService: UserService) {
+    private userService: UserService ) {
   }
 
   respondToAuth(callback: any) {
@@ -86,7 +86,7 @@ export class AuthService {
   }
 
   currentBalanceUR() {
-    return this.currentBalanceWei().dividedBy(1000000000000000000).round(2, Decimal.ROUND_HALF_FLOOR);
+    return this.currentBalanceWei().dividedBy(1000000000000000000).toDecimalPlaces(2, Decimal.ROUND_HALF_FLOOR);
   }
 
   announcementConfirmed() {
