@@ -1,6 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
-import { BigNumber } from 'bignumber.js';
+import Decimal from 'decimal.js';
 import { ChartDataService } from '../../services/chart-data.service';
 import { AuthService } from '../../services/auth';
 import * as _ from 'lodash';
@@ -11,6 +11,7 @@ import { ContactsAndChatsPage } from '../../pages/contacts-and-chats/contacts-an
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Config } from '../../config/config';
 import { InviteLinkPage } from '../../pages/invite-link/invite-link';
+import { UrFormat } from '../../pipes/urFormat';
 
 
 @Component({
@@ -21,14 +22,14 @@ export class TransactionComponent {
   showSpinner: boolean = false;
   transactions = [];
   filteredTransactions = [];
-  filteredTransactionsTotal: any = new BigNumber(0);
+  filteredTransactionsTotal: any = new Decimal(0);
   lastUpdated: any;
   filterOption: string = 'all';
   lastValue: any;
   numberOfItemsToShow: number = 20;
   @Input() transactionType: string;
 
-  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, private alertCtrl: AlertController) {
+  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, private alertCtrl: AlertController, private urFormat: UrFormat ) {
   }
 
   filterTransactions(newFilterOption?) {
@@ -39,7 +40,7 @@ export class TransactionComponent {
     self.filteredTransactions = self.filterOption === 'all' ? self.transactions : _.filter(self.transactions, (transaction: any) => {
       return moment(transaction.updatedAt).isAfter(self.startTime());
     });
-    self.filteredTransactionsTotal = new BigNumber(0);
+    self.filteredTransactionsTotal = new Decimal(0);
     _.each(self.filteredTransactions, transaction => {
       self.filteredTransactionsTotal = self.filteredTransactionsTotal.plus(transaction.amount);
     });
@@ -48,13 +49,13 @@ export class TransactionComponent {
   }
 
   weiToURString(amount: any): string {
-    let convertedAmount = (new BigNumber(amount)).dividedBy(1000000000000000000);
-    return convertedAmount.toFormat(2);
+    let convertedAmount = (new Decimal(amount)).dividedBy(1000000000000000000);
+    return this.urFormat.transform(convertedAmount, null);
   }
 
   selectedTransactionTypeTotal(): string {
     if (this.transactionType === 'all') {
-      return this.auth.currentBalanceUR().toFormat(2);
+      return this.urFormat.transform(this.auth.currentBalanceUR(), null);
     } else {
       return this.weiToURString(this.filteredTransactionsTotal);
     }

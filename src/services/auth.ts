@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import * as log from 'loglevel';
 import { ContactsService } from '../services/contacts.service';
 import { Config } from '../config/config';
-import { BigNumber } from 'bignumber.js';
+import Decimal from 'decimal.js';
 import { UserService } from './user.service';
 import { UserModel } from '../models/user.model';
 import * as firebase from 'firebase';
@@ -27,7 +27,7 @@ export class AuthService {
   constructor(
     public angularFire: AngularFire,
     public contactsService: ContactsService,
-    private userService: UserService) {
+    private userService: UserService ) {
   }
 
   respondToAuth(callback: any) {
@@ -82,11 +82,11 @@ export class AuthService {
     let currentBalance = this.currentUser &&
       this.currentUser.wallet &&
       this.currentUser.wallet.currentBalance;
-    return new BigNumber(currentBalance || 0);
+    return new Decimal(currentBalance || 0);
   }
 
   currentBalanceUR() {
-    return this.currentBalanceWei().dividedBy(1000000000000000000).round(2, BigNumber.ROUND_HALF_FLOOR);
+    return this.currentBalanceWei().dividedBy(1000000000000000000).toDecimalPlaces(2, Decimal.ROUND_HALF_FLOOR);
   }
 
   announcementConfirmed() {
