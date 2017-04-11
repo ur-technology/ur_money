@@ -121,29 +121,6 @@ export class WalletSetupPage {
     });
   }
 
-  private savePassPhrase() {
-    let self = this;
-
-    return new Promise((resolve, reject) => {
-      if ((self.mainForm.value.savePhrase === 'true') || (self.mainForm.value.savePhrase)) {
-        let valueEncrypted = self.encryptionService.encrypt(self.mainForm.value.secretPhrase);
-        NativeStorage.setItem('phrase', { property: valueEncrypted })
-          .then(
-          () => {
-            self.googleAnalyticsEventsService.emitEvent(self.pageName, 'PassPhrase saved in device', 'savePassPhrase()');
-            resolve();
-          },
-          error => {
-            self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error saving PassPhrase in device', 'savePassPhrase()');
-            resolve();
-          }
-          );
-      } else {
-        resolve();
-      }
-    });
-  }
-
   alertSecretPhrase() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Alert secret phrase', 'alertSecretPhrase()');
     let alerta = this.alertCtrl.create({

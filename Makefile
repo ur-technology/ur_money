@@ -19,7 +19,7 @@ install_global_npm     = sudo $(NPM_BINARY) $(NPM_CMD_INSTALL_GLOBAL) $(1)
 CONFIG_PATH            = src/config/config.ts
 
 # Config functions
-overwrite_cnfig       = cp src/config/config.$(1).ts $(CONFIG_PATH)
+overwrite_config       = cp src/config/config.$(1).ts $(CONFIG_PATH)
 
 # The default operation is to serve the application in dev mode.
 run: run-development
