@@ -113,15 +113,7 @@ export class WalletSetupPage {
     WalletModel.generate(self.profile.secretPhrase, self.auth.currentUserId).then((walletData) => {
       let wallet: WalletModel = new WalletModel(walletData);
       self.profile.address = wallet.getAddress();
-      if (self.platform.is('android')) {
-        NativeStorage.clear().then(() => {
-          self.savePassPhrase().then(() => {
-            self.saveWallet();
-          });
-        });
-      } else {
-        self.saveWallet();
-      }
+      self.saveWallet();
     }).catch((error) => {
       self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error Generate wallet Address', 'generateAddress()');
       self.loadingModal.dismiss();
