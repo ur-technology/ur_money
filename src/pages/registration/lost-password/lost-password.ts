@@ -57,16 +57,17 @@ export class LostPasswordPage {
 
               case 'send_recovery_email_canceled_because_user_not_found':
                 self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. Email not found', 'submit()');
-                self.toastService.showMessage({ messageKey: 'errors.emailNotFound'});
+                self.toastService.showMessage({ messageKey: 'errors.emailNotFound' });
                 break;
 
               case 'send_recovery_email_canceled_because_user_disabled':
                 self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. User disabled', 'submit()');
-                self.toastService.showMessage({ messageKey: 'errors.userDisabled'});
+                self.toastService.showMessage({ messageKey: 'errors.userDisabled' });
                 break;
 
               case 'send_recovery_email_canceled_because_email_not_verified':
-                self.toastService.showMessage({ messageKey: 'errors.emailNotVerified'});
+                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. email not verified and wanted to change password', 'submit()');
+                self.toastService.showMessage({ messageKey: 'errors.emailNotVerified' });
                 break;
 
               default:
