@@ -45,7 +45,7 @@ export class ChartDataService {
         return moment(transaction.minedAt, 'x').isBefore(this.startingTime);
       });
 
-      this.priorBalanceWei = new Decimal(priorTransaction ? priorTransaction.balance : 0);
+      this.priorBalanceWei = new Decimal(priorTransaction && priorTransaction.balance ? priorTransaction.balance : 0);
       let priorBalanceUR = priorTransaction ? this.convertWeiStringToApproximateUR(priorTransaction.balance) : 0;
       this.points.unshift([this.startingTime.valueOf(), priorBalanceUR]);
     } else {
