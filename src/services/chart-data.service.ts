@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { AuthService } from '../services/auth';
-import { BigNumber } from 'bignumber.js';
+import Decimal from 'decimal.js';
 import * as firebase from 'firebase';
 
 @Injectable()
@@ -24,7 +24,7 @@ export class ChartDataService {
     this.pointsLoaded = false;
 
     // use fixed estimated fee for performance reasons
-    this.estimatedFeeUR = new BigNumber(0.1);
+    this.estimatedFeeUR = new Decimal(0.1);
     this.estimatedFeeWei = this.estimatedFeeUR.times(1000000000000000000);
     this.loadPointsWhenTransactionsChange();
   }
@@ -45,7 +45,7 @@ export class ChartDataService {
         return moment(transaction.minedAt, 'x').isBefore(this.startingTime);
       });
 
-      this.priorBalanceWei = new BigNumber(priorTransaction ? priorTransaction.balance : 0);
+      this.priorBalanceWei = new Decimal(priorTransaction && priorTransaction.balance ? priorTransaction.balance : 0);
       let priorBalanceUR = priorTransaction ? this.convertWeiStringToApproximateUR(priorTransaction.balance) : 0;
       this.points.unshift([this.startingTime.valueOf(), priorBalanceUR]);
     } else {
@@ -86,9 +86,9 @@ export class ChartDataService {
   }
 
   pendingSentAmountWei(): any {
-    let amount: any = new BigNumber(0);
+    let amount: any = new Decimal(0);
     _.each(this.pendingTransactions, (pendingTransaction) => {
-      let transactionAmount: any = new BigNumber(pendingTransaction.urTransaction.value);
+      let transactionAmount: any = new Decimal(pendingTransaction.urTransaction.value);
       if (pendingTransaction.type === 'sent') {
         amount = amount.minus(transactionAmount).minus(this.estimatedFeeWei);
       }

@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { ElementRef, Inject, Component, trigger, state, style, transition, animate } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { NavController, NavParams, Platform, AlertController, LoadingController } from 'ionic-angular';
-import { BigNumber } from 'bignumber.js';
+import  Decimal  from 'decimal.js';
 
 import { Config } from '../../config/config';
 import { AuthService } from '../../services/auth';
@@ -42,7 +42,7 @@ export class HomePage {
   sendButtonHidden: boolean;
   needsToCompleteProfile: boolean;
   balanceTitle: string;
-  balanceValue: any = new BigNumber(0);
+  balanceValue: any = new Decimal(0);
   selectedOption: any;
   balanceChangeUR: any;
   balanceChangePercent: any;
@@ -140,7 +140,7 @@ export class HomePage {
       this.balanceValue = this.auth.currentBalanceUR();
       this.balanceTitle = null;
     } else {
-      this.balanceValue = new BigNumber(2000);
+      this.balanceValue = new Decimal(2000);
       this.balanceTitle = this.translate.instant(
         {
           'waiting-for-sponsor': 'home.waitingForSponsor',
@@ -150,10 +150,10 @@ export class HomePage {
     }
     if (this.auth.announcementConfirmed() && this.chartData.pointsLoaded) {
       let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
-      let startingBalanceWei = this.chartData.priorBalanceWei || new BigNumber(firstTransaction ? firstTransaction.balance : 0);
+      let startingBalanceWei = this.chartData.priorBalanceWei || new Decimal(firstTransaction ? firstTransaction.balance : 0);
       let balanceChangeWei = this.auth.currentBalanceWei().minus(startingBalanceWei);
-      this.balanceChangeUR = balanceChangeWei.dividedBy(1000000000000000000).round(0, BigNumber.ROUND_HALF_FLOOR);
-      this.balanceChangePercent = startingBalanceWei.isZero() ? null : balanceChangeWei.times(100).dividedBy(startingBalanceWei).round(0, BigNumber.ROUND_HALF_FLOOR);
+      this.balanceChangeUR = balanceChangeWei.dividedBy(1000000000000000000).toDecimalPlaces(0, Decimal.ROUND_HALF_FLOOR);
+      this.balanceChangePercent = startingBalanceWei.isZero() ? null : balanceChangeWei.times(100).dividedBy(startingBalanceWei).toDecimalPlaces(0, Decimal.ROUND_HALF_FLOOR);
     } else {
       this.balanceChangeUR = null;
       this.balanceChangePercent = null;

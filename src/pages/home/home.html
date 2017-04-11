@@ -12,19 +12,19 @@
               <h1 class="chart-title">
                 <span class="small" *ngIf="balanceTitle">{{balanceTitle}}</span>
                 <br *ngIf="balanceTitle"/>
-                {{balanceValue.toFormat(2)}}<span>&nbsp;UR</span>
+                {{balanceValue | urFormat}}<span>&nbsp;UR</span>
               </h1>
             </div>
 
             <h2 class="chart-subtitle clearfix">
               <span class="green" *ngIf="balanceChangePercent">
                 <ion-icon [name]="balanceChangePercent>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>
-                {{balanceChangePercent.toFormat(0)}}%
+                {{balanceChangePercent | urFormat}}%
               </span>
 
               <span class="right" *ngIf="balanceChangeUR">
                 <ion-icon [name]="balanceChangeUR>=0?'md-arrow-up':'md-arrow-down'"></ion-icon>
-                {{balanceChangeUR.toFormat(0)}}
+                {{balanceChangeUR | urFormat}}
               </span>
             </h2>
 
