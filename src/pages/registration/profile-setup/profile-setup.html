@@ -14,7 +14,7 @@
 					<ion-item>
 						<ion-label stacked>{{'profile-setup.name' | translate}}</ion-label>
 						<ion-input type="text" formControlName="name" clearInput="true"></ion-input>
-						<button ion-button outline round type="text" item-right class="buttonInfo" (click)="showRealNameExplanation()"><ion-icon name="help"></ion-icon></button>
+						<button ion-button outline round type="text" item-right class="buttonInfo" (click)="showRealNameExplanation($event)"><ion-icon name="help"></ion-icon></button>
 					</ion-item>
 					<ion-item>
 						<ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
@@ -23,7 +23,7 @@
 				</ion-list>
 			</ion-card-content>
 			<ion-item class="footer-card">
-				<button ion-button item-right clear default [disabled]="!mainForm.valid" icon-right>
+				<button type="submit" ion-button item-right clear default [disabled]="!mainForm.valid" icon-right>
 					{{"continue" | translate}}
 					<ion-icon name="arrow-forward"></ion-icon>
 				</button>
