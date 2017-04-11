@@ -38,5 +38,12 @@ make run
 Make sure you have firebase-tools installed, and have logged in.
 
 ```script
-firebase deploy
+make deploy-staging
 ```
+
+or
+
+```script
+make deploy-production
+```
+

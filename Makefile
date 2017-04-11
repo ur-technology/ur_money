@@ -19,7 +19,7 @@ install_global_npm     = sudo $(NPM_BINARY) $(NPM_CMD_INSTALL_GLOBAL) $(1)
 CONFIG_PATH            = src/config/config.ts
 
 # Config functions
-overwrite_config       = cp src/config/config.$(1).ts $(CONFIG_PATH)
+overwrite_cnfig       = cp src/config/config.$(1).ts $(CONFIG_PATH)
 
 # The default operation is to serve the application in dev mode.
 run: run-development
@@ -36,18 +36,21 @@ run-development: version-file
 run-android: version-file
 	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)
 
-deploy-staging: version-file copy-web-index
+# Deploy to https://ur-money-staging.firebaseapp.com
+deploy-staging: version-file
 	@$(call overwrite_config,staging)
-	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
+	@$(IONIC_BINARY) $(IONIC_CMD_BUILD)  
+	@sed -i '' 's/__VERSION__/$(GITHASH)/' www/index.html
+	@sed -e 's/<\/title>/<\/title><base href=\/">/' www/index.html > www/index.web.html 
 	@firebase deploy --project ur-money-staging
 
+# Deploy to https://web.ur.technology
 deploy-production: version-file
 	@$(call overwrite_config,production)
-	@$(IONIC_BINARY) $(IONIC_CMD_RUN_ANDROID)  
+	@$(IONIC_BINARY) $(IONIC_CMD_BUILD)  
+	@sed -i '' 's/__VERSION__/$(GITHASH)/' www/index.html
+	@sed -e 's/<\/title>/<\/title><base href=\/">/' www/index.html > www/index.web.html 
 	@firebase deploy --project ur-money-production
-
-copy-web-index:
-	@sed -e 's/<\/title>/<\/title>\n  <base href="/">/' www/index.html > www/index.web.html 
 
 # Generate a version TypeScript file containing the current date
 # and a version based on the current git tag.
