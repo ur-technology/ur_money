@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
+import * as firebase from 'firebase';
 
 @Component({
   templateUrl: 'change-sponsor.html'

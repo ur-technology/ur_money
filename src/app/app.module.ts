@@ -57,6 +57,7 @@ import { AcuantService } from '../services/acuant';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { Http, HttpModule } from '@angular/http';
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FormsModule } from '@angular/forms';
 import { Config } from '../config/config';
@@ -132,6 +133,7 @@ export function translateLoaderFactory(http: any) {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),

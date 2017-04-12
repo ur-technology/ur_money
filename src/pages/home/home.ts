@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { ElementRef, Inject, Component, trigger, state, style, transition, animate } from '@angular/core';
+import { ElementRef, Inject, Component } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AngularFire } from 'angularfire2';
 import { NavController, NavParams, Platform, AlertController, LoadingController } from 'ionic-angular';
 import  Decimal  from 'decimal.js';

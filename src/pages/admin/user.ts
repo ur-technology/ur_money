@@ -10,6 +10,7 @@ import { Config } from '../../config/config';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
+import * as firebase from 'firebase';
 
 declare var window: any;
 declare var jQuery: any;
