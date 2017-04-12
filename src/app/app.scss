@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/v2/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,75 +12,84 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
 /*-----------------
     defaults
 -------------------*/
-
-body, h1, h2, h3, h4, h5, h6, input, button, select, textarea {
-
-}
+body,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+select,
+textarea {}
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }
-
 /*-----------------
     icons
 -------------------*/
-
-.home-icon, .request-icon, .wallet-icon, .hand-coin-icon, .dollar-map-icon, .plane-icon {
-    display: inline-block;
-    vertical-align: middle;
-    width: 32px;
-    height: 43px;
+.dollar-map-icon,
+.hand-coin-icon,
+.home-icon,
+.plane-icon,
+.request-icon,
+.wallet-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 32px;
+  height: 43px;
 }
 
 .home-icon {
-    background: url("../assets/img/home-icon.png") no-repeat center;
+  background: url("../assets/img/home-icon.png") no-repeat center;
 }
 
 .request-icon {
-    background: url("../assets/img/earn-icon-20x19.png") no-repeat center;
+  background: url("../assets/img/earn-icon-20x19.png") no-repeat center;
 }
 
 .wallet-icon {
-    background: url("../assets/img/wallet.png") no-repeat 0 0;
+  background: url("../assets/img/wallet.png") no-repeat 0 0;
 }
 
 .hand-coin-icon {
-    background: url("../assets/img/hand-coin.png") no-repeat center;
+  background: url("../assets/img/hand-coin.png") no-repeat center;
 }
 
 .dollar-map-icon {
-    background: url("../assets/img/dollar-map.png") no-repeat 0 0;
+  background: url("../assets/img/dollar-map.png") no-repeat 0 0;
 }
 
 .plane-icon {
-    background: url("../assets/img/plane.png") no-repeat center;
+  background: url("../assets/img/plane.png") no-repeat center;
 }
 
 .invite-icon {
-    display: inline-block;
-    vertical-align: middle;
-    width: 32px;
-    height: 43px;
-    background: url("../assets/img/invite-icon.png") no-repeat center;
+  display: inline-block;
+  vertical-align: middle;
+  width: 32px;
+  height: 43px;
+  background: url("../assets/img/invite-icon.png") no-repeat center;
 }
 
 .users-icon {
-    display: inline-block;
-    vertical-align: text-bottom;
-    width: 23px;
-    height: 22px;
-    background: url("../assets/img/users-icon.png") no-repeat 0 0;
+  display: inline-block;
+  vertical-align: text-bottom;
+  width: 23px;
+  height: 22px;
+  background: url("../assets/img/users-icon.png") no-repeat 0 0;
 }
 
 .add-person-icon {
-    background: url("../assets/img/add-person-icon.png") no-repeat center;
-    width: 34px;
-    height: 23px !important;
-    margin: 0;
+  background: url("../assets/img/add-person-icon.png") no-repeat center;
+  width: 34px;
+  height: 23px !important;
+  margin: 0;
 }
 
 .ion-ios-add-person-icon {
@@ -93,302 +100,336 @@ body, h1, h2, h3, h4, h5, h6, input, button, select, textarea {
   content: url("../assets/img/add-person-icon.png");
 }
 
-
 i.menu-icon {
-    display: inline-block;
-    width: 20px;
-    height: 18px;
-    background-repeat: no-repeat;
-    background-position: center;
+  display: inline-block;
+  width: 20px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .menu-icon-home {
-    background: url("../assets/img/home-icon-20x19.png");
+  background: url("../assets/img/home-icon-20x19.png");
 }
 
 .menu-icon-send-ur {
-    background: url("../assets/img/plane-icon-20x19.png");
+  background: url("../assets/img/plane-icon-20x19.png");
 }
 
 .menu-icon-request-ur {
-    background: url("../assets/img/earn-icon-20x19.png");
+  background: url("../assets/img/earn-icon-20x19.png");
 }
 
 .menu-icon-transactions {
-    background: url("../assets/img/transaction-icon-20x19.png");
+  background: url("../assets/img/transaction-icon-20x19.png");
 }
 
 .menu-icon-invite {
-    background: url("../assets/img/invite-icon-menu-20x19.png");
+  background: url("../assets/img/invite-icon-menu-20x19.png");
 }
 
 .menu-icon-group {
-    background: url("../assets/img/group-icon-20x19.png");
+  background: url("../assets/img/group-icon-20x19.png");
 }
 
 .menu-icon-building {
-    background: url("../assets/img/building-icon-20x19.png");
+  background: url("../assets/img/building-icon-20x19.png");
 }
 
 .menu-icon-about {
-    background: url("../assets/img/info-icon-20x19.png");
+  background: url("../assets/img/info-icon-20x19.png");
 }
 
 .menu-icon-chat {
-    background: url("../assets/img/chat-icon-20x19.png");
+  background: url("../assets/img/chat-icon-20x19.png");
 }
 
 .menu-icon-people {
-    background: url("../assets/img/people-icon-20x19.png");
+  background: url("../assets/img/people-icon-20x19.png");
 }
 
 .qr-code-icon {
-    background: url("../assets/img/qr-code-icon.png") no-repeat center;
-    width: 22px;
-    height: 23px !important;
+  background: url("../assets/img/qr-code-icon.png") no-repeat center;
+  width: 22px;
+  height: 23px !important;
 }
-
 /*--------------------------------------*/
-
-.ion-ios-sent-icon-on, .ion-ios-sent-icon-off, .ion-ios-received-icon-on, .ion-ios-received-icon-off, .ion-ios-earned-icon-on, .ion-ios-earned-icon-off {
-    display: inline-block;
-    width: 28px;
-    height: 28px;
+.ion-ios-earned-icon-off,
+.ion-ios-earned-icon-on,
+.ion-ios-received-icon-off,
+.ion-ios-received-icon-on,
+.ion-ios-sent-icon-off,
+.ion-ios-sent-icon-on {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
 }
 
 .ion-ios-sent-icon {
-    content: url("../assets/img/sent-icon-active.png");
+  content: url("../assets/img/sent-icon-active.png");
 }
 
 .ion-md-sent-icon {
-    content: url("../assets/img/sent-icon-active.png");
+  content: url("../assets/img/sent-icon-active.png");
 }
 
 .ion-ios-sent-icon-on {
-    background: url("../assets/img/sent-icon-active.png") no-repeat center;
+  background: url("../assets/img/sent-icon-active.png") no-repeat center;
 }
 
 .ion-ios-sent-icon-on-outline {
-    background: url("../assets/img/sent-icon.png") no-repeat center;
+  background: url("../assets/img/sent-icon.png") no-repeat center;
 }
 
 .ion-ios-received-icon {
-    content: url("../assets/img/received-icon-active.png");
+  content: url("../assets/img/received-icon-active.png");
 }
 
 .ion-md-received-icon {
-    content: url("../assets/img/received-icon-active.png");
+  content: url("../assets/img/received-icon-active.png");
 }
 
 .ion-ios-received-icon-on {
-    background: url("../assets/img/received-icon-active.png") no-repeat center;
+  background: url("../assets/img/received-icon-active.png") no-repeat center;
 }
 
 .ion-ios-received-icon-on-outline {
-    background: url("../assets/img/received-icon.png") no-repeat center;
+  background: url("../assets/img/received-icon.png") no-repeat center;
 }
 
 .ion-ios-earned-icon {
-    content: url("../assets/img/earned-icon-active.png");
+  content: url("../assets/img/earned-icon-active.png");
 }
 
 .ion-md-earned-icon {
-    content: url("../assets/img/earned-icon-active.png");
+  content: url("../assets/img/earned-icon-active.png");
 }
 
 .ion-ios-earned-icon-on {
-    background: url("../assets/img/earned-icon-active.png") no-repeat center;
+  background: url("../assets/img/earned-icon-active.png") no-repeat center;
 }
 
 .ion-ios-earned-icon-on-outline {
-    background: url("../assets/img/earned-icon.png") no-repeat center;
+  background: url("../assets/img/earned-icon.png") no-repeat center;
 }
 
 .ion-ios-all-icon {
-    content: url("../assets/img/all-icon-active.png");
+  content: url("../assets/img/all-icon-active.png");
 }
 
 .ion-md-all-icon {
-    content: url("../assets/img/all-icon-active.png");
+  content: url("../assets/img/all-icon-active.png");
 }
 
 .ion-ios-all-icon-on {
-    background: url("../assets/img/all-icon-active.png") no-repeat center;
+  background: url("../assets/img/all-icon-active.png") no-repeat center;
 }
 
 .ur-menu {
-    background: rgba(224, 81, 81, 1);
-    background: -moz-linear-gradient(top, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(224, 81, 81, 1)), color-stop(100%, rgba(232, 118, 112, 1)));
-    background: -webkit-linear-gradient(top, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
-    background: -o-linear-gradient(top, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
-    background: -ms-linear-gradient(top, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
-    background: linear-gradient(to bottom, rgba(224, 81, 81, 1) 0%, rgba(232, 118, 112, 1) 100%);
-    // filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#e05151', endColorstr='#e87670', GradientType=0);
-    .menu-bar {
-        .left {
-            float: left;
-            ion-icon {
-                font-size: 22px;
-                font-weight: bold;
-            }
-        }
-        .right {
-            float: right;
-            ion-icon {
-                font-size: 22px;
-                font-weight: bold;
-            }
-        }
+  background: rgba(102,97,91, 1);
+  background: -moz-linear-gradient(top, rgba(102,97,91, 1) 0%, rgba(95,90,84, 1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(102,97,91, 1)), color-stop(100%, rgba(95,90,84, 1)));
+  background: -webkit-linear-gradient(top, rgba(102,97,91, 1) 0%, rgba(95,90,84, 1) 100%);
+  background: -o-linear-gradient(top, rgba(102,97,91, 1) 0%, rgba(95,90,84, 1) 100%);
+  background: -ms-linear-gradient(top, rgba(102,97,91, 1) 0%, rgba(95,90,84, 1) 100%);
+  background: linear-gradient(to bottom, rgba(102,97,91, 1) 0%, rgba(95,90,84, 1) 100%);
+  // filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#e05151', endColorstr='#e87670', GradientType=0);
+  .menu-bar {
+    .left {
+      float: left;
+
+      ion-icon {
+        font-size: 22px;
+        font-weight: bold;
+      }
     }
+
+    .right {
+      float: right;
+
+      ion-icon {
+        font-size: 22px;
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 .bar.menu-bar .button:before {
-    font-size: 22px;
+  font-size: 22px;
 }
 
 .menu-profile {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .menu-profile .menu-avatar {
-    display: inline-block;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    border: 5px solid rgba(104, 117, 118, 0.2);
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 5px solid rgba(104, 117, 118, 0.2);
 }
 
 .menu-profile .profile-name {
-    font-size: 19px;
-    font-weight: 600;
-    color: #ffffff;
-    margin-top: 10px;
+  font-size: 19px;
+  font-weight: 300;
+  color: #ffffff;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+.menu-profile {
+  p {
+    font-weight: 200;
+  }
+}
+
+.menu-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 21px;
+  margin-top: 50px;
+  font-weight: 50px;
+  opacity: 0.9;
+  margin-bottom: 15px;
 }
 
 .menu-list .item {
-    background-color: transparent;
-    border: none;
-    color: #ffffff;
-    font-size: 13px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding-left: 28px;
-    height: 5.2rem;
-    .item-inner {
-        padding-left: 24px;
-    }
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding-left: 28px;
+  height: 5.2rem;
+
+  .item-inner {
+    padding-left: 24px;
+  }
 }
 
 .menu-list .item.item-icon-left {
-    padding-left: 80px;
+  padding-left: 80px;
 }
 
 .menu-list .item i.icon {
-    background-color: rgba(256, 256, 256, 0.2);
-    border-radius: 50px;
-    width: 28px;
-    height: 28px;
-    top: 12px;
-    left: 28px;
+  background-color: rgba(256, 256, 256, 0.2);
+  border-radius: 50px;
+  width: 28px;
+  height: 28px;
+  top: 12px;
+  left: 28px;
 }
 
-.menu-list .item:hover, .menu-list .item:focus {
-    background-color: #ec514a;
+.menu-list .item:focus,
+.menu-list .item:hover {
+  background-color: #3aade2;
 }
 
-.menu-list .item:hover i.icon, .menu-list .item:focus i.icon {
-    background-color: rgba(0, 0, 0, 0.2);
+.menu-list .item:focus i.icon,
+.menu-list .item:hover i.icon {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .menu-footer {
-    display: block;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    position: absolute;
-    right: 0;
-    left: 0;
-    z-index: 9;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 0;
-    width: 100%;
-    border-width: 0;
-    border-style: solid;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid #ddd;
-    background-color: white;
-    background-size: 0;
-    background-color: rgba(57, 57, 57, 0.22);
-    height: 145px;
-    bottom: 0;
-    border-top-width: 1px;
-    border-bottom-width: 0;
-    background-position: top;
+  display: block;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 9;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  width: 100%;
+  border-width: 0;
+  border-style: solid;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #ddd;
+  background-color: white;
+  background-size: 0;
+  background-color: rgba(57, 57, 57, 0.22);
+  height: 145px;
+  bottom: 0;
+  border-top-width: 1px;
+  border-bottom-width: 0;
+  background-position: top;
 }
 
 .add-loved-once {
-    padding-bottom: 0;
+  padding-bottom: 0;
 }
 
 .add-loved-once .col {
-    padding: 0;
+  padding: 0;
 }
 
-.add-loved-once .add-loved, .add-loved-once .add-once {
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+.add-loved-once .add-loved,
+.add-loved-once .add-once {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 }
 
 .add-loved-once .add-loved {
-    background: rgba(0, 0, 0, 0.2) url("../assets/img/loved-once.png") no-repeat 6px 17px;
+  background: rgba(0, 0, 0, 0.2) url("../assets/img/loved-once.png") no-repeat 6px 17px;
 }
 
 .add-loved-once .add-once {
-    background: rgba(0, 0, 0, 0.2) url("../assets/img/group-add.png") no-repeat center;
+  background: rgba(0, 0, 0, 0.2) url("../assets/img/group-add.png") no-repeat center;
 }
 
 .menu-footer .angle-icon {
-    display: inline-block;
-    width: 32px;
-    height: 59px;
-    background: url("../assets/img/angle-right.png") no-repeat 0 0;
+  display: inline-block;
+  width: 32px;
+  height: 59px;
+  background: url("../assets/img/angle-right.png") no-repeat 0 0;
 }
 
 .menu-footer .invite-text {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #ffffff;
-    text-align: center;
-    margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 10px;
 }
 
 .menu-footer .invite-text span {
-    color: #1fd1f0;
+  color: #1fd1f0;
 }
 
 .menu-footer .invite-btn {
-    min-height: 30px;
-    line-height: 30px;
-    border-color: #ffffff;
-    color: #ffffff;
-    margin-left: auto;
-    margin-right: auto;
-    height: 2em;
-    width: 100%;
+  min-height: 30px;
+  line-height: 30px;
+  border-color: #ffffff;
+  color: #ffffff;
+  margin-left: auto;
+  margin-right: auto;
+  height: 2em;
+  width: 100%;
 }
 
 ion-avatar ion-img img {
   min-height: unset;
+}
+
+.ur-menu {
+  hr {
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }

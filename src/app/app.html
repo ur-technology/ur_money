@@ -1,24 +1,31 @@
-<ion-menu [content]="content" *ngIf="auth.currentUser && auth.currentUser.wallet && auth.currentUser.wallet.address">
+<ion-split-pane>
+  <ion-menu [content]="content" *ngIf="auth.currentUser && auth.currentUser.wallet && auth.currentUser.wallet.address">
 
-  <ion-content class="ur-menu">
-    <div class="menu-bar">
-      <button ion-button icon-only clear color="light" class="right" (click)="openSettings()">
+    <ion-content class="ur-menu">
+      <div class="menu-bar">
+        <button ion-button icon-only clear color="light" class="right" (click)="openSettings()">
          <ion-icon name="settings"></ion-icon>
       </button>
-      <div class="right">{{envModeDisplay()}}</div>
-    </div>
-    <div class="menu-profile" *ngIf="auth.currentUser">
-      <img class="menu-avatar" [src]="auth.currentUser.profilePhotoUrl" alt="">
-      <h1 class="profile-name">{{auth.currentUser.name}}</h1>
-      <p *ngIf="auth.announcementConfirmed()" ion-text color="light">{{"app.referralCode" | translate}} {{auth.currentUser.referralCode}}</p>
-    </div>
-    <ion-list class="menu-list" no-lines>
-      <ion-item *ngFor="let menuItem of menuItems" tappable (click)="openPage(menuItem)">
-        <i [class]="menuItem.icon" item-left></i> {{menuItem.title}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
+        <div class="right">{{envModeDisplay()}}</div>
+      </div>
+      <div class="menu-title">
+        UR Money
+      </div>
+      <hr />
+      <div class="menu-profile" *ngIf="auth.currentUser">
+        <img class="menu-avatar" [src]="auth.currentUser.profilePhotoUrl" alt="">
+        <h1 class="profile-name">{{auth.currentUser.name}}</h1>
+        <p *ngIf="auth.announcementConfirmed()" ion-text color="light">{{"app.referralCode" | translate}} {{auth.currentUser.referralCode}}</p>
+      </div>
+      <hr />
+      <ion-list class="menu-list" no-lines>
+        <ion-item *ngFor="let menuItem of menuItems" tappable (click)="openPage(menuItem)">
+          <i [class]="menuItem.icon" item-left></i> {{menuItem.title}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
 
-</ion-menu>
+  </ion-menu>
 
-<ion-nav id="nav" #content swipe-back-enabled="false"></ion-nav>
+  <ion-nav id="nav" #content main swipe-back-enabled="false"></ion-nav>
+</ion-split-pane>
