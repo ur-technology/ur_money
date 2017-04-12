@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom';
-import { ResetPasswordWithCodePage } from '../reset-password-with-code/reset-password-with-code';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ToastService } from '../../../services/toast';
 import { AuthService } from '../../../services/auth';
@@ -52,7 +51,6 @@ export class LostPasswordPage {
               case 'send_recovery_email_finished':
                 self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Go to ResetPasswordWithCodePage', 'submit()');
                 self.toastService.showMessage({ messageKey: 'sign-in.sentRecoveryEmail' });
-                self.navCtrl.setRoot(ResetPasswordWithCodePage);
                 break;
 
               case 'send_recovery_email_canceled_because_user_not_found':
