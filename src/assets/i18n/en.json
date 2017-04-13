@@ -38,7 +38,7 @@
     "gotoSignUp": "Sign up instead?",
     "lostPassword": "I've lost my password",
     "contactSupport": "Contact support",
-    "passwordRecovery": "We will send you a temporary password",
+    "passwordRecovery": "We've sent a temporary password to your email address.",
     "contactSupportMail": "mailto:support@ur.technology?Subject=Support%20lost%20password",
     "passwordRecoveryTitle": "Password recovery",
     "passwordRecoveryEmail": "Enter email to recover password",
