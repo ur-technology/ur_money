@@ -84,7 +84,7 @@ export class UrMoney {
 
         // Verify email if verification code is present
         let verificationCode = params['verification-code'];
-        if (verificationCode && !this.auth.currentUser.isEmailVerified) {
+        if (verificationCode && this.auth && this.auth.currentUser && !this.auth.currentUser.isEmailVerified) {
           this.verifyEmail(verificationCode);
         }
 
