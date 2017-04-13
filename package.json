@@ -5,7 +5,9 @@
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "lint": "ionic-app-scripts lint"
+    "lint": "ionic-app-scripts lint",
+    "pree2e": "webdriver-manager update",
+    "e2e": "protractor protractor.conf.js"
   },
   "dependencies": {
     "@angular/animations": "4.0.0",
