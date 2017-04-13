@@ -349,7 +349,7 @@
   },
   "errors": {
     "emailNotFound": "The email that you entered did not match our records. Please double-check and try again.",
-    "emailNotVerified": "Your email is not verified.",
+    "emailNotVerified": "Your email is not verified. Please contact support@ur.technology.",
     "emailNotUnique": "That email is already registered to another account.",
     "userDisabled": "Your user account has been disabled.",
     "unexpectedProblem": "There was an unexpected problem. Please try again later"
