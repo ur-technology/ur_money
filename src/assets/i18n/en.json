@@ -20,7 +20,7 @@
     "message": "Your email address has not been verified yet. We require you to validate your email address before we can process your bonus. You should have been sent a verification email at the address you provided. If you can't find it, check your spam folder. You can resend the email using the button below. If you need to change your email address, you can do so in the settings menu, under Account > Email.",
     "buttonText": "Resend verification email",
     "verifyEmailSent": "A verification email has been sent to your email address. Please read it and follow the instructions. If you don't see the message, please check your spam folder.",
-    "emailVerified": "Your email has been verified",
+    "emailVerified": "Thanks! Your email has been verified",
     "verificationCodeNotFound": "The verification code that you entered did not match our records. Please double-check and try again."
   },
   "sign-in": {

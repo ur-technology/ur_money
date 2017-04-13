@@ -84,7 +84,7 @@ export class UrMoney {
 
         // Verify email if verification code is present
         let verificationCode = params['verification-code'];
-        if (verificationCode) {
+        if (verificationCode && !this.auth.currentUser.isEmailVerified) {
           this.verifyEmail(verificationCode);
         }
 
@@ -234,11 +234,11 @@ export class UrMoney {
             break;
 
           case 'verify_email_canceled_because_user_not_found':
-            this.toastService.showMessage({ messageKey: 'verify-email.verificationCodeNotFound'});
+            this.toastService.showMessage({ messageKey: 'verify-email.verificationCodeNotFound' });
             break;
 
           case 'verify_email_canceled_because_user_disabled':
-            this.toastService.showMessage({ messageKey: 'errors.userDisabled'});
+            this.toastService.showMessage({ messageKey: 'errors.userDisabled' });
             break;
 
           default:
