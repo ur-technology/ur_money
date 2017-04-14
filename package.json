@@ -30,7 +30,7 @@
     "ethereumjs-util": "^4.5.0",
     "ethereumjs-wallet": "^0.6.0",
     "firebase": "3.7.5",
-    "google-libphonenumber": "^1.0.25",
+    "google-libphonenumber": "2.0.14",
     "ionic-angular": "3.0.1",
     "ionic-native": "2.4.1",
     "ionicons": "3.0.0",
