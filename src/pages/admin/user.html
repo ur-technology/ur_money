@@ -126,25 +126,25 @@
 				<ion-col>
 					<ion-item>
 						<ion-label>Move Requested</ion-label>
-						<ion-checkbox color="danger" checked="{{user.moveRequested}}" (ionChange)="toggle('moveRequested')"></ion-checkbox>
+						<ion-checkbox color="danger" checked="{{user.moveRequested===true}}" (ionChange)="toggle('moveRequested')"></ion-checkbox>
 					</ion-item>
 				</ion-col>
 				<ion-col>
 					<ion-item>
 						<ion-label>Disabled</ion-label>
-						<ion-checkbox color="danger" checked="{{user.disabled}}" (ionChange)="toggle('disabled')"></ion-checkbox>
+						<ion-checkbox color="danger" checked="{{user.disabled===true}}" (ionChange)="toggle('disabled')"></ion-checkbox>
 					</ion-item>
 				</ion-col>
 				<ion-col>
 					<ion-item>
 						<ion-label>Fraud Suspected</ion-label>
-						<ion-checkbox color="danger" checked="{{user.fraudSuspected}}" (ionChange)="toggle('fraudSuspected')"></ion-checkbox>
+						<ion-checkbox color="danger" checked="{{user.fraudSuspected===true}}" (ionChange)="toggle('fraudSuspected')"></ion-checkbox>
 					</ion-item>
 				</ion-col>
 				<ion-col>
 					<ion-item>
 						<ion-label>Duplicate</ion-label>
-						<ion-checkbox color="danger" checked="{{user.duplicate}}" (ionChange)="toggle('duplicate')"></ion-checkbox>
+						<ion-checkbox color="danger" checked="{{user.duplicate===true}}" (ionChange)="toggle('duplicate')"></ion-checkbox>
 					</ion-item>
 				</ion-col>
 			</ion-row>
@@ -152,25 +152,25 @@
 				<ion-col>
 					<ion-item>
 						<ion-label>ID documents uploaded</ion-label>
-						<ion-checkbox color="danger" checked="{{user.idUploaded}}" (ionChange)="toggle('idUploaded')"></ion-checkbox>
+						<ion-checkbox color="danger" checked="{{user.idUploaded===true}}" (ionChange)="toggle('idUploaded')"></ion-checkbox>
 					</ion-item>
 				</ion-col>
 				<ion-col>
 					<ion-item>
 						<ion-label>Selfie uploaded</ion-label>
-						<ion-checkbox color="danger" checked="{{user.selfieMatched}}" (ionChange)="toggle('selfieMatched')"></ion-checkbox>
+						<ion-checkbox color="danger" checked="{{user.selfieMatched===true}}" (ionChange)="toggle('selfieMatched')"></ion-checkbox>
 					</ion-item>
 				</ion-col>
 				<ion-col>
 					<ion-item>
 						<ion-label>Email verified</ion-label>
-						<ion-checkbox color="danger" checked="{{user.isEmailVerified}}" (ionChange)="toggle('isEmailVerified')"></ion-checkbox>
+						<ion-checkbox color="danger" checked="{{user.isEmailVerified===true}}" (ionChange)="toggle('isEmailVerified')"></ion-checkbox>
 					</ion-item>
 				</ion-col>
 				<ion-col>
 					<ion-item>
 						<ion-label>Bonus Approved</ion-label>
-						<ion-checkbox color="danger" checked="{{user.signUpBonusApproved}}" (ionChange)="toggle('signUpBonusApproved')"></ion-checkbox>
+						<ion-checkbox color="danger" checked="{{user.signUpBonusApproved===true}}" (ionChange)="toggle('signUpBonusApproved')"></ion-checkbox>
 					</ion-item>
 				</ion-col>
 			</ion-row>

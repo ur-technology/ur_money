@@ -66,10 +66,6 @@ export class UserPage {
     this.user.countryCode = this.user.countryCode || 'US';
     this.fillCountriesArray();
 
-    this.user.moveRequested = !!this.user.moveRequested;
-    this.user.disabled = !!this.user.disabled;
-    this.user.fraudSuspected = !!this.user.fraudSuspected;
-    this.user.duplicate = !!this.user.duplicate;
     this.user.status = this.getUserStatus(this.user);
 
     this.user.ipAddress = (this.user.prefineryUser && this.user.prefineryUser.ipAddress) || 'None';
