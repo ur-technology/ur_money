@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"referrals.title" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="showSpinner">
+    <ion-row>
+      <ion-col text-center>
+        <ion-spinner></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </div>
+  <ion-list>
+    <ion-item text-wrap detail-none *ngIf="referrals?.length === 0 && !showSpinner">
+      <p>No referrals yet</p>
+    </ion-item>
+    <ion-item detail-none *ngFor="let referral of referrals">
+      <ion-avatar item-left> <img src='{{referral.profilePhotoUrl}}'></ion-avatar>
+      <h2>{{referral.name}}</h2>
+      <p>{{"referrals.downlineLevel" | translate}}: {{referral.downlineLevel}}</p>
+      <button item-right ion-button icon-right>{{"contacts.chat" | translate}} <ion-icon name="chatboxes"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
+</ion-content>

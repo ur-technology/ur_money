@@ -20,6 +20,7 @@ import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-c
 import { HomePage } from '../pages/home/home';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
 import { InviteLinkPage } from '../pages/invite-link/invite-link';
+import { ReferralsPage } from '../pages/referrals/referrals';
 import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
 import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
 import { ResetPasswordWithCodePage } from '../pages/registration/reset-password-with-code/reset-password-with-code';
@@ -172,10 +173,12 @@ export class UrMoney {
         this.menuItems.push({ title: 'Invite friends', page: Config.targetPlatform === 'web' ? InviteLinkPage : ContactsAndChatsPage, pageParams: { goal: 'invite' }, icon: 'icon menu-icon menu-icon-invite', value: 'inviteFriends' });
       }
     }
-    this.menuItems.push({ title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' });
+    this.menuItems.push({ title: 'Referrals', page: ReferralsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'referrals' });
     if (this.auth.currentUser && this.auth.currentUser.admin) {
       this.menuItems.push({ title: 'Manage Users', page: UsersPage, icon: 'icon menu-icon menu-icon-people', value: 'users' });
     }
+    this.menuItems.push({ title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' });
+
     this.translateMenu();
   }
 
