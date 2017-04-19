@@ -1,7 +1,6 @@
 import * as log from 'loglevel';
 import * as firebase from 'firebase';
 import { Injectable } from '@angular/core';
-
 import { UserModel } from '../models/user.model';
 
 
@@ -67,17 +66,15 @@ export class UserService {
       resultRef.on('value', (snapshot)=>{
         let taskResult = snapshot.val();
 
-        if(!taskResult){
+        if(!taskResult) {
           return;
         }
         resultRef.off('value');
         taskRef.remove();
-
-        if (taskResult.error) {
-          log.error(`get referrals error: ${taskResult.error}`);
-          reject(taskResult.error);
-        } else {
+        if (taskResult.state === 'user_referrals_succeeded') {
           resolve(taskResult.referrals);
+        } else {
+          resolve({});
         }
 
       });

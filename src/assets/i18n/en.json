@@ -291,7 +291,9 @@
   },
   "referrals":{
     "title": "Referrals",
-    "downlineLevel": "Downline level"
+    "downlineLevel": "Downline level",
+    "noReferrals": " No referrals",
+    "loadingReferrals": "Loading referrals, this may take awhile"
   },
   "done": "Done",
   "edit": "Edit",

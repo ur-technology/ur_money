@@ -291,7 +291,9 @@
   },
   "referrals":{
     "title": "Referidos",
-    "downlineLevel": "Nivel"
+    "downlineLevel": "Nivel",
+    "noReferrals": "No tienes ningun referido",
+    "loadingReferrals": "Cargando referidos, esto puede tomar un tiempo"
   },
   "done": "Aceptar",
   "edit": "Editar",
