@@ -67,7 +67,7 @@ chat-page {
     padding: 0 12px 0 50px;
   }
 
-  .messages-list .item ion-img:first-child {
+  .messages-list .item img:first-child {
     position: absolute;
     top: 24px;
     right: 12px;
@@ -78,7 +78,7 @@ chat-page {
     border-radius: 50%;
   }
 
-  .messages-list .item.other ion-img:first-child {
+  .messages-list .item.other img:first-child {
     right: auto;
     left: 12px;
   }
