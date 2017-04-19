@@ -13,6 +13,7 @@ import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-int
 import { SignUpPage } from '../pages/registration/sign-up/sign-up';
 import { SignInPage } from '../pages/registration/sign-in/sign-in';
 import { InviteLinkPage } from '../pages/invite-link/invite-link';
+import { ReferralsPage } from '../pages/referrals/referrals';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
 import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
 import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
@@ -91,6 +92,7 @@ export function translateLoaderFactory(http: any) {
     PopoverChatPage,
     ContactsAndChatsPage,
     InviteLinkPage,
+    ReferralsPage,
     AnnouncementInitiatedPage,
     AuthenticationCodePage,
     IntroPage,
@@ -159,6 +161,7 @@ export function translateLoaderFactory(http: any) {
     PopoverChatPage,
     ContactsAndChatsPage,
     InviteLinkPage,
+    ReferralsPage,
     AnnouncementInitiatedPage,
     AuthenticationCodePage,
     IntroPage,

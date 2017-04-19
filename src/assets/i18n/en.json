@@ -142,7 +142,8 @@
     "transactions": "Transactions",
     "about": "About UR",
     "users": "Manage Users",
-    "referralCode": "Referral code: "
+    "referralCode": "Referral code: ",
+    "referrals": "Referrals"
   },
   "home": {
     "bonusGenerating": "Bonus generation in progress",
@@ -287,6 +288,12 @@
     "emailNotUnique": "That email is already registered to another account.",
     "userDisabled": "Your user account has been disabled.",
     "unexpectedProblem": "There was an unexpected problem. Please try again later"
+  },
+  "referrals":{
+    "title": "Referrals",
+    "downlineLevel": "Downline level",
+    "noReferrals": " No referrals",
+    "loadingReferrals": "Loading referrals, this may take awhile"
   },
   "done": "Done",
   "edit": "Edit",

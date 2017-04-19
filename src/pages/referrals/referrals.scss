@@ -1,0 +1,14 @@
+page-referrals {
+  ion-spinner {
+    width: 38px;
+    height: 38px;
+  }
+
+  .no-referrals {
+    text-align: center;
+
+    p {
+      font-size: 1.6rem;
+    }
+  }
+}

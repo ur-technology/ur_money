@@ -1,7 +1,6 @@
 import * as log from 'loglevel';
-
+import * as firebase from 'firebase';
 import { Injectable } from '@angular/core';
-
 import { UserModel } from '../models/user.model';
 
 
@@ -48,6 +47,36 @@ export class UserService {
         }
       }, (error) => {
         reject(error);
+      });
+    });
+  }
+
+  getReferrals(userId: string){
+    return new Promise((resolve, reject)=>{
+      const taskRef = firebase
+      .database()
+      .ref('userQueue/tasks')
+      .push({
+        _state: 'user_referrals_requested',
+        userId
+      });
+
+      const resultRef = taskRef.child('result');
+
+      resultRef.on('value', (snapshot)=>{
+        let taskResult = snapshot.val();
+
+        if(!taskResult) {
+          return;
+        }
+        resultRef.off('value');
+        taskRef.remove();
+        if (taskResult.state === 'user_referrals_succeeded') {
+          resolve(taskResult.referrals);
+        } else {
+          resolve({});
+        }
+
       });
     });
   }

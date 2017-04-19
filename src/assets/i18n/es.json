@@ -142,7 +142,8 @@
     "transactions": "Transacciones",
     "about": "Acerca UR",
     "users": "Administrar usuarios",
-    "referralCode": "Código de referencia: "
+    "referralCode": "Código de referencia: ",
+    "referrals": "Referidos"
   },
   "home": {
     "bonusGenerating": "Generación de bonificación en curso",
@@ -287,6 +288,12 @@
     "emailNotUnique": "Ese correo electrónico ya está registrado en otra cuenta.",
     "userDisabled": "Tu cuenta de usuario se ha deshabilitado.",
     "unexpectedProblem": "Hubo un problema inesperado. Por favor, inténtalo de nuevo más tarde"
+  },
+  "referrals":{
+    "title": "Referidos",
+    "downlineLevel": "Nivel",
+    "noReferrals": "No tienes ningun referido",
+    "loadingReferrals": "Cargando referidos, esto puede tomar un tiempo"
   },
   "done": "Aceptar",
   "edit": "Editar",
