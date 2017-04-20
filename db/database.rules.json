@@ -292,7 +292,7 @@
 				"chatSummaries":{
 					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
 				},
-				"howBonusConfirmedCallToAction":{
+				"showBonusConfirmedCallToAction":{
 					".write":"$uid===auth.uid || root.child('users').child(auth.uid).child('admin').val() == true"
 				},
 				"name":{
@@ -341,9 +341,6 @@
 					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
 				},
 				"selfieMatched":{
-					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
-				},
-				"showBonusConfirmedCallToAction":{
 					".write":"root.child('users').child(auth.uid).child('admin').val() == true"
 				}
 			}
