@@ -21,6 +21,7 @@ import { UrFormat } from '../../pipes/urFormat';
 declare var jQuery: any;
 
 @Component({
+  selector: 'page-send',
   templateUrl: 'send.html',
 })
 export class SendPage {

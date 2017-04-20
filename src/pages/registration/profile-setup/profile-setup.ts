@@ -52,7 +52,8 @@ export class ProfileSetupPage {
     });
   }
 
-  showRealNameExplanation() {
+  showRealNameExplanation(event) {
+    event.preventDefault();
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on Real Name Explanation', 'showRealNameExplanation()');
     let alert = this.alertCtrl.create({
       message: this.translate.instant('profile-setup.realNameExplanation'),

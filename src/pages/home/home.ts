@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { ElementRef, Inject, Component, trigger, state, style, transition, animate } from '@angular/core';
+import { ElementRef, Inject, Component } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AngularFire } from 'angularfire2';
 import { NavController, NavParams, Platform, AlertController, LoadingController } from 'ionic-angular';
 import  Decimal  from 'decimal.js';
@@ -121,11 +122,12 @@ export class HomePage {
                 this.toast.showMessage({ messageKey: 'errors.userDisabled' });
                 break;
               default:
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, '', 'sendVerificationEmail()');
+                this.googleAnalyticsEventsService .emitEvent(this.pageName, 'no taskState', 'sendVerificationEmail()');
                 this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
             }
           });
       }, (error) => {
+        this.googleAnalyticsEventsService .emitEvent(this.pageName, 'Catch error', 'sendVerificationEmail()');
         loadingModal
           .dismiss()
           .then(() => {

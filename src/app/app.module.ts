@@ -13,6 +13,7 @@ import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-int
 import { SignUpPage } from '../pages/registration/sign-up/sign-up';
 import { SignInPage } from '../pages/registration/sign-in/sign-in';
 import { InviteLinkPage } from '../pages/invite-link/invite-link';
+import { ReferralsPage } from '../pages/referrals/referrals';
 import { IdScanPage } from '../pages/registration/id-scan/id-scan';
 import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
 import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
@@ -57,6 +58,7 @@ import { AcuantService } from '../services/acuant';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { Http, HttpModule } from '@angular/http';
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FormsModule } from '@angular/forms';
 import { Config } from '../config/config';
@@ -90,6 +92,7 @@ export function translateLoaderFactory(http: any) {
     PopoverChatPage,
     ContactsAndChatsPage,
     InviteLinkPage,
+    ReferralsPage,
     AnnouncementInitiatedPage,
     AuthenticationCodePage,
     IntroPage,
@@ -132,6 +135,7 @@ export function translateLoaderFactory(http: any) {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
@@ -157,6 +161,7 @@ export function translateLoaderFactory(http: any) {
     PopoverChatPage,
     ContactsAndChatsPage,
     InviteLinkPage,
+    ReferralsPage,
     AnnouncementInitiatedPage,
     AuthenticationCodePage,
     IntroPage,

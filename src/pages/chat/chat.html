@@ -1,9 +1,9 @@
 <ion-header>
     <ion-navbar>
         <ion-title class="chat-title">{{displayUser().name}}</ion-title>
-        <ion-buttons end>
+        <!-- <ion-buttons end>
             <button ion-button icon-only (click)="presentPopover($event)"><ion-icon name="more"></ion-icon></button>
-        </ion-buttons>
+        </ion-buttons> -->
     </ion-navbar>
 </ion-header>
 <ion-content class="chat-page-content" #content>
@@ -13,8 +13,7 @@
             [ngClass]="{'other' : isMessageFromReceiver(message)}"
             *ngFor="let message of messages">
 
-            <ion-img [src]="sender(message).profilePhotoUrl"
-                [alt]="img"></ion-img>
+            <img src="{{sender(message).profilePhotoUrl}}">
 
             <div class="msg-text">
                 <p>{{ message.text }} </p>

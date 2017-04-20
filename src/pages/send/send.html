@@ -45,7 +45,9 @@
     <div class="validatorError" *ngIf="numberOutOfRange()">{{"send.numberOutOfRange" | translate}}</div>
     <div class="validatorError" *ngIf="missingSecretPhrase()">{{"send.secretPhraseRequired" | translate}}</div>
     <div class="validatorError" *ngIf="incorrectSecretPhrase()">{{"send.incorrectSecretPhrase" | translate}}</div>
-<br />
-    <button ion-button round block class="send-requestbtn" type="submit" [disabled]="!mainForm.valid || sendInProgress || !userVerified">{{"send.send" | translate}}</button>
+    <div style="text-align:center">
+      <button ion-button round class="send-requestbtn" type="submit" [disabled]="!mainForm.valid || sendInProgress || !userVerified">{{"send.send" | translate}}</button>
+    </div>
+
   </form>
 </ion-content>

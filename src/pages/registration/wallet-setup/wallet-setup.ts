@@ -2,7 +2,6 @@ import { NavController, Platform, AlertController, LoadingController } from 'ion
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as log from 'loglevel';
-import { NativeStorage } from 'ionic-native';
 import { WalletModel } from '../../../models/wallet';
 import { AuthService } from '../../../services/auth';
 import { CustomValidator } from '../../../validators/custom';
