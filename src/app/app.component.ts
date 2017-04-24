@@ -3,7 +3,8 @@ import * as firebase from 'firebase';
 
 import { ViewChild, Component } from '@angular/core';
 import { Platform, Nav, MenuController } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Config } from '../config/config'
 
@@ -46,7 +47,9 @@ export class UrMoney {
     public auth: AuthService,
     public contactsService: ContactsService,
     public toastService: ToastService,
-    private googleAnalyticsEventsService: GoogleAnalyticsEventsService
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar
   ) {
     this.initializeApp();
   }
@@ -54,13 +57,14 @@ export class UrMoney {
   private initializeApp() {
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
-        StatusBar.styleDefault();
-        if (Splashscreen) {
+        this.statusBar.styleDefault();
+        if (this.splashScreen) {
           setTimeout(() => {
-            Splashscreen.hide();
+            this.splashScreen.hide();
           }, 100);
         }
       }
+
 
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
       let params = Utils.queryParams();

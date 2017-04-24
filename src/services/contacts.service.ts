@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { Contacts } from 'ionic-native';
+import { Contacts } from '@ionic-native/contacts';
 import { FakeContactsSource } from '../models/fake-contacts-source';
 import { ContactModel } from '../models/contact.model';
 import { UserModel } from '../models/user.model';
@@ -21,7 +21,7 @@ export class ContactsService {
   contactGroups: any;
   contactsLoadedEmitter = new EventEmitter();
 
-  constructor(private platform: Platform) {
+  constructor(private platform: Platform, private contacts: Contacts) {
   }
 
   getContacts(): Promise<ContactGroups> {

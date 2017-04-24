@@ -5,7 +5,7 @@ import { App } from 'ionic-angular';
 import { EventsService } from '../../services/events.service';
 import { ChatPage } from '../../pages/chat/chat';
 import { TransactionsPage } from '../../pages/transactions/transactions';
-import { LocalNotifications } from 'ionic-native';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { AuthService } from '../../services/auth';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import * as _ from 'lodash';
@@ -19,7 +19,7 @@ export class EventListComponent {
   pageName = 'EventListComponent';
 
   constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App,
-    private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private localNotifications: LocalNotifications) {
     if (platform.is('cordova')) {
       this.listenForNewEvents();
       this.listenForNotificationSelection();
@@ -37,7 +37,7 @@ export class EventListComponent {
   }
 
   listenForNotificationSelection() {
-    LocalNotifications.on('click', (notification, state) => {
+    this.localNotifications.on('click', (notification, state) => {
       let data = JSON.parse(notification.data);
       this.googleAnalyticsEventsService.emitEvent(this.pageName, `Clicked in a notification - ${data.sourceType}`, 'listenForNotificationSelection()');
       this.openPageByEventType(data.sourceType, data.sourceId);
@@ -60,7 +60,7 @@ export class EventListComponent {
             sound: self._soundFile(event.sourceType),
             data: { sourceId: event.sourceId, sourceType: event.sourceType }
           };
-          LocalNotifications.isPresent(obj.id).then(present => {
+          this.localNotifications.isPresent(obj.id).then(present => {
             self.processNotificationEvent(present, obj, event.sourceType);
             eventSnapshot.ref.update({ notificationProcessed: true });
           });
@@ -90,7 +90,7 @@ export class EventListComponent {
     let sendNotification = sourceType === 'message' ? chatNotificationsEnabled : transactionNotificationsEnabled;
 
     if (sendNotification) {
-      present ? LocalNotifications.update(obj) : LocalNotifications.schedule(obj);
+      present ? this.localNotifications.update(obj) : this.localNotifications.schedule(obj);
     }
   }
 

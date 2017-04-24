@@ -7,7 +7,7 @@ import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import { AuthService } from '../../services/auth';
 import { PopoverChatPage } from './popover-chat';
-import { Keyboard } from 'ionic-native';
+import { Keyboard } from '@ionic-native/keyboard';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
 declare var jQuery: any;
@@ -29,13 +29,13 @@ export class ChatPage {
   pageName = 'ChatPage';
 
   constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public alertCtrl: AlertController, public popoverCtrl: PopoverController,
-    private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private keyboard: Keyboard) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
     this.chatId = this.navParams.get('chatId'); // TODO: maybe include this field in chatSummary
     if (this.platform.is('android')) {
-      Keyboard.onKeyboardShow().subscribe(e => this.onKeyboardShow(e));
+      this.keyboard.onKeyboardShow().subscribe(e => this.onKeyboardShow(e));
     }
   }
 

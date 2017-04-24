@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import Decimal from 'decimal.js';
-import { NativeStorage } from 'ionic-native';
+import { NativeStorage } from '@ionic-native/native-storage';
 import { HomePage } from '../home/home';
 import { WalletModel } from '../../models/wallet';
 import { ChartDataService } from '../../services/chart-data.service';
@@ -49,7 +49,7 @@ export class SendPage {
     public encryptionService: EncryptionService,
     public modalController: ModalController,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService,
-    private urFormat: UrFormat
+    private urFormat: UrFormat, private nativeStorage: NativeStorage
   ) {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
@@ -102,7 +102,7 @@ export class SendPage {
     let self = this;
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Init page', 'ngOnInit()');
     if (self.platform.is('cordova')) {
-      NativeStorage.getItem('phrase').then(data => {
+      self.nativeStorage.getItem('phrase').then(data => {
         let value = self.encryptionService.decrypt(data.property);
         self.phraseSaved = value;
       }, error => {

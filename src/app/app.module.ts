@@ -64,7 +64,15 @@ import { Config } from '../config/config';
 import { SponsorWaitPage } from '../pages/sponsor-wait/sponsor-wait';
 import { UserService } from '../services/user.service';
 import { GoogleAnalyticsEventsService } from '../services/google-analytics-events.service';
-
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { Clipboard } from '@ionic-native/clipboard';
+import { Toast } from '@ionic-native/toast';
+import { Keyboard } from '@ionic-native/keyboard';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { Contacts } from '@ionic-native/contacts';
 
 export const firebaseConfig = {
   apiKey: Config.firebaseApiKey,
@@ -194,6 +202,15 @@ const myFirebaseAuthConfig = {
     UserService,
     GoogleAnalyticsEventsService,
     UrFormat,
+    SplashScreen,
+    StatusBar,
+    SocialSharing,
+    Clipboard,
+    Toast,
+    LocalNotifications,
+    Keyboard,
+    NativeStorage,
+    Contacts,
     { provide: ErrorHandler, useClass: TrackJsErrorHandler },
   ]
 })

@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
-import { SocialSharing, Clipboard, Toast } from 'ionic-native';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { Clipboard } from '@ionic-native/clipboard';
+import { Toast } from '@ionic-native/toast';
 import { ContactsService } from '../../services/contacts.service';
 import { AuthService } from '../../services/auth';
 import { App } from 'ionic-angular';
@@ -34,7 +36,10 @@ export class ContactsComponent {
     public auth: AuthService,
     public platform: Platform,
     public alertCtrl: AlertController,
-    public app: App
+    public app: App,
+    private socialSharing: SocialSharing,
+    private clipboard: Clipboard,
+    private toast: Toast
   ) {
     this.startTime = (new Date()).getTime();
   }
@@ -113,9 +118,9 @@ export class ContactsComponent {
       return;
     }
     let message = "I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit ";
-    Clipboard.copy(message).then((data) => {
-      Toast.show("Pick an app and type a message. Or you can paste the simple message that we've placed in your clipboard.", 'long', 'top').subscribe((toast) => {
-        SocialSharing.shareWithOptions({
+    this.clipboard.copy(message).then((data) => {
+      this.toast.show("Pick an app and type a message. Or you can paste the simple message that we've placed in your clipboard.", 'long', 'top').subscribe((toast) => {
+        this.socialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
           // file: 'https://ur.technology/wp-content/uploads/2016/11/icon-android-192x192.png',
           url: Utils.referralLink(self.auth.currentUser.referralCode),
