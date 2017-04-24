@@ -23,28 +23,28 @@
 				<ion-item>
 					<div item-content class="phone-content">
 						<span class="countryCode">{{mainForm.value.country.telephoneCountryCode}}</span>
-						<ion-input formControlName="phone" placeholder="{{'sign-in.phoneNumber' | translate}}" type="tel"></ion-input>
+						<ion-input formControlName="phone" placeholder="Enter your phone number" type="tel"></ion-input>
 					</div>
 				</ion-item>
 				<ion-item>
-					<ion-label stacked color="primary">{{'sign-up.password' | translate}}</ion-label>
-					<ion-input type="password" formControlName="password" placeholder='{{ "settings.atLeastCharacters" | translate }}'></ion-input>
+					<ion-label stacked color="primary">Password</ion-label>
+					<ion-input type="password" formControlName="password" placeholder='At least 6 characters'></ion-input>
 				</ion-item>
 				<ion-item>
-					<ion-label stacked color="primary">{{'sign-up.passwordConfirmation' | translate}}</ion-label>
-					<ion-input type="password" formControlName="passwordConfirmation" placeholder='{{ "settings.atLeastCharacters" | translate }}'></ion-input>
+					<ion-label stacked color="primary">Password confirmation</ion-label>
+					<ion-input type="password" formControlName="passwordConfirmation" placeholder='At least 6 characters'></ion-input>
 				</ion-item>
 				<ion-item *ngIf="signUpType=='sponsorReferralCode'">
-					<ion-label stacked color="primary">{{'sign-up.sponsorReferralCode' | translate}}</ion-label>
-					<ion-input type="text" formControlName="sponsorReferralCode" placeholder='{{ "sign-up.placeholderSponsorReferralCode" | translate }}'></ion-input>
+					<ion-label stacked color="primary">Sponsor's referral code</ion-label>
+					<ion-input type="text" formControlName="sponsorReferralCode" placeholder="Enter your sponsor's referral code"></ion-input>
 					<button ion-button outline round type="text" item-right class="buttonInfo" (click)="showSponsorReferralCodeExplanation()"><ion-icon name="help"></ion-icon></button>
 				</ion-item>
 
 				<p class="terms" text-center>
-				{{ "welcome.terms" | translate }} {{ "welcome.terms2" | translate }} <a class="terms-btn" (click)="openTermsAndConditions()">{{ "welcome.terms3" | translate }} </a>
+				Click \"Agree & Continue\" to accept the UR Technology <a class="terms-btn" (click)="openTermsAndConditions()">Terms and Service Agreement </a>
 				</p>
 				<div text-center>
-					<button ion-button round (click)="submit()" [disabled]="!mainForm.valid || !countryValid">{{'welcome.agreeAndContinue' | translate}}</button>
+					<button ion-button round (click)="submit()" [disabled]="!mainForm.valid || !countryValid">Agree & Continue</button>
 				</div>
 			</ion-list>
 		</form>

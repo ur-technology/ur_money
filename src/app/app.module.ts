@@ -55,8 +55,7 @@ import { EncryptionService } from '../services/encryption';
 import { EventsService } from '../services/events.service';
 import { ToastService } from '../services/toast';
 import { AcuantService } from '../services/acuant';
-import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
-import { Http, HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
@@ -77,10 +76,6 @@ export const firebaseConfig = {
 const myFirebaseAuthConfig = {
   provider: AuthProviders.Custom,
   method: AuthMethods.CustomToken
-}
-
-export function translateLoaderFactory(http: any) {
-  return new TranslateStaticLoader(http, 'assets/i18n', '.json');
 }
 
 @NgModule({
@@ -139,11 +134,6 @@ export function translateLoaderFactory(http: any) {
     FormsModule,
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
-    TranslateModule.forRoot({
-      provide: TranslateLoader,
-      useFactory: translateLoaderFactory,
-      deps: [Http]
-    }),
     IonicModule.forRoot(UrMoney, {
       platforms: {
         ios: {

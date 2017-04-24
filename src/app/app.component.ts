@@ -1,11 +1,9 @@
-import * as _ from 'lodash';
 import * as log from 'loglevel';
 import * as firebase from 'firebase';
 
 import { ViewChild, Component } from '@angular/core';
 import { Platform, Nav, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { Config } from '../config/config'
 
@@ -46,13 +44,11 @@ export class UrMoney {
     public platform: Platform,
     public menu: MenuController,
     public auth: AuthService,
-    public translate: TranslateService,
     public contactsService: ContactsService,
     public toastService: ToastService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.initializeApp();
-    this.translateConfig();
   }
 
   private initializeApp() {
@@ -178,25 +174,6 @@ export class UrMoney {
       this.menuItems.push({ title: 'Manage Users', page: UsersPage, icon: 'icon menu-icon menu-icon-people', value: 'users' });
     }
     this.menuItems.push({ title: 'About UR', page: AboutPage, icon: 'icon menu-icon menu-icon-about', value: 'about' });
-
-    this.translateMenu();
-  }
-
-  private translateMenu() {
-    _.each(this.menuItems, (menuItem) => {
-      this.translate.get(`app.${menuItem.value}`).subscribe((res: string) => {
-        menuItem.title = res;
-      });
-    });
-  }
-
-  translateConfig() {
-    var userLang = navigator.language.split('-')[0]; // use navigator lang if available
-    userLang = /(de|en|es)/gi.test(userLang) ? userLang : 'en';
-    // this language will be used as a fallback when a translation isn't found in the current language
-    this.translate.setDefaultLang('en');
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.translate.use(userLang);
   }
 
   openPage(menuItem) {
@@ -233,19 +210,19 @@ export class UrMoney {
       .then((taskState: string) => {
         switch (taskState) {
           case 'verify_email_finished':
-            this.toastService.showMessage({ messageKey: 'verify-email.emailVerified' });
+            this.toastService.showMessage({ message: 'Thanks! Your email has been verified' });
             break;
 
           case 'verify_email_canceled_because_user_not_found':
-            this.toastService.showMessage({ messageKey: 'verify-email.verificationCodeNotFound' });
+            this.toastService.showMessage({ message: 'The verification code that you entered did not match our records. Please double-check and try again.' });
             break;
 
           case 'verify_email_canceled_because_user_disabled':
-            this.toastService.showMessage({ messageKey: 'errors.userDisabled' });
+            this.toastService.showMessage({ message: 'Your user account has been disabled.' });
             break;
 
           default:
-            this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+            this.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
         }
       });
   }

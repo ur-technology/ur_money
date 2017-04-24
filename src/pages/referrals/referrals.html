@@ -1,29 +1,29 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{"referrals.title" | translate}}</ion-title>
+    <ion-title>Referrals</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-searchbar *ngIf="referrals?.length > 0 "  (ionInput)="filterItems($event)" placeholder='{{"search" | translate}}'>
+  <ion-searchbar *ngIf="referrals?.length > 0 "  (ionInput)="filterItems($event)" placeholder='Search'>
   </ion-searchbar>
   <div *ngIf="showSpinner">
     <ion-row>
       <ion-col text-center>
         <ion-spinner></ion-spinner>
         <p>
-          {{"referrals.loadingReferrals" | translate}}
+          Loading referrals, this may take awhile
         </p>
       </ion-col>
     </ion-row>
   </div>
   <ion-list>
     <ion-item class="no-referrals" text-wrap detail-none *ngIf="filteredReferrals?.length === 0 && !showSpinner" (click)="inviteFriend()">
-      <p>{{"referrals.noReferrals" | translate}}</p>
+      <p>No referrals</p>
     </ion-item>
     <ion-item detail-none *ngFor="let referral of filteredReferrals">
       <ion-avatar item-left> <img src='{{referral.profilePhotoUrl}}'></ion-avatar>
       <h2>{{referral.name}}</h2>
-      <button item-right ion-button icon-left outline round  (click)="chatWith(referral)"><ion-icon name="chatboxes"></ion-icon>{{"contacts.chat" | translate}}
+      <button item-right ion-button icon-left outline round  (click)="chatWith(referral)"><ion-icon name="chatboxes"></ion-icon>Chat
       </button>
     </ion-item>
   </ion-list>

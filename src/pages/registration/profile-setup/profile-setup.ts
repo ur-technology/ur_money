@@ -3,7 +3,6 @@ import * as log from 'loglevel';
 
 import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Component } from '@angular/core';
 
 import { AuthService } from '../../../services/auth';
@@ -28,7 +27,6 @@ export class ProfileSetupPage {
     public auth: AuthService,
     public toast: ToastService,
     public userService: UserService,
-    private translate: TranslateService,
     private alertCtrl: AlertController,
     private loadingController: LoadingController,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
@@ -56,9 +54,9 @@ export class ProfileSetupPage {
     event.preventDefault();
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on Real Name Explanation', 'showRealNameExplanation()');
     let alert = this.alertCtrl.create({
-      message: this.translate.instant('profile-setup.realNameExplanation'),
+      message: "This should be your real name, as in the name that's listed on your credit card, driver's license or student ID. It will only be used within the UR application so that other people know who they're transacting with.",
       buttons: [{
-        text: this.translate.instant('ok'),
+        text: "Ok",
         handler: () => {
           alert.dismiss();
         }
@@ -69,7 +67,7 @@ export class ProfileSetupPage {
 
   submit() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on Continue button', 'submit()');
-    let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+    let loadingModal = this.loadingController.create({ content: "Please wait..."});
 
     loadingModal
       .present()
@@ -101,22 +99,22 @@ export class ProfileSetupPage {
             switch (taskState) {
               case 'send_verification_email_finished':
                 this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Verification email sent', 'submit()');
-                this.toast.showMessage({ messageKey: 'verify-email.verifyEmailSent' });
+                this.toast.showMessage({ message: "A verification email has been sent to your email address. Please read it and follow the instructions. If you don't see the message, please check your spam folder." });
                 break;
 
               case 'send_verification_email_canceled_because_user_not_found':
                 this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Verification email not sent. User not found', 'submit()');
-                this.toast.showMessage({ messageKey: 'errors.emailNotFound' });
+                this.toast.showMessage({ message: 'The email that you entered did not match our records. Please double-check and try again.' });
                 break;
 
               case 'send_verification_email_canceled_because_user_disabled':
                 this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Verification email not sent. User disabled', 'submit()');
-                this.toast.showMessage({ messageKey: 'errors.userDisabled' });
+                this.toast.showMessage({ message: 'Your user account has been disabled.' });
                 break;
 
               default:
                 this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Verification email not sent. unexpected Problem', 'submit()');
-                this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+                this.toast.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
           });
 
@@ -127,9 +125,9 @@ export class ProfileSetupPage {
           .dismiss()
           .then(() => {
             if (error === 'email_exists') {
-              this.toast.showMessage({ messageKey: 'errors.emailNotUnique' });
+              this.toast.showMessage({ message: 'That email is already registered to another account.' });
             } else {
-              this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+              this.toast.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
             log.warn('unable to save profile info');
           });

@@ -8,7 +8,6 @@ import { TransactionsPage } from '../../pages/transactions/transactions';
 import { LocalNotifications } from 'ionic-native';
 import { AuthService } from '../../services/auth';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import * as _ from 'lodash';
 
 @Component({
@@ -19,7 +18,7 @@ export class EventListComponent {
   events = [];
   pageName = 'EventListComponent';
 
-  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App, public translate: TranslateService,
+  constructor(public eventsService: EventsService, public nav: NavController, public platform: Platform, public auth: AuthService, public toastCtrl: ToastController, public app: App,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     if (platform.is('cordova')) {
       this.listenForNewEvents();
@@ -75,7 +74,7 @@ export class EventListComponent {
     if (!present) {
       obj.at = new Date(new Date().getTime() + 900 * 1000);
     } else {
-      obj.text = sourceType === 'message' ? self.translate.instant('home.newChats') : self.translate.instant('home.newTransactions');
+      obj.text = sourceType === 'message' ? "You have new chats" : "You have new transactions";
       obj.data.sourceId = undefined;
     }
 

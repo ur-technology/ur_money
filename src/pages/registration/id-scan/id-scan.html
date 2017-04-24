@@ -1,22 +1,22 @@
 <ion-header>
 	<ion-navbar>
-		<ion-title>{{"id-scan.title" | translate}}</ion-title>
+		<ion-title>Setting up account</ion-title>
 	</ion-navbar>
 </ion-header>
 <ion-content>
 	<form [formGroup]="mainForm">
 		<ion-card>
 			<ion-card-header>
-				<ion-label text-center color="primary">{{"id-scan.slideTitle" | translate}}</ion-label>
+				<ion-label text-center color="primary">Step 1 of 4 - Scan Your Id</ion-label>
 			</ion-card-header>
 
 			<ion-card-content>
 				<div class="disclaimer">
-					<p>{{'id-scan.reassuringMessage' | translate}} <a href="https://ur.technology/privacy" target="_blank">{{'id-scan.privacyPolicy' | translate}}</a>.</p>
+					<p>In order to help prevent fraud and create a secure environment for our community, we require all users to provide images of their identity documents and a picture of themselves for verification. We only use these images for identity verification and counter-fraud measures. We store all personal information, including ID images, securely and we don't share any details unless required by law. For more information about what we do with your data, see our <a href="https://ur.technology/privacy" target="_blank">Privacy Policy</a>.</p>
 				</div>
 				<ion-list>
 					<ion-item>
-						<ion-label stacked>{{'id-scan.country' | translate}}</ion-label>
+						<ion-label stacked>Country</ion-label>
 						<ion-select formControlName="countryCode" (ionChange)="onCountrySelected($event)">
 							<ion-option [value]="c" *ngFor="let c of countries">
 								{{c.name}}
@@ -24,7 +24,7 @@
 						</ion-select>
 					</ion-item>
 					<ion-item>
-						<ion-label stacked>{{'id-scan.idType' | translate}}</ion-label>
+						<ion-label stacked>Type of ID</ion-label>
 						<ion-select formControlName="idType">
 							<ion-option [value]="i.id" *ngFor="let i of idTypes">
 								{{ i.name }}
@@ -35,25 +35,25 @@
 
 				<div class="id-type" *ngIf="idType == 'national-id'">
 
-					<p>{{'id-scan.nationalIdInstructions' | translate}}</p>
+					<p>Please take a picture of the front and the back of your driver's license or national ID. Your ID should take up as much of the photo as possible without going off the edges. Your images might look like this:</p>
 					<img src="/assets/img/sample-ids.png" />
 					<button (click)="selectFile($event)">
 						<ion-img class="preview-image" [src]="idCardFrontSource" [alt]=""></ion-img>
 						<input id="id-card-front" type="file" capture="camera" accept="image/*" (change)="fileChanged($event, 'DriversLicenseDuplex')" />
-						<ion-icon name="camera"></ion-icon> {{'id-scan.scanFrontOfId' | translate}}
+						<ion-icon name="camera"></ion-icon> Tap to capture the front
 					</button>
 
 					<button (click)="selectFile($event)">
 						<ion-img class="preview-image" [src]="idCardBackSource" [alt]=""></ion-img>
 						<input id="id-card-back" type="file" capture="camera" accept="image/*" (change)="fileChanged($event, 'DriversLicenseDuplex')" />
-						<ion-icon name="camera"></ion-icon> {{'id-scan.scanBackOfId' | translate}}
+						<ion-icon name="camera"></ion-icon> Tap to capture the back
 					</button>
 				</div>
 
 			</ion-card-content>
 			<ion-item class="footer-card">
 				<button ion-button item-right clear default [disabled]="!idCardUploaded()" icon-right (click)="submit()">
-					{{"continue" | translate}}
+					Continue
 					<ion-icon name="arrow-forward"></ion-icon>
 				</button>
 			</ion-item>

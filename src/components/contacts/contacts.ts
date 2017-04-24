@@ -6,7 +6,6 @@ import { AuthService } from '../../services/auth';
 import { App } from 'ionic-angular';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Utils } from '../../services/utils';
 declare var window: any;
 
@@ -35,18 +34,18 @@ export class ContactsComponent {
     public auth: AuthService,
     public platform: Platform,
     public alertCtrl: AlertController,
-    public app: App, public translate: TranslateService
+    public app: App
   ) {
     this.startTime = (new Date()).getTime();
   }
 
   private determineMemberActionLabel() {
     if (this.goal === 'send') {
-      return this.translate.instant('contacts.select');
+      return "Select";
     } else if (this.goal === 'request') {
-      return this.translate.instant('contacts.requestUr');
+      return "Request UR";
     } else {
-      return this.translate.instant('contacts.chat');
+      return "Chat";
     }
   }
 
@@ -97,8 +96,8 @@ export class ContactsComponent {
     let self = this;
     if (self.auth.currentUser.invitesDisabled) {
       self.alertCtrl.create({
-        title: self.translate.instant('contacts.invitesDisabled'),
-        message: self.translate.instant('contacts.sorryInvitesDisabled'),
+        title: "Invites Disabled",
+        message: "Sorry, invites are disabled for this account.",
         buttons: ['Ok']
       }).present();
       return;
@@ -113,14 +112,14 @@ export class ContactsComponent {
       }).present();
       return;
     }
-    let message = this.translate.instant('contacts.inviteMessage');
+    let message = "I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit ";
     Clipboard.copy(message).then((data) => {
-      Toast.show(this.translate.instant('contacts.toastMessage'), 'long', 'top').subscribe((toast) => {
+      Toast.show("Pick an app and type a message. Or you can paste the simple message that we've placed in your clipboard.", 'long', 'top').subscribe((toast) => {
         SocialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
           // file: 'https://ur.technology/wp-content/uploads/2016/11/icon-android-192x192.png',
           url: Utils.referralLink(self.auth.currentUser.referralCode),
-          chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
+          chooserTitle: "Pick an app" // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions');
         }, (error) => {
@@ -137,7 +136,7 @@ export class ContactsComponent {
   }
 
   getInviteItemMessage() {
-    return this.displayableContacts ? this.translate.instant('contacts.messageContactNotPresent') : this.translate.instant('contacts.messageNoContacts');
+    return this.displayableContacts ? "Contact not in list? Invite a friend" : "It looks like you don't have contacts yet. Invite a friend";
   }
 
   filterItems(ev) {

@@ -4,7 +4,6 @@ import { AuthService } from '../../services/auth';
 import { ChatPage } from '../../pages/chat/chat';
 import { App } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 
@@ -17,7 +16,7 @@ export class ChatListComponent {
   x: any[];
   chatSummarySubscription: Subscription;
 
-  constructor(public nav: NavController, public auth: AuthService, public angularFire: AngularFire, public app: App, public translate: TranslateService) {
+  constructor(public nav: NavController, public auth: AuthService, public angularFire: AngularFire, public app: App) {
   }
 
   ngOnInit() {
@@ -43,7 +42,7 @@ export class ChatListComponent {
   }
 
   senderLabel(chatSummary: any) {
-    return chatSummary.lastMessage.senderUserId === this.auth.currentUserId ? `${this.translate.instant('you')}: ` : '';
+    return chatSummary.lastMessage.senderUserId === this.auth.currentUserId ? `You` : '';
   }
 
   displayUser(chatSummary: any) {

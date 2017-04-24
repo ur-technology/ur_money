@@ -4,7 +4,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import Decimal from 'decimal.js';
 import { NativeStorage } from 'ionic-native';
 import { HomePage } from '../home/home';
@@ -46,7 +45,6 @@ export class SendPage {
     public toastService: ToastService,
     public loadingController: LoadingController,
     public auth: AuthService,
-    public translate: TranslateService,
     public chartData: ChartDataService,
     public encryptionService: EncryptionService,
     public modalController: ModalController,
@@ -59,7 +57,7 @@ export class SendPage {
       addressWallet: new FormControl('', [Validators.required, CustomValidator.validateAddressField]),
       contact: new FormControl('', [Validators.required])
     });
-    this.placeholderSentTo = Config.targetPlatform === 'web' ? this.translate.instant('send.placeholderSentToWeb') : this.translate.instant('send.placeholderSentTo');
+    this.placeholderSentTo = Config.targetPlatform === 'web' ? "Enter UR address" : "Choose contact or enter UR address";
     this.userVerified = auth.currentUser.isVerified();
   }
 
@@ -146,7 +144,7 @@ export class SendPage {
 
   showLoadingModal(): Promise<any> {
     this.loadingModal = this.loadingController.create({
-      content: this.translate.instant('pleaseWait'),
+      content: "Please wait...",
       dismissOnPageChange: true
     });
     return this.loadingModal.present();
@@ -190,7 +188,7 @@ export class SendPage {
     }).then(() => {
       self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Send UR succeeded. Go to Home page', 'sendUR()');
       self.nav.setRoot(HomePage);
-      return self.toastService.showMessage({ messageKey: 'send.urSent' });
+      return self.toastService.showMessage({ message: "Your UR has been sent!"});
     }).then(() => {
       return self.loadingModal.dismiss();
     }, (error: any) => {
@@ -199,7 +197,7 @@ export class SendPage {
       self.loadingModal && self.loadingModal.dismiss().then(() => {
         if (error.messageKey === 'canceled') {
           // do nothing
-        } else if (error.messageKey === 'send.incorrectSecretPhrase') {
+        } else if (error.messageKey === 'incorrectSecretPhrase') {
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error sending UR. Passphrase incorrect', 'sendUR()');
           if (self.phraseSaved) {
             self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Going to show saved passphrase modal', 'sendUR()');
@@ -222,19 +220,19 @@ export class SendPage {
             });
             alert.present();
           } else {
-            self.toastService.showMessage({ messageKey: error.messageKey });
+            self.toastService.showMessage({ message: error.message });
           }
 
         } else {
-          let messageKey = 'unexpectedErrorMessage';
+          let message = 'An unexpected error has occurred. Please try again later.';
           if (_.isString(error.message) && /CONNECTION ERROR/i.test(error.message)) {
-            messageKey = 'noInternetConnection';
-          } else if (error.messageKey) {
-            messageKey = error.messageKey;
+            message = 'No internet connection available. Please try again later.';
+          } else if (error.message) {
+            message = error.message;
           }
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error sending UR' + messageKey, 'sendUR()');
-          self.toastService.showMessage({ messageKey: messageKey });
-          if (!error.messageKey) {
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error sending UR' + message, 'sendUR()');
+          self.toastService.showMessage({ message: message });
+          if (!error.message) {
             log.debug(error.message || error);
           }
           // give up trying to send
@@ -277,15 +275,15 @@ export class SendPage {
   }
 
   confirmSecretPhraseWrittenDown() {
-    let message1 = this.translate.instant('wallet-setup.confirmWrittenDownMessage1');
-    let message2 = this.translate.instant('wallet-setup.confirmWrittenDownMessage2');
-    let message3 = this.translate.instant('wallet-setup.confirmWrittenDownMessage3');
+    let message1 = "This is your secret phrase:";
+    let message2 = "Write this phrase on a piece of paper and store it in a safe place.";
+    let message3 = "WARNING: UR Technology does not store your secret phrase on our servers and will NOT be able to recover it if it is lost, forgotten or corrupted.";
     let alert = this.alertCtrl.create({
-      title: this.translate.instant('wallet-setup.confirmWrittenDownTitle'),
+      title: "Write It Down!",
       message: `<p>${message1}</p><p><b>${this.phraseSaved}</b></p><p>${message2}</p><p>${message3}</p>`,
       buttons: [
         {
-          text: this.translate.instant('wallet-setup.confirmWrittenDownButton'), handler: () => {
+          text: "I wrote it down!", handler: () => {
             alert.dismiss().then(() => {
               this.mainForm.value.secretPhrase = '';
             });
@@ -304,7 +302,7 @@ export class SendPage {
         if (self.wallet.getAddress() === self.auth.currentUser.wallet.address) {
           resolve();
         } else {
-          reject({ messageKey: 'send.incorrectSecretPhrase' });
+          reject({ messageKey: 'incorrectSecretPhrase' });
         }
       }, (error) => {
         let message = `cannot generate wallet: ${error}`;
@@ -317,11 +315,11 @@ export class SendPage {
   confirm() {
     return new Promise((resolve, reject) => {
       let prompt = this.alertCtrl.create({
-        title: this.translate.instant('send.confirmation'),
-        message: `<p>${this.translate.instant('send.send')} ${this.mainForm.value.amount} UR?</p>`,
+        title: "Confirmation",
+        message: `<p>Send ${this.mainForm.value.amount} UR?</p>`,
         buttons: [
           {
-            text: this.translate.instant('cancel'),
+            text: "Cancel",
             role: 'cancel',
             handler: data => {
               log.debug('send canceled');
@@ -330,7 +328,7 @@ export class SendPage {
             }
           },
           {
-            text: this.translate.instant('ok'),
+            text: "Ok",
             handler: data => {
               prompt.dismiss().then(() => { resolve(); });
             }

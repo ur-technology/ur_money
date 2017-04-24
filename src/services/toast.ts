@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -8,19 +7,15 @@ export class ToastService {
   toast: any;
 
   constructor(
-    private toastController: ToastController,
-    private translate: TranslateService
+    private toastController: ToastController
   ) {
   }
 
   showMessage(options): Promise<any> {
     let self = this;
     return self.dismissPreviousToast().then(() => {
-      if (!options.message && options.messageKey) {
-        options.message = self.translate.instant(options.messageKey);
-      }
       options = _.defaults(options, {
-        message: self.translate.instant(options.messageKey || 'unexpectedError'),
+        message: options.message,
         duration: 5500,
         position: 'bottom'
       });

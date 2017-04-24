@@ -5,7 +5,6 @@ import * as log from 'loglevel';
 import { WalletModel } from '../../../models/wallet';
 import { AuthService } from '../../../services/auth';
 import { CustomValidator } from '../../../validators/custom';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { EncryptionService } from '../../../services/encryption';
 import { Config } from '../../../config/config';
 import { IntroPage } from '../intro/intro'
@@ -32,7 +31,6 @@ export class WalletSetupPage {
     public platform: Platform,
     public alertCtrl: AlertController,
     public loadingController: LoadingController,
-    public translate: TranslateService,
     public encryptionService: EncryptionService,
     private toastService: ToastService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
@@ -45,7 +43,7 @@ export class WalletSetupPage {
       secretPhrase: '',
     };
     this.loadingModal = this.loadingController.create({
-      content: this.translate.instant('pleaseWait'),
+      content: "Please wait...",
       dismissOnPageChange: true
     });
     this.configPlatform = Config.targetPlatform;
@@ -67,13 +65,13 @@ export class WalletSetupPage {
     let self = this;
 
     let alert = self.alertCtrl.create({
-      title: self.translate.instant('wallet-setup.reenterSecretPhraseTitle'),
-      message: self.translate.instant('wallet-setup.reenterSecretPhraseMessage'),
+      title: "Confirm your secret phrase",
+      message: "Please confirm your secret phrase by re-entering it. Once you've entered it correctly here you won't be able to see it again, so make sure you've recorded it in an appropriate way.",
       inputs: [
         {
           name: 'passphrase',
           type: 'password',
-          placeholder: self.translate.instant('wallet-setup.secretPhrase')
+          placeholder: "Secret phrase"
         }
       ],
       buttons: [
@@ -84,7 +82,7 @@ export class WalletSetupPage {
           }
         },
         {
-          text: self.translate.instant('ok'),
+          text: "Ok",
           handler: (data) => {
             if (data.passphrase === self.profile.secretPhrase) {
               alert.dismiss().then(() => {
@@ -94,7 +92,7 @@ export class WalletSetupPage {
               });
             } else {
               alert.dismiss().then(() => {
-                self.toastService.showMessage({ messageKey: 'wallet-setup.secretPhraseIncorrect' });
+                self.toastService.showMessage({ message: "The secret phrase you re-entered is incorrect. Please try again." });
               });
             }
 
@@ -123,9 +121,9 @@ export class WalletSetupPage {
   alertSecretPhrase() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Alert secret phrase', 'alertSecretPhrase()');
     let alerta = this.alertCtrl.create({
-      message: this.translate.instant('wallet-setup.learnSavePhrase'),
+      message: "By checking this box, you are choosing to store your your secret phrase on your device. This approach to safeguarding your secret phrase has advantages and disadvantages. The main advantage is that, if your forget your secret phrase and also lose your written copy of it, you will usually be able to recover it using this approach. The main disadvantage is that you could increase the chances of having your secret phrase stolen if someone gets physical or remote access to your device. Furthermore, saving your secret phrase to your device is NOT 100% reliable, so please continue to write down your secret phrase and store it in a safe place.",
       buttons: [{
-        text: this.translate.instant('ok'),
+        text: "OK",
         handler: () => {
           alerta.dismiss();
         }

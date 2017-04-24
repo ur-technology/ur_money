@@ -8,13 +8,17 @@
     <img src="assets/img/ur-slogan.png" alt="logo">
   </div>
   <div class="welcome-ur">
-    <p class="sub-heading" innerHTML='{{"sign-in.enterTempPass" | translate}}'></p>
+    <div class="sub-heading">
+      <h3>Welcome back!</h3>
+      <p>We have improved our security system. Because you didn't have a password before, we have sent you a temporary code via SMS. </p>
+      <p>Please enter that code to continue.</p>
+    </div>
     <form [formGroup]="mainForm">
       <div text-center>
         <ion-input type="tel" formControlName="code" placeholder="000000" maxlength=6 text-center autofocus></ion-input>
       </div>
       <div text-center class="continue">
-        <button ion-button round (click)="submit()" [disabled]="!mainForm.valid">{{'continue' | translate}}</button>
+        <button ion-button round (click)="submit()" [disabled]="!mainForm.valid">Continue</button>
       </div>
     </form>
   </div>

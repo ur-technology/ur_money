@@ -1,9 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{"settings.updateEmail" | translate}}</ion-title>
+    <ion-title>Update email</ion-title>
     <ion-buttons end>
       <button ion-button [disabled]="!mainForm.valid" (click)="submit()">
-            {{"done" | translate}}
+            Done
         </button>
     </ion-buttons>
   </ion-navbar>
@@ -12,16 +12,16 @@
   <form [formGroup]="mainForm">
     <ion-list>
       <ion-item>
-        <h3 ion-text class="labelStacked" color="primary">{{'settings.currentEmail' | translate}}</h3>
+        <h3 ion-text class="labelStacked" color="primary">Current email</h3>
         <p>{{auth.currentUser.email}}</p>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'settings.email'|translate}}</ion-label>
+        <ion-label stacked>Email</ion-label>
         <ion-input type="email" formControlName="email" autofocus></ion-input>
       </ion-item>
       <ion-item text-wrap>
         <p>
-          {{'settings.verifyEmailText'|translate}}
+          We will send a verification link to the email address you provide.
         </p>
       </ion-item>
     </ion-list>
