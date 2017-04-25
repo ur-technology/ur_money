@@ -22,7 +22,16 @@
     </ion-item>
     <ion-item detail-none *ngFor="let referral of filteredReferrals" (click)="openSelectedUserReferrals(referral)">
       <ion-avatar item-left> <img src='{{referral.profilePhotoUrl}}'></ion-avatar>
-      <h2>{{referral.name}}</h2>
+      <h2>{{referral.name}} (Downline: {{referral.downlineSize}})</h2>
+      <p>
+        {{referral.phone}}
+      </p>
+      <p>
+        {{referral.email}}
+      </p>
+      <!-- <p>
+        {{country(referral.countryCode)}}
+      </p> -->
       <button item-right ion-button icon-left outline round  (click)="chatWith(referral, $event)"><ion-icon name="chatboxes"></ion-icon>Chat
       </button>
     </ion-item>

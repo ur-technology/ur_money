@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import * as _ from 'lodash';
 import { ChatPage } from '../../pages/chat/chat';
+import { CountryListService } from '../../services/country-list';
 
 @Component({
   selector: 'page-referrals',
@@ -17,7 +18,7 @@ export class ReferralsPage {
   showSpinner = false;
   userToLookForReferrals: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService, private auth: AuthService, private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService, private auth: AuthService, private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private countryListService: CountryListService) {
     this.userToLookForReferrals = this.navParams.get('userToLookForReferrals');
   }
 
@@ -64,6 +65,10 @@ export class ReferralsPage {
         }
       });
     }
+  }
+
+  country(code) {
+    return this.countryListService.findCountryByCode(code);
   }
 
 }
