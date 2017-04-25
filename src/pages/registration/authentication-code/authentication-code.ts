@@ -1,7 +1,6 @@
 import { NavController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
@@ -18,7 +17,6 @@ export class AuthenticationCodePage {
   constructor(public nav: NavController,
     public auth: AuthService,
     public loadingController: LoadingController,
-    public translate: TranslateService,
     public toastService: ToastService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
@@ -41,7 +39,7 @@ export class AuthenticationCodePage {
   checkCode() {
     let self = this;
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Click on check code', 'checkCode()');
-    let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
+    let loadingModal = self.loadingController.create({ content: "Please wait..." });
 
     let authenticationCodeMatch;
 
@@ -58,11 +56,11 @@ export class AuthenticationCodePage {
         // do nothing AuthService will handle a redirect
       } else {
         self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Code was invalid', 'checkCode()');
-        self.toastService.showMessage({ messageKey: 'authentication-code.invalidCode' });
+        self.toastService.showMessage({ message: "The verification code you entered is incorrect or expired. Please try again." });
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({ messageKey: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
+        self.toastService.showMessage({ message: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
       });
     });
   }

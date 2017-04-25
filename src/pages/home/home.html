@@ -60,8 +60,8 @@
         </ion-segment-button>
     </ion-segment>
 	<div class="warning" *ngIf="!auth.currentUser.isEmailVerified && !params['verification-code']">
-		<p>{{"verify-email.message" | translate}}</p>
-		<p><button ion-button round (click)="sendVerificationEmail()">{{'verify-email.buttonText' | translate}}</button></p>
+		<p>Your email address has not been verified yet. We require you to validate your email address before we can process your bonus. You should have been sent a verification email at the address you provided. If you can't find it, check your spam folder. You can resend the email using the button below. If you need to change your email address, you can do so in the settings menu, under Account > Email.</p>
+		<p><button ion-button round (click)="sendVerificationEmail()">Resend verification email</button></p>
 	</div>
     <events-list></events-list>
      <ion-fab right bottom>
@@ -75,13 +75,13 @@
         </div>
 
         <h1>
-          {{"home.congratulations" | translate}}
+          Congratulations!!
         </h1>
         <p>
-          {{"home.rewardMessage" | translate}}
+          You have been rewarded with 2000 UR
         </p>
         <p>
-          {{"home.inviteFriendsRewards" | translate}}
+          Invite your friends to increase your wallet
         </p>
         <p>
           <button ion-button round (click)="hideModalAndInviteFriends()">Invite</button>

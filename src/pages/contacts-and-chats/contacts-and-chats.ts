@@ -1,9 +1,10 @@
 import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AuthService } from '../../services/auth';
 import { Config } from '../../config/config';
 import { Component } from '@angular/core';
-import { SocialSharing, Clipboard, Toast } from 'ionic-native';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { Clipboard } from '@ionic-native/clipboard';
+import { Toast } from '@ionic-native/toast';
 import * as log from 'loglevel';
 import { ChatPage } from '../../pages/chat/chat';
 import { Utils } from '../../services/utils';
@@ -21,8 +22,11 @@ export class ContactsAndChatsPage {
   targetPlatform = Config.targetPlatform;
   pageName = 'ContactsAndChatsPage';
 
-  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public translate: TranslateService, public auth: AuthService, public alertCtrl: AlertController,
-    private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public auth: AuthService, public alertCtrl: AlertController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+    private socialSharing: SocialSharing,
+    private clipboard: Clipboard,
+    private toast: Toast) {
     this.goal = navParams.get('goal');
     if (this.targetPlatform === 'web') {
       this.segmentSelected = 'chats';
@@ -54,13 +58,13 @@ export class ContactsAndChatsPage {
   getPageTitle() {
     switch (this.goal) {
       case 'chat':
-        return this.translate.instant('contacts-and-chats.titleChat');
+        return "Chat with";
       case 'send':
-        return this.translate.instant('contacts-and-chats.titleSend');
+        return "Send UR to";
       case 'request':
-        return this.translate.instant('contacts-and-chats.titleRequest');
+        return "Request UR from";
       case 'invite':
-        return this.translate.instant('contacts-and-chats.titleInvite');
+        return "Invite a friend";
     }
   }
 
@@ -78,14 +82,14 @@ export class ContactsAndChatsPage {
       return;
     }
 
-    let message = this.translate.instant('contacts.inviteMessage');
+    let message = "I downloaded the UR money app and got 2,000 units of cryptocurrency for free. To learn more and get yours free too, visit ";
 
-    Clipboard.copy(message).then((data) => {
-      Toast.show(this.translate.instant('contacts.toastMessage'), 'long', 'top').subscribe((toast) => {
-        SocialSharing.shareWithOptions({
+    this.clipboard.copy(message).then((data) => {
+      this.toast.show("Pick an app and type a message. Or you can paste the simple message that we've placed in your clipboard.", 'long', 'top').subscribe((toast) => {
+        this.socialSharing.shareWithOptions({
           message: message, // not supported on some apps (Facebook, Instagram)
           url: Utils.referralLink(self.auth.currentUser.referralCode),
-          chooserTitle: this.translate.instant('contacts.toastTitle') // Android only
+          chooserTitle: "Pick an app" // Android only
         }).then((result) => {
           log.debug('returned from SocialSharing.shareWithOptions');
         }, (error) => {

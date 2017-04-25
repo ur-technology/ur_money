@@ -4,7 +4,6 @@ import { ContactsAndChatsPage } from '../../pages/contacts-and-chats/contacts-an
 import { Component } from '@angular/core';
 import { SendPage } from './../send/send';
 import { AuthService } from '../../services/auth';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Config } from '../../config/config';
 import { InviteLinkPage } from '../../pages/invite-link/invite-link';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
@@ -17,7 +16,7 @@ export class TransactionsPage {
   segmentSelected: any = 'all';
   pageName = 'TransactionsPage';
 
-  constructor(public nav: NavController, public platform: Platform, private auth: AuthService, private alertCtrl: AlertController, private translate: TranslateService,
+  constructor(public nav: NavController, public platform: Platform, private auth: AuthService, private alertCtrl: AlertController,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
   }
 
@@ -44,8 +43,8 @@ export class TransactionsPage {
     if (!this.auth.announcementConfirmed()) {
       this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Bonus is not approved yet', 'invite()');
       let alert = this.alertCtrl.create({
-        subTitle: this.translate.instant('home.noInvitesAllowed'),
-        buttons: [this.translate.instant('dismiss')]
+        subTitle: "Please wait until your bonus is confirmed to invite friends",
+        buttons: ["Dismiss"]
       });
       alert.present();
     } else {

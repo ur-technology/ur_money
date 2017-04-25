@@ -1,7 +1,6 @@
 import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AuthService } from '../../../services/auth';
 import { ProfileSetupPage } from '../profile-setup/profile-setup';
 import { AcuantService } from '../../../services/acuant';
@@ -30,7 +29,6 @@ export class SelfieMatchPage {
     public nav: NavController,
     public navParams: NavParams,
     public loadingController: LoadingController,
-    public translate: TranslateService,
     public auth: AuthService,
     private toastCtrl: ToastController,
     private acuantService: AcuantService,
@@ -76,7 +74,7 @@ export class SelfieMatchPage {
       destinationPage = HomePage;
     }
 
-    let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+    let loadingModal = this.loadingController.create({ content:"Please wait..." });
     loadingModal.present();
 
     this.idVerifier.matchSelfie(this.dataURLtoBlob(this.selfieSource))
@@ -92,11 +90,11 @@ export class SelfieMatchPage {
         loadingModal.dismiss().then(() => {
 
           let confirm = this.alertCtrl.create({
-            title: this.translate.instant('selfie-match.cantMatchTitle'),
-            message: this.translate.instant('selfie-match.cantMatchMessage'),
+            title: "Couldn't match your selfie to your ID",
+            message: "We couldn't process your ID.",
             buttons: [
               {
-                text: this.translate.instant('selfie-match.tryAgain'),
+                text: "Try again",
                 handler: () => {
                 }
               }

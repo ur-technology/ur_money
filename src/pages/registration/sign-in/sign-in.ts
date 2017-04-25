@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { CountryListService } from '../../../services/country-list';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { TermsAndConditionsPage } from '../../terms-and-conditions/terms-and-conditions';
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
@@ -27,7 +26,6 @@ export class SignInPage {
   constructor(
     public nav: NavController,
     private countryListService: CountryListService,
-    private translate: TranslateService,
     public modalCtrl: ModalController,
     public loadingController: LoadingController,
     public auth: AuthService,
@@ -54,7 +52,7 @@ export class SignInPage {
     let phone = Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix);
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked sign In button', `Phone: ${phone} - submit()`);
     let loadingModal = self.loadingController.create({
-      content: self.translate.instant('pleaseWait'),
+      content: "Please wait...",
     });
     let taskState: string;
     loadingModal.present().then(() => {
@@ -62,6 +60,7 @@ export class SignInPage {
         phone
       );
     }).then((newTaskState: string) => {
+      console.log('newTaskState', newTaskState);
       taskState = newTaskState;
       return loadingModal.dismiss();
     }).then(() => {
@@ -80,11 +79,11 @@ export class SignInPage {
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: user not found', `Phone: ${phone} - submit()`);
           trackJs.track('Login failed: user not found');
           let alert = this.alertCtrl.create({
-            message: this.translate.instant('sign-in.userNotFound'),
+            message: "The number that you entered did not match our records. Please double-check and try again.",
             buttons: [
-              { text: this.translate.instant('cancel'), handler: () => { alert.dismiss(); } },
+              { text: "Cancel", handler: () => { alert.dismiss(); } },
               {
-                text: this.translate.instant('sign-in.gotoSignUp'), handler: () => {
+                text: "Sign up instead?", handler: () => {
                   alert.dismiss().then(() => {
                     self.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
                       self.nav.push(SignUpPage);
@@ -99,20 +98,20 @@ export class SignInPage {
 
         case 'request_sign_in_canceled_because_user_disabled':
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error user disabled', `Phone: ${phone} - submit()`);
-          self.toastService.showMessage({ messageKey: 'errors.userDisabled' });
+          self.toastService.showMessage({ message: 'Your user account has been disabled.' });
           break;
 
         default:
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', `Phone: ${phone} - submit()`);
           trackJs.track('Login failed: unexpected problem');
-          self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+          self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
 
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
         self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', `Phone: ${phone} - submit()`);
         trackJs.track('Login failed: unexpected problem');
-        self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+        self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       });
     });
   }

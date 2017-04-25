@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{"intro.welcome" | translate}}</ion-title>
+    <ion-title>Welcome to UR Money</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -8,22 +8,25 @@
     <ion-card-content>
       <img class="slide-image" src="assets/img/ur-logo.png" />
       <br />
-      <p  innerHTML='{{"intro.message1" | translate}}'>
+      <p>
+        <b>Congratulations!</b>
+        We will process your 2,000 UR bonus as soon as you've verified your email address.
       </p>
       <br />
       <p>
-        {{"intro.message2" | translate}}
+        You will be able to receive and send UR to your friends and family when you've received your bonus.
       </p>
       <p *ngIf="configPlatform!='web'">
-        {{"intro.message3" | translate}}
+        Please check your email for a verification link.
       </p>
-      <br />       
-      <p  innerHTML='{{"intro.message4" | translate}}'>
+      <br />
+      <p>
+        <b>Enjoy UR Money!</b>
       </p>
     </ion-card-content>
     <ion-item class="footer-card">
       <button ion-button item-right clear default icon-right (click)="pleaseContinue()">
-         {{"continue" | translate}}
+         Continue
          <ion-icon name="arrow-forward"></ion-icon>
        </button>
     </ion-item>

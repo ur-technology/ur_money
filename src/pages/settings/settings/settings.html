@@ -1,27 +1,27 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{"settings.title" | translate}}</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content class="settings">
   <ion-list>
     <ion-item-divider color="light">{{auth.currentUser?auth.currentUser.firstName:''}} {{auth.currentUser?auth.currentUser.lastName:''}}</ion-item-divider>
     <button ion-item (click)="gotoSettingAccount()">
-      <ion-label>{{'settings.account' | translate}}</ion-label>
+      <ion-label>Account</ion-label>
     </button>
     <button ion-item *ngIf="targetPlatform!='web'" (click)="gotoSettingsNotifications()">
-      <ion-label>{{'settings.notifications' | translate}}</ion-label>
+      <ion-label>Notifications</ion-label>
     </button>
     <button ion-item (click)="signOut()">
-      <ion-label>{{"signOut" | translate}}</ion-label>
+      <ion-label>Sign out</ion-label>
     </button>
-    <ion-item-divider color="light">{{"settings.general" | translate}}</ion-item-divider>
+    <ion-item-divider color="light">General</ion-item-divider>
     <ion-item>
-      <ion-label stacked>{{'settings.URWalletAddress' | translate}}</ion-label>
+      <ion-label stacked>UR address</ion-label>
       <ion-input type="text" disabled="true" value="{{auth.currentUser && auth.currentUser.wallet.address}}"></ion-input>
     </ion-item>
     <button ion-item (click)="gotoAbout()">
-      <ion-label>{{'app.about' | translate}}</ion-label>
+      <ion-label>About UR</ion-label>
     </button>
   </ion-list>
 </ion-content>

@@ -1,5 +1,4 @@
 import { NavController, AlertController } from 'ionic-angular';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { HomePage } from '../../home/home';
 import { Component } from '@angular/core';
 import { Config } from '../../../config/config';
@@ -18,7 +17,6 @@ export class IntroPage {
   constructor(
     public nav: NavController,
     public alertCtrl: AlertController,
-    public translate: TranslateService,
     public contactsService: ContactsService,
     public auth: AuthService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService

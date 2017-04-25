@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { AuthService } from '../../../services/auth';
@@ -25,7 +24,6 @@ export class ChangeEmailPage {
     private toastService: ToastService,
     private userService: UserService,
     private loadingController: LoadingController,
-    private translate: TranslateService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.mainForm = new FormGroup({
@@ -44,7 +42,7 @@ export class ChangeEmailPage {
 
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on submit button', 'submit()');
 
-    let loading = this.loadingController.create({content: this.translate.instant('pleaseWait')});
+    let loading = this.loadingController.create({content: "Please wait..."});
 
     loading
       .present()
@@ -74,20 +72,20 @@ export class ChangeEmailPage {
 
         if (taskState === 'send_verification_email_finished') {
           this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Email changed', 'submit()');
-          this.toastService.showMessage({ messageKey: 'settings.emailUpdated' });
+          this.toastService.showMessage({ message: 'Email updated. Please validate your email' });
           this.navCtrl.pop();
         } else {
           this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Error changing email', 'submit()');
-          this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+          this.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
         }
       }, error => {
         loading
           .dismiss()
           .then(() => {
             if (error === 'email_exists') {
-              this.toastService.showMessage({ messageKey: 'errors.emailNotUnique' });
+              this.toastService.showMessage({ message: 'That email is already registered to another account.' });
             } else {
-              this.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+              this.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
           });
       });

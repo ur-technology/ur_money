@@ -1,5 +1,5 @@
 <ion-content class="contacts">
-  <ion-searchbar  (ionInput)="filterItems($event)" placeholder='{{"search" | translate}}'>
+  <ion-searchbar  (ionInput)="filterItems($event)" placeholder='Search'>
   </ion-searchbar>
   <div *ngIf="showSpinner">
       <ion-row>
@@ -13,7 +13,7 @@
       <ion-avatar item-left> <img src="{{contact.profilePhotoUrl}}"></ion-avatar>
       <h2>{{contact.name}}</h2>
       <p>{{contact.formattedPhone}} <span>{{contact.phoneType}}</span></p>
-      <button ion-button [hidden]="contact.userId" color="secondary" item-right>{{"contacts.invite" | translate}}</button>
+      <button ion-button [hidden]="contact.userId" color="secondary" item-right>Invite</button>
       <button ion-button [hidden]="!contact.userId" color="primary" item-right>{{memberActionLabel}}</button>
     </ion-item>
 

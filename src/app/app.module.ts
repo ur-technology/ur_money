@@ -55,8 +55,7 @@ import { EncryptionService } from '../services/encryption';
 import { EventsService } from '../services/events.service';
 import { ToastService } from '../services/toast';
 import { AcuantService } from '../services/acuant';
-import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
-import { Http, HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
@@ -65,7 +64,15 @@ import { Config } from '../config/config';
 import { SponsorWaitPage } from '../pages/sponsor-wait/sponsor-wait';
 import { UserService } from '../services/user.service';
 import { GoogleAnalyticsEventsService } from '../services/google-analytics-events.service';
-
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { Clipboard } from '@ionic-native/clipboard';
+import { Toast } from '@ionic-native/toast';
+import { Keyboard } from '@ionic-native/keyboard';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { Contacts } from '@ionic-native/contacts';
 
 export const firebaseConfig = {
   apiKey: Config.firebaseApiKey,
@@ -77,10 +84,6 @@ export const firebaseConfig = {
 const myFirebaseAuthConfig = {
   provider: AuthProviders.Custom,
   method: AuthMethods.CustomToken
-}
-
-export function translateLoaderFactory(http: any) {
-  return new TranslateStaticLoader(http, 'assets/i18n', '.json');
 }
 
 @NgModule({
@@ -139,11 +142,6 @@ export function translateLoaderFactory(http: any) {
     FormsModule,
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
-    TranslateModule.forRoot({
-      provide: TranslateLoader,
-      useFactory: translateLoaderFactory,
-      deps: [Http]
-    }),
     IonicModule.forRoot(UrMoney, {
       platforms: {
         ios: {
@@ -204,6 +202,15 @@ export function translateLoaderFactory(http: any) {
     UserService,
     GoogleAnalyticsEventsService,
     UrFormat,
+    SplashScreen,
+    StatusBar,
+    SocialSharing,
+    Clipboard,
+    Toast,
+    LocalNotifications,
+    Keyboard,
+    NativeStorage,
+    Contacts,
     { provide: ErrorHandler, useClass: TrackJsErrorHandler },
   ]
 })

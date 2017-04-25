@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AuthService } from '../../services/auth';
 import { HomePage } from '../home/home';
-import { TranslateService } from 'ng2-translate';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
 @Component({
@@ -13,9 +12,9 @@ export class SponsorWaitPage {
   pageName = 'SponsorWaitPage';
   message: string;
 
-  constructor(public navCtrl: NavController, public auth: AuthService, public translate: TranslateService,
+  constructor(public navCtrl: NavController, public auth: AuthService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
-    this.message = this.translate.instant('identity-verification-sponsor-wait.slideMessage', { value: this.auth.currentUser.sponsor.name });
+    this.message = `We are currently waiting for <b>${this.auth.currentUser.sponsor.name}</b> to complete their account before you can get your 2000 UR.</br>Your <b>bonus</b> will be generated soon.`;
   }
 
   ionViewDidLoad() {

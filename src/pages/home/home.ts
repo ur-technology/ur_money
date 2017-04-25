@@ -10,7 +10,6 @@ import { Config } from '../../config/config';
 import { AuthService } from '../../services/auth';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ToastService } from '../../services/toast';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Utils } from '../../services/utils';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
@@ -62,7 +61,6 @@ export class HomePage {
     public auth: AuthService,
     public chartData: ChartDataService,
     public toast: ToastService,
-    public translate: TranslateService,
     private alertCtrl: AlertController,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
@@ -94,7 +92,7 @@ export class HomePage {
 
   sendVerificationEmail() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on Send verification email button', 'sendVerificationEmail()');
-    let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+    let loadingModal = this.loadingController.create({ content: "Please wait..." });
 
     loadingModal
       .present()
@@ -111,19 +109,19 @@ export class HomePage {
             switch (taskState) {
               case 'send_verification_email_finished':
                 this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_finished', 'sendVerificationEmail()');
-                this.toast.showMessage({ messageKey: 'verify-email.verifyEmailSent' });
+                this.toast.showMessage({ message: "A verification email has been sent to your email address. Please read it and follow the instructions. If you don't see the message, please check your spam folder." });
                 break;
               case 'send_verification_email_canceled_because_user_not_found':
                 this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_not_found', 'sendVerificationEmail()');
-                this.toast.showMessage({ messageKey: 'errors.emailNotFound' });
+                this.toast.showMessage({ message: 'The email that you entered did not match our records. Please double-check and try again.' });
                 break;
               case 'send_verification_email_canceled_because_user_disabled':
                 this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_disabled', 'sendVerificationEmail()');
-                this.toast.showMessage({ messageKey: 'errors.userDisabled' });
+                this.toast.showMessage({ message: 'Your user account has been disabled.' });
                 break;
               default:
                 this.googleAnalyticsEventsService .emitEvent(this.pageName, 'no taskState', 'sendVerificationEmail()');
-                this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+                this.toast.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
           });
       }, (error) => {
@@ -131,7 +129,7 @@ export class HomePage {
         loadingModal
           .dismiss()
           .then(() => {
-            this.toast.showMessage({ messageKey: 'errors.unexpectedProblem' });
+            this.toast.showMessage({ message: 'There was an unexpected problem. Please try again later' });
           });
       });
   }
@@ -142,12 +140,11 @@ export class HomePage {
       this.balanceTitle = null;
     } else {
       this.balanceValue = new Decimal(2000);
-      this.balanceTitle = this.translate.instant(
+      this.balanceTitle =
         {
-          'waiting-for-sponsor': 'home.waitingForSponsor',
-          'disabled': 'home.userDisabled'
-        }[this.auth.getUserStatus()] || 'home.bonusGenerating'
-      );
+          'waiting-for-sponsor': "Waiting for sponsor to set up account",
+          'disabled': "User disabled"
+        }[this.auth.getUserStatus()] || "Bonus generation in progress";
     }
     if (this.auth.announcementConfirmed() && this.chartData.pointsLoaded) {
       let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
@@ -245,8 +242,8 @@ export class HomePage {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'clicked on invite button on home', 'invite()');
     if (!this.auth.announcementConfirmed()) {
       let alert = this.alertCtrl.create({
-        subTitle: this.translate.instant('home.noInvitesAllowed'),
-        buttons: [this.translate.instant('dismiss')]
+        subTitle: "Please wait until your bonus is confirmed to invite friends",
+        buttons: ["Dismiss"]
       });
       alert.present();
     } else {

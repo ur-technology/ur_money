@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ToastService } from '../../../services/toast';
 import { AuthService } from '../../../services/auth';
 import { SignInPage } from '../sign-in/sign-in';
@@ -17,7 +16,7 @@ export class ResetPasswordPage {
   phone: string;
   pageName = 'ResetPasswordPage';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private toastService: ToastService, private translate: TranslateService, private loadingController: LoadingController,
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private toastService: ToastService, private loadingController: LoadingController,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     this.phone = this.navParams.get('phone');
     this.mainForm = new FormGroup({
@@ -34,7 +33,7 @@ export class ResetPasswordPage {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit button', 'submit()');
     let self = this;
     let taskResult;
-    let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
+    let loadingModal = self.loadingController.create({ content: "Please wait..." });
     loadingModal.present().then(() => {
       return this.auth.generateHashedPassword(self.mainForm.value.password);
     }).then((password) => {
@@ -47,18 +46,18 @@ export class ResetPasswordPage {
       switch (taskResult) {
         case 'request_change_temp_password_succeeded':
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Change password succeeded', 'submit()');
-          self.toastService.showMessage({ messageKey: 'sign-in.passwordChanged' });
+          self.toastService.showMessage({ message: "Your password has been changed. For your security, please sign in with your new password." });
           self.navCtrl.setRoot(SignInPage);
           break;
 
         default:
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'unexpected Problem', 'submit()');
-          self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+          self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       }
     }, (error) => {
       self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Catch. unexpected Problem', 'submit()');
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+        self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       });
     });
   }

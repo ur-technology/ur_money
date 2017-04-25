@@ -3,7 +3,6 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { CustomValidator} from '../../../validators/custom';
 import { HomePage} from '../../home/home';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ToastService} from '../../../services/toast';
 import { AuthService } from '../../../services/auth';
 import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
@@ -16,7 +15,7 @@ export class ChangePasswordPage {
   mainForm: FormGroup;
   pageName = 'ChangePasswordPage';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toastService: ToastService, private translate: TranslateService, private loadingController: LoadingController, private auth: AuthService,
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toastService: ToastService, private loadingController: LoadingController, private auth: AuthService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     this.mainForm = new FormGroup({
       currentPassword: new FormControl('', [Validators.required]),
@@ -33,7 +32,7 @@ export class ChangePasswordPage {
     let self = this;
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit button', 'submit()');
     let resultTask: string;
-    let loading = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+    let loading = this.loadingController.create({ content: "Please wait..." });
     loading.present().then(() => {
       return self.auth.generateHashedPassword(self.mainForm.value.currentPassword);
     }).then((hashedPassword) => {
@@ -44,12 +43,12 @@ export class ChangePasswordPage {
       switch (resultTask) {
         case 'user_check_password_canceled_because_wrong_password':
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'user_check_password_canceled_because_wrong_password', 'submit()');
-          throw { errorMessageKey: 'settings.passwordIncorrect' };
+          throw { errorMessage: 'The current password that you entered does not match our records.' };
         case 'user_check_password_succeded':
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'user_check_password_succeded', 'submit()');
           return Promise.resolve();
         default:
-          throw { errorMessageKey: 'settings.unexpectedProblemChangingPassword' };
+          throw { errorMessage: 'There has been a problem while changing the password' };
       }
     }).then(() => {
       return self.auth.generateHashedPassword(self.mainForm.value.password);
@@ -62,17 +61,17 @@ export class ChangePasswordPage {
       switch (resultTask) {
         case 'user_password_change_succeeded':
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Change password succeeded', 'submit()');
-          self.toastService.showMessage({ messageKey: 'settings.passwordChanged' });
+          self.toastService.showMessage({ message: 'Password changed' });
           this.navCtrl.setRoot(HomePage);
           break;
         default:
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'unexpected Problem Changing Password', 'submit()');
-          self.toastService.showMessage({ messageKey: 'settings.unexpectedProblemChangingPassword' });
+          self.toastService.showMessage({ message: 'There has been a problem while changing the password' });
       }
     }).catch(error => {
       self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Catch. Unexpected Problem Changing Password', 'submit()');
       loading.dismiss().then(() => {
-        self.toastService.showMessage({ messageKey: error.errorMessageKey });
+        self.toastService.showMessage({ message: error.errorMessage });
       });
     });
   }

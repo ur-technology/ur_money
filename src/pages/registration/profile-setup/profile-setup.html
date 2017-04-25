@@ -1,30 +1,30 @@
 <ion-header>
 	<ion-navbar>
-		<ion-title>{{"profile-setup.title" | translate}}</ion-title>
+		<ion-title>Setting up account</ion-title>
 	</ion-navbar>
 </ion-header>
 <ion-content>
 	<form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && submit()">
 		<ion-card>
 			<ion-card-header>
-				<ion-label text-center color="primary">{{"profile-setup.slideTitle" | translate}}</ion-label>
+				<ion-label text-center color="primary">Step 3 of 4 - Profile Info</ion-label>
 			</ion-card-header>
 			<ion-card-content>
 				<ion-list>
 					<ion-item>
-						<ion-label stacked>{{'profile-setup.name' | translate}}</ion-label>
+						<ion-label stacked>Name as it will appear to others</ion-label>
 						<ion-input type="text" formControlName="name" clearInput="true"></ion-input>
 						<button ion-button outline round type="text" item-right class="buttonInfo" (click)="showRealNameExplanation($event)"><ion-icon name="help"></ion-icon></button>
 					</ion-item>
 					<ion-item>
-						<ion-label stacked>{{'profile-setup.email' | translate}}</ion-label>
+						<ion-label stacked>Email address</ion-label>
 						<ion-input type="email" formControlName="email" clearInput="true"></ion-input>
 					</ion-item>
 				</ion-list>
 			</ion-card-content>
 			<ion-item class="footer-card">
 				<button type="submit" ion-button item-right clear default [disabled]="!mainForm.valid" icon-right>
-					{{"continue" | translate}}
+					Continue
 					<ion-icon name="arrow-forward"></ion-icon>
 				</button>
 			</ion-item>

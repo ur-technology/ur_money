@@ -3,7 +3,6 @@ import * as log from 'loglevel';
 
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { AuthService } from '../../../services/auth';
@@ -33,7 +32,6 @@ export class SettingsAccountPage {
     public auth: AuthService,
     private countryListService: CountryListService,
     public toastCtrl: ToastController,
-    public translate: TranslateService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.countries = this.countryListService.getCountryData();
@@ -73,7 +71,7 @@ export class SettingsAccountPage {
     self.auth.currentUser
       .update(_.omitBy(profile, _.isNil))
       .then((response) => {
-        let toast = this.toastCtrl.create({ message: this.translate.instant('settings.profileUpdated'), duration: 3000, position: 'bottom' });
+        let toast = this.toastCtrl.create({ message:"Settings updated", duration: 3000, position: 'bottom' });
         toast.present();
         this.nav.setRoot(HomePage);
       })
