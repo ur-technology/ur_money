@@ -15,8 +15,10 @@ export class ReferralsPage {
   referrals = [];
   filteredReferrals = [];
   showSpinner = false;
+  userToLookForReferrals: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService, private auth: AuthService, private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+    this.userToLookForReferrals = this.navParams.get('userToLookForReferrals');
   }
 
   ionViewDidLoad() {
@@ -24,17 +26,30 @@ export class ReferralsPage {
     this.loadReferrals();
   }
 
+  getPageTitle(): string {
+    if (!this.userToLookForReferrals || (this.userToLookForReferrals === this.auth.currentUser.key)) {
+      return `My referrals`;
+    } else {
+      return `${this.navParams.get('userToLookName')}'s referrals`;
+    }
+  }
+
   loadReferrals() {
     let self = this;
     self.showSpinner = true;
-    self.userService.getReferrals(this.auth.currentUser.key).then(referrals => {
+    self.userService.getReferrals(this.auth.currentUser.key, this.userToLookForReferrals ? this.userToLookForReferrals : this.auth.currentUser.key).then(referrals => {
       self.referrals = _.values(referrals);
       self.filteredReferrals = _.values(referrals);
       self.showSpinner = false;
-    })
+    });
   }
 
-  chatWith(contact) {
+  openSelectedUserReferrals(referral) {
+    this.navCtrl.push(ReferralsPage, { userToLookForReferrals: referral.userId, userToLookName: referral.name })
+  }
+
+  chatWith(contact, event) {
+    event.stopPropagation();
     let self = this;
     self.navCtrl.push(ChatPage, { contact: contact });
   }

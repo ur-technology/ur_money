@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Referrals</ion-title>
+    <ion-title>{{getPageTitle()}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -20,10 +20,10 @@
     <ion-item class="no-referrals" text-wrap detail-none *ngIf="filteredReferrals?.length === 0 && !showSpinner" (click)="inviteFriend()">
       <p>No referrals</p>
     </ion-item>
-    <ion-item detail-none *ngFor="let referral of filteredReferrals">
+    <ion-item detail-none *ngFor="let referral of filteredReferrals" (click)="openSelectedUserReferrals(referral)">
       <ion-avatar item-left> <img src='{{referral.profilePhotoUrl}}'></ion-avatar>
       <h2>{{referral.name}}</h2>
-      <button item-right ion-button icon-left outline round  (click)="chatWith(referral)"><ion-icon name="chatboxes"></ion-icon>Chat
+      <button item-right ion-button icon-left outline round  (click)="chatWith(referral, $event)"><ion-icon name="chatboxes"></ion-icon>Chat
       </button>
     </ion-item>
   </ion-list>

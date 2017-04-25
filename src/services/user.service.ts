@@ -51,14 +51,15 @@ export class UserService {
     });
   }
 
-  getReferrals(userId: string){
+  getReferrals(myUserId: string, userIdToLook: string){
     return new Promise((resolve, reject)=>{
       const taskRef = firebase
       .database()
       .ref('userQueue/tasks')
       .push({
         _state: 'user_referrals_requested',
-        userId
+        userId: myUserId,
+        userIdToLook: userIdToLook
       });
 
       const resultRef = taskRef.child('result');
