@@ -730,6 +730,11 @@ export class CountryListService {
         'countryCode': 'MA'
       },
       {
+        'telephoneCountryCode': '+258',
+        'name': 'Mozambique',
+        'countryCode': 'MZ'
+      },
+      {
         'telephoneCountryCode': '+95',
         'name': 'Myanmar',
         'countryCode': 'MM'
