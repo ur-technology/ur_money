@@ -101,6 +101,7 @@ export class UsersPage {
         user.fraudSuspectedTag = user.fraudSuspected ? 'Fraud-Suspected' : '';
         user.duplicateTag = user.duplicate ? 'Duplicate' : '';
         user.signUpBonusApprovedTag = user.signUpBonusApproved ? 'Bonus-Approved' : '';
+        user.sponsorStatus = user.sponsor.announcementTransactionConfirmed ? 'Approved' : 'Not approved';
       });
       users = _.sortBy(users, (u) => { return 1000000 - (u.downlineSize || 0); });
       this.paginatedUsers = _.chunk(users, this.PAGE_SIZE);
@@ -129,6 +130,20 @@ export class UsersPage {
 
   goToUserPage(user: any) {
     this.nav.push(UserPage, { user: user });
+  }
+
+  goToSponsorPage(user: any) {
+
+    firebase.database().ref('/users/' + user.sponsor.userId).once('value').then((result) => {
+      let sponsor: any = result.val();
+      sponsor.userId = user.sponsor.userId;
+      sponsor.moveRequestedTag = sponsor.moveRequested ? 'Move-Requested' : '';
+      sponsor.disabledTag = sponsor.disabled ? 'Disabled' : '';
+      sponsor.fraudSuspectedTag = sponsor.fraudSuspected ? 'Fraud-Suspected' : '';
+      sponsor.duplicateTag = sponsor.duplicate ? 'Duplicate' : '';
+      sponsor.signUpBonusApprovedTag = sponsor.signUpBonusApproved ? 'Bonus-Approved' : '';
+      this.goToUserPage(sponsor);
+    });
   }
 
   approveSignUpBonus(user: any) {
