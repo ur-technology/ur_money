@@ -1,7 +1,8 @@
 page-referrals {
-  ion-spinner {
+  ion-spinner * {
     width: 38px;
     height: 38px;
+    stroke: color($colors, primary) !important;
   }
 
   .no-referrals {

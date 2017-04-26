@@ -14,9 +14,13 @@ import { CountryListService } from '../../services/country-list';
 export class ReferralsPage {
   pageName = 'ReferralsPage';
   referrals = [];
-  filteredReferrals = [];
   showSpinner = false;
   userToLookForReferrals: string;
+  searchBy: string = 'name';
+  showOptions: boolean = false;
+  endOfResults: boolean = false;
+  startAt = 0;
+  numOfItemsToReturn = 550;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService, private auth: AuthService, private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private countryListService: CountryListService) {
     this.userToLookForReferrals = this.navParams.get('userToLookForReferrals');
@@ -25,6 +29,11 @@ export class ReferralsPage {
   ionViewDidLoad() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
     this.loadReferrals();
+  }
+
+  onSearchBarFocus() {
+    this.showOptions = true;
+    return this.showOptions;
   }
 
   getPageTitle(): string {
@@ -38,9 +47,9 @@ export class ReferralsPage {
   loadReferrals() {
     let self = this;
     self.showSpinner = true;
-    self.userService.getReferrals(this.auth.currentUser.key, this.userToLookForReferrals ? this.userToLookForReferrals : this.auth.currentUser.key).then(referrals => {
-      self.referrals = _.values(referrals);
-      self.filteredReferrals = _.values(referrals);
+    self.userService.getReferrals(this.auth.currentUser.key, this.userToLookForReferrals ? this.userToLookForReferrals : this.auth.currentUser.key, this.startAt, this.numOfItemsToReturn).then((result: any) => {
+      self.referrals = self.referrals.concat(_.values(result.referrals));
+      self.endOfResults = result.endOfResults;
       self.showSpinner = false;
     });
   }
@@ -56,19 +65,20 @@ export class ReferralsPage {
   }
 
   filterItems(ev) {
-    let val = ev.target.value;
-    this.filteredReferrals = this.referrals;
-    if (val && val.trim() !== '') {
-      this.filteredReferrals = _.filter(this.filteredReferrals, contact => {
-        if (contact.name) {
-          return contact.name.toLowerCase().indexOf(val.toLowerCase()) !== -1;
-        }
-      });
-    }
+    // let val = ev.target.value;
+
   }
 
   country(code) {
-    return this.countryListService.findCountryByCode(code);
+    let country = this.countryListService.findCountryByCode(code);
+    if (country !== 'None') {
+      return country;
+    }
+  }
+
+  loadMore() {
+    this.startAt += this.numOfItemsToReturn;
+    this.loadReferrals();
   }
 
 }
