@@ -1,23 +1,23 @@
 <ion-header>
 	<ion-navbar>
-		<ion-title>{{"authentication-code.title" | translate}}</ion-title>
+		<ion-title>Verification code</ion-title>
 	</ion-navbar>
 </ion-header>
 <ion-content class="phone-number phone-number-authentication">
 	<div class="authentication-code-container" text-center>
-	<h3>{{"authentication-code.heading1" | translate}}</h3>
-	<p>{{"authentication-code.heading2" | translate}}</p>
-		<form [formGroup]="mainForm" > 
+	<h3>We have sent you an SMS with a verification code.</h3>
+	<p>To complete your phone number verification, please enter the 6-digit verification code.</p>
+		<form [formGroup]="mainForm" >
 			<div text-center>
 				<ion-input formControlName="code" placeholder="000000" type="tel" maxlength=6 text-center autofocus></ion-input>
 			</div>
 			<div text-center>
-				<button ion-button round (click)="checkCode()" [disabled]="!mainForm.valid">{{'done' | translate}}</button>
+				<button ion-button round (click)="checkCode()" [disabled]="!mainForm.valid">Done</button>
 			</div>
 		</form>
 		<div>
 			<button ion-button small clear
-	   (click)="resendCode()">{{"authentication-code.resendCode" | translate}}</button>
+	   (click)="resendCode()">Didn't receive verification code? Send again</button>
 		</div>
 	</div>
 

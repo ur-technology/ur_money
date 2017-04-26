@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ToastService } from '../../../services/toast';
 import { AuthService } from '../../../services/auth';
 import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
@@ -20,7 +19,6 @@ export class LostPasswordPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private loadingController: LoadingController,
-    private translate: TranslateService,
     private toastService: ToastService,
     private auth: AuthService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
@@ -36,7 +34,7 @@ export class LostPasswordPage {
   submit() {
     let self = this;
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Click on submit', 'submit()');
-    let loadingModal = self.loadingController.create({ content: self.translate.instant('pleaseWait') });
+    let loadingModal = self.loadingController.create({ content: "Please wait..." });
 
     loadingModal
       .present()
@@ -50,27 +48,27 @@ export class LostPasswordPage {
             switch (taskState) {
               case 'send_recovery_email_finished':
                 self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Go to ResetPasswordWithCodePage', 'submit()');
-                self.toastService.showMessage({ messageKey: 'sign-in.sentRecoveryEmail' });
+                self.toastService.showMessage({ message: "A recovery email has been sent to the email address you provided. Please follow the instructions" });
                 break;
 
               case 'send_recovery_email_canceled_because_user_not_found':
                 self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. Email not found', 'submit()');
-                self.toastService.showMessage({ messageKey: 'errors.emailNotFound' });
+                self.toastService.showMessage({ message: 'The email that you entered did not match our records. Please double-check and try again.' });
                 break;
 
               case 'send_recovery_email_canceled_because_user_disabled':
                 self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. User disabled', 'submit()');
-                self.toastService.showMessage({ messageKey: 'errors.userDisabled' });
+                self.toastService.showMessage({ message: 'Your user account has been disabled.' });
                 break;
 
               case 'send_recovery_email_canceled_because_email_not_verified':
                 self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. email not verified and wanted to change password', 'submit()');
-                self.toastService.showMessage({ messageKey: 'errors.emailNotVerified' });
+                self.toastService.showMessage({ message: 'Your email is not verified. Please contact support@ur.technology.' });
                 break;
 
               default:
                 self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. unexpected Problem', 'submit()');
-                self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+                self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
           });
       }, (error) => {
@@ -78,7 +76,7 @@ export class LostPasswordPage {
         loadingModal
           .dismiss()
           .then(() => {
-            self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+            self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
           });
       });
   }

@@ -6,7 +6,7 @@ import { ViewController } from 'ionic-angular';
     <ion-list>
     <ion-row>
       <ion-col>
-        <button ion-item (click)="blockUser()">{{"chat.blockUser" | translate}}</button>
+        <button ion-item (click)="blockUser()">Block user</button>
       </ion-col>
     </ion-row>
     </ion-list>

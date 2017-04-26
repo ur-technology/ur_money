@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{"identity-verification-sponsor-wait.title" | translate}}</ion-title>
+        <ion-title>Waiting sponsor to complete account</ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content>
@@ -8,7 +8,9 @@
     <ion-card-content text-justify>
       <img src="assets/img/ur-logo.png"
         class="slide-image" />
-      <h2 class="slide-title" innerHTML='{{"identity-verification-sponsor-wait.slideTitle" | translate}}'></h2><br />
+      <h2 class="slide-title">
+        <b>Waiting for sponsor to complete profile setup</b>
+      </h2><br />
       <p innerHTML='{{message}}'></p>
     </ion-card-content>
     <ion-item class="footer-card">
@@ -16,7 +18,7 @@
         item-right
         clear icon-right
         (click)="goToHome()">
-        {{"continue" | translate}}
+        Continue
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
     </ion-item>

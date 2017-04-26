@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { AuthService } from '../../../services/auth';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Config } from '../../../config/config';
 import {AboutPage} from '../../about/about';
 import {SettingsAccountPage} from '../settings-account/settings-account';
@@ -19,7 +18,6 @@ export class SettingsPage {
     public nav: NavController,
     public auth: AuthService,
     public alertCtrl: AlertController,
-    public translate: TranslateService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
 
@@ -34,12 +32,12 @@ export class SettingsPage {
   signOut() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on sign out button', 'signOut()');
     let alert = this.alertCtrl.create({
-      title: this.translate.instant('signOut') + '?',
+      title: "Sign out?",
       buttons: [
-        this.translate.instant('cancel')]
+        "Cancel"]
     });
     alert.addButton({
-      text: this.translate.instant('ok'),
+      text: "Ok",
       handler: () => {
         this.auth.angularFire.auth.logout();
       }

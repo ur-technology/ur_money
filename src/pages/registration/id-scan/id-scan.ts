@@ -1,7 +1,6 @@
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AuthService } from '../../../services/auth';
 import { CustomValidator } from '../../../validators/custom';
 import { SelfieMatchPage } from '../selfie-match/selfie-match';
@@ -38,7 +37,6 @@ export class IdScanPage {
   constructor(
     public nav: NavController,
     public loadingController: LoadingController,
-    public translate: TranslateService,
     public auth: AuthService,
     private acuantService: AcuantService,
     public alertCtrl: AlertController,
@@ -78,7 +76,7 @@ export class IdScanPage {
   private fillIdTypesArray() {
 
     this.idTypes = [
-      { id: NATIONAL_ID, name: this.translate.instant('id-scan.nationalId') },
+      { id: NATIONAL_ID, name: "Driver's license or national ID card" },
     ];
 
     this.idType = NATIONAL_ID;
@@ -122,7 +120,7 @@ export class IdScanPage {
 
   submit() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit id verification', 'submit()');
-    let loadingModal = this.loadingController.create({ content: this.translate.instant('pleaseWait') });
+    let loadingModal = this.loadingController.create({ content: "Please wait..." });
     loadingModal.present();
 
     this.verifyID()
@@ -140,16 +138,16 @@ export class IdScanPage {
         trackJs.track('ID scan failed: ' + error);
         loadingModal.dismiss().then(() => {
           this.alertCtrl.create({
-            title: this.translate.instant('id-scan.cantMatchTitle'),
-            message: this.translate.instant('id-scan.cantMatchMessage'),
+            title: "Couldn't recognise your ID",
+            message: "We couldn't recognise your ID. You can try again, or let someone from customer support verify it manually.",
             buttons: [
               {
-                text: this.translate.instant('id-scan.tryAgain'),
+                text: "Try again",
                 handler: () => {
                 }
               },
               {
-                text: this.translate.instant('id-scan.letAHumanDoIt'),
+                text: "Let a human do it",
                 handler: () => {
                   this.nav.setRoot(SelfieMatchPage);
                 }

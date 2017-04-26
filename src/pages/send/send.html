@@ -1,52 +1,52 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{"send.title" | translate}}</ion-title>
+    <ion-title>Send UR</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
 	<div class="not-approved-yet" *ngIf="!userVerified">
-		{{"send.notApprovedYet" | translate}}
+		Your account has not been verified yet, so you can't send UR.
 	</div>
   <ion-grid class="gridSend">
     <ion-row class="rowBalance">
-      <ion-col class="colLabel">{{"send.availableBalance" | translate}}
+      <ion-col class="colLabel">Available balance
         <span class="colValue">{{availableBalanceUR | urFormat}} UR</span>
       </ion-col>
     </ion-row>
     <ion-row class="rowBalance">
-      <ion-col class="colLabel">{{"send.estimatedFee" | translate}}
+      <ion-col class="colLabel">Estimated fee
         <span class="colValue"> {{chartData.estimatedFeeUR | urFormat}} UR</span>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col class="colLabel">{{"send.maxAmount" | translate}}
+      <ion-col class="colLabel">Max amount
         <span class="colValue">{{maxAmountUR | urFormat}} UR</span>
       </ion-col>
     </ion-row>
   </ion-grid>
   <form novalidate class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && sendUR()">
     <ion-item>
-      <ion-label stacked>{{"send.sendTo" | translate}}</ion-label>
+      <ion-label stacked>Send to</ion-label>
       <ion-input placeholder="{{placeholderSentTo}}" *ngIf="!contact" (focus)="chooseContact()" formControlName="addressWallet"></ion-input>
       <ion-input *ngIf="contact" (focus)="chooseContact()" formControlName="contact"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>{{'send.enterAmount' | translate}}</ion-label>
-      <ion-input placeholder="{{'send.placeholderAmount' | translate}}" formControlName="amount" type="number"></ion-input>
+      <ion-label stacked>Amount to send</ion-label>
+      <ion-input placeholder="Enter amount" formControlName="amount" type="number"></ion-input>
       <ion-note item-right> UR </ion-note>
     </ion-item>
     <ion-item>
-      <ion-label stacked>{{'send.secretPhrase' | translate}}</ion-label>
-      <ion-input placeholder="{{'send.placeholderPhrase' | translate}}" formControlName="secretPhrase" type="password"></ion-input>
+      <ion-label stacked>Secret phrase</ion-label>
+      <ion-input placeholder="Enter your secret phrase" formControlName="secretPhrase" type="password"></ion-input>
     </ion-item>
     <br />
-    <div class="validatorError" *ngIf="incorrectToField()">{{"send.incorrectAddress" | translate}}</div>
-    <div class="validatorError" *ngIf="missingAmount()">{{"send.amountRequired" | translate}}</div>
-    <div class="validatorError" *ngIf="numberOutOfRange()">{{"send.numberOutOfRange" | translate}}</div>
-    <div class="validatorError" *ngIf="missingSecretPhrase()">{{"send.secretPhraseRequired" | translate}}</div>
-    <div class="validatorError" *ngIf="incorrectSecretPhrase()">{{"send.incorrectSecretPhrase" | translate}}</div>
+    <div class="validatorError" *ngIf="incorrectToField()">UR address is invalid</div>
+    <div class="validatorError" *ngIf="missingAmount()">Amount is required</div>
+    <div class="validatorError" *ngIf="numberOutOfRange()">Amount must be between 0.000000000000000001 and max amount.</div>
+    <div class="validatorError" *ngIf="missingSecretPhrase()">Secret phrase is required</div>
+    <div class="validatorError" *ngIf="incorrectSecretPhrase()">The secret phrase you entered was not correct.</div>
     <div style="text-align:center">
-      <button ion-button round class="send-requestbtn" type="submit" [disabled]="!mainForm.valid || sendInProgress || !userVerified">{{"send.send" | translate}}</button>
+      <button ion-button round class="send-requestbtn" type="submit" [disabled]="!mainForm.valid || sendInProgress || !userVerified">Send</button>
     </div>
 
   </form>

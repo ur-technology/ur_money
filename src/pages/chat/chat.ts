@@ -6,9 +6,8 @@ import * as _ from 'lodash';
 import * as firebase from 'firebase';
 import * as log from 'loglevel';
 import { AuthService } from '../../services/auth';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { PopoverChatPage } from './popover-chat';
-import { Keyboard } from 'ionic-native';
+import { Keyboard } from '@ionic-native/keyboard';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
 declare var jQuery: any;
@@ -29,14 +28,14 @@ export class ChatPage {
   @ViewChild(Content) content: Content;
   pageName = 'ChatPage';
 
-  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public translate: TranslateService, public alertCtrl: AlertController, public popoverCtrl: PopoverController,
-    private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public alertCtrl: AlertController, public popoverCtrl: PopoverController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private keyboard: Keyboard) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
     this.chatId = this.navParams.get('chatId'); // TODO: maybe include this field in chatSummary
     if (this.platform.is('android')) {
-      Keyboard.onKeyboardShow().subscribe(e => this.onKeyboardShow(e));
+      this.keyboard.onKeyboardShow().subscribe(e => this.onKeyboardShow(e));
     }
   }
 
@@ -146,14 +145,14 @@ export class ChatPage {
   alertBlockedContact(isFirstMessageInChat) {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Show alert of blocked user', 'alertBlockedContact()');
     let alert = this.alertCtrl.create({
-      message: this.translate.instant('chat.unblockMessage', { value: this.displayUser().name }),
+      message: `Unblock ${this.displayUser().name} to send a message.`,
       buttons: [
         {
-          text: this.translate.instant('cancel'),
+          text: 'Cancel',
           role: 'cancel'
         },
         {
-          text: this.translate.instant('chat.unblock'),
+          text: "Unblock",
           handler: () => {
             alert.dismiss().then(() => {
               this.sendMessage(isFirstMessageInChat);
@@ -218,7 +217,7 @@ export class ChatPage {
     let messageSummary = this.messageText.length > 50 ? `${this.messageText.substring(0, 50)}...` : this.messageText;
     eventRef.set({
       createdAt: firebase.database.ServerValue.TIMESTAMP,
-      messageText: `${this.translate.instant('you')}: ${messageSummary}`,
+      messageText: `You: ${messageSummary}`,
       notificationProcessed: 'true',
       profilePhotoUrl: this.chatSummary.users[this.chatSummary.displayUserId].profilePhotoUrl,
       sourceId: this.chatId,
@@ -278,14 +277,14 @@ export class ChatPage {
   blockContact() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on Block contact button', 'blockContact()');
     let alert = this.alertCtrl.create({
-      message: this.translate.instant('chat.blockMessage', { value: this.displayUser().name }),
+      message:`Block ${this.displayUser().name}? Blocked contacts will no longer be able to send you messages.`,
       buttons: [
         {
-          text: this.translate.instant('cancel'),
+          text: 'Cancel',
           role: 'cancel'
         },
         {
-          text: this.translate.instant('ok'),
+          text: 'Ok',
           handler: () => {
             alert.dismiss().then(() => {
               if (this.chatSummaryUnsaved()) {

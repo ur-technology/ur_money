@@ -1,9 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{"settings.account" | translate}}</ion-title>
+    <ion-title>Account</ion-title>
     <ion-buttons end>
       <button ion-button [disabled]="!mainForm.valid" (click)="submit()">
-            {{"save" | translate}}
+            Save
         </button>
     </ion-buttons>
   </ion-navbar>
@@ -12,33 +12,33 @@
   <form [formGroup]="mainForm">
     <ion-list>
       <ion-item>
-        <ion-label stacked>{{'settings.firstName' | translate}}</ion-label>
+        <ion-label stacked>First name</ion-label>
         <ion-input type="text" formControlName="firstName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'settings.middleName' | translate}}</ion-label>
+        <ion-label stacked>Middle name (optional)</ion-label>
         <ion-input type="text" formControlName="middleName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'settings.lastName' | translate}}</ion-label>
+        <ion-label stacked>Last name</ion-label>
         <ion-input type="text" formControlName="lastName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'settings.name' | translate}}</ion-label>
+        <ion-label stacked>Name as it will appear to others</ion-label>
         <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{'settings.country' | translate}}</ion-label>
+        <ion-label stacked>Country</ion-label>
         <ion-select formControlName="countryCode">
           <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
         </ion-select>
       </ion-item>
       <button ion-item (click)="changeEmail()">
-        <h3 ion-text class="labelStacked" color="primary">{{'settings.email' | translate}}</h3>
+        <h3 ion-text class="labelStacked" color="primary">Email</h3>
         <p>{{auth.currentUser.email}}</p>
       </button>
       <button ion-item (click)="changePassword()">
-        <ion-label>{{'settings.changePassword'|translate}}</ion-label>
+        <ion-label>Change password</ion-label>
       </button>
     </ion-list>
   </form>

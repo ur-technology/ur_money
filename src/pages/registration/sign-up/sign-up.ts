@@ -3,7 +3,6 @@ import { NavController, ModalController, LoadingController, AlertController } fr
 import { CountryListService } from '../../../services/country-list';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { TermsAndConditionsPage } from '../../terms-and-conditions/terms-and-conditions';
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
@@ -35,7 +34,6 @@ export class SignUpPage {
   constructor(
     public nav: NavController,
     private countryListService: CountryListService,
-    private translate: TranslateService,
     public modalCtrl: ModalController,
     public loadingController: LoadingController,
     public auth: AuthService,
@@ -93,10 +91,10 @@ export class SignUpPage {
   private changeTitlesBySignUpType() {
     if (this.signUpType === 'sponsorReferralCode') {
       this.mainForm.controls['email'].setErrors(null);
-      this.subheadingButton = this.translate.instant('sign-up.signUpWithEmailCodeInstead');
+      this.subheadingButton = 'Sign up with email instead';
     } else {
       this.mainForm.controls['sponsorReferralCode'].setErrors(null);
-      this.subheadingButton = this.translate.instant('sign-up.signUpWithSponsorReferralCodeInstead');
+      this.subheadingButton = 'Sign up with referral code instead';
     }
   }
 
@@ -104,7 +102,7 @@ export class SignUpPage {
     let self = this;
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Sign up requested', 'submit()');
     let loadingModal = self.loadingController.create({
-      content: self.translate.instant('pleaseWait'),
+      content: "Please wait...",
     });
     let taskState: string;
     loadingModal.present().then(() => {
@@ -128,11 +126,11 @@ export class SignUpPage {
         case 'code_generation_canceled_because_user_already_signed_up':
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'user Already Exists', 'submit()');
           let alert = this.alertCtrl.create({
-            message: this.translate.instant('sign-up.userAlreadyExists'),
+            message: "This phone number already exists on our records, please go to sign in page",
             buttons: [
-              { text: this.translate.instant('cancel'), handler: () => { alert.dismiss(); } },
+              { text: "Cancel", handler: () => { alert.dismiss(); } },
               {
-                text: this.translate.instant('sign-up.gotoSignIn'), handler: () => {
+                text: "Sign In", handler: () => {
                   alert.dismiss().then(() => {
                     self.nav.pop({ animate: false, duration: 0, progressAnimation: false }).then(data => {
                       self.nav.push(SignInPage);
@@ -147,29 +145,29 @@ export class SignUpPage {
 
         case 'code_generation_canceled_because_voip_phone_not_allowed':
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'code_generation_canceled_because_voip_phone_not_allowed',  'submit()');
-          self.toastService.showMessage({ messageKey: 'sign-up.voipNotAllowed' });
+          self.toastService.showMessage({ message: "Signups via a VOIP or other virtual service like Skype and Google voice are not allowed. Please use a number provided by a conventional mobile carrier." });
           break;
 
         case 'code_generation_canceled_because_email_not_found':
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'code_generation_canceled_because_email_not_found', 'submit()');
-          self.toastService.showMessage({ messageKey: 'sign-up.betaEmailNotFound' });
+          self.toastService.showMessage({ message: "The email that you entered was not found in our records. Please double-check and try again." });
           break;
 
         case 'code_generation_canceled_because_sponsor_not_found':
         case 'code_generation_canceled_because_sponsor_disabled':
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'sponsor not found', 'submit()');
-          self.toastService.showMessage({ messageKey: 'sign-up.sponsorNotFoundMessage' });
+          self.toastService.showMessage({ message: "There is no sponsor with that referral code, please try another referral code" });
           break;
 
         default:
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'error unexpectedProblem', 'submit()');
-          self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+          self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
 
       }
     }, (error) => {
       self.googleAnalyticsEventsService.emitEvent(self.pageName, 'error unexpectedProblem', 'submit()');
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({ messageKey: 'errors.unexpectedProblem' });
+        self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       });
     });
   }
@@ -183,9 +181,9 @@ export class SignUpPage {
   showSponsorReferralCodeExplanation() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Sponsor explanation button', 'showSponsorReferralCodeExplanation()');
     let alert = this.alertCtrl.create({
-      message: this.translate.instant('sign-up.sponsorReferralCodeExplanation'),
+      message: "You need your sponsor's referral code in order to sign up. Please, ask the referral code to your sponsor or click on the invitation link that was sent to you.",
       buttons: [{
-        text: this.translate.instant('ok'),
+        text: "Ok",
         handler: () => {
           alert.dismiss();
         }
@@ -198,9 +196,9 @@ export class SignUpPage {
   showEmailExplanation() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Sponsor explanation button', 'showEmailExplanation()');
     let alert = this.alertCtrl.create({
-      message: this.translate.instant('sign-up.emailExplanation'),
+      message: "If you joined our beta program, enter that email.",
       buttons: [{
-        text: this.translate.instant('ok'),
+        text: "Ok",
         handler: () => {
           alert.dismiss();
         }

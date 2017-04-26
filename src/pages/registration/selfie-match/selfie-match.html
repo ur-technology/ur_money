@@ -1,30 +1,30 @@
 <ion-header>
 	<ion-navbar>
-		<ion-title>{{"selfie-match.title" | translate}}</ion-title>
+		<ion-title>Setting up account</ion-title>
 	</ion-navbar>
 </ion-header>
 <ion-content>
 	<form [formGroup]="mainForm">
 		<ion-card>
 			<ion-card-header>
-				<ion-label text-center color="primary">{{"selfie-match.slideTitle" | translate}}</ion-label>
+				<ion-label text-center color="primary">Step 2 of 4 - Take a selfie with your ID</ion-label>
 			</ion-card-header>
 			<ion-card-content>
 
 				<div class="selfie-container">
-					<p>{{"selfie-match.instructions" | translate}}</p>
+					<p>We also need a picture of you holding your identification, clearly displaying the name and photo. This helps us prevent fraud, and helps create a safe environment for everyone. The front of your identification and your face should be visible in the picture, like this:</p>
 					<img src="/assets/img/selfie-diagram.png" />
 					<button (click)="selectFile($event)">
 						<ion-img class="preview-image" [src]="selfieSource" [alt]=""></ion-img>
 						<input id="selfie" type="file" capture="user" accept="image/*" (change)="fileChanged($event, null)" />
-						<ion-icon name="camera"></ion-icon> {{'selfie-match.scan' | translate}}
+						<ion-icon name="camera"></ion-icon> Tap to take a selfie
 					</button>
 				</div>
 
 			</ion-card-content>
 			<ion-item class="footer-card">
 				<button ion-button item-right clear default [disabled]="!selfieUploaded()" icon-right (click)="submit()">
-					{{"continue" | translate}}
+					Continue
 					<ion-icon name="arrow-forward"></ion-icon>
 				</button>
 			</ion-item>

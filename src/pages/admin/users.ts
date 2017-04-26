@@ -1,6 +1,5 @@
 import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AuthService } from '../../services/auth';
 import { Config } from '../../config/config';
 import { UserPage } from './user';
@@ -34,7 +33,6 @@ export class UsersPage {
     private nav: NavController,
     private navParams: NavParams,
     public platform: Platform,
-    private translate: TranslateService,
     public auth: AuthService,
     private alertCtrl: AlertController,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService

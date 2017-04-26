@@ -8,7 +8,6 @@ import * as firebase from 'firebase';
 import * as moment from 'moment';
 import { App } from 'ionic-angular';
 import { ContactsAndChatsPage } from '../../pages/contacts-and-chats/contacts-and-chats';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Config } from '../../config/config';
 import { InviteLinkPage } from '../../pages/invite-link/invite-link';
 import { UrFormat } from '../../pipes/urFormat';
@@ -29,7 +28,7 @@ export class TransactionComponent {
   numberOfItemsToShow: number = 20;
   @Input() transactionType: string;
 
-  constructor(public auth: AuthService, public nav: NavController, public app: App, public translate: TranslateService, public chartData: ChartDataService, private alertCtrl: AlertController, private urFormat: UrFormat ) {
+  constructor(public auth: AuthService, public nav: NavController, public app: App, public chartData: ChartDataService, private alertCtrl: AlertController, private urFormat: UrFormat ) {
   }
 
   filterTransactions(newFilterOption?) {
@@ -136,8 +135,8 @@ export class TransactionComponent {
   invite() {
     if (!this.auth.announcementConfirmed()) {
       let alert = this.alertCtrl.create({
-        subTitle: this.translate.instant('home.noInvitesAllowed'),
-        buttons: [this.translate.instant('dismiss')]
+        subTitle: "Please wait until your bonus is confirmed to invite friends",
+        buttons: ['Dismiss']
       });
       alert.present();
     } else {
@@ -156,11 +155,11 @@ export class TransactionComponent {
   displayableTransactionType(type): string {
     switch (type) {
       case 'sent':
-        return this.translate.instant('transaction.sent');
+        return "sent";
       case 'received':
-        return this.translate.instant('transaction.received');
+        return "received";
       case 'earned':
-        return this.translate.instant('transaction.earned');
+        return "earned";
       default:
         return 'UR';
     }
