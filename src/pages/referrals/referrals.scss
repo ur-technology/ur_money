@@ -1,9 +1,20 @@
 page-referrals {
   .search-div {
-    display: inline-block;
+    display: flex;
+      
+    .div-search-input {
+      flex: 1;
+      order: 3;
+      max-width: 100%;
+    }
+
+    ion-input {
+      border-bottom: 1px solid #dedede;
+    }
 
     button {
-      padding-top: 15px !important;
+      order: 5;
+      text-align: right;
     }
   }
 

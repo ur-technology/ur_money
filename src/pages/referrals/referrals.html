@@ -4,11 +4,13 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <div *ngIf="!showSpinner" class="search-div">
-    <ion-searchbar placeholder="" [(ngModel)]="searchText">
-    </ion-searchbar>
-    <button ion-button icon-right clear (click)="searchItems()">Search
-      <ion-icon  name="arrow-forward"></ion-icon>
+  <div *ngIf="!showSpinner"  class="search-div">
+    <div class="div-search-input">
+      <ion-input [(ngModel)]="searchText" placeholder="Search by Name, Email or Phone" max="10" clearInput="true">
+      </ion-input>
+    </div>
+
+    <button ion-button clear (click)="searchItems()">Search    
     </button>
   </div>
   <ion-list>
