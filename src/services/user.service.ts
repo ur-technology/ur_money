@@ -51,7 +51,7 @@ export class UserService {
     });
   }
 
-  getReferrals(myUserId: string, userIdToLook: string, startAt: number, numOfItemsToReturn: number) {
+  getReferrals(myUserId: string, userIdToLook: string, startAt: number, numOfItemsToReturn: number, searchText: string) {
     return new Promise((resolve, reject) => {
       const taskRef = firebase
         .database()
@@ -61,7 +61,8 @@ export class UserService {
           userId: myUserId,
           userIdToLook: userIdToLook,
           startAt: startAt,
-          numOfItemsToReturn: numOfItemsToReturn
+          numOfItemsToReturn: numOfItemsToReturn,
+          searchText: searchText
         });
 
       const resultRef = taskRef.child('result');
@@ -77,7 +78,7 @@ export class UserService {
         if (taskResult.state === 'user_referrals_succeeded') {
           resolve(taskResult);
         } else {
-          resolve({});
+          resolve(null);
         }
 
       });

@@ -1,4 +1,17 @@
 page-referrals {
+  .search-div {
+    display: inline-block;
+
+    button {
+      padding-top: 15px !important;
+    }
+  }
+
+  ion-searchbar {
+    display: inline-block !important;
+    width: 63%;
+  }
+
   ion-spinner * {
     width: 38px;
     height: 38px;

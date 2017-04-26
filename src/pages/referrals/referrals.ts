@@ -16,11 +16,10 @@ export class ReferralsPage {
   referrals = [];
   showSpinner = false;
   userToLookForReferrals: string;
-  searchBy: string = 'name';
-  showOptions: boolean = false;
-  endOfResults: boolean = false;
+  endOfResults: boolean = true;
   startAt = 0;
-  numOfItemsToReturn = 550;
+  numOfItemsToReturn = 150;
+  searchText: string = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService, private auth: AuthService, private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private countryListService: CountryListService) {
     this.userToLookForReferrals = this.navParams.get('userToLookForReferrals');
@@ -29,11 +28,6 @@ export class ReferralsPage {
   ionViewDidLoad() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
     this.loadReferrals();
-  }
-
-  onSearchBarFocus() {
-    this.showOptions = true;
-    return this.showOptions;
   }
 
   getPageTitle(): string {
@@ -47,9 +41,12 @@ export class ReferralsPage {
   loadReferrals() {
     let self = this;
     self.showSpinner = true;
-    self.userService.getReferrals(this.auth.currentUser.key, this.userToLookForReferrals ? this.userToLookForReferrals : this.auth.currentUser.key, this.startAt, this.numOfItemsToReturn).then((result: any) => {
-      self.referrals = self.referrals.concat(_.values(result.referrals));
-      self.endOfResults = result.endOfResults;
+    self.endOfResults = true;
+    self.userService.getReferrals(this.auth.currentUser.key, this.userToLookForReferrals ? this.userToLookForReferrals : this.auth.currentUser.key, this.startAt, this.numOfItemsToReturn, this.searchText).then((result: any) => {
+      if (result) {
+        self.referrals = self.referrals.concat(_.values(result.referrals));
+        self.endOfResults = result.endOfResults;
+      }
       self.showSpinner = false;
     });
   }
@@ -64,9 +61,9 @@ export class ReferralsPage {
     self.navCtrl.push(ChatPage, { contact: contact });
   }
 
-  filterItems(ev) {
-    // let val = ev.target.value;
-
+  searchItems() {
+    this.referrals = [];
+    this.loadReferrals();
   }
 
   country(code) {

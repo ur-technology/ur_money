@@ -4,22 +4,13 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-searchbar *ngIf="referrals?.length > 0 " (ionFocus)="onSearchBarFocus()" (ionInput)="filterItems($event)" placeholder='Search'>
-  </ion-searchbar>
-  <ion-list radio-group [(ngModel)]="searchBy" *ngIf="showOptions">
-    <ion-item>
-      <ion-label>Name</ion-label>
-      <ion-radio value="name"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Phone</ion-label>
-      <ion-radio value="phone"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Email</ion-label>
-      <ion-radio value="email"></ion-radio>
-    </ion-item>
-  </ion-list>
+  <div *ngIf="!showSpinner" class="search-div">
+    <ion-searchbar placeholder="" [(ngModel)]="searchText">
+    </ion-searchbar>
+    <button ion-button icon-right clear (click)="searchItems()">Search
+      <ion-icon  name="arrow-forward"></ion-icon>
+    </button>
+  </div>
   <ion-list>
     <ion-item class="no-referrals" text-wrap detail-none *ngIf="referrals?.length === 0 && !showSpinner" (click)="inviteFriend()">
       <p>No referrals</p>
@@ -33,9 +24,9 @@
       <p>
         {{referral.email}}
       </p>
-      <p>
+      <!-- <p>
         {{country(referral.countryCode)}}
-      </p>
+      </p> -->
       <button item-right ion-button icon-left outline round (click)="chatWith(referral, $event)"><ion-icon name="chatboxes"></ion-icon>Chat
       </button>
     </ion-item>
