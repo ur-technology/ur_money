@@ -35,13 +35,14 @@
       <ion-avatar item-left> <ion-img [src]="r.profilePhotoUrl"></ion-img></ion-avatar>
       <ion-label>
 		  <h3>{{r.name}} (Downline: {{r.downlineSize}})</h3>
-		  <p>ID recognition status: {{r.idRecognitionStatus}}</p>
-		  <p>Selfie match status: {{r.selfieMatchStatus}}</p>
-        <p>{{r.phone}} {{r.email}} {{country(r)}}</p>
+		  <p *ngIf="!r.signUpBonusApproved">Verification status: {{r.selfieMatchStatus}}</p>
+		  <p>Sponsor: {{r.sponsor.name}} ({{r.sponsorStatus}})</p>
+        <p>{{r.phone}} / {{r.email}} / {{country(r)}}</p>
         <p>{{r.moveRequestedTag}} {{r.disabledTag}} {{r.fraudSuspectedTag}} {{r.duplicateTag}} {{r.signUpBonusApprovedTag}}</p>
       </ion-label>
       <button ion-button type="button" color="secondary" item-right [disabled]="r.signUpBonusApproved" (click)="approveSignUpBonus(r)">Approve</button>
       <button ion-button type="button" color="secondary" item-right (click)="goToUserPage(r)">View</button>
+      <button ion-button type="button" color="secondary" item-right (click)="goToSponsorPage(r)">View sponsor</button>
     </ion-item>
 
     <ion-item detail-none *ngIf="displayableUsers && displayableUsers.length === 0" class="item item-avatar">
