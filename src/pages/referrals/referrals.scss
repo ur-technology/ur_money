@@ -1,16 +1,12 @@
 page-referrals {
   .search-div {
     display: flex;
-      
+
     .div-search-input {
       flex: 1;
       order: 3;
       max-width: 100%;
-    }
-
-    ion-input {
-      border-bottom: 1px solid #dedede;
-    }
+    }  
 
     button {
       order: 5;

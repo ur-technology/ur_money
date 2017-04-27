@@ -42,7 +42,7 @@ export class ReferralsPage {
     let self = this;
     self.showSpinner = true;
     self.endOfResults = true;
-    self.userService.getReferrals(this.auth.currentUser.key, this.userToLookForReferrals ? this.userToLookForReferrals : this.auth.currentUser.key, this.startAt, this.numOfItemsToReturn, this.searchText).then((result: any) => {
+    self.userService.getReferrals(this.auth.currentUser.key, this.userToLookForReferrals ? this.userToLookForReferrals : this.auth.currentUser.key, this.startAt, this.numOfItemsToReturn, this.searchText.substring(0,15)).then((result: any) => {
       if (result) {
         self.referrals = self.referrals.concat(_.values(result.referrals));
         self.endOfResults = result.endOfResults;
