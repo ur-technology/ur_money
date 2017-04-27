@@ -14,7 +14,7 @@ class HomePageSteps {
     this.homePage = new HomePageObject();
   }
 
-  @then(/^I should be on the 'home' screen$/)
+  @then(/^I should be on the home screen$/)
   public ThenIShouldBeOnTheHomeScreen(callback): void {
     expect(this.homePage.logoDiv.isPresent()).to.eventually.be.true;
     callback();

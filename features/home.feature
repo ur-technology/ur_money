@@ -5,6 +5,7 @@ Feature: Home
   
   @HomeScreenScenario
   Scenario: Home screen
-    Then I should see a message informing me 'Welcome to UR'
+    Then I should be on the home screen
+    And I should see a message informing me 'Welcome to UR'
     And I should see a 'sign up' button
     And I should see a 'sign in' button
