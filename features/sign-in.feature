@@ -7,11 +7,10 @@ Feature: Sign In
   @FirstTimeSignInScreenScenario
   Scenario: First time sign in screen
     Then I should be on the first time sign in screen
+    And I should see a message informing me 'click agree & continue to accept the UR Technology'
     And I should see a 'terms and conditions' link
     And I should see a 'country select' field
-    And I should see 'United States' in the 'country select' field
     And I should see a 'phone number' field
-    And I should see a message informing me 'click agree & continue to accept the UR Technology'
     And I should see a 'agree & continue' button
     And I should see the 'agree & continue' button is 'disabled'
 
@@ -32,6 +31,7 @@ Feature: Sign In
   Scenario: Country select
     When I press the 'country select' field
     Then I should see a list of countries with area codes
+    And I should see 'United States' in the 'country select' field
 
   @EnterInvalidPhoneNumberScenario
   Scenario: Enter invalid phone number
