@@ -6,7 +6,7 @@ import { UserModel } from '../models/user.model';
 
 @Injectable()
 export class UserService {
-  constructor() {}
+  constructor() { }
 
   getCurrentUser(currentUserId: string): Promise<UserModel> {
     return new Promise((resolve, reject) => {
@@ -51,30 +51,34 @@ export class UserService {
     });
   }
 
-  getReferrals(userId: string){
-    return new Promise((resolve, reject)=>{
+  getReferrals(myUserId: string, userIdToLook: string, startAt: number, numOfItemsToReturn: number, searchText: string) {
+    return new Promise((resolve, reject) => {
       const taskRef = firebase
-      .database()
-      .ref('userQueue/tasks')
-      .push({
-        _state: 'user_referrals_requested',
-        userId
-      });
+        .database()
+        .ref('userQueue/tasks')
+        .push({
+          _state: 'user_referrals_requested',
+          userId: myUserId,
+          userIdToLook: userIdToLook,
+          startAt: startAt,
+          numOfItemsToReturn: numOfItemsToReturn,
+          searchText: searchText
+        });
 
       const resultRef = taskRef.child('result');
 
-      resultRef.on('value', (snapshot)=>{
+      resultRef.on('value', (snapshot) => {
         let taskResult = snapshot.val();
 
-        if(!taskResult) {
+        if (!taskResult) {
           return;
         }
         resultRef.off('value');
         taskRef.remove();
         if (taskResult.state === 'user_referrals_succeeded') {
-          resolve(taskResult.referrals);
+          resolve(taskResult);
         } else {
-          resolve({});
+          resolve(null);
         }
 
       });

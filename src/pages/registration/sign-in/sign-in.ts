@@ -60,7 +60,6 @@ export class SignInPage {
         phone
       );
     }).then((newTaskState: string) => {
-      console.log('newTaskState', newTaskState);
       taskState = newTaskState;
       return loadingModal.dismiss();
     }).then(() => {
