@@ -1,4 +1,4 @@
-import { $ } from 'protractor';
+import { $, browser, ExpectedConditions } from 'protractor';
 
 export class HomePageObject {
   public logoDiv: any;
@@ -13,5 +13,12 @@ export class HomePageObject {
     this.welcomeMsg = this.welcomeDiv.$('h3');
     this.signUpBtn = this.welcomeDiv.$$('button').get(0);
     this.signInBtn = this.welcomeDiv.$$('button').get(1);
+  }
+
+  signIn() {
+    return browser
+      .wait(ExpectedConditions.elementToBeClickable(this.signInBtn), 3000)
+      .then(() => this.signInBtn.click())
+      .then(() => browser.sleep(3000));
   }
 };

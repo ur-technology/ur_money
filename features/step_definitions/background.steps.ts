@@ -14,9 +14,17 @@ class BackgroundSteps {
 
   @given(/^I have opened the UR app$/)
   public GivenIHaveOpenedTheURApp (callback): void {
-    browser.get('')
-    .then(() => browser.wait(ExpectedConditions.presenceOf(this.homePage.logoDiv), 15 * 1000)) // Wait until page is fully loaded
-    .then(() => callback());
+    browser
+      .get('')
+      .then(() => browser.wait(ExpectedConditions.presenceOf(this.homePage.logoDiv), 15 * 1000)) // Wait until page is fully loaded
+      .then(() => callback());
+  }
+
+  @given(/^I have clicked Sign In button$/)
+  public GivenIHaveClickedSignInButton (callback): void {
+    this.homePage
+      .signIn()
+      .then(() => callback());
   }
 
 }
