@@ -1,6 +1,6 @@
 import { binding, then } from 'cucumber-tsflow';
 
-import { HomePageObject } from '../pages/home.page';
+import { HomePage } from '../pages/home.page';
 
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
@@ -8,10 +8,10 @@ let expect = chai.expect;
 @binding()
 class HomeSteps {
 
-  homePage: HomePageObject;
+  homePage: HomePage;
 
   constructor() {
-    this.homePage = new HomePageObject();
+    this.homePage = new HomePage();
   }
 
   @then(/^I should be on the home screen$/)

@@ -1,15 +1,15 @@
 import { browser, ExpectedConditions } from 'protractor';
 import { binding, given } from 'cucumber-tsflow';
 
-import { HomePageObject } from '../pages/home.page';
+import { HomePage } from '../pages/home.page';
 
 @binding()
 class BackgroundSteps {
 
-  homePage: HomePageObject;
+  homePage: HomePage;
 
   constructor() {
-    this.homePage = new HomePageObject();
+    this.homePage = new HomePage();
   }
 
   @given(/^I have opened the UR app$/)

@@ -1,6 +1,6 @@
 import { $, browser, ExpectedConditions } from 'protractor';
 
-export class TermsAndConditionsPageObject {
+export class TermsAndConditionsPage {
   public termsMessage: any;
   public termsLink: any;
   public modal: any;

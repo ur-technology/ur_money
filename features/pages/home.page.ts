@@ -1,6 +1,6 @@
 import { $, browser, ExpectedConditions } from 'protractor';
 
-export class HomePageObject {
+export class HomePage {
   public logoDiv: any;
   public welcomeDiv: any;
   public welcomeMsg: any;
