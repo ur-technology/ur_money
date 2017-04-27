@@ -26,6 +26,7 @@ exports.config = {
     require: ['features/step_definitions/**/*.steps.ts', 'features/support/**/*.ts'],
     tags: [
       '@HomeScreenScenario',
+      '@FirstTimeSignInScreenScenario',
     ].join(',')
   },
   onPrepare: function () {
