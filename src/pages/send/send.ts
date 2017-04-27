@@ -36,6 +36,7 @@ export class SendPage {
   public placeholderSentTo: string;
   public sendInProgress: boolean = false;
   pageName = 'SendPage';
+  walletAddress: string;
 
   constructor(
     public nav: NavController,
@@ -83,10 +84,10 @@ export class SendPage {
         if (data.contact) {
           self.contact = data.contact;
           (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
-          (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
+          this.walletAddress = self.contact.walletAddress;
         } else {
-          (<FormControl>this.mainForm.controls['addressWallet']).setValue(data.walletAddress);
-          (<FormControl>this.mainForm.controls['contact']).setErrors(null);
+          (<FormControl>this.mainForm.controls['contact']).setValue(data.walletAddress);
+          this.walletAddress = data.walletAddress;
         }
       }
     });
@@ -175,7 +176,7 @@ export class SendPage {
     }).then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      let address = self.contact ? self.contact.wallet.address : self.mainForm.controls['addressWallet'].value;
+      let address = self.walletAddress;
       address = WalletModel.prefixAddress(address);
       return self.wallet.sendRawTransaction(address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {

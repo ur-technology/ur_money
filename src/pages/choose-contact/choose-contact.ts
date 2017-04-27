@@ -46,7 +46,8 @@ export class ChooseContactPage {
     this.viewCtrl.dismiss(contact);
   }
 
-  searchForContacts(input: string) {
-    console.log(input);
+  dismissModal() {
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'No contact chosen', 'dismissModal()');
+    this.viewCtrl.dismiss();
   }
 }

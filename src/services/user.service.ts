@@ -81,4 +81,35 @@ export class UserService {
     });
   }
 
+  searchRecipients(currentUserId: string, searchText: string){
+    return new Promise((resolve, reject)=>{
+      const taskRef = firebase
+      .database()
+      .ref('userQueue/tasks')
+      .push({
+        _state: 'search_recipients_requested',
+        userId: currentUserId,
+        searchText: searchText
+      });
+
+      const resultRef = taskRef.child('result');
+
+      resultRef.on('value', (snapshot)=>{
+        let taskResult = snapshot.val();
+
+        if(!taskResult) {
+          return;
+        }
+        resultRef.off('value');
+        taskRef.remove();
+        if (taskResult.state === 'search_recipients_succeeded') {
+          resolve(taskResult);
+        } else {
+          resolve(null);
+        }
+
+      });
+    });
+  }
+
 }
