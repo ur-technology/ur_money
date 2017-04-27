@@ -1,27 +1,34 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title class="chat-title">Choose contact or enter UR address</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title class="chat-title">Choose recipient or enter UR address</ion-title>
+	</ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-segment [(ngModel)]="option">
-    <ion-segment-button value="contact">
-      Contact
-    </ion-segment-button>
-    <ion-segment-button value="address">
-      Wallet address
-    </ion-segment-button>
-  </ion-segment>
-  <contacts goal="send" *ngIf="option=='contact'" (onContactSelected)="onContactSelected($event)"></contacts>
-  <div *ngIf="option=='address'">
-    <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && dismissWalletAddress()">
-      <ion-item>
-        <ion-label stacked>Wallet address</ion-label>
-        <ion-input formControlName="addressWallet" placeholder="Enter the receiver's UR address"></ion-input>
-        <button ion-button icon-right type="submit" color="primary" [disabled]="!mainForm.valid" item-right>Continue<ion-icon name="arrow-round-forward"></ion-icon></button>
-      </ion-item>
-      <br />
-      <div class="validatorError" *ngIf="incorrectToField()">UR address is invalid</div>
-    </form>
-  </div>
+	<ion-segment [(ngModel)]="option">
+		<ion-segment-button value="search">
+			Search
+		</ion-segment-button>
+		<ion-segment-button value="contact">
+			Contact
+		</ion-segment-button>
+		<ion-segment-button value="address">
+			Wallet address
+		</ion-segment-button>
+	</ion-segment>
+
+	<recipients goal="send" *ngIf="option=='search'" (onContactSelected)="onContactSelected($event)"></recipients>
+
+	<contacts *ngIf="option=='contact'" (onContactSelected)="onContactSelected($event)"></contacts>
+
+	<div *ngIf="option=='address'">
+		<form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && dismissWalletAddress()">
+			<ion-item>
+				<ion-label stacked>Wallet address</ion-label>
+				<ion-input formControlName="addressWallet" placeholder="Enter the receiver's UR address"></ion-input>
+				<button ion-button icon-right type="submit" color="primary" [disabled]="!mainForm.valid" item-right>Continue<ion-icon name="arrow-round-forward"></ion-icon></button>
+			</ion-item>
+			<br />
+			<div class="validatorError" *ngIf="incorrectToField()">UR address is invalid</div>
+		</form>
+	</div>
 </ion-content>

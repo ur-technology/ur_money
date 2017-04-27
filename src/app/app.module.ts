@@ -39,6 +39,7 @@ import { TermsAndConditionsPage } from '../pages/terms-and-conditions/terms-and-
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { ChatListComponent } from '../components/chat-list/chat-list';
 import { ContactsComponent } from '../components/contacts/contacts';
+import { RecipientsComponent } from '../components/recipients/recipients';
 import { EventListComponent } from '../components/event-list/event-list';
 import { TransactionComponent } from '../components/transaction/transaction';
 import { DateAndTime } from '../pipes/dateAndTime.pipe';
@@ -120,6 +121,7 @@ const myFirebaseAuthConfig = {
     SponsorWaitPage,
     ChatListComponent,
     ContactsComponent,
+    RecipientsComponent,
     EventListComponent,
     TransactionComponent,
     DateAndTime,

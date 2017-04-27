@@ -9,7 +9,7 @@ import { GoogleAnalyticsEventsService } from '../../services/google-analytics-ev
   templateUrl: 'choose-contact.html'
 })
 export class ChooseContactPage {
-  option: string = 'contact';
+  option: string = 'search';
   addressText: string;
   mainForm: FormGroup;
   pageName = 'ChooseContactPage';
@@ -46,4 +46,7 @@ export class ChooseContactPage {
     this.viewCtrl.dismiss(contact);
   }
 
+  searchForContacts(input: string) {
+    console.log(input);
+  }
 }

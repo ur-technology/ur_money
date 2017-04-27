@@ -1,0 +1,14 @@
+<ion-content class="contacts">
+  <ion-searchbar  (search)="doSearch($event)" (ionCancel)="cancelSearch()" placeholder='Enter a phone number or email address'>
+  </ion-searchbar>
+  <div *ngIf="showSpinner">
+      <ion-row>
+          <ion-col text-center>
+              <ion-spinner></ion-spinner>
+          </ion-col>
+      </ion-row>
+  </div>
+  <ion-list class="results-list" *ngIf="!showSpinner">
+  </ion-list>
+
+</ion-content>

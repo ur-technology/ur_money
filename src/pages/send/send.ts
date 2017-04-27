@@ -76,26 +76,21 @@ export class SendPage {
   chooseContact() {
     let self = this;
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Show choose contact modal', 'chooseContact()');
-    if (Config.targetPlatform !== 'web') {
-      let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: this.mainForm.controls['addressWallet'].value });
-      chooseModal.onDidDismiss(data => {
-        if (data) {
-          self.contact = null;
-          if (data.contact) {
-            self.contact = data.contact;
-            (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
-            (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
-          } else {
-            (<FormControl>this.mainForm.controls['addressWallet']).setValue(data.walletAddress);
-            (<FormControl>this.mainForm.controls['contact']).setErrors(null);
-          }
+    let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: this.mainForm.controls['addressWallet'].value });
+    chooseModal.onDidDismiss(data => {
+      if (data) {
+        self.contact = null;
+        if (data.contact) {
+          self.contact = data.contact;
+          (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
+          (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
+        } else {
+          (<FormControl>this.mainForm.controls['addressWallet']).setValue(data.walletAddress);
+          (<FormControl>this.mainForm.controls['contact']).setErrors(null);
         }
-      });
-      chooseModal.present();
-    }
-    if (Config.targetPlatform === 'web') {
-      (<FormControl>this.mainForm.controls['contact']).setErrors(null);
-    }
+      }
+    });
+    chooseModal.present();
   }
 
   ngOnInit() {
@@ -188,7 +183,7 @@ export class SendPage {
     }).then(() => {
       self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Send UR succeeded. Go to Home page', 'sendUR()');
       self.nav.setRoot(HomePage);
-      return self.toastService.showMessage({ message: "Your UR has been sent!"});
+      return self.toastService.showMessage({ message: "Your UR has been sent!" });
     }).then(() => {
       return self.loadingModal.dismiss();
     }, (error: any) => {
@@ -208,15 +203,15 @@ export class SendPage {
                 text: 'Cancel',
                 role: 'cancel'
               },
-                {
-                  text: 'Recover',
-                  handler: () => {
+              {
+                text: 'Recover',
+                handler: () => {
 
-                    alert.dismiss().then(() => {
-                      self.countDown();
-                    });
-                  }
-                }]
+                  alert.dismiss().then(() => {
+                    self.countDown();
+                  });
+                }
+              }]
             });
             alert.present();
           } else {
