@@ -14,8 +14,8 @@ export class AnnouncementInitiatedPage {
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
   }
 
-  ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
   }
 
   goToHome() {

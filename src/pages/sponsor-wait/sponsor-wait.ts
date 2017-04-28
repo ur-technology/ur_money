@@ -17,8 +17,8 @@ export class SponsorWaitPage {
     this.message = `We are currently waiting for <b>${this.auth.currentUser.sponsor.name}</b> to complete their account before you can get your 2000 UR.</br>Your <b>bonus</b> will be generated soon.`;
   }
 
-  ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
   }
 
   goToHome() {

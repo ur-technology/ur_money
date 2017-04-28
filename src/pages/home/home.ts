@@ -70,7 +70,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidEnter()');
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
     //this.showEmailVerifyNotification();
     this.renderChart();
     this.auth.walletChanged.subscribe(() => {

@@ -47,8 +47,8 @@ export class UsersPage {
     jQuery('.contentPage').css('top', Config.targetPlatform === 'ios' ? '63px' : '43px');
   }
 
-  ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
   }
 
   searchTextChanged() {

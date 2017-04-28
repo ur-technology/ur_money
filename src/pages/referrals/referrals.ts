@@ -26,7 +26,7 @@ export class ReferralsPage {
   }
 
   ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
     this.loadReferrals();
   }
 

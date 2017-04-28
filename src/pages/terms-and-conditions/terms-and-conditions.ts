@@ -12,8 +12,8 @@ export class TermsAndConditionsPage {
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
   }
 
-  ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
   }
 
   closePage() {

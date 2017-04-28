@@ -16,4 +16,10 @@ export class GoogleAnalyticsEventsService {
       eventValue: eventValue
     });
   }
+
+  public emitCurrentPage(pageName: string){
+    ga('set', 'page', `/${pageName}`);
+    // ga('set', 'title', pageName);
+    ga('send', 'pageview');
+  }
 }
