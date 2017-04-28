@@ -12,6 +12,9 @@
     <ion-item *ngFor="let user of results" (click)="recipientSelected(user)">
       <ion-avatar item-left> <img src='{{user.profilePhotoUrl}}'></ion-avatar>
       <h2 word-wrap>{{user.name}}</h2>
+      <p>
+        {{country(user.countryCode)}}
+      </p>
     </ion-item>
   </ion-list>
 

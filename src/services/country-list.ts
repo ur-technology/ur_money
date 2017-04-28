@@ -21,6 +21,13 @@ export class CountryListService {
     return this.countries.find((x) => { return x.countryCode === 'US'; });
   }
 
+  findCountryByCode(code) {
+    let countryObject = this.countries.find((x) => {
+      return x.countryCode === code;
+    });
+    return (countryObject && countryObject.name) || 'None';
+  }
+
   populateCountries() {
     this.countries = [
       {

@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth';
 import { App } from 'ionic-angular';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import { UserService } from '../../services/user.service';
+import { CountryListService } from '../../services/country-list';
 
 import * as _ from 'lodash';
 
@@ -29,7 +30,8 @@ export class RecipientsComponent {
     private socialSharing: SocialSharing,
     private toast: Toast,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService,
-    private userService: UserService
+    private userService: UserService,
+    private countryListService: CountryListService
   ) {
   }
 
@@ -56,6 +58,13 @@ export class RecipientsComponent {
       }
       this.showSpinner = false;
     });
+  }
+
+  country(code) {
+    let country = this.countryListService.findCountryByCode(code);
+    if (country !== 'None') {
+      return country;
+    }
   }
 
 }
