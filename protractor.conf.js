@@ -29,6 +29,7 @@ exports.config = {
       '@FirstTimeSignInScreenScenario',
       '@SignInScreenOpenTermsAndConditionsScenario',
       '@SignInScreenExitTermsAndConditionsScenario',
+      '@CountrySelectScenario',
     ].join(',')
   },
   onPrepare: function () {

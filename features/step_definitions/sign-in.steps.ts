@@ -113,6 +113,28 @@ class SignInSteps {
     this.termsAndConditionsPage.exitTermsAndConditions().then(callback);
   }
 
+  /**
+   * @CountrySelectScenario steps
+   */
+
+  @when(/^I press the 'country select' field$/)
+  public WhenIPressTheCountrySelectField (callback): void {
+    this.signInPage.openCountrySelect().then(callback);
+  }
+
+  @then(/^I should see a list of countries with area codes$/)
+  public ThenIShouldSeeListOfCountriesWithAreaCode (callback): void {
+    expect(this.signInPage.countrySelectAlert.isPresent()).to.eventually.be.true;
+    callback();
+  }
+
+  @then(/^I should see 'United States' in the 'country select' field$/)
+  public ThenIShouldSeeUnitedStatesInTheCountrySelectField (callback): void {
+    expect(this.signInPage.unitedStatesSelect.isPresent()).to.eventually.be.true;
+    expect(this.signInPage.unitedStatesSelect.getText()).to.eventually.equal('United States');
+    callback();
+  }
+
 }
 
 export default SignInSteps;
