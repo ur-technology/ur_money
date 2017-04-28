@@ -47,4 +47,4 @@ Feature: Sign In
     Given I have selected 'United States' from the 'country' select
     When I enter a valid mobile number
     Then I should see the 'phone number' field is 'valid'
-    And I should see the 'done' button is 'enabled'
+    And I should see the 'agree & continue' button is 'enabled'

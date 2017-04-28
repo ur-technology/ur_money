@@ -8,6 +8,7 @@ let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
 const INVALID_MOBILE: string = '.323+234';
+const VALID_MOBILE: string = '6199344518';
 
 @binding()
 class SignInSteps {
@@ -165,19 +166,46 @@ class SignInSteps {
 
   @given(/^I have selected 'United States' from the 'country' select$/)
   public GivenIHaveSelectedUnitedStatesFromCountrySelect(callback): void {
-    this.signInPage.openCountrySelect()
+    this.signInPage
+      .openCountrySelect()
       .then(() => this.signInPage.selectUnitedStates())
+      .then(() => this.signInPage.closeCountrySelectAlert())
       .then(callback);
   }
 
   @when(/^I enter an invalid mobile number$/)
   public WhenIEnterInvalidPhoneNumber(callback): void {
-    this.signInPage.enterPhoneNumber(INVALID_MOBILE).then(callback);
+    this.signInPage
+      .enterPhoneNumber(INVALID_MOBILE)
+      .then(callback);
   }
 
   @then(/^I should see the 'phone number' field is 'invalid'$/)
   public ThenIShouldSeeThePhoneNumberFieldIsInvalid(callback): void {
     expect(this.signInPage.phoneNumberInput.getAttribute('class')).to.eventually.have.string('ng-invalid');
+    callback();
+  }
+
+  /**
+   * @EnterValidPhoneNumberScenario steps
+   */
+
+  @when(/^I enter a valid mobile number$/)
+  public WhenIEnterValidMobileNumber (callback): void {
+    this.signInPage
+      .enterPhoneNumber(VALID_MOBILE)
+      .then(callback);
+  }
+
+  @then(/^I should see the 'phone number' field is 'valid'$/)
+  public ThenIShouldSeePhoneNumberFieldIsValid (callback): void {
+    expect(this.signInPage.phoneNumberInput.getAttribute('class')).to.eventually.have.string('ng-valid');
+    callback();
+  }
+
+  @then(/^I should see the 'agree & continue' button is 'enabled'$/)
+  public ThenIShouldSeeAgreeAndContinueButtonIsEnabled (callback): void {
+    expect(this.signInPage.continueBtn.isEnabled()).to.eventually.be.true;
     callback();
   }
 

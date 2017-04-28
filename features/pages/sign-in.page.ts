@@ -23,16 +23,30 @@ export class SignInPage {
 
   openCountrySelect() {
     return browser
-      .wait(ExpectedConditions.elementToBeClickable(this.countrySelect), 3000)
+      .wait(ExpectedConditions.elementToBeClickable(this.countrySelect), 1000)
       .then(() => this.countrySelect.click())
-      .then(() => browser.sleep(3000));
+      .then(() => browser.sleep(1000));
   }
 
   selectUnitedStates() {
     return browser
-      .wait(ExpectedConditions.elementToBeClickable(this.unitedStatesSelect), 3000)
+      .wait(ExpectedConditions.elementToBeClickable(this.unitedStatesSelect), 1000)
       .then(() => this.unitedStatesSelect.click())
-      .then(() => browser.sleep(3000));
+      .then(() => browser.sleep(1000));
+  }
+
+  closeCountrySelectAlert() {
+    return browser
+      .wait(ExpectedConditions.elementToBeClickable(this.countrySelectOkBtn), 1000)
+      .then(() => this.countrySelectOkBtn.click())
+      .then(() => browser.sleep(1000));
+  }
+
+  cancelCountrySelectAlert() {
+    return browser
+      .wait(ExpectedConditions.elementToBeClickable(this.countrySelectCancelBtn), 1000)
+      .then(() => this.countrySelectCancelBtn.click())
+      .then(() => browser.sleep(1000));
   }
 
   enterPhoneNumber(mobileNo: string) {
