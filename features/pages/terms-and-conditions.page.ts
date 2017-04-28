@@ -20,14 +20,14 @@ export class TermsAndConditionsPage {
   }
 
   openTermsAndConditions() {
-    return browser.wait(ExpectedConditions.elementToBeClickable(this.termsLink), 3000)
-    .then(() => this.termsLink.click())
-    .then(() => browser.sleep(3000));
+    return browser.wait(ExpectedConditions.elementToBeClickable(this.termsLink), 1000)
+      .then(() => this.termsLink.click())
+      .then(() => browser.sleep(1000));
   }
 
   exitTermsAndConditions() {
-    return browser.wait(ExpectedConditions.elementToBeClickable(this.modalDoneButton), 3000)
-    .then(() => this.modalDoneButton.click())
-    .then(() => browser.sleep(3000));
+    return browser.wait(ExpectedConditions.elementToBeClickable(this.modalDoneButton), 1000)
+      .then(() => this.modalDoneButton.click())
+      .then(() => browser.sleep(1000));
   }
 }
