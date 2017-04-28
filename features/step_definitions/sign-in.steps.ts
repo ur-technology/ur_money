@@ -145,6 +145,20 @@ class SignInSteps {
     callback();
   }
 
+  @then(/^I should see 'country select Ok' button$/)
+  public ThenIShouldSeeCountrySelectOkButton (callback): void {
+    expect(this.signInPage.countrySelectOkBtn.isPresent()).to.eventually.be.true;
+    expect(this.signInPage.countrySelectOkBtn.getText()).to.eventually.equal('OK');
+    callback();
+  }
+
+  @then(/^I should see 'country select Cancel' button$/)
+  public ThenIShouldSeeCountrySelectCancelButton (callback): void {
+    expect(this.signInPage.countrySelectCancelBtn.isPresent()).to.eventually.be.true;
+    expect(this.signInPage.countrySelectCancelBtn.getText()).to.eventually.equal('CANCEL');
+    callback();
+  }
+
   /**
    * @EnterInvalidPhoneNumberScenario steps
    */

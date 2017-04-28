@@ -5,6 +5,8 @@ export class SignInPage {
   public countrySelect: any;
   public countrySelectAlert: any;
   public unitedStatesSelect: any;
+  public countrySelectOkBtn: any;
+  public countrySelectCancelBtn: any;
   public phoneNumberInput: any;
   public continueBtn: any;
 
@@ -13,6 +15,8 @@ export class SignInPage {
     this.countrySelect = this.form.$('ion-item.item-select');
     this.countrySelectAlert = $('ion-alert');
     this.unitedStatesSelect = this.countrySelectAlert.$('button#alert-input-0-211');
+    this.countrySelectOkBtn = this.countrySelectAlert.$('.alert-button-group').$$('button.alert-button').get(1);
+    this.countrySelectCancelBtn = this.countrySelectAlert.$('.alert-button-group').$$('button.alert-button').get(0);
     this.phoneNumberInput = this.form.$('.phone-content').$('input.text-input');
     this.continueBtn = this.form.$('button.button-default');
   }
