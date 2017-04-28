@@ -1,4 +1,10 @@
 page-choose-contact {
+  .not-approved-yet {
+    padding: 1em;
+    background-color: #fff588;
+    font-weight: bold;
+  }
+
   ion-spinner * {
     width: 38px;
     height: 38px;

@@ -1,10 +1,10 @@
 <ion-header>
 	<ion-navbar>
 		<ion-buttons start>
-      <button ion-button (click)="dismissModal()">
+			<button ion-button (click)="dismissModal()">
         Cancel
       </button>
-    </ion-buttons>
+		</ion-buttons>
 		<ion-title class="chat-title">Choose recipient or enter UR address</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -26,6 +26,23 @@
 	<!-- <contacts *ngIf="option=='contact'" (onContactSelected)="onContactSelected($event)"></contacts> -->
 
 	<div *ngIf="option=='address'">
+		<div class="not-approved-yet" *ngIf="!userRegisteredForMoreThan90Days">
+			<div *ngIf="!showMessageLegacyUsers">
+				You can send money when you are part of the UR community for 90 days.
+				<p>
+					You are member since {{authService.currentUser.createdAt | dateAndTime}}
+				</p>
+				<p>
+					You can send UR to other members of the community by going to the Search tab and finding them by email or phone
+				</p>
+			</div>
+			<div *ngIf="showMessageLegacyUsers">
+				We are limiting send UR to other wallet addresses for 90 days.
+				<p>
+					You can send UR to other members of the community by going to the search tab and finding them by email or phone
+				</p>
+			</div>
+		</div>
 		<form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && dismissWalletAddress()">
 			<ion-item>
 				<ion-input formControlName="addressWallet" placeholder="Enter the receiver's UR address"></ion-input>
