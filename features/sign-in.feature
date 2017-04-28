@@ -38,7 +38,7 @@ Feature: Sign In
     Given I have selected 'United States' from the 'country' select
     When I enter an invalid mobile number
     Then I should see the 'phone number' field is 'invalid'
-    And I should see the 'done' button is 'disabled'
+    And I should see the 'agree & continue' button is 'disabled'
 
   @EnterValidPhoneNumberScenario
   Scenario: Enter valid phone number

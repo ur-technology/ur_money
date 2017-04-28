@@ -7,6 +7,8 @@ import { SignInPage } from '../pages/sign-in.page';
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
+const INVALID_MOBILE: string = '.323+234';
+
 @binding()
 class SignInSteps {
 
@@ -75,7 +77,9 @@ class SignInSteps {
 
   @when(/^I press the 'terms and conditions' link$/)
   public WhenIPressTheTermsAndConditionsLink (callback): void {
-    this.termsAndConditionsPage.openTermsAndConditions().then(callback);
+    this.termsAndConditionsPage
+      .openTermsAndConditions()
+      .then(callback);
   }
 
   @then(/^I should be on the 'terms and conditions' modal$/)
@@ -105,12 +109,16 @@ class SignInSteps {
 
   @given(/^I have opened the terms and conditions$/)
   public GivenIHaveOpenedTheTermsAndConditions (callback): void {
-    this.termsAndConditionsPage.openTermsAndConditions().then(callback);
+    this.termsAndConditionsPage
+      .openTermsAndConditions()
+      .then(callback);
   }
 
   @when(/^I click the 'done' button$/)
   public WhenIClickTheDoneButton (callback): void {
-    this.termsAndConditionsPage.exitTermsAndConditions().then(callback);
+    this.termsAndConditionsPage
+      .exitTermsAndConditions()
+      .then(callback);
   }
 
   /**
@@ -119,7 +127,9 @@ class SignInSteps {
 
   @when(/^I press the 'country select' field$/)
   public WhenIPressTheCountrySelectField (callback): void {
-    this.signInPage.openCountrySelect().then(callback);
+    this.signInPage
+      .openCountrySelect()
+      .then(callback);
   }
 
   @then(/^I should see a list of countries with area codes$/)
@@ -132,6 +142,28 @@ class SignInSteps {
   public ThenIShouldSeeUnitedStatesInTheCountrySelectField (callback): void {
     expect(this.signInPage.unitedStatesSelect.isPresent()).to.eventually.be.true;
     expect(this.signInPage.unitedStatesSelect.getText()).to.eventually.equal('United States');
+    callback();
+  }
+
+  /**
+   * @EnterInvalidPhoneNumberScenario steps
+   */
+
+  @given(/^I have selected 'United States' from the 'country' select$/)
+  public GivenIHaveSelectedUnitedStatesFromCountrySelect(callback): void {
+    this.signInPage.openCountrySelect()
+      .then(() => this.signInPage.selectUnitedStates())
+      .then(callback);
+  }
+
+  @when(/^I enter an invalid mobile number$/)
+  public WhenIEnterInvalidPhoneNumber(callback): void {
+    this.signInPage.enterPhoneNumber(INVALID_MOBILE).then(callback);
+  }
+
+  @then(/^I should see the 'phone number' field is 'invalid'$/)
+  public ThenIShouldSeeThePhoneNumberFieldIsInvalid(callback): void {
+    expect(this.signInPage.phoneNumberInput.getAttribute('class')).to.eventually.have.string('ng-invalid');
     callback();
   }
 

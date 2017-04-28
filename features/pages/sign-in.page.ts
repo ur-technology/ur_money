@@ -24,6 +24,13 @@ export class SignInPage {
       .then(() => browser.sleep(3000));
   }
 
+  selectUnitedStates() {
+    return browser
+      .wait(ExpectedConditions.elementToBeClickable(this.unitedStatesSelect), 3000)
+      .then(() => this.unitedStatesSelect.click())
+      .then(() => browser.sleep(3000));
+  }
+
   enterPhoneNumber(mobileNo: string) {
     return this.phoneNumberInput.sendKeys(mobileNo);
   }

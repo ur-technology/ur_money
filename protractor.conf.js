@@ -30,6 +30,7 @@ exports.config = {
       '@SignInScreenOpenTermsAndConditionsScenario',
       '@SignInScreenExitTermsAndConditionsScenario',
       '@CountrySelectScenario',
+      '@EnterInvalidPhoneNumberScenario',
     ].join(',')
   },
   onPrepare: function () {
