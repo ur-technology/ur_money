@@ -14,14 +14,14 @@ Feature: Sign In
     And I should see a 'agree & continue' button
     And I should see the 'agree & continue' button is 'disabled'
 
-  @OpenTermsAndConditionsScenario
+  @SignInScreenOpenTermsAndConditionsScenario
   Scenario: Open terms and conditions
     When I press the 'terms and conditions' link
     Then I should be on the 'terms and conditions' modal
     And I should see the terms and conditions
     And I should see a modal 'done' button
 
-  @ExitTermsAndConditionsScenario
+  @SignInScreenExitTermsAndConditionsScenario
   Scenario: Exit terms and conditions
     Given I have opened the terms and conditions
     When I click the 'done' button

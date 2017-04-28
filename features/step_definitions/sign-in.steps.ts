@@ -1,5 +1,5 @@
 import { browser } from 'protractor';
-import { binding, then } from 'cucumber-tsflow';
+import { binding, when, then } from 'cucumber-tsflow';
 
 import { TermsAndConditionsPage } from '../pages/terms-and-conditions.page';
 import { SignInPage } from '../pages/sign-in.page';
@@ -17,6 +17,10 @@ class SignInSteps {
     this.termsAndConditionsPage = new TermsAndConditionsPage();
     this.signInPage = new SignInPage();
   }
+
+  /**
+   * @FirstTimeSignInScreenScenario steps
+   */
 
   @then(/^I should be on the first time sign in screen$/)
   public ThenIShouldBeOnTheFirstTimeSignInScreen(callback): void {
@@ -62,6 +66,36 @@ class SignInSteps {
   @then(/^I should see the 'agree & continue' button is 'disabled'$/)
   public ThenIShouldSeeAgreeAndContinueButtonIsDisabled (callback): void {
     expect(this.signInPage.continueBtn.isEnabled()).to.eventually.be.false;
+    callback();
+  }
+
+  /**
+   * @SignInScreenOpenTermsAndConditionsScenario steps
+   */
+
+  @when(/^I press the 'terms and conditions' link$/)
+  public WhenIPressTheTermsAndConditionsLink (callback): void {
+    this.termsAndConditionsPage.openTermsAndConditions().then(callback);
+  }
+
+  @then(/^I should be on the 'terms and conditions' modal$/)
+  public ThenIShouldBeOnTheTermsAndConditionsModal (callback): void {
+    expect(this.termsAndConditionsPage.modal.isPresent()).to.eventually.be.true;
+    expect(this.termsAndConditionsPage.modalTitle.getText()).to.eventually.equal('Terms and Conditions');
+    callback();
+  }
+
+  @then(/^I should see the terms and conditions$/)
+  public ThenIShouldSeeTheTermsAndConditions (callback): void {
+    expect(this.termsAndConditionsPage.modalContent.getText()).to.eventually.have
+      .string('This is a contract between you and UR Technology Inc. ("UR Technology")');
+    callback();
+  }
+
+  @then(/^I should see a modal 'done' button$/)
+  public ThenIShouldSeeModalDoneButton (callback): void {
+    expect(this.termsAndConditionsPage.modalDoneButton.isPresent()).to.eventually.be.true;
+    expect(this.termsAndConditionsPage.modalDoneButton.getText()).to.eventually.equal('DONE');
     callback();
   }
 

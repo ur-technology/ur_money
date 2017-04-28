@@ -27,6 +27,7 @@ exports.config = {
     tags: [
       '@HomeScreenScenario',
       '@FirstTimeSignInScreenScenario',
+      '@SignInScreenOpenTermsAndConditionsScenario',
     ].join(',')
   },
   onPrepare: function () {

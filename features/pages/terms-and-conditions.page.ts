@@ -7,6 +7,7 @@ export class TermsAndConditionsPage {
   public modalHeader: any;
   public modalTitle: any;
   public modalDoneButton: any;
+  public modalContent: any;
 
   constructor() {
     this.termsMessage = $('p.terms');
@@ -14,7 +15,8 @@ export class TermsAndConditionsPage {
     this.modal = $('ion-modal');
     this.modalHeader = this.modal.$('ion-header');
     this.modalTitle = this.modalHeader.$('ion-title');
-    this.modalDoneButton = this.modalHeader.$('button.bar-button');
+    this.modalDoneButton = this.modalHeader.$('ion-navbar').$('ion-buttons').$('button.bar-button');
+    this.modalContent = this.modal.$('ion-content');
   }
 
   openTermsAndConditions() {
