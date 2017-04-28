@@ -55,7 +55,6 @@ export class SendPage {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       secretPhrase: new FormControl('', [Validators.required]),
-      addressWallet: new FormControl('', [Validators.required, CustomValidator.validateAddressField]),
       contact: new FormControl('', [Validators.required])
     });
     this.placeholderSentTo = Config.targetPlatform === 'web' ? "Enter UR address" : "Choose contact or enter UR address";
@@ -77,9 +76,9 @@ export class SendPage {
   chooseContact() {
     let self = this;
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Show choose contact modal', 'chooseContact()');
-    let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: this.mainForm.controls['addressWallet'].value });
+    let chooseModal = this.modalController.create(ChooseContactPage);
     chooseModal.onDidDismiss(data => {
-      if (data) {
+      if (data && data.contact.walletAddress) {
         self.contact = null;
         if (data.contact) {
           self.contact = data.contact;
@@ -114,7 +113,7 @@ export class SendPage {
   }
 
   incorrectToField(): boolean {
-    let control = this.mainForm.get('addressWallet');
+    let control = this.mainForm.get('contact');
     return (control.touched || control.dirty) && control.hasError('invalidAddress');
   }
 

@@ -44,13 +44,13 @@ export class RecipientsComponent {
   }
 
   searchRecipients() {
-    if(this.showSpinner) {
+    if ((this.showSpinner) || (_.trim(this.searchText || '').length === 0)) {
       return;
     }
     this.showSpinner = true;
     this.searchText = _.trim(this.searchText || '');
 
-    this.userService.searchRecipients(this.auth.currentUser.key, this.searchText).then((results: any) => {
+    this.userService.searchRecipientsWallets(this.auth.currentUser.key, this.searchText).then((results: any) => {
       if (results) {
         this.results = results.data;
       } else {

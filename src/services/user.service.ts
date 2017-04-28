@@ -81,13 +81,13 @@ export class UserService {
     });
   }
 
-  searchRecipients(currentUserId: string, searchText: string){
+  searchRecipientsWallets(currentUserId: string, searchText: string){
     return new Promise((resolve, reject)=>{
       const taskRef = firebase
       .database()
       .ref('userQueue/tasks')
       .push({
-        _state: 'search_recipients_requested',
+        _state: 'search_recipients_wallets_requested',
         userId: currentUserId,
         searchText: searchText
       });
@@ -102,7 +102,7 @@ export class UserService {
         }
         resultRef.off('value');
         taskRef.remove();
-        if (taskResult.state === 'search_recipients_succeeded') {
+        if (taskResult.state === 'search_recipients_wallets_succeeded') {
           resolve(taskResult);
         } else {
           resolve(null);

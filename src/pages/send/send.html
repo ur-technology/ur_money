@@ -39,7 +39,7 @@
       <ion-input placeholder="Enter your secret phrase" formControlName="secretPhrase" type="password"></ion-input>
     </ion-item>
     <br />
-    <div class="validatorError" *ngIf="incorrectToField()">UR address is invalid</div>
+    <div class="validatorError" *ngIf="incorrectToField()">Send to field is invalid</div>
     <div class="validatorError" *ngIf="missingAmount()">Amount is required</div>
     <div class="validatorError" *ngIf="numberOutOfRange()">Amount must be between 0.000000000000000001 and max amount.</div>
     <div class="validatorError" *ngIf="missingSecretPhrase()">Secret phrase is required</div>
