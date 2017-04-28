@@ -33,6 +33,16 @@ environments.
 make run
 ```
 
+
+## To run e2e test
+
+Before running e2e test, you should run ionic app first.
+To run the app, please reference [How to run as a web server](#to-run-as-a-web-server)
+
+```script
+make e2e
+```
+
 ## Deploy to Firebase Hosting
 
 Make sure you have firebase-tools installed, and have logged in.
