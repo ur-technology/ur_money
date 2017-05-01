@@ -2,7 +2,7 @@
   <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && searchRecipients()">
     <ion-item>
       <ion-label stacked>Email address or phone number</ion-label>
-      <ion-input [(ngModel)]="searchText" formControlName="sendTo" placeholder="Phone number or email address"></ion-input>
+      <ion-input [(ngModel)]="searchText" formControlName="sendTo"></ion-input>
       <button ion-button clear color="primary" style="margin-top:18px;" type="submit" (click)="searchRecipients()" item-right>Search</button>
     </ion-item>
     <ion-list>
