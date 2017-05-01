@@ -30,6 +30,11 @@ run: run-development
 run-development: version-file
 	@$(IONIC_BINARY) $(IONIC_CMD_SERVE)
 
+# Run e2e test.
+# Before running e2e test, ionic app should be running already.
+e2e:
+	@npm run e2e
+
 # Run the application on a connected android in production mode.
 # The version file must be generated before execution in order to
 # prevent potential TypeScript errors.
