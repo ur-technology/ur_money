@@ -45,6 +45,7 @@
 		</div>
 		<form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && dismissWalletAddress()">
 			<ion-item>
+				<ion-label stacked>Wallet address</ion-label>
 				<ion-input formControlName="addressWallet" placeholder="Enter the receiver's UR address"></ion-input>
 				<button ion-button clear type="submit" color="primary" style="margin-top:18px;" [disabled]="!mainForm.valid" item-right>Continue</button>
 			</ion-item>

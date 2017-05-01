@@ -1,28 +1,29 @@
 <ion-content class="contacts">
-  <ion-list>
+  <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && searchRecipients()">
     <ion-item>
-      <ion-input [(ngModel)]="searchText" placeholder="Phone number or email address"></ion-input>
-      <button ion-button clear color="primary" style="margin-top:18px;" (click)="searchRecipients()" item-right>Search</button>
+      <ion-label stacked>Email address or phone number</ion-label>
+      <ion-input [(ngModel)]="searchText" formControlName="sendTo" placeholder="Phone number or email address"></ion-input>
+      <button ion-button clear color="primary" style="margin-top:18px;" type="submit" (click)="searchRecipients()" item-right>Search</button>
     </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-item class="no-items" text-wrap detail-none *ngIf="results && results.length === 0 && !showSpinner">
-      <p>No results</p>
-    </ion-item>
-    <ion-item *ngFor="let user of results" (click)="recipientSelected(user)">
-      <ion-avatar item-left> <img src='{{user.profilePhotoUrl}}'></ion-avatar>
-      <h2 word-wrap>{{user.name}}</h2>
-      <p>
-        {{country(user.countryCode)}}
-      </p>
-    </ion-item>
-  </ion-list>
+    <ion-list>
+      <ion-item class="no-items" text-wrap detail-none *ngIf="results && results.length === 0 && !showSpinner">
+        <p>No results</p>
+      </ion-item>
+      <ion-item *ngFor="let user of results" (click)="recipientSelected(user)">
+        <ion-avatar item-left> <img src='{{user.profilePhotoUrl}}'></ion-avatar>
+        <h2 word-wrap>{{user.name}}</h2>
+        <p>
+          {{country(user.countryCode)}}
+        </p>
+      </ion-item>
+    </ion-list>
 
-  <div *ngIf="showSpinner">
-    <ion-row>
-      <ion-col text-center>
-        <ion-spinner></ion-spinner>
-      </ion-col>
-    </ion-row>
-  </div>
+    <div *ngIf="showSpinner">
+      <ion-row>
+        <ion-col text-center>
+          <ion-spinner></ion-spinner>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
 </ion-content>

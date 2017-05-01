@@ -8,6 +8,7 @@ import { GoogleAnalyticsEventsService } from '../../services/google-analytics-ev
 import { UserService } from '../../services/user.service';
 import { CountryListService } from '../../services/country-list';
 import { Utils } from '../../services/utils';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import * as _ from 'lodash';
 
@@ -22,6 +23,7 @@ export class RecipientsComponent {
   showSpinner: boolean = false;
   searchText: string;
   results;
+  mainForm: FormGroup;
 
   constructor(
     public nav: NavController,
@@ -34,6 +36,12 @@ export class RecipientsComponent {
     private userService: UserService,
     private countryListService: CountryListService
   ) {
+
+    this.mainForm = new FormGroup({
+      sendTo: new FormControl('', (control) => {
+        return Validators.required(control) || this.validateRecipientSendTo(this.auth.currentUser.countryCode, control);
+      }),
+    });
   }
 
   ionViewDidLoad() {
@@ -48,8 +56,7 @@ export class RecipientsComponent {
     if (this.showSpinner) {
       return;
     }
-    if (!this.validateSearchText()) {
-      this.results = [];
+    if (!this.mainForm.valid) {
       return;
     }
     this.showSpinner = true;
@@ -60,18 +67,21 @@ export class RecipientsComponent {
     });
   }
 
-  private validateSearchText(): boolean {
-    let trimmedText = _.trim(this.searchText || '');
-    if (Utils.validateEmail(trimmedText)) {
-      return true;
-    } else {
-      let res = Utils.validateAndParsePhoneNumber(trimmedText, this.auth.currentUser.countryCode);
-      if (res.valid) {
-        this.searchText = res.parsedNumber;
-        return true;
+  validateRecipientSendTo(countryCode, control) {
+    let self = this;
+    if (control.value) {
+      let trimmedText = _.trim(control.value || '');
+      if (Utils.validateEmail(trimmedText)) {
+        return;
+      } else {
+        let res = Utils.validateAndParsePhoneNumber(trimmedText, countryCode);
+        if (res.valid) {
+          self.searchText = res.parsedNumber;
+          return;
+        }
       }
+      return { 'invalidSendTo': true };
     }
-    return false;
   }
 
   country(code) {
