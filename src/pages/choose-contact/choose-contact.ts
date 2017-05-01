@@ -26,7 +26,7 @@ export class ChooseContactPage {
     private authService: AuthService) {
 
     this.mainForm = new FormGroup({
-      addressWallet: new FormControl('', [Validators.required, CustomValidator.validateAddressField]),
+      addressWallet: new FormControl('', [Validators.required, CustomValidator.validateWalletAddressField]),
     });
   }
 

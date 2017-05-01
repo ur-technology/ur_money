@@ -7,6 +7,7 @@ import { App } from 'ionic-angular';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import { UserService } from '../../services/user.service';
 import { CountryListService } from '../../services/country-list';
+import { Utils } from '../../services/utils';
 
 import * as _ from 'lodash';
 
@@ -44,20 +45,33 @@ export class RecipientsComponent {
   }
 
   searchRecipients() {
-    if ((this.showSpinner) || (_.trim(this.searchText || '').length === 0)) {
+    if (this.showSpinner) {
+      return;
+    }
+    if (!this.validateSearchText()) {
+      this.results = [];
       return;
     }
     this.showSpinner = true;
-    this.searchText = _.trim(this.searchText || '');
 
     this.userService.searchRecipientsWallets(this.auth.currentUser.key, this.searchText).then((results: any) => {
-      if (results) {
-        this.results = results.data;
-      } else {
-        this.results = [];
-      }
+      results ? this.results = results.data : this.results = [];
       this.showSpinner = false;
     });
+  }
+
+  private validateSearchText(): boolean {
+    let trimmedText = _.trim(this.searchText || '');
+    if (Utils.validateEmail(trimmedText)) {
+      return true;
+    } else {
+      let res = Utils.validateAndParsePhoneNumber(trimmedText, this.auth.currentUser.countryCode);
+      if (res.valid) {
+        this.searchText = res.parsedNumber;
+        return true;
+      }
+    }
+    return false;
   }
 
   country(code) {

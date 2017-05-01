@@ -25,7 +25,7 @@ export class CustomValidator {
     }
   }
 
-  static validateAddressField(control) {
+  static validateWalletAddressField(control) {
     if (control && control.value) {
       if (!WalletModel.validateAddressFormat(control.value)) {
         return { 'invalidAddress': true };
