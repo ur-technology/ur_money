@@ -1,4 +1,13 @@
 home-page {
+	.home-title {
+		.toolbar-title-md {
+			color: transparent;
+		}
+		.toolbar-title-ios {
+			color: transparent;
+		}
+	}
+
 	ion-header {
 		.bar-buttons {
 			color: color($colors, primary);
