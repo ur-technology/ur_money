@@ -27,21 +27,7 @@
 
 	<div *ngIf="option=='address'">
 		<div class="not-approved-yet" *ngIf="!userRegisteredForMoreThan90Days">
-			<div *ngIf="!showMessageLegacyUsers">
-				You can send money when you are part of the UR community for 90 days.
-				<p>
-					You are member since {{authService.currentUser.createdAt | dateAndTime}}
-				</p>
-				<p>
-					You can send UR to other members of the community by going to the Search tab and finding them by email or phone
-				</p>
-			</div>
-			<div *ngIf="showMessageLegacyUsers">
-				We are limiting send UR to other wallet addresses for 90 days.
-				<p>
-					You can send UR to other members of the community by going to the search tab and finding them by email or phone
-				</p>
-			</div>
+			Your account will be able to send UR to external wallets starting {{dateAllowedToSend}}.  Until then, you can continue to earn referral bonuses and transact within the UR community.  
 		</div>
 		<form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && dismissWalletAddress()">
 			<ion-item>
