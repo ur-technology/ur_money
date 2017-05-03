@@ -187,37 +187,16 @@ export class SendPage {
     }).then(() => {
       return self.loadingModal.dismiss();
     }, (error: any) => {
+
       self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error sending UR', 'sendUR()');
       self.sendInProgress = false;
       self.loadingModal && self.loadingModal.dismiss().then(() => {
+
         if (error.messageKey === 'canceled') {
           // do nothing
-        } else if (error.messageKey === 'incorrectSecretPhrase') {
+        } else if (error.messageKey == 'incorrectSecretPhrase') {
+          self.toastService.showMessage({ message: 'You entered an incorrect passphrase, please try again.' });
           self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error sending UR. Passphrase incorrect', 'sendUR()');
-          if (self.phraseSaved) {
-            self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Going to show saved passphrase modal', 'sendUR()');
-            let alert = self.alertCtrl.create({
-              title: 'Secret phrase incorrect',
-              message: 'Did you forget the secret phrase? Tap Recover to show your secret phrase.',
-              buttons: [{
-                text: 'Cancel',
-                role: 'cancel'
-              },
-              {
-                text: 'Recover',
-                handler: () => {
-
-                  alert.dismiss().then(() => {
-                    self.countDown();
-                  });
-                }
-              }]
-            });
-            alert.present();
-          } else {
-            self.toastService.showMessage({ message: error.message });
-          }
-
         } else {
           let message = 'An unexpected error has occurred. Please try again later.';
           if (_.isString(error.message) && /CONNECTION ERROR/i.test(error.message)) {
