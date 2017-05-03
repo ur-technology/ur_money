@@ -4,6 +4,7 @@ import { Contacts } from '@ionic-native/contacts';
 import { FakeContactsSource } from '../models/fake-contacts-source';
 import { ContactModel } from '../models/contact.model';
 import { UserModel } from '../models/user.model';
+import { Utils } from '../services/utils';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import * as firebase from 'firebase';
@@ -42,7 +43,7 @@ export class ContactsService {
     return new Promise((resolve, reject) => {
       contacts = _.concat(contacts, self.extraContactsForSecondaryPhones(contacts));
       _.each(contacts, (contact) => {
-        contact.formattedPhone = self.e164ToFormattedPhone(contact.phone);
+        contact.formattedPhone = Utils.toInternationalFormatPhoneNumber(contact.phone, self.currentUserCountryCode);
       });
       contacts = _.sortBy(contacts, 'name');
       let groups = _.groupBy(contacts, function(c) { return c.userId ? 'members' : 'nonMembers'; });
@@ -204,7 +205,7 @@ export class ContactsService {
   private validRawPhones(rawPhones: any) {
     let self = this;
     _.each(rawPhones, (rawPhone: any) => {
-      let e164Phone = self.toE164(rawPhone.value);
+      let e164Phone = Utils.toE164FormatPhoneNumber(rawPhone.value, self.currentUserCountryCode);
       if (e164Phone && (rawPhone.type === 'mobile' || rawPhone.type === 'home') && rawPhone.value !== self.currentUserPhone) {
         rawPhone.value = e164Phone;
       } else {
@@ -212,54 +213,6 @@ export class ContactsService {
       }
     });
     return _.uniqBy(_.filter(rawPhones, 'value'), 'value');
-  }
-
-  private toE164(phone: string): string {
-    let e164Phone;
-    let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-    let phoneNumberFormat = require('google-libphonenumber').PhoneNumberFormat;
-    try {
-      let initialPlus = /^\+/.test(phone);
-      let strippedPhone = phone.replace(/\D/g, '');
-      if (!strippedPhone) {
-        return undefined;
-      }
-      if (initialPlus) {
-        strippedPhone = '+' + strippedPhone;
-      }
-
-      let phoneNumberObject = phoneNumberUtil.parse(strippedPhone, this.currentUserCountryCode);
-      if (phoneNumberUtil.isValidNumber(phoneNumberObject)) {
-        e164Phone = phoneNumberUtil.format(phoneNumberObject, phoneNumberFormat.E164);
-        if (this.currentUserCountryCode === 'MX' && /^\+52[2-9]/.test(e164Phone)) {
-          // In Mexico, The 1 after +52 indicates that a number is mobile,
-          // but it's often left out of contacts because most carriers don't require it.
-          // If the 1 is  missing, we add it back to normalize the number.
-          e164Phone = '+521' + e164Phone.substring(3);
-          let phoneNumberObject = phoneNumberUtil.parse(strippedPhone, this.currentUserCountryCode); // TODO: handle this better
-          e164Phone = phoneNumberUtil.format(phoneNumberObject, phoneNumberFormat.E164);
-        }
-
-      }
-    } catch (e) {
-      if (!/The string supplied did not seem to be a phone number/.test(e.message)) {
-        log.debug(`error parsing or validating phone number '${phone}': ${e.message}`);
-      }
-    }
-    return e164Phone;
-  }
-
-  private e164ToFormattedPhone(e164Phone: string): string {
-    let formattedPhone;
-    let phoneNumberUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-    let phoneNumberFormat = require('google-libphonenumber').PhoneNumberFormat;
-    try {
-      let phoneNumberObject = phoneNumberUtil.parse(e164Phone, this.currentUserCountryCode);
-      formattedPhone = phoneNumberUtil.format(phoneNumberObject, phoneNumberFormat.INTERNATIONAL);
-    } catch (e) {
-      log.debug(`error formatting phone number '${formattedPhone}': ${e.message}`);
-    }
-    return formattedPhone;
   }
 
 }

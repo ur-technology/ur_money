@@ -27,8 +27,7 @@
   <form novalidate class="send-requestcontx" [formGroup]="mainForm" (ngSubmit)="mainForm.valid && sendUR()">
     <ion-item>
       <ion-label stacked>Send to</ion-label>
-      <ion-input placeholder="{{placeholderSentTo}}" *ngIf="!contact" (focus)="chooseContact()" formControlName="addressWallet"></ion-input>
-      <ion-input *ngIf="contact" (focus)="chooseContact()" formControlName="contact"></ion-input>
+      <ion-input placeholder="Choose recipient" (focus)="chooseContact()" formControlName="contact"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Amount to send</ion-label>
@@ -40,7 +39,7 @@
       <ion-input placeholder="Enter your secret phrase" formControlName="secretPhrase" type="password"></ion-input>
     </ion-item>
     <br />
-    <div class="validatorError" *ngIf="incorrectToField()">UR address is invalid</div>
+    <div class="validatorError" *ngIf="incorrectToField()">Send to field is invalid</div>
     <div class="validatorError" *ngIf="missingAmount()">Amount is required</div>
     <div class="validatorError" *ngIf="numberOutOfRange()">Amount must be between 0.000000000000000001 and max amount.</div>
     <div class="validatorError" *ngIf="missingSecretPhrase()">Secret phrase is required</div>
