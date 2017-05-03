@@ -36,6 +36,7 @@ export class SendPage {
   public placeholderSentTo: string;
   public sendInProgress: boolean = false;
   pageName = 'SendPage';
+  walletAddress: string;
 
   constructor(
     public nav: NavController,
@@ -54,7 +55,6 @@ export class SendPage {
     this.mainForm = new FormGroup({
       amount: new FormControl('', [CustomValidator.numericRangeValidator, Validators.required]),
       secretPhrase: new FormControl('', [Validators.required]),
-      addressWallet: new FormControl('', [Validators.required, CustomValidator.validateAddressField]),
       contact: new FormControl('', [Validators.required])
     });
     this.placeholderSentTo = Config.targetPlatform === 'web' ? "Enter UR address" : "Choose contact or enter UR address";
@@ -76,26 +76,21 @@ export class SendPage {
   chooseContact() {
     let self = this;
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Show choose contact modal', 'chooseContact()');
-    if (Config.targetPlatform !== 'web') {
-      let chooseModal = this.modalController.create(ChooseContactPage, { walletAddress: this.mainForm.controls['addressWallet'].value });
-      chooseModal.onDidDismiss(data => {
-        if (data) {
-          self.contact = null;
-          if (data.contact) {
-            self.contact = data.contact;
-            (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
-            (<FormControl>this.mainForm.controls['addressWallet']).setErrors(null);
-          } else {
-            (<FormControl>this.mainForm.controls['addressWallet']).setValue(data.walletAddress);
-            (<FormControl>this.mainForm.controls['contact']).setErrors(null);
-          }
+    let chooseModal = this.modalController.create(ChooseContactPage);
+    chooseModal.onDidDismiss(data => {
+      if (data && data.contact.walletAddress) {
+        self.contact = null;
+        if (data.contact) {
+          self.contact = data.contact;
+          (<FormControl>this.mainForm.controls['contact']).setValue(self.contact.name);
+          this.walletAddress = self.contact.walletAddress;
+        } else {
+          (<FormControl>this.mainForm.controls['contact']).setValue(data.walletAddress);
+          this.walletAddress = data.walletAddress;
         }
-      });
-      chooseModal.present();
-    }
-    if (Config.targetPlatform === 'web') {
-      (<FormControl>this.mainForm.controls['contact']).setErrors(null);
-    }
+      }
+    });
+    chooseModal.present();
   }
 
   ngOnInit() {
@@ -118,7 +113,7 @@ export class SendPage {
   }
 
   incorrectToField(): boolean {
-    let control = this.mainForm.get('addressWallet');
+    let control = this.mainForm.get('contact');
     return (control.touched || control.dirty) && control.hasError('invalidAddress');
   }
 
@@ -180,7 +175,7 @@ export class SendPage {
     }).then(() => {
       return self.auth.checkFirebaseConnection();
     }).then(() => {
-      let address = self.contact ? self.contact.wallet.address : self.mainForm.controls['addressWallet'].value;
+      let address = self.walletAddress;
       address = WalletModel.prefixAddress(address);
       return self.wallet.sendRawTransaction(address, Number(self.mainForm.value.amount));
     }).then((urTransaction) => {
@@ -188,7 +183,7 @@ export class SendPage {
     }).then(() => {
       self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Send UR succeeded. Go to Home page', 'sendUR()');
       self.nav.setRoot(HomePage);
-      return self.toastService.showMessage({ message: "Your UR has been sent!"});
+      return self.toastService.showMessage({ message: "Your UR has been sent!" });
     }).then(() => {
       return self.loadingModal.dismiss();
     }, (error: any) => {
@@ -208,15 +203,15 @@ export class SendPage {
                 text: 'Cancel',
                 role: 'cancel'
               },
-                {
-                  text: 'Recover',
-                  handler: () => {
+              {
+                text: 'Recover',
+                handler: () => {
 
-                    alert.dismiss().then(() => {
-                      self.countDown();
-                    });
-                  }
-                }]
+                  alert.dismiss().then(() => {
+                    self.countDown();
+                  });
+                }
+              }]
             });
             alert.present();
           } else {

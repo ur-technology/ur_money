@@ -1,0 +1,29 @@
+<ion-content class="contacts">
+  <form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && searchRecipients()">
+    <ion-item>
+      <ion-label stacked>Email address or phone number</ion-label>
+      <ion-input [(ngModel)]="searchText" formControlName="sendTo"></ion-input>
+      <button ion-button clear color="primary" style="margin-top:18px;" type="submit" (click)="searchRecipients()" item-right>Search</button>
+    </ion-item>
+    <ion-list>
+      <ion-item class="no-items" text-wrap detail-none *ngIf="results && results.length === 0 && !showSpinner">
+        <p>No results</p>
+      </ion-item>
+      <ion-item *ngFor="let user of results" (click)="recipientSelected(user)">
+        <ion-avatar item-left> <img src='{{user.profilePhotoUrl}}'></ion-avatar>
+        <h2 word-wrap>{{user.name}}</h2>
+        <p>
+          {{country(user.countryCode)}}
+        </p>
+      </ion-item>
+    </ion-list>
+
+    <div *ngIf="showSpinner">
+      <ion-row>
+        <ion-col text-center>
+          <ion-spinner></ion-spinner>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
+</ion-content>
