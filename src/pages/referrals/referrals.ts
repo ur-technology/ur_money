@@ -22,6 +22,7 @@ export class ReferralsPage {
   numOfItemsToReturn = 150;
   searchText: string = '';
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService, private auth: AuthService, private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private countryListService: CountryListService) {
     this.userToLookForReferrals = this.navParams.get('userToLookForReferrals');
   }
@@ -32,11 +33,11 @@ export class ReferralsPage {
   }
 
   getPageTitle(): string {
-    if (!this.userToLookForReferrals || (this.userToLookForReferrals === this.auth.currentUser.key)) {
-      return `My referrals`;
-    } else {
-      return `${this.navParams.get('userToLookName')}'s referrals`;
-    }
+    return this.checkIfLookingMyReferrals() ? `My referrals` : `${this.navParams.get('userToLookName')}'s referrals`;
+  }
+
+  checkIfLookingMyReferrals() {
+    return (!this.userToLookForReferrals || (this.userToLookForReferrals === this.auth.currentUser.key));
   }
 
   loadReferrals() {
