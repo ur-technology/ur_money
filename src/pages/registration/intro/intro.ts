@@ -24,8 +24,8 @@ export class IntroPage {
     this.configPlatform = Config.targetPlatform;
   }
 
-  ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
   }
 
   pleaseContinue() {

@@ -21,8 +21,8 @@ export class SettingsNotificationsPage {
     this.transactionNotificationsEnabled = _.isUndefined(this.transactionNotificationsEnabled) ? true : this.transactionNotificationsEnabled;
   }
 
-  ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
   }
 
   changeChatNotification(value) {

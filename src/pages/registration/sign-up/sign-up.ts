@@ -76,8 +76,11 @@ export class SignUpPage {
     return matches && matches[1];
   }
 
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
+  }
+
   ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
     this.changeTitlesBySignUpType();
   }
 

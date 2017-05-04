@@ -1,4 +1,13 @@
 home-page {
+	.home-title {
+		.toolbar-title-md {
+			color: transparent;
+		}
+		.toolbar-title-ios {
+			color: transparent;
+		}
+	}
+
 	ion-header {
 		.bar-buttons {
 			color: color($colors, primary);
@@ -49,6 +58,14 @@ home-page {
 	text-align: center;
 	color: #555555;
 	margin-bottom: 20px;
+}
+
+.balance-title{
+	text-align: center;
+	font-size: 1.3rem;
+	font-weight: 600;
+	color: color($colors, primary);
+	padding-top: 20px;
 }
 
 .dash-chart-cont .chart-title span {

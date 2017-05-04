@@ -21,8 +21,8 @@ export class SignInTemporaryCodePage {
     this.phone = this.navParams.get('phone');
   }
 
-  ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', `Phone: ${this.phone} - ionViewDidLoad()`);
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
   }
 
   submit() {

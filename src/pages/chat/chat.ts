@@ -52,7 +52,7 @@ export class ChatPage {
   }
 
   ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
     if (this.chatSummary) {
       this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded with chatSummary', 'ionViewDidLoad()');
       this.loadMessages();

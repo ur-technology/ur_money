@@ -3,7 +3,6 @@ import * as firebase from 'firebase';
 import { Injectable } from '@angular/core';
 import { UserModel } from '../models/user.model';
 
-
 @Injectable()
 export class UserService {
   constructor() { }
@@ -80,28 +79,27 @@ export class UserService {
         } else {
           resolve(null);
         }
-
       });
     });
   }
 
-  searchRecipientsWallets(currentUserId: string, searchText: string){
-    return new Promise((resolve, reject)=>{
+  searchRecipientsWallets(currentUserId: string, searchText: string) {
+    return new Promise((resolve, reject) => {
       const taskRef = firebase
-      .database()
-      .ref('userQueue/tasks')
-      .push({
-        _state: 'search_recipients_wallets_requested',
-        userId: currentUserId,
-        searchText: searchText
-      });
+        .database()
+        .ref('userQueue/tasks')
+        .push({
+          _state: 'search_recipients_wallets_requested',
+          userId: currentUserId,
+          searchText: searchText
+        });
 
       const resultRef = taskRef.child('result');
 
-      resultRef.on('value', (snapshot)=>{
+      resultRef.on('value', (snapshot) => {
         let taskResult = snapshot.val();
 
-        if(!taskResult) {
+        if (!taskResult) {
           return;
         }
         resultRef.off('value');

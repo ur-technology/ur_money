@@ -25,7 +25,7 @@ export class InviteLinkPage {
   }
 
   ionViewDidEnter() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
     let Clipboard = require('clipboard');
     new Clipboard('#copy-button');
   }

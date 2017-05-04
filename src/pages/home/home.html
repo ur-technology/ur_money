@@ -3,15 +3,15 @@
         <button ion-button menuToggle icon-only>
             <ion-icon name="menu"></ion-icon>{{envModeDisplay()}}
         </button>
+        <ion-title class="home-title">UR Money</ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content class="background-pic" >
     <div class="dash-chart-cont">
         <div>
-            <div tappable (click)="goToNextStep()">
+            <div tappable (click)="goToNextStep()" class="balance-title">
+              <p *ngIf="balanceTitle">{{balanceTitle}}</p>
               <h1 class="chart-title">
-                <span class="small" *ngIf="balanceTitle">{{balanceTitle}}</span>
-                <br *ngIf="balanceTitle"/>
                 {{balanceValue | urFormat}}<span>&nbsp;UR</span>
               </h1>
             </div>

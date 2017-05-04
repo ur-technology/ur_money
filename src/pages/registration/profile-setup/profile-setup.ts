@@ -39,8 +39,11 @@ export class ProfileSetupPage {
 
   }
 
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
+  }
+
   ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
     let self = this;
     self.auth.reloadCurrentUser().then(() => {
       let name = _.isEmpty(_.trim(self.auth.currentUser.name || '')) ?

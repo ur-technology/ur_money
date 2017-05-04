@@ -32,8 +32,8 @@ export class AuthenticationCodePage {
     });
   }
 
-  ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
   }
 
   checkCode() {

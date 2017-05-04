@@ -61,8 +61,8 @@ export class SendPage {
     this.userVerified = auth.currentUser.isVerified();
   }
 
-  ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
   }
 
   reflectMaxAmountOnPage() {

@@ -70,7 +70,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidEnter()');
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
     //this.showEmailVerifyNotification();
     this.renderChart();
     this.auth.walletChanged.subscribe(() => {
@@ -144,7 +144,7 @@ export class HomePage {
         {
           'waiting-for-sponsor': "Waiting for sponsor to set up account",
           'disabled': "User disabled"
-        }[this.auth.getUserStatus()] || "Bonus generation in progress";
+        }[this.auth.getUserStatus()] || "We are checking your documents and contact you via email once your wallet is verified";
     }
     if (this.auth.announcementConfirmed() && this.chartData.pointsLoaded) {
       let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());

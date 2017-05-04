@@ -58,8 +58,11 @@ export class IdScanPage {
     this.mainForm = new FormGroup(formElements);
   }
 
+  ionViewDidEnter() {
+    this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
+  }
+
   ionViewDidLoad() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Loaded', 'ionViewDidLoad()');
     this.fillCountriesArray();
     this.fillIdTypesArray();
   }

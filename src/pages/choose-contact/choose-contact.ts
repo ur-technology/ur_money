@@ -16,7 +16,6 @@ export class ChooseContactPage {
   mainForm: FormGroup;
   pageName = 'ChooseContactPage';
   userRegisteredForMoreThan90Days: boolean = false;
-  showMessageLegacyUsers: boolean = false;
   dateAllowedToSend:any;
 
 
@@ -69,11 +68,9 @@ export class ChooseContactPage {
     if (restrictionStartDate.isBefore(moment(this.authService.currentUser.createdAt))) {
       createdAtDate =moment(this.authService.currentUser.createdAt);
       this.dateAllowedToSend = moment(createdAtDate).add(90, 'days').format('D/MMM/YYYY');
-      this.showMessageLegacyUsers = false;
     } else {
       createdAtDate = moment(restrictionDateConfig);
       this.dateAllowedToSend = moment(createdAtDate).add(90, 'days').format('D/MMM/YYYY');
-      this.showMessageLegacyUsers = true;
     }
     let days = moment().diff(createdAtDate, 'days');
     this.userRegisteredForMoreThan90Days = days > 90;
