@@ -98,7 +98,6 @@ export class UrMoney {
             this.googleAnalyticsEventsService.emitEvent(this.pageName, `reset-code URL param. unauthenticated`, 'initializeApp()');
             this.nav.setRoot(ResetPasswordWithCodePage, { resetCode });
           } else {
-            this.googleAnalyticsEventsService.emitEvent(this.pageName, `unauthenticated. Redirect to welcome page`, 'initializeApp()');
             this.nav.setRoot(WelcomePage);
           }
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
@@ -116,7 +115,6 @@ export class UrMoney {
             this.googleAnalyticsEventsService.emitEvent(this.pageName, `Redirect to SelfieMatchPage`, 'initializeApp()');
             this.nav.setRoot(SelfieMatchPage);
           } else {
-            this.googleAnalyticsEventsService.emitEvent(this.pageName, `Redirect to IdScanPage`, 'initializeApp()');
             this.nav.setRoot(IdScanPage);
           }
         } else {
@@ -142,7 +140,6 @@ export class UrMoney {
             }
 
           } else {
-            this.googleAnalyticsEventsService.emitEvent(this.pageName, `Just redirect to HomePage`, 'initializeApp()');
             this.contactsService.loadContacts(this.auth.currentUserId, this.auth.currentUser.phone, this.auth.currentUser.countryCode);
             this.nav.setRoot(HomePage);
           }
