@@ -1,6 +1,19 @@
 import { FirebaseModel } from './firebase-model';
 import * as _ from 'lodash';
 
+// This should be kept in sync with the user queue processor!
+export enum UserStates {
+  NoSponsor = 0,
+  Disabled,
+  FraudSuspected,
+  BonusReceived,
+  InvalidBonus,
+  WaitingForBonus,
+  MissingID,
+  AwaitingReview,
+  MissingWallet,
+}
+
 export class UserModel extends FirebaseModel {
   static _containerPath = 'users';
 
@@ -30,7 +43,8 @@ export class UserModel extends FirebaseModel {
   signUpBonusApproved: boolean;
   showBonusConfirmedCallToAction: boolean;
   isEmailVerified: boolean;
-  createdAt:  number
+  createdAt: number;
+  fraudSuspected: boolean;
 
   static fullName(user: any) {
     return _.trim(`${user.firstName || ''} ${user.middleName || ''} ${user.lastName || ''}`).replace(/  /, ' ');
@@ -65,7 +79,8 @@ export class UserModel extends FirebaseModel {
         'signUpBonusApproved',
         'showBonusConfirmedCallToAction',
         'isEmailVerified',
-        'createdAt'
+        'createdAt',
+        'fraudSuspected',
       ]).then(resultObject => {
         let result = new UserModel();
         result.key = key;
@@ -149,5 +164,95 @@ export class UserModel extends FirebaseModel {
     // user management system, so it seems reasonable to use it as
     // an indication of ID verifications – even if it's misnamed.
     return this.signUpBonusApproved;
+  }
+
+  status(): number {
+
+    if (!this.sponsor) {
+      return UserStates.NoSponsor;
+    }
+
+    if (this.disabled) {
+      return UserStates.Disabled
+    }
+
+    if (this.fraudSuspected) {
+      return UserStates.FraudSuspected
+    }
+
+    if (this.wallet &&
+      this.wallet.announcementTransaction &&
+      this.wallet.announcementTransaction.hash &&
+      this.wallet.announcementTransaction.blockNumber &&
+      this.signUpBonusApproved) {
+      return UserStates.BonusReceived;
+    }
+
+    if (this.wallet &&
+      this.wallet.announcementTransaction &&
+      this.wallet.announcementTransaction.hash &&
+      this.wallet.announcementTransaction.blockNumber) {
+      return UserStates.InvalidBonus;
+    }
+
+    if (this.wallet &&
+      this.wallet.announcementTransaction &&
+      this.wallet.announcementTransaction.hash) {
+      return UserStates.WaitingForBonus;
+    }
+
+    if (!this.signUpBonusApproved &&
+      !(this.idUploaded && this.selfieMatched)) {
+      return UserStates.MissingID;
+    }
+
+    if (!this.signUpBonusApproved) {
+      return UserStates.AwaitingReview;
+    }
+
+    if (!(this.wallet && this.wallet.address)) {
+      return UserStates.MissingWallet;
+    }
+
+    return -1;
+  }
+
+  statusDescription(): string {
+    return UserModel.StatusString(this.status());
+  }
+
+  public static StatusString(status: number): string {
+
+    switch (status) {
+
+      case UserStates.NoSponsor:
+        return 'No sponsor';
+
+      case UserStates.Disabled:
+        return 'Disabled'
+
+      case UserStates.FraudSuspected:
+        return 'Fraud suspected'
+
+      case UserStates.BonusReceived:
+        return 'Bonus received';
+
+      case UserStates.InvalidBonus:
+        return 'Bonus received (prior to ID approval requirements)';
+
+      case UserStates.WaitingForBonus:
+        return 'Approved, waiting for bonus';
+
+      case UserStates.MissingID:
+        return 'Identifcation documents not provided';
+
+      case UserStates.AwaitingReview:
+        return 'Waiting for review';
+
+      case UserStates.MissingWallet:
+        return 'Missing wallet';
+    }
+
+    return "Unknown status"
   }
 }

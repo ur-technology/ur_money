@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth';
+import { UserModel } from '../../models/user.model';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 import * as _ from 'lodash';
 import { ChatPage } from '../../pages/chat/chat';
@@ -42,7 +43,7 @@ export class ReferralsPage {
     let self = this;
     self.showSpinner = true;
     self.endOfResults = true;
-    self.userService.getReferrals(this.auth.currentUser.key, this.userToLookForReferrals ? this.userToLookForReferrals : this.auth.currentUser.key, this.startAt, this.numOfItemsToReturn, this.searchText.substring(0,15)).then((result: any) => {
+    self.userService.getReferrals(this.auth.currentUser.key, this.userToLookForReferrals ? this.userToLookForReferrals : this.auth.currentUser.key, this.startAt, this.numOfItemsToReturn, this.searchText.substring(0, 15)).then((result: any) => {
       if (result) {
         self.referrals = self.referrals.concat(_.values(result.referrals));
         self.endOfResults = result.endOfResults;
@@ -59,6 +60,10 @@ export class ReferralsPage {
     event.stopPropagation();
     let self = this;
     self.navCtrl.push(ChatPage, { contact: contact });
+  }
+
+  status(user): string {
+    return UserModel.StatusString(user.state);
   }
 
   searchItems() {

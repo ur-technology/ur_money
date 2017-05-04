@@ -26,6 +26,7 @@
     <ion-item detail-none *ngFor="let referral of referrals" (click)="openSelectedUserReferrals(referral)">
       <ion-avatar item-left> <img src='{{referral.profilePhotoUrl}}'></ion-avatar>
       <h2 word-wrap>{{referral.name}}</h2>
+	  <h3><em>{{status(referral)}}</em></h3>
       <p>
         Downline: {{referral.downlineSize}}
       </p>
