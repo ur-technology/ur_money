@@ -2,7 +2,6 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { ElementRef, Inject, Component } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AngularFire } from 'angularfire2';
 import { NavController, NavParams, Platform, AlertController, LoadingController } from 'ionic-angular';
 import  Decimal  from 'decimal.js';
 
@@ -57,7 +56,6 @@ export class HomePage {
     public nav: NavController,
     public platform: Platform,
     private loadingController: LoadingController,
-    public angularFire: AngularFire,
     public auth: AuthService,
     public chartData: ChartDataService,
     public toast: ToastService,

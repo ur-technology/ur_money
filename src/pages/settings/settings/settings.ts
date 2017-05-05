@@ -40,8 +40,9 @@ export class SettingsPage {
       text: "Ok",
       handler: () => {
         alert.dismiss();
-        this.auth.angularFire.auth.logout();
+        this.auth.signOut();
         return false;
+
       }
     });
     alert.present();

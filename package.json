@@ -28,7 +28,7 @@
     "@ionic-native/status-bar": "3.4.2",
     "@ionic-native/toast": "3.4.2",
     "@ionic/storage": "2.0.1",
-    "angularfire2": "2.0.0-beta.8",
+    "angularfire2": "4.0.0-rc.0",
     "buffer": "^4.7.0",
     "clipboard": "^1.5.15",
     "country-data": "0.0.25",
