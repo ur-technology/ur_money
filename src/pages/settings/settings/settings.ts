@@ -39,7 +39,9 @@ export class SettingsPage {
     alert.addButton({
       text: "Ok",
       handler: () => {
+        alert.dismiss();
         this.auth.angularFire.auth.logout();
+        return false;
       }
     });
     alert.present();

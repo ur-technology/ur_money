@@ -96,6 +96,7 @@ export class SelfieMatchPage {
               {
                 text: "Try again",
                 handler: () => {
+                  return false;
                 }
               }
             ]

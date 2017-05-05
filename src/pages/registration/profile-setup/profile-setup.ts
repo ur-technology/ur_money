@@ -62,6 +62,7 @@ export class ProfileSetupPage {
         text: "Ok",
         handler: () => {
           alert.dismiss();
+          return false;
         }
       }]
     });

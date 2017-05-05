@@ -131,7 +131,7 @@ export class SignUpPage {
           let alert = this.alertCtrl.create({
             message: "This phone number already exists on our records, please go to sign in page",
             buttons: [
-              { text: "Cancel", handler: () => { alert.dismiss(); } },
+              { text: "Cancel", handler: () => { alert.dismiss(); return false; } },
               {
                 text: "Sign In", handler: () => {
                   alert.dismiss().then(() => {
@@ -139,6 +139,7 @@ export class SignUpPage {
                       self.nav.push(SignInPage);
                     });
                   });
+                  return false;
                 }
               }
             ]
@@ -189,6 +190,7 @@ export class SignUpPage {
         text: "Ok",
         handler: () => {
           alert.dismiss();
+          return false;
         }
       }
       ]
@@ -204,6 +206,7 @@ export class SignUpPage {
         text: "Ok",
         handler: () => {
           alert.dismiss();
+          return false;
         }
       }
       ]

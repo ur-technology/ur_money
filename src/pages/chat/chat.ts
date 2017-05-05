@@ -158,6 +158,7 @@ export class ChatPage {
               this.sendMessage(isFirstMessageInChat);
               this.setBlockContactInDB(false);
             });
+            return false;
           }
         }
       ]
@@ -292,6 +293,7 @@ export class ChatPage {
               }
               this.setBlockContactInDB(true);
             });
+            return false;
           }
         }
       ]
