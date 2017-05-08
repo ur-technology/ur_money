@@ -45,7 +45,7 @@
             </ion-avatar>
             <h2>{{transaction.title}} <span class="item-date-time">{{transaction.updatedAt|dateAndTime}}</span></h2>
             <p>{{transaction.messageText}} <span *ngIf="showSeeMore"><a (click)="txtLimit = null; showSeeMore = !showSeeMore">See more</a></span>
-              <span class="transaction-filter-{{transaction.type}}">{{displayableTransactionType(transaction.type)}}</span></p>
+            </p>
             <span class="icon trans-ur"
                 item-right>{{weiToURString(transaction.amount || "0")}}<br/>  UR</span>
         </ion-item>
