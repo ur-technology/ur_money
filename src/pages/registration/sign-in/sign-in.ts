@@ -49,7 +49,7 @@ export class SignInPage {
 
   submit() {
     let self = this;
-    let phone = Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix);
+    let phone = Utils.toE164FormatPhoneNumber(this.mainForm.value.phone, this.mainForm.value.country.countryCode);
     self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked sign In button', `Phone: ${phone} - submit()`);
     let loadingModal = self.loadingController.create({
       content: "Please wait...",

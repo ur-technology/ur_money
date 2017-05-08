@@ -110,7 +110,7 @@ export class SignUpPage {
     let taskState: string;
     loadingModal.present().then(() => {
       return self.auth.requestSignUpCodeGeneration(
-        Utils.normalizedPhone(this.mainForm.value.country.telephoneCountryCode, this.mainForm.value.phone, this.mainForm.value.country.mobileAreaCodePrefix),
+        Utils.toE164FormatPhoneNumber(this.mainForm.value.phone, this.mainForm.value.country.countryCode),
         self.mainForm.value.password,
         self.signUpType === 'sponsorReferralCode' ? self.mainForm.value.sponsorReferralCode : null,
         self.signUpType === 'email' ? self.mainForm.value.email : null
@@ -148,7 +148,7 @@ export class SignUpPage {
           break;
 
         case 'code_generation_canceled_because_voip_phone_not_allowed':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'code_generation_canceled_because_voip_phone_not_allowed',  'submit()');
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'code_generation_canceled_because_voip_phone_not_allowed', 'submit()');
           self.toastService.showMessage({ message: "Signups via a VOIP or other virtual service like Skype and Google voice are not allowed. Please use a number provided by a conventional mobile carrier." });
           break;
 
