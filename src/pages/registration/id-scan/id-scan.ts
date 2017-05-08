@@ -147,12 +147,14 @@ export class IdScanPage {
               {
                 text: "Try again",
                 handler: () => {
+                  return false;
                 }
               },
               {
                 text: "Let a human do it",
                 handler: () => {
                   this.nav.setRoot(SelfieMatchPage);
+                  return false;
                 }
               }
             ]

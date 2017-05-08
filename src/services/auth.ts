@@ -1,5 +1,4 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { AngularFire } from 'angularfire2';
 import * as _ from 'lodash';
 import * as log from 'loglevel';
 import { ContactsService } from '../services/contacts.service';
@@ -8,6 +7,7 @@ import Decimal from 'decimal.js';
 import { UserService } from './user.service';
 import { UserModel } from '../models/user.model';
 import * as firebase from 'firebase';
+import {AngularFireDatabase} from 'angularfire2/database';
 
 declare var trackJs: any;
 
@@ -25,7 +25,7 @@ export class AuthService {
   public walletChanged = new EventEmitter();
 
   constructor(
-    public angularFire: AngularFire,
+    private angularFire: AngularFireDatabase,
     public contactsService: ContactsService,
     private userService: UserService ) {
   }
@@ -66,6 +66,10 @@ export class AuthService {
     }, (error) => {
       callback(error);
     });
+  }
+
+  signOut(){
+    firebase.auth().signOut();
   }
 
   reloadCurrentUser(): Promise<any> {

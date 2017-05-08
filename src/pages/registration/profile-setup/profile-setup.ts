@@ -62,6 +62,7 @@ export class ProfileSetupPage {
         text: "Ok",
         handler: () => {
           alert.dismiss();
+          return false;
         }
       }]
     });
@@ -70,16 +71,17 @@ export class ProfileSetupPage {
 
   submit() {
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on Continue button', 'submit()');
-    let loadingModal = this.loadingController.create({ content: "Please wait..."});
+    let loadingModal = this.loadingController.create({ content: "Please wait..." });
+    let email = this.mainForm.value.email.toLowerCase();
 
     loadingModal
       .present()
       .then(() => {
         // Check email uniqueness
-        if (this.auth.currentUser.email === this.mainForm.value.email) {
+        if (this.auth.currentUser.email === email) {
           return true;
         } else {
-          return this.userService.checkEmailUniqueness(this.mainForm.value.email);
+          return this.userService.checkEmailUniqueness(email);
         }
       })
       .then((isUnique: boolean) => {
@@ -87,7 +89,7 @@ export class ProfileSetupPage {
           throw 'email_exists';
         }
 
-        return this.auth.currentUser.update(this.mainForm.value);
+        return this.auth.currentUser.update({ name: this.mainForm.value.name, email: email });
       })
       .then(() => {
         return this.auth.sendVerificationEmail(

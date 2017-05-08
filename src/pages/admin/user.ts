@@ -1,4 +1,4 @@
-import { NavController, NavParams, ToastController, AlertController, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
@@ -35,7 +35,6 @@ export class UserPage {
     public nav: NavController,
     public navParams: NavParams,
     public auth: AuthService,
-    private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService

@@ -1,4 +1,4 @@
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { HomePage } from '../../home/home';
 import { Component } from '@angular/core';
 import { Config } from '../../../config/config';
@@ -16,7 +16,6 @@ export class IntroPage {
 
   constructor(
     public nav: NavController,
-    public alertCtrl: AlertController,
     public contactsService: ContactsService,
     public auth: AuthService,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService

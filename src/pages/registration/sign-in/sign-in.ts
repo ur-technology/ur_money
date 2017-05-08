@@ -80,7 +80,7 @@ export class SignInPage {
           let alert = this.alertCtrl.create({
             message: "The number that you entered did not match our records. Please double-check and try again.",
             buttons: [
-              { text: "Cancel", handler: () => { alert.dismiss(); } },
+              { text: "Cancel", handler: () => { alert.dismiss(); return false;} },
               {
                 text: "Sign up instead?", handler: () => {
                   alert.dismiss().then(() => {
@@ -88,6 +88,7 @@ export class SignInPage {
                       self.nav.push(SignUpPage);
                     });
                   });
+                  return false;
                 }
               }
             ]

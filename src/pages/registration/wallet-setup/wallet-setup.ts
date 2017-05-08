@@ -79,6 +79,8 @@ export class WalletSetupPage {
           text: 'Cancel',
           role: 'cancel',
           handler: data => {
+            alert.dismiss();
+            return false;
           }
         },
         {
@@ -95,7 +97,7 @@ export class WalletSetupPage {
                 self.toastService.showMessage({ message: "The secret phrase you re-entered is incorrect. Please try again." });
               });
             }
-
+            return false;
           }
         }
       ]
@@ -126,6 +128,7 @@ export class WalletSetupPage {
         text: "OK",
         handler: () => {
           alerta.dismiss();
+          return false;
         }
       }
       ]

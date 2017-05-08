@@ -59,7 +59,9 @@ import { AcuantService } from '../services/acuant';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { FormsModule } from '@angular/forms';
 import { Config } from '../config/config';
 import { SponsorWaitPage } from '../pages/sponsor-wait/sponsor-wait';
@@ -81,11 +83,6 @@ export const firebaseConfig = {
   databaseURL: 'https://' + Config.firebaseProjectId + '.firebaseio.com',
   storageBucket: Config.firebaseProjectId + '.appspot.com'
 };
-
-const myFirebaseAuthConfig = {
-  provider: AuthProviders.Custom,
-  method: AuthMethods.CustomToken
-}
 
 @NgModule({
   declarations: [
@@ -143,7 +140,9 @@ const myFirebaseAuthConfig = {
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+    AngularFireModule.initializeApp(firebaseConfig),// imports firebase/app needed for everything
+    AngularFireDatabaseModule, // imports firebase/database, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     IonicModule.forRoot(UrMoney, {
       platforms: {
         ios: {

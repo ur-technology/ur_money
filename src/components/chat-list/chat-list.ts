@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { AuthService } from '../../services/auth';
 import { ChatPage } from '../../pages/chat/chat';
 import { App } from 'ionic-angular';
-import { AngularFire } from 'angularfire2';
+import {AngularFireDatabase} from 'angularfire2/database';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class ChatListComponent {
   x: any[];
   chatSummarySubscription: Subscription;
 
-  constructor(public nav: NavController, public auth: AuthService, public angularFire: AngularFire, public app: App) {
+  constructor(public nav: NavController, public auth: AuthService, public angularFire: AngularFireDatabase, public app: App) {
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class ChatListComponent {
   }
 
   load() {
-    this.chatSummarySubscription = this.angularFire.database.list(`/users/${this.auth.currentUserId}/chatSummaries`).subscribe(data => {
+    this.chatSummarySubscription = this.angularFire.list(`/users/${this.auth.currentUserId}/chatSummaries`).subscribe(data => {
       this.chats = _.filter(data, (chatSummary: any) => {
         return chatSummary.lastMessage;
       });
