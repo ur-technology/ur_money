@@ -16,7 +16,7 @@ export class ToastService {
     return self.dismissPreviousToast().then(() => {
       options = _.defaults(options, {
         message: options.message,
-        duration: 5500,
+        duration: options.duration ? options.duration : 5500,
         position: 'bottom'
       });
       self.toast = self.toastController.create(options);
