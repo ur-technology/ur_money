@@ -27,7 +27,7 @@ export class SignInTemporaryCodePage {
 
   submit() {
     let self = this;
-    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit code button', `Phone: ${self.phone} - submit()`);
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit code button', `Phone: ${self.phone} - submit sign in temporary code`);
     let task: string;
     let loadingModal = self.loadingController.create({ content: "Please wait..." });
 
@@ -39,23 +39,22 @@ export class SignInTemporaryCodePage {
     }).then(() => {
       switch (task) {
         case 'request_check_temp_password_succeded':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Submited code succeded. Go to ResetPasswordPage', `Phone: ${self.phone} - submit()`);
           self.navCtrl.setRoot(ResetPasswordPage, {phone: self.phone});
           break;
         case 'request_check_temp_password_canceled_because_wrong_password':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Wrong code submited', `Phone: ${self.phone} - submit()`);
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Wrong code submited', `Phone: ${self.phone} - temp code - wrong code`);
           self.toastService.showMessage({ message: "The number and password that you entered did not match our records. Please double-check and try again."});
           break;
         case 'request_check_temp_password_canceled_because_user_not_found':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'User not found', `Phone: ${self.phone} - submit()`);
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'User not found', `Phone: ${self.phone} - temp code - user not found`);
           self.toastService.showMessage({ message: 'Your user account has been disabled.' });
           break;
         default:
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Unexpected Problem', `Phone: ${self.phone} - submit()`);
+          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Unexpected Problem', `Phone: ${self.phone} - temp code - problem`);
           self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       }
     }, (error) => {
-      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Unexpected Problem', `Phone: ${self.phone} - submit()`);
+      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Unexpected Problem', `Phone: ${self.phone} - temp code - error`);
       loadingModal.dismiss().then(() => {
         self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       });

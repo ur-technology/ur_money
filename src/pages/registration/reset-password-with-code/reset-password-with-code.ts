@@ -44,7 +44,7 @@ export class ResetPasswordWithCodePage {
   }
 
   submit() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit button', 'submit()');
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit button', 'submit reset password info');
     const loadingModal = this.loadingController
       .create({
         content: "Please wait..."
@@ -63,18 +63,15 @@ export class ResetPasswordWithCodePage {
           .then(() => {
             switch (taskState) {
               case 'reset_password_finished':
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Reset password finished. Go to sign in', 'submit()');
                 this.toastService.showMessage({ message: "Your password has been changed. For your security, please sign in with your new password." });
                 this.navCtrl.setRoot(SignInPage);
                 break;
 
               case 'reset_password_canceled_because_user_not_found':
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'reset_password_canceled_because_user_not_found', 'submit()');
                 this.toastService.showMessage({ message: "The reset code that you entered did not match our records. Please double-check and try again."});
                 break;
 
               case 'reset_password_canceled_because_user_disabled':
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'reset_password_canceled_because_user_disabled', 'submit()');
                 this.toastService.showMessage({ message: 'Your user account has been disabled.'});
                 break;
 
@@ -83,12 +80,10 @@ export class ResetPasswordWithCodePage {
                 break;
 
               default:
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'unexpected Problem', 'submit()');
                 this.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
           });
       }, (error) => {
-        this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Catch unexpected Problem', 'submit()');
         loadingModal
           .dismiss()
           .then(() => {

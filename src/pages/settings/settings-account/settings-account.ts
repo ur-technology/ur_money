@@ -59,7 +59,7 @@ export class SettingsAccountPage {
 
   submit() {
     let self = this;
-    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit button', 'submit()');
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit button', 'submit setting account info');
     let profile: any = {
       firstName: self.mainForm.value.firstName,
       lastName: self.mainForm.value.lastName,

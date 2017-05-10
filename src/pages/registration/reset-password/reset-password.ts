@@ -30,7 +30,7 @@ export class ResetPasswordPage {
   }
 
   submit() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit button', 'submit()');
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit button', 'submit reset passsword info');
     let self = this;
     let taskResult;
     let loadingModal = self.loadingController.create({ content: "Please wait..." });
@@ -45,17 +45,14 @@ export class ResetPasswordPage {
 
       switch (taskResult) {
         case 'request_change_temp_password_succeeded':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Change password succeeded', 'submit()');
           self.toastService.showMessage({ message: "Your password has been changed. For your security, please sign in with your new password." });
           self.navCtrl.setRoot(SignInPage);
           break;
 
         default:
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'unexpected Problem', 'submit()');
           self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       }
     }, (error) => {
-      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Catch. unexpected Problem', 'submit()');
       loadingModal.dismiss().then(() => {
         self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       });

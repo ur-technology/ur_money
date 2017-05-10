@@ -106,24 +106,19 @@ export class HomePage {
           .then(() => {
             switch (taskState) {
               case 'send_verification_email_finished':
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_finished', 'sendVerificationEmail()');
                 this.toast.showMessage({ message: "A verification email has been sent to your email address. Please read it and follow the instructions. If you don't see the message, please check your spam folder." });
                 break;
               case 'send_verification_email_canceled_because_user_not_found':
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_not_found', 'sendVerificationEmail()');
                 this.toast.showMessage({ message: 'The email that you entered did not match our records. Please double-check and try again.' });
                 break;
               case 'send_verification_email_canceled_because_user_disabled':
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_disabled', 'sendVerificationEmail()');
                 this.toast.showMessage({ message: 'Your user account has been disabled.' });
                 break;
               default:
-                this.googleAnalyticsEventsService .emitEvent(this.pageName, 'no taskState', 'sendVerificationEmail()');
                 this.toast.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
           });
       }, (error) => {
-        this.googleAnalyticsEventsService .emitEvent(this.pageName, 'Catch error', 'sendVerificationEmail()');
         loadingModal
           .dismiss()
           .then(() => {

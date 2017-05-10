@@ -33,7 +33,7 @@ export class LostPasswordPage {
 
   submit() {
     let self = this;
-    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Click on submit', 'submit()');
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Click on submit', 'submit lost password info');
     let loadingModal = self.loadingController.create({ content: "Please wait..." });
 
     loadingModal
@@ -47,32 +47,27 @@ export class LostPasswordPage {
           .then(() => {
             switch (taskState) {
               case 'send_recovery_email_finished':
-                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Go to ResetPasswordWithCodePage', 'submit()');
                 self.toastService.showMessage({ message: "A recovery email has been sent to the email address you provided. Please follow the instructions" });
                 break;
 
               case 'send_recovery_email_canceled_because_user_not_found':
-                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. Email not found', 'submit()');
                 self.toastService.showMessage({ message: 'The email that you entered did not match our records. Please double-check and try again.' });
                 break;
 
               case 'send_recovery_email_canceled_because_user_disabled':
-                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. User disabled', 'submit()');
                 self.toastService.showMessage({ message: 'Your user account has been disabled.' });
                 break;
 
               case 'send_recovery_email_canceled_because_email_not_verified':
-                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. email not verified and wanted to change password', 'submit()');
                 self.toastService.showMessage({ message: 'Your email is not verified. Please contact support@ur.technology.' });
                 break;
 
               default:
-                self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error. unexpected Problem', 'submit()');
                 self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
           });
       }, (error) => {
-        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error catch. unexpected Problem', 'submit()');
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error catch. unexpected Problem', 'error submit lost password info');
         loadingModal
           .dismiss()
           .then(() => {

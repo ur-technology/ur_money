@@ -30,7 +30,7 @@ export class ChangePasswordPage {
 
   submit() {
     let self = this;
-    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit button', 'submit()');
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit button', 'submit change password info');
     let resultTask: string;
     let loading = this.loadingController.create({ content: "Please wait..." });
     loading.present().then(() => {
@@ -42,10 +42,8 @@ export class ChangePasswordPage {
     }).then(() => {
       switch (resultTask) {
         case 'user_check_password_canceled_because_wrong_password':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'user_check_password_canceled_because_wrong_password', 'submit()');
           throw { errorMessage: 'The current password that you entered does not match our records.' };
         case 'user_check_password_succeded':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'user_check_password_succeded', 'submit()');
           return Promise.resolve();
         default:
           throw { errorMessage: 'There has been a problem while changing the password' };
@@ -60,16 +58,14 @@ export class ChangePasswordPage {
     }).then(() => {
       switch (resultTask) {
         case 'user_password_change_succeeded':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Change password succeeded', 'submit()');
           self.toastService.showMessage({ message: 'Password changed' });
           this.navCtrl.setRoot(HomePage);
           break;
         default:
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'unexpected Problem Changing Password', 'submit()');
           self.toastService.showMessage({ message: 'There has been a problem while changing the password' });
       }
     }).catch(error => {
-      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Catch. Unexpected Problem Changing Password', 'submit()');
+      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Catch. Unexpected Problem Changing Password', 'error changing pass');
       loading.dismiss().then(() => {
         self.toastService.showMessage({ message: error.errorMessage });
       });
