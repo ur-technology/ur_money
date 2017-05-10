@@ -3,7 +3,9 @@
     <ion-item>
       <ion-label stacked>Email address or phone number</ion-label>
       <ion-input [(ngModel)]="searchText" formControlName="sendTo"></ion-input>
-      <button ion-button clear color="primary" style="margin-top:18px;" type="submit" (click)="searchRecipients()" item-right>Search</button>
+      <button ion-button  clear color="primary" style="margin-top:18px;" type="submit" (click)="searchRecipients()"  icon-right item-right>Search
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
     </ion-item>
     <ion-list>
       <ion-item class="no-items" text-wrap detail-none *ngIf="results && results.length === 0 && !showSpinner">

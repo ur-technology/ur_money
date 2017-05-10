@@ -27,13 +27,15 @@
 
 	<div *ngIf="option=='address'">
 		<div class="not-approved-yet" *ngIf="!userRegisteredForMoreThan90Days">
-			Your account will be able to send UR to external wallets starting {{dateAllowedToSend}}.  Until then, you can continue to earn referral bonuses and transact within the UR community.  
+			Your account will be able to send UR to external wallets starting {{dateAllowedToSend}}.  Until then, you can continue to earn referral bonuses and transact within the UR community.
 		</div>
 		<form [formGroup]="mainForm" (ngSubmit)="mainForm.valid && dismissWalletAddress()">
 			<ion-item>
 				<ion-label stacked>Wallet address</ion-label>
 				<ion-input formControlName="addressWallet" placeholder="Enter the receiver's UR address"></ion-input>
-				<button ion-button clear type="submit" color="primary" style="margin-top:18px;" [disabled]="!mainForm.valid" item-right>Continue</button>
+				<button ion-button clear type="submit" color="primary" style="margin-top:18px;" [disabled]="!mainForm.valid"  icon-right  item-right>Continue
+					<ion-icon name="arrow-forward"></ion-icon>
+				</button>
 			</ion-item>
 			<br />
 			<div class="validatorError" *ngIf="incorrectToField()">UR address is invalid</div>

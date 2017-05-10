@@ -18,8 +18,7 @@ $text-color: #4d4d4d; // $background-color:  #f1f3f4;
 $background-color: #fff;
 $list-background-color: #fff;
 $toolbar-background: color($colors, primary); // App iOS Variables
-$split-pane-side-max-width: 20%;
-// --------------------------------------------------
+$split-pane-side-max-width: 20%; // --------------------------------------------------
 // iOS only Sass variables can go here
 $select-ios-padding-left: 0;
 $text-input-ios-show-valid-highlight: false;
@@ -31,7 +30,7 @@ $card-ios-header-font-size: 1.7rem;
 $card-ios-header-padding: 5px;
 $card-ios-padding-right: 8px;
 $card-ios-padding-left: 8px;
-// --------------------------------------------------
+$cordova-ios-statusbar-padding: 4px; // --------------------------------------------------
 // Material Design only Sass variables can go here
 
 .md ion-header::after {
@@ -53,8 +52,7 @@ $label-md-text-color: color($colors, primary);
 $card-md-header-font-size: 1.7rem;
 $card-md-header-padding: 5px;
 $card-md-padding-right: 8px;
-$card-md-padding-left: 8px;
-// App Windows Variables
+$card-md-padding-left: 8px; // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
 // App Theme

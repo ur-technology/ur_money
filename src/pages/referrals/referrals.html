@@ -7,7 +7,8 @@
       <ion-label stacked>Find user</ion-label>
       <ion-input [(ngModel)]="searchText" placeholder="By Name, Email or Phone" max="10">
       </ion-input>
-      <button ion-button clear (click)="searchItems()" item-right>Search
+      <button ion-button clear (click)="searchItems()" icon-right item-right>Search
+          <ion-icon name="arrow-forward"></ion-icon>
           </button>
     </ion-item>
   </ion-list>
