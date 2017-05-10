@@ -103,7 +103,7 @@ export class SignUpPage {
 
   submit() {
     let self = this;
-    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Sign up requested', 'submit()');
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Sign up requested', 'submit sign up info');
     let loadingModal = self.loadingController.create({
       content: "Please wait...",
     });
@@ -121,13 +121,11 @@ export class SignUpPage {
     }).then(() => {
       switch (taskState) {
         case 'code_generation_finished':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Go to AuthenticationCodePage', 'submit()');
           self.auth.countryCode = this.mainForm.value.country.countryCode;
           self.nav.push(AuthenticationCodePage);
           break;
 
         case 'code_generation_canceled_because_user_already_signed_up':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'user Already Exists', 'submit()');
           let alert = this.alertCtrl.create({
             message: "This phone number already exists on our records, please go to sign in page",
             buttons: [
@@ -148,28 +146,23 @@ export class SignUpPage {
           break;
 
         case 'code_generation_canceled_because_voip_phone_not_allowed':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'code_generation_canceled_because_voip_phone_not_allowed', 'submit()');
           self.toastService.showMessage({ message: "Signups via a VOIP or other virtual service like Skype and Google voice are not allowed. Please use a number provided by a conventional mobile carrier." });
           break;
 
         case 'code_generation_canceled_because_email_not_found':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'code_generation_canceled_because_email_not_found', 'submit()');
           self.toastService.showMessage({ message: "The email that you entered was not found in our records. Please double-check and try again." });
           break;
 
         case 'code_generation_canceled_because_sponsor_not_found':
         case 'code_generation_canceled_because_sponsor_disabled':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'sponsor not found', 'submit()');
           self.toastService.showMessage({ message: "There is no sponsor with that referral code, please try another referral code" });
           break;
 
         default:
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'error unexpectedProblem', 'submit()');
           self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
 
       }
     }, (error) => {
-      self.googleAnalyticsEventsService.emitEvent(self.pageName, 'error unexpectedProblem', 'submit()');
       loadingModal.dismiss().then(() => {
         self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       });

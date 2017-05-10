@@ -122,7 +122,7 @@ export class IdScanPage {
   }
 
   submit() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit id verification', 'submit()');
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit id verification', 'submit id scan info');
     let loadingModal = this.loadingController.create({ content: "Please wait..." });
     loadingModal.present();
 
@@ -132,12 +132,11 @@ export class IdScanPage {
         this.idCardData = idCardData;
 
         loadingModal.dismiss().then(() => {
-          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Go to SelfieMatchPage', 'submit()');
           this.nav.push(SelfieMatchPage);
         });
       },
       (error) => {
-        this.googleAnalyticsEventsService.emitEvent(this.pageName, 'ID scan failed: ' + error, 'submit()');
+        this.googleAnalyticsEventsService.emitEvent(this.pageName, 'ID scan failed: ' + error, 'error id scan');
         trackJs.track('ID scan failed: ' + error);
         loadingModal.dismiss().then(() => {
           this.alertCtrl.create({

@@ -50,7 +50,7 @@ export class SignInPage {
   submit() {
     let self = this;
     let phone = Utils.toE164FormatPhoneNumber(this.mainForm.value.phone, this.mainForm.value.country.countryCode);
-    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked sign In button', `Phone: ${phone} - submit()`);
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked sign In button', `Phone: ${phone} - submit sign in info`);
     let loadingModal = self.loadingController.create({
       content: "Please wait...",
     });
@@ -65,17 +65,14 @@ export class SignInPage {
     }).then(() => {
       switch (taskState) {
         case 'request_sign_in_succeded':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Going to SignInPasswordPage', `Phone: ${phone} - submit()`);
           self.nav.push(SignInPasswordPage, { phone: phone });
           break;
 
         case 'request_sign_in_canceled_because_user_does_not_have_password_set':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Going to SignInTemporaryCodePage', `Phone: ${phone} - submit()`);
           self.nav.push(SignInTemporaryCodePage, { phone: phone });
           break;
 
         case 'request_sign_in_canceled_because_user_not_found':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: user not found', `Phone: ${phone} - submit()`);
           trackJs.track('Login failed: user not found');
           let alert = this.alertCtrl.create({
             message: "The number that you entered did not match our records. Please double-check and try again.",
@@ -97,19 +94,17 @@ export class SignInPage {
           break;
 
         case 'request_sign_in_canceled_because_user_disabled':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Error user disabled', `Phone: ${phone} - submit()`);
           self.toastService.showMessage({ message: 'Your user account has been disabled.' });
           break;
 
         default:
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', `Phone: ${phone} - submit()`);
           trackJs.track('Login failed: unexpected problem');
           self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
 
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', `Phone: ${phone} - submit()`);
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', `Phone: ${phone} - submit sign in - error`);
         trackJs.track('Login failed: unexpected problem');
         self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       });

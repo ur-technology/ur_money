@@ -29,7 +29,7 @@ export class SignInPasswordPage {
 
   submit() {
     let self = this;
-    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit password button', 'submit()');
+    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Clicked on submit password button', 'submit in password info');
     let task: string;
     let loadingModal = self.loadingController.create({ content: "Please wait..." });
 
@@ -43,27 +43,22 @@ export class SignInPasswordPage {
     }).then(() => {
       switch (task) {
         case 'sign_in_finished':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Sign in finished', 'submit()');
           // Auth service will redirect to the right page after login
           break;
         case 'sign_in_canceled_because_password_incorrect':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: incorrect password' , 'submit()');
           trackJs.track('Login failed (password page): incorrect password');
           self.toastService.showMessage({ message: "The number and password that you entered did not match our records. Please double-check and try again." });
           break;
         case 'request_sign_in_canceled_because_user_disabled':
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: user disabled', 'submit()');
           trackJs.track('Login failed (password page): user disabled');
           self.toastService.showMessage({ message: 'Your user account has been disabled.' });
           break;
         default:
-          self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', 'submit()');
           trackJs.track('Login failed (password page): unexpected problem');
           self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Login failed: unexpected problem', 'submit()');
         trackJs.track('Login failed (password page): unexpected problem');
         self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       });
@@ -71,7 +66,7 @@ export class SignInPasswordPage {
   }
 
   lostPassword() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Go to lost password page', 'lostPassword()');
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Go to lost password page', 'Clicked lost password button');
     this.navCtrl.push(LostPasswordPage, { phone: this.phone });
   }
 }

@@ -40,7 +40,7 @@ export class ChangeEmailPage {
       return;
     }
 
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on submit button', 'submit()');
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked on submit button', 'submit change email info');
 
     let loading = this.loadingController.create({content: "Please wait..."});
 
@@ -71,11 +71,9 @@ export class ChangeEmailPage {
         loading.dismiss();
 
         if (taskState === 'send_verification_email_finished') {
-          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Email changed', 'submit()');
           this.toastService.showMessage({ message: 'Email updated. Please validate your email' });
           this.navCtrl.pop();
         } else {
-          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Error changing email', 'submit()');
           this.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
         }
       }, error => {
