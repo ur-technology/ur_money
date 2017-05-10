@@ -2,58 +2,45 @@
   <ion-navbar>
     <ion-title>{{getPageTitle()}}</ion-title>
   </ion-navbar>
+  <ion-list *ngIf="!showSpinner">
+    <ion-item>
+      <ion-label stacked>Find user</ion-label>
+      <ion-input [(ngModel)]="searchText" placeholder="By Name, Email or Phone" max="10">
+      </ion-input>
+      <button ion-button clear (click)="searchItems()" item-right>Search
+          </button>
+    </ion-item>
+  </ion-list>
 </ion-header>
 <ion-content>
-  <div *ngIf="!showSpinner" class="search-div">
-    <div class="div-search-input">
-      <ion-list>
-        <ion-item>
-          <ion-input [(ngModel)]="searchText" placeholder="By Name, Email or Phone" max="10">
-          </ion-input>
-        </ion-item>
-      </ion-list>
-      <!-- <ion-item>
-      </ion-item> -->
-    </div>
-    <button ion-button clear (click)="searchItems()">Search
-    </button>
-  </div>
-  <ion-list>
+  <ion-list style="padding-top:60px;">
     <ion-item class="no-referrals" text-wrap detail-none *ngIf="referrals?.length === 0 && !showSpinner" (click)="inviteFriend()">
       <p>No referrals</p>
     </ion-item>
     <ion-item detail-none *ngFor="let referral of referrals" (click)="openSelectedUserReferrals(referral)">
-<ion-row>
-      <ion-col style="max-width:51px !important;">
-
-        <ion-avatar item-left> <img src='{{referral.profilePhotoUrl}}'></ion-avatar>
-      </ion-col>
-      <ion-col col-auto>
-        <h2 word-wrap>{{referral.name}}</h2>
-        <h3><em>{{status(referral)}}</em></h3>
-        <p>
-          Downline: {{referral.downlineSize}}
-        </p>
-        <p *ngIf="checkIfLookingMyReferrals()">
-          {{referral.phone}}
-        </p>
-        <p *ngIf="checkIfLookingMyReferrals()">
-          {{referral.email}}
-        </p>
-        <!-- <p>
+      <ion-avatar item-left> <img src='{{referral.profilePhotoUrl}}'></ion-avatar>
+      <h2 word-wrap>{{referral.name}}</h2>
+      <h3><em>{{status(referral)}}</em></h3>
+      <p>
+        Downline: {{referral.downlineSize}}
+      </p>
+      <p *ngIf="checkIfLookingMyReferrals()">
+        {{referral.phone}}
+      </p>
+      <p *ngIf="checkIfLookingMyReferrals()">
+        {{referral.email}}
+      </p>
+      <!-- <p>
         {{country(referral.countryCode)}}
       </p> -->
-      </ion-col>
-      <ion-col  >
-        <button item-right ion-button icon-left outline round (click)="chatWith(referral, $event)"><ion-icon name="chatboxes"></ion-icon>Chat
-      </button>
-      </ion-col>
-      <ion-col >
+
+      <p>
         <button item-right ion-button icon-left outline round (click)="copyToClipboard(referral, $event)" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js"><ion-icon name="clipboard"></ion-icon>Copy to clipboard
       </button>
-      </ion-col>
 
-</ion-row>
+        <button item-right ion-button icon-left outline round (click)="chatWith(referral, $event)"><ion-icon name="chatboxes"></ion-icon>Chat
+      </button>
+      </p>
     </ion-item>
     <ion-item style="text-align:center" *ngIf="!showSpinner && !endOfResults">
       <button ion-button clear (click)="loadMore()">Load more... </button>
