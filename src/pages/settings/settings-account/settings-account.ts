@@ -51,6 +51,7 @@ export class SettingsAccountPage {
       lastName: new FormControl(authUser.lastName, [CustomValidator.nameValidator, Validators.required]),
       name: new FormControl(authUser.name, [CustomValidator.nameValidator, Validators.required]),
       countryCode: new FormControl('', Validators.required),
+      phone: new FormControl({ value: authUser.phone, disabled: true }),
     });
 
     let country = this.countries.find((x) => { return x.countryCode === (authUser.countryCode || 'US'); });
@@ -71,7 +72,7 @@ export class SettingsAccountPage {
     self.auth.currentUser
       .update(_.omitBy(profile, _.isNil))
       .then((response) => {
-        let toast = this.toastCtrl.create({ message:"Settings updated", duration: 3000, position: 'bottom' });
+        let toast = this.toastCtrl.create({ message: "Settings updated", duration: 3000, position: 'bottom' });
         toast.present();
         this.nav.setRoot(HomePage);
       })
