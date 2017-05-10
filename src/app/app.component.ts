@@ -172,7 +172,7 @@ export class UrMoney {
         this.menuItems.push({ title: 'Invite friends', page: Config.targetPlatform === 'web' ? InviteLinkPage : ContactsAndChatsPage, pageParams: { goal: 'invite' }, icon: 'icon menu-icon menu-icon-invite', value: 'inviteFriends' });
       }
     }
-    this.menuItems.push({ title: 'Referrals', page: ReferralsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'referrals' });
+    this.menuItems.push({ title: 'Referrals', page: ReferralsPage, icon: 'icon menu-icon menu-icon-people', value: 'referrals' });
     if (this.auth.currentUser && this.auth.currentUser.admin) {
       this.menuItems.push({ title: 'Manage Users', page: UsersPage, icon: 'icon menu-icon menu-icon-people', value: 'users' });
     }
