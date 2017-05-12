@@ -83,6 +83,7 @@ export class HomePage {
     setTimeout(() => {
       if (this.auth.currentUser.showBonusConfirmedCallToAction) {
         this.fadeInState = 'active';
+        this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Show showBonusConfirmedCallToAction', 'showBonusConfirmedCallToAction is true');
         this.showBonusRewardModal = true;
       }
     }, 1500);
@@ -250,7 +251,7 @@ export class HomePage {
 
   hideModalAndInviteFriends() {
     let self = this;
-    self.googleAnalyticsEventsService.emitEvent(this.pageName, 'dismissed modal animation that shows when bonus has been approved', 'hideModalAndInviteFriends()');
+    self.googleAnalyticsEventsService.emitEvent(this.pageName, 'dismissed modal animation that shows when bonus has been approved', 'hide bonus approved modal');
     self.auth.currentUser.update({ showBonusConfirmedCallToAction: null }).then(() => {
       self.auth.currentUser.showBonusConfirmedCallToAction = false;
       self.showBonusRewardModal = false;

@@ -67,7 +67,6 @@ export class SelfieMatchPage {
   }
 
   submit() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked submit selfie button', 'submit selfie match info');
     let destinationPage: any = ProfileSetupPage;
 
     if (this.auth.currentUser.wallet && this.auth.currentUser.wallet.address) {
@@ -80,6 +79,7 @@ export class SelfieMatchPage {
     this.idVerifier.matchSelfie(this.dataURLtoBlob(this.selfieSource))
       .then(() => {
         loadingModal.dismiss().then(() => {
+          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Selfie submit completed', 'submit selfie match info');
           this.nav.setRoot(destinationPage);
         });
       },

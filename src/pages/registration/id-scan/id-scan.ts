@@ -122,7 +122,6 @@ export class IdScanPage {
   }
 
   submit() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on submit id verification', 'submit id scan info');
     let loadingModal = this.loadingController.create({ content: "Please wait..." });
     loadingModal.present();
 
@@ -132,6 +131,7 @@ export class IdScanPage {
         this.idCardData = idCardData;
 
         loadingModal.dismiss().then(() => {
+          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Id Verification sent', 'submit id scan verification ok');
           this.nav.push(SelfieMatchPage);
         });
       },

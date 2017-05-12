@@ -151,7 +151,7 @@ export class WalletSetupPage {
         firebase.database().ref('/walletCreatedQueue/tasks').push({
           userId: this.auth.currentUserId
         }).then();
-        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Set root page IntroPage', 'saveWallet()');
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'wallet created', 'wallet created');
         self.nav.setRoot(IntroPage);
       });
     }).catch((error) => {

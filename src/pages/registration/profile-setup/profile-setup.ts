@@ -70,7 +70,6 @@ export class ProfileSetupPage {
   }
 
   submit() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Click on Continue button', 'submit profile setup info');
     let loadingModal = this.loadingController.create({ content: "Please wait..." });
     let email = this.mainForm.value.email.toLowerCase();
 
@@ -103,7 +102,9 @@ export class ProfileSetupPage {
           .then(() => {
             switch (taskState) {
               case 'send_verification_email_finished':
+                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Profile setup completed', 'submit profile setup info');
                 this.toast.showMessage({ message: "A verification email has been sent to your email address. Please read it and follow the instructions. If you don't see the message, please check your spam folder." });
+                this.nav.push(WalletSetupPage);
                 break;
 
               case 'send_verification_email_canceled_because_user_not_found':
@@ -118,8 +119,6 @@ export class ProfileSetupPage {
                 this.toast.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
           });
-
-        this.nav.push(WalletSetupPage);
       }, (error) => {
         loadingModal
           .dismiss()
