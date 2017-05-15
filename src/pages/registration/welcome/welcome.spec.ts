@@ -13,7 +13,6 @@ import {GoogleAnalyticsEventsService} from '../../../services/google-analytics-e
 let comp: WelcomePage;
 let fixture: ComponentFixture<WelcomePage>;
 let de: DebugElement;
-let el: HTMLElement;
 
 describe('Page: WelcomePage', () => {
   beforeEach(async(() => {
