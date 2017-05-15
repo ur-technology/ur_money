@@ -1,13 +1,22 @@
 var webpackConfig = require('./webpack.test.js');
 
-module.exports = function (config) {
+module.exports = function(config) {
   var _config = {
     basePath: '',
 
     frameworks: ['jasmine'],
 
-    files: [
-      {pattern: './karma-test-shim.js', watched: true}
+    files: [{
+        pattern: './karma-test-shim.js',
+        watched: true
+      },
+      {
+        pattern: '../src/assets/img/*.png',
+        watched: false,
+        included: false,
+        served: true,
+        nocache: false
+      }
     ],
 
     preprocessors: {
@@ -28,6 +37,10 @@ module.exports = function (config) {
       level: 'log',
       format: '%b %T: %m',
       terminal: true
+    },
+
+    proxies: {
+      '/assets/img': '/assets/img'
     },
 
     reporters: ['kjhtml', 'dots', 'mocha'],

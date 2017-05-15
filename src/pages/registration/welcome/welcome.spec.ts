@@ -77,4 +77,11 @@ describe('Page: WelcomePage', () => {
 
     expect(navCtrl.push).toHaveBeenCalledWith(SignInPage);
   });
+
+  it('should call GA to set page name', () => {
+    let googleAnalyticsEventsService = fixture.debugElement.injector.get(GoogleAnalyticsEventsService);
+    spyOn(googleAnalyticsEventsService, 'emitCurrentPage');
+    comp.ionViewDidEnter();
+    expect(googleAnalyticsEventsService.emitCurrentPage).toHaveBeenCalledWith('WelcomePage');
+  });
 });
