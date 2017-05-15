@@ -84,4 +84,18 @@ describe('Page: WelcomePage', () => {
     comp.ionViewDidEnter();
     expect(googleAnalyticsEventsService.emitCurrentPage).toHaveBeenCalledWith('WelcomePage');
   });
+
+  it('should call GA event to announce sign up', () => {
+    let googleAnalyticsEventsService = fixture.debugElement.injector.get(GoogleAnalyticsEventsService);
+    spyOn(googleAnalyticsEventsService, 'emitEvent');
+    comp.signUp();
+    expect(googleAnalyticsEventsService.emitEvent).toHaveBeenCalledWith('WelcomePage', 'Clicked sign up button', 'signUp()');
+  });
+
+  it('should call GA event to announce sign in', () => {
+    let googleAnalyticsEventsService = fixture.debugElement.injector.get(GoogleAnalyticsEventsService);
+    spyOn(googleAnalyticsEventsService, 'emitEvent');
+    comp.signIn();
+    expect(googleAnalyticsEventsService.emitEvent).toHaveBeenCalledWith('WelcomePage', 'Clicked sign in button', 'signIn()');
+  });
 });
