@@ -1,17 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { IonicModule, NavController, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { UrMoney } from '../../../app/app.component';
 import { NavMock, GoogleAnalyticsEventsServiceMock, ModalControllerMock, AuthServiceMock, LoadingControllerMock, ToastServiceMock, AlertControllerMock } from '../../../mocks';
 import { CountryListServiceMock } from '../../../mocks';
-import { SignUpPage } from '../sign-up/sign-up';
+// import { SignUpPage } from '../sign-up/sign-up';
 import { TermsAndConditionsPage } from '../../terms-and-conditions/terms-and-conditions';
 import { SignInPage } from './sign-in';
 import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 import { CountryListService } from '../../../services/country-list';
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
+import { click, advance } from '../../../../testing';
 
 let comp: SignInPage;
 let fixture: ComponentFixture<SignInPage>;
@@ -65,6 +66,14 @@ describe('Page: SignInPage', () => {
     fixture = TestBed.createComponent(SignInPage);
     comp = fixture.componentInstance;
   });
+  // beforeEach(async(() => {
+  //   fixture = TestBed.createComponent(SignInPage);
+  //   comp = fixture.componentInstance;
+  //   fixture.detectChanges();
+  //   return fixture.whenStable().then(() => {
+  //     fixture.detectChanges();
+  //   });
+  // }));
 
   afterEach(() => {
     fixture.destroy();
@@ -101,7 +110,20 @@ describe('Page: SignInPage', () => {
     let modalController = fixture.debugElement.injector.get(ModalController);
     spyOn(modalController, 'create').and.callThrough();
     de = fixture.debugElement.query(By.css('.terms-btn'));
-    de.triggerEventHandler('click', null);
+    click(de);
     expect(modalController.create).toHaveBeenCalledWith(TermsAndConditionsPage)
   });
+
+  it('should clear phone input when changing country', fakeAsync(() => {
+    comp.mainForm.controls['phone'].setValue('998016833');
+    advance(fixture);
+    advance(fixture);
+    de = fixture.debugElement.query(By.css('input[type=tel]'));
+    expect(de.nativeElement.value).toEqual('998016833');
+    comp.onChangeCountry();
+    advance(fixture);
+    advance(fixture);
+    de= fixture.debugElement.query(By.css('input[type=tel]'));
+    expect(de.nativeElement.value).toEqual('');
+  }));
 });

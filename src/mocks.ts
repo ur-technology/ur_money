@@ -14,8 +14,32 @@ export class GoogleAnalyticsEventsServiceMock {
 }
 
 export class CountryListServiceMock {
-  public getCountryData(): void { }
-  public getDefaultContry(): any { }
+  public getCountryData(): any[] {
+    return[
+      {
+        'telephoneCountryCode': '+93',
+        'name': 'Afghanistan',
+        'countryCode': 'AF'
+      },
+      {
+        'telephoneCountryCode': '+355',
+        'name': 'Albania',
+        'countryCode': 'AL'
+      },
+      {
+        'telephoneCountryCode': '+1',
+        'name': 'United States',
+        'countryCode': 'US'
+      }];
+    }
+
+  public getDefaultContry(): any {
+    return {
+      'telephoneCountryCode': '+1',
+      'name': 'United States',
+      'countryCode': 'US'
+    };
+  }
 }
 
 export class AuthServiceMock {

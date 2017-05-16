@@ -9,6 +9,7 @@ import { SignUpPage } from '../sign-up/sign-up';
 import { SignInPage } from '../sign-in/sign-in';
 import { WelcomePage } from './welcome';
 import {GoogleAnalyticsEventsService} from '../../../services/google-analytics-events.service';
+import { click } from '../../../../testing';
 
 let comp: WelcomePage;
 let fixture: ComponentFixture<WelcomePage>;
@@ -55,7 +56,7 @@ describe('Page: WelcomePage', () => {
 
     de = fixture.debugElement.query(By.css('button'));
 
-    de.triggerEventHandler('click', null);
+    click(de);
 
     expect(navCtrl.push).toHaveBeenCalledWith(SignUpPage);
   });
@@ -72,7 +73,7 @@ describe('Page: WelcomePage', () => {
       }
     }
 
-    de.triggerEventHandler('click', null);
+    click(de);
 
     expect(navCtrl.push).toHaveBeenCalledWith(SignInPage);
   });
