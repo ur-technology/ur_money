@@ -46,6 +46,14 @@ export class CountryListServiceMock {
 }
 
 export class AuthServiceMock {
+  public generateHashedPassword(password: string): Promise<string> {
+    return Promise.resolve('password');
+  }
+
+  public signIn(phone: string, password: string): Promise<string> {
+    return Promise.resolve('');
+  }
+
   requestSignIn(phone: string): Promise<any> {
     return new Promise(function(resolve: Function): void {
       resolve();
