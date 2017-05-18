@@ -79,6 +79,8 @@ export class WalletSetupPage {
           text: 'Cancel',
           role: 'cancel',
           handler: data => {
+            alert.dismiss();
+            return false;
           }
         },
         {
@@ -95,7 +97,7 @@ export class WalletSetupPage {
                 self.toastService.showMessage({ message: "The secret phrase you re-entered is incorrect. Please try again." });
               });
             }
-
+            return false;
           }
         }
       ]
@@ -126,6 +128,7 @@ export class WalletSetupPage {
         text: "OK",
         handler: () => {
           alerta.dismiss();
+          return false;
         }
       }
       ]
@@ -148,7 +151,7 @@ export class WalletSetupPage {
         firebase.database().ref('/walletCreatedQueue/tasks').push({
           userId: this.auth.currentUserId
         }).then();
-        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Set root page IntroPage', 'saveWallet()');
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'wallet created', 'wallet created');
         self.nav.setRoot(IntroPage);
       });
     }).catch((error) => {

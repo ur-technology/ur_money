@@ -22,4 +22,8 @@ profile-setup-page {
   .card-md .item-md.item-block .item-inner {
     border-bottom: 1px solid #dedede;
   }
+
+  .password input {
+    text-transform: lowercase;
+  }
 }

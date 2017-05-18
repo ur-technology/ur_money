@@ -33,6 +33,10 @@
           <ion-option [value]="c" *ngFor="let c of countries">{{c.name}}</ion-option>
         </ion-select>
       </ion-item>
+      <ion-item>
+        <ion-label stacked>Phone number</ion-label>
+        <ion-input type="text" formControlName="phone"></ion-input>
+      </ion-item>
       <button ion-item (click)="changeEmail()">
         <h3 ion-text class="labelStacked" color="primary">Email</h3>
         <p>{{auth.currentUser.email}}</p>

@@ -38,7 +38,6 @@ export class AuthenticationCodePage {
 
   checkCode() {
     let self = this;
-    self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Click on check code', 'checkCode()');
     let loadingModal = self.loadingController.create({ content: "Please wait..." });
 
     let authenticationCodeMatch;
@@ -52,10 +51,10 @@ export class AuthenticationCodePage {
       return loadingModal.dismiss();
     }).then(() => {
       if (authenticationCodeMatch) {
-        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Code match succeeded', 'checkCode()');
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Code match succeeded', 'SMS code correct');
         // do nothing AuthService will handle a redirect
       } else {
-        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Code was invalid', 'checkCode()');
+        self.googleAnalyticsEventsService.emitEvent(self.pageName, 'Code was invalid', 'SMS code incorrect');
         self.toastService.showMessage({ message: "The verification code you entered is incorrect or expired. Please try again." });
       }
     }, (error) => {

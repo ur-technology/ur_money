@@ -67,7 +67,6 @@ export class SelfieMatchPage {
   }
 
   submit() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Clicked submit selfie button', 'submit()');
     let destinationPage: any = ProfileSetupPage;
 
     if (this.auth.currentUser.wallet && this.auth.currentUser.wallet.address) {
@@ -80,12 +79,12 @@ export class SelfieMatchPage {
     this.idVerifier.matchSelfie(this.dataURLtoBlob(this.selfieSource))
       .then(() => {
         loadingModal.dismiss().then(() => {
-          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Selfie matched', 'submit()');
+          this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Selfie submit completed', 'submit selfie match info');
           this.nav.setRoot(destinationPage);
         });
       },
       (error) => {
-        this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Selfie matched failed'+ error, 'submit()');
+        this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Selfie matched failed'+ error, 'selfie matched error');
         trackJs.track('Selfie match failed: ' + error);
         loadingModal.dismiss().then(() => {
 
@@ -96,6 +95,7 @@ export class SelfieMatchPage {
               {
                 text: "Try again",
                 handler: () => {
+                  return false;
                 }
               }
             ]

@@ -2,7 +2,6 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { ElementRef, Inject, Component } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AngularFire } from 'angularfire2';
 import { NavController, NavParams, Platform, AlertController, LoadingController } from 'ionic-angular';
 import  Decimal  from 'decimal.js';
 
@@ -57,7 +56,6 @@ export class HomePage {
     public nav: NavController,
     public platform: Platform,
     private loadingController: LoadingController,
-    public angularFire: AngularFire,
     public auth: AuthService,
     public chartData: ChartDataService,
     public toast: ToastService,
@@ -85,6 +83,7 @@ export class HomePage {
     setTimeout(() => {
       if (this.auth.currentUser.showBonusConfirmedCallToAction) {
         this.fadeInState = 'active';
+        this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Show showBonusConfirmedCallToAction', 'showBonusConfirmedCallToAction is true');
         this.showBonusRewardModal = true;
       }
     }, 1500);
@@ -108,24 +107,19 @@ export class HomePage {
           .then(() => {
             switch (taskState) {
               case 'send_verification_email_finished':
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_finished', 'sendVerificationEmail()');
                 this.toast.showMessage({ message: "A verification email has been sent to your email address. Please read it and follow the instructions. If you don't see the message, please check your spam folder." });
                 break;
               case 'send_verification_email_canceled_because_user_not_found':
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_not_found', 'sendVerificationEmail()');
                 this.toast.showMessage({ message: 'The email that you entered did not match our records. Please double-check and try again.' });
                 break;
               case 'send_verification_email_canceled_because_user_disabled':
-                this.googleAnalyticsEventsService.emitEvent(this.pageName, 'send_verification_email_canceled_because_user_disabled', 'sendVerificationEmail()');
                 this.toast.showMessage({ message: 'Your user account has been disabled.' });
                 break;
               default:
-                this.googleAnalyticsEventsService .emitEvent(this.pageName, 'no taskState', 'sendVerificationEmail()');
                 this.toast.showMessage({ message: 'There was an unexpected problem. Please try again later' });
             }
           });
       }, (error) => {
-        this.googleAnalyticsEventsService .emitEvent(this.pageName, 'Catch error', 'sendVerificationEmail()');
         loadingModal
           .dismiss()
           .then(() => {
@@ -257,7 +251,7 @@ export class HomePage {
 
   hideModalAndInviteFriends() {
     let self = this;
-    self.googleAnalyticsEventsService.emitEvent(this.pageName, 'dismissed modal animation that shows when bonus has been approved', 'hideModalAndInviteFriends()');
+    self.googleAnalyticsEventsService.emitEvent(this.pageName, 'dismissed modal animation that shows when bonus has been approved', 'hide bonus approved modal');
     self.auth.currentUser.update({ showBonusConfirmedCallToAction: null }).then(() => {
       self.auth.currentUser.showBonusConfirmedCallToAction = false;
       self.showBonusRewardModal = false;

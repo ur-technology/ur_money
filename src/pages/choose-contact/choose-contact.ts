@@ -56,7 +56,7 @@ export class ChooseContactPage {
   }
 
   dismissModal() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'No contact chosen', 'dismissModal()');
+    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'No contact chosen. Dismiss modal', 'dismissModal()');
     this.viewCtrl.dismiss();
   }
 

@@ -228,6 +228,7 @@ export class SendPage {
         handler: () => {
           clearInterval(this.refreshIntervalId);
           countDownAlert.dismiss();
+          return false;
         }
       }]
     });
@@ -261,6 +262,7 @@ export class SendPage {
             alert.dismiss().then(() => {
               this.mainForm.value.secretPhrase = '';
             });
+            return false;
           }
         }
       ]
@@ -299,12 +301,14 @@ export class SendPage {
               log.debug('send canceled');
               prompt.dismiss();
               reject({ messageKey: 'canceled' });
+              return false;
             }
           },
           {
             text: "Ok",
             handler: data => {
               prompt.dismiss().then(() => { resolve(); });
+              return false;
             }
           }
         ]

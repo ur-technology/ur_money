@@ -65,7 +65,6 @@ export class UrMoney {
         }
       }
 
-      this.googleAnalyticsEventsService.emitCurrentPage(this.pageName);
       let logLevel = { 'trace': 0, 'debug': 1, 'info': 2, 'warn': 3, 'error': 4, 'silent': 5 }[Config.logLevel] || 1;
       let params = Utils.queryParams();
 
@@ -86,7 +85,6 @@ export class UrMoney {
         // Verify email if verification code is present
         let verificationCode = params['verification-code'];
         if (verificationCode && this.auth && this.auth.currentUser && !this.auth.currentUser.isEmailVerified) {
-          this.googleAnalyticsEventsService.emitEvent(this.pageName, `verification-code URL param`, 'initializeApp()');
           this.verifyEmail(verificationCode);
         }
 
@@ -95,7 +93,6 @@ export class UrMoney {
           let resetCode = params['reset-code'];
 
           if (resetCode) {
-            this.googleAnalyticsEventsService.emitEvent(this.pageName, `reset-code URL param. unauthenticated`, 'initializeApp()');
             this.nav.setRoot(ResetPasswordWithCodePage, { resetCode });
           } else {
             this.nav.setRoot(WelcomePage);
@@ -105,14 +102,11 @@ export class UrMoney {
           if (this.auth.currentUser.selfieMatched) {
 
             if (!this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
-              this.googleAnalyticsEventsService.emitEvent(this.pageName, `No wallet. Redirect to ProfileSetupPage`, 'initializeApp()');
               this.nav.setRoot(ProfileSetupPage);
             } else {
-              this.googleAnalyticsEventsService.emitEvent(this.pageName, `Redirect to HomePage`, 'initializeApp()');
               this.nav.setRoot(HomePage);
             }
           } else if (this.auth.currentUser.idUploaded) {
-            this.googleAnalyticsEventsService.emitEvent(this.pageName, `Redirect to SelfieMatchPage`, 'initializeApp()');
             this.nav.setRoot(SelfieMatchPage);
           } else {
             this.nav.setRoot(IdScanPage);
@@ -120,10 +114,8 @@ export class UrMoney {
         } else {
 
           if (!this.auth.currentUser.idUploaded) {
-            this.googleAnalyticsEventsService.emitEvent(this.pageName, `Redirect to IdScanPage legacy user`, 'initializeApp()');
             this.nav.setRoot(IdScanPage);
           } else if (!this.auth.currentUser.selfieMatched) {
-            this.googleAnalyticsEventsService.emitEvent(this.pageName, `Redirect to SelfieMatchPage legacy user`, 'initializeApp()');
             this.nav.setRoot(SelfieMatchPage);
           } else if (this.auth.currentUser.admin && params['admin-redirect']) {
 
@@ -131,7 +123,6 @@ export class UrMoney {
 
               case 'user':
                 this.lookupUserById(params['id']).then((user) => {
-                  this.googleAnalyticsEventsService.emitEvent(this.pageName, `admin-redirect url param. Redirect to UserPage`, 'initializeApp()');
                   this.nav.setRoot(UserPage, { user: user });
                 });
 
@@ -181,7 +172,7 @@ export class UrMoney {
         this.menuItems.push({ title: 'Invite friends', page: Config.targetPlatform === 'web' ? InviteLinkPage : ContactsAndChatsPage, pageParams: { goal: 'invite' }, icon: 'icon menu-icon menu-icon-invite', value: 'inviteFriends' });
       }
     }
-    this.menuItems.push({ title: 'Referrals', page: ReferralsPage, icon: 'icon menu-icon menu-icon-transactions', value: 'referrals' });
+    this.menuItems.push({ title: 'Referrals', page: ReferralsPage, icon: 'icon menu-icon menu-icon-people', value: 'referrals' });
     if (this.auth.currentUser && this.auth.currentUser.admin) {
       this.menuItems.push({ title: 'Manage Users', page: UsersPage, icon: 'icon menu-icon menu-icon-people', value: 'users' });
     }

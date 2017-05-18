@@ -1,4 +1,4 @@
-import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth';
 import { Config } from '../../config/config';
@@ -34,7 +34,6 @@ export class UsersPage {
     private navParams: NavParams,
     public platform: Platform,
     public auth: AuthService,
-    private alertCtrl: AlertController,
     private googleAnalyticsEventsService: GoogleAnalyticsEventsService
   ) {
     this.countries = require('country-data').countries.all;

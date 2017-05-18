@@ -1,6 +1,5 @@
 import { ViewChild, Component } from '@angular/core';
 import { NavController, NavParams, Platform, Content, AlertController, PopoverController } from 'ionic-angular';
-import { AngularFire } from 'angularfire2';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 import * as firebase from 'firebase';
@@ -8,6 +7,7 @@ import * as log from 'loglevel';
 import { AuthService } from '../../services/auth';
 import { PopoverChatPage } from './popover-chat';
 import { Keyboard } from '@ionic-native/keyboard';
+import {AngularFireDatabase} from 'angularfire2/database';
 import { GoogleAnalyticsEventsService } from '../../services/google-analytics-events.service';
 
 declare var jQuery: any;
@@ -28,8 +28,8 @@ export class ChatPage {
   @ViewChild(Content) content: Content;
   pageName = 'ChatPage';
 
-  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public angularFire: AngularFire, public auth: AuthService, public alertCtrl: AlertController, public popoverCtrl: PopoverController,
-    private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private keyboard: Keyboard) {
+  constructor(public nav: NavController, public navParams: NavParams, public platform: Platform, public auth: AuthService, public alertCtrl: AlertController, public popoverCtrl: PopoverController,
+    private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private keyboard: Keyboard, private angularFire:AngularFireDatabase) {
     // NOTE: either contact or chatSummary+chatId should be passed to this page via NavParams
     this.contact = this.navParams.get('contact');
     this.chatSummary = this.navParams.get('chatSummary');
@@ -120,7 +120,7 @@ export class ChatPage {
 
   loadMessages() {
     if (!this.messagesRef || this.messagesRef.closed) {
-      this.messagesRef = this.angularFire.database.list(`/users/${this.auth.currentUserId}/chats/${this.chatId}/messages`).subscribe(data => {
+      this.messagesRef = this.angularFire.list(`/users/${this.auth.currentUserId}/chats/${this.chatId}/messages`).subscribe(data => {
         this.messages = data;
         this.scrollToBottomPage();
       });
@@ -158,6 +158,7 @@ export class ChatPage {
               this.sendMessage(isFirstMessageInChat);
               this.setBlockContactInDB(false);
             });
+            return false;
           }
         }
       ]
@@ -292,6 +293,7 @@ export class ChatPage {
               }
               this.setBlockContactInDB(true);
             });
+            return false;
           }
         }
       ]

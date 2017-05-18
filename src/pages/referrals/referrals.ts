@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth';
@@ -7,6 +7,7 @@ import { GoogleAnalyticsEventsService } from '../../services/google-analytics-ev
 import * as _ from 'lodash';
 import { ChatPage } from '../../pages/chat/chat';
 import { CountryListService } from '../../services/country-list';
+import { ToastService } from '../../services/toast';
 
 @Component({
   selector: 'page-referrals',
@@ -21,9 +22,9 @@ export class ReferralsPage {
   startAt = 0;
   numOfItemsToReturn = 150;
   searchText: string = '';
+  @ViewChild('textHolder') inputTextHolder;
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService, private auth: AuthService, private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private countryListService: CountryListService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService, private auth: AuthService, private googleAnalyticsEventsService: GoogleAnalyticsEventsService, private countryListService: CountryListService, private toastService: ToastService) {
     this.userToLookForReferrals = this.navParams.get('userToLookForReferrals');
   }
 
@@ -82,6 +83,23 @@ export class ReferralsPage {
   loadMore() {
     this.startAt += this.numOfItemsToReturn;
     this.loadReferrals();
+  }
+
+  copyToClipboard(referral, event) {
+    event.stopPropagation();
+    let textToBeCopied = this.checkIfLookingMyReferrals() ? `Name: ${referral.name} Phone: ${referral.phone} Email: ${referral.email}` : `Name: ${referral.name}`;
+    this.inputTextHolder.nativeElement.setAttribute("value", textToBeCopied);
+    this.inputTextHolder.nativeElement.select();
+    var succeeded;
+    try {
+      succeeded = document.execCommand("copy");
+    } catch (e) {
+      succeeded = false;
+    }
+    if (succeeded) {
+      this.toastService.showMessage({ message: 'Text copied', duration: 1000 });
+    }
+
   }
 
 }
