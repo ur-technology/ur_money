@@ -68,6 +68,10 @@ export class AuthServiceMock {
     return Promise.resolve('');
   }
 
+  public requestChangeTempPassword(phone: string, tempPassword: string): Promise<any> {
+    return Promise.resolve('');
+  }
+
   public requestSignIn(phone: string): Promise<any> {
     return new Promise(function(resolve: Function): void {
       resolve();
