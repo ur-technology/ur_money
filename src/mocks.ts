@@ -4,6 +4,12 @@ export class NavControllerMock {
       resolve();
     });
   }
+
+  public setRoot(): any {
+    return new Promise(function(resolve: Function): void {
+      resolve();
+    });
+  }
 }
 
 export class NavParamsMock {
@@ -54,7 +60,11 @@ export class AuthServiceMock {
     return Promise.resolve('');
   }
 
-  requestSignIn(phone: string): Promise<any> {
+  public requestCheckTempCode(phone: string, tempCode: string): Promise<any> {
+    return Promise.resolve('');
+  }
+
+  public requestSignIn(phone: string): Promise<any> {
     return new Promise(function(resolve: Function): void {
       resolve();
     });
