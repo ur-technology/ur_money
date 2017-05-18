@@ -3,7 +3,7 @@ import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { IonicModule, NavController, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { UrMoney } from '../../../app/app.component';
-import { NavMock, GoogleAnalyticsEventsServiceMock, ModalControllerMock, AuthServiceMock, LoadingControllerMock, ToastServiceMock, AlertControllerMock } from '../../../mocks';
+import { NavControllerMock, GoogleAnalyticsEventsServiceMock, ModalControllerMock, AuthServiceMock, LoadingControllerMock, ToastServiceMock, AlertControllerMock } from '../../../mocks';
 import { CountryListServiceMock } from '../../../mocks';
 // import { SignUpPage } from '../sign-up/sign-up';
 import { SignInPasswordPage } from '../sign-in-password/sign-in-password';
@@ -28,7 +28,7 @@ describe('Page: SignInPage', () => {
       providers: [
         {
           provide: NavController,
-          useClass: NavMock
+          useClass: NavControllerMock
         },
         {
           provide: GoogleAnalyticsEventsService,
