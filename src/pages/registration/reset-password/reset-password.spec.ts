@@ -1,19 +1,16 @@
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { By }           from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { IonicModule, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { UrMoney } from '../../../app/app.component';
 import { NavParamsMock, NavControllerMock, GoogleAnalyticsEventsServiceMock, AuthServiceMock, LoadingControllerMock, ToastServiceMock } from '../../../mocks';
 import { ResetPasswordPage } from './reset-password';
 import { AuthService } from '../../../services/auth';
 import { ToastService } from '../../../services/toast';
-import { click, advance } from '../../../../testing';
+import {  advance } from '../../../../testing';
 import { SignInPage } from '../sign-in/sign-in';
 import { GoogleAnalyticsEventsService } from '../../../services/google-analytics-events.service';
 
 let comp: ResetPasswordPage;
 let fixture: ComponentFixture<ResetPasswordPage>;
-let de: DebugElement;
 
 describe('Page: ResetPasswordPage', () => {
 
@@ -112,5 +109,31 @@ describe('Page: ResetPasswordPage', () => {
     expect(auth.requestChangeTempPassword).toHaveBeenCalled();
     expect(toastService.showMessage).toHaveBeenCalledWith({ message: 'Your password has been changed. For your security, please sign in with your new password.' });
     expect(navCtrl.setRoot).toHaveBeenCalledWith(SignInPage);
+  }));
+
+  it('should show a message when other message arrives', fakeAsync(() => {
+    let toastService = fixture.debugElement.injector.get(ToastService);
+    spyOn(toastService, 'showMessage');
+
+    let auth = fixture.debugElement.injector.get(AuthService);
+    spyOn(auth, 'requestChangeTempPassword').and.returnValue(Promise.resolve(''));
+
+    comp.submit();
+    advance(fixture);
+
+    expect(toastService.showMessage).toHaveBeenCalledWith({ message: 'There was an unexpected problem. Please try again later' });
+  }));
+
+  it('should show a message when an error occurs', fakeAsync(() => {
+    let toastService = fixture.debugElement.injector.get(ToastService);
+    spyOn(toastService, 'showMessage');
+
+    let auth = fixture.debugElement.injector.get(AuthService);
+    spyOn(auth, 'requestChangeTempPassword').and.throwError('error');
+
+    comp.submit();
+    advance(fixture);
+
+    expect(toastService.showMessage).toHaveBeenCalledWith({ message: 'There was an unexpected problem. Please try again later' });
   }));
 });

@@ -40,7 +40,7 @@ module.exports = function(config) {
     },
 
     proxies: {
-      '/assets/img': '/assets/img'
+      // '/assets/img': 'http://localhost:9876/assets/img'
     },
 
     reporters: ['kjhtml', 'dots', 'mocha'],
