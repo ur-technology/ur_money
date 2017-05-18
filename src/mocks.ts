@@ -64,6 +64,10 @@ export class AuthServiceMock {
     return Promise.resolve('');
   }
 
+  public resetPasswordWithCode(resetCode: string, newPassword: string): Promise<any> {
+    return Promise.resolve('');
+  }
+
   public requestSignIn(phone: string): Promise<any> {
     return new Promise(function(resolve: Function): void {
       resolve();
