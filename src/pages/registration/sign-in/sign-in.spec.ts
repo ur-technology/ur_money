@@ -189,5 +189,21 @@ describe('Page: SignInPage', () => {
     expect(alertCtrl.create).toHaveBeenCalled();
   }));
 
+  it('should show message if an error occurs', fakeAsync(() => {
+    comp.mainForm.controls['phone'].setValue('9373964400');
+    let auth = fixture.debugElement.injector.get(AuthService);
+    spyOn(auth, 'requestSignIn').and.throwError('error');
+    let toastService = fixture.debugElement.injector.get(ToastService);
+    spyOn(toastService, 'showMessage');
+    let loadingController: any = fixture.debugElement.injector.get(LoadingController);
+    spyOn(loadingController.component, 'dismiss').and.callThrough();
+
+    comp.submit();
+
+    advance(fixture);
+    expect(toastService.showMessage).toHaveBeenCalledWith({ message: 'There was an unexpected problem. Please try again later' });
+    expect(loadingController.component.dismiss).toHaveBeenCalled();
+  }));
+
 
 });
