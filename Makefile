@@ -6,7 +6,7 @@ GITHASH                := $(shell git describe --tags --always)
 IONIC_BINARY           := ionic
 IONIC_CMD_SERVE        := serve -c
 IONIC_CMD_RUN_ANDROID  := run android -c --prod
-IONIC_CMD_BUILD        := build --prod
+IONIC_CMD_BUILD        := cordova build android --prod
 
 # NPM setup
 NPM_BINARY             := npm
