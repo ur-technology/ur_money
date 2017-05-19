@@ -1,4 +1,8 @@
 export class NavControllerMock {
+
+  public pop(): any {
+    return Promise.resolve();
+  }
   public push(): any {
     return new Promise(function (resolve: Function): void {
       resolve();
@@ -52,6 +56,15 @@ export class CountryListServiceMock {
 }
 
 export class AuthServiceMock {
+
+  public checkFirebaseConnection(): Promise<any> {
+    return Promise.resolve();
+  }
+
+  public checkSignUpCodeMatching(submittedAuthenticationCode: string): Promise<boolean> {
+    return Promise.resolve(true);
+  }
+
   public generateHashedPassword(password: string): Promise<string> {
     return Promise.resolve('password');
   }
