@@ -1,12 +1,12 @@
 export class NavControllerMock {
   public push(): any {
-    return new Promise(function(resolve: Function): void {
+    return new Promise(function (resolve: Function): void {
       resolve();
     });
   }
 
   public setRoot(): any {
-    return new Promise(function(resolve: Function): void {
+    return new Promise(function (resolve: Function): void {
       resolve();
     });
   }
@@ -72,8 +72,12 @@ export class AuthServiceMock {
     return Promise.resolve('');
   }
 
+  public requestSignUpCodeGeneration(phone: string, password: string, sponsorReferralCode: string, email: string): Promise<string> {
+    return Promise.resolve('');
+  }
+
   public requestSignIn(phone: string): Promise<any> {
-    return new Promise(function(resolve: Function): void {
+    return new Promise(function (resolve: Function): void {
       resolve();
     });
   }
@@ -87,13 +91,13 @@ export class ModalControllerMock {
 
 export class LoadingComponentMock {
   present() {
-    return new Promise(function(resolve: Function): void {
+    return new Promise(function (resolve: Function): void {
       resolve();
     });
   }
 
   dismiss() {
-    return new Promise(function(resolve: Function): void {
+    return new Promise(function (resolve: Function): void {
       resolve();
     });
   }
@@ -109,7 +113,7 @@ export class LoadingControllerMock {
 
 export class ToastServiceMock {
   public showMessage(): any {
-    return new Promise(function(resolve: Function): void {
+    return new Promise(function (resolve: Function): void {
       resolve();
     });
   }
