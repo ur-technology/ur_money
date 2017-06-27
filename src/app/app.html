@@ -15,7 +15,6 @@
       <div class="menu-profile" *ngIf="auth.currentUser">
         <img class="menu-avatar" [src]="auth.currentUser.profilePhotoUrl" alt="">
         <h1 class="profile-name">{{auth.currentUser.name}}</h1>
-        <p *ngIf="auth.announcementConfirmed()" ion-text color="light">Referral code: {{auth.currentUser.referralCode}}</p>
       </div>
       <hr />
       <ion-list class="menu-list" no-lines>
