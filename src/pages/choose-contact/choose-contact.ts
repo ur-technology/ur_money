@@ -41,12 +41,14 @@ export class ChooseContactPage {
   }
 
   dismissWalletAddress() {
-    if(!this.userRegisteredForMoreThan90Days){
+    if (!this.userRegisteredForMoreThan90Days) {
       return;
     }
 
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Choose contact. Dismiss wallet', 'dismissWalletAddress()');
-    let data = { walletAddress: (<FormControl>this.mainForm.get('addressWallet')).value };
+
+    let address = (<FormControl>this.mainForm.get('addressWallet')).value;
+    let data = { contact: { name: address, walletAddress: address } };
     this.viewCtrl.dismiss(data);
   }
 
