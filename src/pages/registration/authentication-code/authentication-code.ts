@@ -59,7 +59,7 @@ export class AuthenticationCodePage {
       }
     }, (error) => {
       loadingModal.dismiss().then(() => {
-        self.toastService.showMessage({ message: error.messageKey === 'noInternetConnection' ? 'noInternetConnection' : 'unexpectedErrorMessage' });
+        self.toastService.showMessage({ message: 'There was an unexpected problem. Please try again later' });
       });
     });
   }
