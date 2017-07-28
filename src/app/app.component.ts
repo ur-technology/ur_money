@@ -17,13 +17,11 @@ import { GoogleAnalyticsEventsService } from '../services/google-analytics-event
 import { AboutPage } from '../pages/about/about';
 import { ContactsAndChatsPage } from '../pages/contacts-and-chats/contacts-and-chats';
 import { HomePage } from '../pages/home/home';
-import { IdScanPage } from '../pages/registration/id-scan/id-scan';
 import { InviteLinkPage } from '../pages/invite-link/invite-link';
 import { ReferralsPage } from '../pages/referrals/referrals';
 import { NoInternetConnectionPage } from '../pages/no-internet-connection/no-internet-connection';
 import { ProfileSetupPage } from '../pages/registration/profile-setup/profile-setup';
 import { ResetPasswordWithCodePage } from '../pages/registration/reset-password-with-code/reset-password-with-code';
-import { SelfieMatchPage } from '../pages/registration/selfie-match/selfie-match';
 import { SendPage } from '../pages/send/send';
 import { SettingsPage } from '../pages/settings/settings/settings';
 import { TransactionsPage } from '../pages/transactions/transactions';
@@ -98,27 +96,13 @@ export class UrMoney {
             this.nav.setRoot(WelcomePage);
           }
         } else if (status === 'initial' || !this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
-
-          if (this.auth.currentUser.selfieMatched) {
-
-            if (!this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
-              this.nav.setRoot(ProfileSetupPage);
-            } else {
-              this.nav.setRoot(HomePage);
-            }
-          } else if (this.auth.currentUser.idUploaded) {
-            this.nav.setRoot(SelfieMatchPage);
+          if (!this.auth.currentUser.wallet || !this.auth.currentUser.wallet.address) {
+            this.nav.setRoot(ProfileSetupPage);
           } else {
-            this.nav.setRoot(IdScanPage);
+            this.nav.setRoot(HomePage);
           }
         } else {
-
-          if (!this.auth.currentUser.idUploaded) {
-            this.nav.setRoot(IdScanPage);
-          } else if (!this.auth.currentUser.selfieMatched) {
-            this.nav.setRoot(SelfieMatchPage);
-          } else if (this.auth.currentUser.admin && params['admin-redirect']) {
-
+          if (this.auth.currentUser.admin && params['admin-redirect']) {
             switch (params['redirect']) {
 
               case 'user':
