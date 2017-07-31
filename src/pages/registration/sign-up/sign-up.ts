@@ -86,7 +86,6 @@ export class SignUpPage {
 
   changeSignUpType() {
     this.signUpType = this.signUpType === 'sponsorReferralCode' ? 'email' : 'sponsorReferralCode';
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, `Changed sign up type - ${this.signUpType}`, 'changeTitlesBySignUpType()');
     this.changeTitlesBySignUpType();
 
   }
@@ -170,31 +169,16 @@ export class SignUpPage {
   }
 
   openTermsAndConditions() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Open Terms And Conditions Page', 'openTermsAndConditions()');
     let modal = this.modalCtrl.create(TermsAndConditionsPage);
     modal.present();
   }
 
   showSponsorReferralCodeExplanation() {
+    console.log('click showSponsorReferralCodeExplanation');
+    debugger;
     this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Sponsor explanation button', 'showSponsorReferralCodeExplanation()');
     let alert = this.alertCtrl.create({
       message: "You need your sponsor's referral code in order to sign up. Please, ask the referral code to your sponsor or click on the invitation link that was sent to you.",
-      buttons: [{
-        text: "Ok",
-        handler: () => {
-          alert.dismiss();
-          return false;
-        }
-      }
-      ]
-    });
-    alert.present();
-  }
-
-  showEmailExplanation() {
-    this.googleAnalyticsEventsService.emitEvent(this.pageName, 'Sponsor explanation button', 'showEmailExplanation()');
-    let alert = this.alertCtrl.create({
-      message: "If you joined our beta program, enter that email.",
       buttons: [{
         text: "Ok",
         handler: () => {

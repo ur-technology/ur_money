@@ -138,7 +138,7 @@ export class HomePage {
         {
           'waiting-for-sponsor': "Waiting for sponsor to set up account",
           'disabled': "User disabled"
-        }[this.auth.getUserStatus()] || "We are checking your documents and contact you via email once your wallet is verified";
+      }[this.auth.getUserStatus()] || "Bonus UR has been disabled, and UR2, a new cryptocurrency, is coming. Hold on to your secret passphrase as you will need it to make the transition to the new currency. In the meantime, feel free to trade or use your UR however you like. We will contact you with more details in the coming weeks.";
     }
     if (this.auth.announcementConfirmed() && this.chartData.pointsLoaded) {
       let firstTransaction = _.first(this.chartData.transactionsWithinTimeRange());
